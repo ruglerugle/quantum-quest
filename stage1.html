@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d3d4d">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE1 光は波？ それとも粒？ ― 二重スリットから読み解く量子力学</title>
+<meta name="description" content="量子力学のはじまり、二重スリット実験。スクリーンに現れる縞模様が「光は波」の証拠になる理由と、光を1粒ずつ発射しても縞が積み上がる不思議を学ぶステージ。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/stage1">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="二重スリットから読み解く量子力学">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE1 光は波？ それとも粒？ ― 二重スリットから読み解く量子力学">
+<meta property="og:description" content="二重スリット実験でスクリーンに現れる縞模様から、光の正体に迫るステージ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/stage1">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .slit-svg .wall{fill:var(--felt);stroke:var(--felt-dark);stroke-width:1.5}
+  .slit-svg .screen{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .slit-svg .wave{fill:none;stroke:var(--gold);stroke-width:1.6;opacity:.85}
+  .slit-svg .fringe{fill:var(--gold)}
+  .slit-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">⚛️</a> <span>二重スリットから読み解く量子力学</span></div>
+      <div class="brand-sub">STAGE 1 ― 光は波？ それとも粒？ ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 1</span><span class="chapter-title">光は波？ それとも粒？</span>
+        <div class="chapter-sub">二重スリット実験</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">二重スリット実験の縞模様が「光は波」の証拠になる理由と、それでも残る不思議を知ろう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日から量子力学の旅を始めよう。出発点はたったひとつの実験――光を2本の細いすき間（スリット）に通して、奥のスクリーンに映す「二重スリット実験」だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ヤングの実験ですね。スクリーンには明るい帯と暗い帯が交互に並ぶ、干渉縞ができるはずです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。2つのスリットから広がった波が重なって、山と山が出会う場所は強め合って明るく、山と谷が出会う場所は打ち消し合って暗くなる。縞模様は「光が波である」動かぬ証拠とされてきたんだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="slit-svg" viewBox="0 0 320 210" width="100%" role="img" aria-label="二重スリット実験の模式図。2つのスリットから広がった波が干渉して、スクリーンに明暗の縞模様を作る">
+          <rect class="wall" x="70" y="10" width="10" height="72"></rect>
+          <rect class="wall" x="70" y="96" width="10" height="20"></rect>
+          <rect class="wall" x="70" y="130" width="10" height="70"></rect>
+          <circle class="wave" cx="90" cy="89" r="12"></circle>
+          <circle class="wave" cx="90" cy="89" r="24"></circle>
+          <circle class="wave" cx="90" cy="89" r="40"></circle>
+          <circle class="wave" cx="90" cy="123" r="14" opacity=".7"></circle>
+          <circle class="wave" cx="90" cy="123" r="28" opacity=".7"></circle>
+          <circle class="wave" cx="90" cy="123" r="44" opacity=".7"></circle>
+          <rect class="screen" x="250" y="10" width="14" height="190" rx="3"></rect>
+          <g>
+            <rect class="fringe" x="252" y="24"  width="10" height="12" rx="2" opacity=".35"></rect>
+            <rect class="fringe" x="252" y="52"  width="10" height="14" rx="2" opacity=".7"></rect>
+            <rect class="fringe" x="252" y="82"  width="10" height="16" rx="2"></rect>
+            <rect class="fringe" x="252" y="112" width="10" height="16" rx="2"></rect>
+            <rect class="fringe" x="252" y="144" width="10" height="14" rx="2" opacity=".7"></rect>
+            <rect class="fringe" x="252" y="172" width="10" height="12" rx="2" opacity=".35"></rect>
+          </g>
+          <text class="label" x="75" y="208" text-anchor="middle">二重スリット</text>
+          <text class="label" x="257" y="208" text-anchor="middle">スクリーン</text>
+          <text class="label" x="30" y="93">光→</text>
+        </svg>
+        <div class="diagram-caption">2つのスリットから広がった波が重なり合い、スクリーンに明暗の縞（干渉縞）を作る</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">強め合う場所（明るい）＝ 2つの波の山と山が重なる場所</span>
+        <span class="step">打ち消し合う場所（暗い）＝ 山と谷が重なる場所</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ここまでは高校で習った通りです。……でも博士、それなら話は「光は波」で決着では？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ところがね、光源をどんどん暗くして、光を「1粒ずつ」発射できるようにすると、おかしなことが起きるんだ。スクリーンには光が<strong>1個の点</strong>としてポツ、ポツと届く。まるで粒のようにね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">点として届くなら粒……でも、1粒ずつなら干渉する相手がいないから、縞は消えるはずですよね？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが消えないんだよ。1粒ずつ届いた点を何万個も記録していくと、点の集まりが<strong>じわじわと縞模様を描いていく</strong>。届くときは粒、たまると波の模様。この「両方の顔」こそが量子力学の入り口なんだ。この謎を、これからのステージで一つずつ解きほぐしていこう。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. スクリーンに明暗の縞模様ができるのは、光（波）のどんな性質のせい？</p>
+        <div class="choice-list">
+          <button class="choice-btn">干渉（波どうしの強め合い・打ち消し合い）</button>
+          <button class="choice-btn">反射（鏡のように跳ね返る性質）</button>
+          <button class="choice-btn">直進（まっすぐ進む性質）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 2つのスリットから広がった波が重なり、山と山なら明るく、山と谷なら暗くなる。これが干渉縞だね。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 光を極限まで弱くして「1粒ずつ」発射すると、スクリーンはどうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">干渉する相手がいないので、縞は消えて2本の帯だけになる</button>
+          <button class="choice-btn">1個ずつ点として届くのに、点がたまると縞模様が現れる</button>
+          <button class="choice-btn">弱すぎて、スクリーンには何も届かなくなる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 届き方は粒、積み上がった模様は波。この二面性（波と粒の二重性）が、量子力学の出発点になった不思議なんだ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QQ.initStagePage(1);</script>
+</body>
+</html>

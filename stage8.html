@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d3d4d">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE8 量子もつれ ― 二重スリットから読み解く量子力学</title>
+<meta name="description" content="どれだけ離れていても瞬時に相関する2つの粒子。アインシュタインが「不気味な遠隔作用」と呼んだ量子もつれと、量子暗号・量子コンピュータへの応用を学ぶ最終ステージ。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/stage8">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="二重スリットから読み解く量子力学">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE8 量子もつれ ― 二重スリットから読み解く量子力学">
+<meta property="og:description" content="量子もつれと、量子暗号・量子コンピュータへの応用を学ぶ最終ステージ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/stage8">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .ent-svg .source{fill:var(--gold);stroke:var(--gold-dark);stroke-width:1.5}
+  .ent-svg .particle{fill:#2f6fa6;stroke:#1d4a73;stroke-width:1.2}
+  .ent-svg .trail{fill:none;stroke:#2f6fa6;stroke-width:1.6;stroke-dasharray:4 3;opacity:.7}
+  .ent-svg .detector{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .ent-svg .result{fill:var(--ink);font-size:20px;font-weight:900}
+  .ent-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">⚛️</a> <span>二重スリットから読み解く量子力学</span></div>
+      <div class="brand-sub">STAGE 8 ― 量子もつれ ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 8</span><span class="chapter-title">量子もつれ</span>
+        <div class="chapter-sub">離れていてもつながる相関</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">量子もつれの「瞬時の相関」がなぜ光速通信にならないのかを理解し、量子技術への入り口に立とう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いよいよ最終ステージだ。重ね合わせは1個の粒子の話だったけれど、<strong>2個の粒子をまとめて1つの波動関数</strong>で表すこともできる。たとえば「合計がゼロ」になるように生まれた2つの粒子。片方が↑なら、もう片方は必ず↓だ。ただしどちらが↑かは決まっていない――そんな重ね合わせ状態を作れるんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">その2つを、片方は地球に、もう片方をアンドロメダまで運んだとします。地球側を測って↑が出たら……その瞬間に、アンドロメダ側は↓に決まってしまうんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう、距離に関係なく瞬時にね。これが<strong>量子もつれ（エンタングルメント）</strong>だよ。アインシュタインはこれを「不気味な遠隔作用」と呼んで、「本当は最初から決まっていたのを知らないだけ（隠れた変数）ではないか」と反論した。1935年のEPR論文だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「最初から決まっていた」なら、手袋の左右を別々の箱に入れて送るのと同じで、不気味でも何でもありません。どちらが正しいかは、実験で区別できるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">できるんだ、これが。1964年にベルが、「最初から決まっている」なら測定の相関に破れない上限（ベルの不等式）があることを示した。そして実験の結果は――不等式を<strong>破った</strong>。量子力学の勝ちだよ。この検証実験を実現した3人には2022年のノーベル物理学賞が贈られたんだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="ent-svg" viewBox="0 0 320 170" width="100%" role="img" aria-label="中央の源から左右に飛んだ2つの粒子を離れた場所で測定すると、片方が上向きならもう片方は必ず下向きになる">
+          <circle class="source" cx="160" cy="85" r="10"></circle>
+          <text class="label" x="160" y="112" text-anchor="middle">もつれた対の発生源</text>
+          <path class="trail" d="M148 85 L70 85"></path>
+          <path class="trail" d="M172 85 L250 85"></path>
+          <circle class="particle" cx="100" cy="85" r="6"></circle>
+          <circle class="particle" cx="220" cy="85" r="6"></circle>
+          <rect class="detector" x="30" y="60" width="36" height="50" rx="6"></rect>
+          <rect class="detector" x="254" y="60" width="36" height="50" rx="6"></rect>
+          <text class="result" x="48" y="93" text-anchor="middle">↑</text>
+          <text class="result" x="272" y="93" text-anchor="middle">↓</text>
+          <text class="label" x="48" y="130" text-anchor="middle">地球で測定</text>
+          <text class="label" x="272" y="130" text-anchor="middle">どんなに遠くでも</text>
+          <text class="label" x="272" y="144" text-anchor="middle">必ず逆向き</text>
+          <text class="label" x="160" y="30" text-anchor="middle">測るまで、どちらが↑かは決まっていない</text>
+        </svg>
+        <div class="diagram-caption">それぞれの結果は完全にランダム。それなのに、突き合わせると必ず逆向き――この相関の強さは「最初から決まっていた」説では説明できない</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">待ってください。「瞬時に決まる」なら、これで光より速く通信できてしまいませんか？ 相対性理論と矛盾します。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">鋭い。でも大丈夫、通信はできないんだ。考えてごらん。地球のきみの手元に出るのは↑か↓かの<strong>ランダムな結果だけ</strong>で、どちらを出すかを選べない。アンドロメダ側も、手元の結果を見るだけではただのランダムな列。相関に気づけるのは、後で両方の記録を（光速以下の通常の手段で）突き合わせたときだけ。だから相対性理論とはぶつからないんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">通信には使えなくても、この「盗み見ようがない相関」自体が資源になりそうですね。乱数がそのまま2か所で共有されているようなものですから。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まさにそれが現在の量子技術だ。盗聴すると必ず痕跡が残る<strong>量子暗号</strong>、重ね合わせともつれを計算資源にする<strong>量子コンピュータ</strong>、状態を転送する量子テレポーテーション。二重スリットの縞模様から始まった旅が、100年経った今、技術の最前線につながっているんだね。ここまで本当によく歩いてきた。旅の総仕上げに、最後のクイズに挑戦してごらん。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. もつれた2つの粒子の一方を測定すると、何が起こる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">もう一方の粒子に、光の速さで信号が飛んでいく</button>
+          <button class="choice-btn">距離に関係なく、もう一方の測定結果との相関が瞬時に定まる</button>
+          <button class="choice-btn">もう一方の粒子が消滅する</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 「信号が飛ぶ」のではなく、2粒子がもともと1つの波動関数を共有しているために、結果の相関が距離によらず成り立つんだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 量子もつれを使っても光より速く通信できないのはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">手元の測定結果はランダムで、送りたい内容を自分で選べないから</button>
+          <button class="choice-btn">粒子を運ぶケーブルの品質に限界があるから</button>
+          <button class="choice-btn">量子はゆっくりとしか動けないから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 各自の手元にあるのはランダムな結果の列だけ。相関は両方の記録を通常の通信で突き合わせて初めて分かる。だから情報は光速を超えないんだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 量子もつれや重ね合わせが実際に応用されている（されつつある）分野は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">エネルギーを無から取り出す永久機関</button>
+          <button class="choice-btn">過去に情報を送るタイムマシン</button>
+          <button class="choice-btn">盗聴を検知できる量子暗号や、量子コンピュータ</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 盗聴が必ず痕跡を残す量子鍵配送、重ね合わせを計算に使う量子コンピュータなど、量子力学の「奇妙さ」そのものが技術資源になっているんだ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>クリア画面へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QQ.initStagePage(8);</script>
+</body>
+</html>

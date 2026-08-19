@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d3d4d">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE3 電子も波だった ― 二重スリットから読み解く量子力学</title>
+<meta name="description" content="「光が粒なら、電子は波では？」ド・ブロイの物質波 λ=h/mv を学び、電子の干渉縞と、原子の中の電子軌道が飛び飛びになる理由まで読み解くステージ。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/stage3">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="二重スリットから読み解く量子力学">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE3 電子も波だった ― 二重スリットから読み解く量子力学">
+<meta property="og:description" content="ド・ブロイの物質波 λ=h/mv を学び、原子の軌道が飛び飛びになる理由まで読み解くステージ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/stage3">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .bohr-svg .orbit{fill:none;stroke:var(--line);stroke-width:1.5;stroke-dasharray:3 4}
+  .bohr-svg .ewave{fill:none;stroke:var(--gold);stroke-width:2;stroke-linejoin:round}
+  .bohr-svg .nucleus{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
+  .bohr-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">⚛️</a> <span>二重スリットから読み解く量子力学</span></div>
+      <div class="brand-sub">STAGE 3 ― 電子も波だった ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 3</span><span class="chapter-title">電子も波だった</span>
+        <div class="chapter-sub">ド・ブロイの物質波</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">物質波の波長 λ=h/mv を手に入れて、原子の中の電子軌道が「飛び飛び」になる理由を説明できるようになろう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">波だと思っていた光には、粒の顔があった。1924年、フランスの若き物理学者ド・ブロイは、大胆な逆転の発想をしたんだ。「それなら、粒だと思っている<strong>電子</strong>にも、波の顔があるのでは？」とね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">対称性からの類推ですね。光で成り立つなら物質でも、と。それで、電子の波長はどう決まるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">運動量 p＝mv を使って λ＝h/p。ここでもプランク定数 h が顔を出すよ。この波を「物質波（ド・ブロイ波）」と呼ぶんだ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">物質波の波長： λ ＝ h ÷ p ＝ h ÷ (mv)</span>
+        <span class="step">m：質量　v：速さ　p＝mv：運動量　h：プランク定数</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">でも、それが本当なら確かめられますよね。電子のビームを二重スリットに通せば、STAGE1の光と同じように干渉縞が出るはずです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まさにその実験が行われて、電子は見事に干渉縞を作ったんだ。しかも電子を1個ずつ発射しても、点がたまると縞が現れる。光とまったく同じ「二つの顔」を、質量を持つ電子も見せたんだよ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そしてこの物質波は、当時の大問題をひとつ解決した。「原子の中の電子の軌道は、なぜ決まった大きさしか許されないのか？」という謎だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ボーアの原子模型ですね。電子が特定の軌道にしかいられない理由は、確かに模型のままでは「そういう決まり」でしかありませんでした。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">電子を「軌道を一周する波」だと考えてごらん。円周がちょうど波長の整数倍（2πr＝nλ）になっていれば、波は一周してぴったり自分と重なって、安定した定常波になれる。半端な軌道では波が自分自身とずれて打ち消し合ってしまう。だから軌道は飛び飛びになるんだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bohr-svg" viewBox="0 0 300 200" width="100%" role="img" aria-label="原子核のまわりの円軌道に、電子の波がちょうど整数個の波長で収まっている模式図">
+          <g transform="translate(50,0)">
+            <circle class="nucleus" cx="100" cy="100" r="7"></circle>
+            <circle class="orbit" cx="100" cy="100" r="60"></circle>
+            <path class="ewave" d="M160 100 L164.6 82.7 L157.9 66.6 L142.4 57.6 L126.6 54.0 L113.8 48.7 L100 40 L86.2 48.7 L73.4 54.0 L57.6 57.6 L42.1 66.6 L35.4 82.7 L40 100 L35.4 117.3 L42.1 133.4 L57.6 142.4 L73.4 146.0 L86.2 151.3 L100 160 L113.8 151.3 L126.6 146.0 L142.4 142.4 L157.9 133.4 L164.6 117.3 Z"></path>
+            <text class="label" x="100" y="188" text-anchor="middle">円周＝波長×整数 の軌道だけが安定</text>
+          </g>
+        </svg>
+        <div class="diagram-caption">軌道の円周 2πr が波長 λ のちょうど整数倍（2πr＝nλ）のとき、電子の波は一周して自分と重なり、定常波として安定する</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「そういう決まり」だった飛び飛びの軌道が、弦の振動と同じ定常波の条件に変わるなんて。……ちなみに、私たち自身にも波長はあるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">あるよ。ただ λ＝h/mv の h が10⁻³⁴という途方もなく小さい数だから、歩くうさ美の波長は10⁻³⁵ m ほど。原子1個の1兆分の1のさらに1兆分の1以下で、絶対に観測できない。波の顔が見えるのは、電子のように m が極端に小さい世界だけなんだね。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 質量 m、速さ v で動く粒子の物質波の波長 λ は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">λ ＝ h ÷ (mv)</button>
+          <button class="choice-btn">λ ＝ mv ÷ h</button>
+          <button class="choice-btn">λ ＝ hm ÷ v</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 波長は運動量 p＝mv に反比例する。速く・重いものほど波長は短くなって、波の性質が見えなくなっていくんだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 電子のビームを二重スリットに通すと、スクリーンには何が現れる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">電子は粒なので、スリットの形どおり2本の帯</button>
+          <button class="choice-btn">電子は小さすぎて、何も記録されない</button>
+          <button class="choice-btn">光と同じような干渉縞</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 実際の実験で電子の干渉縞が確認され、物質波は仮説から事実になった。1個ずつ発射しても点がたまれば縞になる、というところまで光と同じなんだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 原子の中の電子の軌道が「飛び飛び」の大きさしか許されない理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">原子核の電気の力が、段階的にしか働かないから</button>
+          <button class="choice-btn">円周がちょうど電子波の波長の整数倍になる軌道でしか、波が安定な定常波になれないから</button>
+          <button class="choice-btn">電子どうしがぶつからないように場所を譲り合うから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 2πr＝nλ を満たす軌道だけで電子の波は一周後に自分とぴったり重なれる。ギターの弦に決まった音（振動）しか立たないのと同じ理屈だね。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QQ.initStagePage(3);</script>
+</body>
+</html>

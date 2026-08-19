@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d3d4d">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE5 不確定性原理 ― 二重スリットから読み解く量子力学</title>
+<meta name="description" content="位置を決めれば運動量がぼやけ、運動量を決めれば位置がぼやける。ハイゼンベルクの不確定性原理 Δx·Δp≥ℏ/2 が「波の宿命」である理由を学ぶステージ。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/stage5">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="二重スリットから読み解く量子力学">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE5 不確定性原理 ― 二重スリットから読み解く量子力学">
+<meta property="og:description" content="不確定性原理 Δx·Δp≥ℏ/2 が「波の宿命」である理由を学ぶステージ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/stage5">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .unc-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .unc-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+  .unc-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .unc-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">⚛️</a> <span>二重スリットから読み解く量子力学</span></div>
+      <div class="brand-sub">STAGE 5 ― 不確定性原理 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 5</span><span class="chapter-title">不確定性原理</span>
+        <div class="chapter-sub">位置と運動量のトレードオフ</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">不確定性原理が「測定の下手さ」ではなく「波であることの宿命」だと理解しよう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">電子が波動関数で表されると分かった今なら、量子力学で一番有名な原理を「導く」ことができるよ。ハイゼンベルクの不確定性原理――<strong>位置と運動量は、同時に正確には決まらない</strong>、というものだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">名前は聞いたことがあります。でも正直、「観測すると乱してしまうから分からない」という技術的な話だと思っていました。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこが一番誤解されやすいところなんだ。鍵はSTAGE3の式 p＝h/λ だよ。運動量は波長で決まる。じゃあ聞くけれど、「波長がきっちり一つに決まった波」って、どんな形をしているかな？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">完全な正弦波……ですが、正弦波は同じ形がどこまでも続く波です。あっ、それだと |ψ|² がどこでも同じ値になって、電子が「どこにいるか」がまったく決まりません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。逆に電子を狭い場所に押し込めた波（波束）を作るには、<strong>いろいろな波長の波をたくさん重ねる</strong>しかない。波長がばらつくということは、p＝h/λ より運動量がばらつくということ。位置を絞るほど運動量が広がる――これは波である以上、絶対に逃れられないトレードオフなんだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="unc-svg" viewBox="0 0 320 230" width="100%" role="img" aria-label="上：波長の決まった正弦波は無限に広がり位置が決まらない。下：位置の決まった波束は多くの波長の重ね合わせでできている">
+          <line class="base" x1="15" y1="55" x2="305" y2="55"></line>
+          <path class="wave" d="M15 55 q10 -30 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0"></path>
+          <text class="strong" x="20" y="18">波長ピッタリ（p が確定）</text>
+          <text class="label" x="20" y="32">→ どこまでも続く波。位置 x は完全に不明</text>
+          <line class="base" x1="15" y1="165" x2="305" y2="165"></line>
+          <path class="wave" d="M15 165 L110 165 q5 -6 10 0 q5 14 10 0 q5 -34 10 0 q5 34 10 0 q5 -14 10 0 q5 6 10 0 L305 165"></path>
+          <text class="strong" x="20" y="122">位置ほぼ確定（波束）</text>
+          <text class="label" x="20" y="136">→ 多くの波長の重ね合わせ。p は不明に</text>
+        </svg>
+        <div class="diagram-caption">波長（＝運動量）を決めれば位置がぼやけ、位置を決めれば波長（＝運動量）がぼやける。両方を同時に確定した波は描けない</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">不確定性原理： Δx × Δp ≥ ℏ／2</span>
+        <span class="step">Δx：位置のばらつき　Δp：運動量のばらつき　ℏ＝h/2π（エイチバー）</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">測定技術がどれだけ進歩しても超えられない、波そのものに刻まれた限界なんですね。……この原理、何かの役に立っているんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">実は、きみの体が今つぶれずに存在していることの説明になっているんだよ。マイナスの電気を持つ電子は、プラスの原子核に引かれて落ち込んでしまいそうなものだね。でも原子核のそばに閉じ込められるほど Δx が小さくなり、Δp が巨大になって、電子は激しく暴れて外へ広がろうとする。この綱引きの釣り合いが、原子の大きさを決めているんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">原子がつぶれない理由が「ぼやけ」のおかげだったなんて。不確定というと頼りない響きなのに、世界を支えている原理だったんですね。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 不確定性原理の説明として正しいのは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">位置を正確に決めるほど運動量が定まらなくなる、波の性質そのものによる原理的な限界</button>
+          <button class="choice-btn">今の測定器の精度が足りないせいで起きる、いずれ技術で克服できる限界</button>
+          <button class="choice-btn">電子が小さすぎて顕微鏡で見えないという観察上の限界</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 位置の定まった波束を作るには多くの波長を重ねるしかなく、波長のばらつきは運動量のばらつきそのもの。どんな技術でも回避できないんだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 波長がきっちり一つに決まった波（完全な正弦波）で表される電子の「位置」は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">波の中心の1点に決まる</button>
+          <button class="choice-btn">波が無限に続くので、どこにいるかまったく決まらない</button>
+          <button class="choice-btn">波の山の数だけ複数の場所に決まる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 正弦波は同じ形がどこまでも続くから |ψ|² が一様で、「ここにいる」と言える場所がない。運動量の確定と位置の確定は両立しないんだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 電子をとても狭い場所に閉じ込めると、どうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">Δp が大きくなり、電子は激しく動き回ろうとする</button>
+          <button class="choice-btn">おとなしく静止する</button>
+          <button class="choice-btn">波長がどんどん長くなる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ Δx を小さくすれば Δp が大きくなる。この「閉じ込めるほど暴れる」性質が、電子が原子核に落ち込まず、原子が一定の大きさを保つ理由なんだ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QQ.initStagePage(5);</script>
+</body>
+</html>

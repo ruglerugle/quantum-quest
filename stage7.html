@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d3d4d">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE7 トンネル効果と猫 ― 二重スリットから読み解く量子力学</title>
+<meta name="description" content="波動関数は壁の中にも染み出す。エネルギーが足りなくても壁を通り抜けるトンネル効果と、重ね合わせ・シュレーディンガーの猫の思考実験を学ぶステージ。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/stage7">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="二重スリットから読み解く量子力学">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE7 トンネル効果と猫 ― 二重スリットから読み解く量子力学">
+<meta property="og:description" content="トンネル効果と、重ね合わせ・シュレーディンガーの猫の思考実験を学ぶステージ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/stage7">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .tun-svg .barrier{fill:var(--felt);opacity:.85;stroke:var(--felt-dark);stroke-width:1.5}
+  .tun-svg .wave{fill:none;stroke:var(--gold);stroke-width:2.2}
+  .tun-svg .decay{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-dasharray:4 3}
+  .tun-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+  .tun-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">⚛️</a> <span>二重スリットから読み解く量子力学</span></div>
+      <div class="brand-sub">STAGE 7 ― トンネル効果と猫 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 7</span><span class="chapter-title">トンネル効果と猫</span>
+        <div class="chapter-sub">壁抜けと重ね合わせ</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">波動関数の「染み出し」からトンネル効果を理解し、重ね合わせと観測の問題――シュレーディンガーの猫――に踏み込もう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">前のステージの井戸は「無限に高い壁」だった。今度は壁を<strong>有限の高さ</strong>にしてみよう。ボールなら、山を越えるエネルギーが足りなければ100%跳ね返される。でも電子のシュレーディンガー方程式を解くと、驚くことが起きるんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">壁が無限でないなら、境界条件が変わりますね。壁の位置で ψ をゼロにする必要がなくなる……もしかして、ψ が壁の中に入り込むんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。ψ は壁の中で急速に（指数関数的に）小さくなりながらも、ゼロにはならずに染み込んでいく。壁が十分に薄ければ、<strong>反対側にわずかな ψ が生き残る</strong>。|ψ|² が確率だったことを思い出してごらん。つまり――エネルギーが足りないのに、壁の向こうで見つかることがあるんだ。これが<strong>トンネル効果</strong>だよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="tun-svg" viewBox="0 0 320 190" width="100%" role="img" aria-label="壁に向かって進む波動関数が、壁の中で指数関数的に減衰しながらも、壁の向こう側に小さな波として染み出す様子">
+          <line class="base" x1="10" y1="110" x2="310" y2="110"></line>
+          <rect class="barrier" x="140" y="30" width="46" height="80" rx="4"></rect>
+          <path class="wave" d="M10 110 q10 -26 20 0 q10 26 20 0 q10 -26 20 0 q10 26 20 0 q10 -26 20 0 q10 26 20 0 q10 -26 10 -13"></path>
+          <path class="decay" d="M140 97 q20 8 46 12"></path>
+          <path class="wave" d="M186 110 q8 -8 16 0 q8 8 16 0 q8 -8 16 0 q8 8 16 0 q8 -8 16 0 q8 8 16 0"></path>
+          <text class="label" x="60" y="150" text-anchor="middle">入射する波</text>
+          <text class="label" x="163" y="22" text-anchor="middle">壁（エネルギー不足）</text>
+          <text class="label" x="255" y="150" text-anchor="middle">染み出した小さな波</text>
+        </svg>
+        <div class="diagram-caption">ψ は壁の中で指数関数的に減衰するが、壁が薄ければ反対側に小さく生き残る。その |ψ|² のぶんだけ「壁抜け」が起こる</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">量子の世界の「すり抜け」、実際に起きている現場はあるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">むしろ身近だらけだよ。太陽が輝けるのは、本来なら反発し合って近づけない原子核どうしがトンネル効果で融合できるから。ウランなどのアルファ崩壊も、原子核の壁からの壁抜け。工学でも、原子1個1個を画像化する走査型トンネル顕微鏡や、スマホのフラッシュメモリの書き込みがトンネル効果を使っているんだ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">さて、ここで一段深い話をしよう。シュレーディンガー方程式は線形だから、解の足し算もまた解になる。「壁を抜けた ψ」と「跳ね返った ψ」の<strong>両方が重なった状態</strong>も、正真正銘の1つの状態なんだ。これを「重ね合わせ」と呼ぶ。観測すると、どちらか一方が確率に従って選ばれる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ミクロの世界ならそれで通る気もします。でも、その重ね合わせを大きな世界につないだら、おかしなことになりませんか。たとえば装置の出力で何か大きなものを動かしたら……。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まさにそこを突いたのが、シュレーディンガー自身の思考実験――有名な「シュレーディンガーの猫」だ。箱の中に猫と、放射性原子1個で作動する毒ガス装置を入れる。原子が「崩壊した／していない」の重ね合わせなら、装置を通じて猫まで「死んでいる且つ生きている」重ね合わせになってしまうのか？ 彼はこの理論の奇妙さを<strong>批判するために</strong>この例を出したんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">創始者の一人が「こんなのおかしい」と言うための例だったのに、今では量子力学の看板みたいになっているのが皮肉ですね。実際のところ、猫はどうなるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">現代の理解では、猫のような大きな物体は空気や光と絶えず相互作用していて、重ね合わせは一瞬で壊れてしまう（デコヒーレンスと呼ぶ）。だからマクロの猫の重ね合わせは事実上観測できない。ただ、「観測とは何か」という問いそのものは、今も研究が続く深い問題なんだ。……ねこ博士としては、箱に入れられる前に断固抗議するけれどね。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. エネルギーが足りない電子でも壁を通り抜けられることがあるのはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">電子が壁に穴を開けて壊してしまうから</button>
+          <button class="choice-btn">壁にぶつかった勢いで一時的に加速するから</button>
+          <button class="choice-btn">波動関数が壁の中で減衰しながらも、薄い壁なら反対側に染み出して残るから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ψ は壁の中で指数関数的に小さくなるがゼロにはならない。壁の向こうに残った |ψ|² のぶんだけ、電子はそちら側で見つかり得るんだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. トンネル効果が実際に働いている例はどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">太陽の中の核融合や、原子を画像化する走査型トンネル顕微鏡</button>
+          <button class="choice-btn">雨上がりに虹が7色に見えること</button>
+          <button class="choice-btn">電子レンジで食べ物が温まること</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 太陽の核融合、アルファ崩壊、走査型トンネル顕微鏡、フラッシュメモリ――「壁抜け」は自然界でも技術でも現役で働いているんだ。（虹は光の屈折、電子レンジは電磁波による分子の振動だね）</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 「シュレーディンガーの猫」の思考実験が突きつけた問題は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">猫は気まぐれなので実験動物に向かない、という問題</button>
+          <button class="choice-btn">ミクロの重ね合わせを増幅すると、マクロな物体まで重ね合わせになってしまうのか、「観測」とはどこで起きるのかという問題</button>
+          <button class="choice-btn">毒ガスの化学反応は量子力学では計算できない、という問題</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 原子の重ね合わせが装置を介して猫の生死にまで及ぶなら、常識と衝突する。シュレーディンガー自身は理論の奇妙さへの批判としてこれを提示したんだ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QQ.initStagePage(7);</script>
+</body>
+</html>
