@@ -85,14 +85,42 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">ヤングの実験ですね。スクリーンには明るい帯と暗い帯が交互に並ぶ、干渉縞ができるはずです。</div>
+          <div class="dialog-bubble">ヤングの実験ですね。スクリーンには明るい帯と暗い帯が交互に並ぶ、「干渉縞（かんしょうじま）」という模様ができるはずです。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その通り。2つのスリットから広がった波が重なって、山と山が出会う場所は強め合って明るく、山と谷が出会う場所は打ち消し合って暗くなる。縞模様は「光が波である」動かぬ証拠とされてきたんだ。</div>
+          <div class="dialog-bubble">その通り。ただ、この縞がなぜできるのかを説明できてこそ本物だ。この先の旅の土台になるから、まず「波」という道具を点検しておこう。<strong>波とは、何かの揺れが、次々と隣へ伝わっていく現象</strong>のことだよ。水面に石を落とすと、輪っかが広がっていくね。あれは水そのものが移動しているのではなくて、「揺れ」が外へ外へと伝わっているんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">波の形には名前がついていましたね。盛り上がったところが「<strong>山</strong>」、へこんだところが「<strong>谷</strong>」。山のてっぺんから次の山のてっぺんまでの距離が「<strong>波長</strong>」で、揺れの大きさ（山の高さ）が「<strong>振幅（しんぷく）</strong>」です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そして波には、粒には絶対にまねできない特技がある。<strong>重ね合わせ</strong>だ。2つの波が同じ場所にやってくると、波は互いをすり抜けながら、その場所では揺れが足し算される。山と山が出会えば2倍の高さに盛り上がるし、山と谷が出会えば、上への揺れと下への揺れが打ち消し合って、ほとんど平らになってしまう。石を2個、池に同時に落とすと、広がる輪っかどうしが複雑な模様を作るのを見たことがないかな。あれが重ね合わせだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">強め合いと打ち消し合い。この2つが起きることを「<strong>干渉</strong>」と呼ぶんでしたね。では二重スリットに戻ります。スリットが2本あると、それぞれのすき間から波が半円状に広がって、スクリーンの上で重なり合う……。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ここからが縞のできる仕組みだ。スクリーン上のある点に注目してごらん。その点までの距離は、左のスリットからと右のスリットからで、ほんの少しだけ違うね。この「<strong>距離の差</strong>」が決め手になる。距離の差がちょうど波長の整数倍（0倍、1倍、2倍…）なら、2つの波は山と山がそろって届くから、強め合って明るくなる。距離の差が半波長ぶんずれていたら、山と谷が出会って打ち消し合い、暗くなる。スクリーン上の場所ごとに距離の差が少しずつ変わっていくから、明るい場所と暗い場所が交互に並ぶ――これが干渉縞の正体だよ。</div>
         </div>
       </div>
 
@@ -124,8 +152,8 @@
       </div>
 
       <div class="formula-box">
-        <span class="step">強め合う場所（明るい）＝ 2つの波の山と山が重なる場所</span>
-        <span class="step">打ち消し合う場所（暗い）＝ 山と谷が重なる場所</span>
+        <span class="step">明るい場所 ＝ 2つのスリットからの距離の差が「波長 × 整数」（山と山がそろって強め合う）</span>
+        <span class="step">暗い場所 ＝ 距離の差が「波長 × 整数 ＋ 半波長」（山と谷が出会って打ち消し合う）</span>
       </div>
 
       <div class="dialogue-scene">
@@ -134,14 +162,28 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">ここまでは高校で習った通りです。……でも博士、それなら話は「光は波」で決着では？</div>
+          <div class="dialog-bubble">逆に、もし光がボールのような「粒」だったら、すき間の形どおりに、スクリーンには帯が2本できるだけのはずです。縞にはなりません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこが決定的なポイントだ。実は「光の正体は何か」は、大昔から科学者たちの大論争でね。ニュートンは「光は粒だ」と考え、ホイヘンスは「波だ」と主張した。それからおよそ100年後の1800年代のはじめ、ヤングがこの実験で縞模様を見せたことで、「粒では縞は作れない。光は波だ」と決着した――と、みんな思っていたんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">含みのある言い方ですね……。仕組みも歴史も納得したのに、それなら話は「光は波」で決着では？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">ところがね、光源をどんどん暗くして、光を「1粒ずつ」発射できるようにすると、おかしなことが起きるんだ。スクリーンには光が<strong>1個の点</strong>としてポツ、ポツと届く。まるで粒のようにね。</div>
+          <div class="dialog-bubble">ところがね、続きがあるんだ。光源をどんどん暗くしていくことを想像してごらん。もし光が純粋な波なら、暗くするにつれて縞全体が<strong>なめらかに薄く</strong>なっていくはずだね。ところが実際に感度のよい装置で観察すると、そうはならない。ある暗さから先は、スクリーンに光が<strong>1個の点としてポツ……ポツ……と届く</strong>ようになるんだ。光は、それ以上薄められない「つぶつぶ」でできていた。まるで粒のようにね。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">

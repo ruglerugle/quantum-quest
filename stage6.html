@@ -77,7 +77,7 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">ニュートン力学では、力が分かれば F＝ma で物体の運動がすべて予言できました。量子力学の ψ にも、そういう「大黒柱の方程式」があるんですか？</div>
+          <div class="dialog-bubble">ニュートン力学の大黒柱は F＝ma でした。「物体に力 F を加えると、質量 m に応じた加速度 a（速度の変わる勢い）が生じる」――たったこの一本の式で、投げたボールの軌道も、惑星の運行も、力さえ分かれば未来まで予言できる。量子力学の ψ にも、そういう「大黒柱の方程式」があるんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -95,40 +95,55 @@
       </div>
 
       <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">記号が一気に増えたから、一つずつ読み下そう。まず左辺の ∂ψ/∂t は「<strong>ψ が時間とともに変化する速さ</strong>」を表す記号だ（グラフの傾きのようなものだと思えばいい）。右辺の Ĥ は「ハミルトニアン」と読んで、波動関数から<strong>エネルギーの情報を取り出す操作</strong>を表す。中身は「運動エネルギー＋位置エネルギー」、つまりその状況のエネルギーの内訳表だ。だからこの方程式は、日本語に訳すと「<strong>ψ の変化の速さは、その状態の持つエネルギーが決める</strong>」となる。</div>
+        </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">虚数単位の i が、物理の基本方程式に堂々と入っているんですね。ψ が複素数だという話は、飾りではなかったんだ……。</div>
+          <div class="dialog-bubble">そして左辺には iℏ。虚数単位の i が、物理の基本方程式に堂々と入っているんですね。ψ が複素数だという話は、飾りではなかったんだ……。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いいところに気づいたね。さて、方程式は使ってこそ分かる。一番シンプルな問題を実際に解いてみよう。<strong>幅 L の「井戸」に閉じ込められた電子</strong>だ。井戸の中は自由に動けるけれど、壁は無限に高くて絶対に外へ出られない、という設定だよ。</div>
+          <div class="dialog-bubble">いいところに気づいたね。2行目の「定常状態」も説明しておこう。エネルギーがはっきり1つに決まった状態では、ψ の（複素数としての）向きがくるくる回るだけで、<strong>|ψ|² の形は時間がたっても変わらない</strong>。形が定まっているから「定常」だ。そういう状態を探すときは、方程式が Ĥψ＝Eψ――「エネルギーを取り出す操作をしても、形が変わらず、ただ E 倍になる」――というシンプルな形になる。今日はこちらを使うよ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">さて、方程式は使ってこそ分かる。一番シンプルな問題を実際に解いてみよう。<strong>幅 L の「井戸」に閉じ込められた電子</strong>だ。まっすぐな細い溝の中に電子を1個入れて、両端には無限に高い壁がある――中では自由に動けるけれど、外へは絶対に出られない、という理想化した設定だよ。おもちゃのような問題に見えるけれど、半導体の中に電子を閉じ込める「量子井戸」など、現実の技術にかなり近い状況なんだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">壁の外には絶対にいられないから、壁の位置では ψ＝0。つまり「両端が固定された弦」と同じ境界条件ですね。それなら井戸の幅に、半波長の整数個がぴったり収まる波しか残れません。</div>
+          <div class="dialog-bubble">考え方はSTAGE3のギターの弦と同じですね。壁の外には絶対にいられない＝壁の外では見つかる確率がゼロ＝壁の位置で ψ＝0。「両端が固定された弦」とまったく同じ条件です。それなら、井戸の幅 L に半波長がちょうど整数個おさまる波しか生き残れません。半波長1個なら L＝λ/2 で λ＝2L、半波長2個なら λ＝L、半波長3個なら λ＝2L/3……。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">完璧だ。許される波長は λ＝2L/n（n＝1, 2, 3, …）。あとは p＝h/λ とエネルギー E＝p²/2m に代入してごらん。エネルギーの式が自然に出てくるよ。</div>
+          <div class="dialog-bubble">完璧だ。まとめると、許される波長は λ＝2L/n（n＝1, 2, 3, …）。あとはこれをエネルギーに翻訳しよう。井戸の中では位置エネルギーはゼロだから、電子のエネルギーは運動エネルギー E＝½mv² だけだ。ここで v＝p/m を代入すると、E＝½m(p/m)²＝<strong>p²/2m</strong> と、運動量だけで書き直せる。そこに STAGE3 の p＝h/λ と、いま求めた λ＝2L/n を順に入れてごらん。</div>
         </div>
       </div>
 
       <div class="formula-box">
-        <span class="step">境界条件： 両端で ψ＝0　→　λ ＝ 2L/n（n＝1, 2, 3, …）</span>
-        <span class="step">p ＝ h/λ ＝ nh/2L</span>
-        <span class="step">E<sub>n</sub> ＝ p²/2m ＝ n²h² ／ 8mL²　（n² に比例して飛び飛び！）</span>
+        <span class="step">境界条件： 両端で ψ＝0　→　半波長 × n ＝ L　→　λ ＝ 2L/n（n＝1, 2, 3, …）</span>
+        <span class="step">運動量： p ＝ h/λ ＝ nh/2L（n が大きいほど波長が短く、勢いが大きい）</span>
+        <span class="step">エネルギー： E ＝ ½mv² ＝ p²/2m　に p＝nh/2L を代入</span>
+        <span class="step">E<sub>n</sub> ＝ (nh/2L)² ÷ 2m ＝ n²h² ／ 8mL²　（n² に比例して飛び飛び！）</span>
       </div>
 
       <div class="diagram-box">
