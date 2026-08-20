@@ -137,13 +137,18 @@
         <div class="diagram-caption">同じ波長の波AとBの足し算。Bを半波長ぶんずらすだけで、A＋Bは「2倍の波」から「ほぼ平ら」まで変わる</div>
       </div>
 
+      <div class="diagram-box">
+        <canvas id="pond-canvas" width="320" height="220" style="width:100%;height:auto;border-radius:8px;display:block" role="img" aria-label="池に石を2つ落としたときのアニメーション。2つの点から波紋が広がって重なり合い、いつも打ち消し合っている筋が扇形に伸びる"></canvas>
+        <div class="diagram-caption">池に石を2個落としたときの水面。2つの波紋が重なり合い、山（金）と谷（青）の市松模様の間に、<strong>いつも打ち消し合って静かなままの「筋」</strong>が扇形に伸びる</div>
+      </div>
+
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">足し算した波が、消えたり2倍になったり……不思議な光景です。強め合いと打ち消し合い……。二重スリットに当てはめると、すき間が2本あるということは、それぞれのすき間から波が半円状に広がって、スクリーンの上で重なり合うということですね。場所によって強め合ったり打ち消し合ったりしそうです。</div>
+          <div class="dialog-bubble">足し算した波が、消えたり2倍になったり……。それに池のほうは、波紋がどんどん広がっているのに、<strong>いつ見ても静かなままの「筋」</strong>が何本も伸びていますね。場所ごとに強め合いか打ち消し合いかが決まっているんだ……。二重スリットに当てはめると、すき間が2本あるということは、それぞれのすき間から波が半円状に広がって、スクリーンの上で重なり合うということですね。この池と同じことが起きそうです。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -265,9 +270,78 @@
 <script src="js/progress.js"></script>
 <script>
   // アニメーションを避けたい設定のユーザーには静止画（強め合いの状態）で表示する
-  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  var REDUCED_MOTION = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (REDUCED_MOTION) {
     document.querySelectorAll(".sup-svg animate, .sup-svg animateTransform").forEach(function (a) { a.remove(); });
   }
+
+  // 池の波紋の干渉アニメーション：2つの波源からの波 sin(kr1−ωt)+sin(kr2−ωt) を色の濃淡で描く
+  (function () {
+    var cv = document.getElementById("pond-canvas");
+    if (!cv || !cv.getContext) return;
+    var ctx = cv.getContext("2d");
+    var W = cv.width, H = cv.height;
+    var img = ctx.createImageData(W, H);
+    var px = img.data;
+    var S1X = 105, S1Y = 110, S2X = 215, S2Y = 110;
+    var K = 2 * Math.PI / 26;          // 波長26px
+    var OMEGA = 2 * Math.PI / 1.6;     // 周期1.6秒
+    var PAPER = [246, 241, 226], CREST = [166, 116, 42], TROUGH = [15, 74, 90];
+
+    // 各ピクセルの波源からの距離と減衰率を前計算しておく
+    var n = W * H;
+    var kr1 = new Float32Array(n), kr2 = new Float32Array(n);
+    var a1 = new Float32Array(n), a2 = new Float32Array(n);
+    for (var y = 0; y < H; y++) {
+      for (var x = 0; x < W; x++) {
+        var i = y * W + x;
+        var r1 = Math.sqrt((x - S1X) * (x - S1X) + (y - S1Y) * (y - S1Y));
+        var r2 = Math.sqrt((x - S2X) * (x - S2X) + (y - S2Y) * (y - S2Y));
+        kr1[i] = K * r1; kr2[i] = K * r2;
+        a1[i] = Math.min(1, 5.5 / Math.sqrt(r1 + 4));
+        a2[i] = Math.min(1, 5.5 / Math.sqrt(r2 + 4));
+      }
+    }
+
+    function drawFrame(t) {
+      var wt = OMEGA * t;
+      for (var i = 0, j = 0; i < n; i++, j += 4) {
+        var v = a1[i] * Math.sin(kr1[i] - wt) + a2[i] * Math.sin(kr2[i] - wt);
+        var m = v < 0 ? -v : v;
+        if (m > 1.6) m = 1.6;
+        m = m / 1.6;
+        var c = v > 0 ? CREST : TROUGH;
+        px[j]     = PAPER[0] + (c[0] - PAPER[0]) * m;
+        px[j + 1] = PAPER[1] + (c[1] - PAPER[1]) * m;
+        px[j + 2] = PAPER[2] + (c[2] - PAPER[2]) * m;
+        px[j + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      // 石の落ちた場所（波源）に印を打つ
+      ctx.fillStyle = "#241d12";
+      [[S1X, S1Y], [S2X, S2Y]].forEach(function (s) {
+        ctx.beginPath(); ctx.arc(s[0], s[1], 3.5, 0, Math.PI * 2); ctx.fill();
+      });
+    }
+
+    if (REDUCED_MOTION) { drawFrame(0.4); return; }
+
+    var running = true;
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        running = entries[0].isIntersecting;
+      }).observe(cv);
+    }
+    var last = 0;
+    function loop(ms) {
+      if (running && ms - last > 40) {  // 約25fpsに間引く
+        last = ms;
+        drawFrame(ms / 1000);
+      }
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  })();
 </script>
 <script>QQ.initStagePage(1);</script>
 </body>
