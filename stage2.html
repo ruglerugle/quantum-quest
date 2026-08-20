@@ -35,6 +35,12 @@
   .pe-svg .eminus{fill:#fff;font-size:12px;font-weight:900}
   .pe-svg .arrow{stroke:#2f6fa6;stroke-width:1.6;fill:none}
   .pe-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .spec-svg{display:block;margin-top:10px}
+  .spec-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
+  .spec-svg .cname{font-size:12px;font-weight:900}
+  .spec-svg .invis{fill:var(--paper2);stroke:var(--line);stroke-width:1;stroke-dasharray:3 3}
+  .spec-svg .wred{fill:none;stroke:#c8433f;stroke-width:2}
+  .spec-svg .wvio{fill:none;stroke:#7a4fb0;stroke-width:2}
 </style>
 </head>
 <body>
@@ -131,6 +137,31 @@
       <div class="formula-box">
         <span class="step">波の速さ ＝ 振動数 × 波長　（どんな波でも成り立つ）</span>
         <span class="step">光は速さが一定 → 振動数が大きいほど波長は短い（振動数＝波長のシーソー＝目に見える「色」）</span>
+        <svg class="spec-svg" viewBox="0 0 320 130" width="100%" role="img" aria-label="光の色と振動数・波長の対応図。赤は振動数が小さく波長が長い。紫は振動数が大きく波長が短い。赤の外に赤外線、紫の外に紫外線がある">
+          <defs>
+            <linearGradient id="specgrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#c8433f"></stop>
+              <stop offset="0.22" stop-color="#d99a41"></stop>
+              <stop offset="0.42" stop-color="#cfc23c"></stop>
+              <stop offset="0.6" stop-color="#4fa35c"></stop>
+              <stop offset="0.8" stop-color="#2f6fa6"></stop>
+              <stop offset="1" stop-color="#7a4fb0"></stop>
+            </linearGradient>
+          </defs>
+          <rect class="invis" x="13" y="30" width="32" height="28" rx="4"></rect>
+          <rect x="45" y="30" width="230" height="28" rx="4" fill="url(#specgrad)"></rect>
+          <rect class="invis" x="275" y="30" width="32" height="28" rx="4"></rect>
+          <text class="label" x="29" y="24" text-anchor="middle">赤外線</text>
+          <text class="label" x="29" y="72" text-anchor="middle">見えない</text>
+          <text class="label" x="291" y="24" text-anchor="middle">紫外線</text>
+          <text class="label" x="291" y="72" text-anchor="middle">見えない</text>
+          <text class="label cname" x="57" y="76" fill="#c8433f">赤</text>
+          <text class="label cname" x="253" y="76" fill="#7a4fb0">紫</text>
+          <path class="wred" d="M45 96 q12.5 -16 25 0 q12.5 16 25 0 q12.5 -16 25 0 q12.5 16 25 0"></path>
+          <path class="wvio" d="M175 96 q4.17 -16 8.33 0 q4.17 16 8.33 0 q4.17 -16 8.33 0 q4.17 16 8.33 0 q4.17 -16 8.33 0 q4.17 16 8.33 0 q4.17 -16 8.33 0 q4.17 16 8.33 0 q4.17 -16 8.33 0 q4.17 16 8.33 0 q4.17 -16 8.33 0 q4.17 16 8.33 0"></path>
+          <text class="label" x="95" y="122" text-anchor="middle">波長 長い ・ 振動数 小さい</text>
+          <text class="label" x="225" y="122" text-anchor="middle">波長 短い ・ 振動数 大きい</text>
+        </svg>
       </div>
 
       <div class="dialogue-scene">
