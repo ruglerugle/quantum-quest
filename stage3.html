@@ -56,6 +56,9 @@
   .grad-svg .area{fill:var(--gold-light);opacity:.55}
   .grad-svg .strip{fill:#c8433f;opacity:.3;stroke:#c8433f;stroke-width:1}
   .grad-svg .guide{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+  .spec3-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .spec3-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .spec3-svg .dark{fill:#12121c;stroke:var(--line);stroke-width:1}
 </style>
 </head>
 <body>
@@ -396,6 +399,34 @@
           </div>
           <div class="dialog-bubble">第二の謎もある。原子に熱や電気を加えると光を出すんだけど、その光の色を調べると<strong>飛び飛び</strong>なんだ。虹のように色が連続して並ぶのではなく、決まった色の細い線が何本か並ぶだけ（これを「線スペクトル」と呼ぶ）。ネオンサインの赤や花火の色が元素ごとに決まっているのは、この性質のおかげだよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="spec3-svg" viewBox="0 0 320 152" width="100%" role="img" aria-label="上：白熱電球の光をプリズムで分けると全ての色が連続した虹になる。下：水素の出す光は、決まった色の細い線が数本並ぶだけの線スペクトルになる">
+          <defs>
+            <linearGradient id="specgrad3" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#c8433f"></stop>
+              <stop offset="0.22" stop-color="#d99a41"></stop>
+              <stop offset="0.42" stop-color="#cfc23c"></stop>
+              <stop offset="0.6" stop-color="#4fa35c"></stop>
+              <stop offset="0.8" stop-color="#2f6fa6"></stop>
+              <stop offset="1" stop-color="#7a4fb0"></stop>
+            </linearGradient>
+          </defs>
+          <text class="strong" x="30" y="18">白熱電球や太陽の光 → すべての色が連続した虹</text>
+          <rect x="30" y="26" width="260" height="28" rx="4" fill="url(#specgrad3)"></rect>
+          <text class="strong" x="30" y="92">水素の原子が出す光 → 決まった色の細い線だけ</text>
+          <rect class="dark" x="30" y="100" width="260" height="28" rx="4"></rect>
+          <rect x="66" y="100" width="4" height="28" fill="#e05a50"></rect>
+          <rect x="214" y="100" width="3" height="28" fill="#3ec6c9"></rect>
+          <rect x="259" y="100" width="3" height="28" fill="#5a6fd9"></rect>
+          <rect x="280" y="100" width="3" height="28" fill="#9b6fe0"></rect>
+          <text class="label" x="160" y="148" text-anchor="middle">横軸は共通（左が赤 → 右が紫）</text>
+        </svg>
+        <div class="diagram-caption">白熱電球の光は色が連続して並ぶのに、原子（例：水素）の出す光は決まった色の細い線が数本だけ。線の並びは元素ごとに決まった「指紋」で（ネオンは赤系、ナトリウムは黄色）、なぜ飛び飛びなのかが第二の謎</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
