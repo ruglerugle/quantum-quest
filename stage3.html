@@ -45,6 +45,14 @@
   .pair-svg .brk{stroke:#2f6fa6;stroke-width:2;fill:none}
   .pair-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .pair-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .grad-svg .axis{stroke:var(--muted);stroke-width:1.5;fill:none}
+  .grad-svg .curve{fill:none;stroke:var(--gold);stroke-width:2.5}
+  .grad-svg .tan{stroke:#2f6fa6;stroke-width:2;fill:none}
+  .grad-svg .tri{stroke:#c8433f;stroke-width:1.5;fill:none;stroke-dasharray:3 3}
+  .grad-svg .dot{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
+  .grad-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .grad-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .grad-svg .blue{fill:#2f6fa6}
 </style>
 </head>
 <body>
@@ -168,7 +176,63 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いい整理だね。そしてこの2つの区別が、まさにこれから効いてくる。前のステージの E＝hν を思い出してごらん。振動数は「<strong>時間</strong>方向に、1秒あたり何回刻むか」という、時間についての量だった。それが<strong>エネルギー</strong>と結びついた。では、「<strong>空間</strong>方向に、何メートルおきに刻むか」を表す波長は、動きのどんな量と結びつくと思う？</div>
+          <div class="dialog-bubble">いい整理だね。それにね、この2つはまったくの他人ではなく、<strong>親子のようにつながっている</strong>んだ。E＝½mv² を、横軸を速さ v、縦軸をエネルギー E にしてグラフに描いてごらん。2乗だから、右へ行くほど坂がどんどん急になる曲線（放物線）になるね。ここで「<strong>グラフの傾き</strong>」に注目しよう。速さをほんの少し Δv だけ増やしたとき、エネルギーがどれだけ増えるか――増えた分 ΔE を Δv で割ったものが傾きだ。この傾きを、きみの数学で計算してみてごらん。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="grad-svg" viewBox="0 0 320 235" width="100%" role="img" aria-label="横軸が速さv、縦軸がエネルギーEの放物線のグラフ。速さが小さい点では接線の傾きが緩やかで、速さが大きい点では急。傾きがそのまま運動量mvになる">
+          <path class="axis" d="M45 20 L45 190 L300 190"></path>
+          <path class="axis" d="M300 190 l-8 -4 M300 190 l-8 4"></path>
+          <path class="axis" d="M45 20 l-4 8 M45 20 l4 8"></path>
+          <text class="strong" x="60" y="30">E ＝ ½mv² のグラフ</text>
+          <text class="label" x="284" y="208">速さ v</text>
+          <text class="label" x="8" y="30">E</text>
+          <path class="curve" d="M45 190 Q165 190 285 30"></path>
+          <line class="tan" x1="95" y1="185.5" x2="175" y2="150"></line>
+          <circle class="dot" cx="125" cy="172.2" r="5"></circle>
+          <path class="tri" d="M125 172.2 h40 v-17.8"></path>
+          <text class="label" x="143" y="184" text-anchor="middle">Δv</text>
+          <text class="label" x="172" y="168">ΔE</text>
+          <text class="label blue" x="96" y="140">傾き＝p（小）</text>
+          <line class="tan" x1="185" y1="140" x2="265" y2="60"></line>
+          <circle class="dot" cx="225" cy="100" r="5"></circle>
+          <path class="tri" d="M225 100 h40 v-40"></path>
+          <text class="label" x="243" y="113" text-anchor="middle">Δv</text>
+          <text class="label" x="270" y="82">ΔE</text>
+          <text class="label blue" x="150" y="60">傾き＝p（大）</text>
+          <text class="strong" x="160" y="227" text-anchor="middle">同じ Δv でも、速いところほど ΔE が大きい（坂が急）</text>
+        </svg>
+        <div class="diagram-caption">エネルギーの坂の傾き ΔE/Δv を調べると、ちょうど運動量 p＝mv になる。速いほど坂が急＝運動量が大きい</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">速さを v から v＋Δv にすると： ΔE ＝ ½m(v＋Δv)² − ½mv² ＝ mvΔv ＋ ½m(Δv)²</span>
+        <span class="step">Δv がとても小さいとき、(Δv)² の項はさらに小さいので無視できる → ΔE ≒ mv × Δv</span>
+        <span class="step">グラフの傾き ＝ ΔE ÷ Δv ≒ mv ＝ <strong>運動量 p</strong></span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">乗法公式で展開すればいいんですね。½m(v＋Δv)² を開くと ½mv² ＋ mvΔv ＋ ½m(Δv)²。元の ½mv² を引くと、増えた分は mvΔv ＋ ½m(Δv)²。Δv をうんと小さくすれば2つ目の項は無視できて……ΔE ÷ Δv ＝ mv。あっ、<strong>グラフの傾きが、ちょうど運動量</strong>になっています！</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">お見事。<strong>エネルギーの坂の傾きが、運動量</strong>なんだ。つまり運動量には「エネルギーの増えやすさ」という顔もある。速いほど坂が急だから、同じ Δv でもエネルギーがたくさん増える――エネルギーが2乗で効く理由も、この絵で腑に落ちるね。ちなみに、いまきみがやった「うんと小さい変化で傾きを調べる」という操作には名前がついていて、「<strong>微分</strong>」と呼ぶ。数学の強力な道具だから、出会う日を楽しみにしておくといいよ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">さて、そんな親子のようにつながりつつも別人格の2つの量が、これからの旅でそれぞれ主役を張ることになる。前のステージの E＝hν を思い出してごらん。振動数は「<strong>時間</strong>方向に、1秒あたり何回刻むか」という、時間についての量だった。それが<strong>エネルギー</strong>と結びついた。では、「<strong>空間</strong>方向に、何メートルおきに刻むか」を表す波長は、動きのどんな量と結びつくと思う？</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
