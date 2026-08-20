@@ -30,6 +30,21 @@
   .bohr-svg .ewave{fill:none;stroke:var(--gold);stroke-width:2;stroke-linejoin:round}
   .bohr-svg .nucleus{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
   .bohr-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .pv-svg .road{stroke:var(--line);stroke-width:2}
+  .pv-svg .truckL{fill:#2f6fa6;stroke:#1d4a73;stroke-width:1.2}
+  .pv-svg .truckR{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
+  .pv-svg .arrL{stroke:#2f6fa6;stroke-width:2.5;fill:none}
+  .pv-svg .arrR{stroke:#c8433f;stroke-width:2.5;fill:none}
+  .pv-svg .burst{fill:var(--gold);stroke:var(--gold-dark);stroke-width:1.5}
+  .pv-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .pv-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .pair-svg .wave{fill:none;stroke:var(--gold);stroke-width:2.2}
+  .pair-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+  .pair-svg .guide{stroke:#c8433f;stroke-width:1.2;stroke-dasharray:3 3}
+  .pair-svg .dot{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
+  .pair-svg .brk{stroke:#2f6fa6;stroke-width:2;fill:none}
+  .pair-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .pair-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
 </style>
 </head>
 <body>
@@ -107,6 +122,40 @@
           </div>
           <div class="dialog-bubble">素晴らしい質問だね。似ているけれど、性格の違う量なんだ。違いその1は「<strong>速さの効き方</strong>」。動くものの持つエネルギー（運動エネルギー）を式で書くと E＝½mv² で、速さの<strong>2乗</strong>に比例する。速さを2倍にすると、運動量は2倍だけど、エネルギーは4倍になるんだ。違いその2は「<strong>向き</strong>」。運動量には向きがあって、右向きと左向きは打ち消し合う。正面衝突する2台のトラックを考えてごらん。運動量は合計するとゼロ。でもエネルギーに向きは無いから、合計は莫大――だから激しく壊れるんだね。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="pv-svg" viewBox="0 0 320 150" width="100%" role="img" aria-label="同じ速さで正面衝突する2台のトラックのアニメーション。運動量は右向きと左向きで合計ゼロだが、エネルギーは向きが無いので合計は大きく、激しく壊れる">
+          <line class="road" x1="10" y1="80" x2="310" y2="80"></line>
+          <g>
+            <rect class="truckL" x="28" y="54" width="44" height="24" rx="4"></rect>
+            <g>
+              <path class="arrL" d="M40 42 L74 42 M74 42 l-8 -5 M74 42 l-8 5"></path>
+              <text class="label" x="50" y="34" text-anchor="middle">p →</text>
+              <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.42;0.5;0.95;1" dur="4.5s" repeatCount="indefinite"></animate>
+            </g>
+            <animateTransform attributeName="transform" type="translate" values="0 0;90 0;90 0" keyTimes="0;0.45;1" dur="4.5s" repeatCount="indefinite"></animateTransform>
+          </g>
+          <g>
+            <rect class="truckR" x="248" y="54" width="44" height="24" rx="4"></rect>
+            <g>
+              <path class="arrR" d="M280 42 L246 42 M246 42 l8 -5 M246 42 l8 5"></path>
+              <text class="label" x="270" y="34" text-anchor="middle">← p</text>
+              <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.42;0.5;0.95;1" dur="4.5s" repeatCount="indefinite"></animate>
+            </g>
+            <animateTransform attributeName="transform" type="translate" values="0 0;-90 0;-90 0" keyTimes="0;0.45;1" dur="4.5s" repeatCount="indefinite"></animateTransform>
+          </g>
+          <g opacity="0" transform="translate(0,-26)">
+            <path class="burst" d="M160 48 l5 10 11 -3 -6 10 9 7 -12 1 1 12 -8 -9 -8 9 1 -12 -12 -1 9 -7 -6 -10 11 3 z"></path>
+            <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.44;0.5;0.62;0.75;1" dur="4.5s" repeatCount="indefinite"></animate>
+          </g>
+          <text class="strong" x="160" y="112" text-anchor="middle">運動量の合計：→ ＋ ← ＝ 0（向きが打ち消す）</text>
+          <text class="strong" x="160" y="134" text-anchor="middle">エネルギーの合計：莫大（向きが無い）→ 激しく壊れる</text>
+        </svg>
+        <div class="diagram-caption">同じ速さの正面衝突。「止めにくさ」は左右で打ち消し合って合計ゼロなのに、「壊す力」は打ち消えない――運動量とエネルギーは別の量</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -141,6 +190,28 @@
         <span class="step">物質波の波長： λ ＝ h ÷ p ＝ h ÷ (mv)</span>
         <span class="step">m：質量　v：速さ　p＝mv：運動量　h：プランク定数</span>
         <span class="step">美しい対： E ＝ hν（時間の刻み ⇔ エネルギー）　／　λ ＝ h/p（空間の刻み ⇔ 運動量）</span>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="pair-svg" viewBox="0 0 320 240" width="100%" role="img" aria-label="上：流れる波の1点をじっと見ると1秒あたり振動数回だけ上下する（時間の刻み、E=hν）。下：波の写真では山から山までが波長（空間の刻み、p=h/λ）">
+          <text class="strong" x="10" y="16">⏱ 時間の刻み：1点をじっと見ると…</text>
+          <line class="base" x1="10" y1="60" x2="310" y2="60"></line>
+          <line class="guide" x1="160" y1="26" x2="160" y2="94"></line>
+          <path class="wave" d="M-120 60 q15 -32 30 0 q15 32 30 0 q15 -32 30 0 q15 32 30 0 q15 -32 30 0 q15 32 30 0 q15 -32 30 0 q15 32 30 0 q15 -32 30 0 q15 32 30 0 q15 -32 30 0 q15 32 30 0 q15 -32 30 0 q15 32 30 0 q15 -32 30 0 q15 32 30 0">
+            <animateTransform attributeName="transform" type="translate" values="0 0;60 0" dur="2s" repeatCount="indefinite"></animateTransform>
+          </path>
+          <circle class="dot" cx="160" cy="73.9" r="6">
+            <animate attributeName="cy" values="73.9;64.1;52;44.6;46.1;55.9;68;75.5;73.9" keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1" dur="2s" repeatCount="indefinite"></animate>
+          </circle>
+          <text class="label" x="10" y="106">1秒あたりの上下の回数 ＝ 振動数 ν　→　E ＝ hν</text>
+          <text class="strong" x="10" y="136">📏 空間の刻み：写真に撮ると…</text>
+          <line class="base" x1="10" y1="186" x2="310" y2="186"></line>
+          <path class="wave" d="M25 186 q15 -32 30 0 q15 32 30 0 q15 -32 30 0 q15 32 30 0 q15 -32 30 0 q15 32 30 0 q15 -32 30 0 q15 32 30 0"></path>
+          <path class="brk" d="M100 164 v-6 h60 v6"></path>
+          <text class="label" x="130" y="152" text-anchor="middle">波長 λ（山から山まで）</text>
+          <text class="label" x="10" y="232">山と山の間の距離 ＝ 波長 λ　→　p ＝ h/λ</text>
+        </svg>
+        <div class="diagram-caption">同じ1つの波の「時間の顔」と「空間の顔」。時間の刻み（振動数）はエネルギーと、空間の刻み（波長）は運動量と、h を仲立ちに結ばれる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -294,6 +365,12 @@
 </div>
 
 <script src="js/progress.js"></script>
+<script>
+  // アニメーションを避けたい設定のユーザーには静止画で表示する
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelectorAll(".pv-svg animate, .pv-svg animateTransform, .pair-svg animate, .pair-svg animateTransform").forEach(function (a) { a.remove(); });
+  }
+</script>
 <script>QQ.initStagePage(3);</script>
 </body>
 </html>
