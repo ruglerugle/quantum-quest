@@ -53,6 +53,9 @@
   .grad-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .grad-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .grad-svg .blue{fill:#2f6fa6}
+  .grad-svg .area{fill:var(--gold-light);opacity:.55}
+  .grad-svg .strip{fill:#c8433f;opacity:.3;stroke:#c8433f;stroke-width:1}
+  .grad-svg .guide{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
 </style>
 </head>
 <body>
@@ -226,6 +229,64 @@
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
           <div class="dialog-bubble">お見事。<strong>エネルギーの坂の傾きが、運動量</strong>なんだ。つまり運動量には「エネルギーの増えやすさ」という顔もある。速いほど坂が急だから、同じ Δv でもエネルギーがたくさん増える――エネルギーが2乗で効く理由も、この絵で腑に落ちるね。ちなみに、いまきみがやった「うんと小さい変化で傾きを調べる」という操作には名前がついていて、「<strong>微分</strong>」と呼ぶ。数学の強力な道具だから、出会う日を楽しみにしておくといいよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">待ってください、それなら<strong>逆の道</strong>もあるはずです。E のグラフの傾きをたどると p が出てくるなら、p のグラフから出発して E に戻る方法も……。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最高の着眼だね。今度は横軸を速さ v、縦軸を<strong>運動量 p＝mv</strong> にしてグラフを描いてごらん。原点を通るまっすぐな直線になる。ここで、止まっている状態から速さを v まで、Δv ずつ少しずつ上げていくことを考えよう。さっき導いたとおり、ひと刻みごとに増えるエネルギーは ΔE ≒ p × Δv。これはグラフの上では「<strong>高さ p、幅 Δv の細い長方形の面積</strong>」だね。ぜんぶ足し合わせると、何の形になるかな？</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="grad-svg" viewBox="0 0 320 235" width="100%" role="img" aria-label="横軸が速さv、縦軸が運動量pのグラフ。p=mvは原点を通る直線で、その下の三角形の面積を細い長方形の集まりとして足し合わせるとエネルギー½mv²になる">
+          <polygon class="area" points="45,190 245,190 245,81.7"></polygon>
+          <rect class="strip" x="160" y="127.7" width="12" height="62.3"></rect>
+          <path class="axis" d="M45 20 L45 190 L300 190"></path>
+          <path class="axis" d="M300 190 l-8 -4 M300 190 l-8 4"></path>
+          <path class="axis" d="M45 20 l-4 8 M45 20 l4 8"></path>
+          <text class="strong" x="60" y="30">p ＝ mv のグラフ</text>
+          <text class="label" x="8" y="30">p</text>
+          <text class="label" x="284" y="208">速さ v</text>
+          <line class="tan" x1="45" y1="190" x2="285" y2="60"></line>
+          <line class="guide" x1="245" y1="190" x2="245" y2="81.7"></line>
+          <text class="label" x="245" y="205" text-anchor="middle">v</text>
+          <text class="label blue" x="60" y="105">細い長方形 ＝ p × Δv ＝ ΔE</text>
+          <path class="tri" d="M120 110 L158 125"></path>
+          <text class="strong" x="175" y="172" text-anchor="middle">面積 ＝ E</text>
+          <text class="strong" x="160" y="227" text-anchor="middle">直線の下の三角形の面積が、そのままエネルギー</text>
+        </svg>
+        <div class="diagram-caption">細い長方形（p×Δv）を0からvまで足し集めると、直線の下の三角形の面積になる。三角形の面積＝½×v×mv＝½mv²＝E</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">ひと刻みで増えるエネルギー： ΔE ≒ p × Δv（高さ p・幅 Δv の細い長方形の面積）</span>
+        <span class="step">0 から v までぜんぶ足し合わせる ＝ 直線 p＝mv の下の三角形の面積</span>
+        <span class="step">E ＝ ½ × 底辺 × 高さ ＝ ½ × v × (mv) ＝ <strong>½mv²</strong>　（エネルギーに戻った！）</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">三角形の面積の公式で E に戻れました……！ E のグラフの<strong>傾き</strong>をとると p になり、p のグラフの<strong>面積</strong>をとると E に戻る。行きと帰りの道が、ちゃんと対になっているんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。この「細かく刻んで足し集める」操作にも名前があって、「<strong>積分</strong>」と呼ぶんだ。微分（傾き）と積分（面積）は、いまきみが見抜いたとおり、互いに逆向きの操作。この行き帰りの関係は、数学全体でも指折りの大発見なんだよ。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
