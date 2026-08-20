@@ -31,6 +31,12 @@
   .slit-svg .wave{fill:none;stroke:var(--gold);stroke-width:1.6;opacity:.85}
   .slit-svg .fringe{fill:var(--gold)}
   .slit-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .sup-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+  .sup-svg .wA{fill:none;stroke:var(--gold);stroke-width:2.2}
+  .sup-svg .wB{fill:none;stroke:#2f6fa6;stroke-width:2.2}
+  .sup-svg .wSum{fill:none;stroke:#c8433f;stroke-width:2.6}
+  .sup-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .sup-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
 </style>
 </head>
 <body>
@@ -108,12 +114,36 @@
           </div>
           <div class="dialog-bubble">そして波には、粒には絶対にまねできない特技がある。<strong>重ね合わせ</strong>だ。2つの波が同じ場所にやってくると、波は互いをすり抜けながら、その場所では揺れが足し算される。山と山が出会えば2倍の高さに盛り上がるし、谷と谷が出会えば2倍の深さにへこむ――どちらも揺れとしては「強め合い」だ。逆に山と谷が出会えば、上への揺れと下への揺れが打ち消し合って、ほとんど平らになってしまう。石を2個、池に同時に落とすと、広がる輪っかどうしが複雑な模様を作るのを見たことがないかな。あれが重ね合わせだよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sup-svg" viewBox="0 0 320 235" width="100%" role="img" aria-label="同じ波長の2つの波AとBを足し算するアニメーション。Bを少しずつずらすと、山と山がそろったときは2倍の波になり、山と谷が出会うと平らに消える">
+          <text class="strong" x="10" y="16">波A</text>
+          <line class="base" x1="5" y1="45" x2="305" y2="45"></line>
+          <path class="wA" d="M5 45 q15 -28 30 0 q15 28 30 0 q15 -28 30 0 q15 28 30 0 q15 -28 30 0 q15 28 30 0 q15 -28 30 0 q15 28 30 0 q15 -28 30 0 q15 28 30 0"></path>
+          <text class="strong" x="10" y="81">波B（半波長ぶん、ずらしたり戻したり）</text>
+          <line class="base" x1="5" y1="110" x2="305" y2="110"></line>
+          <path class="wB" d="M-55 110 q15 -28 30 0 q15 28 30 0 q15 -28 30 0 q15 28 30 0 q15 -28 30 0 q15 28 30 0 q15 -28 30 0 q15 28 30 0 q15 -28 30 0 q15 28 30 0 q15 -28 30 0 q15 28 30 0 q15 -28 30 0 q15 28 30 0">
+            <animateTransform attributeName="transform" type="translate" values="0 0;0 0;30 0;30 0;0 0" keyTimes="0;0.12;0.5;0.62;1" dur="8s" repeatCount="indefinite"></animateTransform>
+          </path>
+          <text class="strong" x="10" y="150">A＋B（足し算した波）</text>
+          <line class="base" x1="5" y1="190" x2="305" y2="190"></line>
+          <path class="wSum" d="M-55 190 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0">
+            <animate attributeName="d" values="M-55 190 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0;M-55 190 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0;M-55 190 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0;M-55 190 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0 q15 0 30 0;M-55 190 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0 q15 -56 30 0 q15 56 30 0" keyTimes="0;0.12;0.5;0.62;1" dur="8s" repeatCount="indefinite"></animate>
+            <animateTransform attributeName="transform" type="translate" values="0 0;0 0;15 0;15 0;0 0" keyTimes="0;0.12;0.5;0.62;1" dur="8s" repeatCount="indefinite"></animateTransform>
+          </path>
+          <text class="label" x="160" y="228" text-anchor="middle">山と山・谷と谷がそろう → 2倍　／　山と谷が出会う → ほぼ平ら</text>
+        </svg>
+        <div class="diagram-caption">同じ波長の波AとBの足し算。Bを半波長ぶんずらすだけで、A＋Bは「2倍の波」から「ほぼ平ら」まで変わる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">強め合いと打ち消し合い……。二重スリットに当てはめると、すき間が2本あるということは、それぞれのすき間から波が半円状に広がって、スクリーンの上で重なり合うということですね。場所によって強め合ったり打ち消し合ったりしそうです。</div>
+          <div class="dialog-bubble">足し算した波が、消えたり2倍になったり……不思議な光景です。強め合いと打ち消し合い……。二重スリットに当てはめると、すき間が2本あるということは、それぞれのすき間から波が半円状に広がって、スクリーンの上で重なり合うということですね。場所によって強め合ったり打ち消し合ったりしそうです。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -233,6 +263,12 @@
 </div>
 
 <script src="js/progress.js"></script>
+<script>
+  // アニメーションを避けたい設定のユーザーには静止画（強め合いの状態）で表示する
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelectorAll(".sup-svg animate, .sup-svg animateTransform").forEach(function (a) { a.remove(); });
+  }
+</script>
 <script>QQ.initStagePage(1);</script>
 </body>
 </html>
