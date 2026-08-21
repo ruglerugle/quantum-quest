@@ -50,6 +50,14 @@
   .rot-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .rot-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .rot-svg .sep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+  .imul-svg .axis{stroke:var(--line);stroke-width:1.2}
+  .imul-svg .orbit{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 4}
+  .imul-svg .vec{stroke:var(--gold-dark);stroke-width:3;fill:none}
+  .imul-svg .vhead{fill:var(--gold-dark)}
+  .imul-svg .mark{fill:var(--ink);font-size:14px;font-weight:900}
+  .imul-svg .flash{fill:#c8433f;font-size:15px;font-weight:900}
+  .imul-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .imul-svg .strong{fill:var(--ink);font-size:12.5px;font-weight:900}
 </style>
 </head>
 <body>
@@ -216,14 +224,42 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">実に鋭い。そして半分は正解だよ。きみの言う「大きさと向きを持つ、2つの数の組で表す矢印」には「<strong>ベクトル</strong>」という名前がついていてね。実際、複素数を使わずに、ψ をベクトル（2つの数の組）のまま書き表す流儀も本当にあるんだ。その意味で、複素数 a＋bi の実体は、確かにベクトル (a, b) そのものと言っていい。ただし、ただのベクトルには無い道具が1つ、複素数には組み込まれている――<strong>掛け算</strong>だ。複素数どうしの掛け算は、矢印を「<strong>回して、伸び縮みさせる</strong>」操作になっている。とくに i を1回掛けることは、矢印を「90度回す」ことにぴったり対応するんだ（i を2回掛ければ180度回転＝逆向き。これが i²＝−1 の正体だよ）。そして量子力学では、この「回す」操作こそが主役でね。ψ の時間変化は矢印の回転そのものだし、干渉は矢印の向きがそろうか逆かの勝負だった。<strong>回転の掛け算を最初から標準装備した矢印</strong>――それが複素数なんだ。</div>
+          <div class="dialog-bubble">実に鋭い。そして半分は正解だよ。きみの言う「大きさと向きを持つ、2つの数の組で表す矢印」には「<strong>ベクトル</strong>」という名前がついていてね。実際、複素数を使わずに、ψ をベクトル（2つの数の組）のまま書き表す流儀も本当にあるんだ。その意味で、複素数 a＋bi の実体は、確かにベクトル (a, b) そのものと言っていい。ただし、ただのベクトルには無い道具が1つ、複素数には組み込まれている――<strong>掛け算</strong>だ。複素数どうしの掛け算は、矢印を「<strong>回して、伸び縮みさせる</strong>」操作になっている。とくに i を1回掛けることは、矢印を「90度回す」ことにぴったり対応するんだ（i を2回掛ければ180度回転＝逆向き。これが i²＝−1 の正体だよ）。そして量子力学では、この「回す」操作こそが主役でね。ψ の時間変化は矢印の回転そのものだし、干渉は矢印の向きがそろうか逆かの勝負だった。<strong>回転の掛け算を最初から標準装備した矢印</strong>――それが複素数なんだ。動かして見せよう。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="imul-svg" viewBox="0 0 320 210" width="100%" role="img" aria-label="複素平面上の矢印に i を掛けるたびに90度ずつ回転するアニメーション。1に i を掛けると i、もう一度掛けると−1（半回転）、さらに掛けると−i、4回で1周してもとの1に戻る">
+          <line class="axis" x1="15" y1="110" x2="155" y2="110"></line>
+          <line class="axis" x1="85" y1="40" x2="85" y2="180"></line>
+          <circle class="orbit" cx="85" cy="110" r="55"></circle>
+          <text class="mark" x="152" y="103">1</text>
+          <text class="mark" x="90" y="36">i</text>
+          <text class="mark" x="4" y="103">−1</text>
+          <text class="mark" x="90" y="194">−i</text>
+          <g>
+            <line class="vec" x1="85" y1="110" x2="130" y2="110"></line>
+            <path class="vhead" d="M140 110 l-12 -5 0 10 z"></path>
+            <animateTransform attributeName="transform" type="rotate" values="0 85 110;0 85 110;-90 85 110;-90 85 110;-180 85 110;-180 85 110;-270 85 110;-270 85 110;-360 85 110;-360 85 110" keyTimes="0;0.15;0.2;0.35;0.4;0.55;0.6;0.75;0.8;1" dur="8s" repeatCount="indefinite"></animateTransform>
+          </g>
+          <text class="flash" x="120" y="66" opacity="0">×i<animate attributeName="opacity" values="0;0;1;0;0;1;0;0;1;0;0;1;0;0" keyTimes="0;0.15;0.175;0.2;0.35;0.375;0.4;0.55;0.575;0.6;0.75;0.775;0.8;1" dur="8s" repeatCount="indefinite"></animate></text>
+          <text class="strong" x="185" y="60">「×i」＝ 90度回す</text>
+          <text class="label" x="185" y="88">1 → i → −1 → −i → 1</text>
+          <text class="label" x="185" y="112">i² ＝ 90度×2 ＝ 半回転</text>
+          <text class="label" x="185" y="130">　　＝ 逆向き ＝ −1</text>
+          <text class="label" x="185" y="160">4回掛けると1周して、</text>
+          <text class="label" x="185" y="178">もとの 1 に戻る</text>
+        </svg>
+        <div class="diagram-caption">i を掛けるたびに、矢印は90度ずつ回る。2回で半回転（i²＝−1）、4回で1周してもとに戻る――「2乗すると−1」の正体は回転だった</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">矢印だけでなく、道具箱ごと選んだ、ということですか。……でも、そもそも「ψ は複素数だ」とは、どうやって分かったんですか？ 誰かがそう決めたんでしょうか。</div>
+          <div class="dialog-bubble">i²＝−1 が「半回転で逆向き」のことだったなんて……前に習ったときより、ずっと腑に落ちました。矢印だけでなく、道具箱ごと選んだ、ということですか。……でも、そもそも「ψ は複素数だ」とは、どうやって分かったんですか？ 誰かがそう決めたんでしょうか。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -411,7 +447,7 @@
 <script>
   // アニメーションを避けたい設定のユーザーには静止画で表示する
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll(".rot-svg animate, .rot-svg animateTransform").forEach(function (a) { a.remove(); });
+    document.querySelectorAll(".rot-svg animate, .rot-svg animateTransform, .imul-svg animate, .imul-svg animateTransform").forEach(function (a) { a.remove(); });
   }
 </script>
 <script>QQ.initStagePage(4);</script>
