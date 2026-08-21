@@ -30,6 +30,17 @@
   .prob-svg .curve{fill:none;stroke:var(--gold);stroke-width:2.2}
   .prob-svg .dot{fill:#2f6fa6}
   .prob-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .cpx-svg .axis{stroke:var(--muted);stroke-width:1.5;fill:none}
+  .cpx-svg .vec{stroke:var(--gold-dark);stroke-width:2.5;fill:none}
+  .cpx-svg .vhead{fill:var(--gold-dark)}
+  .cpx-svg .dash{stroke:#2f6fa6;stroke-width:1.5;stroke-dasharray:4 3;fill:none}
+  .cpx-svg .pt{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
+  .cpx-svg .arc{stroke:#c8433f;stroke-width:1.5;fill:none}
+  .cpx-svg .add{stroke:#2f6fa6;stroke-width:2.5;fill:none}
+  .cpx-svg .ahead{fill:#2f6fa6}
+  .cpx-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
+  .cpx-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .cpx-svg .sep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
 </style>
 </head>
 <body>
@@ -142,6 +153,48 @@
           </div>
           <div class="dialog-bubble">完璧な復習だね、この旅ではその理解で十分だよ。複素数の「大きさ」のことを<strong>絶対値</strong>と呼び、|ψ| と書く。a＋bi なら、絶対値の2乗は a²＋b² だ（三平方の定理で原点からの距離を求めるのと同じだね）。「向き」のほうも遊んでいるわけではなくて、STAGE1で見た波の干渉――強め合いと打ち消し合い――を起こす役目を担っているんだ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="cpx-svg" viewBox="0 0 320 205" width="100%" role="img" aria-label="左：複素数a+biは平面上の点で、原点からの矢印の長さが絶対値、矢印の方角が向き。右：矢印の足し算では、向きがそろえば長くなり（強め合い）、向きが逆なら消える（打ち消し合い）">
+          <text class="strong" x="10" y="18">複素数 ＝ 平面の矢印</text>
+          <path class="axis" d="M40 35 L40 160 L165 160"></path>
+          <path class="axis" d="M165 160 l-7 -4 M165 160 l-7 4 M40 35 l-4 7 M40 35 l4 7"></path>
+          <text class="label" x="168" y="176" text-anchor="end">ふつうの数</text>
+          <text class="label" x="10" y="32">iの目盛り</text>
+          <line class="dash" x1="40" y1="85" x2="130" y2="85"></line>
+          <line class="dash" x1="130" y1="160" x2="130" y2="85"></line>
+          <text class="label" x="85" y="174" text-anchor="middle">a</text>
+          <text class="label" x="138" y="126">b</text>
+          <line class="vec" x1="40" y1="160" x2="126" y2="88"></line>
+          <path class="vhead" d="M130 85 l-10 2 3 9 z"></path>
+          <circle class="pt" cx="130" cy="85" r="4.5"></circle>
+          <text class="strong" x="120" y="72">a＋bi</text>
+          <text class="label" x="44" y="105">長さ ＝ |ψ|</text>
+          <text class="label" x="44" y="119">＝ √(a²＋b²)</text>
+          <path class="arc" d="M62 160 A22 22 0 0 0 57 146"></path>
+          <text class="label" x="68" y="150">向き</text>
+          <line class="sep" x1="180" y1="15" x2="180" y2="195"></line>
+          <text class="strong" x="192" y="18">「向き」が干渉を生む</text>
+          <line class="add" x1="192" y1="55" x2="215" y2="55"></line><path class="ahead" d="M219 55 l-9 -4 0 8 z"></path>
+          <text class="label" x="226" y="59">＋</text>
+          <line class="add" x1="238" y1="55" x2="261" y2="55"></line><path class="ahead" d="M265 55 l-9 -4 0 8 z"></path>
+          <text class="label" x="272" y="59">＝</text>
+          <line class="vec" x1="192" y1="76" x2="257" y2="76"></line><path class="vhead" d="M263 76 l-10 -4 0 8 z"></path>
+          <text class="label" x="192" y="97">向きがそろう → 強め合い</text>
+          <line class="add" x1="192" y1="130" x2="215" y2="130"></line><path class="ahead" d="M219 130 l-9 -4 0 8 z"></path>
+          <text class="label" x="226" y="134">＋</text>
+          <line class="add" x1="246" y1="130" x2="269" y2="130"></line><path class="ahead" d="M242 130 l9 -4 0 8 z"></path>
+          <text class="label" x="276" y="134">＝</text>
+          <circle class="pt" cx="292" cy="130" r="3"></circle>
+          <text class="label" x="192" y="151">向きが逆 → 打ち消し合い</text>
+          <text class="label" x="192" y="172">ψ の足し算では、</text>
+          <text class="label" x="192" y="186">向きしだいで結果が変わる</text>
+        </svg>
+        <div class="diagram-caption">左：複素数 a＋bi は平面の点（＝原点からの矢印）。矢印の長さが絶対値 |ψ|、方角が「向き」。右：矢印どうしの足し算は、向きがそろえば長く（強め合い）、逆なら消える（打ち消し合い）――STAGE1の干渉の正体</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
