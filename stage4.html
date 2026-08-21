@@ -41,6 +41,15 @@
   .cpx-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
   .cpx-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .cpx-svg .sep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+  .rot-svg .wave{fill:none;stroke:var(--gold);stroke-width:2.2}
+  .rot-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+  .rot-svg .orbit{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 4}
+  .rot-svg .vec{stroke:var(--gold-dark);stroke-width:2.5;fill:none}
+  .rot-svg .vhead{fill:var(--gold-dark)}
+  .rot-svg .alert{fill:#c8433f;font-size:11.5px;font-weight:900}
+  .rot-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .rot-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .rot-svg .sep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
 </style>
 </head>
 <body>
@@ -221,14 +230,40 @@
             <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">それがね、決めたのではなく、<strong>追い込まれた</strong>んだ。方程式の発明者シュレーディンガー自身、最初は実数の波で理論を作ろうとした。でも失敗した。理由を1つ見せよう。実数の波は、ぶらんこが真ん中を通る瞬間のように、<strong>波全体が一瞬、完全に平らになる瞬間</strong>が必ずあるね。もし ψ が実数なら、その瞬間、|ψ|²――電子の見つかる確率――が宇宙のどこでもゼロになる。つまり<strong>電子が一瞬、宇宙から消えてしまう</strong>ことになる。</div>
+          <div class="dialog-bubble">それがね、決めたのではなく、<strong>追い込まれた</strong>んだ。方程式の発明者シュレーディンガー自身、最初は実数の波で理論を作ろうとした。でも失敗した。理由を1つ見せよう。実数の波は、ぶらんこが真ん中を通る瞬間のように、<strong>波全体が一瞬、完全に平らになる瞬間</strong>が必ずあるね。もし ψ が実数なら、その瞬間、|ψ|²――電子の見つかる確率――が宇宙のどこでもゼロになる。つまり<strong>電子が一瞬、宇宙から消えてしまう</strong>ことになる。見比べてごらん。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="rot-svg" viewBox="0 0 320 265" width="100%" role="img" aria-label="上：実数の波は揺れるため、波全体が完全に平らになる瞬間があり、そのとき見つかる確率がどこでもゼロになってしまう。下：複素数の波は矢印が回るだけで長さが一定なので、確率は保たれる">
+          <text class="strong" x="10" y="18">実数の波：「揺れる」</text>
+          <line class="base" x1="15" y1="70" x2="305" y2="70"></line>
+          <path class="wave" d="M15 70 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0">
+            <animate attributeName="d" dur="3.6s" repeatCount="indefinite" keyTimes="0;0.25;0.5;0.75;1" values="M15 70 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0;M15 70 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0;M15 70 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0;M15 70 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0 q14.5 0 29 0;M15 70 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0 q14.5 -32 29 0 q14.5 32 29 0"></animate>
+          </path>
+          <text class="alert" x="160" y="118" text-anchor="middle" opacity="0">いま、どこでもゼロ ＝ 電子が消える!?<animate attributeName="opacity" dur="3.6s" repeatCount="indefinite" keyTimes="0;0.17;0.25;0.34;0.66;0.75;0.84;1" values="0;0;1;0;0;1;0;0"></animate></text>
+          <line class="sep" x1="10" y1="132" x2="310" y2="132"></line>
+          <text class="strong" x="10" y="152">複素数の波：「回る」</text>
+          <circle class="orbit" cx="80" cy="207" r="38"></circle>
+          <g>
+            <line class="vec" x1="80" y1="207" x2="80" y2="172"></line>
+            <path class="vhead" d="M80 166 l-5 10 10 0 z"></path>
+            <animateTransform attributeName="transform" type="rotate" from="0 80 207" to="360 80 207" dur="3.6s" repeatCount="indefinite"></animateTransform>
+          </g>
+          <text class="label" x="140" y="196">矢印は回るだけで、長さはずっと一定</text>
+          <text class="label" x="140" y="216">→ |ψ|² は一瞬もゼロにならない</text>
+          <text class="label" x="140" y="236">（電子は消えない）</text>
+        </svg>
+        <div class="diagram-caption">上：実数の波は「揺れる」ので、全体が平らになる瞬間が必ず来る（そのとき電子はどこにもいないことに）。下：複素数の波は「回る」ので、矢印の長さ＝|ψ| がいつでも一定に保たれる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">それは困ります……。あっ、でも回転する矢印なら大丈夫なんだ。ぶらんこと違って、ぐるぐる回る矢印は<strong>向きが変わるだけで、長さはずっと一定</strong>。|ψ|² が一瞬もゼロにならないから、電子は消えない……！</div>
+          <div class="dialog-bubble">上の波、本当に一瞬、まっ平らになっていますね……。それは困ります。あっ、でも回転する矢印なら大丈夫なんだ。ぶらんこと違って、ぐるぐる回る矢印は<strong>向きが変わるだけで、長さはずっと一定</strong>。|ψ|² が一瞬もゼロにならないから、電子は消えない……！</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -373,6 +408,12 @@
 </div>
 
 <script src="js/progress.js"></script>
+<script>
+  // アニメーションを避けたい設定のユーザーには静止画で表示する
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelectorAll(".rot-svg animate, .rot-svg animateTransform").forEach(function (a) { a.remove(); });
+  }
+</script>
 <script>QQ.initStagePage(4);</script>
 </body>
 </html>
