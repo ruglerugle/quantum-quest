@@ -59,6 +59,13 @@
   .imul-svg .flash{fill:#c8433f;font-size:15px;font-weight:900}
   .imul-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .imul-svg .strong{fill:var(--ink);font-size:12.5px;font-weight:900}
+  .cloud-svg .nucleus{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
+  .cloud-svg .orbit{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 4}
+  .cloud-svg .edot{fill:#2f6fa6;stroke:#1d4a73;stroke-width:1.2}
+  .cloud-svg .cdot{fill:#2f6fa6}
+  .cloud-svg .sep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+  .cloud-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .cloud-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
 </style>
 </head>
 <body>
@@ -381,6 +388,89 @@
           </div>
           <div class="dialog-bubble">お見事。干渉していたのは電子どうしではなく、1個の電子の波動関数なんだ。だから1個ずつ発射しても縞ができる。原子の中の電子も同じで、軌道をぐるぐる回る粒ではなく、原子核のまわりに |ψ|² の濃淡として広がる「電子雲」として描かれるんだよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="cloud-svg" viewBox="0 0 320 210" width="100%" role="img" aria-label="左：昔の想像図では電子が原子核のまわりの軌道をぐるぐる回る。右：実際の姿では、観測のたびに1点ずつ見つかった位置がたまっていき、原子核のまわりに濃淡のある電子雲が浮かび上がる">
+          <text class="strong" x="10" y="18">昔の想像図</text>
+          <circle class="nucleus" cx="75" cy="115" r="6"></circle>
+          <circle class="orbit" cx="75" cy="115" r="42"></circle>
+          <g transform="translate(75,73)">
+            <circle class="edot" cx="0" cy="0" r="5">
+              <animateMotion dur="2.8s" repeatCount="indefinite" path="M0,0 a42,42 0 1,1 0,84 a42,42 0 1,1 0,-84"></animateMotion>
+            </circle>
+          </g>
+          <text class="label" x="75" y="184" text-anchor="middle">粒が軌道を回る……？</text>
+          <line class="sep" x1="160" y1="15" x2="160" y2="195"></line>
+          <text class="strong" x="175" y="18">実際の姿（|ψ|² の雲）</text>
+          <circle class="nucleus" cx="240" cy="115" r="6"></circle>
+          <circle class="cdot" cx="233.5" cy="125.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.368;0.383;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="258.1" cy="118.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.666;0.681;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="228.7" cy="134.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.189;0.204;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="274.6" cy="142.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.159;0.174;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="240.6" cy="84.2" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.219;0.234;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="225.0" cy="127.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.652;0.667;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="229.8" cy="116.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.562;0.577;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="238.3" cy="124.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.458;0.473;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="256.2" cy="110.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.174;0.189;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="269.1" cy="101.2" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.816;0.831;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="224.9" cy="135.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.055;0.070;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="198.4" cy="114.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.100;0.115;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="238.2" cy="90.3" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.517;0.532;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="249.1" cy="136.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.890;0.905;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="249.5" cy="113.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.532;0.547;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="246.3" cy="112.3" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.323;0.338;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="262.9" cy="112.7" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.607;0.622;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="257.8" cy="142.1" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.547;0.562;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="266.7" cy="104.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.144;0.159;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="222.6" cy="74.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.428;0.443;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="242.7" cy="94.1" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.487;0.502;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="223.2" cy="120.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.353;0.368;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="242.0" cy="101.1" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.681;0.696;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="279.7" cy="123.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.860;0.875;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="229.8" cy="105.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.711;0.726;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="270.6" cy="155.2" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.129;0.144;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="270.0" cy="109.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.741;0.756;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="266.8" cy="97.3" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.204;0.219;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="214.3" cy="81.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.264;0.279;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="221.9" cy="92.1" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.502;0.517;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="263.0" cy="154.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.786;0.801;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="240.0" cy="144.7" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.696;0.711;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="247.8" cy="139.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.875;0.890;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="241.1" cy="138.7" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.801;0.816;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="195.9" cy="132.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.831;0.846;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="222.8" cy="112.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.443;0.458;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="245.6" cy="127.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.771;0.786;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="224.7" cy="95.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.279;0.294;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="250.1" cy="115.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.920;0.935;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="246.1" cy="126.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.592;0.607;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="228.5" cy="113.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.308;0.323;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="260.5" cy="127.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.756;0.771;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="235.3" cy="125.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.622;0.637;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="220.8" cy="128.7" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.383;0.398;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="241.0" cy="76.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.473;0.488;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="231.8" cy="160.3" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.726;0.741;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="262.0" cy="131.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.398;0.413;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="231.4" cy="132.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.413;0.428;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="252.4" cy="117.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.845;0.860;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="230.4" cy="109.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.294;0.309;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="267.2" cy="113.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.338;0.353;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="211.3" cy="92.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.637;0.652;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="214.5" cy="124.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.577;0.592;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="232.9" cy="120.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.040;0.055;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="252.8" cy="121.7" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.249;0.264;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="241.6" cy="125.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.070;0.085;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="245.5" cy="98.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.115;0.130;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="267.4" cy="80.1" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.234;0.249;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="240.2" cy="133.2" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.905;0.920;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <circle class="cdot" cx="257.2" cy="124.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.085;0.100;1" dur="12s" repeatCount="indefinite"></animate></circle>
+          <text class="label" x="240" y="184" text-anchor="middle">観測1回ごとに1点、</text>
+          <text class="label" x="240" y="199" text-anchor="middle">たまると濃淡の「雲」に</text>
+        </svg>
+        <div class="diagram-caption">左：惑星のように軌道を回る、という古いイメージ。右：実際は決まった通り道は無く、観測のたびに |ψ|² の濃い場所ほど見つかりやすい。見つかった点を重ねると、原子核のまわりに「電子雲」が浮かび上がる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
@@ -449,7 +539,8 @@
 <script>
   // アニメーションを避けたい設定のユーザーには静止画で表示する
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll(".rot-svg animate, .rot-svg animateTransform, .imul-svg animate, .imul-svg animateTransform").forEach(function (a) { a.remove(); });
+    document.querySelectorAll(".rot-svg animate, .rot-svg animateTransform, .imul-svg animate, .imul-svg animateTransform, .cloud-svg animate, .cloud-svg animateMotion").forEach(function (a) { a.remove(); });
+    document.querySelectorAll(".cloud-svg .cdot").forEach(function (c) { c.setAttribute("opacity", "0.85"); });
   }
 </script>
 <script>QQ.initStagePage(4);</script>
