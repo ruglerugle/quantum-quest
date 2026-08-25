@@ -35,6 +35,7 @@
   .well-svg .eminus{fill:#fff;font-size:12px;font-weight:900}
   .well-svg .brk{stroke:#2f6fa6;stroke-width:2;fill:none}
   .well-svg .cont{stroke:var(--felt);stroke-width:6;stroke-dasharray:2 6;fill:none;opacity:.6}
+  .well-svg .pin{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
 </style>
 </head>
 <body>
@@ -182,6 +183,24 @@
           </div>
           <div class="dialog-bubble">攻め方は2段構えだよ。手がかり①：壁の外に電子は<strong>絶対に行けない</strong>。「絶対に行けない」＝「外で見つかる確率がゼロ」＝壁の位置で <strong>ψ＝0</strong>。このように、波の形の「両端」に課される条件を<strong>境界条件</strong>と呼ぶんだ。手がかり②：さがしているのはエネルギーの決まった<strong>定常状態</strong>だった。さっき見たとおり、定常状態では ψ の矢印は各地点でくるくる回るだけで、<strong>波の形そのものは変わらない</strong>。つまり井戸の中の ψ は、その場にとどまって振動する波――<strong>定常波</strong>になる。……「両端が固定されていて」「その場で振動する波」。この組み合わせ、どこかで出会わなかったかな？</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="well-svg" viewBox="0 0 320 205" width="100%" role="img" aria-label="井戸の中の波動関数のアニメーション。壁の位置ではψが常にゼロで赤い点が動かず、中身の波は形を保ったまま、その場でふくらんだり反転したりする定常波になる">
+          <text class="strong" x="160" y="16" text-anchor="middle">① 壁の位置では、いつも ψ＝0（赤い点は動かない）</text>
+          <path class="wall" d="M70 30 L70 165 L250 165 L250 30"></path>
+          <line class="level" x1="70" y1="100" x2="250" y2="100"></line>
+          <path class="wave" d="M70 100 Q100 48 130 100 Q160 152 190 100 Q220 48 250 100">
+            <animate attributeName="d" values="M70 100 Q100 48 130 100 Q160 152 190 100 Q220 48 250 100;M70 100 Q100 100 130 100 Q160 100 190 100 Q220 100 250 100;M70 100 Q100 152 130 100 Q160 48 190 100 Q220 152 250 100;M70 100 Q100 100 130 100 Q160 100 190 100 Q220 100 250 100;M70 100 Q100 48 130 100 Q160 152 190 100 Q220 48 250 100" keyTimes="0;0.25;0.5;0.75;1" dur="1.8s" repeatCount="indefinite"></animate>
+          </path>
+          <circle class="pin" cx="70" cy="100" r="5"></circle>
+          <circle class="pin" cx="250" cy="100" r="5"></circle>
+          <text class="strong" x="160" y="192" text-anchor="middle">② 形を保ったまま、その場で振動（定常波）</text>
+        </svg>
+        <div class="diagram-caption">2つの手がかりを絵にすると――。①両端（壁の位置）では ψ が常にゼロ：赤い点はけっして動かない。②中身は、形を保ったまま、その場でふくらんだり反転したりする定常波。つまり「両端が固定された、その場で振動する波」</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
