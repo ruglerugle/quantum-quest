@@ -121,21 +121,49 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">さて、方程式は使ってこそ分かる。一番シンプルな問題を実際に解いてみよう。<strong>幅 L の「井戸」に閉じ込められた電子</strong>だ。まっすぐな細い溝の中に電子を1個入れて、両端には無限に高い壁がある――中では自由に動けるけれど、外へは絶対に出られない、という理想化した設定だよ。おもちゃのような問題に見えるけれど、半導体の中に電子を閉じ込める「量子井戸」など、現実の技術にかなり近い状況なんだ。</div>
+          <div class="dialog-bubble">さて、方程式は使ってこそ分かる。一番シンプルな問題を実際に解いてみよう。設定をていねいに説明するよ。電子を1個、まっすぐな細い「箱」に閉じ込める。箱と言っても、ガラスや金属でできた物の壁ではなくてね。左右の外側に、電子がどうやっても越えられないくらい高い<strong>電気の力の壁</strong>（電子を強く押し返す仕掛け）がそびえていて、<strong>幅 L の内側だけ、電子は自由に動ける</strong>――そういう状況だ。物理学者はこの設定を、エネルギーの高低を図にしたときの断面の形から「<strong>井戸（いど）</strong>」と呼んでいる。深い井戸の底に電子が1個いる、という絵を思い浮かべてごらん。おもちゃのような設定に見えるけれど、半導体の中に電子をこうして閉じ込める「量子井戸」という現実の技術もあるんだよ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">考え方はSTAGE3のギターの弦と同じですね。壁の外には絶対にいられない＝壁の外では見つかる確率がゼロ＝壁の位置で ψ＝0。「両端が固定された弦」とまったく同じ条件です。それなら、井戸の幅 L に半波長がちょうど整数個おさまる波しか生き残れません。半波長1個なら L＝λ/2 で λ＝2L、半波長2個なら λ＝L、半波長3個なら λ＝2L/3……。</div>
+          <div class="dialog-bubble">設定は分かりました。井戸の底にいる電子の ψ を、方程式で求めるんですね。……でも、「方程式を解く」と言われても、正直、何から手を付ければいいのか見当がつきません。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">完璧だよ。まとめると、許される波長は λ＝2L/n（n＝1, 2, 3, …）。あとはこれをエネルギーに翻訳しよう。井戸の中では位置エネルギーはゼロだから、電子のエネルギーは運動エネルギー E＝½mv² だけだ。ここで v＝p/m を代入すると、E＝½m(p/m)²＝<strong>p²/2m</strong> と、運動量だけで書き直せる。そこに STAGE3 の p＝h/λ と、いま求めた λ＝2L/n を順に入れてごらん。</div>
+          <div class="dialog-bubble">攻め方は2段構えだよ。手がかり①：壁の外に電子は<strong>絶対に行けない</strong>。「絶対に行けない」＝「外で見つかる確率がゼロ」＝壁の位置で <strong>ψ＝0</strong>。このように、波の形の「両端」に課される条件を<strong>境界条件</strong>と呼ぶんだ。手がかり②：さがしているのはエネルギーの決まった<strong>定常状態</strong>だった。さっき見たとおり、定常状態では ψ の矢印は各地点でくるくる回るだけで、<strong>波の形そのものは変わらない</strong>。つまり井戸の中の ψ は、その場にとどまって振動する波――<strong>定常波</strong>になる。……「両端が固定されていて」「その場で振動する波」。この組み合わせ、どこかで出会わなかったかな？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">両端が動かせなくて、その場で振動する……あっ、STAGE3の<strong>ギターの弦</strong>です！ 弦の長さに半波長がちょうど整数個おさまる揺れ方だけが生き残る、というあの話と、条件がまったく同じになっています。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。だから答えの形も弦と同じだ。幅 L に半波長が1個・2個・3個……とおさまる波だけが生き残る。式にすると<span class="nw">「半波長 × n ＝ L」</span>、つまり<strong>許される波長は λ＝2L/n</strong>（n＝1, 2, 3, …）。波長が飛び飛びの値しか取れない、というところまでは、これで決まりだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">波長が飛び飛びなのは分かりました。でも待ってください、知りたかったのは<strong>エネルギー</strong>が飛び飛びになる理由でしたよね。波長の話が、どうしてエネルギーの話になるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい問いだ。ここで、これまで集めた道具が一本の鎖につながるんだよ。井戸の中では位置エネルギーはゼロだから、電子のエネルギーは運動エネルギー E＝½mv² だけ。v＝p/m を代入すると <span class="nw">E＝p²/2m</span> と、運動量だけで書ける。そして STAGE3 の <span class="nw">p＝h/λ</span>。つまり――<strong>λ が決まれば p が決まり、p が決まれば E が決まる</strong>。波長が飛び飛びなら、エネルギーも飛び飛びになるしかない。λ＝2L/n をこの鎖に順に通してごらん。</div>
         </div>
       </div>
 
