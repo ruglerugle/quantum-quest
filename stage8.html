@@ -207,14 +207,37 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そう考えたくなるね。でも、実験の答えは違った。原子の内部にそっと目印を付けるだけの、ほとんど蹴飛ばさない検出方法でも、縞は<strong>完全に消える</strong>ことが確かめられたんだ。効いているのは乱しの強さではなく、「どちらを通ったか」の情報が<strong>世界のどこかに残るかどうか</strong>。仕組みは、今日学んだそのものだよ。検出器が経路を記録した瞬間、電子と検出器は「（左を通る電子＋『左』と記録した検出器）と（右を通る電子＋『右』と記録した検出器）の重ね合わせ」――つまり<strong>もつれた状態</strong>になる。縞を作るには左右の波どうしが干渉する必要があるけれど、それぞれが別々の「相棒の記録」と結びついて区別できるようになった瞬間、左右の波は互いに干渉できなくなる。STAGE1の縞は、こうして消えるんだ。</div>
+          <div class="dialog-bubble">そう考えたくなるね。でも、実験の答えは違った。原子の内部にそっと目印を付けるだけの、ほとんど蹴飛ばさない検出方法でも、縞は<strong>完全に消える</strong>ことが確かめられたんだ。効いているのは乱しの強さではなく、「どちらを通ったか」の情報が<strong>世界のどこかに残るかどうか</strong>。その仕組みを、きちんと説明しよう。まず、縞ができていた理由をSTAGE4の「矢印」の言葉で復習するよ。スクリーンのある点に注目すると、そこには「左のスリットを通ってきた矢印」と「右を通ってきた矢印」の2本が届く。ここで量子力学の<strong>会計ルール</strong>その1――<strong>行き着く結末がまったく同じで、どちらの行き方だったか区別のしようがないなら、矢印を足してから2乗する</strong>。長さ1の矢印2本が同じ向きなら、足して長さ2、確率は 2²＝4。逆向きなら足してゼロ、確率0。この場所ごとの差が、縞の明暗だったね。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">もつれが、縞を消す犯人だったんですね……。ということは、逆はどうでしょう。記録した情報を、誰にも読めない形で<strong>完全に消して</strong>しまえば、縞は戻るんですか？</div>
+          <div class="dialog-bubble">はい、そこまではSTAGE4で納得しています。では、検出器を置くと何が変わるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">変わるのは<strong>「結末」</strong>なんだ。検出器が経路を記録すると、全体は今日学んだ<strong>もつれた状態</strong>になる――「左を通った電子 ＋『左』と書かれたメモ」と「右を通った電子 ＋『右』と書かれたメモ」の重ね合わせだ。すると、スクリーンの<strong>同じ点</strong>に電子が届いても、世界に残ったメモの中身が違う。つまりこの2つは「まったく同じ結末」ではなく、<strong>区別できる別々の結末</strong>になってしまった。そこで会計ルールその2――<strong>結末が区別できるなら、矢印は足せない。それぞれを先に2乗して、確率どうしを足す</strong>。STAGE1からずっと、縞の計算は「区別のつかない2つの行き方」という前提でルールその1を使ってきた。検出器は、その前提を壊しただけなんだよ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">量子力学の会計ルール（矢印の長さはどちらも1とする）</span>
+        <span class="step">結末が同じ（区別できない）→ <strong>足してから2乗</strong>： <span class="nw">|→ ＋ →|² ＝ 4</span>　／　<span class="nw">|→ ＋ ←|² ＝ 0</span>　（場所で差がつく ＝ 縞）</span>
+        <span class="step">結末が違う（区別できる）→ <strong>2乗してから足す</strong>： <span class="nw">|→|² ＋ |→|² ＝ 2</span>　／　<span class="nw">|→|² ＋ |←|² ＝ 2</span>　（どこでも同じ ＝ 縞なし）</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">計算してみます。検出器が無ければ、明るい点は確率4、暗い点は0で、場所によって大違い――これが縞。検出器を置くと、明るかったはずの点は 1＋1＝2、暗かったはずの点も 1＋1＝2……あっ、<strong>どの点でも2</strong>になって、差がぜんぶ消えます。縞が消えるって、電子が乱されたからではなくて、<strong>足し算のルールの適用先が変わったから</strong>なんですね。もつれが、縞を消す犯人だったんだ……。ということは、逆はどうでしょう。記録した情報を、誰にも読めない形で<strong>完全に消して</strong>しまえば、縞は戻るんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
