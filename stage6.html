@@ -36,6 +36,13 @@
   .well-svg .brk{stroke:#2f6fa6;stroke-width:2;fill:none}
   .well-svg .cont{stroke:var(--felt);stroke-width:6;stroke-dasharray:2 6;fill:none;opacity:.6}
   .well-svg .pin{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
+  .well-svg .accent{fill:#8a6a24;font-size:11px;font-weight:900}
+  .anim-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .anim-ctrl .btn{padding:.4rem .95rem;font-size:13px;font-weight:900}
+  .anim-ctrl .ctrl-label{font-size:11px;color:var(--muted);font-weight:700}
+  .anim-ctrl input[type=range]{flex:1;max-width:280px;min-width:140px;accent-color:#8a6a24}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
 </style>
 </head>
 <body>
@@ -120,7 +127,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いいところに気づいたね。そしてここが、STAGE4で予告した「実数ではだめな、もう1つの理由」の答え合わせだ。もし i を使わずに、実数のままこの形（時間について1回の変化率で書く形）の方程式を作ると、それは波の方程式ではなく、<strong>熱がさめていく方程式</strong>になってしまう。お湯の温度がなまって冷めるように、波はぼやけて消えていく一方なんだ。ところが i が入ると、「減衰」が「<strong>回転</strong>」に化ける。ψ の矢印はくるくる回り続けるだけで、大きさは保たれる。i は、波を死なせないための部品なんだよ。さて、2行目の「定常状態」も説明しておこう。エネルギーがはっきり1つに決まった状態では、ψ の（複素数としての）向きがくるくる回るだけで、<strong>|ψ|² の形は時間がたっても変わらない</strong>。形が定まっているから「定常」だ。そういう状態を探すときは、方程式が Ĥψ＝Eψ――「エネルギーを取り出す操作をしても、形が変わらず、ただ E 倍になる」――というシンプルな形になる。今日はこちらを使うよ。</div>
+          <div class="dialog-bubble">いいところに気づいたね。そしてここが、STAGE4で予告した「実数ではだめな、もう1つの理由」の答え合わせだ。もし i を使わずに、実数のままこの形（時間について1回の変化率で書く形）の方程式を作ると、それは波の方程式ではなく、<strong>熱がさめていく方程式</strong>になってしまう。お湯の温度がなまって冷めるように、波はぼやけて消えていく一方なんだ。ところが i が入ると、「減衰」が「<strong>回転</strong>」に化ける。ψ の矢印はくるくる回り続けるだけで、大きさは保たれる。i は、波を死なせないための部品なんだよ。しかも回転の速さはエネルギーに比例する――<strong>ψ の矢印は、その状態のエネルギーに比例した速さで回る時計</strong>なんだ。この性質はこの先の旅でも使うから、<strong>矢印の時計法則</strong>という呼び名を付けておこう。さて、2行目の「定常状態」も説明しておこう。エネルギーがはっきり1つに決まった状態では、ψ の（複素数としての）向きがくるくる回るだけで、<strong>|ψ|² の形は時間がたっても変わらない</strong>。形が定まっているから「定常」だ。そういう状態を探すときは、方程式が Ĥψ＝Eψ――「エネルギーを取り出す操作をしても、形が変わらず、ただ E 倍になる」――というシンプルな形になる。今日はこちらを使うよ。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -215,6 +222,29 @@
           </div>
           <div class="dialog-bubble">その通り。だから答えの形も弦と同じだ。幅 L に半波長が1個・2個・3個……とおさまる波だけが生き残る。式にすると<span class="nw">「半波長 × n ＝ L」</span>、つまり<strong>許される波長は λ＝2L/n</strong>（n＝1, 2, 3, …）。波長が飛び飛びの値しか取れない、というところまでは、これで決まりだよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="string-svg" class="well-svg" viewBox="0 0 372 226" width="100%" role="img" aria-label="閉じ込められた波のシミュレータ。揺すりの細かさを変えると、弦の長さに山が整数個おさまるパターンだけが大きく生き残り、半端な細かさでは自分自身との干渉で打ち消されて振幅が育たない様子を示す">
+          <text class="strong" x="186" y="16" text-anchor="middle">弦に「ちょうど収まる」波だけが生き残る</text>
+          <g id="string-body"></g>
+        </svg>
+        <div class="readout">
+          <span>波の細かさ <b id="st-k">1.00</b></span>
+          <span>生き残り度 <b id="st-a">100%</b></span>
+          <span>判定 <b id="st-v">生き残る（山1個のパターン）</b></span>
+        </div>
+        <div class="anim-ctrl">
+          <span class="ctrl-label">波の細かさ</span>
+          <input type="range" id="st-slider" min="50" max="350" step="1" value="100" aria-label="波の細かさを変える">
+          <button type="button" class="btn" id="st-1">山1個</button>
+          <button type="button" class="btn" id="st-2">山2個</button>
+          <button type="button" class="btn" id="st-3">山3個</button>
+        </div>
+        <div class="diagram-caption">両端が固定された弦（＝閉じ込められた波）。スライダーで波の細かさを連続的に変えられるが、<strong>大きく振動できるのは、山がちょうど整数個おさまる細かさだけ</strong>。半端な細かさでは、往復してきた波が自分自身とずれて打ち消し合い、振幅が育たない（線が薄くなる）。生き残るパターンが1個、2個、3個…ととびとびに並ぶ――これが定在波で、ギターの音の高さが決まっている理由。電子の波を閉じ込めたときも、まったく同じ選別が起きる。</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
@@ -284,6 +314,20 @@
           </div>
           <div class="dialog-bubble">それは前のステージの不確定性原理そのものだね。幅 L に閉じ込めた以上、運動量はゼロにはできない。この最低限のエネルギーを「零点エネルギー」と呼ぶんだ。原子や分子のエネルギーが飛び飛びなのも、根っこはこの井戸と同じ。方程式と境界条件が、世界の「デジタルさ」を生んでいるんだよ。</div>
         </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">そういえば、この分野はそもそも「<strong>量子</strong>」力学という名前でした。この名前は、今日導いた階段と関係があるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">大ありだよ。「量子」は「<strong>とびとびのかたまり</strong>」という意味なんだ。エネルギーが連続ではなく、決まった段の値でしかやり取りされない――この分野の名前は、今日きみが導いた階段そのものから来ている。<br>証拠は目でも見える。ネオンサインや花火が<strong>決まった色</strong>で光るのは、電子が階段を1段降りるとき、段差ぶんのエネルギーがそのまま決まった色の光になって出てくるからだ。時計法則で言えば、<strong>段差＝矢印の回転リズムの差が、そのまま光の周波数（色）になる</strong>。階段がとびとびだから、色もとびとびなんだよ。</div>
+        </div>
       </div>
 
       <div class="quiz-head">確認クイズ</div>
@@ -345,5 +389,90 @@
   }
 </script>
 <script>QQ.initStagePage(6);</script>
+
+<script>
+(function(){
+  // 図1: 閉じ込められた波の生き残りシミュレータ
+  var svg = document.getElementById('string-svg');
+  var g = document.getElementById('string-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CA = '#b98a2e', CN = '#b5504a', CB = '#2f7a6b';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var X0 = 46, X1 = 326, MID = 108, AMP = 56;
+  // 固定端
+  el('line', {x1: X0, y1: MID - 70, x2: X0, y2: MID + 70, stroke: 'var(--ink)', 'stroke-width': 4});
+  el('line', {x1: X1, y1: MID - 70, x2: X1, y2: MID + 70, stroke: 'var(--ink)', 'stroke-width': 4});
+  txt(X0, MID + 90, 'label', '固定端');
+  txt(X1, MID + 90, 'label', '固定端');
+  el('line', {x1: X0, y1: MID, x2: X1, y2: MID, stroke: 'var(--line)', 'stroke-dasharray': '3 4'});
+  var wavePos = el('path', {fill: 'none', stroke: CB, 'stroke-width': 2.6});
+  var waveNeg = el('path', {fill: 'none', stroke: CB, 'stroke-width': 2.6, opacity: .35});
+  var verdictTxt = txt(186, 34, 'strong', '');
+
+  var slider = document.getElementById('st-slider');
+  var kEl = document.getElementById('st-k'), aEl = document.getElementById('st-a'), vEl = document.getElementById('st-v');
+  var t = 0, running = false, raf = null;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function survival(k) {
+    // 整数からの離れ具合で生き残り度を決める（共鳴の鋭さの模式）
+    var d = Math.abs(k - Math.round(k));
+    return 1 / (1 + Math.pow(d / 0.12, 2));
+  }
+  function draw(phase) {
+    var k = (slider ? parseFloat(slider.value) : 100) / 100;
+    var s = survival(k);
+    var envelope = 0.15 + 0.85 * s;
+    var dPos = '', dNeg = '';
+    for (var i = 0; i <= 100; i++) {
+      var x = X0 + (X1 - X0) * i / 100;
+      var shape = Math.sin(Math.PI * k * i / 100);
+      var yP = MID - shape * AMP * envelope * Math.cos(phase);
+      var yN = MID + shape * AMP * envelope * Math.cos(phase);
+      dPos += (i === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + yP.toFixed(1) + ' ';
+      dNeg += (i === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + yN.toFixed(1) + ' ';
+    }
+    wavePos.setAttribute('d', dPos);
+    waveNeg.setAttribute('d', dNeg);
+    var alive = s > 0.6;
+    wavePos.setAttribute('stroke', alive ? CB : CN);
+    waveNeg.setAttribute('stroke', alive ? CB : CN);
+    verdictTxt.textContent = alive ? '生き残る（自分とそろって強め合う）' : '打ち消し合って育たない';
+    verdictTxt.style.fill = alive ? CB : CN;
+    if (kEl) kEl.textContent = k.toFixed(2);
+    if (aEl) aEl.textContent = Math.round(s * 100) + '%';
+    if (vEl) vEl.textContent = alive ? '生き残る（山' + Math.round(k) + '個のパターン）' : '打ち消される';
+  }
+  if (slider) slider.addEventListener('input', function () { draw(t); });
+  [['st-1', 100], ['st-2', 200], ['st-3', 300]].forEach(function (p) {
+    var b = document.getElementById(p[0]);
+    if (b) b.addEventListener('click', function () { slider.value = p[1]; draw(t); });
+  });
+  function loop() {
+    if (!running) return;
+    t += 0.09;
+    draw(t);
+    raf = requestAnimationFrame(loop);
+  }
+  draw(0);
+  if (!reduced && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  }
+})();
+</script>
 </body>
 </html>
