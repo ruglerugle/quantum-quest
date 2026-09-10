@@ -53,7 +53,8 @@
   .grad-svg .sec{stroke:#c8433f;stroke-width:2.2;fill:none}
   .grad-svg .dot2{fill:#fff;stroke:#c8433f;stroke-width:2}
   .grad-svg .red{fill:#c8433f}
-  .grad-svg .strip2{fill:rgba(200,67,63,.32);stroke:#c8433f;stroke-width:1}
+  .grad-svg .strip2{fill:rgba(200,67,63,.28);stroke:#c8433f;stroke-width:1}
+  .grad-svg .strip3{fill:rgba(200,67,63,.8);stroke:#8f2f2c;stroke-width:1.2}
   .grad-svg .tri{stroke:#c8433f;stroke-width:1.5;fill:none;stroke-dasharray:3 3}
   .grad-svg .dot{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
   .grad-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
@@ -293,6 +294,8 @@
             <text class="strong" x="185" y="172" text-anchor="middle">面積 ＝ E</text>
           </g>
           <path class="strip2" id="area-strips" d=""></path>
+          <path class="strip3" id="area-focal" d=""></path>
+          <text class="label red" id="area-dv" text-anchor="middle" x="166" y="204">Δv</text>
           <path class="axis" d="M45 20 L45 190 L300 190"></path>
           <path class="axis" d="M300 190 l-8 -4 M300 190 l-8 4"></path>
           <path class="axis" d="M45 20 l-4 8 M45 20 l4 8"></path>
@@ -303,7 +306,7 @@
           <line class="tan" x1="45" y1="190" x2="285" y2="60"></line>
           <line class="guide" x1="245" y1="190" x2="245" y2="81.7"></line>
           <text class="label" x="245" y="205" text-anchor="middle">v</text>
-          <text class="label blue" x="60" y="105">1本の短冊 ＝ p × Δv ＝ ΔE</text>
+          <text class="label blue" x="60" y="105">濃い短冊 ＝ p × Δv ＝ ΔE</text>
           <text class="strong" x="160" y="227" text-anchor="middle">Δv を小さくするほど、短冊の合計は三角形の面積に近づく</text>
         </svg>
         <div class="diagram-caption">高さ p・幅 Δv の短冊を0からvまで敷き詰めて足し集める。Δv を小さくして本数を増やすほど、短冊の合計は直線の下の三角形の面積に近づき、行き着き先がちょうど三角形の面積＝½×v×mv＝½mv²＝E</div>
@@ -698,22 +701,32 @@
     if (!strips) return;
     var tri = document.getElementById("area-tri");
     var lab = document.getElementById("area-label");
+    var focal = document.getElementById("area-focal");
+    var dvLab = document.getElementById("area-dv");
     var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var X0 = 45, X1 = 245, BASE = 190, S = 130 / 240;
-    function build(w) {
+    var X0 = 45, X1 = 245, BASE = 190, S = 130 / 240, XF = 166;
+    function stripPath(x, w) {
+      var wl = Math.min(w, X1 - x);
+      var h = (x - X0) * S;
+      if (h <= 0.4) return "";
+      return "M" + x.toFixed(1) + " " + BASE + " v-" + h.toFixed(1) + " h" + wl.toFixed(1) + " V" + BASE + " z ";
+    }
+    function render(w) {
+      var xf = X0 + Math.floor((XF - X0) / w) * w;   // モチーフの短冊（XF を含む1本）
       var d = "";
       for (var x = X0; x < X1 - 0.01; x += w) {
-        var wl = Math.min(w, X1 - x);
-        var h = (x - X0) * S;
-        if (h > 0.4) d += "M" + x.toFixed(1) + " " + BASE + " v-" + h.toFixed(1) + " h" + wl.toFixed(1) + " V" + BASE + " z ";
+        if (Math.abs(x - xf) > w / 2) d += stripPath(x, w);
       }
-      return d;
+      strips.setAttribute("d", d);
+      focal.setAttribute("d", stripPath(xf, w));
+      dvLab.setAttribute("x", (xf + Math.min(w, X1 - xf) / 2).toFixed(1));
     }
     if (reduced) {
       tri.setAttribute("opacity", "1");
       lab.textContent = "Δv → 0：三角形の面積 ＝ E";
-      strips.setAttribute("d", build(25));
+      render(25);
       strips.setAttribute("opacity", "0.45");
+      focal.setAttribute("opacity", "0.8");
       return;
     }
     var W0 = 50, W1 = 1.6, SHRINK = 7000, HOLD = 2600, TOTAL = SHRINK + HOLD;
@@ -729,12 +742,16 @@
         if (t < SHRINK) {
           var u = t / SHRINK;
           var w = W0 * Math.pow(W1 / W0, u); // 指数的に連続で細く
-          strips.setAttribute("d", build(w));
+          render(w);
           strips.setAttribute("opacity", "1");
+          focal.setAttribute("opacity", "1");
+          dvLab.setAttribute("opacity", "1");
           tri.setAttribute("opacity", "0");
           lab.textContent = "幅 Δv の短冊 " + Math.round((X1 - X0) / w) + " 本";
         } else {
           strips.setAttribute("opacity", "0");
+          focal.setAttribute("opacity", "0");
+          dvLab.setAttribute("opacity", "0");
           tri.setAttribute("opacity", "1");
           lab.textContent = "Δv → 0：三角形の面積 ＝ E";
         }
