@@ -307,7 +307,7 @@
       <div class="diagram-box">
         <div class="ipanel">
           <canvas id="ipanC" role="img" aria-label="同じ比例定数kを共有する2つのパネル。左は i なしの実数の方程式で、kが負なら波が減衰し、正なら増幅し、ゼロなら変わらない。右は同じkにiを掛けただけの方程式で、矢印が大きさを保ったまま回転し、kの大きさで回転が速くなり、kの符号で回る向きが変わり、k=0なら止まる"></canvas>
-          <div class="anim-ctrl"><span class="ctrl-label">比例定数 k（両方に共通）</span><input type="range" id="ipan-k" min="-2" max="2" step="0.1" value="-1" aria-label="比例定数k"><b class="ctrl-val" id="ipan-kv">−1.0</b></div>
+          <div class="anim-ctrl"><span class="ctrl-label">比例定数 k（≒エネルギー E。両方に共通）</span><input type="range" id="ipan-k" min="-2" max="2" step="0.1" value="-1" aria-label="比例定数k（エネルギーEに相当）"><b class="ctrl-val" id="ipan-kv">−1.0</b></div>
         </div>
         <svg class="iclock-svg" viewBox="0 0 320 122" width="100%" role="img" aria-label="定常状態の図。3つの場所の矢印がどれも同じ速さで回るだけなので、確率分布の形は時間がたっても変わらない">
           <rect class="card" x="15" y="6" width="290" height="110" rx="10"></rect>
@@ -339,7 +339,7 @@
           <path class="psi2" d="M55 94 Q160 66 265 94"></path>
           <text class="label" x="160" y="108" text-anchor="middle">|ψ|² の形は時間がたっても変わらない（Ĥψ＝Eψ）</text>
         </svg>
-        <div class="diagram-caption">同じ比例定数 k を共有する実験パネル。違いは i を掛けるかどうかだけ。左（i なし）は k が負なら減衰、正なら増幅と、どちらにしても一方通行で「揺れ」は生まれない。右（i あり）は同じ k でも矢印は大きさを保ったまま回転し、k の大きさは回る速さに、符号は回る向きに変わる（k＝0 なら両方とも何も起こらない）。シュレーディンガー方程式ではこの定数がエネルギーに当たるので、回る速さはエネルギーに比例する＝矢印の時計法則。下段：定常状態では、どの場所の矢印も同じ速さで回るだけなので、|ψ|² の形は時間がたっても変わらない</div>
+        <div class="diagram-caption">同じ比例定数 k を共有する実験パネル。違いは i を掛けるかどうかだけ。左（i なし）は k が負なら減衰、正なら増幅と、どちらにしても一方通行で「揺れ」は生まれない。右（i あり）は同じ k でも矢印は大きさを保ったまま回転し、k の大きさは回る速さに、符号は回る向きに変わる（k＝0 なら両方とも何も起こらない）。シュレーディンガー方程式ではこの k がエネルギー E に当たる（正確には E/ℏ）ので、回る速さはエネルギーに比例する＝矢印の時計法則。下段：定常状態では、どの場所の矢印も同じ速さで回るだけなので、|ψ|² の形は時間がたっても変わらない</div>
       </div>
 
       <div class="dialogue-scene">
