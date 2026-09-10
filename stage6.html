@@ -47,6 +47,17 @@
   .iclock-svg .handhead{fill:#2f6fa6}
   .iclock-svg .psi2{fill:rgba(217,164,65,.25);stroke:var(--gold-dark);stroke-width:2}
   .iclock-svg .formula{fill:#2f6fa6;font-size:13px;font-weight:900}
+  .opfn-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .opfn-svg .title{fill:var(--ink);font-size:12px;font-weight:900}
+  .opfn-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
+  .opfn-svg .mach{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:2}
+  .opfn-svg .machtext{fill:var(--gold-dark);font-size:11.5px;font-weight:900}
+  .opfn-svg .arr{stroke:var(--muted);stroke-width:1.6;fill:none}
+  .opfn-svg .arrhead{fill:var(--muted)}
+  .opfn-svg .tok{fill:#e3eef8;stroke:#2f6fa6;stroke-width:2}
+  .opfn-svg .toktext{fill:#2f6fa6;font-size:13px;font-weight:900}
+  .opfn-svg .incurve{fill:none;stroke:var(--gold-dark);stroke-width:2.4}
+  .opfn-svg .outcurve{fill:none;stroke:#2f6fa6;stroke-width:2.4}
   .anim-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
   .anim-ctrl .btn{padding:.4rem .95rem;font-size:13px;font-weight:900}
   .anim-ctrl .ctrl-label{font-size:11px;color:var(--muted);font-weight:700}
@@ -153,6 +164,56 @@
           </div>
           <div class="dialog-bubble">考え方はとても近いよ。関数は「<strong>数を入れると、数が返る</strong>」仕組みだね。演算子はその一段上で、「<strong>関数を丸ごと入れると、新しい関数が返る</strong>」仕組みなんだ。たとえば「傾きを求めよ」という演算子に ψ の曲線全体を渡すと、各点での傾きを並べた<strong>別の曲線</strong>が返ってくる。数を食べて数を返すのが関数、関数（曲線ごと）を食べて関数を返すのが演算子――そこが違いだ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="opfn-svg" viewBox="0 0 320 240" width="100%" role="img" aria-label="関数と演算子の違いのアニメーション。上段：関数y=2xの機械に数の3が入っていくと、数の6が出てくる。下段：「傾きを求めよ」という演算子の機械にψの曲線が丸ごと入っていくと、各点の傾きを並べた別の曲線が出てくる">
+          <rect class="card" x="15" y="12" width="290" height="90" rx="10"></rect>
+          <text class="title" x="160" y="32" text-anchor="middle">関数：数を入れると、数が返る</text>
+          <line class="arr" x1="62" y1="65" x2="120" y2="65"></line>
+          <path class="arrhead" d="M126 65 l-8 -4.5 0 9 z"></path>
+          <line class="arr" x1="196" y1="65" x2="254" y2="65"></line>
+          <path class="arrhead" d="M260 65 l-8 -4.5 0 9 z"></path>
+          <rect class="mach" x="130" y="45" width="60" height="40" rx="7"></rect>
+          <text class="machtext" x="160" y="69" text-anchor="middle">y＝2x</text>
+          <g transform="translate(45,65)">
+            <circle class="tok" r="11"></circle>
+            <text class="toktext" y="4.5" text-anchor="middle">3</text>
+            <animateTransform attributeName="transform" type="translate" values="45 65;117 65;117 65" keyTimes="0;0.4;1" dur="4s" repeatCount="indefinite"></animateTransform>
+            <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.38;0.46;1" dur="4s" repeatCount="indefinite"></animate>
+          </g>
+          <g transform="translate(203,65)">
+            <circle class="tok" r="11"></circle>
+            <text class="toktext" y="4.5" text-anchor="middle">6</text>
+            <animateTransform attributeName="transform" type="translate" values="203 65;203 65;275 65;275 65" keyTimes="0;0.5;0.9;1" dur="4s" repeatCount="indefinite"></animateTransform>
+            <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.5;0.58;0.92;1" dur="4s" repeatCount="indefinite"></animate>
+          </g>
+          <rect class="card" x="15" y="112" width="290" height="116" rx="10"></rect>
+          <text class="title" x="160" y="132" text-anchor="middle">演算子：関数を丸ごと入れると、関数が返る</text>
+          <line class="arr" x1="62" y1="172" x2="120" y2="172"></line>
+          <path class="arrhead" d="M126 172 l-8 -4.5 0 9 z"></path>
+          <line class="arr" x1="196" y1="172" x2="254" y2="172"></line>
+          <path class="arrhead" d="M260 172 l-8 -4.5 0 9 z"></path>
+          <rect class="mach" x="130" y="147" width="60" height="50" rx="7"></rect>
+          <text class="machtext" x="160" y="167" text-anchor="middle">傾きを</text>
+          <text class="machtext" x="160" y="182" text-anchor="middle">求めよ</text>
+          <g transform="translate(45,178)">
+            <path class="incurve" d="M-26 0 Q0 -26 26 0"></path>
+            <animateTransform attributeName="transform" type="translate" values="45 178;117 178;117 178" keyTimes="0;0.4;1" dur="4s" repeatCount="indefinite"></animateTransform>
+            <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.38;0.46;1" dur="4s" repeatCount="indefinite"></animate>
+          </g>
+          <g transform="translate(203,172)">
+            <path class="outcurve" d="M-24 -12 L24 12"></path>
+            <animateTransform attributeName="transform" type="translate" values="203 172;203 172;275 172;275 172" keyTimes="0;0.5;0.9;1" dur="4s" repeatCount="indefinite"></animateTransform>
+            <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.5;0.58;0.92;1" dur="4s" repeatCount="indefinite"></animate>
+          </g>
+          <text class="label" x="70" y="218" text-anchor="middle">ψ の曲線ごと</text>
+          <text class="label" x="242" y="218" text-anchor="middle">傾きを並べた別の曲線</text>
+        </svg>
+        <div class="diagram-caption">関数と演算子の違い。関数 y＝2x は「数の 3」を食べて「数の 6」を返す。演算子は関数（曲線）を丸ごと食べる機械で、「傾きを求めよ」という演算子に ψ の曲線を渡すと、各点での傾きを並べた別の曲線が返ってくる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
@@ -501,7 +562,7 @@
 <script>
   // アニメーションを避けたい設定のユーザーには静止画で表示する
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll(".well-svg animate, .well-svg animateTransform, .iclock-svg animate, .iclock-svg animateTransform").forEach(function (a) { a.remove(); });
+    document.querySelectorAll(".well-svg animate, .well-svg animateTransform, .iclock-svg animate, .iclock-svg animateTransform, .opfn-svg animate, .opfn-svg animateTransform").forEach(function (a) { a.remove(); });
   }
 </script>
 <script>QQ.initStagePage(6);</script>
