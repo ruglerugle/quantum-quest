@@ -74,6 +74,11 @@
   .pair2-svg .hbadge{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:2}
   .pair2-svg .htext{fill:var(--gold-dark);font-size:16px;font-weight:900}
   .pair2-svg .hline{stroke:var(--gold-dark);stroke-width:1.5;stroke-dasharray:4 3}
+  .pair2-svg .vbadge{fill:#e3eef8;stroke:#2f6fa6;stroke-width:2}
+  .pair2-svg .vtext{fill:#2f6fa6;font-size:15px;font-weight:900;font-style:italic}
+  .pair2-svg .vline{stroke:#2f6fa6;stroke-width:1.5;stroke-dasharray:4 3}
+  .pair2-svg .vlabel{fill:#2f6fa6;font-size:11px;font-weight:900}
+  .pair2-svg .hlabel{fill:var(--gold-dark);font-size:11px;font-weight:900}
   .spec3-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .spec3-svg .dark{fill:#12121c;stroke:var(--line);stroke-width:1}
 </style>
@@ -328,7 +333,7 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="pair2-svg" viewBox="0 0 320 195" width="100%" role="img" aria-label="2本の式の対称性を並べた図。左のカードは時間の刻みで、振動数がエネルギーと結ばれ、式はE=hν。右のカードは空間の刻みで、波長が運動量と結ばれ、式はp=h/λ。中央の h が両方の式に共通の仲立ちになっている">
+        <svg class="pair2-svg" viewBox="0 0 320 215" width="100%" role="img" aria-label="2本の式の対称性を並べた図。左のカードは時間の刻みで、振動数がエネルギーと結ばれ、式はE=hν。右のカードは空間の刻みで、波長が運動量と結ばれ、式はp=h/λ。上段では振動数と波長が波の速さvで結ばれ、ν=v/λ、λ=v/νと互いに換算できる。下段では中央の h が両方の式に共通の仲立ちになっている">
           <rect class="card" x="15" y="12" width="130" height="140" rx="10"></rect>
           <text class="title" x="80" y="34" text-anchor="middle">時間の刻み</text>
           <text class="item" x="80" y="60" text-anchor="middle">振動数 ν</text>
@@ -345,12 +350,16 @@
           <path class="arrhead" d="M240 101 l-4.5 -8 9 0 z"></path>
           <text class="item" x="240" y="117" text-anchor="middle">運動量 p</text>
           <text class="formula" x="240" y="142" text-anchor="middle">p ＝ h/λ</text>
+          <line class="vline" x1="112" y1="56" x2="214" y2="56"></line>
+          <circle class="vbadge" cx="160" cy="56" r="14"></circle>
+          <text class="vtext" x="159" y="61" text-anchor="middle">v</text>
           <line class="hline" x1="145" y1="137" x2="175" y2="137"></line>
           <circle class="hbadge" cx="160" cy="137" r="14"></circle>
           <text class="htext" x="160" y="143" text-anchor="middle">h</text>
-          <text class="label" x="160" y="175" text-anchor="middle">どちらの式も、同じプランク定数 h が仲立ちしている</text>
+          <text class="vlabel" x="160" y="175" text-anchor="middle">v ＝ 波の速さ：ν＝v/λ、λ＝v/ν</text>
+          <text class="hlabel" x="160" y="196" text-anchor="middle">h ＝ プランク定数：どちらの式も同じ h が仲立ち</text>
         </svg>
-        <div class="diagram-caption">2本で1組の対。時間方向の刻み（振動数）はエネルギーと、空間方向の刻み（波長）は運動量と結ばれ、その仲立ちはどちらも同じ h。この対称性を見たド・ブロイは「光だけの特別ルールのはずがない」と考えた</div>
+        <div class="diagram-caption">2本で1組の対。時間方向の刻み（振動数）はエネルギーと、空間方向の刻み（波長）は運動量と結ばれ、その仲立ちはどちらも同じ h。さらに振動数と波長どうしも独立ではなく、波の速さ v を通して ν＝v/λ（λ＝v/ν）と互いに換算できる。この対称性を見たド・ブロイは「光だけの特別ルールのはずがない」と考えた</div>
       </div>
 
       <div class="dialogue-scene">
