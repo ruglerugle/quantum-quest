@@ -53,6 +53,7 @@
   .grad-svg .sec{stroke:#c8433f;stroke-width:2.2;fill:none}
   .grad-svg .dot2{fill:#fff;stroke:#c8433f;stroke-width:2}
   .grad-svg .red{fill:#c8433f}
+  .grad-svg .strip2{fill:rgba(200,67,63,.32);stroke:#c8433f;stroke-width:1}
   .grad-svg .tri{stroke:#c8433f;stroke-width:1.5;fill:none;stroke-dasharray:3 3}
   .grad-svg .dot{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
   .grad-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
@@ -286,9 +287,33 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="grad-svg" viewBox="0 0 320 235" width="100%" role="img" aria-label="横軸が速さv、縦軸が運動量pのグラフ。p=mvは原点を通る直線で、その下の三角形の面積を細い長方形の集まりとして足し合わせるとエネルギー½mv²になる">
-          <polygon class="area" points="45,190 245,190 245,81.7"></polygon>
-          <rect class="strip" x="160" y="127.7" width="12" height="62.3"></rect>
+        <svg class="grad-svg" viewBox="0 0 320 235" width="100%" role="img" aria-label="横軸が速さv、縦軸が運動量pのグラフのアニメーション。原点を通る直線p=mvの下に、幅Δvの短冊が4本、8本、16本、32本とどんどん細かく敷き詰められていき、最後に直線の下の三角形の面積そのものになる。この面積がエネルギー½mv²">
+          <g opacity="0">
+            <path class="strip2" d="M95.0 190 v-27.1 h50.0 V190 z M145.0 190 v-54.2 h50.0 V190 z M195.0 190 v-81.2 h50.0 V190 z"></path>
+            <text class="strong" x="60" y="55">幅 Δv の短冊 4 本</text>
+            <animate attributeName="opacity" values="1;0" keyTimes="0;0.18" calcMode="discrete" dur="10s" repeatCount="indefinite"></animate>
+          </g>
+          <g opacity="0">
+            <path class="strip2" d="M70.0 190 v-13.5 h25.0 V190 z M95.0 190 v-27.1 h25.0 V190 z M120.0 190 v-40.6 h25.0 V190 z M145.0 190 v-54.2 h25.0 V190 z M170.0 190 v-67.7 h25.0 V190 z M195.0 190 v-81.2 h25.0 V190 z M220.0 190 v-94.8 h25.0 V190 z"></path>
+            <text class="strong" x="60" y="55">幅 Δv の短冊 8 本</text>
+            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.18;0.36" calcMode="discrete" dur="10s" repeatCount="indefinite"></animate>
+          </g>
+          <g opacity="0">
+            <path class="strip2" d="M57.5 190 v-6.8 h12.5 V190 z M70.0 190 v-13.5 h12.5 V190 z M82.5 190 v-20.3 h12.5 V190 z M95.0 190 v-27.1 h12.5 V190 z M107.5 190 v-33.9 h12.5 V190 z M120.0 190 v-40.6 h12.5 V190 z M132.5 190 v-47.4 h12.5 V190 z M145.0 190 v-54.2 h12.5 V190 z M157.5 190 v-60.9 h12.5 V190 z M170.0 190 v-67.7 h12.5 V190 z M182.5 190 v-74.5 h12.5 V190 z M195.0 190 v-81.2 h12.5 V190 z M207.5 190 v-88.0 h12.5 V190 z M220.0 190 v-94.8 h12.5 V190 z M232.5 190 v-101.6 h12.5 V190 z"></path>
+            <text class="strong" x="60" y="55">幅 Δv の短冊 16 本</text>
+            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.36;0.54" calcMode="discrete" dur="10s" repeatCount="indefinite"></animate>
+          </g>
+          <g opacity="0">
+            <path class="strip2" d="M51.3 190 v-3.4 h6.3 V190 z M57.5 190 v-6.8 h6.3 V190 z M63.8 190 v-10.2 h6.3 V190 z M70.0 190 v-13.5 h6.3 V190 z M76.3 190 v-16.9 h6.3 V190 z M82.5 190 v-20.3 h6.3 V190 z M88.8 190 v-23.7 h6.3 V190 z M95.0 190 v-27.1 h6.3 V190 z M101.3 190 v-30.5 h6.3 V190 z M107.5 190 v-33.9 h6.3 V190 z M113.8 190 v-37.2 h6.3 V190 z M120.0 190 v-40.6 h6.3 V190 z M126.3 190 v-44.0 h6.3 V190 z M132.5 190 v-47.4 h6.3 V190 z M138.8 190 v-50.8 h6.3 V190 z M145.0 190 v-54.2 h6.3 V190 z M151.3 190 v-57.6 h6.3 V190 z M157.5 190 v-60.9 h6.3 V190 z M163.8 190 v-64.3 h6.3 V190 z M170.0 190 v-67.7 h6.3 V190 z M176.3 190 v-71.1 h6.3 V190 z M182.5 190 v-74.5 h6.3 V190 z M188.8 190 v-77.9 h6.3 V190 z M195.0 190 v-81.2 h6.3 V190 z M201.3 190 v-84.6 h6.3 V190 z M207.5 190 v-88.0 h6.3 V190 z M213.8 190 v-91.4 h6.3 V190 z M220.0 190 v-94.8 h6.3 V190 z M226.3 190 v-98.2 h6.3 V190 z M232.5 190 v-101.6 h6.3 V190 z M238.8 190 v-104.9 h6.3 V190 z"></path>
+            <text class="strong" x="60" y="55">幅 Δv の短冊 32 本</text>
+            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.54;0.72" calcMode="discrete" dur="10s" repeatCount="indefinite"></animate>
+          </g>
+          <g opacity="1">
+            <polygon class="area" points="45,190 245,190 245,81.7"></polygon>
+            <text class="strong" x="60" y="55">Δv → 0：三角形の面積 ＝ E</text>
+            <text class="strong" x="185" y="172" text-anchor="middle">面積 ＝ E</text>
+            <animate attributeName="opacity" values="0;1" keyTimes="0;0.72" calcMode="discrete" dur="10s" repeatCount="indefinite"></animate>
+          </g>
           <path class="axis" d="M45 20 L45 190 L300 190"></path>
           <path class="axis" d="M300 190 l-8 -4 M300 190 l-8 4"></path>
           <path class="axis" d="M45 20 l-4 8 M45 20 l4 8"></path>
@@ -298,12 +323,10 @@
           <line class="tan" x1="45" y1="190" x2="285" y2="60"></line>
           <line class="guide" x1="245" y1="190" x2="245" y2="81.7"></line>
           <text class="label" x="245" y="205" text-anchor="middle">v</text>
-          <text class="label blue" x="60" y="105">細い長方形 ＝ p × Δv ＝ ΔE</text>
-          <path class="tri" d="M120 110 L158 125"></path>
-          <text class="strong" x="175" y="172" text-anchor="middle">面積 ＝ E</text>
-          <text class="strong" x="160" y="227" text-anchor="middle">直線の下の三角形の面積が、そのままエネルギー</text>
+          <text class="label blue" x="60" y="105">1本の短冊 ＝ p × Δv ＝ ΔE</text>
+          <text class="strong" x="160" y="227" text-anchor="middle">Δv を小さくするほど、短冊の合計は三角形の面積に近づく</text>
         </svg>
-        <div class="diagram-caption">細い長方形（p×Δv）を0からvまで足し集めると、直線の下の三角形の面積になる。三角形の面積＝½×v×mv＝½mv²＝E</div>
+        <div class="diagram-caption">高さ p・幅 Δv の短冊を0からvまで敷き詰めて足し集める。Δv を小さくして本数を増やすほど、短冊の合計は直線の下の三角形の面積に近づき、行き着き先がちょうど三角形の面積＝½×v×mv＝½mv²＝E</div>
       </div>
 
       <div class="formula-box">
