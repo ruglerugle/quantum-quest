@@ -306,9 +306,8 @@
 
       <div class="diagram-box">
         <div class="ipanel">
-          <canvas id="ipanC" role="img" aria-label="比例定数を自分で変えられる実験パネル。左は i なしの実数の方程式で、kが負なら波が減衰し、正なら増幅し、ゼロなら変わらない。右は i ありで、矢印が大きさを保ったまま回転し、エネルギーEを大きくすると回転が速くなる"></canvas>
-          <div class="anim-ctrl"><span class="ctrl-label">i なし：比例定数 k</span><input type="range" id="ipan-k" min="-2" max="2" step="0.1" value="-1" aria-label="実数の比例定数k"><b class="ctrl-val" id="ipan-kv">−1.0</b></div>
-          <div class="anim-ctrl"><span class="ctrl-label">i あり：エネルギー E</span><input type="range" id="ipan-e" min="0.25" max="3" step="0.05" value="1" aria-label="エネルギーE"><b class="ctrl-val" id="ipan-ev">1.00</b></div>
+          <canvas id="ipanC" role="img" aria-label="同じ比例定数kを共有する2つのパネル。左は i なしの実数の方程式で、kが負なら波が減衰し、正なら増幅し、ゼロなら変わらない。右は同じkにiを掛けただけの方程式で、矢印が大きさを保ったまま回転し、kの大きさで回転が速くなり、kの符号で回る向きが変わり、k=0なら止まる"></canvas>
+          <div class="anim-ctrl"><span class="ctrl-label">比例定数 k（両方に共通）</span><input type="range" id="ipan-k" min="-2" max="2" step="0.1" value="-1" aria-label="比例定数k"><b class="ctrl-val" id="ipan-kv">−1.0</b></div>
         </div>
         <svg class="iclock-svg" viewBox="0 0 320 122" width="100%" role="img" aria-label="定常状態の図。3つの場所の矢印がどれも同じ速さで回るだけなので、確率分布の形は時間がたっても変わらない">
           <rect class="card" x="15" y="6" width="290" height="110" rx="10"></rect>
@@ -340,7 +339,7 @@
           <path class="psi2" d="M55 94 Q160 66 265 94"></path>
           <text class="label" x="160" y="108" text-anchor="middle">|ψ|² の形は時間がたっても変わらない（Ĥψ＝Eψ）</text>
         </svg>
-        <div class="diagram-caption">比例定数を自分で動かせる実験パネル。左（i なし）はスライダーの k が負なら波は減衰して消え、正なら増幅してふくらむ一方で、どちらにしても「揺れ」は生まれない。右（i あり）は矢印が大きさを保ったまま回転し、エネルギー E を大きくすると回転が速くなるだけ（矢印の時計法則）。下段：エネルギーが1つに決まった定常状態では、どの場所の矢印も同じ速さで回るだけなので、|ψ|² の形は時間がたっても変わらない</div>
+        <div class="diagram-caption">同じ比例定数 k を共有する実験パネル。違いは i を掛けるかどうかだけ。左（i なし）は k が負なら減衰、正なら増幅と、どちらにしても一方通行で「揺れ」は生まれない。右（i あり）は同じ k でも矢印は大きさを保ったまま回転し、k の大きさは回る速さに、符号は回る向きに変わる（k＝0 なら両方とも何も起こらない）。シュレーディンガー方程式ではこの定数がエネルギーに当たるので、回る速さはエネルギーに比例する＝矢印の時計法則。下段：定常状態では、どの場所の矢印も同じ速さで回るだけなので、|ψ|² の形は時間がたっても変わらない</div>
       </div>
 
       <div class="dialogue-scene">
@@ -609,14 +608,14 @@
     var cv = document.getElementById("ipanC");
     if (!cv) return;
     var ctx = cv.getContext("2d");
-    var kEl = document.getElementById("ipan-k"), eEl = document.getElementById("ipan-e");
-    var kv = document.getElementById("ipan-kv"), ev = document.getElementById("ipan-ev");
+    var kEl = document.getElementById("ipan-k");
+    var kv = document.getElementById("ipan-kv");
     var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var C = { line: "#ddd0ad", paper: "#fffdf6", ink: "#241d12", muted: "#8a7a5c", red: "#c8433f", blue: "#2f6fa6", gold: "#a6742a" };
-    var k = parseFloat(kEl.value), E = parseFloat(eEl.value);
+    var k = parseFloat(kEl.value);
     var tau = 0, theta = 0, W, H;
     function fmt(x) { return (x < 0 ? "−" : "＋") + Math.abs(x).toFixed(1); }
-    function labels() { kv.textContent = fmt(k); ev.textContent = E.toFixed(2); }
+    function labels() { kv.textContent = fmt(k); }
     function roundRect(x, y, w, h, r) {
       ctx.beginPath();
       if (ctx.roundRect) { ctx.roundRect(x, y, w, h, r); }
@@ -634,7 +633,7 @@
       ctx.font = "900 13px system-ui,sans-serif"; ctx.fillStyle = C.ink;
       var lcx = 4 + cw / 2, rcx = W / 2 + 5 + cw / 2;
       ctx.fillText("i なし：変化＝k×いまの値", lcx, 26);
-      ctx.fillText("i あり：変化＝(i×E)×いまの値", rcx, 26);
+      ctx.fillText("i あり：変化＝(i×k)×いまの値", rcx, 26);
       // 左：振幅が e^(kt) で変わる波
       var A = Math.exp(k * tauD);
       var midY = H * 0.52, amp = Math.min(A, 2.6) * H * 0.14;
@@ -668,7 +667,8 @@
       ctx.lineTo(hx + Math.cos(ang - 2.6) * 8, hy + Math.sin(ang - 2.6) * 8);
       ctx.closePath(); ctx.fill();
       ctx.fillStyle = C.muted;
-      ctx.fillText("回転：大きさは変わらず、速さは E に比例", rcx, H - 12);
+      var rst = Math.abs(k) <= 0.05 ? "k＝0：止まったまま" : ("回転（" + (k > 0 ? "反時計回り" : "時計回り") + "）：大きさは変わらない");
+      ctx.fillText(rst, rcx, H - 12);
     }
     function resize() {
       var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.52, 190));
@@ -677,10 +677,9 @@
       cv.style.height = h + "px";
       ctx.setTransform(d, 0, 0, d, 0, 0);
       W = w; H = h;
-      draw(reduced ? 1.2 : tau, reduced ? -E * 1.2 : theta);
+      draw(reduced ? 1.2 : tau, reduced ? -k * 1.2 : theta);
     }
-    kEl.addEventListener("input", function () { k = parseFloat(this.value); tau = 0; labels(); if (reduced) draw(1.2, -E * 1.2); });
-    eEl.addEventListener("input", function () { E = parseFloat(this.value); labels(); if (reduced) draw(1.2, -E * 1.2); });
+    kEl.addEventListener("input", function () { k = parseFloat(this.value); tau = 0; labels(); if (reduced) draw(1.2, -k * 1.2); });
     var visible = true;
     if ("IntersectionObserver" in window) {
       visible = false;
@@ -691,7 +690,7 @@
       var dt = Math.min((now - last) / 1000, 0.1); last = now;
       if (visible) {
         tau += dt; if (tau > 2.8) tau = 0;
-        theta -= E * 1.9 * dt;
+        theta -= k * 1.9 * dt;
         draw(tau, theta);
       }
       requestAnimationFrame(tick);
