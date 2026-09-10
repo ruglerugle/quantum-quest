@@ -287,39 +287,19 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="grad-svg" viewBox="0 0 320 235" width="100%" role="img" aria-label="横軸が速さv、縦軸が運動量pのグラフのアニメーション。原点を通る直線p=mvの下に、幅Δvの短冊が4本、8本、16本、32本とどんどん細かく敷き詰められていき、最後に直線の下の三角形の面積そのものになる。この面積がエネルギー½mv²">
-          <g opacity="0">
-            <path class="strip2" d="M95.0 190 v-27.1 h50.0 V190 z M145.0 190 v-54.2 h50.0 V190 z M195.0 190 v-81.2 h50.0 V190 z"></path>
-            <text class="strong" x="60" y="55">幅 Δv の短冊 4 本</text>
-            <animate attributeName="opacity" values="1;0" keyTimes="0;0.18" calcMode="discrete" dur="10s" repeatCount="indefinite"></animate>
-          </g>
-          <g opacity="0">
-            <path class="strip2" d="M70.0 190 v-13.5 h25.0 V190 z M95.0 190 v-27.1 h25.0 V190 z M120.0 190 v-40.6 h25.0 V190 z M145.0 190 v-54.2 h25.0 V190 z M170.0 190 v-67.7 h25.0 V190 z M195.0 190 v-81.2 h25.0 V190 z M220.0 190 v-94.8 h25.0 V190 z"></path>
-            <text class="strong" x="60" y="55">幅 Δv の短冊 8 本</text>
-            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.18;0.36" calcMode="discrete" dur="10s" repeatCount="indefinite"></animate>
-          </g>
-          <g opacity="0">
-            <path class="strip2" d="M57.5 190 v-6.8 h12.5 V190 z M70.0 190 v-13.5 h12.5 V190 z M82.5 190 v-20.3 h12.5 V190 z M95.0 190 v-27.1 h12.5 V190 z M107.5 190 v-33.9 h12.5 V190 z M120.0 190 v-40.6 h12.5 V190 z M132.5 190 v-47.4 h12.5 V190 z M145.0 190 v-54.2 h12.5 V190 z M157.5 190 v-60.9 h12.5 V190 z M170.0 190 v-67.7 h12.5 V190 z M182.5 190 v-74.5 h12.5 V190 z M195.0 190 v-81.2 h12.5 V190 z M207.5 190 v-88.0 h12.5 V190 z M220.0 190 v-94.8 h12.5 V190 z M232.5 190 v-101.6 h12.5 V190 z"></path>
-            <text class="strong" x="60" y="55">幅 Δv の短冊 16 本</text>
-            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.36;0.54" calcMode="discrete" dur="10s" repeatCount="indefinite"></animate>
-          </g>
-          <g opacity="0">
-            <path class="strip2" d="M51.3 190 v-3.4 h6.3 V190 z M57.5 190 v-6.8 h6.3 V190 z M63.8 190 v-10.2 h6.3 V190 z M70.0 190 v-13.5 h6.3 V190 z M76.3 190 v-16.9 h6.3 V190 z M82.5 190 v-20.3 h6.3 V190 z M88.8 190 v-23.7 h6.3 V190 z M95.0 190 v-27.1 h6.3 V190 z M101.3 190 v-30.5 h6.3 V190 z M107.5 190 v-33.9 h6.3 V190 z M113.8 190 v-37.2 h6.3 V190 z M120.0 190 v-40.6 h6.3 V190 z M126.3 190 v-44.0 h6.3 V190 z M132.5 190 v-47.4 h6.3 V190 z M138.8 190 v-50.8 h6.3 V190 z M145.0 190 v-54.2 h6.3 V190 z M151.3 190 v-57.6 h6.3 V190 z M157.5 190 v-60.9 h6.3 V190 z M163.8 190 v-64.3 h6.3 V190 z M170.0 190 v-67.7 h6.3 V190 z M176.3 190 v-71.1 h6.3 V190 z M182.5 190 v-74.5 h6.3 V190 z M188.8 190 v-77.9 h6.3 V190 z M195.0 190 v-81.2 h6.3 V190 z M201.3 190 v-84.6 h6.3 V190 z M207.5 190 v-88.0 h6.3 V190 z M213.8 190 v-91.4 h6.3 V190 z M220.0 190 v-94.8 h6.3 V190 z M226.3 190 v-98.2 h6.3 V190 z M232.5 190 v-101.6 h6.3 V190 z M238.8 190 v-104.9 h6.3 V190 z"></path>
-            <text class="strong" x="60" y="55">幅 Δv の短冊 32 本</text>
-            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.54;0.72" calcMode="discrete" dur="10s" repeatCount="indefinite"></animate>
-          </g>
-          <g opacity="1">
+        <svg class="grad-svg" viewBox="0 0 320 235" width="100%" role="img" aria-label="横軸が速さv、縦軸が運動量pのグラフのアニメーション。原点を通る直線p=mvの下に幅Δvの短冊が敷き詰められ、幅が連続的にどんどん細くなって本数が増えていき、最後に直線の下の三角形の面積そのものに行き着く。この面積がエネルギー½mv²">
+          <g id="area-tri" opacity="0">
             <polygon class="area" points="45,190 245,190 245,81.7"></polygon>
-            <text class="strong" x="60" y="55">Δv → 0：三角形の面積 ＝ E</text>
             <text class="strong" x="185" y="172" text-anchor="middle">面積 ＝ E</text>
-            <animate attributeName="opacity" values="0;1" keyTimes="0;0.72" calcMode="discrete" dur="10s" repeatCount="indefinite"></animate>
           </g>
+          <path class="strip2" id="area-strips" d=""></path>
           <path class="axis" d="M45 20 L45 190 L300 190"></path>
           <path class="axis" d="M300 190 l-8 -4 M300 190 l-8 4"></path>
           <path class="axis" d="M45 20 l-4 8 M45 20 l4 8"></path>
           <text class="strong" x="60" y="30">p ＝ mv のグラフ</text>
           <text class="label" x="8" y="30">p</text>
           <text class="label" x="284" y="208">速さ v</text>
+          <text class="strong" id="area-label" x="60" y="55"></text>
           <line class="tan" x1="45" y1="190" x2="285" y2="60"></line>
           <line class="guide" x1="245" y1="190" x2="245" y2="81.7"></line>
           <text class="label" x="245" y="205" text-anchor="middle">v</text>
@@ -710,6 +690,59 @@
     var fallE = document.querySelector(".fall-svg .fall-e");
     if (fallE) { fallE.setAttribute("transform", "translate(170,118.7)"); }
   }
+</script>
+<script>
+  // p=mv グラフ：短冊の幅が連続的に細くなり、三角形の面積に収束するアニメ
+  (function () {
+    var strips = document.getElementById("area-strips");
+    if (!strips) return;
+    var tri = document.getElementById("area-tri");
+    var lab = document.getElementById("area-label");
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var X0 = 45, X1 = 245, BASE = 190, S = 130 / 240;
+    function build(w) {
+      var d = "";
+      for (var x = X0; x < X1 - 0.01; x += w) {
+        var wl = Math.min(w, X1 - x);
+        var h = (x - X0) * S;
+        if (h > 0.4) d += "M" + x.toFixed(1) + " " + BASE + " v-" + h.toFixed(1) + " h" + wl.toFixed(1) + " V" + BASE + " z ";
+      }
+      return d;
+    }
+    if (reduced) {
+      tri.setAttribute("opacity", "1");
+      lab.textContent = "Δv → 0：三角形の面積 ＝ E";
+      strips.setAttribute("d", build(25));
+      strips.setAttribute("opacity", "0.45");
+      return;
+    }
+    var W0 = 50, W1 = 1.6, SHRINK = 7000, HOLD = 2600, TOTAL = SHRINK + HOLD;
+    var visible = true;
+    if ("IntersectionObserver" in window) {
+      visible = false;
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(strips.ownerSVGElement);
+    }
+    var t0 = performance.now();
+    function frame(now) {
+      if (visible) {
+        var t = (now - t0) % TOTAL;
+        if (t < SHRINK) {
+          var u = t / SHRINK;
+          var w = W0 * Math.pow(W1 / W0, u); // 指数的に連続で細く
+          strips.setAttribute("d", build(w));
+          strips.setAttribute("opacity", "1");
+          tri.setAttribute("opacity", "0");
+          lab.textContent = "幅 Δv の短冊 " + Math.round((X1 - X0) / w) + " 本";
+        } else {
+          strips.setAttribute("opacity", "0");
+          tri.setAttribute("opacity", "1");
+          lab.textContent = "Δv → 0：三角形の面積 ＝ E";
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
 </script>
 <script>QQ.initStagePage(3);</script>
 </body>
