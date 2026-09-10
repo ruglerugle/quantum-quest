@@ -79,6 +79,14 @@
   .pair2-svg .vline{stroke:#2f6fa6;stroke-width:1.5;stroke-dasharray:4 3}
   .pair2-svg .vlabel{fill:#2f6fa6;font-size:11px;font-weight:900}
   .pair2-svg .hlabel{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .fall-svg .trail{stroke:#c3b48a;stroke-width:1.3;fill:none;stroke-dasharray:3 3}
+  .fall-svg .nucl{fill:#e8b6b4;stroke:#c8433f;stroke-width:2}
+  .fall-svg .ntext{fill:#c8433f;font-size:12px;font-weight:900}
+  .fall-svg .el{fill:#bcd7ee;stroke:#2f6fa6;stroke-width:2}
+  .fall-svg .etext{fill:#2f6fa6;font-size:11px;font-weight:900}
+  .fall-svg .ring{stroke:var(--gold-dark);stroke-width:1.6;fill:none}
+  .fall-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
+  .fall-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .spec3-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .spec3-svg .dark{fill:#12121c;stroke:var(--line);stroke-width:1}
 </style>
@@ -450,6 +458,29 @@
           </div>
           <div class="dialog-bubble">いい弁護だね。その通り、回っている限り、引く力そのものは敵ではない。惑星ならその理屈で万事うまくいく。ところが電子には、惑星に無い事情がひとつだけある――<strong>電気を帯びている</strong>ことだ。当時確立していた電磁気の理論によると、電気を帯びた粒が円運動（＝進む向きを変え続ける運動）をすると、<strong>光（電磁波）を放って、エネルギーを失い続けてしまう</strong>んだ。エネルギーを失えば軌道は保てない。らせんを描いて縮んでいって、計算上は<strong>1億分の1秒もたたずに原子核へ墜落</strong>する。理論の上では、原子は一瞬でつぶれるはず。でも現実の原子はいつまでも安定している。これが第一の謎。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="fall-svg" viewBox="0 0 320 185" width="100%" role="img" aria-label="当時の電磁気理論が予言する電子の運命のアニメーション。マイナスの電子が光を放ちながら、らせんを描いて中心のプラスの原子核へ墜落していく">
+          <text class="strong" x="160" y="18" text-anchor="middle">電磁気理論の予言：回る電子は墜落するはず</text>
+          <path class="trail" d="M222.0 88.0 L220.6 99.0 L217.3 109.5 L212.2 119.2 L205.5 127.8 L197.5 135.0 L188.3 140.6 L178.3 144.4 L167.9 146.4 L157.4 146.5 L147.1 144.7 L137.3 141.1 L128.4 135.9 L120.6 129.2 L114.2 121.3 L109.4 112.4 L106.2 102.9 L104.8 93.0 L105.2 83.1 L107.3 73.5 L111.1 64.4 L116.4 56.3 L123.0 49.3 L130.7 43.7 L139.3 39.5 L148.3 37.0 L157.7 36.1 L166.9 36.9 L175.8 39.3 L184.1 43.3 L191.4 48.6 L197.7 55.1 L202.6 62.5 L206.1 70.7 L208.1 79.3 L208.5 88.0 L207.3 96.6 L204.7 104.8 L200.6 112.3 L195.4 118.9 L189.0 124.4 L181.9 128.7 L174.2 131.6 L166.1 133.0 L158.0 133.0 L150.1 131.5 L142.6 128.7 L135.8 124.6 L129.9 119.4 L125.1 113.3 L121.5 106.5 L119.2 99.3 L118.2 91.8 L118.6 84.3 L120.3 77.0 L123.3 70.3 L127.3 64.3 L132.3 59.1 L138.2 54.9 L144.6 51.9 L151.4 50.1 L158.3 49.6 L165.1 50.3 L171.6 52.1 L177.7 55.1 L183.0 59.1 L187.5 64.0 L191.0 69.5 L193.5 75.4 L194.8 81.7 L195.0 88.0 L194.1 94.2 L192.0 100.0 L189.1 105.4 L185.2 110.0 L180.6 113.9 L175.5 116.8 L170.0 118.7 L164.3 119.6 L158.6 119.5 L153.1 118.4 L147.9 116.3 L143.3 113.3 L139.3 109.7 L136.1 105.4 L133.7 100.7 L132.2 95.7 L131.7 90.5 L132.1 85.5 L133.3 80.6 L135.4 76.2 L138.2 72.2 L141.7 68.8 L145.6 66.2 L149.9 64.3 L154.4 63.3 L158.9 63.1 L163.3 63.6 L167.5 65.0 L171.3 67.0 L174.6 69.7 L177.4 72.8 L179.4 76.4 L180.9 80.2 L181.5 84.1 L181.5 88.0 L180.8 91.8 L179.4 95.3 L177.5 98.4 L175.0 101.1 L172.2 103.3 L169.1 104.9 L165.8 105.9 L162.5 106.2 L159.2 106.0 L156.1 105.2 L153.2 103.9 L150.7 102.1 L148.6 99.9 L147.0 97.5 L145.8 94.8 L145.2 92.1 L145.1 89.3 L145.5 86.7 L146.3 84.2 L147.6 82.0 L149.2 80.1 L151.0 78.6 L153.0 77.5 L155.2 76.7 L157.4 76.4 L159.5 76.5 L161.5 77.0 L163.3 77.8 L164.9 78.9 L166.2 80.2 L167.2 81.7 L167.9 83.3 L168.2 84.9 L168.3 86.5 L168.0 88.0"></path>
+          <circle class="nucl" cx="160" cy="88" r="8"></circle>
+          <text class="ntext" x="160" y="92.5" text-anchor="middle">＋</text>
+          <g class="fall-e">
+            <animateMotion dur="7s" repeatCount="indefinite" path="M222.0 88.0 L220.6 99.0 L217.3 109.5 L212.2 119.2 L205.5 127.8 L197.5 135.0 L188.3 140.6 L178.3 144.4 L167.9 146.4 L157.4 146.5 L147.1 144.7 L137.3 141.1 L128.4 135.9 L120.6 129.2 L114.2 121.3 L109.4 112.4 L106.2 102.9 L104.8 93.0 L105.2 83.1 L107.3 73.5 L111.1 64.4 L116.4 56.3 L123.0 49.3 L130.7 43.7 L139.3 39.5 L148.3 37.0 L157.7 36.1 L166.9 36.9 L175.8 39.3 L184.1 43.3 L191.4 48.6 L197.7 55.1 L202.6 62.5 L206.1 70.7 L208.1 79.3 L208.5 88.0 L207.3 96.6 L204.7 104.8 L200.6 112.3 L195.4 118.9 L189.0 124.4 L181.9 128.7 L174.2 131.6 L166.1 133.0 L158.0 133.0 L150.1 131.5 L142.6 128.7 L135.8 124.6 L129.9 119.4 L125.1 113.3 L121.5 106.5 L119.2 99.3 L118.2 91.8 L118.6 84.3 L120.3 77.0 L123.3 70.3 L127.3 64.3 L132.3 59.1 L138.2 54.9 L144.6 51.9 L151.4 50.1 L158.3 49.6 L165.1 50.3 L171.6 52.1 L177.7 55.1 L183.0 59.1 L187.5 64.0 L191.0 69.5 L193.5 75.4 L194.8 81.7 L195.0 88.0 L194.1 94.2 L192.0 100.0 L189.1 105.4 L185.2 110.0 L180.6 113.9 L175.5 116.8 L170.0 118.7 L164.3 119.6 L158.6 119.5 L153.1 118.4 L147.9 116.3 L143.3 113.3 L139.3 109.7 L136.1 105.4 L133.7 100.7 L132.2 95.7 L131.7 90.5 L132.1 85.5 L133.3 80.6 L135.4 76.2 L138.2 72.2 L141.7 68.8 L145.6 66.2 L149.9 64.3 L154.4 63.3 L158.9 63.1 L163.3 63.6 L167.5 65.0 L171.3 67.0 L174.6 69.7 L177.4 72.8 L179.4 76.4 L180.9 80.2 L181.5 84.1 L181.5 88.0 L180.8 91.8 L179.4 95.3 L177.5 98.4 L175.0 101.1 L172.2 103.3 L169.1 104.9 L165.8 105.9 L162.5 106.2 L159.2 106.0 L156.1 105.2 L153.2 103.9 L150.7 102.1 L148.6 99.9 L147.0 97.5 L145.8 94.8 L145.2 92.1 L145.1 89.3 L145.5 86.7 L146.3 84.2 L147.6 82.0 L149.2 80.1 L151.0 78.6 L153.0 77.5 L155.2 76.7 L157.4 76.4 L159.5 76.5 L161.5 77.0 L163.3 77.8 L164.9 78.9 L166.2 80.2 L167.2 81.7 L167.9 83.3 L168.2 84.9 L168.3 86.5 L168.0 88.0"></animateMotion>
+            <circle class="ring" r="4">
+              <animate attributeName="r" values="4;20" dur="1.2s" repeatCount="indefinite"></animate>
+              <animate attributeName="opacity" values="0.8;0" dur="1.2s" repeatCount="indefinite"></animate>
+            </circle>
+            <circle class="el" r="5.5"></circle>
+            <text class="etext" y="4" text-anchor="middle">−</text>
+          </g>
+          <text class="label" x="160" y="170" text-anchor="middle">光を放ってエネルギーを失い、らせんを描いて墜落してしまう</text>
+        </svg>
+        <div class="diagram-caption">当時の電磁気理論が予言する電子の運命。円運動する電子は光（電磁波）を放ってエネルギーを失い続け、らせんを描いて原子核へ墜落する——計算上は1億分の1秒未満。それでも現実の原子が安定しているのはなぜか、というのが第一の謎</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
@@ -649,7 +680,9 @@
 <script>
   // アニメーションを避けたい設定のユーザーには静止画で表示する
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll(".pv-svg animate, .pv-svg animateTransform, .pair-svg animate, .pair-svg animateTransform, .bohr-svg animate, .gtr-svg animate").forEach(function (a) { a.remove(); });
+    document.querySelectorAll(".pv-svg animate, .pv-svg animateTransform, .pair-svg animate, .pair-svg animateTransform, .bohr-svg animate, .gtr-svg animate, .fall-svg animate, .fall-svg animateMotion").forEach(function (a) { a.remove(); });
+    var fallE = document.querySelector(".fall-svg .fall-e");
+    if (fallE) { fallE.setAttribute("transform", "translate(170,118.7)"); }
   }
 </script>
 <script>QQ.initStagePage(3);</script>
