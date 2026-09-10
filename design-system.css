@@ -6,14 +6,14 @@
    色を変えたいときは :root の変数だけ差し替えればOK。
    ============================================================ */
 
-/* ギリシャ文字ν(U+03BD)だけ数学組版用のSTIX Two Text Italic（SIL OFLライセンス）で描画し、
-   右ストロークが強くカーブする形にして英字のvと見分けやすくする。
-   woff2はν1文字のみのサブセット(約1KB)を同梱 */
+/* ギリシャ文字（Α-Ω, α-ω）を数学組版用のSTIX Two Text Italic（SIL OFLライセンス）で描画し、
+   数式らしい字形にする（特にνは右ストロークが強くカーブし、英字のvと見分けやすくなる）。
+   woff2はギリシャ文字のみのサブセット(約7KB)を同梱 */
 @font-face{
   font-family:"GreekNu";
-  src:url("fonts/nu-stix-italic.woff2") format("woff2"),local("Georgia Italic"),local("Times New Roman Italic");
+  src:url("fonts/greek-stix-italic.woff2") format("woff2"),local("Georgia Italic"),local("Times New Roman Italic");
   font-weight:100 900;
-  unicode-range:U+03BD;
+  unicode-range:U+0391-03A1,U+03A3-03A9,U+03B1-03C9;
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
