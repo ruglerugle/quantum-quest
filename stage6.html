@@ -74,6 +74,8 @@
   .surf3-svg .ticklabel{font-size:11px;font-weight:900}
   .surf3-svg .bluet{fill:#2f6fa6}
   .surf3-svg .goldt{fill:var(--gold-dark)}
+  .ipanel canvas{display:block;width:100%;height:auto}
+  .ipanel .ctrl-val{font-weight:900;font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right;font-size:13px}
   .surf3-wrap{position:relative}
   .surf3-wrap canvas{display:block;width:100%;height:auto;touch-action:none;cursor:grab}
   .surf3-hint{text-align:center;font-size:11px;font-weight:700;color:var(--muted);margin-top:4px}
@@ -303,51 +305,15 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="iclock-svg" viewBox="0 0 320 375" width="100%" role="img" aria-label="iの役割と定常状態のアニメーション。上段左：iを使わない実数の方程式では波が減衰してぼやけて消えていく。上段右：iが入ると減衰や増幅が回転に変わり、矢印は大きさを保ったまま回り続ける。中段：矢印の回る速さはエネルギーに比例し、エネルギーが小さいとゆっくり、大きいと速く回る（矢印の時計法則）。下段：定常状態ではどの場所の矢印も回るだけなので、確率分布の形は時間がたっても変わらない">
-          <rect class="card" x="15" y="12" width="137" height="123" rx="10"></rect>
-          <text class="title" x="83.5" y="32" text-anchor="middle">i なし：減衰</text>
-          <g transform="translate(83.5,80)">
-            <path class="base" d="M-58 0 H58"></path>
-            <g>
-              <path class="wave" d="M-55.0 -0.0 L-53.2 -4.2 L-51.3 -8.1 L-49.5 -11.8 L-47.7 -14.9 L-45.8 -17.3 L-44.0 -19.0 L-42.2 -19.9 L-40.3 -19.9 L-38.5 -19.0 L-36.7 -17.3 L-34.8 -14.9 L-33.0 -11.8 L-31.2 -8.1 L-29.3 -4.2 L-27.5 0.0 L-25.7 4.2 L-23.8 8.1 L-22.0 11.8 L-20.2 14.9 L-18.3 17.3 L-16.5 19.0 L-14.7 19.9 L-12.8 19.9 L-11.0 19.0 L-9.2 17.3 L-7.3 14.9 L-5.5 11.8 L-3.7 8.1 L-1.8 4.2 L0.0 0.0 L1.8 -4.2 L3.7 -8.1 L5.5 -11.8 L7.3 -14.9 L9.2 -17.3 L11.0 -19.0 L12.8 -19.9 L14.7 -19.9 L16.5 -19.0 L18.3 -17.3 L20.2 -14.9 L22.0 -11.8 L23.8 -8.1 L25.7 -4.2 L27.5 -0.0 L29.3 4.2 L31.2 8.1 L33.0 11.8 L34.8 14.9 L36.7 17.3 L38.5 19.0 L40.3 19.9 L42.2 19.9 L44.0 19.0 L45.8 17.3 L47.7 14.9 L49.5 11.8 L51.3 8.1 L53.2 4.2 L55.0 0.0"></path>
-              <animateTransform attributeName="transform" type="scale" values="1 1;1 0.03;1 0.03;1 1" keyTimes="0;0.7;0.9;1" dur="4s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <text class="label" x="83.5" y="127" text-anchor="middle">ぼやけて消えていく一方</text>
-          <rect class="card" x="168" y="12" width="137" height="123" rx="10"></rect>
-          <text class="title" x="236.5" y="32" text-anchor="middle">i あり：回転</text>
-          <g transform="translate(236.5,78)">
-            <circle class="dial" r="30"></circle>
-            <g>
-              <line class="hand" x1="0" y1="0" x2="24" y2="0"></line>
-              <path class="handhead" d="M30 0 l-8 -4.5 0 9 z"></path>
-              <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="4s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <text class="label" x="236.5" y="127" text-anchor="middle">大きさは保たれる</text>
-          <rect class="card" x="15" y="145" width="290" height="110" rx="10"></rect>
-          <text class="title" x="160" y="165" text-anchor="middle">矢印の時計法則：回る速さはエネルギーに比例</text>
-          <g transform="translate(95,207)">
-            <circle class="dial" r="26"></circle>
-            <g>
-              <line class="hand" x1="0" y1="0" x2="20" y2="0"></line>
-              <path class="handhead" d="M26 0 l-8 -4.5 0 9 z"></path>
-              <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="6.4s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <text class="label" x="95" y="247" text-anchor="middle">エネルギー小 → ゆっくり</text>
-          <g transform="translate(225,207)">
-            <circle class="dial" r="26"></circle>
-            <g>
-              <line class="hand" x1="0" y1="0" x2="20" y2="0"></line>
-              <path class="handhead" d="M26 0 l-8 -4.5 0 9 z"></path>
-              <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="1.6s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <text class="label" x="225" y="247" text-anchor="middle">エネルギー大 → 速く回る</text>
-          <rect class="card" x="15" y="265" width="290" height="103" rx="10"></rect>
-          <text class="title" x="160" y="285" text-anchor="middle">定常状態：矢印はどこでも回るだけ</text>
-          <g transform="translate(90,306)">
+        <div class="ipanel">
+          <canvas id="ipanC" role="img" aria-label="比例定数を自分で変えられる実験パネル。左は i なしの実数の方程式で、kが負なら波が減衰し、正なら増幅し、ゼロなら変わらない。右は i ありで、矢印が大きさを保ったまま回転し、エネルギーEを大きくすると回転が速くなる"></canvas>
+          <div class="anim-ctrl"><span class="ctrl-label">i なし：比例定数 k</span><input type="range" id="ipan-k" min="-2" max="2" step="0.1" value="-1" aria-label="実数の比例定数k"><b class="ctrl-val" id="ipan-kv">−1.0</b></div>
+          <div class="anim-ctrl"><span class="ctrl-label">i あり：エネルギー E</span><input type="range" id="ipan-e" min="0.25" max="3" step="0.05" value="1" aria-label="エネルギーE"><b class="ctrl-val" id="ipan-ev">1.00</b></div>
+        </div>
+        <svg class="iclock-svg" viewBox="0 0 320 122" width="100%" role="img" aria-label="定常状態の図。3つの場所の矢印がどれも同じ速さで回るだけなので、確率分布の形は時間がたっても変わらない">
+          <rect class="card" x="15" y="6" width="290" height="110" rx="10"></rect>
+          <text class="title" x="160" y="26" text-anchor="middle">定常状態：矢印はどこでも回るだけ</text>
+          <g transform="translate(90,50)">
             <circle class="dial" r="13"></circle>
             <g>
               <line class="hand" x1="0" y1="0" x2="9" y2="0"></line>
@@ -355,7 +321,7 @@
               <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="4s" repeatCount="indefinite"></animateTransform>
             </g>
           </g>
-          <g transform="translate(160,306)">
+          <g transform="translate(160,50)">
             <circle class="dial" r="13"></circle>
             <g>
               <line class="hand" x1="0" y1="0" x2="9" y2="0"></line>
@@ -363,7 +329,7 @@
               <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="4s" repeatCount="indefinite"></animateTransform>
             </g>
           </g>
-          <g transform="translate(230,306)">
+          <g transform="translate(230,50)">
             <circle class="dial" r="13"></circle>
             <g>
               <line class="hand" x1="0" y1="0" x2="9" y2="0"></line>
@@ -371,10 +337,10 @@
               <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="4s" repeatCount="indefinite"></animateTransform>
             </g>
           </g>
-          <path class="psi2" d="M55 350 Q160 322 265 350"></path>
-          <text class="label" x="160" y="362" text-anchor="middle">|ψ|² の形は時間がたっても変わらない（Ĥψ＝Eψ）</text>
+          <path class="psi2" d="M55 94 Q160 66 265 94"></path>
+          <text class="label" x="160" y="108" text-anchor="middle">|ψ|² の形は時間がたっても変わらない（Ĥψ＝Eψ）</text>
         </svg>
-        <div class="diagram-caption">i の役割と定常状態。実数のままの方程式では波は熱がさめるようにぼやけて消えるが、i が入ると「減衰」や「増幅」が「回転」に変わり、ψ の矢印は大きさを保ったまま回り続ける。回る速さはエネルギーに比例（矢印の時計法則）。エネルギーが1つに決まった定常状態では、どの場所の矢印も同じ速さで回るだけなので、|ψ|² の形は時間がたっても変わらない</div>
+        <div class="diagram-caption">比例定数を自分で動かせる実験パネル。左（i なし）はスライダーの k が負なら波は減衰して消え、正なら増幅してふくらむ一方で、どちらにしても「揺れ」は生まれない。右（i あり）は矢印が大きさを保ったまま回転し、エネルギー E を大きくすると回転が速くなるだけ（矢印の時計法則）。下段：エネルギーが1つに決まった定常状態では、どの場所の矢印も同じ速さで回るだけなので、|ψ|² の形は時間がたっても変わらない</div>
       </div>
 
       <div class="dialogue-scene">
@@ -636,6 +602,105 @@
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     document.querySelectorAll(".well-svg animate, .well-svg animateTransform, .iclock-svg animate, .iclock-svg animateTransform, .opfn-svg animate, .opfn-svg animateTransform").forEach(function (a) { a.remove(); });
   }
+</script>
+<script>
+  // i の役割：比例定数を動かせる実験パネル
+  (function () {
+    var cv = document.getElementById("ipanC");
+    if (!cv) return;
+    var ctx = cv.getContext("2d");
+    var kEl = document.getElementById("ipan-k"), eEl = document.getElementById("ipan-e");
+    var kv = document.getElementById("ipan-kv"), ev = document.getElementById("ipan-ev");
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var C = { line: "#ddd0ad", paper: "#fffdf6", ink: "#241d12", muted: "#8a7a5c", red: "#c8433f", blue: "#2f6fa6", gold: "#a6742a" };
+    var k = parseFloat(kEl.value), E = parseFloat(eEl.value);
+    var tau = 0, theta = 0, W, H;
+    function fmt(x) { return (x < 0 ? "−" : "＋") + Math.abs(x).toFixed(1); }
+    function labels() { kv.textContent = fmt(k); ev.textContent = E.toFixed(2); }
+    function roundRect(x, y, w, h, r) {
+      ctx.beginPath();
+      if (ctx.roundRect) { ctx.roundRect(x, y, w, h, r); }
+      else { ctx.rect(x, y, w, h); }
+    }
+    function card(x, y, w, h) {
+      ctx.fillStyle = C.paper; ctx.strokeStyle = C.line; ctx.lineWidth = 1.5;
+      roundRect(x, y, w, h, 10); ctx.fill(); ctx.stroke();
+    }
+    function draw(tauD, thD) {
+      ctx.clearRect(0, 0, W, H);
+      var cw = W / 2 - 9, ch = H - 8;
+      card(4, 4, cw, ch); card(W / 2 + 5, 4, cw, ch);
+      ctx.textAlign = "center";
+      ctx.font = "900 13px system-ui,sans-serif"; ctx.fillStyle = C.ink;
+      var lcx = 4 + cw / 2, rcx = W / 2 + 5 + cw / 2;
+      ctx.fillText("i なし：変化＝k×いまの値", lcx, 26);
+      ctx.fillText("i あり：変化＝(i×E)×いまの値", rcx, 26);
+      // 左：振幅が e^(kt) で変わる波
+      var A = Math.exp(k * tauD);
+      var midY = H * 0.52, amp = Math.min(A, 2.6) * H * 0.14;
+      ctx.save();
+      roundRect(4, 30, cw, ch - 52); ctx.clip();
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(16, midY); ctx.lineTo(cw - 8, midY); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.strokeStyle = C.red; ctx.lineWidth = 2.2; ctx.beginPath();
+      for (var i = 0; i <= 60; i++) {
+        var x = 16 + (cw - 24) * i / 60;
+        var y = midY - amp * Math.sin(i / 60 * Math.PI * 4);
+        if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+      }
+      ctx.stroke();
+      ctx.restore();
+      ctx.font = "700 11px system-ui,sans-serif"; ctx.fillStyle = C.muted;
+      var st = k < -0.05 ? "減衰：ぼやけて消えていく" : (k > 0.05 ? "増幅：ふくらむ一方" : "k＝0：何も起こらない");
+      ctx.fillText(st, lcx, H - 12);
+      // 右：大きさ一定で回る矢印
+      var dcx = rcx, dcy = H * 0.52, r = Math.min(cw, ch) * 0.30;
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(dcx, dcy, r, 0, 7); ctx.stroke();
+      var hx = dcx + Math.cos(thD) * r * 0.82, hy = dcy + Math.sin(thD) * r * 0.82;
+      ctx.strokeStyle = C.blue; ctx.lineWidth = 2.8;
+      ctx.beginPath(); ctx.moveTo(dcx, dcy); ctx.lineTo(hx, hy); ctx.stroke();
+      var ang = Math.atan2(hy - dcy, hx - dcx);
+      ctx.fillStyle = C.blue; ctx.beginPath();
+      ctx.moveTo(dcx + Math.cos(thD) * r * 0.97, dcy + Math.sin(thD) * r * 0.97);
+      ctx.lineTo(hx + Math.cos(ang + 2.6) * 8, hy + Math.sin(ang + 2.6) * 8);
+      ctx.lineTo(hx + Math.cos(ang - 2.6) * 8, hy + Math.sin(ang - 2.6) * 8);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = C.muted;
+      ctx.fillText("回転：大きさは変わらず、速さは E に比例", rcx, H - 12);
+    }
+    function resize() {
+      var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.52, 190));
+      var d = window.devicePixelRatio || 1;
+      cv.width = Math.round(w * d); cv.height = Math.round(h * d);
+      cv.style.height = h + "px";
+      ctx.setTransform(d, 0, 0, d, 0, 0);
+      W = w; H = h;
+      draw(reduced ? 1.2 : tau, reduced ? -E * 1.2 : theta);
+    }
+    kEl.addEventListener("input", function () { k = parseFloat(this.value); tau = 0; labels(); if (reduced) draw(1.2, -E * 1.2); });
+    eEl.addEventListener("input", function () { E = parseFloat(this.value); labels(); if (reduced) draw(1.2, -E * 1.2); });
+    var visible = true;
+    if ("IntersectionObserver" in window) {
+      visible = false;
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(cv);
+    }
+    var last = performance.now();
+    function tick(now) {
+      var dt = Math.min((now - last) / 1000, 0.1); last = now;
+      if (visible) {
+        tau += dt; if (tau > 2.8) tau = 0;
+        theta -= E * 1.9 * dt;
+        draw(tau, theta);
+      }
+      requestAnimationFrame(tick);
+    }
+    labels();
+    window.addEventListener("resize", resize);
+    resize();
+    if (!reduced) requestAnimationFrame(tick);
+  })();
 </script>
 <script>
   // ψ(x,t) 曲面：ドラッグで視点を回せる3Dワイヤーフレーム
