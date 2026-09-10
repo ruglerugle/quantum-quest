@@ -712,14 +712,18 @@
       return "M" + x.toFixed(1) + " " + BASE + " v-" + h.toFixed(1) + " h" + wl.toFixed(1) + " V" + BASE + " z ";
     }
     function render(w) {
-      var xf = X0 + Math.floor((XF - X0) / w) * w;   // モチーフの短冊（XF を含む1本）
-      var d = "";
-      for (var x = X0; x < X1 - 0.01; x += w) {
-        if (Math.abs(x - xf) > w / 2) d += stripPath(x, w);
+      // モチーフの短冊は左端 XF（＝v0）に固定。そこを基準に左右へタイルする
+      var d = "", x;
+      for (x = XF - w; x > X0 - w + 0.01; x -= w) {
+        var xl = Math.max(x, X0), wl = x + w - xl;
+        if (wl > 0.05) d += stripPath(xl, wl);
+      }
+      for (x = XF + w; x < X1 - 0.01; x += w) {
+        d += stripPath(x, w);
       }
       strips.setAttribute("d", d);
-      focal.setAttribute("d", stripPath(xf, w));
-      dvLab.setAttribute("x", (xf + Math.min(w, X1 - xf) / 2).toFixed(1));
+      focal.setAttribute("d", stripPath(XF, w));
+      dvLab.setAttribute("x", (XF + Math.min(w, X1 - XF) / 2).toFixed(1));
     }
     if (reduced) {
       tri.setAttribute("opacity", "1");
