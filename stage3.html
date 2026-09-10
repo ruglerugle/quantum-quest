@@ -49,6 +49,10 @@
   .grad-svg .axis{stroke:var(--muted);stroke-width:1.5;fill:none}
   .grad-svg .curve{fill:none;stroke:var(--gold);stroke-width:2.5}
   .grad-svg .tan{stroke:#2f6fa6;stroke-width:2;fill:none}
+  .grad-svg .tanb{stroke:#2f6fa6;stroke-width:2;fill:none;stroke-dasharray:6 4}
+  .grad-svg .sec{stroke:#c8433f;stroke-width:2.2;fill:none}
+  .grad-svg .dot2{fill:#fff;stroke:#c8433f;stroke-width:2}
+  .grad-svg .red{fill:#c8433f}
   .grad-svg .tri{stroke:#c8433f;stroke-width:1.5;fill:none;stroke-dasharray:3 3}
   .grad-svg .dot{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
   .grad-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
@@ -217,7 +221,7 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="grad-svg" viewBox="0 0 320 235" width="100%" role="img" aria-label="横軸が速さv、縦軸がエネルギーEの放物線のグラフ。速さが小さい点では接線の傾きが緩やかで、速さが大きい点では急。傾きがそのまま運動量mvになる">
+        <svg class="grad-svg" viewBox="0 0 320 235" width="100%" role="img" aria-label="横軸が速さv、縦軸がエネルギーEの放物線のグラフのアニメーション。曲線上の点Aと少し先の点を結ぶ坂（割線）が描かれ、幅Δvがだんだん縮んでいくと、割線が点Aでの接線にぴったり重なっていく。接線の傾きが運動量p。右上には速い点での接線もあり、速いほど傾きが急">
           <path class="axis" d="M45 20 L45 190 L300 190"></path>
           <path class="axis" d="M300 190 l-8 -4 M300 190 l-8 4"></path>
           <path class="axis" d="M45 20 l-4 8 M45 20 l4 8"></path>
@@ -225,21 +229,20 @@
           <text class="label" x="284" y="208">速さ v</text>
           <text class="label" x="8" y="30">E</text>
           <path class="curve" d="M45 190 Q165 190 285 30"></path>
-          <line class="tan" x1="95" y1="185.5" x2="175" y2="150"></line>
-          <circle class="dot" cx="125" cy="172.2" r="5"></circle>
-          <path class="tri" d="M125 172.2 h40 v-17.8"></path>
-          <text class="label" x="143" y="184" text-anchor="middle">Δv</text>
-          <text class="label" x="172" y="168">ΔE</text>
-          <text class="label blue" x="96" y="140">傾き＝p（小）</text>
-          <line class="tan" x1="185" y1="140" x2="265" y2="60"></line>
-          <circle class="dot" cx="225" cy="100" r="5"></circle>
-          <path class="tri" d="M225 100 h40 v-40"></path>
-          <text class="label" x="243" y="113" text-anchor="middle">Δv</text>
-          <text class="label" x="270" y="82">ΔE</text>
-          <text class="label blue" x="150" y="60">傾き＝p（大）</text>
-          <text class="strong" x="160" y="227" text-anchor="middle">同じ Δv でも、速いところほど ΔE が大きい（坂が急）</text>
+          <line class="tanb" x1="98.0" y1="190.6" x2="243.0" y2="103.6"></line>
+          <text class="label blue" x="94.0" y="182.6">接線（傾き＝p）</text>
+          <path class="sec" d="M115.0 188.8 L271.0 60.6"><animate attributeName="d" values="M115.0 188.8 L271.0 60.6;M115.0 185.9 L243.0 90.6;M115.0 183.6 L221.0 111.1;M115.0 181.9 L205.0 124.4;M115.0 181.0 L197.0 130.5;M115.0 181.0 L197.0 130.5;M115.0 188.8 L271.0 60.6" keyTimes="0;0.17;0.34;0.51;0.68;0.95;1" dur="8s" repeatCount="indefinite"></animate></path>
+          <path class="tri" d="M153.0 157.6 H233.0 V91.8"><animate attributeName="d" values="M153.0 157.6 H233.0 V91.8;M153.0 157.6 H205.0 V118.9;M153.0 157.6 H183.0 V137.1;M153.0 157.6 H167.0 V148.7;M153.0 157.6 H159.0 V153.9;M153.0 157.6 H159.0 V153.9;M153.0 157.6 H233.0 V91.8" keyTimes="0;0.17;0.34;0.51;0.68;0.95;1" dur="8s" repeatCount="indefinite"></animate></path>
+          <circle class="dot" cx="153.0" cy="157.6" r="5"></circle>
+          <circle class="dot2" cx="233.0" cy="91.8" r="4.5"><animate attributeName="cx" values="233.0;205.0;183.0;167.0;159.0;159.0;233.0" keyTimes="0;0.17;0.34;0.51;0.68;0.95;1" dur="8s" repeatCount="indefinite"></animate><animate attributeName="cy" values="91.8;118.9;137.1;148.7;153.9;153.9;91.8" keyTimes="0;0.17;0.34;0.51;0.68;0.95;1" dur="8s" repeatCount="indefinite"></animate></circle>
+          <text class="label red" x="193.0" y="171.6" text-anchor="middle">Δv<animate attributeName="x" values="193.0;179.0;168.0;160.0;156.0;156.0;193.0" keyTimes="0;0.17;0.34;0.51;0.68;0.95;1" dur="8s" repeatCount="indefinite"></animate></text>
+          <text class="label red" x="239.0" y="128.7">ΔE<animate attributeName="x" values="239.0;211.0;189.0;173.0;165.0;165.0;239.0" keyTimes="0;0.17;0.34;0.51;0.68;0.95;1" dur="8s" repeatCount="indefinite"></animate><animate attributeName="y" values="128.7;142.2;151.4;157.1;159.8;159.8;128.7" keyTimes="0;0.17;0.34;0.51;0.68;0.95;1" dur="8s" repeatCount="indefinite"></animate></text>
+          <line class="tan" x1="192.0" y1="135.6" x2="282.0" y2="39.6"></line>
+          <circle class="dot" cx="237" cy="87.6" r="5"></circle>
+          <text class="label blue" x="147" y="63.6">速い点ほど傾きが急</text>
+          <text class="strong" x="160" y="227" text-anchor="middle">Δv を小さくすると、坂 ΔE/Δv は接線の傾きに近づく</text>
         </svg>
-        <div class="diagram-caption">エネルギーの坂の傾き ΔE/Δv を調べると、ちょうど運動量 p＝mv になる。速いほど坂が急＝運動量が大きい</div>
+        <div class="diagram-caption">赤い2点を結ぶ坂の傾きが ΔE/Δv。幅 Δv を小さくしていくと、坂は青い破線の接線にぴったり重なっていき、その行き着き先「その速さでの坂の傾き」がちょうど運動量 p＝mv になる。右上の接線のように、速い点ほど傾きは急＝運動量が大きい</div>
       </div>
 
       <div class="dialogue-scene">
@@ -680,7 +683,7 @@
 <script>
   // アニメーションを避けたい設定のユーザーには静止画で表示する
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll(".pv-svg animate, .pv-svg animateTransform, .pair-svg animate, .pair-svg animateTransform, .bohr-svg animate, .gtr-svg animate, .fall-svg animate, .fall-svg animateMotion").forEach(function (a) { a.remove(); });
+    document.querySelectorAll(".pv-svg animate, .pv-svg animateTransform, .pair-svg animate, .pair-svg animateTransform, .bohr-svg animate, .gtr-svg animate, .fall-svg animate, .fall-svg animateMotion, .grad-svg animate").forEach(function (a) { a.remove(); });
     var fallE = document.querySelector(".fall-svg .fall-e");
     if (fallE) { fallE.setAttribute("transform", "translate(170,118.7)"); }
   }
