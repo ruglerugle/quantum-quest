@@ -37,6 +37,16 @@
   .well-svg .cont{stroke:var(--felt);stroke-width:6;stroke-dasharray:2 6;fill:none;opacity:.6}
   .well-svg .pin{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
   .well-svg .accent{fill:#8a6a24;font-size:11px;font-weight:900}
+  .iclock-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .iclock-svg .title{fill:var(--ink);font-size:12px;font-weight:900}
+  .iclock-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
+  .iclock-svg .wave{fill:none;stroke:#c8433f;stroke-width:2.2}
+  .iclock-svg .base{stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 3;fill:none}
+  .iclock-svg .dial{fill:none;stroke:var(--line);stroke-width:1.5}
+  .iclock-svg .hand{stroke:#2f6fa6;stroke-width:2.6;fill:none}
+  .iclock-svg .handhead{fill:#2f6fa6}
+  .iclock-svg .psi2{fill:rgba(217,164,65,.25);stroke:var(--gold-dark);stroke-width:2}
+  .iclock-svg .formula{fill:#2f6fa6;font-size:13px;font-weight:900}
   .anim-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
   .anim-ctrl .btn{padding:.4rem .95rem;font-size:13px;font-weight:900}
   .anim-ctrl .ctrl-label{font-size:11px;color:var(--muted);font-weight:700}
@@ -129,6 +139,84 @@
           </div>
           <div class="dialog-bubble">いいところに気づいたね。そしてここが、STAGE4で予告した「実数ではだめな、もう1つの理由」の答え合わせだ。もし i を使わずに、実数のままこの形（時間について1回の変化率で書く形）の方程式を作ると、それは波の方程式ではなく、<strong>熱がさめていく方程式</strong>になってしまう。お湯の温度がなまって冷めるように、波はぼやけて消えていく一方なんだ。ところが i が入ると、「減衰」が「<strong>回転</strong>」に化ける。ψ の矢印はくるくる回り続けるだけで、大きさは保たれる。i は、波を死なせないための部品なんだよ。しかも回転の速さはエネルギーに比例する――<strong>ψ の矢印は、その状態のエネルギーに比例した速さで回る時計</strong>なんだ。この性質はこの先の旅でも使うから、<strong>矢印の時計法則</strong>という呼び名を付けておこう。さて、2行目の「定常状態」も説明しておこう。エネルギーがはっきり1つに決まった状態では、ψ の（複素数としての）向きがくるくる回るだけで、<strong>|ψ|² の形は時間がたっても変わらない</strong>。形が定まっているから「定常」だ。そういう状態を探すときは、方程式が Ĥψ＝Eψ――「エネルギーを取り出す操作をしても、形が変わらず、ただ E 倍になる」――というシンプルな形になる。今日はこちらを使うよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="iclock-svg" viewBox="0 0 320 375" width="100%" role="img" aria-label="iの役割と定常状態のアニメーション。上段左：iを使わない実数の方程式では波が減衰してぼやけて消えていく。上段右：iが入ると減衰が回転に変わり、矢印は大きさを保ったまま回り続ける。中段：矢印の回る速さはエネルギーに比例し、エネルギーが小さいとゆっくり、大きいと速く回る（矢印の時計法則）。下段：定常状態ではどの場所の矢印も回るだけなので、確率分布の形は時間がたっても変わらない">
+          <rect class="card" x="15" y="12" width="137" height="123" rx="10"></rect>
+          <text class="title" x="83.5" y="32" text-anchor="middle">i なし：減衰</text>
+          <g transform="translate(83.5,80)">
+            <path class="base" d="M-58 0 H58"></path>
+            <g>
+              <path class="wave" d="M-55.0 -0.0 L-53.2 -4.2 L-51.3 -8.1 L-49.5 -11.8 L-47.7 -14.9 L-45.8 -17.3 L-44.0 -19.0 L-42.2 -19.9 L-40.3 -19.9 L-38.5 -19.0 L-36.7 -17.3 L-34.8 -14.9 L-33.0 -11.8 L-31.2 -8.1 L-29.3 -4.2 L-27.5 0.0 L-25.7 4.2 L-23.8 8.1 L-22.0 11.8 L-20.2 14.9 L-18.3 17.3 L-16.5 19.0 L-14.7 19.9 L-12.8 19.9 L-11.0 19.0 L-9.2 17.3 L-7.3 14.9 L-5.5 11.8 L-3.7 8.1 L-1.8 4.2 L0.0 0.0 L1.8 -4.2 L3.7 -8.1 L5.5 -11.8 L7.3 -14.9 L9.2 -17.3 L11.0 -19.0 L12.8 -19.9 L14.7 -19.9 L16.5 -19.0 L18.3 -17.3 L20.2 -14.9 L22.0 -11.8 L23.8 -8.1 L25.7 -4.2 L27.5 -0.0 L29.3 4.2 L31.2 8.1 L33.0 11.8 L34.8 14.9 L36.7 17.3 L38.5 19.0 L40.3 19.9 L42.2 19.9 L44.0 19.0 L45.8 17.3 L47.7 14.9 L49.5 11.8 L51.3 8.1 L53.2 4.2 L55.0 0.0"></path>
+              <animateTransform attributeName="transform" type="scale" values="1 1;1 0.03;1 0.03;1 1" keyTimes="0;0.7;0.9;1" dur="4s" repeatCount="indefinite"></animateTransform>
+            </g>
+          </g>
+          <text class="label" x="83.5" y="127" text-anchor="middle">ぼやけて消えていく一方</text>
+          <rect class="card" x="168" y="12" width="137" height="123" rx="10"></rect>
+          <text class="title" x="236.5" y="32" text-anchor="middle">i あり：回転</text>
+          <g transform="translate(236.5,78)">
+            <circle class="dial" r="30"></circle>
+            <g>
+              <line class="hand" x1="0" y1="0" x2="24" y2="0"></line>
+              <path class="handhead" d="M30 0 l-8 -4.5 0 9 z"></path>
+              <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="4s" repeatCount="indefinite"></animateTransform>
+            </g>
+          </g>
+          <text class="label" x="236.5" y="127" text-anchor="middle">大きさは保たれる</text>
+          <rect class="card" x="15" y="145" width="290" height="110" rx="10"></rect>
+          <text class="title" x="160" y="165" text-anchor="middle">矢印の時計法則：回る速さはエネルギーに比例</text>
+          <g transform="translate(95,207)">
+            <circle class="dial" r="26"></circle>
+            <g>
+              <line class="hand" x1="0" y1="0" x2="20" y2="0"></line>
+              <path class="handhead" d="M26 0 l-8 -4.5 0 9 z"></path>
+              <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="6.4s" repeatCount="indefinite"></animateTransform>
+            </g>
+          </g>
+          <text class="label" x="95" y="247" text-anchor="middle">エネルギー小 → ゆっくり</text>
+          <g transform="translate(225,207)">
+            <circle class="dial" r="26"></circle>
+            <g>
+              <line class="hand" x1="0" y1="0" x2="20" y2="0"></line>
+              <path class="handhead" d="M26 0 l-8 -4.5 0 9 z"></path>
+              <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="1.6s" repeatCount="indefinite"></animateTransform>
+            </g>
+          </g>
+          <text class="label" x="225" y="247" text-anchor="middle">エネルギー大 → 速く回る</text>
+          <rect class="card" x="15" y="265" width="290" height="103" rx="10"></rect>
+          <text class="title" x="160" y="285" text-anchor="middle">定常状態：矢印はどこでも回るだけ</text>
+          <g transform="translate(90,306)">
+            <circle class="dial" r="13"></circle>
+            <g>
+              <line class="hand" x1="0" y1="0" x2="9" y2="0"></line>
+              <path class="handhead" d="M13 0 l-6 -3.5 0 7 z"></path>
+              <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="4s" repeatCount="indefinite"></animateTransform>
+            </g>
+          </g>
+          <g transform="translate(160,306)">
+            <circle class="dial" r="13"></circle>
+            <g>
+              <line class="hand" x1="0" y1="0" x2="9" y2="0"></line>
+              <path class="handhead" d="M13 0 l-6 -3.5 0 7 z"></path>
+              <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="4s" repeatCount="indefinite"></animateTransform>
+            </g>
+          </g>
+          <g transform="translate(230,306)">
+            <circle class="dial" r="13"></circle>
+            <g>
+              <line class="hand" x1="0" y1="0" x2="9" y2="0"></line>
+              <path class="handhead" d="M13 0 l-6 -3.5 0 7 z"></path>
+              <animateTransform attributeName="transform" type="rotate" values="0;-360" dur="4s" repeatCount="indefinite"></animateTransform>
+            </g>
+          </g>
+          <path class="psi2" d="M55 350 Q160 322 265 350"></path>
+          <text class="label" x="160" y="362" text-anchor="middle">|ψ|² の形は時間がたっても変わらない（Ĥψ＝Eψ）</text>
+        </svg>
+        <div class="diagram-caption">i の役割と定常状態。実数のままの方程式では波は熱がさめるようにぼやけて消えるが、i が入ると「減衰」が「回転」に変わり、ψ の矢印は大きさを保ったまま回り続ける。回る速さはエネルギーに比例（矢印の時計法則）。エネルギーが1つに決まった定常状態では、どの場所の矢印も同じ速さで回るだけなので、|ψ|² の形は時間がたっても変わらない</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
@@ -385,7 +473,7 @@
 <script>
   // アニメーションを避けたい設定のユーザーには静止画で表示する
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll(".well-svg animate, .well-svg animateTransform").forEach(function (a) { a.remove(); });
+    document.querySelectorAll(".well-svg animate, .well-svg animateTransform, .iclock-svg animate, .iclock-svg animateTransform").forEach(function (a) { a.remove(); });
   }
 </script>
 <script>QQ.initStagePage(6);</script>
