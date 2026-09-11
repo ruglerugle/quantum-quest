@@ -85,6 +85,18 @@
   .econ-svg .btext2{fill:#2f6fa6;font-size:12px;font-weight:900}
   .econ-svg .dial{fill:var(--paper2);stroke:var(--muted);stroke-width:1.5}
   .econ-svg .hand{stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+  .phot-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .phot-svg .title{fill:var(--ink);font-size:12px;font-weight:900}
+  .phot-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
+  .phot-svg .base{stroke:var(--line);stroke-width:1.2}
+  .phot-svg .bar1{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:2}
+  .phot-svg .bar2{fill:#dceaf8;stroke:#2f6fa6;stroke-width:2}
+  .phot-svg .btext1{fill:var(--gold-dark);font-size:12px;font-weight:900}
+  .phot-svg .btext2{fill:#2f6fa6;font-size:12px;font-weight:900}
+  .phot-svg .wave{fill:none;stroke:#7a4fb0;stroke-width:2.4}
+  .phot-svg .wavehead{fill:#7a4fb0}
+  .phot-svg .wavetext{fill:#7a4fb0;font-size:11px;font-weight:900}
+  .phot-svg .ledger{fill:#2f6fa6;font-size:11px;font-weight:900}
   .ipanel canvas{display:block;width:100%;height:auto}
   .ipanel .ctrl-val{font-weight:900;font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right;font-size:13px}
   .surf3-wrap{position:relative}
@@ -434,6 +446,35 @@
         <div class="diagram-caption">エネルギーが E₁ と E₂ の2種類混ざった状態。左：確率分布 |ψ|² の形は時間とともに動き続ける。右：それでも「測ったら E₁ が出るか E₂ が出るか」の混ざり具合は時間がたってもまったく変わらない――これが量子力学でのエネルギー保存則。この内訳が変わるのは、外から光を当てるなど、よそとエネルギーをやり取りしたときだけ</div>
       </div>
 
+      <div class="diagram-box">
+        <svg class="phot-svg" viewBox="0 0 320 180" width="100%" role="img" aria-label="外から光を当てたときのアニメーション。紫の波線で描かれた光子が左から飛んできてエネルギーの内訳の棒グラフに吸収されると、E1の確率の棒が縮んでE2の棒が伸び、内訳が変わる。光子は消えて、そのエネルギーhνはE2−E1として電子に移り、帳尻が合う">
+          <rect class="card" x="15" y="12" width="290" height="156" rx="10"></rect>
+          <text class="title" x="160" y="32" text-anchor="middle">外から光を当てると、内訳が変わる</text>
+          <line class="base" x1="170" y1="140" x2="295" y2="140"></line>
+          <rect class="bar1" x="185" y="75" width="30" height="65" rx="3">
+            <animate attributeName="y" values="75;75;105;105" keyTimes="0;0.38;0.52;1" dur="7s" repeatCount="indefinite"></animate>
+            <animate attributeName="height" values="65;65;35;35" keyTimes="0;0.38;0.52;1" dur="7s" repeatCount="indefinite"></animate>
+          </rect>
+          <text class="btext1" x="200" y="69" text-anchor="middle">E₁<animate attributeName="y" values="69;69;99;99" keyTimes="0;0.38;0.52;1" dur="7s" repeatCount="indefinite"></animate></text>
+          <rect class="bar2" x="245" y="110" width="30" height="30" rx="3">
+            <animate attributeName="y" values="110;110;80;80" keyTimes="0;0.38;0.52;1" dur="7s" repeatCount="indefinite"></animate>
+            <animate attributeName="height" values="30;30;60;60" keyTimes="0;0.38;0.52;1" dur="7s" repeatCount="indefinite"></animate>
+          </rect>
+          <text class="btext2" x="260" y="104" text-anchor="middle">E₂<animate attributeName="y" values="104;104;74;74" keyTimes="0;0.38;0.52;1" dur="7s" repeatCount="indefinite"></animate></text>
+          <g transform="translate(28,100)">
+            <g>
+              <path class="wave" d="M0 0 q5 -9 10 0 q5 9 10 0 q5 -9 10 0 q5 9 10 0 q5 -9 10 0"></path>
+              <path class="wavehead" d="M60 0 l-9 -5 0 10 z"></path>
+              <text class="wavetext" x="18" y="-16">光子 hν</text>
+              <animateTransform attributeName="transform" type="translate" values="0 0;118 0;118 0" keyTimes="0;0.36;1" dur="7s" repeatCount="indefinite"></animateTransform>
+              <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.36;0.44;1" dur="7s" repeatCount="indefinite"></animate>
+            </g>
+          </g>
+          <text class="ledger" x="160" y="160" text-anchor="middle" opacity="1">電子が受け取ったぶん光子は消える：hν ＝ E₂ − E₁<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5;0.62;1" dur="7s" repeatCount="indefinite"></animate></text>
+        </svg>
+        <div class="diagram-caption">内訳が変わる唯一の場合＝外とのやり取り。光子（エネルギー hν の光の粒）が飛んできて電子に吸収されると、E₁ の確率が減って E₂ の確率が増える。ただしタダでは変わらない。光子はそのぶん消えていて、hν ＝ E₂ − E₁ という帳尻がきちんと合っている――全体で見ればエネルギー保存則はやはり破れない</div>
+      </div>
+
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -698,7 +739,7 @@
 <script>
   // アニメーションを避けたい設定のユーザーには静止画で表示する
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll(".well-svg animate, .well-svg animateTransform, .iclock-svg animate, .iclock-svg animateTransform, .opfn-svg animate, .opfn-svg animateTransform, .econ-svg animate, .econ-svg animateTransform").forEach(function (a) { a.remove(); });
+    document.querySelectorAll(".well-svg animate, .well-svg animateTransform, .iclock-svg animate, .iclock-svg animateTransform, .opfn-svg animate, .opfn-svg animateTransform, .econ-svg animate, .econ-svg animateTransform, .phot-svg animate, .phot-svg animateTransform").forEach(function (a) { a.remove(); });
   }
 </script>
 <script>
