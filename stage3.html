@@ -26,36 +26,36 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
-  .bohr-svg .orbit{fill:none;stroke:var(--line);stroke-width:1.5;stroke-dasharray:3 4}
-  .bohr-svg .ewave{fill:none;stroke:var(--gold);stroke-width:2;stroke-linejoin:round}
+  .bohr-svg .orbit{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 4}
+  .bohr-svg .ewave{fill:none;stroke:var(--gold);stroke-width:1.2;stroke-linejoin:round}
   .bohr-svg .nucleus{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
   .bohr-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .bohr-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
-  .pv-svg .road{stroke:var(--line);stroke-width:2}
+  .pv-svg .road{stroke:var(--line);stroke-width:1.2}
   .pv-svg .truckL{fill:#2f6fa6;stroke:#1d4a73;stroke-width:1.2}
   .pv-svg .truckR{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
-  .pv-svg .arrL{stroke:#2f6fa6;stroke-width:2.5;fill:none}
-  .pv-svg .arrR{stroke:#c8433f;stroke-width:2.5;fill:none}
-  .pv-svg .burst{fill:var(--gold);stroke:var(--gold-dark);stroke-width:1.5}
+  .pv-svg .arrL{stroke:#2f6fa6;stroke-width:1.5;fill:none}
+  .pv-svg .arrR{stroke:#c8433f;stroke-width:1.5;fill:none}
+  .pv-svg .burst{fill:var(--gold);stroke:var(--gold-dark);stroke-width:1.2}
   .pv-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .pv-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
-  .pair-svg .wave{fill:none;stroke:var(--gold);stroke-width:2.2}
+  .pair-svg .wave{fill:none;stroke:var(--gold);stroke-width:1.3}
   .pair-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
   .pair-svg .guide{stroke:#c8433f;stroke-width:1.2;stroke-dasharray:3 3}
   .pair-svg .dot{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
-  .pair-svg .brk{stroke:#2f6fa6;stroke-width:2;fill:none}
+  .pair-svg .brk{stroke:#2f6fa6;stroke-width:1.2;fill:none}
   .pair-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .pair-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
-  .grad-svg .axis{stroke:var(--muted);stroke-width:1.5;fill:none}
-  .grad-svg .curve{fill:none;stroke:var(--gold);stroke-width:2.5}
-  .grad-svg .tan{stroke:#2f6fa6;stroke-width:2;fill:none}
-  .grad-svg .tanb{stroke:#2f6fa6;stroke-width:2;fill:none;stroke-dasharray:6 4}
-  .grad-svg .sec{stroke:#c8433f;stroke-width:2.2;fill:none}
-  .grad-svg .dot2{fill:#fff;stroke:#c8433f;stroke-width:2}
+  .grad-svg .axis{stroke:var(--muted);stroke-width:1.2;fill:none}
+  .grad-svg .curve{fill:none;stroke:var(--gold);stroke-width:1.5}
+  .grad-svg .tan{stroke:#2f6fa6;stroke-width:1.2;fill:none}
+  .grad-svg .tanb{stroke:#2f6fa6;stroke-width:1.2;fill:none;stroke-dasharray:6 4}
+  .grad-svg .sec{stroke:#c8433f;stroke-width:1.3;fill:none}
+  .grad-svg .dot2{fill:#fff;stroke:#c8433f;stroke-width:1.2}
   .grad-svg .red{fill:#c8433f}
   .grad-svg .strip2{fill:rgba(200,67,63,.28);stroke:#c8433f;stroke-width:1}
   .grad-svg .strip3{fill:rgba(200,67,63,.8);stroke:#8f2f2c;stroke-width:1.2}
-  .grad-svg .tri{stroke:#c8433f;stroke-width:1.5;fill:none;stroke-dasharray:3 3}
+  .grad-svg .tri{stroke:#c8433f;stroke-width:1.2;fill:none;stroke-dasharray:3 3}
   .grad-svg .dot{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
   .grad-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .grad-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
@@ -64,33 +64,33 @@
   .grad-svg .strip{fill:#c8433f;opacity:.3;stroke:#c8433f;stroke-width:1}
   .grad-svg .guide{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
   .spec3-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
-  .gtr-svg .string{fill:none;stroke:var(--gold);stroke-width:2.5}
+  .gtr-svg .string{fill:none;stroke:var(--gold);stroke-width:1.5}
   .gtr-svg .post{fill:var(--felt)}
   .gtr-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
   .gtr-svg .finger{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
   .gtr-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
   .gtr-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
-  .pair2-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .pair2-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.2}
   .pair2-svg .title{fill:var(--ink);font-size:13px;font-weight:900}
   .pair2-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
   .pair2-svg .item{fill:var(--ink);font-size:12.5px;font-weight:900}
   .pair2-svg .formula{fill:#2f6fa6;font-size:15px;font-weight:900}
-  .pair2-svg .arr{stroke:var(--muted);stroke-width:1.6;fill:none}
+  .pair2-svg .arr{stroke:var(--muted);stroke-width:1.2;fill:none}
   .pair2-svg .arrhead{fill:var(--muted)}
-  .pair2-svg .hbadge{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:2}
+  .pair2-svg .hbadge{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:1.2}
   .pair2-svg .htext{fill:var(--gold-dark);font-size:16px;font-weight:900}
-  .pair2-svg .hline{stroke:var(--gold-dark);stroke-width:1.5;stroke-dasharray:4 3}
-  .pair2-svg .vbadge{fill:#e3eef8;stroke:#2f6fa6;stroke-width:2}
+  .pair2-svg .hline{stroke:var(--gold-dark);stroke-width:1.2;stroke-dasharray:4 3}
+  .pair2-svg .vbadge{fill:#e3eef8;stroke:#2f6fa6;stroke-width:1.2}
   .pair2-svg .vtext{fill:#2f6fa6;font-size:15px;font-weight:900;font-style:italic}
-  .pair2-svg .vline{stroke:#2f6fa6;stroke-width:1.5;stroke-dasharray:4 3}
+  .pair2-svg .vline{stroke:#2f6fa6;stroke-width:1.2;stroke-dasharray:4 3}
   .pair2-svg .vlabel{fill:#2f6fa6;font-size:11px;font-weight:900}
   .pair2-svg .hlabel{fill:var(--gold-dark);font-size:11px;font-weight:900}
   .fall-svg .trail{stroke:#c3b48a;stroke-width:1.3;fill:none;stroke-dasharray:3 3}
-  .fall-svg .nucl{fill:#e8b6b4;stroke:#c8433f;stroke-width:2}
+  .fall-svg .nucl{fill:#e8b6b4;stroke:#c8433f;stroke-width:1.2}
   .fall-svg .ntext{fill:#c8433f;font-size:12px;font-weight:900}
-  .fall-svg .el{fill:#bcd7ee;stroke:#2f6fa6;stroke-width:2}
+  .fall-svg .el{fill:#bcd7ee;stroke:#2f6fa6;stroke-width:1.2}
   .fall-svg .etext{fill:#2f6fa6;font-size:11px;font-weight:900}
-  .fall-svg .ring{stroke:var(--gold-dark);stroke-width:1.6;fill:none}
+  .fall-svg .ring{stroke:var(--gold-dark);stroke-width:1.2;fill:none}
   .fall-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
   .fall-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .spec3-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}

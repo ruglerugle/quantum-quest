@@ -26,74 +26,74 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
-  .well-svg .wall{stroke:var(--felt);stroke-width:6;fill:none}
+  .well-svg .wall{stroke:var(--felt);stroke-width:3;fill:none}
   .well-svg .level{stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 3}
-  .well-svg .wave{fill:none;stroke:var(--gold);stroke-width:2.2}
+  .well-svg .wave{fill:none;stroke:var(--gold);stroke-width:1.3}
   .well-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .well-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .well-svg .electron{fill:#2f6fa6;stroke:#1d4a73;stroke-width:1.2}
   .well-svg .eminus{fill:#fff;font-size:12px;font-weight:900}
-  .well-svg .brk{stroke:#2f6fa6;stroke-width:2;fill:none}
-  .well-svg .cont{stroke:var(--felt);stroke-width:6;stroke-dasharray:2 6;fill:none;opacity:.6}
+  .well-svg .brk{stroke:#2f6fa6;stroke-width:1.2;fill:none}
+  .well-svg .cont{stroke:var(--felt);stroke-width:3;stroke-dasharray:2 6;fill:none;opacity:.6}
   .well-svg .pin{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
   .well-svg .accent{fill:#8a6a24;font-size:11px;font-weight:900}
-  .iclock-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .iclock-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.2}
   .iclock-svg .title{fill:var(--ink);font-size:12px;font-weight:900}
   .iclock-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
-  .iclock-svg .wave{fill:none;stroke:#c8433f;stroke-width:2.2}
+  .iclock-svg .wave{fill:none;stroke:#c8433f;stroke-width:1.3}
   .iclock-svg .base{stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 3;fill:none}
-  .iclock-svg .dial{fill:none;stroke:var(--line);stroke-width:1.5}
-  .iclock-svg .hand{stroke:#2f6fa6;stroke-width:2.6;fill:none}
+  .iclock-svg .dial{fill:none;stroke:var(--line);stroke-width:1.2}
+  .iclock-svg .hand{stroke:#2f6fa6;stroke-width:1.6;fill:none}
   .iclock-svg .handhead{fill:#2f6fa6}
-  .iclock-svg .psi2{fill:rgba(217,164,65,.25);stroke:var(--gold-dark);stroke-width:2}
+  .iclock-svg .psi2{fill:rgba(217,164,65,.25);stroke:var(--gold-dark);stroke-width:1.2}
   .iclock-svg .formula{fill:#2f6fa6;font-size:13px;font-weight:900}
-  .opfn-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .opfn-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.2}
   .opfn-svg .title{fill:var(--ink);font-size:12px;font-weight:900}
   .opfn-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
-  .opfn-svg .mach{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:2}
+  .opfn-svg .mach{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:1.2}
   .opfn-svg .machtext{fill:var(--gold-dark);font-size:11.5px;font-weight:900}
-  .opfn-svg .arr{stroke:var(--muted);stroke-width:1.6;fill:none}
+  .opfn-svg .arr{stroke:var(--muted);stroke-width:1.2;fill:none}
   .opfn-svg .arrhead{fill:var(--muted)}
-  .opfn-svg .tok{fill:#e3eef8;stroke:#2f6fa6;stroke-width:2}
+  .opfn-svg .tok{fill:#e3eef8;stroke:#2f6fa6;stroke-width:1.2}
   .opfn-svg .toktext{fill:#2f6fa6;font-size:13px;font-weight:900}
-  .opfn-svg .incurve{fill:none;stroke:var(--gold-dark);stroke-width:2.4}
-  .opfn-svg .outcurve{fill:none;stroke:#2f6fa6;stroke-width:2.4}
+  .opfn-svg .incurve{fill:none;stroke:var(--gold-dark);stroke-width:1.4}
+  .opfn-svg .outcurve{fill:none;stroke:#2f6fa6;stroke-width:1.4}
   .surf3-svg .title{fill:var(--ink);font-size:12px;font-weight:900}
   .surf3-svg .mesh{fill:none;stroke:#cfc2a0;stroke-width:1.2}
-  .surf3-svg .axis{stroke:var(--muted);stroke-width:1.5;fill:none}
+  .surf3-svg .axis{stroke:var(--muted);stroke-width:1.2;fill:none}
   .surf3-svg .axhead{fill:var(--muted)}
   .surf3-svg .axlabel{fill:var(--muted);font-size:11px;font-weight:900}
-  .surf3-svg .tcut{fill:none;stroke:var(--gold-dark);stroke-width:2.6}
-  .surf3-svg .xfix{fill:none;stroke:#2f6fa6;stroke-width:2.6}
-  .surf3-svg .dot{fill:#2f6fa6;stroke:#fff;stroke-width:1.5}
+  .surf3-svg .tcut{fill:none;stroke:var(--gold-dark);stroke-width:1.6}
+  .surf3-svg .xfix{fill:none;stroke:#2f6fa6;stroke-width:1.6}
+  .surf3-svg .dot{fill:#2f6fa6;stroke:#fff;stroke-width:1.2}
   .surf3-svg .drop{stroke:#2f6fa6;stroke-width:1.2;stroke-dasharray:3 3}
   .surf3-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
-  .surf3-svg .cross{fill:#c8433f;stroke:#fff;stroke-width:1.5}
+  .surf3-svg .cross{fill:#c8433f;stroke:#fff;stroke-width:1.2}
   .surf3-svg .crosslabel{fill:#c8433f;font-size:11px;font-weight:900}
-  .surf3-svg .tick{stroke:var(--muted);stroke-width:1.5}
+  .surf3-svg .tick{stroke:var(--muted);stroke-width:1.2}
   .surf3-svg .ticklabel{font-size:11px;font-weight:900}
   .surf3-svg .bluet{fill:#2f6fa6}
   .surf3-svg .goldt{fill:var(--gold-dark)}
-  .econ-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .econ-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.2}
   .econ-svg .title{fill:var(--ink);font-size:12px;font-weight:900}
   .econ-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
-  .econ-svg .dens{fill:rgba(217,164,65,.3);stroke:var(--gold-dark);stroke-width:2.2}
+  .econ-svg .dens{fill:rgba(217,164,65,.3);stroke:var(--gold-dark);stroke-width:1.3}
   .econ-svg .base{stroke:var(--line);stroke-width:1.2}
-  .econ-svg .bar1{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:2}
-  .econ-svg .bar2{fill:#dceaf8;stroke:#2f6fa6;stroke-width:2}
+  .econ-svg .bar1{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:1.2}
+  .econ-svg .bar2{fill:#dceaf8;stroke:#2f6fa6;stroke-width:1.2}
   .econ-svg .btext1{fill:var(--gold-dark);font-size:12px;font-weight:900}
   .econ-svg .btext2{fill:#2f6fa6;font-size:12px;font-weight:900}
-  .econ-svg .dial{fill:var(--paper2);stroke:var(--muted);stroke-width:1.5}
-  .econ-svg .hand{stroke:var(--muted);stroke-width:2;stroke-linecap:round}
-  .phot-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .econ-svg .dial{fill:var(--paper2);stroke:var(--muted);stroke-width:1.2}
+  .econ-svg .hand{stroke:var(--muted);stroke-width:1.2;stroke-linecap:round}
+  .phot-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.2}
   .phot-svg .title{fill:var(--ink);font-size:12px;font-weight:900}
   .phot-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
   .phot-svg .base{stroke:var(--line);stroke-width:1.2}
-  .phot-svg .bar1{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:2}
-  .phot-svg .bar2{fill:#dceaf8;stroke:#2f6fa6;stroke-width:2}
+  .phot-svg .bar1{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:1.2}
+  .phot-svg .bar2{fill:#dceaf8;stroke:#2f6fa6;stroke-width:1.2}
   .phot-svg .btext1{fill:var(--gold-dark);font-size:12px;font-weight:900}
   .phot-svg .btext2{fill:#2f6fa6;font-size:12px;font-weight:900}
-  .phot-svg .wave{fill:none;stroke:#7a4fb0;stroke-width:2.4}
+  .phot-svg .wave{fill:none;stroke:#7a4fb0;stroke-width:1.4}
   .phot-svg .wavehead{fill:#7a4fb0}
   .phot-svg .wavetext{fill:#7a4fb0;font-size:11px;font-weight:900}
   .phot-svg .ledger{fill:#2f6fa6;font-size:11px;font-weight:900}
