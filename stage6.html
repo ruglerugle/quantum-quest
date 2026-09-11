@@ -434,7 +434,7 @@
           </g>
           <text class="label" x="160" y="103" text-anchor="middle">時間</text>
           <rect class="card" x="168" y="12" width="137" height="148" rx="10"></rect>
-          <text class="title" x="236.5" y="32" text-anchor="middle">エネルギーの内訳</text>
+          <text class="title" x="236.5" y="32" text-anchor="middle">電子のエネルギーの内訳</text>
           <text class="label" x="236.5" y="46" text-anchor="middle">（測ったら出る確率）</text>
           <line class="base" x1="180" y1="135" x2="293" y2="135"></line>
           <rect class="bar1" x="193" y="75" width="30" height="60" rx="3"></rect>
@@ -443,13 +443,14 @@
           <text class="btext2" x="263" y="88" text-anchor="middle">E₂</text>
           <text class="label" x="236.5" y="152" text-anchor="middle">ずっと変わらない（凍結）</text>
         </svg>
-        <div class="diagram-caption">エネルギーが E₁ と E₂ の2種類混ざった状態。左：確率分布 |ψ|² の形は時間とともに動き続ける。右：それでも「測ったら E₁ が出るか E₂ が出るか」の混ざり具合は時間がたってもまったく変わらない――これが量子力学でのエネルギー保存則。この内訳が変わるのは、外から光を当てるなど、よそとエネルギーをやり取りしたときだけ</div>
+        <div class="diagram-caption">電子のエネルギーに E₁ と E₂ の2種類（電子が取り得る2つのエネルギーの値）が混ざった状態。左：確率分布 |ψ|² の形は時間とともに動き続ける。右：それでも「電子のエネルギーを測ったら E₁ が出るか E₂ が出るか」の混ざり具合は時間がたってもまったく変わらない――これが量子力学でのエネルギー保存則。この内訳が変わるのは、外から光を当てるなど、よそとエネルギーをやり取りしたときだけ</div>
       </div>
 
       <div class="diagram-box">
         <svg class="phot-svg" viewBox="0 0 320 180" width="100%" role="img" aria-label="外から光を当てたときのアニメーション。紫の波線で描かれた光子が左から飛んできてエネルギーの内訳の棒グラフに吸収されると、E1の確率の棒が縮んでE2の棒が伸び、内訳が変わる。光子は消えて、そのエネルギーhνはE2−E1として電子に移り、帳尻が合う">
           <rect class="card" x="15" y="12" width="290" height="156" rx="10"></rect>
           <text class="title" x="160" y="32" text-anchor="middle">外から光を当てると、内訳が変わる</text>
+          <text class="label" x="160" y="48" text-anchor="middle">（E₁・E₂＝電子のエネルギー、hν＝光子のエネルギー）</text>
           <line class="base" x1="170" y1="140" x2="295" y2="140"></line>
           <rect class="bar1" x="185" y="75" width="30" height="65" rx="3">
             <animate attributeName="y" values="75;75;105;105" keyTimes="0;0.38;0.52;1" dur="7s" repeatCount="indefinite"></animate>
@@ -472,7 +473,7 @@
           </g>
           <text class="ledger" x="160" y="160" text-anchor="middle" opacity="1">電子が受け取ったぶん光子は消える：hν ＝ E₂ − E₁<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5;0.62;1" dur="7s" repeatCount="indefinite"></animate></text>
         </svg>
-        <div class="diagram-caption">内訳が変わる唯一の場合＝外とのやり取り。光子（エネルギー hν の光の粒）が飛んできて電子に吸収されると、E₁ の確率が減って E₂ の確率が増える。ただしタダでは変わらない。光子はそのぶん消えていて、hν ＝ E₂ − E₁ という帳尻がきちんと合っている――全体で見ればエネルギー保存則はやはり破れない</div>
+        <div class="diagram-caption">内訳が変わる唯一の場合＝外とのやり取り。E₁・E₂ はどちらも電子の取り得るエネルギーの値で、hν だけが光子のエネルギー。光子が飛んできて電子に吸収されると、電子のエネルギーが E₁ になる確率が減って E₂ になる確率が増える。ただしタダでは変わらない。光子はそのぶん消えていて、hν ＝ E₂ − E₁ という帳尻がきちんと合っている――全体で見ればエネルギー保存則はやはり破れない</div>
       </div>
 
       <div class="dialogue-scene">
