@@ -505,6 +505,17 @@
           </div>
           <div class="dialog-bubble"><strong>時間</strong>だ。STAGE3の対を思い出してごらん。「空間の刻み λ ⇔ 運動量 p」「時間の刻み ν ⇔ エネルギー E」という2本1組だったね。だから対称性はこうなる。運動量が1つに確定すると、ψ は<strong>空間方向に一様</strong>――どこで見ても同じで、位置が分からなくなる。エネルギーが1つに確定すると、ψ は<strong>時間方向に「一様」</strong>――<strong>いつ見ても同じ</strong>になる。それこそが、今日の定常状態だ。「エネルギーが確定した状態は、いつまでも変わらない」という話は、STAGE4でやった空間の話の、時間バージョンだったわけだね。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="surf3-wrap">
+          <canvas id="sym3c" role="img" aria-label="場所x・時刻t・|ψ|²の3軸で描いた2枚の曲面の比較。左は運動量が確定した状態で、|ψ|²は場所方向にも時刻方向にも完全に平ら＝どの場所でも同じで位置が不確定。右はエネルギーが確定した定常状態で、|ψ|²は場所方向には山の形を持つが、時刻方向にはまっすぐ伸びていて、いつ見ても同じ形。ドラッグで視点を回転できる"></canvas>
+          <div class="surf3-hint">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</div>
+        </div>
+        <div class="diagram-caption">|ψ|² を場所 x・時刻 t の上に描いた2枚の曲面。左（運動量が確定）：|ψ|² は完全に平ら――空間方向に一様で、どこにいるか分からない。右（エネルギーが確定＝定常状態）：場所方向には山の形があるのに、時刻方向にはレールのようにまっすぐ――時間方向に一様で、いつ見ても同じ形。「p 確定 ⇔ 空間で一様」「E 確定 ⇔ 時間で一様」という対称性がそのまま形になっている</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -952,8 +963,9 @@
     function move(e) {
       if (!dragging) return;
       var p = e.touches ? e.touches[0] : e;
-      yaw += (p.clientX - lx) * 0.01;
-      pitch += (p.clientY - ly) * 0.01;
+      // 手前をつかんで動かす感覚（ドラッグ方向に手前側が付いてくる）
+      yaw -= (p.clientX - lx) * 0.01;
+      pitch -= (p.clientY - ly) * 0.01;
       if (pitch > 1.5) pitch = 1.5;
       if (pitch < -1.5) pitch = -1.5;
       lx = p.clientX; ly = p.clientY;
@@ -1069,6 +1081,106 @@
     }, {threshold: 0.15}).observe(svg);
   }
 })();
+</script>
+<script>
+  // p確定とE確定の|ψ|²比較：ドラッグで回せる2枚の曲面
+  (function () {
+    var cv = document.getElementById("sym3c");
+    if (!cv) return;
+    var ctx = cv.getContext("2d");
+    var yaw = 0.45, pitch = -1.02;
+    var W, H, sc, cx, cy;
+    var C = { mesh1: "#8fb6cc", mesh2: "#c9a24a", muted: "#8a7a5c", ink: "#241d12", blue: "#2f6fa6", gold: "#a6742a" };
+    function proj(x, y, z) {
+      var cyw = Math.cos(yaw), syw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+      var X1 = x * cyw + z * syw, Z1 = -x * syw + z * cyw;
+      var Y2 = y * cp - Z1 * sp;
+      return [cx + sc * X1, cy - sc * Y2];
+    }
+    function sheet(xc, f, color) {
+      ctx.strokeStyle = color; ctx.lineWidth = 0.9;
+      var i, j, p;
+      for (i = 0; i <= 12; i++) {
+        var t = i * 0.5;
+        ctx.beginPath();
+        for (j = 0; j <= 24; j++) {
+          var u = j * 0.25;
+          p = proj(xc + (u - 3) * 0.85, f(u), (t - 3) * 0.85);
+          if (j) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]);
+        }
+        ctx.stroke();
+      }
+      for (i = 0; i <= 12; i++) {
+        var u2 = i * 0.5;
+        ctx.beginPath();
+        for (j = 0; j <= 24; j++) {
+          var t2 = j * 0.25;
+          p = proj(xc + (u2 - 3) * 0.85, f(u2), (t2 - 3) * 0.85);
+          if (j) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]);
+        }
+        ctx.stroke();
+      }
+    }
+    function label(x, y, z, text, color) {
+      var p = proj(x, y, z);
+      ctx.fillStyle = color; ctx.textAlign = "center";
+      ctx.font = "900 12px system-ui,sans-serif";
+      ctx.fillText(text, p[0], p[1]);
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      sheet(-4.3, function () { return 0.55; }, C.mesh1);
+      sheet(4.3, function (u) { var s = Math.sin(Math.PI * u / 6); return 1.7 * s * s; }, C.mesh2);
+      var o = [-7.5, 0, -3.2];
+      var o2 = proj(o[0], o[1], o[2]);
+      var ax = proj(o[0] + 2.2, 0, o[2]);
+      var az = proj(o[0], 0, o[2] + 2.2);
+      ctx.strokeStyle = C.muted; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(o2[0], o2[1]); ctx.lineTo(ax[0], ax[1]); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(o2[0], o2[1]); ctx.lineTo(az[0], az[1]); ctx.stroke();
+      ctx.fillStyle = C.muted; ctx.font = "900 11px system-ui,sans-serif"; ctx.textAlign = "center";
+      ctx.fillText("場所 x", ax[0] + 6, ax[1] + 13);
+      ctx.fillText("時刻 t", az[0], az[1] - 8);
+      label(-4.3, 2.5, 0, "運動量が確定", C.ink);
+      label(4.3, 3.0, 0, "エネルギーが確定（定常状態）", C.ink);
+      ctx.fillStyle = C.blue; ctx.font = "700 10.5px system-ui,sans-serif";
+      ctx.fillText("|ψ|² はどこでも同じ＝位置が不確定", W * 0.26, H - 8);
+      ctx.fillStyle = C.gold;
+      ctx.fillText("|ψ|² はいつ見ても同じ形", W * 0.76, H - 8);
+    }
+    function resize() {
+      var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.62, 230));
+      var d = window.devicePixelRatio || 1;
+      cv.width = Math.round(w * d); cv.height = Math.round(h * d);
+      cv.style.height = h + "px";
+      ctx.setTransform(d, 0, 0, d, 0, 0);
+      W = w; H = h; sc = w / 23; cx = w / 2; cy = h * 0.5;
+      draw();
+    }
+    var dragging = false, lx = 0, ly = 0;
+    function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; cv.style.cursor = "grabbing"; if (e.cancelable) e.preventDefault(); }
+    function move(e) {
+      if (!dragging) return;
+      var p = e.touches ? e.touches[0] : e;
+      // 手前をつかんで動かす感覚
+      yaw -= (p.clientX - lx) * 0.01;
+      pitch -= (p.clientY - ly) * 0.01;
+      if (pitch > 1.5) pitch = 1.5;
+      if (pitch < -1.5) pitch = -1.5;
+      lx = p.clientX; ly = p.clientY;
+      draw();
+      if (e.cancelable) e.preventDefault();
+    }
+    function up() { dragging = false; cv.style.cursor = "grab"; }
+    cv.addEventListener("mousedown", down);
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+    cv.addEventListener("touchstart", down, { passive: false });
+    cv.addEventListener("touchmove", move, { passive: false });
+    window.addEventListener("touchend", up);
+    window.addEventListener("resize", resize);
+    resize();
+  })();
 </script>
 </body>
 </html>
