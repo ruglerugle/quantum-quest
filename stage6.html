@@ -74,6 +74,17 @@
   .surf3-svg .ticklabel{font-size:11px;font-weight:900}
   .surf3-svg .bluet{fill:#2f6fa6}
   .surf3-svg .goldt{fill:var(--gold-dark)}
+  .econ-svg .card{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .econ-svg .title{fill:var(--ink);font-size:12px;font-weight:900}
+  .econ-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
+  .econ-svg .dens{fill:rgba(217,164,65,.3);stroke:var(--gold-dark);stroke-width:2.2}
+  .econ-svg .base{stroke:var(--line);stroke-width:1.2}
+  .econ-svg .bar1{fill:var(--gold-light);stroke:var(--gold-dark);stroke-width:2}
+  .econ-svg .bar2{fill:#dceaf8;stroke:#2f6fa6;stroke-width:2}
+  .econ-svg .btext1{fill:var(--gold-dark);font-size:12px;font-weight:900}
+  .econ-svg .btext2{fill:#2f6fa6;font-size:12px;font-weight:900}
+  .econ-svg .dial{fill:var(--paper2);stroke:var(--muted);stroke-width:1.5}
+  .econ-svg .hand{stroke:var(--muted);stroke-width:2;stroke-linecap:round}
   .ipanel canvas{display:block;width:100%;height:auto}
   .ipanel .ctrl-val{font-weight:900;font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right;font-size:13px}
   .surf3-wrap{position:relative}
@@ -392,6 +403,38 @@
           </div>
           <div class="dialog-bubble">「決まっていない」と「変わる」は別物なんだ。混ざった状態は、エネルギーの値が時間とともに変わっている状態ではなくて、「測ったら E₁ が出るか E₂ が出るか、<strong>確率でしか決まっていない</strong>」状態だ。位置が1点に定まらなかったのと同じことが、エネルギーという量にも起こるだけだよ。そして保存則はちゃんと生きている。<strong>E₁ と E₂ の混ざり具合（それぞれが出る確率）は、時間がたってもまったく変わらない</strong>んだ。|ψ|² の山は動き回るのに、エネルギーの内訳だけはずっと凍結されている――これが量子力学でのエネルギー保存則だ。内訳が変わるのは、外から光を当てるなど、よそとエネルギーをやり取りしたときだけ。そのときも、電子が受け取ったぶん光のエネルギーが減っていて、全体の帳尻はきちんと合っている。さて、話を戻そう。形が時々刻々変わる状態よりも、まずは形の決まった定常状態から探すのが定石だ。その条件を式にしたのが2行目の <strong>Ĥψ＝Eψ</strong>――「エネルギーを取り出す操作をしても、形は変わらず、ただ E 倍になる」、つまり<strong>エネルギーがはっきり E に決まっている状態</strong>、という意味の式だよ。今日はこちらを使う。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="econ-svg" viewBox="0 0 320 175" width="100%" role="img" aria-label="エネルギーが2種類混ざった状態のアニメーション。左のカードでは確率分布|ψ|²の山が左右に行ったり来たりと動き続ける。中央の時計が時間の経過を表す。右のカードではエネルギーE1とE2が出る確率の棒グラフが、時間がたってもまったく変わらずに凍結されている">
+          <rect class="card" x="15" y="12" width="137" height="148" rx="10"></rect>
+          <text class="title" x="83.5" y="32" text-anchor="middle">|ψ|² の形</text>
+          <line class="base" x1="25" y1="135" x2="142" y2="135"></line>
+          <path class="dens" d="M25.0 135.0 L27.9 133.6 L30.9 129.5 L33.8 123.1 L36.7 114.7 L39.6 105.1 L42.5 94.8 L45.5 84.7 L48.4 75.4 L51.3 67.5 L54.3 61.6 L57.2 58.1 L60.1 57.0 L63.0 58.4 L65.9 62.2 L68.9 68.0 L71.8 75.4 L74.7 83.8 L77.7 92.7 L80.6 101.5 L83.5 109.8 L86.4 117.2 L89.4 123.4 L92.3 128.2 L95.2 131.7 L98.1 133.8 L101.0 134.8 L104.0 135.0 L106.9 134.5 L109.8 133.7 L112.8 132.8 L115.7 132.1 L118.6 131.7 L121.5 131.6 L124.5 131.8 L127.4 132.3 L130.3 133.0 L133.2 133.8 L136.1 134.4 L139.1 134.8 L142.0 135.0">
+            <animate attributeName="d" dur="4s" repeatCount="indefinite" values="M25.0 135.0 L27.9 133.6 L30.9 129.5 L33.8 123.1 L36.7 114.7 L39.6 105.1 L42.5 94.8 L45.5 84.7 L48.4 75.4 L51.3 67.5 L54.3 61.6 L57.2 58.1 L60.1 57.0 L63.0 58.4 L65.9 62.2 L68.9 68.0 L71.8 75.4 L74.7 83.8 L77.7 92.7 L80.6 101.5 L83.5 109.8 L86.4 117.2 L89.4 123.4 L92.3 128.2 L95.2 131.7 L98.1 133.8 L101.0 134.8 L104.0 135.0 L106.9 134.5 L109.8 133.7 L112.8 132.8 L115.7 132.1 L118.6 131.7 L121.5 131.6 L124.5 131.8 L127.4 132.3 L130.3 133.0 L133.2 133.8 L136.1 134.4 L139.1 134.8 L142.0 135.0;M25.0 135.0 L27.9 134.8 L30.9 134.4 L33.8 133.8 L36.7 133.0 L39.6 132.3 L42.5 131.8 L45.5 131.6 L48.4 131.7 L51.3 132.1 L54.3 132.8 L57.2 133.7 L60.1 134.5 L63.0 135.0 L65.9 134.8 L68.9 133.8 L71.8 131.7 L74.7 128.2 L77.7 123.4 L80.6 117.2 L83.5 109.8 L86.4 101.5 L89.4 92.7 L92.3 83.8 L95.2 75.4 L98.1 68.0 L101.0 62.2 L104.0 58.4 L106.9 57.0 L109.8 58.1 L112.8 61.6 L115.7 67.5 L118.6 75.4 L121.5 84.7 L124.5 94.8 L127.4 105.1 L130.3 114.7 L133.2 123.1 L136.1 129.5 L139.1 133.6 L142.0 135.0;M25.0 135.0 L27.9 133.6 L30.9 129.5 L33.8 123.1 L36.7 114.7 L39.6 105.1 L42.5 94.8 L45.5 84.7 L48.4 75.4 L51.3 67.5 L54.3 61.6 L57.2 58.1 L60.1 57.0 L63.0 58.4 L65.9 62.2 L68.9 68.0 L71.8 75.4 L74.7 83.8 L77.7 92.7 L80.6 101.5 L83.5 109.8 L86.4 117.2 L89.4 123.4 L92.3 128.2 L95.2 131.7 L98.1 133.8 L101.0 134.8 L104.0 135.0 L106.9 134.5 L109.8 133.7 L112.8 132.8 L115.7 132.1 L118.6 131.7 L121.5 131.6 L124.5 131.8 L127.4 132.3 L130.3 133.0 L133.2 133.8 L136.1 134.4 L139.1 134.8 L142.0 135.0"></animate>
+          </path>
+          <text class="label" x="83.5" y="152" text-anchor="middle">山は行ったり来たり動き続ける</text>
+          <circle class="dial" cx="160" cy="80" r="11"></circle>
+          <g transform="translate(160,80)">
+            <line class="hand" x1="0" y1="0" x2="0" y2="-8">
+              <animateTransform attributeName="transform" type="rotate" values="0;360" dur="4s" repeatCount="indefinite"></animateTransform>
+            </line>
+          </g>
+          <text class="label" x="160" y="103" text-anchor="middle">時間</text>
+          <rect class="card" x="168" y="12" width="137" height="148" rx="10"></rect>
+          <text class="title" x="236.5" y="32" text-anchor="middle">エネルギーの内訳</text>
+          <text class="label" x="236.5" y="46" text-anchor="middle">（測ったら出る確率）</text>
+          <line class="base" x1="180" y1="135" x2="293" y2="135"></line>
+          <rect class="bar1" x="193" y="75" width="30" height="60" rx="3"></rect>
+          <text class="btext1" x="208" y="68" text-anchor="middle">E₁</text>
+          <rect class="bar2" x="248" y="95" width="30" height="40" rx="3"></rect>
+          <text class="btext2" x="263" y="88" text-anchor="middle">E₂</text>
+          <text class="label" x="236.5" y="152" text-anchor="middle">ずっと変わらない（凍結）</text>
+        </svg>
+        <div class="diagram-caption">エネルギーが E₁ と E₂ の2種類混ざった状態。左：確率分布 |ψ|² の形は時間とともに動き続ける。右：それでも「測ったら E₁ が出るか E₂ が出るか」の混ざり具合は時間がたってもまったく変わらない――これが量子力学でのエネルギー保存則。この内訳が変わるのは、外から光を当てるなど、よそとエネルギーをやり取りしたときだけ</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -655,7 +698,7 @@
 <script>
   // アニメーションを避けたい設定のユーザーには静止画で表示する
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll(".well-svg animate, .well-svg animateTransform, .iclock-svg animate, .iclock-svg animateTransform, .opfn-svg animate, .opfn-svg animateTransform").forEach(function (a) { a.remove(); });
+    document.querySelectorAll(".well-svg animate, .well-svg animateTransform, .iclock-svg animate, .iclock-svg animateTransform, .opfn-svg animate, .opfn-svg animateTransform, .econ-svg animate, .econ-svg animateTransform").forEach(function (a) { a.remove(); });
   }
 </script>
 <script>
