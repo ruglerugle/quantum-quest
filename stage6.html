@@ -511,10 +511,10 @@
 
       <div class="diagram-box">
         <div class="surf3-wrap">
-          <canvas id="sym3c" role="img" aria-label="場所x・時刻t・|ψ|²の3軸で描いた2枚の曲面の比較。左は運動量が確定した状態で、|ψ|²は場所方向にも時刻方向にも完全に平ら＝どの場所でも同じで位置が不確定。右はエネルギーが確定した定常状態で、|ψ|²は場所方向には山の形を持つが、時刻方向にはまっすぐ伸びていて、いつ見ても同じ形。ドラッグで視点を回転できる"></canvas>
+          <canvas id="sym3c" role="img" aria-label="場所x・時刻t・|ψ|²の3軸で描いた3枚の曲面の比較。左上は運動量が確定した状態で、|ψ|²はどの方向にも完全に平ら＝位置が不確定。右上はエネルギーが確定した定常状態で、|ψ|²は場所方向に山を持つが時刻方向にはまっすぐ伸びていて、いつ見ても同じ形。下はエネルギーが混ざった定常でない状態で、曲面は時刻方向にも波打ち、時刻で切るたびに断面の形が違う。ドラッグで視点を回転できる"></canvas>
           <div class="surf3-hint">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</div>
         </div>
-        <div class="diagram-caption">|ψ|² を場所 x・時刻 t の上に描いた2枚の曲面。左（運動量が確定）：|ψ|² は完全に平ら――空間方向に一様で、どこにいるか分からない。右（エネルギーが確定＝定常状態）：場所方向には山の形があるのに、時刻方向にはレールのようにまっすぐ――時間方向に一様で、いつ見ても同じ形。「p 確定 ⇔ 空間で一様」「E 確定 ⇔ 時間で一様」という対称性がそのまま形になっている</div>
+        <div class="diagram-caption">|ψ|² を場所 x・時刻 t の上に描いた3枚の曲面。左上（運動量が確定）：|ψ|² は完全に平ら――空間方向に一様で、どこにいるか分からない。右上（エネルギーが確定＝定常状態）：場所方向には山の形があるのに、時刻方向にはレールのようにまっすぐ――時間方向に一様で、いつ見ても同じ形。下（エネルギーが混ざった状態＝定常でない）：曲面は時刻方向にも波打ち、時刻で切るたびに断面の形が違う――|ψ|² の形が時間とともに変わってしまう。「p 確定 ⇔ 空間で一様」「E 確定 ⇔ 時間で一様」という対称性と、その対称性が崩れた姿が、そのまま形になっている</div>
       </div>
 
       <div class="dialogue-scene">
@@ -811,21 +811,21 @@
 <script>QQ.initStagePage(6);</script>
 
 <script>
-  // p確定とE確定の|ψ|²比較：ドラッグで回せる2枚の曲面
+  // p確定・E確定・エネルギーが混ざった状態の|ψ|²比較：ドラッグで回せる3枚の曲面
   (function () {
     var cv = document.getElementById("sym3c");
     if (!cv) return;
     var ctx = cv.getContext("2d");
     var yaw = 0.45, pitch = -1.02;
-    var W, H, sc, cx, cy;
-    var C = { mesh1: "#8fb6cc", mesh2: "#c9a24a", muted: "#8a7a5c", ink: "#241d12", blue: "#2f6fa6", gold: "#a6742a" };
-    function proj(x, y, z) {
+    var W, H, sc;
+    var C = { mesh1: "#8fb6cc", mesh2: "#c9a24a", mesh3: "#cf9a97", muted: "#8a7a5c", ink: "#241d12", blue: "#2f6fa6", gold: "#a6742a", red: "#c8433f" };
+    function rot(x, y, z) {
       var cyw = Math.cos(yaw), syw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
       var X1 = x * cyw + z * syw, Z1 = -x * syw + z * cyw;
       var Y2 = y * cp - Z1 * sp;
-      return [cx + sc * X1, cy - sc * Y2];
+      return [sc * X1, -sc * Y2];
     }
-    function sheet(xc, f, color) {
+    function sheet(ax, ay, f, color) {
       ctx.strokeStyle = color; ctx.lineWidth = 0.9;
       var i, j, p;
       for (i = 0; i <= 12; i++) {
@@ -833,8 +833,8 @@
         ctx.beginPath();
         for (j = 0; j <= 24; j++) {
           var u = j * 0.25;
-          p = proj(xc + (u - 3) * 0.85, f(u), (t - 3) * 0.85);
-          if (j) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]);
+          p = rot((u - 3) * 0.85, f(u, t), (t - 3) * 0.85);
+          if (j) ctx.lineTo(ax + p[0], ay + p[1]); else ctx.moveTo(ax + p[0], ay + p[1]);
         }
         ctx.stroke();
       }
@@ -843,46 +843,53 @@
         ctx.beginPath();
         for (j = 0; j <= 24; j++) {
           var t2 = j * 0.25;
-          p = proj(xc + (u2 - 3) * 0.85, f(u2), (t2 - 3) * 0.85);
-          if (j) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]);
+          p = rot((u2 - 3) * 0.85, f(u2, t2), (t2 - 3) * 0.85);
+          if (j) ctx.lineTo(ax + p[0], ay + p[1]); else ctx.moveTo(ax + p[0], ay + p[1]);
         }
         ctx.stroke();
       }
     }
-    function label(x, y, z, text, color) {
-      var p = proj(x, y, z);
-      ctx.fillStyle = color; ctx.textAlign = "center";
-      ctx.font = "900 12px system-ui,sans-serif";
-      ctx.fillText(text, p[0], p[1]);
+    function fFlat() { return 0.55; }
+    function fStat(u) { var w = Math.sin(Math.PI * u / 6); return 1.7 * w * w; }
+    function fMix(u, t) {
+      var p1 = Math.sin(Math.PI * u / 6), p2 = Math.sin(2 * Math.PI * u / 6);
+      return 1.15 * (0.5 * p1 * p1 + 0.5 * p2 * p2 + p1 * p2 * Math.cos(1.05 * t));
+    }
+    function text(x, y, str, color, font, align) {
+      ctx.fillStyle = color; ctx.textAlign = align || "center"; ctx.font = font;
+      ctx.fillText(str, x, y);
     }
     function draw() {
       ctx.clearRect(0, 0, W, H);
-      sheet(-4.3, function () { return 0.55; }, C.mesh1);
-      sheet(4.3, function (u) { var s = Math.sin(Math.PI * u / 6); return 1.7 * s * s; }, C.mesh2);
-      var o = [-7.5, 0, -3.2];
-      var o2 = proj(o[0], o[1], o[2]);
-      var ax = proj(o[0] + 2.2, 0, o[2]);
-      var az = proj(o[0], 0, o[2] + 2.2);
+      var ax1 = W * 0.26, ay1 = H * 0.245;
+      var ax2 = W * 0.75, ay2 = H * 0.245;
+      var ax3 = W * 0.5, ay3 = H * 0.72;
+      var TITLE = "900 12px system-ui,sans-serif", SUB = "700 10.5px system-ui,sans-serif";
+      sheet(ax1, ay1, fFlat, C.mesh1);
+      sheet(ax2, ay2, fStat, C.mesh2);
+      sheet(ax3, ay3, fMix, C.mesh3);
+      // 軸（左上シートの手前角から）
+      var oC = rot(-3.6, 0, -3.6), aX = rot(-1.4, 0, -3.6), aZ = rot(-3.6, 0, -1.4);
       ctx.strokeStyle = C.muted; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.moveTo(o2[0], o2[1]); ctx.lineTo(ax[0], ax[1]); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(o2[0], o2[1]); ctx.lineTo(az[0], az[1]); ctx.stroke();
-      ctx.fillStyle = C.muted; ctx.font = "900 11px system-ui,sans-serif"; ctx.textAlign = "center";
-      ctx.fillText("場所 x", ax[0] + 6, ax[1] + 13);
-      ctx.fillText("時刻 t", az[0], az[1] - 8);
-      label(-4.3, 2.5, 0, "運動量が確定", C.ink);
-      label(4.3, 3.0, 0, "エネルギーが確定（定常状態）", C.ink);
-      ctx.fillStyle = C.blue; ctx.font = "700 10.5px system-ui,sans-serif";
-      ctx.fillText("|ψ|² はどこでも同じ＝位置が不確定", W * 0.26, H - 8);
-      ctx.fillStyle = C.gold;
-      ctx.fillText("|ψ|² はいつ見ても同じ形", W * 0.76, H - 8);
+      ctx.beginPath(); ctx.moveTo(ax1 + oC[0], ay1 + oC[1]); ctx.lineTo(ax1 + aX[0], ay1 + aX[1]); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(ax1 + oC[0], ay1 + oC[1]); ctx.lineTo(ax1 + aZ[0], ay1 + aZ[1]); ctx.stroke();
+      text(ax1 + aX[0] + 7, ay1 + aX[1] + 4, "場所 x", C.muted, "900 11px system-ui,sans-serif", "left");
+      text(ax1 + aZ[0], ay1 + aZ[1] - 8, "時刻 t", C.muted, "900 11px system-ui,sans-serif");
+      // 見出しとまとめ
+      text(ax1, H * 0.045, "運動量が確定", C.ink, TITLE);
+      text(ax2, H * 0.045, "エネルギーが確定（定常状態）", C.ink, TITLE);
+      text(ax1, H * 0.478, "|ψ|² はどこでも同じ＝位置が不確定", C.blue, SUB);
+      text(ax2, H * 0.478, "|ψ|² はいつ見ても同じ形", C.gold, SUB);
+      text(ax3, H * 0.515, "エネルギーが混ざった状態（定常でない）", C.ink, TITLE);
+      text(ax3, H * 0.975, "|ψ|² の形が時間とともに変わる（tで切るたびに断面が違う）", C.red, SUB);
     }
     function resize() {
-      var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.62, 230));
+      var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.05, 380));
       var d = window.devicePixelRatio || 1;
       cv.width = Math.round(w * d); cv.height = Math.round(h * d);
       cv.style.height = h + "px";
       ctx.setTransform(d, 0, 0, d, 0, 0);
-      W = w; H = h; sc = w / 23; cx = w / 2; cy = h * 0.5;
+      W = w; H = h; sc = w / 16.5;
       draw();
     }
     var dragging = false, lx = 0, ly = 0;
