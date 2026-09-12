@@ -354,7 +354,8 @@
     .node .label{font-size:9px;padding:2px 7px;white-space:normal;text-align:center;line-height:1.25;width:max-content;max-width:104px;border-radius:8px}
     .node.n1 .label{position:relative;left:14px}
     .node.n4 .label{position:relative;left:-14px}
-    .node .start-tip{top:-28px}
+    /* 上に飛び出すと地図のoverflowで切れるため、モバイルは通常フローでバッジの上に置く */
+    .node .start-tip{position:static;transform:none;animation:none;margin-left:14px}
 
     .questlog{flex-direction:column}
   }
