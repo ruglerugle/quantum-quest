@@ -13,7 +13,7 @@
   gtag('config', 'G-9RTQCP2HXM');
 </script>
 <title>STAGE6 判別式でフィニッシュ ― 不確定性原理を証明する</title>
-<meta name="description" content="残った式は λ のただの二次関数。「すべての λ で0以上」なら判別式は0以下――中学校で習う判別式が、量子力学最深の定理 Δx·Δp ≥ ℏ/2 にとどめを刺す。証明完成の瞬間。">
+<meta name="description" content="残った式は λ のただの二次関数。「すべての λ で0以上」なら判別式は0以下――中学校で習う解の公式から生まれる判別式が、量子力学最深の定理 Δx·Δp ≥ ℏ/2 にとどめを刺す。証明完成の瞬間。">
 <link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage6">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="不確定性原理を証明する">
@@ -22,6 +22,8 @@
 <meta property="og:description" content="中学数学の判別式が、量子力学最深の定理にとどめを刺す。証明完成の瞬間へ。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage6">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
@@ -67,7 +69,7 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 6</span><span class="chapter-title">判別式でフィニッシュ</span>
+        <span class="chapter-badge">STAGE 6</span><h1 class="chapter-title">判別式でフィニッシュ</h1>
         <div class="chapter-sub">中学数学が定理を倒す</div>
       </div>
 
@@ -83,21 +85,21 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">前のステージで手に入れた到達点を、あらためて眺めよう。I(λ) ＝ (Δx)²λ² − λ ＋ (Δp)²/ℏ² が、<strong>すべての実数 λ で0以上</strong>。λ² の係数 (Δx)² は正だから（ゼロの場合は後で退治する）、グラフは<strong>下に凸の放物線</strong>だ。ここから先は、きみのホームグラウンドだよ。放物線と横軸の位置関係を調べる道具を、学校で習っているね。</div>
+          <div class="dialog-bubble">前のステージで手に入れた到達点を、あらためて眺めよう。I(λ) ＝ (Δx)²λ² − λ ＋ (Δp)²/ℏ² が、<strong>すべての実数 λ で0以上</strong>。λ² の係数 (Δx)² は正だから（ゼロの場合は後で退治する）、グラフは<strong>下に凸の放物線</strong>だ。ここから先は、きみのホームグラウンドだよ。二次方程式の<strong>解の公式</strong>は、学校で習っているね。実は放物線と横軸の位置関係も、あの公式から読み取れるんだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">判別式ですね。二次方程式 Aλ²＋Bλ＋C＝0 の解の公式に出てくる、ルートの中身 <strong>D＝B²−4AC</strong>。D が正なら解が2つ――つまり放物線は横軸と2点で交わる。D＝0 なら1点で接する。D が負なら交わらない。解の公式のルートの中がマイナスになったら実数の解なし、という、あれです。</div>
+          <div class="dialog-bubble">ルートの中身ですね。二次方程式 Aλ²＋Bλ＋C＝0 の解の公式に出てくる <strong>B²−4AC</strong>。あれがマイナスになったら実数の解なし、と習いました。解がない――つまり放物線は横軸と交わらない。プラスなら解が2つで、2点で交わる。ちょうど0なら、1点で接する。ルートの中身の符号だけで、位置関係が全部分かります。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">それで、「すべての λ で I(λ) ≥ 0」という条件は、D についての条件に言い換えられる。考えてごらん。もし D が正だったら、何が起きてしまうかな。</div>
+          <div class="dialog-bubble">そう。そのルートの中身には<strong>判別式</strong>という名前がついていて、D＝B²−4AC と書く。それで、「すべての λ で I(λ) ≥ 0」という条件は、D についての条件に言い換えられる。考えてごらん。もし D が正だったら、何が起きてしまうかな。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -161,7 +163,7 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">振り返ると、使った道具は「2乗は0以上」「電子は必ずどこかにいる」「部分積分」「判別式」……たったこれだけです。宇宙のどんな粒子も、どんな最新技術でも破れない限界が、こんなに少ない道具から論理だけで出てくるなんて。それと、ハイゼンベルクの見積もり「およそ h」と比べると、正確な下限 ℏ/2＝h/4π は h の13分の1くらいですね。桁の見積もりとしては彼も良い線だったんだ。</div>
+          <div class="dialog-bubble">振り返ると、使った道具は「2乗は0以上」「電子は必ずどこかにいる」「部分積分」「判別式」……たったこれだけです。宇宙のどんな粒子も、どんな最新技術でも破れない限界が、こんなに少ない道具から論理だけで出てくるなんて。それと、ハイゼンベルクの見積もり「およそ h」と比べると、正確な下限 ℏ/2＝h/4π は h の約12.6分の1ですね。桁の見積もりとしては、彼も良い線だったんですね。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -186,7 +188,7 @@
         </div>
       </div>
 
-      <div class="quiz-head">確認クイズ</div>
+      <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 「すべての λ で I(λ) ≥ 0」から、判別式 D について言えることは？</p>
         <div class="choice-list">
@@ -204,7 +206,7 @@
           <button class="choice-btn">Δx＋Δp ≥ ℏ/2（ばらつきの和に下限がある）</button>
           <button class="choice-btn">(Δx)²(Δp)² ≥ ℏ²/4、平方根をとって Δx·Δp ≥ ℏ/2</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ 移項と平方根だけで、ケナードの定理 Δx·Δp ≥ ℏ/2 が完成する。1927年の物理学の最深部にとどめを刺したのは、中学校で習う判別式だった。</div>
+        <div class="quiz-explain" hidden>正解！ 移項と平方根だけで、ケナードの定理 Δx·Δp ≥ ℏ/2 が完成する。1927年の物理学の最深部にとどめを刺したのは、中学校で習う解の公式から生まれる判別式だった。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
