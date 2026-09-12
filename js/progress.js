@@ -21,8 +21,7 @@
     4: [1, 0, 1],
     5: [0, 1, 0],
     6: [1, 2, 0],
-    7: [0, 1, 2],
-    8: [1, 0, 2]
+    7: [1, 0, 2]
   };
 
   var STAGES = [
@@ -31,9 +30,8 @@
     { n: 3, file: "stage3.html", title: "電子も波だった", sub: "ド・ブロイの物質波" },
     { n: 4, file: "stage4.html", title: "波動関数 ψ の正体", sub: "|ψ|² は確率を表す" },
     { n: 5, file: "stage5.html", title: "不確定性原理", sub: "位置と運動量のトレードオフ" },
-    { n: 6, file: "stage6.html", title: "シュレーディンガー方程式", sub: "量子力学の運動方程式" },
-    { n: 7, file: "stage7.html", title: "重ね合わせと猫", sub: "解の足し算と観測" },
-    { n: 8, file: "stage8.html", title: "量子もつれ", sub: "離れていてもつながる相関" }
+    { n: 6, file: "stage6.html", title: "シュレーディンガー方程式", sub: "量子力学の運動方程式を読み解く" },
+    { n: 7, file: "stage7.html", title: "量子もつれ", sub: "離れていてもつながる相関" }
   ];
 
   function getCleared() {

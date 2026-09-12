@@ -30,6 +30,8 @@
   .unc-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
   .unc-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .unc-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .sister-link{align-self:flex-end;font-size:12px;font-weight:700;color:var(--muted);background:var(--paper2);border:1px dashed var(--line);border-radius:8px;padding:7px 12px;margin:6px 0}
+  .sister-link a{color:var(--gold-dark);font-weight:800}
 </style>
 </head>
 <body>
@@ -40,8 +42,8 @@
       <div class="brand-sub">STAGE 5 ― 不確定性原理 ―</div>
     </div>
     <div class="head-progress-wrap">
-      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
-      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
     </div>
     <div class="header-actions">
       <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
@@ -187,7 +189,7 @@
       </div>
 
       <div class="formula-box">
-        <span class="step">不確定性原理： Δx × Δp ≥ ℏ／2</span>
+        <span class="step">不確定性原理： <span class="nw">Δx·Δp ≥ ℏ/2</span></span>
         <span class="step">Δx：位置のばらつき　Δp：運動量のばらつき　ℏ＝h/2π（エイチバー）</span>
       </div>
 
@@ -227,6 +229,7 @@
           </div>
           <div class="dialog-bubble">よく気づいたね、その通り。 実は、言い出した本人ハイゼンベルクの最初の説明こそが、その「測定が乱す」描像だったんだ。誤解が世界中に広まったのは、ある意味で本人のせいとも言える。同僚のボーアはすぐに「本質は測定ではなく、<strong>波であることそのもの</strong>だ」と指摘した。そして同じ1927年のうちに、<strong>ケナード</strong>という物理学者が、波の数学から Δx·Δp ≥ ℏ/2 という正確な不等式を<strong>定理として証明</strong>したんだ。その証明の筋道は、きみが今日たどった道――波束を作るには波長を混ぜるしかない――そのものだよ。しかも「短い波の塊を作るには広い範囲の波長が要る」ということ自体は、音や電波の世界では量子力学より前から知られていた波の常識でね。そこに p＝h/λ が「波長の混ざり幅＝運動量のばらつき」という物理の意味を与えた瞬間、波の常識が自然界の大原理に化けた、というわけなんだ。</div>
         </div>
+        <div class="sister-link">🎓 ケナードの証明を、数式で1ステップずつ自分の手でたどりたい人は、姉妹サイト「<a href="https://ruglerugle.github.io/kennard-inequality/" target="_blank" rel="noopener">不確定性原理を証明する（ケナードの不等式）</a>」へ</div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -253,7 +256,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">ここで今日の不等式の出番だ。電子の波を、半径 Δx の小さな範囲に閉じ込めたとしよう。不等式をひっくり返すと <span class="nw">Δp ≥ ℏ/(2Δx)</span>――<strong>閉じ込めをきつくするほど、運動量のばらつきが大きくなる</strong>。そして運動量のばらつきが大きいということは、電子が平均として速く動き回っている、つまり<strong>運動エネルギーが大きい</strong>ということだ（STAGE3の E＝p²/2m を思い出してごらん）。まとめると、こうなる。狭く縮こまるほど、電気の力では<strong>得</strong>をするけれど、運動エネルギーでは<strong>大損</strong>をする。</div>
+          <div class="dialog-bubble">ここで今日の不等式の出番だ。電子の波を、半径 Δx の小さな範囲に閉じ込めたとしよう。不等式をひっくり返すと <span class="nw">Δp ≥ ℏ/(2Δx)</span>――<strong>閉じ込めをきつくするほど、運動量のばらつきが大きくなる</strong>。そして運動量のばらつきが大きいということは、電子が平均として速く動き回っている、つまり<strong>運動エネルギーが大きい</strong>ということだ（STAGE3の p＝mv と E＝½mv² を思い出してごらん。運動量が大きいとは速さが大きいこと、そしてエネルギーは速さの2乗でぐんぐん増えるんだった）。まとめると、こうなる。狭く縮こまるほど、電気の力では<strong>得</strong>をするけれど、運動エネルギーでは<strong>大損</strong>をする。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
