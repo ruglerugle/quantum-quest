@@ -38,26 +38,28 @@
 </script>
 <style>
   :root{
-    --bg0:#070818;
-    --bg1:#0e1030;
-    --panel:rgba(12,13,34,.74);
-    --panel-b:rgba(154,167,255,.28);
-    --tp:#eef0fb;
-    --ts:#b6bde0;
-    --tm:#767fa6;
-    --gold:#b9a5ff;
-    --cyan:#6ee7ff;
-    --amber:#f3c96a;
+    --felt:#141b3d;
+    --felt2:#1c2452;
+    --paper:#f6f1e2;
+    --paper2:#fffdf6;
+    --paper-deep:#efe4c8;
+    --ink:#241d12;
+    --muted:#8a7a5c;
+    --gold:#d9a441;
+    --gold-dark:#a6742a;
+    --line:#ddd0ad;
+    --tp:#f4f2ec;
+    --ts:#c9cde4;
+    --tm:#8b91b5;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   html,body{margin:0;padding:0}
   body{
     background:
-      radial-gradient(1100px 560px at 12% -8%, rgba(140,120,255,.14), transparent 60%),
-      radial-gradient(900px 520px at 92% 6%, rgba(90,200,255,.10), transparent 60%),
-      radial-gradient(700px 500px at 50% 110%, rgba(255,120,200,.06), transparent 60%),
-      linear-gradient(180deg,var(--bg0),var(--bg1) 45%,var(--bg0));
+      radial-gradient(900px 500px at 15% -10%, rgba(217,164,65,.08), transparent 60%),
+      radial-gradient(800px 480px at 90% 4%, rgba(110,150,255,.10), transparent 60%),
+      linear-gradient(180deg,var(--felt),var(--felt2) 45%,var(--felt));
     color:var(--tp);
     font-family:"Hiragino Sans","Yu Gothic",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     min-height:100vh;
@@ -67,144 +69,148 @@
   .stars{
     position:fixed;inset:0;pointer-events:none;z-index:0;
     background-image:
-      radial-gradient(1.5px 1.5px at 20px 30px, rgba(255,255,255,.5), transparent),
-      radial-gradient(1.5px 1.5px at 140px 90px, rgba(255,255,255,.35), transparent),
-      radial-gradient(1px 1px at 260px 40px, rgba(255,255,255,.4), transparent),
-      radial-gradient(1.5px 1.5px at 340px 160px, rgba(255,255,255,.3), transparent),
-      radial-gradient(1px 1px at 420px 70px, rgba(255,255,255,.45), transparent),
-      radial-gradient(1.5px 1.5px at 90px 200px, rgba(255,255,255,.3), transparent);
+      radial-gradient(1.5px 1.5px at 20px 30px, rgba(255,255,255,.4), transparent),
+      radial-gradient(1px 1px at 140px 90px, rgba(255,255,255,.3), transparent),
+      radial-gradient(1px 1px at 260px 40px, rgba(255,255,255,.35), transparent),
+      radial-gradient(1.5px 1.5px at 340px 160px, rgba(255,255,255,.22), transparent),
+      radial-gradient(1px 1px at 90px 200px, rgba(255,255,255,.25), transparent);
     background-repeat:repeat;
     background-size:480px 240px;
-    opacity:.55;
+    opacity:.5;
   }
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:20px 20px 40px}
 
-  /* ============ HERO ============ */
-  .hero{
-    position:relative;z-index:1;
-    min-height:92svh;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;
-    padding:56px 20px 72px;
-    overflow:hidden;
+  /* ============ topbar（クエスト共通様式） ============ */
+  .topbar{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;color:#fff;
+    padding:12px 18px;margin-bottom:20px;
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.14));
+    border-radius:14px;border:1px solid rgba(255,255,255,.15);
   }
-  #slit-canvas{
-    position:absolute;inset:0;width:100%;height:100%;
-    display:block;
+  .brand-badge{
+    width:44px;height:44px;flex-shrink:0;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:22px;
+    background:radial-gradient(circle at 35% 30%,rgba(217,164,65,.55),rgba(12,16,40,1) 75%);
+    border:1.5px solid var(--gold);
+    box-shadow:0 0 0 3px rgba(0,0,0,.25),0 0 10px -2px var(--gold);
   }
-  .hero-veil{
-    position:absolute;inset:0;pointer-events:none;
-    background:
-      radial-gradient(60% 55% at 50% 46%, rgba(7,8,24,.32), transparent 70%),
-      linear-gradient(180deg, rgba(7,8,24,.25), transparent 30%, transparent 70%, var(--bg0) 100%);
+  .brand-copy strong{display:block;font-size:15px;letter-spacing:.03em}
+  .brand-copy small{display:block;font-size:10.5px;color:var(--gold);letter-spacing:.18em;font-weight:700}
+
+  /* ============ hero ============ */
+  .hero{text-align:center;margin:26px 0 20px}
+  .hero h1{
+    font-size:clamp(30px,5.4vw,46px);margin:0 0 10px;font-weight:900;letter-spacing:.08em;
+    color:var(--paper);
+    text-shadow:0 2px 0 rgba(0,0,0,.35), 0 0 34px rgba(217,164,65,.3);
   }
-  .hero-copy{position:relative;max-width:820px}
-  .eyebrow{
-    display:inline-block;font-size:12px;letter-spacing:.22em;color:var(--gold);
-    border:1px solid rgba(185,165,255,.38);border-radius:999px;padding:5px 16px;margin-bottom:20px;
-    background:rgba(12,13,34,.5);backdrop-filter:blur(2px);
-  }
-  h1{
-    font-size:clamp(40px,7.2vw,76px);margin:0 0 10px;font-weight:900;letter-spacing:.06em;
-    background:linear-gradient(100deg,#fff 20%,#c9d4f5 45%,var(--gold) 75%,var(--cyan));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    text-shadow:0 0 60px rgba(140,120,255,.35);
-    line-height:1.2;
-  }
-  .hero-copy .tag{
-    color:var(--ts);font-size:clamp(14px,2vw,17px);max-width:640px;margin:0 auto 8px;
-    text-shadow:0 1px 8px rgba(7,8,24,.9);
-  }
-  .hero-copy .tag strong{color:#fff}
-  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+  .hero h1 .qmark{color:var(--gold)}
+  .hero .tag{color:var(--ts);font-size:clamp(13.5px,1.9vw,15.5px);max-width:640px;margin:0 auto}
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0 20px}
   .stat{
     font-size:12.5px;font-weight:700;color:var(--ts);letter-spacing:.05em;
-    border:1px solid rgba(154,167,255,.3);border-radius:999px;padding:5px 14px;
-    background:rgba(12,13,34,.55);backdrop-filter:blur(2px);
+    border:1px solid rgba(217,164,65,.4);border-radius:999px;padding:5px 14px;
+    background:rgba(0,0,0,.22);
   }
-  .stat b{color:var(--cyan);font-size:14px}
-  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-  .cta{
+  .stat b{color:var(--gold);font-size:14px}
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{
     display:inline-flex;align-items:center;gap:8px;
-    font-size:15px;font-weight:800;text-decoration:none;letter-spacing:.03em;
-    border-radius:12px;padding:13px 26px;
+    font-size:14.5px;font-weight:800;text-decoration:none;letter-spacing:.03em;
+    border-radius:10px;padding:12px 24px;
     transition:transform .16s ease, box-shadow .16s ease, filter .16s ease;
   }
-  .cta.primary{
-    color:#0b0d24;background:linear-gradient(120deg,var(--amber),#ffde9e);
-    box-shadow:0 0 24px -4px rgba(243,201,106,.55), 0 8px 20px -8px rgba(0,0,0,.7);
+  .btn-primary{
+    color:var(--ink);background:linear-gradient(180deg,#eebb5c,var(--gold));
+    border:1px solid rgba(0,0,0,.2);
+    box-shadow:0 3px 0 var(--gold-dark), 0 8px 18px -8px rgba(0,0,0,.6);
   }
-  .cta.primary:hover{transform:translateY(-2px);box-shadow:0 0 34px -2px rgba(243,201,106,.75), 0 12px 24px -8px rgba(0,0,0,.7)}
-  .cta.ghost{
-    color:var(--tp);border:1.5px solid rgba(154,167,255,.45);background:rgba(12,13,34,.55);backdrop-filter:blur(2px);
+  .btn-primary:hover{transform:translateY(-2px);filter:brightness(1.05);box-shadow:0 5px 0 var(--gold-dark), 0 12px 22px -8px rgba(0,0,0,.6)}
+  .btn-ghost{
+    color:var(--tp);border:1.5px solid rgba(255,255,255,.4);background:rgba(0,0,0,.2);
   }
-  .cta.ghost:hover{transform:translateY(-2px);border-color:rgba(185,165,255,.8);box-shadow:0 0 22px -6px var(--gold)}
-  .hero-note{position:relative;margin-top:22px;font-size:12px;color:var(--tm);letter-spacing:.04em}
-  .scroll-cue{
-    position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
-    color:var(--tm);font-size:20px;opacity:.8;
-    animation:cue 2.2s ease-in-out infinite;
-  }
-  @keyframes cue{0%,100%{transform:translate(-50%,0);opacity:.5}50%{transform:translate(-50%,8px);opacity:1}}
+  .btn-ghost:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 0 16px -6px var(--gold)}
 
-  .wrap{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:8px 20px 40px}
-
-  .section-head{text-align:center;margin:30px 0 26px}
-  .section-head h2{
-    font-size:clamp(22px,3.2vw,30px);margin:0 0 8px;font-weight:800;letter-spacing:.05em;
-    background:linear-gradient(90deg,#fff,#c9d4f5 60%,var(--gold));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
+  /* ============ 博士とうさ美のひとこと（クエストの対話様式） ============ */
+  .guide{max-width:720px;margin:26px auto 8px;display:flex;flex-direction:column;gap:10px}
+  .g-row{display:flex;gap:10px;align-items:flex-end}
+  .g-row.right{flex-direction:row-reverse}
+  .g-avatar{
+    width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;
+    border:2px solid var(--gold);background:#fffdf6;
+    box-shadow:0 0 0 3px rgba(0,0,0,.25), 0 4px 10px -4px rgba(0,0,0,.6);
   }
-  .section-head p{color:var(--ts);max-width:600px;margin:0 auto;font-size:14px}
+  .g-avatar img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  .g-bubble{
+    background:var(--paper2);color:var(--ink);
+    border:1px solid var(--line);border-radius:14px;
+    padding:10px 16px;font-size:13.5px;line-height:1.75;
+    box-shadow:0 4px 12px -6px rgba(0,0,0,.5);
+    max-width:78%;
+  }
+  .g-row .g-bubble{border-bottom-left-radius:4px}
+  .g-row.right .g-bubble{border-bottom-left-radius:14px;border-bottom-right-radius:4px}
 
-  /* ============ Map ============ */
+  /* ============ 宝の地図 ============ */
   .map-frame{
     position:relative;
-    border:1px solid rgba(154,167,255,.35);
-    border-radius:20px;
+    margin-top:22px;
+    border-radius:18px;
     padding:10px;
-    background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-    box-shadow:0 0 0 1px rgba(0,0,0,.4) inset, 0 0 60px -20px rgba(140,120,255,.25), 0 30px 60px -30px rgba(0,0,0,.7);
+    background:linear-gradient(180deg,#8a6a34,#6d5228);
+    box-shadow:0 0 0 1px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.25), 0 24px 50px -24px rgba(0,0,0,.8);
   }
   .map{
     position:relative;
     width:100%;
-    aspect-ratio:5/3.1;
-    border-radius:14px;
+    aspect-ratio:5/3.15;
+    border-radius:10px;
     overflow:hidden;
     background:
-      radial-gradient(230px 170px at 9% 22%, rgba(94,200,255,.16), transparent 70%),
-      radial-gradient(220px 170px at 22% 58%, rgba(143,123,255,.16), transparent 70%),
-      radial-gradient(230px 180px at 37% 28%, rgba(255,182,72,.13), transparent 70%),
-      radial-gradient(230px 190px at 51% 66%, rgba(255,107,157,.14), transparent 70%),
-      radial-gradient(230px 180px at 65% 35%, rgba(79,216,196,.15), transparent 70%),
-      radial-gradient(240px 190px at 79% 70%, rgba(127,224,127,.14), transparent 70%),
-      radial-gradient(230px 180px at 92% 34%, rgba(240,149,95,.16), transparent 70%),
-      linear-gradient(160deg,#0b0d24,#141a3a 55%,#0b0d24);
+      radial-gradient(220px 160px at 9% 22%, rgba(94,170,255,.16), transparent 70%),
+      radial-gradient(210px 160px at 22% 58%, rgba(143,123,255,.15), transparent 70%),
+      radial-gradient(220px 170px at 37% 28%, rgba(240,160,40,.16), transparent 70%),
+      radial-gradient(220px 180px at 51% 66%, rgba(255,100,150,.13), transparent 70%),
+      radial-gradient(220px 170px at 65% 35%, rgba(50,190,170,.16), transparent 70%),
+      radial-gradient(230px 180px at 79% 70%, rgba(90,190,90,.15), transparent 70%),
+      radial-gradient(220px 170px at 92% 34%, rgba(240,130,70,.16), transparent 70%),
+      repeating-radial-gradient(circle at 30% 40%, transparent 0 7px, rgba(138,106,52,.035) 7px 8px),
+      linear-gradient(160deg,#f7f0da,#efe4c3 55%,#f4ecd4);
+    box-shadow:inset 0 0 60px rgba(122,90,42,.35), inset 0 0 14px rgba(122,90,42,.25);
   }
   .map svg.terrain{position:absolute;inset:0;width:100%;height:100%}
-  .grid-lines{position:absolute;inset:0;opacity:.25;
-    background-image:linear-gradient(rgba(154,167,255,.08) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(154,167,255,.08) 1px, transparent 1px);
+  .grid-lines{position:absolute;inset:0;opacity:.5;
+    background-image:linear-gradient(rgba(138,122,92,.14) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(138,122,92,.14) 1px, transparent 1px);
     background-size:8.333% 10%;
   }
-  .fog{position:absolute;inset:0;pointer-events:none;
+  .vignette{position:absolute;inset:0;pointer-events:none;
     background:
-      radial-gradient(320px 220px at 100% 0%, rgba(7,8,24,.85), transparent 70%),
-      radial-gradient(320px 220px at 0% 100%, rgba(7,8,24,.6), transparent 70%);
+      radial-gradient(120% 90% at 50% 50%, transparent 62%, rgba(122,90,42,.22) 100%);
   }
 
-  .deco{position:absolute;font-size:20px;opacity:.55;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5));user-select:none;pointer-events:none}
+  .deco{position:absolute;font-size:19px;opacity:.75;filter:drop-shadow(0 2px 2px rgba(120,90,40,.35));user-select:none;pointer-events:none}
 
-  .trail-glow{fill:none;stroke:var(--gold);stroke-width:1.1;opacity:.3;filter:blur(2px)}
-  .trail{fill:none;stroke:var(--gold);stroke-width:.55;stroke-linecap:round;stroke-dasharray:2.2 2.6;opacity:.9}
+  .trail-glow{fill:none;stroke:var(--gold-dark);stroke-width:1.4;opacity:.22;filter:blur(1.6px)}
+  .trail{fill:none;stroke:var(--gold-dark);stroke-width:.6;stroke-linecap:round;stroke-dasharray:1.6 2.2;opacity:.95}
   @media (prefers-reduced-motion: no-preference){
     .trail{animation:flow 1.6s linear infinite}
-    @keyframes flow{to{stroke-dashoffset:-4.8}}
+    @keyframes flow{to{stroke-dashoffset:-3.8}}
   }
   .mobile-only{display:none}
 
-  .flag{position:absolute;left:4%;top:14%;transform:translate(-50%,-100%);font-size:26px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.6))}
-  .flag .label{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;color:var(--gold);letter-spacing:.1em;margin-top:2px}
+  .flag{position:absolute;left:4%;top:15%;transform:translate(-50%,-100%);font-size:26px;filter:drop-shadow(0 3px 3px rgba(120,90,40,.5))}
+  .flag .label{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;color:var(--gold-dark);letter-spacing:.12em;font-weight:800;margin-top:2px}
+
+  .map-chara{
+    position:absolute;width:56px;height:auto;pointer-events:none;z-index:3;
+    filter:drop-shadow(0 4px 6px rgba(120,90,40,.45));
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .map-chara{animation:hop 2.6s ease-in-out infinite}
+    @keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+    .map-chara.rb{animation-delay:1.3s}
+  }
 
   .node{
     position:absolute;transform:translate(-50%,-50%);
@@ -215,43 +221,44 @@
   .node .badge{
     width:56px;height:56px;border-radius:50%;
     display:flex;align-items:center;justify-content:center;font-size:26px;
-    background:radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--accent) 55%, #0b0d24), #0b0d24 75%);
-    border:2px solid var(--accent);
-    box-shadow:0 0 0 4px rgba(7,8,24,.55), 0 0 18px -2px var(--accent), 0 6px 14px -6px rgba(0,0,0,.7);
+    background:radial-gradient(circle at 35% 30%, #fffdf6, #f1e6c8 78%);
+    border:2.5px solid var(--accent);
+    box-shadow:0 0 0 3px rgba(255,253,246,.7), 0 4px 0 rgba(122,90,42,.28), 0 8px 16px -6px rgba(90,60,20,.45);
     transition:transform .18s ease, box-shadow .18s ease;
     position:relative;
   }
   .node .badge::after{
     content:"";position:absolute;inset:-8px;border-radius:50%;
-    border:1px dashed color-mix(in srgb, var(--accent) 55%, transparent);
-    opacity:.35;
+    border:1.5px dashed color-mix(in srgb, var(--accent) 60%, transparent);
+    opacity:.5;
   }
   @media (prefers-reduced-motion: no-preference){
-    .node .badge::after{animation:orbit 14s linear infinite}
+    .node .badge::after{animation:orbit 16s linear infinite}
     @keyframes orbit{to{transform:rotate(360deg)}}
   }
   .node .num{
-    position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;
-    background:var(--accent);color:#0b0d24;font-size:10px;font-weight:800;
+    position:absolute;top:-5px;right:-5px;width:20px;height:20px;border-radius:50%;
+    background:var(--accent);color:#fff;font-size:11px;font-weight:900;
     display:flex;align-items:center;justify-content:center;
-    box-shadow:0 0 0 2px #0b0d24;
+    box-shadow:0 0 0 2.5px #fffdf6, 0 2px 4px rgba(90,60,20,.4);
   }
   .node .label{
-    background:rgba(7,8,24,.78);border:1px solid color-mix(in srgb, var(--accent) 55%, transparent);
-    border-radius:8px;padding:3px 9px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;
+    background:#fffdf6;border:1.5px solid color-mix(in srgb, var(--accent) 60%, #d9c9a0);
+    border-radius:999px;padding:3px 11px;font-size:11px;font-weight:800;color:var(--ink);white-space:nowrap;
     letter-spacing:.02em;
+    box-shadow:0 2px 6px -2px rgba(90,60,20,.35);
   }
   .node:hover .badge, .node:focus-visible .badge, .node.active .badge{
-    transform:translateY(-4px) scale(1.06);
-    box-shadow:0 0 0 4px rgba(7,8,24,.55), 0 0 30px 3px var(--accent), 0 10px 16px -6px rgba(0,0,0,.7);
+    transform:translateY(-5px) scale(1.08);
+    box-shadow:0 0 0 3px rgba(255,253,246,.9), 0 0 20px 0 color-mix(in srgb, var(--accent) 65%, transparent), 0 10px 18px -6px rgba(90,60,20,.5);
   }
   .node:hover .badge::after, .node:focus-visible .badge::after, .node.active .badge::after{opacity:1}
   .node:focus-visible{outline:none}
   .node .start-tip{
-    position:absolute;top:-30px;left:50%;transform:translateX(-50%);
-    font-size:10px;font-weight:800;color:#0b0d24;background:var(--amber);
-    border-radius:999px;padding:2px 9px;white-space:nowrap;letter-spacing:.06em;
-    box-shadow:0 0 12px -2px rgba(243,201,106,.8);
+    position:absolute;top:-32px;left:50%;transform:translateX(-50%);
+    font-size:10px;font-weight:900;color:var(--ink);background:var(--gold);
+    border-radius:999px;padding:3px 10px;white-space:nowrap;letter-spacing:.06em;
+    box-shadow:0 2px 0 var(--gold-dark), 0 4px 10px -3px rgba(90,60,20,.5);
   }
   @media (prefers-reduced-motion: no-preference){
     .node .start-tip{animation:bob 2s ease-in-out infinite}
@@ -267,67 +274,70 @@
   .n6{left:79%; top:70%}
   .n7{left:92%; top:34%}
 
-  .compass{position:absolute;top:14px;right:16px;width:44px;height:44px;opacity:.75}
+  .compass{position:absolute;top:12px;right:14px;width:46px;height:46px;opacity:.9}
 
-  /* ============ Quest log panel ============ */
+  /* ============ クエストログ（紙のボード） ============ */
   .questlog{
-    margin-top:18px;
-    background:var(--panel);border:1px solid var(--panel-b);border-radius:14px;
+    margin-top:16px;
+    background:var(--paper2);border:1px solid var(--line);border-radius:14px;
     padding:18px 20px;display:flex;gap:16px;align-items:flex-start;
-    min-height:88px;
-    backdrop-filter:blur(3px);
+    min-height:96px;color:var(--ink);
+    box-shadow:0 8px 22px -12px rgba(0,0,0,.55);
   }
   .questlog .qi{
-    flex:0 0 auto;width:48px;height:48px;border-radius:12px;
-    display:flex;align-items:center;justify-content:center;font-size:24px;
-    background:color-mix(in srgb, var(--accent,#b9a5ff) 20%, transparent);
-    border:1px solid color-mix(in srgb, var(--accent,#b9a5ff) 45%, transparent);
-    transition:background .15s ease, border-color .15s ease;
+    flex:0 0 auto;width:50px;height:50px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;font-size:25px;
+    background:color-mix(in srgb, var(--accent,#d9a441) 16%, #fffdf6);
+    border:1.5px solid color-mix(in srgb, var(--accent,#d9a441) 55%, transparent);
   }
   .questlog .qt{flex:1;min-width:0}
-  .questlog .qsub{font-size:11px;letter-spacing:.1em;color:var(--accent,var(--gold));font-weight:700;margin-bottom:2px}
-  .questlog h3{margin:0 0 6px;font-size:16px;color:#fff}
-  .questlog p{margin:0 0 10px;font-size:13px;color:var(--ts)}
+  .questlog .qsub{font-size:11px;letter-spacing:.1em;color:var(--accent,var(--gold-dark));font-weight:800;margin-bottom:2px}
+  .questlog h3{margin:0 0 6px;font-size:16px;color:var(--ink)}
+  .questlog p{margin:0 0 10px;font-size:13px;color:#5c503a}
   .questlog .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-  .questlog .tag{font-size:11px;color:var(--tm);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:2px 9px}
+  .questlog .tag{font-size:11px;color:var(--muted);border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:2px 9px}
   .questlog .go{
-    display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;
-    color:#0b0d24;background:var(--gold);border-radius:8px;padding:7px 14px;text-decoration:none;
-    transition:filter .15s ease;
+    display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;
+    color:var(--ink);background:linear-gradient(180deg,#eebb5c,var(--gold));
+    border:1px solid rgba(0,0,0,.15);
+    border-radius:9px;padding:8px 16px;text-decoration:none;
+    box-shadow:0 2px 0 var(--gold-dark);
+    transition:filter .15s ease, transform .15s ease;
   }
-  .questlog .go:hover{filter:brightness(1.08)}
-  .questlog .hint{color:var(--tm);font-size:13px;margin:auto}
+  .questlog .go:hover{filter:brightness(1.05);transform:translateY(-1px)}
+  .questlog .hint{color:var(--muted);font-size:13px;margin:auto}
 
-  /* ============ Side quests ============ */
-  .side{margin-top:44px}
-  .side h2{font-size:16px;margin:0 0 4px;color:var(--tp);letter-spacing:.04em}
+  /* ============ 寄り道クエスト ============ */
+  .side{margin-top:40px}
+  .side h2{font-size:17px;margin:0 0 4px;color:var(--tp);letter-spacing:.04em}
   .side .lead{margin:0 0 14px;font-size:13px;color:var(--tm)}
   .side-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
   .side-card{
-    display:block;text-decoration:none;color:inherit;
-    background:var(--panel);border:1px solid var(--panel-b);border-radius:12px;
-    padding:14px 16px;transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
-    backdrop-filter:blur(3px);
+    display:block;text-decoration:none;color:var(--ink);
+    background:var(--paper2);border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 6px 16px -10px rgba(0,0,0,.55);
   }
-  .side-card:hover{transform:translateY(-3px);border-color:rgba(185,165,255,.55);box-shadow:0 0 22px -8px var(--gold)}
-  .side-card .sc-sub{font-size:10.5px;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-bottom:4px}
-  .side-card .sc-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
-  .side-card .sc-desc{font-size:12px;color:var(--ts);line-height:1.6}
+  .side-card:hover{transform:translateY(-3px);box-shadow:0 10px 22px -10px rgba(0,0,0,.6), 0 0 0 2px var(--gold) inset}
+  .side-card .sc-sub{font-size:10.5px;letter-spacing:.12em;color:var(--gold-dark);font-weight:800;margin-bottom:4px}
+  .side-card .sc-title{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:4px}
+  .side-card .sc-desc{font-size:12px;color:#5c503a;line-height:1.6}
 
-  footer{margin-top:48px;text-align:center;color:var(--tm);font-size:12.5px;position:relative;z-index:1;padding-bottom:28px}
+  footer{margin-top:44px;text-align:center;color:var(--tm);font-size:12px;letter-spacing:.08em;position:relative;z-index:1;padding-bottom:26px}
+  .footer-suits{margin-top:6px;display:flex;gap:14px;justify-content:center;color:var(--gold);opacity:.7}
 
   /* ============ モバイル ============ */
   @media (max-width:640px){
-    .hero{min-height:88svh;padding:48px 16px 64px}
-    .h-br{display:none}
-    .cta{padding:12px 20px;font-size:14px}
+    .hero h1{letter-spacing:.05em}
+    .g-bubble{max-width:100%;font-size:12.5px}
+    .btn{padding:11px 18px;font-size:13.5px}
 
     .map{ aspect-ratio:4/5.1; }
 
     .trail-glow:not(.mobile-only), .trail:not(.mobile-only){display:none}
     .mobile-only{display:block}
 
-    .deco, .compass{display:none}
+    .deco, .compass, .map-chara{display:none}
 
     .flag{left:7%; top:8%}
 
@@ -341,10 +351,10 @@
 
     .node{max-width:30%}
     .node .badge{width:46px;height:46px;font-size:20px}
-    .node .label{font-size:9px;padding:2px 5px;white-space:normal;text-align:center;line-height:1.25;width:max-content;max-width:104px}
+    .node .label{font-size:9px;padding:2px 7px;white-space:normal;text-align:center;line-height:1.25;width:max-content;max-width:104px;border-radius:8px}
     .node.n1 .label{position:relative;left:14px}
     .node.n4 .label{position:relative;left:-14px}
-    .node .start-tip{top:-26px}
+    .node .start-tip{top:-28px}
 
     .questlog{flex-direction:column}
   }
@@ -352,17 +362,20 @@
 </head>
 <body>
 <div class="stars"></div>
+<div class="wrap">
 
-<!-- ============ HERO: 二重スリット・ライブ実験 ============ -->
-<header class="hero" id="top">
-  <canvas id="slit-canvas" aria-hidden="true"></canvas>
-  <div class="hero-veil" aria-hidden="true"></div>
-  <div class="hero-copy">
-    <span class="eyebrow">FREE BROWSER LEARNING GAMES</span>
-    <h1>量子クエスト集</h1>
-    <p class="tag">背後で起きているのは、本物の<strong>二重スリット実験</strong>。<br class="h-br">
-      光子は1発ずつ飛んでいるのに、スクリーンには縞が積もっていく――<br class="h-br">
-      この謎から、量子コンピュータの実機まで。<strong>7つのクエスト</strong>で旅をしよう。</p>
+  <nav class="topbar" aria-label="サイト情報">
+    <span class="brand-badge" aria-hidden="true">⚛️</span>
+    <span class="brand-copy">
+      <strong>量子クエスト集</strong>
+      <small>QUANTUM QUEST MAP</small>
+    </span>
+  </nav>
+
+  <header class="hero">
+    <h1>量子の世界、<span class="qmark">全制覇</span>の地図</h1>
+    <p class="tag">二重スリットの謎から、量子コンピュータの実機まで。<br>
+      ねこ博士とうさ美と一緒に、7つのクエストで量子力学を旅しよう。</p>
     <div class="stats" aria-label="シリーズの規模">
       <span class="stat"><b>7</b> クエスト</span>
       <span class="stat"><b>51</b> ステージ</span>
@@ -370,22 +383,23 @@
       <span class="stat">中学数学からOK</span>
     </div>
     <div class="cta-row">
-      <a class="cta primary" href="https://quantum-mechanics.habatakijuku.com/general/">🚩 最初のクエストへ出発</a>
-      <a class="cta ghost" href="#map">🗺️ 地図から選ぶ</a>
+      <a class="btn btn-primary" href="https://quantum-mechanics.habatakijuku.com/general/">🚩 最初のクエストへ出発</a>
+      <a class="btn btn-ghost" href="#map">🗺️ 地図から選ぶ</a>
     </div>
-    <p class="hero-note">番号順に進めば、論理の飛躍なく最前線までたどり着けます。</p>
-  </div>
-  <div class="scroll-cue" aria-hidden="true">▾</div>
-</header>
+  </header>
 
-<div class="wrap">
+  <section class="guide" aria-label="案内">
+    <div class="g-row">
+      <span class="g-avatar"><img src="images/cat.webp" alt="ねこ博士" width="54" height="54"></span>
+      <div class="g-bubble">ようこそ。この地図が、量子の世界の全行程だよ。番号順に進めば、論理の飛躍なく最前線までたどり着ける。迷ったら①から始めてごらん。</div>
+    </div>
+    <div class="g-row right">
+      <span class="g-avatar"><img src="images/rabbit.webp" alt="うさ美" width="54" height="54"></span>
+      <div class="g-bubble">③は数学の山場って聞きました。難しかったら④に進んで、あとから戻ってきてもいいんですよね。</div>
+    </div>
+  </section>
 
-  <div class="section-head" id="map">
-    <h2>量子の世界 ― 旅の地図</h2>
-    <p>7つの領域をつなぐ光の巡礼路。気になるクエストに触れると、旅の詳細が現れます。</p>
-  </div>
-
-  <div class="map-frame">
+  <div class="map-frame" id="map">
     <div class="map">
 
       <div class="grid-lines"></div>
@@ -399,12 +413,12 @@
 
       <!-- decorative scenery -->
       <span class="deco" style="left:5%;top:52%" aria-hidden="true">🔭</span>
-      <span class="deco" style="left:15%;top:20%" aria-hidden="true">🌌</span>
+      <span class="deco" style="left:15%;top:20%" aria-hidden="true">🌊</span>
       <span class="deco" style="left:28%;top:84%" aria-hidden="true">🌙</span>
       <span class="deco" style="left:31%;top:52%" aria-hidden="true">✨</span>
-      <span class="deco" style="left:44%;top:14%" aria-hidden="true">☄️</span>
+      <span class="deco" style="left:44%;top:14%" aria-hidden="true">📏</span>
       <span class="deco" style="left:45%;top:88%" aria-hidden="true">🛰️</span>
-      <span class="deco" style="left:58%;top:58%" aria-hidden="true">💫</span>
+      <span class="deco" style="left:58%;top:58%" aria-hidden="true">🔔</span>
       <span class="deco" style="left:71%;top:16%" aria-hidden="true">🪐</span>
       <span class="deco" style="left:72%;top:90%" aria-hidden="true">🧲</span>
       <span class="deco" style="left:86%;top:56%" aria-hidden="true">❄️</span>
@@ -412,70 +426,73 @@
 
       <div class="flag" aria-hidden="true">🚩<span class="label">START</span></div>
 
+      <img class="map-chara" src="images/cat.webp" alt="" aria-hidden="true" width="56" height="72" style="left:2.5%;top:33%">
+      <img class="map-chara rb" src="images/rabbit.webp" alt="" aria-hidden="true" width="52" height="67" style="left:55%;top:12%">
+
       <svg class="compass" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="46" fill="rgba(7,8,24,.5)" stroke="var(--gold)" stroke-width="2"/>
-        <path d="M50 8 L58 50 L50 92 L42 50 Z" fill="var(--gold)" opacity=".85"/>
-        <path d="M8 50 L50 42 L92 50 L50 58 Z" fill="var(--gold)" opacity=".5"/>
-        <text x="50" y="20" text-anchor="middle" font-size="12" fill="var(--gold)" font-weight="700">N</text>
+        <circle cx="50" cy="50" r="46" fill="rgba(255,253,246,.75)" stroke="var(--gold-dark)" stroke-width="3"/>
+        <path d="M50 8 L58 50 L50 92 L42 50 Z" fill="var(--gold-dark)" opacity=".9"/>
+        <path d="M8 50 L50 42 L92 50 L50 58 Z" fill="var(--gold-dark)" opacity=".45"/>
+        <text x="50" y="22" text-anchor="middle" font-size="13" fill="var(--gold-dark)" font-weight="800">N</text>
       </svg>
 
-      <div class="fog"></div>
+      <div class="vignette"></div>
 
       <!-- quest nodes -->
       <a class="node n1" href="https://quantum-mechanics.habatakijuku.com/general/"
-         data-accent="#5ec8ff" data-icon="🌊" data-sub="QUANTUM BASICS" data-title="二重スリットから読み解く量子力学"
+         data-accent="#2f6fa6" data-icon="🌊" data-sub="QUANTUM BASICS" data-title="二重スリットから読み解く量子力学"
          data-desc="電子はなぜ縞模様を描くのか。二重スリット実験の謎から出発し、光子・物質波・波動関数・不確定性原理・シュレディンガー方程式の読み方まで、量子力学の土台をそろえる。すべての旅はここから。"
          data-tags="二重スリット,波動関数,不確定性原理" data-num="1" data-stages="全7ステージ" data-level="入門" data-prereq="前提なし">
         <span class="start-tip">ここから！</span>
-        <div class="badge" style="--accent:#5ec8ff">🌊<span class="num">1</span></div>
+        <div class="badge" style="--accent:#2f6fa6">🌊<span class="num">1</span></div>
         <div class="label">量子力学クエスト</div>
       </a>
 
       <a class="node n2" href="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/"
-         data-accent="#8f7bff" data-icon="📜" data-sub="DERIVATION" data-title="シュレディンガー方程式を導く"
+         data-accent="#7a4fb0" data-icon="📜" data-sub="DERIVATION" data-title="シュレディンガー方程式を導く"
          data-desc="①で「読み方」を学んだ方程式は、どこから来たのか。波の式・複素数・E=hν・p=h/λ・微分と道具をそろえ、1926年の方程式を自分の手で組み立てる。井戸の解法とトンネル効果もここで。"
          data-tags="導出,複素数,微分" data-num="2" data-stages="全8ステージ" data-level="基礎" data-prereq="前提: ①">
-        <div class="badge" style="--accent:#8f7bff">📜<span class="num">2</span></div>
+        <div class="badge" style="--accent:#7a4fb0">📜<span class="num">2</span></div>
         <div class="label">シュレディンガー方程式</div>
       </a>
 
       <a class="node n3" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/"
-         data-accent="#ffb648" data-icon="📏" data-sub="PROOF" data-title="不確定性原理を証明する ― ケナードの不等式"
+         data-accent="#b98a2e" data-icon="📏" data-sub="PROOF" data-title="不確定性原理を証明する ― ケナードの不等式"
          data-desc="①で出会った Δx·Δp ≥ ℏ/2 は、実は波の数学から導ける厳密な定理。標準偏差・積分・部分積分・判別式と道具を発見しながら、1927年のケナードの証明を最後まで自分の手でたどる。数学の山場。"
          data-tags="証明,標準偏差,部分積分" data-num="3" data-stages="全7ステージ" data-level="発展" data-prereq="前提: ①②">
-        <div class="badge" style="--accent:#ffb648">📏<span class="num">3</span></div>
+        <div class="badge" style="--accent:#b98a2e">📏<span class="num">3</span></div>
         <div class="label">ケナードの不等式</div>
       </a>
 
       <a class="node n4" href="https://quantum-mechanics.habatakijuku.com/bell-inequality/"
-         data-accent="#ff6b9d" data-icon="🔔" data-sub="ENTANGLEMENT" data-title="ベルの不等式を破る"
+         data-accent="#c8437a" data-icon="🔔" data-sub="ENTANGLEMENT" data-title="ベルの不等式を破る"
          data-desc="「月は見ていなくても存在するか」――アインシュタインの疑問に自然自身が答えを出すまで。もつれ・隠れた変数・ベルの不等式を個数の数え上げだけで導き、アスペの実験と2022年ノーベル賞へ。"
          data-tags="量子もつれ,隠れた変数,ノーベル賞" data-num="4" data-stages="全6ステージ" data-level="基礎" data-prereq="前提: ①">
-        <div class="badge" style="--accent:#ff6b9d">🔔<span class="num">4</span></div>
+        <div class="badge" style="--accent:#c8437a">🔔<span class="num">4</span></div>
         <div class="label">ベルの不等式</div>
       </a>
 
       <a class="node n5" href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/"
-         data-accent="#4fd8c4" data-icon="🌫️" data-sub="MEASUREMENT" data-title="消える干渉縞 ― 観測すると世界はどう変わるか"
+         data-accent="#2f8a8f" data-icon="🌫️" data-sub="MEASUREMENT" data-title="消える干渉縞 ― 観測すると世界はどう変わるか"
          data-desc="観測すると干渉縞が消えるのはなぜか。振幅の足し算ルールだけを武器に、経路検出器・量子消しゴム・デコヒーレンスを解き明かし、「月が消えない理由」から観測問題の最前線まで到達する。"
          data-tags="観測問題,デコヒーレンス,量子消しゴム" data-num="5" data-stages="全7ステージ" data-level="基礎" data-prereq="前提: ①④">
-        <div class="badge" style="--accent:#4fd8c4">🌫️<span class="num">5</span></div>
+        <div class="badge" style="--accent:#2f8a8f">🌫️<span class="num">5</span></div>
         <div class="label">消える干渉縞</div>
       </a>
 
       <a class="node n6" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/"
-         data-accent="#7fe07f" data-icon="💻" data-sub="QUANTUM COMPUTING" data-title="量子コンピュータはなぜ速いのか"
+         data-accent="#2f8f65" data-icon="💻" data-sub="QUANTUM COMPUTING" data-title="量子コンピュータはなぜ速いのか"
          data-desc="「全部の答えを同時に計算するから速い」は半分まちがい。量子ビット・ゲート・もつれから、グローバーの探索・ショアの因数分解・誤り訂正まで、速さの正体＝干渉の設計を自分の手で確かめる。"
          data-tags="量子ビット,グローバー,ショア" data-num="6" data-stages="全8ステージ" data-level="発展" data-prereq="前提: ①④⑤">
-        <div class="badge" style="--accent:#7fe07f">💻<span class="num">6</span></div>
+        <div class="badge" style="--accent:#2f8f65">💻<span class="num">6</span></div>
         <div class="label">量子コンピュータ</div>
       </a>
 
       <a class="node n7" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/"
-         data-accent="#f0955f" data-icon="❄️" data-sub="HARDWARE" data-title="量子コンピュータはどう作るのか"
+         data-accent="#c8663f" data-icon="❄️" data-sub="HARDWARE" data-title="量子コンピュータはどう作るのか"
          data-desc="実機は宇宙空間の100倍冷たい場所で動いている。超伝導・ジョセフソン接合・希釈冷凍機・マイクロ波制御から100万量子ビットへの壁まで、⑥の原理を現実の物質で作る工学に踏み込む。旅の終着点。"
          data-tags="超伝導,希釈冷凍機,誤り訂正" data-num="7" data-stages="全8ステージ" data-level="発展" data-prereq="前提: ⑥">
-        <div class="badge" style="--accent:#f0955f">❄️<span class="num">7</span></div>
+        <div class="badge" style="--accent:#c8663f">❄️<span class="num">7</span></div>
         <div class="label">量子ハードウェア</div>
       </a>
 
@@ -483,7 +500,7 @@
   </div>
 
   <div class="questlog" id="questlog">
-    <p class="hint">地図上のクエストにカーソルを合わせる（またはタップする）と、ここに詳細が表示されます。<br>番号順に進めば無理なく学べます。初めての方は <strong>① 量子力学クエスト（入門）</strong>から！<br>③は数学の山場なので、難しければ④に進んで後から戻ってきても大丈夫です。</p>
+    <p class="hint">地図上のクエストにカーソルを合わせる（またはタップする）と、ここに詳細が表示されます。<br>番号順に進めば無理なく学べます。初めての方は <strong>① 量子力学クエスト（入門）</strong>から！</p>
   </div>
 
   <div class="side">
@@ -514,7 +531,8 @@
   </div>
 
   <footer>
-    <p>すべて無料・ブラウザだけで遊べます。 &copy; <span id="year"></span> ruglerugle</p>
+    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;&copy; <span id="year"></span> ruglerugle</p>
+    <div class="footer-suits" aria-hidden="true"><span>Ψ</span><span>ℏ</span><span>⚛</span><span>∞</span></div>
   </footer>
 
 </div>
@@ -522,7 +540,6 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  /* ============ クエストログ ============ */
   var log = document.getElementById('questlog');
   var nodes = document.querySelectorAll('.node');
 
@@ -550,274 +567,6 @@
       });
     });
   });
-
-  /* ============ ヒーロー: 二重スリット・ライブ実験 ============ */
-  (function(){
-    var canvas = document.getElementById('slit-canvas');
-    var ctx = canvas.getContext('2d');
-    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    var W, H, dpr, geo, accum, actx;
-    var particles = [];
-    var flashes = [];
-    var ringPhase = 0;
-    var running = false, inView = true, rafId = null;
-    var frame = 0;
-
-    // 干渉分布のサンプリング用CDF
-    var CDF_N = 512, cdf = new Float32Array(CDF_N), cdfSpan = 0;
-
-    function buildGeometry(){
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      var rect = canvas.getBoundingClientRect();
-      W = Math.max(1, Math.round(rect.width * dpr));
-      H = Math.max(1, Math.round(rect.height * dpr));
-      canvas.width = W; canvas.height = H;
-
-      var cy = H * 0.5;
-      geo = {
-        cy: cy,
-        emitX: W * 0.045,
-        barX: W * 0.34,
-        scrX: W * 0.945,
-        slitGap: H * 0.085,          // スリット中心の片側オフセット
-        slitH: H * 0.026,            // スリット半高
-        fringeP: H / 9,              // 縞の周期
-        envS: H * 0.30               // 包絡線の広がり
-      };
-
-      // I(u) = cos^2(πu/period) * exp(-(u/env)^2) のCDF
-      cdfSpan = H * 0.46;
-      var sum = 0;
-      for (var i = 0; i < CDF_N; i++){
-        var u = (i / (CDF_N - 1) * 2 - 1) * cdfSpan;
-        var I = Math.pow(Math.cos(Math.PI * u / geo.fringeP), 2) * Math.exp(-(u*u)/(geo.envS*geo.envS));
-        sum += I; cdf[i] = sum;
-      }
-      for (i = 0; i < CDF_N; i++) cdf[i] /= sum;
-
-      // 着弾の蓄積レイヤー
-      accum = document.createElement('canvas');
-      accum.width = W; accum.height = H;
-      actx = accum.getContext('2d');
-
-      particles.length = 0; flashes.length = 0;
-    }
-
-    function sampleLandingY(){
-      var r = Math.random(), lo = 0, hi = CDF_N - 1;
-      while (lo < hi){ var mid = (lo + hi) >> 1; if (cdf[mid] < r) lo = mid + 1; else hi = mid; }
-      return geo.cy + (lo / (CDF_N - 1) * 2 - 1) * cdfSpan;
-    }
-
-    function spawn(){
-      var slit = Math.random() < 0.5 ? -1 : 1;
-      var aimed = Math.random() < 0.86;
-      var y0 = geo.cy + (Math.random() - 0.5) * H * 0.16;
-      var slitY = geo.cy + slit * geo.slitGap + (Math.random() - 0.5) * geo.slitH * 1.4;
-      var targetY = aimed ? slitY : geo.cy + (Math.random() - 0.5) * H * 0.5;
-      var vx = (2.4 + Math.random() * 1.4) * (W / 1400);
-      particles.push({
-        x: geo.emitX, y: y0, vx: vx,
-        vy: (targetY - y0) / ((geo.barX - geo.emitX) / vx),
-        past: false, landY: 0, px: geo.emitX, py: y0,
-        hue: Math.random() < 0.18 ? 'gold' : 'cyan'
-      });
-    }
-
-    function drawHit(x, y, strong){
-      var r = (strong ? 3.2 : 2.4) * dpr / Math.max(dpr,1) * (dpr > 1 ? dpr*0.7 : 1);
-      var g = actx.createRadialGradient(x, y, 0, x, y, r * 3);
-      g.addColorStop(0, 'rgba(230,220,255,.85)');
-      g.addColorStop(0.35, 'rgba(185,165,255,.35)');
-      g.addColorStop(1, 'rgba(185,165,255,0)');
-      actx.globalCompositeOperation = 'lighter';
-      actx.fillStyle = g;
-      actx.beginPath(); actx.arc(x, y, r * 3, 0, 6.2832); actx.fill();
-    }
-
-    function prefill(n){
-      for (var i = 0; i < n; i++){
-        drawHit(geo.scrX + (Math.random() - 0.5) * 5 * dpr, sampleLandingY(), false);
-      }
-    }
-
-    function drawStatic(){
-      ctx.clearRect(0, 0, W, H);
-      drawApparatus(1);
-      ctx.drawImage(accum, 0, 0);
-    }
-
-    function drawApparatus(alpha){
-      var g = geo;
-      ctx.save();
-      ctx.globalAlpha = alpha;
-
-      // 光源
-      var eg = ctx.createRadialGradient(g.emitX, g.cy, 0, g.emitX, g.cy, 26 * dpr);
-      eg.addColorStop(0, 'rgba(255,255,255,.9)');
-      eg.addColorStop(0.3, 'rgba(110,231,255,.5)');
-      eg.addColorStop(1, 'rgba(110,231,255,0)');
-      ctx.fillStyle = eg;
-      ctx.beginPath(); ctx.arc(g.emitX, g.cy, 26 * dpr, 0, 6.2832); ctx.fill();
-
-      // バリア（2本のスリット）
-      var bw = 3.5 * dpr;
-      ctx.fillStyle = 'rgba(120,130,190,.34)';
-      var s1t = g.cy - g.slitGap - g.slitH, s1b = g.cy - g.slitGap + g.slitH;
-      var s2t = g.cy + g.slitGap - g.slitH, s2b = g.cy + g.slitGap + g.slitH;
-      ctx.fillRect(g.barX - bw/2, 0, bw, s1t);
-      ctx.fillRect(g.barX - bw/2, s1b, bw, s2t - s1b);
-      ctx.fillRect(g.barX - bw/2, s2b, bw, H - s2b);
-      // スリットの縁を光らせる
-      ctx.fillStyle = 'rgba(185,165,255,.85)';
-      [[s1t],[s1b],[s2t],[s2b]].forEach(function(yy){
-        ctx.fillRect(g.barX - bw/2 - 1*dpr, yy[0] - 1*dpr, bw + 2*dpr, 2*dpr);
-      });
-
-      // スクリーン
-      var sg = ctx.createLinearGradient(g.scrX - 8*dpr, 0, g.scrX + 6*dpr, 0);
-      sg.addColorStop(0, 'rgba(154,167,255,0)');
-      sg.addColorStop(0.7, 'rgba(154,167,255,.16)');
-      sg.addColorStop(1, 'rgba(154,167,255,.32)');
-      ctx.fillStyle = sg;
-      ctx.fillRect(g.scrX - 8*dpr, 0, 14*dpr, H);
-
-      ctx.restore();
-    }
-
-    function drawRings(){
-      var g = geo, maxR = (g.scrX - g.barX) * 1.05;
-      ctx.save();
-      ctx.lineWidth = 1 * dpr;
-      for (var s = -1; s <= 1; s += 2){
-        var sy = g.cy + s * g.slitGap;
-        for (var k = 0; k < 5; k++){
-          var r = ((ringPhase + k * g.fringeP * 1.9) % maxR);
-          var a = 0.10 * (1 - r / maxR);
-          if (a <= 0.004) continue;
-          ctx.strokeStyle = 'rgba(140,150,255,' + a.toFixed(3) + ')';
-          ctx.beginPath();
-          ctx.arc(g.barX, sy, r, -1.15, 1.15);
-          ctx.stroke();
-        }
-      }
-      ctx.restore();
-    }
-
-    function step(){
-      var g = geo;
-      frame++;
-      ringPhase += 0.9 * dpr;
-
-      var want = W < 700 * dpr ? 46 : 80;
-      while (particles.length < want) spawn();
-
-      ctx.clearRect(0, 0, W, H);
-      drawRings();
-      drawApparatus(1);
-      ctx.drawImage(accum, 0, 0);
-
-      // 蓄積をゆっくり減衰させ、縞が「生きている」状態を保つ
-      if (frame % 240 === 0){
-        actx.globalCompositeOperation = 'destination-out';
-        actx.fillStyle = 'rgba(0,0,0,.05)';
-        actx.fillRect(0, 0, W, H);
-      }
-
-      ctx.save();
-      for (var i = particles.length - 1; i >= 0; i--){
-        var p = particles[i];
-        p.px = p.x; p.py = p.y;
-        p.x += p.vx; p.y += p.vy;
-
-        if (!p.past && p.x >= g.barX){
-          var d1 = Math.abs(p.y - (g.cy - g.slitGap));
-          var d2 = Math.abs(p.y - (g.cy + g.slitGap));
-          if (Math.min(d1, d2) <= g.slitH){
-            p.past = true;
-            p.landY = sampleLandingY();
-            p.vy = (p.landY - p.y) / ((g.scrX - p.x) / p.vx);
-          } else {
-            flashes.push({x: g.barX, y: p.y, life: 14});
-            particles.splice(i, 1);
-            continue;
-          }
-        }
-
-        if (p.x >= g.scrX){
-          drawHit(g.scrX + (Math.random() - 0.5) * 4 * dpr, p.landY, true);
-          particles.splice(i, 1);
-          continue;
-        }
-
-        // 描画: 尾 + 本体
-        var col = p.hue === 'gold' ? '243,201,106' : '110,231,255';
-        ctx.strokeStyle = 'rgba(' + col + ',.4)';
-        ctx.lineWidth = 1.4 * dpr;
-        ctx.beginPath();
-        ctx.moveTo(p.x - p.vx * 4.5, p.y - p.vy * 4.5);
-        ctx.lineTo(p.x, p.y);
-        ctx.stroke();
-        ctx.fillStyle = 'rgba(255,255,255,.95)';
-        ctx.beginPath(); ctx.arc(p.x, p.y, 1.5 * dpr, 0, 6.2832); ctx.fill();
-      }
-
-      // バリアに吸収された光子の小さな閃光
-      for (i = flashes.length - 1; i >= 0; i--){
-        var f = flashes[i];
-        f.life--;
-        if (f.life <= 0){ flashes.splice(i, 1); continue; }
-        var fa = f.life / 14;
-        ctx.fillStyle = 'rgba(255,180,120,' + (fa * 0.55).toFixed(3) + ')';
-        ctx.beginPath(); ctx.arc(f.x, f.y, (3 + (1 - fa) * 5) * dpr * 0.7, 0, 6.2832); ctx.fill();
-      }
-      ctx.restore();
-
-      if (running) rafId = requestAnimationFrame(step);
-    }
-
-    function start(){
-      if (running || reduced || !inView || document.hidden) return;
-      running = true;
-      rafId = requestAnimationFrame(step);
-    }
-    function stop(){
-      running = false;
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = null;
-    }
-
-    buildGeometry();
-    if (reduced){
-      prefill(1600);
-      drawStatic();
-    } else {
-      prefill(180); // 最初から縞のきざしを見せる
-      start();
-    }
-
-    var io = new IntersectionObserver(function(entries){
-      inView = entries[0].isIntersecting;
-      if (inView) start(); else stop();
-    }, {threshold: 0.05});
-    io.observe(canvas);
-
-    document.addEventListener('visibilitychange', function(){
-      if (document.hidden) stop(); else start();
-    });
-
-    var resizeT;
-    window.addEventListener('resize', function(){
-      clearTimeout(resizeT);
-      resizeT = setTimeout(function(){
-        stop();
-        buildGeometry();
-        if (reduced){ prefill(1600); drawStatic(); }
-        else { prefill(180); start(); }
-      }, 200);
-    });
-  })();
 </script>
 
 <!-- Google Analytics -->
