@@ -1,0 +1,45 @@
+name: Sync quest sites
+
+# シリーズ各章の元リポジトリとマップ（quantum-mechanics）の内容を
+# このリポジトリのサブフォルダ／ルートへ同期する。
+# 変更があればbotがコミットし、Cloudflare Pages（Git連携）が自動デプロイする。
+on:
+  schedule:
+    - cron: "17 * * * *" # 毎時17分
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync map (quantum-mechanics) into root
+        run: |
+          set -e
+          rm -rf tmp-map
+          git clone --depth 1 https://github.com/ruglerugle/quantum-mechanics.git tmp-map
+          cp tmp-map/index.html index.html
+          mkdir -p images
+          cp tmp-map/images/ogp.png images/ogp.png
+          rm -rf tmp-map
+
+      - name: Sync quest repos into subdirs
+        run: |
+          set -e
+          for repo in schrodinger-equation kennard-inequality bell-inequality decoherence-quest quantum-computer quantum-hardware; do
+            rm -rf "$repo" tmp-clone
+            git clone --depth 1 "https://github.com/ruglerugle/$repo.git" tmp-clone
+            rm -rf tmp-clone/.git tmp-clone/.github tmp-clone/.claude tmp-clone/CLAUDE.md
+            mv tmp-clone "$repo"
+          done
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && echo "変更なし" || { git commit -m "chore: 各章リポジトリから自動同期"; git push; }
