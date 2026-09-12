@@ -22,6 +22,8 @@
 <meta property="og:description" content="光子数個ぶんの小声を、雑音を足さずに100万倍へ。読み出しと増幅の鎖の工学。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage6">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
@@ -61,7 +63,7 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 6</span><span class="chapter-title">壊さずに読み出す</span>
+        <span class="chapter-badge">STAGE 6</span><h1 class="chapter-title">壊さずに読み出す</h1>
         <div class="chapter-sub">共振器と増幅の鎖</div>
       </div>
 
@@ -77,14 +79,14 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">最後は条件④、読み出しだ。考えてみると、これは注文が矛盾すれすれでね。計算の間はさんざん「手がかりを漏らすな」と言っておいて、最後の瞬間だけは「はっきり手がかりを出せ」と言う。この虫のいい注文に応える仕掛けを、前の旅でひとつ見ているね。どんな仕掛けだった？</div>
+          <div class="dialog-bubble">最後は条件④、読み出しだ。考えてみると、これは注文が矛盾すれすれでね。計算の間はさんざん「手がかりを漏らすな」と言っておいて、最後の瞬間だけは「はっきり手がかりを出せ」と言う。この虫のいい注文に、超伝導方式はこう応える。量子ビットの隣に、読み出し専用の小さなマイクロ波の空洞――決まった音程で鳴る<strong>笛</strong>のようなもの――を置いておくんだ。量子ビットが |0⟩ か |1⟩ かで、隣どうしの波の押し合いのせいで<strong>笛の音程がごくわずかに変わる</strong>。そこで弱い電波を笛に通して、音程の変化を読み取れば、0か1かが分かる、という仕掛けだよ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">量子ビットの隣に、読み出し専用の小さなマイクロ波の空洞――決まった音程で鳴る<strong>笛</strong>のようなもの――を置いておく。量子ビットが |0⟩ か |1⟩ かで、隣どうしの波の押し合いのせいで<strong>笛の音程がごくわずかに変わる</strong>。そこで弱い電波を笛に通して音程の変化を読み取れば、0か1かが分かる。電波に手がかりが乗って外に出た瞬間、状態は出た方に確定する――でした。<br>ただ、今回の旅の目で見ると、まず設計の動機が気になります。<strong>なぜこんな回りくどいことを？</strong> 量子ビット本体に直接電波を当てて、返事を聞けばいいように思えます。</div>
+          <div class="dialog-bubble">電波に手がかりが乗って外に出た瞬間、状態は出た方に確定する――デコヒーレンスの旅の言葉で言えば、そういうことですね。<br>ただ、まず設計の動機が気になります。<strong>なぜこんな回りくどいことを？</strong> 量子ビット本体に直接電波を当てて、返事を聞けばいいように思えます。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -244,7 +246,7 @@
         <span class="step">・読み出し1回＝数百ナノ秒・成功率<strong>99%程度</strong>＝実機最大の誤り所。これで<strong>4条件すべて達成</strong>、量子ビット1個の完全体</span>
       </div>
 
-      <div class="quiz-head">確認クイズ</div>
+      <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 量子ビットに直接聞かず、わざわざ隣の共振器（笛）の音程を読む理由は？</p>
         <div class="choice-list">

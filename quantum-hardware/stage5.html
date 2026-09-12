@@ -22,6 +22,8 @@
 <meta property="og:description" content="ゲートの実体は室温で設計されたマイクロ波パルス。減衰器の階段が300Kの騒音を殺し、合図だけを10mKへ届ける。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage5">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
@@ -61,7 +63,7 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 5</span><span class="chapter-title">矢印を回す配線</span>
+        <span class="chapter-badge">STAGE 5</span><h1 class="chapter-title">矢印を回す配線</h1>
         <div class="chapter-sub">マイクロ波制御の実際</div>
       </div>
 
@@ -84,7 +86,7 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">整理します。|0⟩ と |1⟩ の矢印は段差に比例した速さの差で回っていて（矢印の時計法則）、その差はこの回路では約5GHz。<strong>段差にぴったり同じ周波数のマイクロ波</strong>を当てると、ブランコを揺れに合わせて押すのと同じ共鳴が起きて、|0⟩ と |1⟩ の間の乗り移りが進む。<strong>当てる時間で混ざり具合が決まり</strong>、途中で止めれば H、乗り移り切るまで当てれば X。リズムのずれた電波は押しが打ち消し合って効かない。ここまでが前の旅の理解です。<br>でも今回の旅の視点で見ると、話がまだ始まってもいません。<strong>そのマイクロ波は、誰が、どこで作るんですか？</strong> そして、どうやって10mKの聖域まで届けるんですか？</div>
+          <div class="dialog-bubble">整理します。|0⟩ と |1⟩ の矢印は段差に比例した速さの差で回っていて（矢印の時計法則）、その差はこの回路では約5GHz。<strong>段差にぴったり同じ周波数のマイクロ波</strong>を当てると、ブランコを揺れに合わせて押すのと同じ共鳴が起きて、|0⟩ と |1⟩ の間の乗り移りが進む。<strong>当てる時間で混ざり具合が決まり</strong>、途中で止めれば H、乗り移り切るまで当てれば X。リズムのずれた電波は押しが打ち消し合って効かない。ここまでが、前の旅で学んだゲートと、ステージ3で学んだ共鳴を合わせた理解です。<br>でも今回の旅の視点で見ると、話がまだ始まってもいません。<strong>そのマイクロ波は、誰が、どこで作るんですか？</strong> そして、どうやって10mKの聖域まで届けるんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -98,7 +100,7 @@
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">面積が同じでいいなら、<strong>強く短く</strong>が得です。ゲートが速いほど、100マイクロ秒の寿命に多くの計算を詰め込めます。数ナノ秒、いえもっと短く……<br>――待ってください。量子力学の旅の<strong>不確定性原理</strong>を思い出します。あのときは「場所を狭く絞った波は、波長がひとつに定まらない」でした。<strong>時間を短く絞ったパルスでも、同じことが周波数に起きたりしませんか？</strong> もし起きるなら、「5GHzちょうど」のつもりが周波数の混ざり物になります。そして |1⟩→|2⟩ の段差は、5GHzから<strong>たった200〜300MHzしか離れていない</strong>と教わりました。広がった周波数がそこに引っかかったら、波が第3の段に乗り移ってしまう気がします。</div>
+          <div class="dialog-bubble">面積が同じでいいなら、<strong>強く短く</strong>が得です。ゲートが速いほど、100マイクロ秒の寿命に多くの計算を詰め込めます。数ナノ秒、いえもっと短く……<br>――待ってください。量子力学の旅の<strong>不確定性原理</strong>を思い出します。あのときは「場所を狭く絞った波は、波長がひとつに定まらない」でした（この直感を定理に磨き上げたのが、<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#2f8a8f;text-decoration:underline">ケナードの不等式の旅</a>でした）。<strong>時間を短く絞ったパルスでも、同じことが周波数に起きたりしませんか？</strong> もし起きるなら、「5GHzちょうど」のつもりが周波数の混ざり物になります。そして |1⟩→|2⟩ の段差は、5GHzから<strong>たった200〜300MHzしか離れていない</strong>と教わりました。広がった周波数がそこに引っかかったら、波が第3の段に乗り移ってしまう気がします。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -167,7 +169,7 @@
             <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そうなんだ、周波数では選り分けられない。だから発想を変える。<br><strong>減衰器</strong>という部品がある。通る信号を決まった割合で弱める部品で、食い止めたエネルギーは熱としてその場に捨てる。これを各プレートに1つずつ挟んで、上から下まで合計で<strong>100万分の1</strong>まで弱めるんだ。弱め具合は<strong>デシベル（dB）</strong>という単位で表す習わしで、100万分の1はマイナス60デシベルにあたる。<br>すると、ケーブルを降りてくる300K由来の騒音も100万分の1になる。300Kの騒音を100万分の1に薄めると、ちょうど<strong>10mKの静けさと同じ水準</strong>まで落ちる計算になる。<br>――もちろん、これだけ聞くと欠陥だらけの策だ。何が犠牲になっているか、言えるかな。</div>
+          <div class="dialog-bubble">そうなんだ、周波数では選り分けられない。だから発想を変える。<br><strong>減衰器</strong>という部品がある。通る信号を決まった割合で弱める部品で、食い止めたエネルギーは熱としてその場に捨てる。これを各プレートに1つずつ挟んで、上から下まで合計で<strong>100万分の1</strong>まで弱めるんだ。弱め具合は<strong>デシベル（dB）</strong>という単位で表す習わしで、100万分の1はマイナス60デシベルにあたる。<br>すると、ケーブルを降りてくる300K由来の騒音も100万分の1になる。ここで、減衰器を各プレートに分けて置いたことが効いてくる。減衰器は上から来る騒音を薄める一方で、<strong>自分自身の温度ぶんの熱の震えを新たに足す</strong>。だから最後に残る騒音の大きさは、上の階の300Kではなく、<strong>いちばん下に置いた減衰器自身の温度――つまり10mK――で決まる</strong>。<br>――もちろん、これだけ聞くと欠陥だらけの策だ。何が犠牲になっているか、言えるかな。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -218,7 +220,7 @@
           </g>
           <text class="label" x="268" y="98" text-anchor="middle">↓ 通るたびに両方が同じ割合で弱まる（計100万分の1）</text>
         </svg>
-        <div class="diagram-caption">緑のバーが合図（マイクロ波パルス）、赤のバーが300K由来の騒音。減衰器はどちらも同じ割合で弱めるが、<strong>騒音の強さは発生源の温度で決まっていて増やせない</strong>のに対し、<strong>合図はこちらが最初から100万倍強く送り出せる</strong>。合計マイナス60デシベル（100万分の1）の減衰を経ると、10mKには「ちょうどいい強さの合図」と「10mKの静けさと同水準の騒音」だけが届く。減衰器が食い止めたエネルギーは熱になるため、大部分は冷やす力に余裕のある上の段で捨てる。</div>
+        <div class="diagram-caption">緑のバーが合図（マイクロ波パルス）、赤のバーが300K由来の騒音。減衰器はどちらも同じ割合で弱めるが、<strong>騒音の強さは発生源の温度で決まっていて増やせない</strong>のに対し、<strong>合図はこちらが最初から100万倍強く送り出せる</strong>。合計マイナス60デシベル（100万分の1）の減衰を経ると、その結果、10mKには「ちょうどいい強さの合図」と「最下段の減衰器自身がもつ10mK並みの騒音」だけが残る。減衰器が食い止めたエネルギーは熱になるため、大部分は冷やす力に余裕のある上の段で捨てる。</div>
       </div>
 
       <div class="dialogue-scene">
@@ -244,11 +246,11 @@
         <span class="step">・<strong>回転角＝パルスの面積（強さ×時間）</strong>。回転軸はパルスの<strong>位相</strong>（押し始めのタイミング）で選ぶ（X回転とY回転の作り分け）</span>
         <span class="step">・短いパルスは周波数の幅が広がる（不確定性原理）→ 5%しか離れていない |1⟩→|2⟩ の段差に引っかかる<strong>リーク</strong> → ゲートは20〜50ナノ秒が下限、角は釣り鐘型に丸める。1量子ビットゲートの成功率99.9%以上</span>
         <span class="step">・配線の二重の敵：①<strong>伝導熱</strong>（対策：熱を伝えにくい合金ケーブル＋各プレートへの熱係留で途中下車）②<strong>騒音の導管</strong>（300Kの機器・ケーブル自身の電子の熱の震えが5GHz帯の雑音を放送し、量子ビットの耳元へ直通）</span>
-        <span class="step">・解法＝<strong>減衰器の階段</strong>：各プレートで信号を弱め、計100万分の1（−60dB）。騒音は10mK並みの静けさへ。合図は<span class="nw">最初から100万倍強く送る</span>ことで生き残る。「選り分ける」のではなく「スタートの強さの差で勝負を決める」</span>
+        <span class="step">・解法＝<strong>減衰器の階段</strong>：各プレートで信号を弱め、計100万分の1（−60dB）。上の階の騒音は薄まり、残るのは最下段の減衰器自身の10mK並みの静けさだけ。合図は<span class="nw">最初から100万倍強く送る</span>ことで生き残る。「選り分ける」のではなく「スタートの強さの差で勝負を決める」</span>
         <span class="step">・読み出し（帰り道）は逆に<strong>増幅</strong>の旅。雑音を足さない増幅という難題へ（次ステージ）</span>
       </div>
 
-      <div class="quiz-head">確認クイズ</div>
+      <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. パルスを強くすれば回転角（面積）を保ったままゲートを速くできるのに、実機が20〜50ナノ秒より速くしない理由は？</p>
         <div class="choice-list">
@@ -276,7 +278,7 @@
           <button class="choice-btn">合図は量子の性質を持っていて、減衰器を素通りできるから</button>
           <button class="choice-btn">騒音の強さは発生源の温度で決まり増やせないが、合図は室温側で最初から100万倍強く送り出せる。同じ割合で弱まれば、ちょうどいい合図と10mK並みの騒音が残るから</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ 減衰器は合図も騒音も同じ割合で弱める（選り分けはできない）。勝負を決めるのはスタート地点の強さの差だ。狙って作る合図は好きなだけ強くできるが、熱の震えから勝手に湧く騒音は温度で上限が決まっている。100万分の1に薄めれば、300Kの騒音はちょうど10mKの静けさの水準まで落ちる。</div>
+        <div class="quiz-explain" hidden>正解！ 減衰器は合図も騒音も同じ割合で弱める（選り分けはできない）。勝負を決めるのはスタート地点の強さの差だ。狙って作る合図は好きなだけ強くできるが、熱の震えから勝手に湧く騒音は温度で上限が決まっている。十分に薄めてやれば、300Kの騒音は届かなくなり、残るのは最下段の減衰器自身がもつ10mK並みの静けさだけになる。</div>
       </div>
 
       <div class="stage-nav">
