@@ -6,7 +6,7 @@
 (function (global) {
   "use strict";
 
-  var STORAGE_KEY = "kennardQuestProgress";
+  var STORAGE_KEY = "kennardQuestProgress_v2";
 
   var BOOK_RECOMMEND = {
     title: "松浦壮『量子とはなんだろう 宇宙を支配する究極のしくみ』（ブルーバックス）",
