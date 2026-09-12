@@ -131,30 +131,10 @@
   }
   .btn-ghost:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 0 16px -6px var(--gold)}
 
-  /* ============ 博士とうさ美のひとこと（クエストの対話様式） ============ */
-  .guide{max-width:720px;margin:26px auto 8px;display:flex;flex-direction:column;gap:10px}
-  .g-row{display:flex;gap:10px;align-items:flex-end}
-  .g-row.right{flex-direction:row-reverse}
-  .g-avatar{
-    width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;
-    border:2px solid var(--gold);background:#fffdf6;
-    box-shadow:0 0 0 3px rgba(0,0,0,.25), 0 4px 10px -4px rgba(0,0,0,.6);
-  }
-  .g-avatar img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
-  .g-bubble{
-    background:var(--paper2);color:var(--ink);
-    border:1px solid var(--line);border-radius:14px;
-    padding:10px 16px;font-size:13.5px;line-height:1.75;
-    box-shadow:0 4px 12px -6px rgba(0,0,0,.5);
-    max-width:78%;
-  }
-  .g-row .g-bubble{border-bottom-left-radius:4px}
-  .g-row.right .g-bubble{border-bottom-left-radius:14px;border-bottom-right-radius:4px}
-
   /* ============ 宝の地図 ============ */
   .map-frame{
     position:relative;
-    margin-top:22px;
+    margin-top:26px;
     border-radius:18px;
     padding:10px;
     background:linear-gradient(180deg,#8a6a34,#6d5228);
@@ -319,7 +299,6 @@
   /* ============ モバイル ============ */
   @media (max-width:640px){
     .hero h1{letter-spacing:.05em}
-    .g-bubble{max-width:100%;font-size:12.5px}
     .btn{padding:11px 18px;font-size:13.5px}
 
     .map{ aspect-ratio:4/5.1; }
@@ -380,17 +359,6 @@
       <a class="btn btn-ghost" href="#map">🗺️ 地図から選ぶ</a>
     </div>
   </header>
-
-  <section class="guide" aria-label="案内">
-    <div class="g-row">
-      <span class="g-avatar"><img src="images/cat.webp" alt="ねこ博士" width="54" height="54"></span>
-      <div class="g-bubble">ようこそ。この地図が、量子の世界の全行程だよ。番号順に進めば、論理の飛躍なく最前線までたどり着ける。迷ったら①から始めてごらん。</div>
-    </div>
-    <div class="g-row right">
-      <span class="g-avatar"><img src="images/rabbit.webp" alt="うさ美" width="54" height="54"></span>
-      <div class="g-bubble">③は数学の山場って聞きました。難しかったら④に進んで、あとから戻ってきてもいいんですよね。</div>
-    </div>
-  </section>
 
   <div class="map-frame" id="map">
     <div class="map">
