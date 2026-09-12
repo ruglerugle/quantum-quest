@@ -118,6 +118,13 @@
   function initQuiz(stageNum, onAllSolved) {
     var answers = ANSWERS[stageNum] || [];
     var cards = document.querySelectorAll(".quiz-card[data-quiz]");
+    // クイズのないステージでは onAllSolved が永久に呼ばれず「次へ」が押せなくなるため、先に解放する
+    if (cards.length === 0) { onAllSolved(); return; }
+    // ANSWERS の件数がクイズ数と食い違うと、該当カードが永久に正解できずステージがクリア不能になる。
+    // 無言で壊れるのを防ぐため、開発時に気づけるよう警告を出す
+    if (answers.length !== cards.length && window.console && console.warn) {
+      console.warn("[progress] STAGE" + stageNum + ": ANSWERS の件数(" + answers.length + ")がクイズ数(" + cards.length + ")と一致しません");
+    }
     cards.forEach(function (card, cardIndex) {
       var live = document.createElement("p");
       live.className = "sr-only";
@@ -130,7 +137,10 @@
           var correct = answers[cardIndex] === btnIndex;
           live.textContent = correct ? "正解です" : "不正解です。もう一度選んでください";
           if (correct) {
-            buttons.forEach(function (b) { b.disabled = true; });
+            // 正解のボタンは disabled にせず、フォーカスを保ったまま操作だけ止める
+            // （押した瞬間にフォーカスが body へ飛ぶと、キーボード利用者が位置を見失うため）
+            buttons.forEach(function (b) { if (b !== btn) b.disabled = true; });
+            btn.setAttribute("aria-disabled", "true");
             btn.classList.add("choice-ok");
             markSolved(card);
             if (allSolved(document)) {

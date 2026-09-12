@@ -22,6 +22,8 @@
 <meta property="og:description" content="因数分解を「周期探し」に変え、干渉で周期を読む。15＝3×5を手で解きながらショアのアルゴリズムを理解する。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage7">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
@@ -67,7 +69,7 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 7</span><span class="chapter-title">ショアの因数分解</span>
+        <span class="chapter-badge">STAGE 7</span><h1 class="chapter-title">ショアの因数分解</h1>
         <div class="chapter-sub">暗号を破る周期発見</div>
       </div>
 
@@ -163,14 +165,14 @@
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">分かりました。実際に確かめます。7を2回掛けた数は49。49−1＝48、49＋1＝50。<br>48と15の最大公約数は<strong>3</strong>。50と15の最大公約数は<strong>5</strong>。ちゃんと出ます！<br>（余りの4を使っても同じで、4−1＝3、4＋1＝5。余りを取っても15との最大公約数は変わらないからですね。）<br>最大公約数を求めるのは、ユークリッドの互除法を使えば大きな数でも一瞬です。<strong>周期さえ分かれば、そこから先は簡単</strong>ということですか。</div>
+          <div class="dialog-bubble">分かりました。実際に確かめます。7を2回掛けた数は49。49−1＝48、49＋1＝50。<br>48と15の最大公約数は<strong>3</strong>。50と15の最大公約数は<strong>5</strong>。ちゃんと出ます！<br>（余りの4を使っても同じで、4−1＝3、4＋1＝5。余りを取っても15との最大公約数は変わらないからですね。）<br><strong>周期さえ分かれば、そこから先は簡単</strong>ということですか。でも、桁が何百もある数どうしの最大公約数を求めるのは、大変ではないんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その通り。手順をまとめよう。<br>①因数分解したい数 N と共通の約数を持たない数 a を、適当に選ぶ<br>②a を1回、2回、3回…と掛けた余りの列の<strong>周期 r</strong> を求める<br>③r が偶数なら、a を r の半分だけ掛けた余りの、<strong>±1 と N の最大公約数</strong>を取る<br>これで N の因数が出る。運が悪いと（r が奇数だったり、うまくいかない場合が）あるが、a を選び直せばよくて、たいてい数回で成功する。<br>――さて、この手順の中で、ふつうのコンピュータにとって絶望的に重いのはどこかな。</div>
+          <div class="dialog-bubble">そこは心配いらない。最大公約数には<strong>ユークリッドの互除法</strong>という2300年前からの高速な求め方があって、ふつうのコンピュータでも何百桁だろうと一瞬で計算できるんだ。では手順をまとめよう。<br>①因数分解したい数 N と共通の約数を持たない数 a を、適当に選ぶ<br>②a を1回、2回、3回…と掛けた余りの列の<strong>周期 r</strong> を求める<br>③r が偶数なら、a を r の半分だけ掛けた余りの、<strong>±1 と N の最大公約数</strong>を取る<br>これで N の因数が出る。運が悪いと（r が奇数だったり、うまくいかない場合が）あるが、a を選び直せばよくて、たいてい数回で成功する。<br>――さて、この手順の中で、ふつうのコンピュータにとって絶望的に重いのはどこかな。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -279,7 +281,7 @@
             <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">まだ破られていない。実機でショアのアルゴリズムが本当に実行できたのは、15や21といった<strong>おもちゃのような数</strong>までだ。距離はまだ遠い。<br>2048ビットのRSAを破るには、誤りのない<strong>論理量子ビットが数千個</strong>必要だと見積もられている。ところが、いまの実機にあるのは<strong>誤りだらけの物理量子ビットが数百から千個ほど</strong>。しかも、論理量子ビット1個を作るのに、物理量子ビットが千個から数千個要る。掛け合わせると、必要な物理量子ビットは<strong>百万個規模</strong>だ。<br>なぜそんなに要るのか――その答えが、この旅の最後のステージになる。</div>
+          <div class="dialog-bubble">まだ破られていない。実機でショアのアルゴリズムが本当に実行できたのは、15や21といった<strong>おもちゃのような数</strong>までだ。距離はまだ遠い。<br>2048ビットのRSAを破るには、誤りなく動く量子ビット――物理の部品を束ねて誤りを消した「正味」の量子ビットで、<strong>論理量子ビット</strong>と呼ぶ――が<strong>数千個</strong>必要だと見積もられている。ゲートを掛ける回数で言えば、<strong>何十億回</strong>という規模だ。ところが、いまの実機にあるのは<strong>誤りだらけの物理量子ビットが数百から千個ほど</strong>。しかも、論理量子ビット1個を作るのに、物理量子ビットが千個から数千個要る。掛け合わせると、必要な物理量子ビットは<strong>百万個規模</strong>だ。<br>なぜそんなに要るのか――その答えが、この旅の最後のステージになる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -308,7 +310,7 @@
         <span class="step">・現状：実機で解けたのは15や21程度。2048ビットRSAには<strong>論理量子ビット数千個</strong>（＝物理量子ビット百万個規模）が必要で、まだ遠い。<br class="wbr">ただし「いま集めて、あとで解読する」脅威があるため、<strong>耐量子計算機暗号</strong>への移行が進行中（NISTが2024年に最初の標準を発表）</span>
       </div>
 
-      <div class="quiz-head">確認クイズ</div>
+      <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. ショアのアルゴリズムで、量子コンピュータが担当している部分は？</p>
         <div class="choice-list">

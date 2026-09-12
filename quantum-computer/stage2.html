@@ -22,6 +22,8 @@
 <meta property="og:description" content="計算とは矢印の表を書き換えること。ゲートの正体は2列の対応表と「掛けて足す」のルールだ。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage2">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
@@ -67,7 +69,7 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 2</span><span class="chapter-title">量子ゲート</span>
+        <span class="chapter-badge">STAGE 2</span><h1 class="chapter-title">量子ゲート</h1>
         <div class="chapter-sub">2列の対応表と掛け算のルール</div>
       </div>
 
@@ -90,7 +92,7 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble"><a href="https://informatics.habatakijuku.com/cpu-logic-game/" target="_blank" rel="noopener" style="color:#8a5a2a;text-decoration:underline">論理回路の旅</a>でやった話ですよね。ANDは「2つとも1のときだけ1」、ORは「どちらか1なら1」、NOTは「0と1をひっくり返す」。こういう部品を<strong>ゲート</strong>と呼んで、大量につないで足し算や掛け算を作っているんでしたよね。</div>
+          <div class="dialog-bubble"><a href="https://informatics.habatakijuku.com/cpu-logic-game/" target="_blank" rel="noopener" style="color:#8a5a2a;text-decoration:underline">論理回路の旅</a>で勉強しました。ANDは「2つとも1のときだけ1」、ORは「どちらか1なら1」、NOTは「0と1をひっくり返す」。こういう部品を<strong>ゲート</strong>と呼んで、大量につないで足し算や掛け算を作っている、と学びました。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -182,7 +184,7 @@
         <span class="step">・<strong>当て方の規則はただ1つ（掛けて足す）</strong>：入力（a, b）に対して<br class="wbr"><strong>a×（|0⟩ の行き先）＋ b×（|1⟩ の行き先）</strong> を行ごとに足す（行列の掛け算）。<br class="wbr">ゲートは入力を見て場合分けしない――同じ規則を機械的に当てるだけ</span>
       </div>
 
-      <div class="quiz-head">確認クイズ</div>
+      <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 量子ゲートが必ず「可逆」（元に戻せる）なのはなぜ？</p>
         <div class="choice-list">

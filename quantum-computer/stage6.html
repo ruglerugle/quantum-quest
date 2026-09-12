@@ -22,6 +22,8 @@
 <meta property="og:description" content="100万個から当たりを約1000回で。反転と折り返しの2手だけで正解の矢印が育つ、振幅増幅の仕組みを追う。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage6">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
@@ -67,7 +69,7 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 6</span><span class="chapter-title">グローバーの探索</span>
+        <span class="chapter-badge">STAGE 6</span><h1 class="chapter-title">グローバーの探索</h1>
         <div class="chapter-sub">振幅増幅</div>
       </div>
 
@@ -334,14 +336,14 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その見立てで合っている。ただ、分かれ目がひとつある。<strong>一度きりの調べものなら、並べ替えは損</strong>になる。全部の行を読んで並べ替える手間のほうが、端から順に照合していく手間より大きいからね。逆に<strong>何度も引くなら、並べ替えたほうが勝つ</strong>。手間を最初に一度だけ払えば、あとは1件あたり20回で済む。これは古典の完勝で、世の中のデータベースはみなこれをやっている。<br>ついでに、量子の側の言い分も言っておこう。<strong>オラクルは、行どうしを比べない</strong>。1つの行を渡されて「照合に引っかかるか」を答えるだけだ。並べ替えというのは行どうしの大小を使う作業だから、この箱にとって<strong>並び順は最初から関係がない</strong>。だから重ね合わせにそのまま通せるんだ。</div>
+          <div class="dialog-bubble">その見立てで合っている。ただ、分かれ目がひとつある。<strong>一度きりの調べものなら、並べ替えは損</strong>になる。全部の行を読んで並べ替える手間のほうが、端から順に照合していく手間より大きいからね。逆に<strong>何度も引くなら、並べ替えたほうが勝つ</strong>。手間を最初に一度だけ払えば、あとは1件あたり20回で済む。これはふつうのコンピュータの完勝で、世の中のデータベースはみなこれをやっている。<br>ついでに、量子の側の言い分も言っておこう。<strong>オラクルは、行どうしを比べない</strong>。1つの行を渡されて「照合に引っかかるか」を答えるだけだ。並べ替えというのは行どうしの大小を使う作業だから、この箱にとって<strong>並び順は最初から関係がない</strong>。だから重ね合わせにそのまま通せるんだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">結局、手順をぜんぶ数えれば、<a href="https://informatics.habatakijuku.com/algo-quest/" target="_blank" rel="noopener" style="color:#2f7a6b;text-decoration:underline">アルゴリズムの旅</a>で習った<strong>クイックソート</strong>で番号順に並べ替えて索引を付けておき、探すたびに<strong>二分探索</strong>で見つけるほうが、はるかに速いですね。一回限りの操作なら、<strong>線形探索</strong>のほうが速いですし。<br>では、並べ替えられる相手にグローバーを持ち出しても、あまり意味がないということですか。</div>
+          <div class="dialog-bubble">結局、手順をぜんぶ数えれば、<a href="https://informatics.habatakijuku.com/algo-quest/" target="_blank" rel="noopener" style="color:#2f7a6b;text-decoration:underline">アルゴリズムの旅</a>で勉強したやり方――あらかじめ番号順に並べ替えて索引を付けておき、探すたびに「真ん中を見て、半分に絞る」を繰り返す<strong>二分探索</strong>で見つける――のほうが、はるかに速いですね。一回限りの操作なら、端から順に照合していく<strong>線形探索</strong>のほうが速いですし。<br>では、並べ替えられる相手にグローバーを持ち出しても、あまり意味がないということですか。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -413,7 +415,7 @@
         <span class="step">・加速は<strong>2次まで</strong>（N → √N）で、指数加速ではない。128ビット鍵の総当たりは実質64ビット分になるが、<span class="nw">鍵長を2倍にすれば対策できる</span></span>
       </div>
 
-      <div class="quiz-head">確認クイズ</div>
+      <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 候補が4個、当たりが1個。全部の矢印を0.5にそろえてから、当たりを反転し、平均のまわりで折り返した。当たりの矢印の長さは？</p>
         <div class="choice-list">

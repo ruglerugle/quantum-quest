@@ -22,6 +22,8 @@
 <meta property="og:description" content="マルスの法則 cos²θ から、もつれ光子ペアの食い違い率 D＝sin²(角度差) を導く。対決の弾丸を込める回。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage4">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
@@ -109,7 +111,7 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 4</span><span class="chapter-title">量子力学の予言</span>
+        <span class="chapter-badge">STAGE 4</span><h1 class="chapter-title">量子力学の予言</h1>
         <div class="chapter-sub">食い違いは sin²(角度差)</div>
       </div>
 
@@ -125,7 +127,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">裁判の基準はできた。今度は原告側――量子力学に、具体的な数字を予言してもらう番だ。鍵になるのは、STAGE2で宿題にしておいた問い。<strong>斜めに振動する光が偏光板に入ると、どうなるか？</strong> 答えを出すために、まず角度の道具を2つ用意するよ。半径1の円を描いて、中心から角度θの方向に線を引き、円周との交点を見る。この点の<strong>高さ</strong>を<strong>sinθ（サイン）</strong>、<strong>横の位置</strong>を<strong>cosθ（コサイン）</strong>と呼ぶ。たとえば θ＝0° なら点は真横にあるから、高さ sin0°＝0、横 cos0°＝1。θ＝90° なら真上だから sin90°＝1、cos90°＝0。よく使う値も挙げておこう。<strong>sin30°＝1/2、cos30°＝√3/2（＝約0.87）、sin60°＝√3/2、cos60°＝1/2、sin45°＝cos45°＝1/√2（＝約0.71）</strong>だ。</div>
+          <div class="dialog-bubble">裁判の基準はできた。今度は原告側――量子力学に、具体的な数字を予言してもらう番だ。鍵になるのは、STAGE2で宿題にしておいた問い。<strong>斜めに振動する光が偏光板に入ると、どうなるか？</strong> 答えを出すために、まず角度の道具を2つ用意するよ。<a href="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/" target="_blank" rel="noopener" style="color:var(--gold-dark);text-decoration:underline">シュレディンガー方程式の教室</a>を歩いた人にはおなじみの2人だけれど、初めてでも大丈夫、ここで定義から説明する。半径1の円を描いて、中心から角度θの方向に線を引き、円周との交点を見る。この点の<strong>高さ</strong>を<strong>sinθ（サイン）</strong>、<strong>横の位置</strong>を<strong>cosθ（コサイン）</strong>と呼ぶ。たとえば θ＝0° なら点は真横にあるから、高さ sin0°＝0、横 cos0°＝1。θ＝90° なら真上だから sin90°＝1、cos90°＝0。よく使う値も挙げておこう。<strong>sin30°＝1/2、cos30°＝√3/2（＝約0.87）、sin60°＝√3/2、cos60°＝1/2、sin45°＝cos45°＝1/√2（＝約0.71）</strong>だ。</div>
         </div>
       </div>
 
@@ -172,14 +174,14 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">光の振動を<strong>矢印</strong>として描くんだ。矢印の向きが偏光の向き、矢印の長さが振動の大きさ（<strong>振幅</strong>と呼ぶ）だよ。偏光板の軸から角度θだけ傾いた、長さ1の矢印を考えよう。この矢印は、<strong>軸に沿った成分</strong>と<strong>軸に直角な成分</strong>の2本に分解できる。いま定義した道具そのままに、軸に沿った成分の長さは<strong>cosθ</strong>、直角な成分は<strong>sinθ</strong>だ。偏光板は軸に沿った振動だけを通す柵だったから、通り抜けるのは cosθ の成分だけ。ここでもう1つ、波の大事な性質を教えよう。<strong>波の明るさ（エネルギー）は、振幅の2乗に比例する</strong>。振れ幅が2倍になると、動きの速さも働く力も2倍ずつになって、エネルギーは2×2＝4倍になる、という理屈だ。すると、通った後の明るさは元の――</div>
+          <div class="dialog-bubble">光の振動を<strong>矢印</strong>として描くんだ。矢印の向きが偏光の向き、矢印の長さが振動の大きさ（<strong>振幅</strong>と呼ぶ）だよ。偏光板の軸から角度θだけ傾いた、長さ1の矢印を考えよう。この矢印は、<strong>軸に沿った成分</strong>と<strong>軸に直角な成分</strong>の2本に分解できる。いま定義した道具そのままに、軸に沿った成分の長さは<strong>cosθ</strong>、直角な成分は<strong>sinθ</strong>だ。偏光板は軸に沿った振動だけを通す柵だったから、通り抜けるのは cosθ の成分だけ。ここでもう1つ、波の大事な性質を教えよう。<strong>波の明るさ（エネルギー）は、振幅の2乗に比例する</strong>。振れ幅が2倍になると、動きの速さも働く力も2倍ずつになって、エネルギーは2×2＝4倍になる、という理屈だ。書き方をひとつ決めておこう。「cosθ を2乗したもの」は <strong>cos²θ</strong> と書く。すると、通った後の明るさは元の――</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">振幅がcosθ倍になったのだから、明るさは<strong>cos²θ倍</strong>ですね（cos²θは「コサインθの2乗」の書き方でしたね）。検算します。θ＝0°なら cos²0°＝1で全部通る。θ＝90°なら cos²90°＝0で全滅。STAGE2の柵の話と一致します。θ＝45°なら (1/√2)²＝1/2でちょうど半分。……あ、でも先生、ここで前と同じ問題が起きます。<strong>光子1個は割れない</strong>んでした。明るさが cos²θ倍になるということは、光子の数が cos²θ倍に減るしかない。つまり<strong>1個1個の光子は、確率 cos²θ で通り、確率 sin²θ で吸収される</strong>（三平方の定理でcos²θ＋sin²θ＝1）。そういうことですか？</div>
+          <div class="dialog-bubble">振幅がcosθ倍になったのだから、明るさは<strong>cos²θ倍</strong>ですね。検算します。θ＝0°なら cos²0°＝1で全部通る。θ＝90°なら cos²90°＝0で全滅。STAGE2の柵の話と一致します。θ＝45°なら (1/√2)²＝1/2でちょうど半分。……あ、でも先生、ここで前と同じ問題が起きます。<strong>光子1個は割れない</strong>んでした。明るさが cos²θ倍になるということは、光子の数が cos²θ倍に減るしかない。つまり<strong>1個1個の光子は、確率 cos²θ で通り、確率 sin²θ で吸収される</strong>（三平方の定理でcos²θ＋sin²θ＝1）。そういうことですか？</div>
         </div>
       </div>
 
@@ -262,7 +264,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">満点だよ。これが<strong>マルスの法則</strong>の光子版だ。マルスは19世紀初めに明るさの法則 cos²θ を見つけた物理学者で、量子力学はそれを「1個あたりの確率」と読み替えた。<strong>軸から角度θ傾いた偏光の光子は、確率 cos²θ で通る（○）、確率 sin²θ で吸収される（×）</strong>。これが量子力学の基本ルールだ。そしてどちらになるかは、量子力学によれば本物の偶然で、誰にも――光子自身にも――事前には分からない。</div>
+          <div class="dialog-bubble">その通り。これが<strong>マルスの法則</strong>の光子版だ。マルスは19世紀初めに明るさの法則 cos²θ を見つけた物理学者で、量子力学はそれを「1個あたりの確率」と読み替えた。<strong>軸から角度θ傾いた偏光の光子は、確率 cos²θ で通る（○）、確率 sin²θ で吸収される（×）</strong>。これが量子力学の基本ルールだ。そしてどちらになるかは、量子力学によれば本物の偶然で、誰にも――光子自身にも――事前には分からない。</div>
         </div>
       </div>
 
@@ -334,7 +336,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">素晴らしい違和感だ。鍵は、偏光板が「元の偏光を当てる装置」ではなく、<strong>出口が2つしかない装置</strong>だという点にあるんだ。波の絵に戻ろう。どんな向きの振動が入ってきても、柵をすり抜けられるのは軸方向の成分だけだったね。つまり通過した後の光は――入射前が何であれ――<strong>軸方向（a）の振動しか含んでいない</strong>。元の偏光bの違いは「どのくらいの確率で通るか」にだけ現れて、通った後の姿には残らない。実験でも確かめられるよ。角度aの板のすぐ後ろに<strong>もう1枚、角度aの板</strong>を置くと、通過してきた光子は100%通る。a＋90°の板なら0%。通過後の光子は、偏光aの光子と完全に同じふるまいをするんだ。ブロック側は、吸収型の板だと光子が消えてしまうから直接は見えないけれど、方解石という透明な結晶のように<strong>出口が2つある</strong>測定器を使えば、もう一方の出口から出る光は必ずa＋90°偏光になっている。だから理論では、吸収も「a＋90°側の答えが出た」として扱う。</div>
+          <div class="dialog-bubble">いい違和感だね。鍵は、偏光板が「元の偏光を当てる装置」ではなく、<strong>出口が2つしかない装置</strong>だという点にあるんだ。波の絵に戻ろう。どんな向きの振動が入ってきても、柵をすり抜けられるのは軸方向の成分だけだったね。つまり通過した後の光は――入射前が何であれ――<strong>軸方向（a）の振動しか含んでいない</strong>。元の偏光bの違いは「どのくらいの確率で通るか」にだけ現れて、通った後の姿には残らない。実験でも確かめられるよ。角度aの板のすぐ後ろに<strong>もう1枚、角度aの板</strong>を置くと、通過してきた光子は100%通る。a＋90°の板なら0%。通過後の光子は、偏光aの光子と完全に同じふるまいをするんだ。ブロック側は、吸収型の板だと光子が消えてしまうから直接は見えないけれど、方解石という透明な結晶のように<strong>出口が2つある</strong>測定器を使えば、もう一方の出口から出る光は必ずa＋90°偏光になっている。だから理論では、吸収も「a＋90°側の答えが出た」として扱う。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -507,7 +509,7 @@
         <span class="step">ベルの不等式に代入すると <span class="nw">3/4 ≤ 1/2</span> で不成立。量子力学の予言はベルの不等式と両立しない（決着は実験データに委ねられる）</span>
       </div>
 
-      <div class="quiz-head">確認クイズ</div>
+      <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 偏光板の軸から角度θ傾いた偏光を持つ光子1個は、どうなる？</p>
         <div class="choice-list">
