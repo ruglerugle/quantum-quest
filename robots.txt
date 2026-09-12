@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://quantum-mechanics.habatakijuku.com/sitemap.xml
+Sitemap: https://quantum-mechanics.habatakijuku.com/general/sitemap.xml

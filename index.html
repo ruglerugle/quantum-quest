@@ -3,8 +3,459 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0d3d4d">
-<!-- Google tag (gtag.js) -->
+<title>量子クエスト集 ― 量子力学から量子コンピュータまでの学習マップ ―</title>
+<meta name="description" content="二重スリットの謎から量子コンピュータの実機まで、7つの無料ブラウザ学習ゲームで量子の世界を旅するシリーズマップ。おすすめの学習順序つき。ねこ博士とうさ美が案内します。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="量子クエスト集">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="量子クエスト集 ― 量子力学から量子コンピュータまでの学習マップ ―">
+<meta property="og:description" content="二重スリットの謎から量子コンピュータの実機まで、7つの無料ブラウザ学習ゲームで量子の世界を旅するシリーズマップ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/images/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "量子クエスト集",
+  "description": "二重スリットの謎から量子コンピュータの実機まで、量子の世界を7つの無料ブラウザ学習ゲームで旅するシリーズ。",
+  "url": "https://quantum-mechanics.habatakijuku.com/",
+  "inLanguage": "ja",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "二重スリットから読み解く量子力学", "url": "https://quantum-mechanics.habatakijuku.com/general/" },
+    { "@type": "ListItem", "position": 2, "name": "シュレディンガー方程式を導く", "url": "https://ruglerugle.github.io/schrodinger-equation/" },
+    { "@type": "ListItem", "position": 3, "name": "不確定性原理を証明する ― ケナードの不等式", "url": "https://ruglerugle.github.io/kennard-inequality/" },
+    { "@type": "ListItem", "position": 4, "name": "ベルの不等式を破る", "url": "https://ruglerugle.github.io/bell-inequality/" },
+    { "@type": "ListItem", "position": 5, "name": "消える干渉縞 ― 観測すると世界はどう変わるか", "url": "https://ruglerugle.github.io/decoherence-quest/" },
+    { "@type": "ListItem", "position": 6, "name": "量子コンピュータはなぜ速いのか", "url": "https://ruglerugle.github.io/quantum-computer/" },
+    { "@type": "ListItem", "position": 7, "name": "量子コンピュータはどう作るのか", "url": "https://ruglerugle.github.io/quantum-hardware/" }
+  ]
+}
+</script>
+<style>
+  :root{
+    --bg0:#070818;
+    --bg1:#0e1030;
+    --panel:rgba(12,13,34,.74);
+    --panel-b:rgba(154,167,255,.28);
+    --tp:#eef0fb;
+    --ts:#b6bde0;
+    --tm:#767fa6;
+    --gold:#b9a5ff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 560px at 12% -8%, rgba(140,120,255,.14), transparent 60%),
+      radial-gradient(900px 520px at 92% 6%, rgba(90,200,255,.10), transparent 60%),
+      radial-gradient(700px 500px at 50% 110%, rgba(255,120,200,.06), transparent 60%),
+      linear-gradient(180deg,var(--bg0),var(--bg1) 45%,var(--bg0));
+    color:var(--tp);
+    font-family:"Hiragino Sans","Yu Gothic",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    min-height:100vh;
+    line-height:1.7;
+  }
+  .stars{
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, rgba(255,255,255,.5), transparent),
+      radial-gradient(1.5px 1.5px at 140px 90px, rgba(255,255,255,.35), transparent),
+      radial-gradient(1px 1px at 260px 40px, rgba(255,255,255,.4), transparent),
+      radial-gradient(1.5px 1.5px at 340px 160px, rgba(255,255,255,.3), transparent),
+      radial-gradient(1px 1px at 420px 70px, rgba(255,255,255,.45), transparent),
+      radial-gradient(1.5px 1.5px at 90px 200px, rgba(255,255,255,.3), transparent);
+    background-repeat:repeat;
+    background-size:480px 240px;
+    opacity:.55;
+  }
+  .wrap{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:48px 20px 40px}
+
+  header{text-align:center;margin-bottom:34px}
+  .eyebrow{
+    display:inline-block;font-size:12px;letter-spacing:.2em;color:var(--gold);
+    border:1px solid rgba(185,165,255,.35);border-radius:999px;padding:4px 14px;margin-bottom:16px;
+  }
+  h1{
+    font-size:clamp(26px,4.2vw,40px);margin:0 0 12px;font-weight:800;letter-spacing:.03em;
+    background:linear-gradient(90deg,#fff,#c9d4f5 55%,var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  header p{color:var(--ts);max-width:600px;margin:0 auto;font-size:14.5px}
+
+  /* ===== Map ===== */
+  .map-frame{
+    position:relative;
+    border:1px solid rgba(154,167,255,.35);
+    border-radius:20px;
+    padding:10px;
+    background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+    box-shadow:0 0 0 1px rgba(0,0,0,.4) inset, 0 30px 60px -30px rgba(0,0,0,.7);
+  }
+  .map{
+    position:relative;
+    width:100%;
+    aspect-ratio:5/3.1;
+    border-radius:14px;
+    overflow:hidden;
+    background:
+      radial-gradient(230px 170px at 9% 22%, rgba(94,200,255,.16), transparent 70%),
+      radial-gradient(220px 170px at 22% 58%, rgba(143,123,255,.16), transparent 70%),
+      radial-gradient(230px 180px at 37% 28%, rgba(255,182,72,.13), transparent 70%),
+      radial-gradient(230px 190px at 51% 66%, rgba(255,107,157,.14), transparent 70%),
+      radial-gradient(230px 180px at 65% 35%, rgba(79,216,196,.15), transparent 70%),
+      radial-gradient(240px 190px at 79% 70%, rgba(127,224,127,.14), transparent 70%),
+      radial-gradient(230px 180px at 92% 34%, rgba(240,149,95,.16), transparent 70%),
+      linear-gradient(160deg,#0b0d24,#141a3a 55%,#0b0d24);
+  }
+  .map svg.terrain{position:absolute;inset:0;width:100%;height:100%}
+  .grid-lines{position:absolute;inset:0;opacity:.25;
+    background-image:linear-gradient(rgba(154,167,255,.08) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(154,167,255,.08) 1px, transparent 1px);
+    background-size:8.333% 10%;
+  }
+  .fog{position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(320px 220px at 100% 0%, rgba(7,8,24,.85), transparent 70%),
+      radial-gradient(320px 220px at 0% 100%, rgba(7,8,24,.6), transparent 70%);
+  }
+
+  .deco{position:absolute;font-size:20px;opacity:.55;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5));user-select:none;pointer-events:none}
+
+  .trail-glow{fill:none;stroke:var(--gold);stroke-width:.9;opacity:.25;filter:blur(2px)}
+  .trail{fill:none;stroke:var(--gold);stroke-width:.55;stroke-linecap:round;stroke-dasharray:2.2 2.6;opacity:.85}
+  .mobile-only{display:none}
+
+  .flag{position:absolute;left:4%;top:14%;transform:translate(-50%,-100%);font-size:26px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.6))}
+  .flag .label{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;color:var(--gold);letter-spacing:.1em;margin-top:2px}
+
+  .node{
+    position:absolute;transform:translate(-50%,-50%);
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    text-decoration:none;color:inherit;
+    z-index:2;
+  }
+  .node .badge{
+    width:56px;height:56px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:26px;
+    background:radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--accent) 55%, #0b0d24), #0b0d24 75%);
+    border:2px solid var(--accent);
+    box-shadow:0 0 0 4px rgba(7,8,24,.55), 0 0 18px -2px var(--accent), 0 6px 14px -6px rgba(0,0,0,.7);
+    transition:transform .18s ease, box-shadow .18s ease;
+    position:relative;
+  }
+  .node .badge::after{
+    content:"";position:absolute;inset:-8px;border-radius:50%;
+    border:1px dashed color-mix(in srgb, var(--accent) 55%, transparent);
+    opacity:0;transition:opacity .18s ease, transform .5s ease;
+  }
+  .node .num{
+    position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;
+    background:var(--accent);color:#0b0d24;font-size:10px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 2px #0b0d24;
+  }
+  .node .label{
+    background:rgba(7,8,24,.78);border:1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+    border-radius:8px;padding:3px 9px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;
+    letter-spacing:.02em;
+  }
+  .node:hover .badge, .node:focus-visible .badge{
+    transform:translateY(-4px) scale(1.06);
+    box-shadow:0 0 0 4px rgba(7,8,24,.55), 0 0 26px 2px var(--accent), 0 10px 16px -6px rgba(0,0,0,.7);
+  }
+  .node:hover .badge::after, .node:focus-visible .badge::after{opacity:1;transform:rotate(25deg)}
+  .node:focus-visible{outline:none}
+  .node.active .badge{
+    transform:translateY(-4px) scale(1.06);
+    box-shadow:0 0 0 4px rgba(7,8,24,.55), 0 0 26px 2px var(--accent), 0 10px 16px -6px rgba(0,0,0,.7);
+  }
+
+  /* Node position presets */
+  .n1{left:9%;  top:22%}
+  .n2{left:22%; top:58%}
+  .n3{left:37%; top:28%}
+  .n4{left:51%; top:66%}
+  .n5{left:65%; top:35%}
+  .n6{left:79%; top:70%}
+  .n7{left:92%; top:34%}
+
+  .compass{position:absolute;top:14px;right:16px;width:44px;height:44px;opacity:.75}
+
+  /* ===== Quest log panel ===== */
+  .questlog{
+    margin-top:18px;
+    background:var(--panel);border:1px solid var(--panel-b);border-radius:14px;
+    padding:18px 20px;display:flex;gap:16px;align-items:flex-start;
+    min-height:88px;
+  }
+  .questlog .qi{
+    flex:0 0 auto;width:48px;height:48px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;font-size:24px;
+    background:color-mix(in srgb, var(--accent,#b9a5ff) 20%, transparent);
+    border:1px solid color-mix(in srgb, var(--accent,#b9a5ff) 45%, transparent);
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .questlog .qt{flex:1;min-width:0}
+  .questlog .qsub{font-size:11px;letter-spacing:.1em;color:var(--accent,var(--gold));font-weight:700;margin-bottom:2px}
+  .questlog h3{margin:0 0 6px;font-size:16px;color:#fff}
+  .questlog p{margin:0 0 10px;font-size:13px;color:var(--ts)}
+  .questlog .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .questlog .tag{font-size:11px;color:var(--tm);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:2px 9px}
+  .questlog .go{
+    display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;
+    color:#0b0d24;background:var(--gold);border-radius:8px;padding:7px 14px;text-decoration:none;
+    transition:filter .15s ease;
+  }
+  .questlog .go:hover{filter:brightness(1.08)}
+  .questlog .hint{color:var(--tm);font-size:13px;margin:auto}
+
+  /* ===== Side quests ===== */
+  .side{margin-top:34px}
+  .side h2{font-size:16px;margin:0 0 4px;color:var(--tp);letter-spacing:.04em}
+  .side .lead{margin:0 0 14px;font-size:13px;color:var(--tm)}
+  .side-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .side-card{
+    display:block;text-decoration:none;color:inherit;
+    background:var(--panel);border:1px solid var(--panel-b);border-radius:12px;
+    padding:14px 16px;transition:transform .15s ease, border-color .15s ease;
+  }
+  .side-card:hover{transform:translateY(-2px);border-color:rgba(185,165,255,.55)}
+  .side-card .sc-sub{font-size:10.5px;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-bottom:4px}
+  .side-card .sc-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+  .side-card .sc-desc{font-size:12px;color:var(--ts);line-height:1.6}
+
+  footer{margin-top:40px;text-align:center;color:var(--tm);font-size:12.5px}
+
+  /* ===== モバイル: 地図の見た目は保ったまま、右端で折り返すスネーク型配置にする ===== */
+  @media (max-width:640px){
+    .map{ aspect-ratio:4/5.1; }
+
+    .trail-glow:not(.mobile-only), .trail:not(.mobile-only){display:none}
+    .mobile-only{display:block}
+
+    .deco, .compass{display:none}
+
+    .flag{left:7%; top:8%}
+
+    .n1{left:15%; top:14%}
+    .n2{left:50%; top:11%}
+    .n3{left:85%; top:16%}
+    .n4{left:86%; top:44%}
+    .n5{left:50%; top:40%}
+    .n6{left:14%; top:45%}
+    .n7{left:50%; top:72%}
+
+    .node{max-width:30%}
+    .node .badge{width:46px;height:46px;font-size:20px}
+    .node .label{font-size:9px;padding:2px 5px;white-space:normal;text-align:center;line-height:1.25;width:max-content;max-width:104px}
+    .node.n1 .label{position:relative;left:14px}
+    .node.n4 .label{position:relative;left:-14px}
+
+    .questlog{flex-direction:column}
+  }
+
+  @media (prefers-color-scheme: light){
+    body{
+      background:
+        radial-gradient(1200px 600px at 15% -10%, rgba(110,90,255,.06), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(80,180,255,.06), transparent 60%),
+        linear-gradient(180deg,#f7f8fc,#eef1f9 40%,#f7f8fc);
+      color:#1b2233;
+    }
+    :root{--ts:#4c5670;--tm:#8590a8;--panel:rgba(255,255,255,.75);--panel-b:rgba(20,30,60,.12)}
+    .stars{opacity:.2;filter:invert(1)}
+    h1{background:linear-gradient(90deg,#1b2233,#4a3a8a 60%,#6b4fd8);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .questlog h3{color:#1b2233}
+    .node .label{color:#1b2233;background:rgba(255,255,255,.85)}
+    .side h2{color:#1b2233}
+    .side-card .sc-title{color:#1b2233}
+  }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">FREE BROWSER LEARNING GAMES</span>
+    <h1>量子クエスト集</h1>
+    <p>二重スリットの謎から量子コンピュータの実機まで ― 量子の世界を7つのクエストで旅する。番号順に進めば、論理の飛躍なく最前線までたどり着けます。</p>
+  </header>
+
+  <div class="map-frame">
+    <div class="map" id="map">
+
+      <div class="grid-lines"></div>
+
+      <svg class="terrain" viewBox="0 0 100 60" preserveAspectRatio="none">
+        <path class="trail-glow" d="M9,13.2 C13,20 16,26 22,34.8 C26,40.5 32,26 37,16.8 C41,10 45,28 51,39.6 C55,47 59,30 65,21 C69,15.5 73,32 79,42 C83,48 87,32 92,20.4"/>
+        <path class="trail" d="M9,13.2 C13,20 16,26 22,34.8 C26,40.5 32,26 37,16.8 C41,10 45,28 51,39.6 C55,47 59,30 65,21 C69,15.5 73,32 79,42 C83,48 87,32 92,20.4"/>
+        <path class="trail-glow mobile-only" d="M15,8.4 C25,4.5 40,8.5 50,6.6 C62,4.5 76,6 85,9.6 C92,12.5 92,20 86,26.4 C78,32 62,26 50,24 C38,22 20,20 14,27 C10,32 16,37 26,39.5 C36,42 46,39.5 50,43.2"/>
+        <path class="trail mobile-only" d="M15,8.4 C25,4.5 40,8.5 50,6.6 C62,4.5 76,6 85,9.6 C92,12.5 92,20 86,26.4 C78,32 62,26 50,24 C38,22 20,20 14,27 C10,32 16,37 26,39.5 C36,42 46,39.5 50,43.2"/>
+      </svg>
+
+      <!-- decorative scenery -->
+      <span class="deco" style="left:5%;top:52%" aria-hidden="true">🔭</span>
+      <span class="deco" style="left:15%;top:20%" aria-hidden="true">🌌</span>
+      <span class="deco" style="left:28%;top:84%" aria-hidden="true">🌙</span>
+      <span class="deco" style="left:31%;top:52%" aria-hidden="true">✨</span>
+      <span class="deco" style="left:44%;top:14%" aria-hidden="true">☄️</span>
+      <span class="deco" style="left:45%;top:88%" aria-hidden="true">🛰️</span>
+      <span class="deco" style="left:58%;top:58%" aria-hidden="true">💫</span>
+      <span class="deco" style="left:71%;top:16%" aria-hidden="true">🪐</span>
+      <span class="deco" style="left:72%;top:90%" aria-hidden="true">🧲</span>
+      <span class="deco" style="left:86%;top:56%" aria-hidden="true">❄️</span>
+      <span class="deco" style="left:95%;top:80%" aria-hidden="true">🏭</span>
+
+      <div class="flag" aria-hidden="true">🚩<span class="label">START</span></div>
+
+      <svg class="compass" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="46" fill="rgba(7,8,24,.5)" stroke="var(--gold)" stroke-width="2"/>
+        <path d="M50 8 L58 50 L50 92 L42 50 Z" fill="var(--gold)" opacity=".85"/>
+        <path d="M8 50 L50 42 L92 50 L50 58 Z" fill="var(--gold)" opacity=".5"/>
+        <text x="50" y="20" text-anchor="middle" font-size="12" fill="var(--gold)" font-weight="700">N</text>
+      </svg>
+
+      <div class="fog"></div>
+
+      <!-- quest nodes -->
+      <a class="node n1" href="https://quantum-mechanics.habatakijuku.com/general/"
+         data-accent="#5ec8ff" data-icon="🌊" data-sub="QUANTUM BASICS" data-title="二重スリットから読み解く量子力学"
+         data-desc="電子はなぜ縞模様を描くのか。二重スリット実験の謎から出発し、光子・物質波・波動関数・不確定性原理・シュレディンガー方程式の読み方まで、量子力学の土台をそろえる。すべての旅はここから。"
+         data-tags="二重スリット,波動関数,不確定性原理" data-num="1" data-stages="全7ステージ" data-level="入門" data-prereq="前提なし">
+        <div class="badge" style="--accent:#5ec8ff">🌊<span class="num">1</span></div>
+        <div class="label">量子力学クエスト</div>
+      </a>
+
+      <a class="node n2" href="https://ruglerugle.github.io/schrodinger-equation/"
+         data-accent="#8f7bff" data-icon="📜" data-sub="DERIVATION" data-title="シュレディンガー方程式を導く"
+         data-desc="①で「読み方」を学んだ方程式は、どこから来たのか。波の式・複素数・E=hν・p=h/λ・微分と道具をそろえ、1926年の方程式を自分の手で組み立てる。井戸の解法とトンネル効果もここで。"
+         data-tags="導出,複素数,微分" data-num="2" data-stages="全8ステージ" data-level="基礎" data-prereq="前提: ①">
+        <div class="badge" style="--accent:#8f7bff">📜<span class="num">2</span></div>
+        <div class="label">シュレディンガー方程式</div>
+      </a>
+
+      <a class="node n3" href="https://ruglerugle.github.io/kennard-inequality/"
+         data-accent="#ffb648" data-icon="📏" data-sub="PROOF" data-title="不確定性原理を証明する ― ケナードの不等式"
+         data-desc="①で出会った Δx·Δp ≥ ℏ/2 は、実は波の数学から導ける厳密な定理。標準偏差・積分・部分積分・判別式と道具を発見しながら、1927年のケナードの証明を最後まで自分の手でたどる。数学の山場。"
+         data-tags="証明,標準偏差,部分積分" data-num="3" data-stages="全7ステージ" data-level="発展" data-prereq="前提: ①②">
+        <div class="badge" style="--accent:#ffb648">📏<span class="num">3</span></div>
+        <div class="label">ケナードの不等式</div>
+      </a>
+
+      <a class="node n4" href="https://ruglerugle.github.io/bell-inequality/"
+         data-accent="#ff6b9d" data-icon="🔔" data-sub="ENTANGLEMENT" data-title="ベルの不等式を破る"
+         data-desc="「月は見ていなくても存在するか」――アインシュタインの疑問に自然自身が答えを出すまで。もつれ・隠れた変数・ベルの不等式を個数の数え上げだけで導き、アスペの実験と2022年ノーベル賞へ。"
+         data-tags="量子もつれ,隠れた変数,ノーベル賞" data-num="4" data-stages="全6ステージ" data-level="基礎" data-prereq="前提: ①">
+        <div class="badge" style="--accent:#ff6b9d">🔔<span class="num">4</span></div>
+        <div class="label">ベルの不等式</div>
+      </a>
+
+      <a class="node n5" href="https://ruglerugle.github.io/decoherence-quest/"
+         data-accent="#4fd8c4" data-icon="🌫️" data-sub="MEASUREMENT" data-title="消える干渉縞 ― 観測すると世界はどう変わるか"
+         data-desc="観測すると干渉縞が消えるのはなぜか。振幅の足し算ルールだけを武器に、経路検出器・量子消しゴム・デコヒーレンスを解き明かし、「月が消えない理由」から観測問題の最前線まで到達する。"
+         data-tags="観測問題,デコヒーレンス,量子消しゴム" data-num="5" data-stages="全7ステージ" data-level="基礎" data-prereq="前提: ①④">
+        <div class="badge" style="--accent:#4fd8c4">🌫️<span class="num">5</span></div>
+        <div class="label">消える干渉縞</div>
+      </a>
+
+      <a class="node n6" href="https://ruglerugle.github.io/quantum-computer/"
+         data-accent="#7fe07f" data-icon="💻" data-sub="QUANTUM COMPUTING" data-title="量子コンピュータはなぜ速いのか"
+         data-desc="「全部の答えを同時に計算するから速い」は半分まちがい。量子ビット・ゲート・もつれから、グローバーの探索・ショアの因数分解・誤り訂正まで、速さの正体＝干渉の設計を自分の手で確かめる。"
+         data-tags="量子ビット,グローバー,ショア" data-num="6" data-stages="全8ステージ" data-level="発展" data-prereq="前提: ①④⑤">
+        <div class="badge" style="--accent:#7fe07f">💻<span class="num">6</span></div>
+        <div class="label">量子コンピュータ</div>
+      </a>
+
+      <a class="node n7" href="https://ruglerugle.github.io/quantum-hardware/"
+         data-accent="#f0955f" data-icon="❄️" data-sub="HARDWARE" data-title="量子コンピュータはどう作るのか"
+         data-desc="実機は宇宙空間の100倍冷たい場所で動いている。超伝導・ジョセフソン接合・希釈冷凍機・マイクロ波制御から100万量子ビットへの壁まで、⑥の原理を現実の物質で作る工学に踏み込む。旅の終着点。"
+         data-tags="超伝導,希釈冷凍機,誤り訂正" data-num="7" data-stages="全8ステージ" data-level="発展" data-prereq="前提: ⑥">
+        <div class="badge" style="--accent:#f0955f">❄️<span class="num">7</span></div>
+        <div class="label">量子ハードウェア</div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="questlog" id="questlog">
+    <p class="hint">地図上のクエストにカーソルを合わせる（またはタップする）と、ここに詳細が表示されます。<br>番号順に進めば無理なく学べます。初めての方は <strong>① 量子力学クエスト（入門）</strong>から！<br>③は数学の山場なので、難しければ④に進んで後から戻ってきても大丈夫です。</p>
+  </div>
+
+  <div class="side">
+    <h2>🛤️ 寄り道クエスト</h2>
+    <p class="lead">本編の前後で立ち寄ると理解が深まる関連クエストです。</p>
+    <div class="side-grid">
+      <a class="side-card" href="https://complex-number.habatakijuku.com/">
+        <div class="sc-sub">準備編 ・ MATH</div>
+        <div class="sc-title">本当はおもしろい複素数の世界</div>
+        <div class="sc-desc">②で使う複素数を、ガウス平面からオイラーの等式まで基礎から。①の前後どちらでも。</div>
+      </a>
+      <a class="side-card" href="https://ruglerugle.github.io/quantum-circuit/">
+        <div class="sc-sub">実技編 ・ CIRCUIT</div>
+        <div class="sc-title">量子回路クエスト</div>
+        <div class="sc-desc">⑥で学んだゲートを実際に配線して組む実技ゲーム。ベル状態や半加算器を自分の手で構成する。</div>
+      </a>
+      <a class="side-card" href="https://ruglerugle.github.io/grover-oracle/">
+        <div class="sc-sub">発展編 ・ ORACLE</div>
+        <div class="sc-title">オラクルは比較しない</div>
+        <div class="sc-desc">⑥のグローバー探索に出てくる「オラクル」の中身を回路レベルで解剖する解説クエスト。</div>
+      </a>
+      <a class="side-card" href="https://ruglerugle.github.io/oracle-workshop/">
+        <div class="sc-sub">発展編 ・ WORKSHOP</div>
+        <div class="sc-title">オラクル工房</div>
+        <div class="sc-desc">検算回路からグローバーのオラクルを自作する実技ゲーム。量子回路クエストの続編。</div>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>すべて無料・ブラウザだけで遊べます。 &copy; <span id="year"></span> ruglerugle</p>
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  var log = document.getElementById('questlog');
+  var nodes = document.querySelectorAll('.node');
+
+  function renderLog(n){
+    var accent = n.dataset.accent;
+    var tags = n.dataset.tags.split(',').map(function(t){return '<span class="tag">'+t+'</span>'}).join('');
+    log.style.setProperty('--accent', accent);
+    log.innerHTML =
+      '<div class="qi" style="--accent:'+accent+'">'+n.dataset.icon+'</div>' +
+      '<div class="qt">' +
+        '<div class="qsub" style="color:'+accent+'">QUEST '+n.dataset.num+' ・ '+n.dataset.sub+' ・ '+n.dataset.stages+' ・ '+n.dataset.level+' ・ '+n.dataset.prereq+'</div>' +
+        '<h3>'+n.dataset.title+'</h3>' +
+        '<p>'+n.dataset.desc+'</p>' +
+        '<div class="tags">'+tags+'</div>' +
+        '<a class="go" href="'+n.getAttribute('href')+'">このクエストへ出発する →</a>' +
+      '</div>';
+  }
+
+  nodes.forEach(function(n){
+    n.addEventListener('mouseenter', function(){
+      nodes.forEach(function(x){x.classList.remove('active')});
+      n.classList.add('active');
+      renderLog(n);
+    });
+    n.addEventListener('focus', function(){
+      nodes.forEach(function(x){x.classList.remove('active')});
+      n.classList.add('active');
+      renderLog(n);
+    });
+  });
+</script>
+
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -12,133 +463,5 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>二重スリットから読み解く量子力学 ― 全7ステージの無料学習ゲーム</title>
-<meta name="description" content="二重スリット実験の謎から出発して、光電効果・物質波・波動関数・不確定性原理・シュレーディンガー方程式・量子もつれまで、7つのステージで量子力学を学べる無料の学習サイト。ねこ博士とうさ美が案内します。">
-<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="二重スリットから読み解く量子力学">
-<meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="二重スリットから読み解く量子力学 ― 全7ステージの無料学習ゲーム">
-<meta property="og:description" content="二重スリット実験の謎から、シュレーディンガー方程式・量子もつれまで。7つのステージで量子力学を学べる無料の学習サイト。">
-<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/">
-<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/images/ogp.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" href="images/favicon.png">
-<link rel="stylesheet" href="design-system.css">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LearningResource",
-  "name": "二重スリットから読み解く量子力学",
-  "alternateName": "QUANTUM QUEST",
-  "description": "二重スリット実験の謎から出発して、シュレーディンガー方程式・量子もつれまで、7つのステージで量子力学を学べる無料の学習サイト。",
-  "url": "https://quantum-mechanics.habatakijuku.com/",
-  "inLanguage": "ja",
-  "learningResourceType": "learning activity",
-  "educationalLevel": "中学生以上",
-  "teaches": "量子力学（二重スリット実験・光電効果・物質波・波動関数と確率解釈・不確定性原理・シュレーディンガー方程式・重ね合わせ・量子もつれ）",
-  "isAccessibleForFree": true,
-  "author": { "@type": "Person", "name": "ruglerugle" }
-}
-</script>
-</head>
-<body>
-<div class="shell">
-  <nav class="topbar" aria-label="サイト情報">
-    <span class="brand-badge" aria-hidden="true">⚛️</span>
-    <span class="brand-copy">
-      <strong>二重スリットから読み解く量子力学</strong>
-      <small>QUANTUM QUEST</small>
-    </span>
-  </nav>
-
-  <header class="hero">
-    <div class="hero-copy">
-      <h1><span class="line">電子は、波であり粒である。</span><span class="line accent">二重スリットの謎から、シュレーディンガー方程式まで登ろう。</span></h1>
-      <p>スタート地点は、たったひとつの実験。スクリーンに浮かぶ<span class="nowrap">縞模様</span>の謎を追いかけるうちに、光電効果、物質波、波動関数、不確定性原理と、量子力学の道具が一つずつ手に入っていく。最後には量子もつれの世界まで、7つのステージで少しずつ旅していこう。</p>
-    </div>
-  </header>
-
-  <main>
-    <section class="board" aria-labelledby="quest-heading">
-      <div class="board-head">
-        <div><h2 id="quest-heading">クエストを選ぼう！</h2></div>
-        <p>ステージ1から順番にクリアしよう（前のステージをクリアすると次が解放されます）</p>
-      </div>
-
-      <div class="quest-grid">
-        <a class="quest-card" href="stage1.html" data-stage="1" style="--accent:#a6742a;--accent-bg:#fdf3e0">
-          <div class="q-top"><span class="q-num">1</span><span class="q-suit" aria-hidden="true">✦</span></div>
-          <div class="q-meta"><span class="q-tag">運命の実験</span><span class="q-time">⏱ 約8分</span></div>
-          <div class="q-title">光は波？ それとも粒？</div>
-          <p class="q-desc">すべてはここから始まった。二重スリット実験でスクリーンに現れる縞模様から、光の正体に迫ろう。</p>
-          <span class="q-cta">はじめる →</span>
-        </a>
-
-        <a class="quest-card" href="stage2.html" data-stage="2" style="--accent:#5b3fa6;--accent-bg:#efe9f9">
-          <div class="q-top"><span class="q-num">2</span><span class="q-suit" aria-hidden="true">✦</span></div>
-          <div class="q-meta"><span class="q-tag">E = hν</span><span class="q-time">⏱ 約9分</span></div>
-          <div class="q-title">光は粒でもあった</div>
-          <p class="q-desc">金属に光を当てると電子が飛び出す「光電効果」。波の考えでは説明できない謎を、アインシュタインの光量子仮説で解こう。</p>
-          <span class="q-cta">はじめる →</span>
-        </a>
-
-        <a class="quest-card" href="stage3.html" data-stage="3" style="--accent:#2f6fa6;--accent-bg:#e8f1fa">
-          <div class="q-top"><span class="q-num">3</span><span class="q-suit" aria-hidden="true">✦</span></div>
-          <div class="q-meta"><span class="q-tag">λ = h/p</span><span class="q-time">⏱ 約10分</span></div>
-          <div class="q-title">電子も波だった</div>
-          <p class="q-desc">「光が粒なら、電子は波では？」――ド・ブロイの大胆な発想が、原子の中の電子の謎まで解いてしまう。</p>
-          <span class="q-cta">はじめる →</span>
-        </a>
-
-        <a class="quest-card" href="stage4.html" data-stage="4" style="--accent:#2f8f65;--accent-bg:#eaf7ef">
-          <div class="q-top"><span class="q-num">4</span><span class="q-suit" aria-hidden="true">✦</span></div>
-          <div class="q-meta"><span class="q-tag">|ψ|²</span><span class="q-time">⏱ 約10分</span></div>
-          <div class="q-title">波動関数 ψ の正体</div>
-          <p class="q-desc">電子の波とは、いったい「何の」波なのか。波動関数と確率解釈という、量子力学の心臓部に踏み込もう。</p>
-          <span class="q-cta">はじめる →</span>
-        </a>
-
-        <a class="quest-card" href="stage5.html" data-stage="5" style="--accent:#a63f6f;--accent-bg:#fbe9f1">
-          <div class="q-top"><span class="q-num">5</span><span class="q-suit" aria-hidden="true">✦</span></div>
-          <div class="q-meta"><span class="q-tag">Δx·Δp ≥ ℏ/2</span><span class="q-time">⏱ 約10分</span></div>
-          <div class="q-title">不確定性原理</div>
-          <p class="q-desc">位置を決めれば運動量がぼやけ、運動量を決めれば位置がぼやける。測定の腕前の問題ではない、波そのものの宿命を知ろう。</p>
-          <span class="q-cta">はじめる →</span>
-        </a>
-
-        <a class="quest-card" href="stage6.html" data-stage="6" style="--accent:#2f8a8f;--accent-bg:#e6f5f5">
-          <div class="q-top"><span class="q-num">6</span><span class="q-suit" aria-hidden="true">✦</span></div>
-          <div class="q-meta"><span class="q-tag">Ĥψ = Eψ</span><span class="q-time">⏱ 約13分</span></div>
-          <div class="q-title">シュレーディンガー方程式</div>
-          <p class="q-desc">波動関数の従う運動方程式、ついに登場。記号の読み下しから、虚数 i の役割、「定常状態」の意味、そして重ね合わせの原理までを読み解こう。</p>
-          <span class="q-cta">はじめる →</span>
-        </a>
-
-        <a class="quest-card" href="stage7.html" data-stage="7" style="--accent:#b5504a;--accent-bg:#fdefed">
-          <div class="q-top"><span class="q-num">7</span><span class="q-suit" aria-hidden="true">✦</span></div>
-          <div class="q-meta"><span class="q-tag">最深部</span><span class="q-time">⏱ 約11分</span></div>
-          <div class="q-title">量子もつれ</div>
-          <p class="q-desc">生きていて死んでいる猫の思考実験から、どれだけ離れていても瞬時に相関する2つの粒子へ。量子技術の最前線に立とう。</p>
-          <span class="q-cta">はじめる →</span>
-        </a>
-
-      </div>
-    </section>
-
-    <div id="book-recommend"></div>
-  </main>
-
-  <footer>
-    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;© <span id="year"></span> ruglerugle</p>
-    <div class="footer-suits" aria-hidden="true"><span>✦</span><span>☾</span><span>✧</span><span>★</span></div>
-  </footer>
-</div>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-<script src="js/progress.js"></script>
-<script>QQ.initCoverPage();</script>
 </body>
 </html>
