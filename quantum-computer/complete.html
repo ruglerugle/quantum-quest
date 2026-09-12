@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16224e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>全ステージクリア ― 量子コンピュータはなぜ速いのか</title>
+<meta name="description" content="量子コンピュータはなぜ速いのか、全8ステージクリアおめでとう。ここまでの旅を振り返ろう。">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/complete.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="量子コンピュータはなぜ速いのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="全ステージクリア ― 量子コンピュータはなぜ速いのか">
+<meta property="og:description" content="全8ステージクリアおめでとう。旅を振り返ろう。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/complete.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar" aria-label="サイト情報">
+    <span class="brand-badge" aria-hidden="true">💠</span>
+    <span class="brand-copy">
+      <strong>量子コンピュータはなぜ速いのか</strong>
+      <small>QUANTUM COMPUTER QUEST</small>
+    </span>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <h1><span class="line">速さの正体、解明完了 ∎</span></h1>
+      <p>「全部の答えを同時に計算するから速い」という説明の、どこが正しくてどこが足りないのか――きみはもう、中身から語れる。矢印の一覧表から出発して、ゲート、もつれ、ドイチュ、グローバー、ショア、そして誤り訂正まで。使った道具は最後までたった1つ、<span class="nowrap">「区別がつかない道筋は、矢印を足してから2乗する」</span>だけだった。旅の記録で振り返ろう。</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="board" aria-labelledby="recap-heading">
+      <div class="board-head">
+        <div><h2 id="recap-heading">ここまでの旅を振り返ろう</h2></div>
+        <p>全8ステージ、おつかれさま</p>
+      </div>
+
+      <div class="recap-list">
+        <div class="recap-item">
+          <div class="recap-num">1</div>
+          <div class="recap-body">
+            <div class="recap-title">量子ビットとは何か</div>
+            <div class="recap-desc">状態は「0の矢印と1の矢印の一覧表」。確率は長さの2乗、合計は1。読み出せば1つだけ出て状態はそれに変わる。そして向きの違いも、れっきとした状態の違いだった。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">2</div>
+          <div class="recap-body">
+            <div class="recap-title">量子ゲート</div>
+            <div class="recap-desc">計算とは表の書き換え。長さの合計を保つ回転（ユニタリ）だけが許され、だからすべて可逆。どんなゲートも「2列の対応表（行列）」で完全に決まり、当て方は「掛けて足す」の1つだけ。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">3</div>
+          <div class="recap-body">
+            <div class="recap-title">アダマールゲート</div>
+            <div class="recap-desc">Hの正体は和と差を作る装置で、マイナスは差の式の引き算（条件分岐ではない）。Hを2回で元に戻るのは、いらない行の矢印が打ち消し合うから――確率だけの世界には作れない、量子計算の心臓部。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">4</div>
+          <div class="recap-body">
+            <div class="recap-title">もつれを作る</div>
+            <div class="recap-desc">n量子ビットで表は2ⁿ行、300個で宇宙の原子より多い。でも読み出せるのは1つだけ。H と CNOT の2手でベル状態を作り、「掛け算では書けない」ことを背理法で確かめた。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">5</div>
+          <div class="recap-body">
+            <div class="recap-title">並列計算の神話</div>
+            <div class="recap-desc">ドイチュの問題を1回の質問で解いた。決定的だったのは重ね合わせではなく最後のアダマール――いらない答えを必ずゼロにする干渉の設計。位相キックバックという跳ね返しの技も手に入れた。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">6</div>
+          <div class="recap-body">
+            <div class="recap-title">グローバーの探索</div>
+            <div class="recap-desc">当たりを反転して目印を付け、平均のまわりで折り返す。この2手を約0.785×√N 回で正解が育つ。ただし2次加速どまりで、それが限界だと証明されていることまで見届けた。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">7</div>
+          <div class="recap-body">
+            <div class="recap-title">ショアの因数分解</div>
+            <div class="recap-desc">因数分解は「余りのくり返しの周期を探す問題」に化ける。15＝3×5 を自分の手で解き、周期と共鳴する干渉＝量子フーリエ変換が指数加速を生むことを確かめた。耐量子暗号への移行も進行中。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">8</div>
+          <div class="recap-body">
+            <div class="recap-title">最大の敵と誤り訂正</div>
+            <div class="recap-desc">干渉でできた機械にとって手がかりの漏れは死。コピーも測定も禁じられた中で、「隣どうしが同じか違うか」だけを診るシンドローム測定が突破口になった。閾値定理と、実機の現在地まで。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【旅の結論 ― 量子コンピュータはなぜ速いのか】</span>
+        <span class="step">・状態＝<strong>答え候補ごとの矢印の一覧表</strong>／計算＝<strong>表の書き換え</strong>／読み出し＝<strong>1つだけ</strong></span>
+        <span class="step">・速さの正体は「同時に計算するから」ではなく、<strong>いらない候補の矢印を打ち消し、欲しい候補を強め合わせる干渉の設計</strong></span>
+        <span class="step">・その設計が指数的に効くのは、問題に<strong>構造がある</strong>とき（ショアの周期）。構造がなければ<span class="nw">グローバーの2次加速が限界</span></span>
+        <span class="step">・干渉は最大の武器であり、最大の弱点でもある（<strong>デコヒーレンス</strong>）。誤り訂正は「中身を覗かず症状だけ診る」ことで成立している</span>
+        <span class="step">・最有力の応用は暗号解読ではなく<strong>分子・材料のシミュレーション</strong>。量子の振る舞いを量子で真似る</span>
+      </div>
+
+      <div class="board-head" style="margin-top:30px">
+        <div><h2 id="next-heading">次の旅へ</h2></div>
+        <p>この旅で使い続けた道具が、実物のチップの上でどう実現されているのか――今度は「作る」側から見てみよう</p>
+      </div>
+      <div class="complete-actions">
+        <a class="btn btn-primary" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/">続編: 量子コンピュータはどう作るのか →</a>
+        <a class="btn" href="https://quantum-mechanics.habatakijuku.com/">🗺 シリーズ全体の地図を見る</a>
+      </div>
+
+      <div class="complete-actions">
+        <a class="btn" href="index.html">トップに戻る</a>
+        <button class="btn" id="btn-reset-all">🔄 最初からやり直す</button>
+      </div>
+    </section>
+
+    <div id="book-recommend"></div>
+  </main>
+
+  <footer>
+    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;© <span id="year"></span> ruglerugle</p>
+    <div class="footer-suits" aria-hidden="true"><span>💠</span><span>🔀</span><span>🔗</span><span>⚛</span></div>
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<script src="js/progress.js"></script>
+<script>QC.initCompletePage();</script>
+</body>
+</html>

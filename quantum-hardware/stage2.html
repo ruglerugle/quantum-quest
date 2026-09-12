@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12303c">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE2 超伝導と電気の振り子 ― 量子コンピュータはどう作るのか</title>
+<meta name="description" content="コンデンサとコイルで作る「電気の振り子」から、超伝導量子ビットの土台を組み上げる。電気抵抗の正体（震える原子への衝突＝熱と手がかりの漏れ）、1911年の超伝導発見、電子がペアを組んで1つの波になるしくみ、そしてエネルギーの階段が現れる条件までを、論理の飛躍なく積み上げる。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage2.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはどう作るのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE2 超伝導と電気の振り子 ― 量子コンピュータはどう作るのか">
+<meta property="og:description" content="電気抵抗の正体から超伝導まで。チップの上に「エネルギーの階段」を出現させる。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage2.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qh-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qh-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qh-svg .accent{fill:#2f8a8f;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🧊</a> <span>量子コンピュータはどう作るのか</span></div>
+      <div class="brand-sub">STAGE 2 ― 超伝導と電気の振り子 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 2</span><span class="chapter-title">超伝導と電気の振り子</span>
+        <div class="chapter-sub">エネルギーの階段を作る</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">条件①「区別できる2つの状態」の攻略を始めよう。コンデンサとコイルで電気の振り子を組み、電気抵抗という敵の正体を突き止め、超伝導の力でチップの上に「エネルギーの階段」を出現させる。何兆個の電子がなぜ1つの波になれるのか、自分の言葉で説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">条件①「区別できる2つの状態」から攻めよう。原子なら、とびとびのエネルギーの段が生まれつき備わっている。でもわれわれは人工の回路でそれを作る。<br>部品は2つ。<strong>コンデンサ</strong>は、金属の板を2枚向かい合わせた部品で、板に電気をためられる。<strong>コイル</strong>は導線をぐるぐる巻いた部品だ。コイルに電流が流れると磁石の働きが生まれ、電流を変化させようとすると磁石の働きがそれに逆らう――中学の理科でやった<strong>電磁誘導</strong>だね。つまりコイルは「流れている電流を、そのまま流し続けようとする」部品だ。<br>この2つを輪っかにつなぐと、何が起きると思う？ コンデンサに電気をためた状態から出発してごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">追いかけてみます。たまった電気がコイルを通って流れ出す。空になった瞬間に止まりそうですが――コイルが「流し続けようとする」から、止まらずに流れすぎて、<strong>反対側の板に電気がたまる</strong>。たまったら今度は逆向きに流れ出して、また行きすぎて……<strong>永遠に行ったり来たり</strong>です。<br>理科の振り子と同じ構造ですね。振り子は「位置のエネルギー」と「運動のエネルギー」を交互にやり取りしながら揺れ続けます。この回路は「板にたまった電気のエネルギー」と「コイルの磁気のエネルギー」を交互にやり取りしている。――前の旅で博士が<strong>電気の振り子</strong>と呼んでいたのは、これだったんですね。<br>この振り子、1秒に何回揺れるんですか？</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="lc-svg" class="qh-svg" viewBox="0 0 372 260" width="100%" role="img" aria-label="電気の振り子のアニメーション。左は理科の振り子が揺れ、中央のLC回路では電子の群れが輪の中を行ったり来たりして、板の上に電子の粒がたまっては空になる。流れが逆転するのは、満タンになった板の電気が押し返すため。右の棒グラフは電気のエネルギーと磁気のエネルギーが交互に伸び縮みし、合計がいつも一定であることを示す">
+          <text class="strong" x="186" y="16" text-anchor="middle">電気の振り子 ― エネルギーが2つの姿を行き来する</text>
+          <g id="lc-body"></g>
+        </svg>
+        <div class="diagram-caption">左の<strong>理科の振り子</strong>と中央の<strong>電気の振り子（コイル＝記号L、コンデンサ＝記号C をつないだ回路なので「LC回路」と呼ばれる）</strong>は、同じリズムで動いている。輪の中の●は電子の群れで、輪をぐるぐる回るのではなく<strong>行ったり来たり</strong>する。振り子が端で止まる瞬間＝<strong>板が満タン</strong>（電気のエネルギー最大）。満タンの板は安定ではなく引き延ばされたゴムひもの状態で、たまった電気の押し返しがそのまま逆流の駆動力になる。振り子が真下を最速で通過する瞬間＝<strong>電流が最大</strong>（磁気のエネルギー最大）。右の棒グラフの通り、2つのエネルギーは交互に入れ替わり<strong>合計はいつも一定</strong>――「位置⇄運動」と同じ構造だ。なお「最初にためた電気」は説明用の出発点で、実機に電池はつながっていない。<strong>実機の出発点は振り子が止まった空の状態</strong>（冷却がタダで作る――ステージ4）で、揺らし始めるのはステージ5で登場する<strong>マイクロ波パルス</strong>の仕事になる。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それは板の大きさやコイルの巻き数で<strong>設計者が自由に決められる</strong>。これが人工物の強みだよ。量子コンピュータの実機ではおよそ<strong>1秒に50億回</strong>。単位で言うと5ギガヘルツ（GHz）だ。ヘルツは「1秒あたりの往復回数」、ギガは10億倍を表す。<br>1秒に50億回の電気振動というのは、実はスマホやWi-Fiの電波と同じ速さの世界で、この帯域の電波を<strong>マイクロ波</strong>と呼ぶ。つまり通信産業が何十年もかけて磨いてきた測定器や部品がそのまま使える。これも人工回路を選ぶ理由のひとつなんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">前の旅の予告を、ここで確かめさせてください。この振り子を量子力学で扱うと<strong>「エネルギーの階段」</strong>が現れるのでした。井戸に閉じ込められた電子と同じで、閉じ込められた波には「ちょうど収まる形だけが生き残る」選別（定在波の選別）が働いて、エネルギーがとびとびになる。この回路の波も小さな輪に閉じ込められているから、同じ選別が働くはず、と。<br>でも今回の旅では、そこをごまかさずに聞きたいんです。コイルの中の電子は<strong>何兆個</strong>もいるはずです。何兆個もの粒の集まりを、どうして「1つの波」と呼べるんですか？ 前の旅では「超伝導で電子がペアを組んで1つの波になる」と聞きましたが、あのときは駆け足でした。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">よし、今日はそこを主役にしよう。まず敵の正体から。<br>ふつうの金属の中身は、<strong>整列した原子</strong>と、そのすき間を動き回る<strong>自由な電子たち</strong>だ。原子は熱でぶるぶる震えている。電子が流れようとすると、震える原子に次々ぶつかって進路を乱される――これが<strong>電気抵抗</strong>の正体だ。<br>ぶつかるたびに2つの悪いことが起きる。1つ、電流のエネルギーが原子の震え、つまり<strong>熱に変わって逃げる</strong>。振り子は数回の往復で擦り切れて止まる。2つ、ぶつかられた原子の震えには「電流がどう流れていたか」の記録が刻まれる。きみの言葉で言えば<strong>手がかりが漏れる</strong>。<br>定在波の選別は、波が<strong>何度も何度も往復して自分自身と干渉する</strong>ことで初めて働くのだった。数回で擦り切れる波に階段は現れない。抵抗は、条件①と条件②の両方を同時に殺す敵なんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">敵は熱で震える原子。なら<strong>冷やせば</strong>震えは静まって、抵抗は小さくなっていくはずです。<br>……でも、それでは足りない気がします。「小さくなる」と「ゼロになる」は別物です。ほんのわずかでも抵抗が残っていたら、1秒に50億回も揺れる振り子です、あっという間に擦り切れます。冷やすだけで、本当にゼロまで行けるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい質問だね。実際、冷やすだけなら抵抗は「小さくなる」だけで、ゼロには届かない――というのが1911年までの常識だった。<br>その年、オランダの物理学者<strong>カマリング・オネス</strong>が、水銀を液体ヘリウムの温度まで冷やして抵抗を測った。温度の目盛りをひとつ紹介しておくと、これ以上冷やせない下限の温度（約−273.15℃）を0度として測る<strong>絶対温度</strong>（単位はケルビン、K）というものがあって、液体ヘリウムは約4.2Kだ。<br>結果は誰の予想とも違った。抵抗はなだらかに減っていったあと、ある温度で<strong>崖から落ちるように、突然、完全にゼロ</strong>になった。測定にかかる残りかすが一切ない、本物のゼロだ。実際、超伝導の輪っかに電流を流して放置する実験では、<strong>何年たっても電流が減らない</strong>ことが確かめられている。これが<strong>超伝導</strong>の発見だよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 220" width="100%" role="img" aria-label="温度と電気抵抗のグラフ。ふつうの金属は冷やすと抵抗がなだらかに減るがゼロにはならない。超伝導体はある温度（転移温度）で抵抗が崖のように落ちて完全にゼロになる">
+          <text class="strong" x="186" y="18" text-anchor="middle">1911年の大発見 ― 抵抗が「突然ゼロ」になる</text>
+          <!-- 軸 -->
+          <line x1="52" y1="180" x2="340" y2="180" stroke="var(--ink)" stroke-width="1.8"/>
+          <line x1="52" y1="180" x2="52" y2="40" stroke="var(--ink)" stroke-width="1.8"/>
+          <path d="M 334 175 L 342 180 L 334 185 M 47 46 L 52 38 L 57 46" stroke="var(--ink)" stroke-width="1.8" fill="none"/>
+          <text class="label" x="196" y="200" text-anchor="middle">温度（右ほど高温）→</text>
+          <text class="label" x="30" y="110" text-anchor="middle" transform="rotate(-90 30 110)">電気抵抗</text>
+          <!-- ふつうの金属 -->
+          <path d="M 340 66 Q 200 84 120 118 Q 80 136 58 150" stroke="var(--muted)" stroke-width="2.4" fill="none" stroke-dasharray="6 4"/>
+          <text class="label" x="256" y="60" text-anchor="middle">ふつうの金属：なだらかに減るが</text>
+          <text class="label" x="256" y="74" text-anchor="middle">ゼロには届かない</text>
+          <!-- 超伝導体 -->
+          <path d="M 340 96 Q 240 108 170 122" stroke="#b5504a" stroke-width="3" fill="none"/>
+          <path d="M 170 122 L 170 180" stroke="#b5504a" stroke-width="3" fill="none"/>
+          <path d="M 170 180 L 56 180" stroke="#b5504a" stroke-width="3.4" fill="none"/>
+          <circle cx="170" cy="180" r="4" fill="#b5504a"/>
+          <text class="accent" x="170" y="212" text-anchor="middle" fill="#b5504a">転移温度（水銀は約4.2K）</text>
+          <text class="accent" x="106" y="166" text-anchor="middle">完全にゼロ！</text>
+          <text class="label" x="262" y="130" text-anchor="middle">超伝導体：崖のように落ちる</text>
+        </svg>
+        <div class="diagram-caption">横軸が温度、縦軸が電気抵抗。ふつうの金属（点線）は冷やすほど原子の震えが静まって抵抗がなだらかに減るが、ゼロにはならない。超伝導体（実線）は<strong>転移温度</strong>を境に抵抗が崖のように落ち、測定できる残りかすが一切ない<strong>本物のゼロ</strong>になる。なだらかな変化では説明がつかない「変身」（氷⇄水のような相転移）であり、内部では電子がペアを組んで全体が1つの波になっている。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「なだらかに減る」なら分かります。震えが静まるだけですから。でも「ある温度で突然ゼロ」は説明がつきません。氷が0℃で突然水になるみたいに、<strong>金属そのものが別の状態に変身した</strong>としか思えない挙動です。中で何が起きているんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まさに変身――氷と水のような<strong>相転移</strong>が起きている。中で起きていることはこうだ。<br>ある温度より下がると、電子たちが<strong>2個ずつペア</strong>を組み始める（クーパー対と呼ぶ）。そしてここが肝心なのだが、ペアを組んだ電子たちは、全ペアが足並みをそろえて、<strong>金属全体でたった1つの波</strong>として振る舞うようになる。何兆個の粒の群れが、1個の巨大な量子に化けるんだ。<br>1つの波になると、なぜ抵抗が消えるか。全員が手をつないで行進している集団を想像してごらん。1人だけつまずかせることは、もうできない。よろめかせたければ<strong>行進全体をまとめて乱す</strong>しかないが、それには大きなエネルギーが要る。低温の世界にそんなエネルギーの持ち合わせはない。だから原子が多少震えていても、波はいっさい乱されずに流れ続ける。抵抗が「小さい」ではなく「ゼロ」になる理由は、乱すこと自体が<strong>禁止</strong>されるからなんだ。<br>――正直に断っておく。「<strong>なぜ電子はペアを組むのか</strong>」は、この旅では説明しない。マイナス同士の電子が引き合う理由は大学レベルの難問で、発見から理論の完成（1957年）まで46年かかった。今日は「実験で完全に確立した事実」として借りてくる。この旅の借り物はここだけだよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="sc-svg" class="qh-svg" viewBox="0 0 372 246" width="100%" role="img" aria-label="ふつうの金属と超伝導体の比較アニメーション。左のふつうの金属では、電子が1個ずつばらばらに動き、熱で震える原子にぶつかるたびに進路を乱されて原子が熱で光る。右の超伝導体では、電子が2個ずつペアを組み、全ペアが足並みをそろえて1つの波として、震える原子の間をいっさい乱されずに流れ続ける">
+          <text class="strong" x="186" y="16" text-anchor="middle">なぜ抵抗が「ゼロ」になるのか ― 1人の行進と、全員の行進</text>
+          <g id="sc-body"></g>
+        </svg>
+        <div class="diagram-caption">左：ふつうの金属では、電子が1個ずつばらばらに動き、熱で震える原子にぶつかっては進路を乱される。ぶつかるたびにエネルギーが熱として逃げる（原子が光る瞬間）――これが<strong>抵抗</strong>。右：超伝導体では、電子が2個ずつペア（クーパー対）を組み、全ペアが足並みをそろえて<strong>金属全体でたった1つの波</strong>として流れる。手をつないで行進する集団の<strong>1人だけをつまずかせることはできない</strong>。乱すには行進全体をまとめて乱す大きなエネルギーが要るが、低温の世界にその持ち合わせはない。だから原子が多少震えていても波はいっさい乱されず、抵抗は「小さい」ではなく<strong>本物のゼロ</strong>になる。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">分かりました、そこは事実として受け取ります。これで「何兆個の粒が、なぜ1つの波なのか」は解けました。<br>すると約束どおり、輪に閉じ込められた1つの波に選別が働いて、階段が現れる……はずなのですが、あらためて考えると妙です。井戸の階段は、1山・2山という<strong>波の形</strong>ごとにエネルギーが決まる話でした。この回路の輪の中に、弦のような「形」の違いがあるようには思えません。この回路ではいったい、<strong>何が、どうとびとびになる</strong>んですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いちばん大事なところで立ち止まってくれたね。実は、この回路でとびとびになるものは、<strong>井戸のときと少し違う</strong>。さっきの「同じ選別が働くはず」は半分当たりなのだが、ここを分けておかないと画が結べないんだ。<br>ギターの弦や井戸の電子では、「ちょうど収まる<strong>形</strong>」の選別が働いた。形がとびとびなら、とびとびになるのは<strong>音の高さ（振動数）</strong>だ。<br>ところがこの回路では、振動数は最初から1つに決まっている。理科で習う振り子の<strong>等時性</strong>――揺れが大きくても小さくても1往復の時間は同じ――のおかげで、リズムは5GHzただ1つだ。だから、とびとびになる余地があるのは振動数ではない。とびとびになるのは<strong>「音量」――振動の激しさ（振幅）、つまり回路にためたエネルギー</strong>のほうなんだ。そして、そのとびとびの1目盛りぶんを、これから<strong>「粒」</strong>と呼ぶことにしよう。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……その「<strong>粒</strong>」とは、結局なんですか？ 電子のことではないですよね。何かの物の粒なのか、それともただの概念的な単位なのか、まだつかめません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">きみの見立ての通り――<strong>粒は電子ではない</strong>。粒を1個入れても、電子は1個も増えない。<strong>同じ何兆個の電子たちが、ひとまわりだけ激しく揺れるようになる</strong>――それが「粒が1個入った」のすべてだ。<br>「じゃあ粒はどこにあるのか」と聞かれたら、答えは「<strong>回路全体の揺れに、1個ぶん</strong>」としか言えない。空間のどこかに置いてある物ではないんだ。それでも、ただの概念的な単位でもないよ。量子ビットがエネルギーをこぼすとき、この粒は配線を伝って外へ飛び出し、<strong>5GHzの電波の光子1個</strong>として検出器に当たる。光の光子と同じ種類の、正真正銘の実在だ。<br>たとえるなら、電子は舞台の上で揺れる役者たち、粒は「揺れ」という演目の<strong>チケット1枚</strong>だね。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="gr-svg" class="qh-svg" viewBox="0 0 372 260" width="100%" role="img" aria-label="粒はどこにあるのかのアニメーション。左の回路の輪で電子の点が行ったり来たり揺れている間、輪全体が淡く光り「粒1個ぶんの揺れ」を表す。回路がエネルギーをこぼすと、光が消えて電子の揺れが静まり、粒だけが波束となって配線を走り、右の検出器に5GHzの光子1個としてカチッと当たる。電子は輪に残ったまま。これを繰り返す">
+          <text class="strong" x="186" y="16" text-anchor="middle">粒はどこにあるのか ― 中では「全体に1個」、外では「光子1個」</text>
+          <circle id="gr-halo-f" cx="90" cy="112" r="56" fill="#2f8a8f" opacity="0.12"/>
+          <circle id="gr-halo-s" cx="90" cy="112" r="56" fill="none" stroke="#2f8a8f" stroke-width="1.6" stroke-dasharray="6 4"/>
+          <circle cx="90" cy="112" r="40" fill="none" stroke="var(--ink)" stroke-width="2.2"/>
+          <g id="gr-elec"></g>
+          <text id="gr-halo-t" class="accent" x="90" y="44" text-anchor="middle">粒1個ぶんの揺れ</text>
+          <text class="label" x="90" y="188" text-anchor="middle">「どこ」とは言えない――</text>
+          <text class="label" x="90" y="204" text-anchor="middle">回路全体の揺れに、1個ぶん</text>
+          <line x1="146" y1="112" x2="294" y2="112" stroke="var(--ink)" stroke-width="2"/>
+          <g id="gr-pkt" opacity="0">
+            <path d="M -22 0 q 5.5 -11 11 0 q 5.5 11 11 0 q 5.5 -11 11 0 q 5.5 11 11 0" stroke="#b5504a" stroke-width="2.4" fill="none"/>
+          </g>
+          <text class="label" x="216" y="82" text-anchor="middle">エネルギーをこぼすと、</text>
+          <text class="label" x="216" y="98" text-anchor="middle">粒だけが配線を伝って外へ</text>
+          <text class="label" x="216" y="136" text-anchor="middle">（電子は輪に残る）</text>
+          <rect id="gr-det" x="296" y="86" width="52" height="52" rx="8" fill="var(--paper2)" stroke="#6b7480" stroke-width="1.8"/>
+          <text class="label" x="322" y="116" text-anchor="middle">検出器</text>
+          <g id="gr-spark" opacity="0">
+            <path d="M 288 100 L 296 106 M 286 112 L 294 112 M 288 124 L 296 118" stroke="#b5504a" stroke-width="1.8"/>
+          </g>
+          <text id="gr-click" class="accent" x="322" y="74" text-anchor="middle" fill="#b5504a" opacity="0">カチッ</text>
+          <text class="label" x="322" y="156" text-anchor="middle">5GHzの光子1個</text>
+          <text class="label" x="186" y="228" text-anchor="middle">外に出た瞬間は「5GHzの電波の光子1個」――光の光子と同じ実在</text>
+          <text class="label" x="186" y="246" text-anchor="middle">電子＝舞台で揺れる役者たち ／ 粒＝「揺れ」という演目のチケット1枚</text>
+        </svg>
+        <div class="diagram-caption">粒の居場所（アニメーション）。回路が粒1個ぶん揺れている間は、電子たち（●）が行ったり来たりし、<strong>輪全体が淡く光る</strong>――粒は特定の場所に置いてある物ではなく、回路全体の揺れに「1個ぶん」として帰属する。量子ビットがエネルギーをこぼすと、光が消えて電子の揺れが静まり、<strong>粒だけが波束となって配線を走り、検出器に「5GHzの電波の光子1個」としてカチッと当たる</strong>。飛び出すのは粒（チケット）だけで、電子（役者）は舞台の輪に残る。ただの概念的な単位ではない、光の光子と同じ実在だ。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">では、その粒の大きさは、何が決めているのか。ここで量子力学の旅のもう1つの収穫、光電効果の <strong>E＝hf</strong> を思い出してほしい。あれは「振動数 f の光は、エネルギーを hf の粒（光子）でしか出し入れできない」という法則だった。光の正体は電磁気の振動で、この回路の電気振動も<strong>同じ電磁気の振動</strong>だ。だから同じ法則が働き、この回路もエネルギーを <strong>hf の粒単位でしか出し入れできない</strong>。<br>ためられるエネルギーは、粒0個ぶん、1個ぶん、2個ぶん……。<strong>これが階段の正体</strong>だよ。段の番号は「入っている振動の粒の個数」、段を1つ上がることは「粒を1個入れること」。5GHzの粒だから、正体は<strong>マイクロ波の光子</strong>そのものだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ひとつ、寄り道の質問をさせてください。スピーカーの音量も振幅ですよね。ふつうの音の音量も、超細かく見れば<strong>粒であり、その変化は離散的</strong>なんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通りなんだ。音の音量も粒の単位でしか増減できず、音の粒には<strong>フォノン</strong>という名前までついている。ただ、耳に聞こえる音は振動数が低いぶん粒（hf）が小さすぎて、まわりの熱のゆらぎが、その何十億倍ものエネルギーで絶え間なく粒を作っては消している――<strong>粒は最初からあるのに、熱の海に埋もれている</strong>んだ。この「熱のゆらぎと段差の綱引き」の算数は、ステージ4で主役になる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">つまり音量も実は<strong>離散的な変化</strong>なのに、その段差が小さすぎて、普段は滑らかに<strong>連続的に見えていた</strong>んですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。付け加えると、ふつうの回路ではもうひとつ、前半の敵の<strong>抵抗</strong>も階段を隠している。波が数回で擦り切れる回路では選別が働ききらず、<strong>段そのものがぼやけて</strong>しまう。<br>だから逆に、超伝導で段をくっきりさせ、うんと冷やして粒をほぼ0個まで追い出してやると、「<strong>粒が0個か、1個か</strong>」を数えられる世界が見えてくる。<br>段差の実額も出しておこう。粒1個ぶん＝<strong>プランク定数×振り子の周波数</strong>。5GHzなら、およそ3×10⁻²⁴ジュール（1兆分の1のさらに1兆分の1の、その1000分の3）。米粒を1ミリ持ち上げるエネルギーと比べても、桁が20個も足りない。<strong>この途方もない小ささ</strong>が、あとで冷却の話に直結するから、頭の隅に置いておいてほしい。<br>そして現物はこうだ。シリコンやサファイアの板の上に、<strong>アルミニウム</strong>の薄い膜を印刷のような技術で描く。向かい合う2本の金属パターンがコンデンサ、細長い導線がコイルの役目。全体で数百マイクロメートル（μm。1000分の1ミリメートル）、髪の毛を数本並べたくらいの大きさだ。目で見える大きさの回路が、原子のようにとびとびの段を持つ――だからこの回路は<strong>人工原子</strong>とも呼ばれる。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 270" width="100%" role="img" aria-label="チップの上の人工原子の見取り図。シリコンやサファイアの基板の上に、アルミニウムの薄い膜で回路が描かれている。①向かい合う2枚の大きな板がコンデンサ、②細長く折りたたんだ導線がコイルの役目。スケールバーは100マイクロメートルで、髪の毛の太さ約80マイクロメートルと同程度。右には本物の原子（約0.1ナノメートル）が描かれ、大きさは100万倍以上違うのに、どちらもとびとびの段を持つことを示す">
+          <text class="strong" x="186" y="16" text-anchor="middle">チップの上の人工原子 ― ルーペで見える「原子」</text>
+          <!-- 基板とアルミ回路 -->
+          <rect x="22" y="36" width="228" height="150" rx="8" fill="#e9eef6" stroke="var(--line)"/>
+          <text class="label" x="136" y="52" text-anchor="middle">アルミニウムの薄い膜で描いた回路</text>
+          <rect x="56" y="60" width="62" height="46" fill="#dfe3e9" stroke="#6b7480" stroke-width="1.4"/>
+          <rect x="152" y="60" width="62" height="46" fill="#dfe3e9" stroke="#6b7480" stroke-width="1.4"/>
+          <path d="M 87 106 L 87 136 L 110 136 L 110 150 L 133 150 L 133 136 L 156 136 L 156 150 L 179 150 L 179 136 L 183 136 L 183 106" stroke="#8892a1" stroke-width="3" fill="none"/>
+          <circle cx="135" cy="83" r="8" fill="var(--paper2)" stroke="#2f8a8f" stroke-width="1.4"/>
+          <text class="accent" x="135" y="87" text-anchor="middle">①</text>
+          <circle cx="205" cy="143" r="8" fill="var(--paper2)" stroke="#2f8a8f" stroke-width="1.4"/>
+          <text class="accent" x="205" y="147" text-anchor="middle">②</text>
+          <text class="label" x="136" y="176" text-anchor="middle">シリコンやサファイアの基板</text>
+          <text class="label" x="136" y="204" text-anchor="middle">① 向かい合う2枚の板 ＝ コンデンサ</text>
+          <text class="label" x="136" y="220" text-anchor="middle">② 細長い導線 ＝ コイルの役目</text>
+          <!-- スケールバー -->
+          <line x1="56" y1="240" x2="156" y2="240" stroke="var(--ink)" stroke-width="2"/>
+          <line x1="56" y1="235" x2="56" y2="245" stroke="var(--ink)" stroke-width="2"/>
+          <line x1="156" y1="235" x2="156" y2="245" stroke="var(--ink)" stroke-width="2"/>
+          <text class="label" x="106" y="258" text-anchor="middle">100μm（髪の毛の太さ ≒ 80μm）</text>
+          <!-- 本物の原子との比較 -->
+          <text class="label" x="307" y="44" text-anchor="middle">本物の原子</text>
+          <circle cx="307" cy="86" r="3.5" fill="#b5504a"/>
+          <circle cx="307" cy="86" r="12" fill="none" stroke="var(--muted)" stroke-width="1.2"/>
+          <circle cx="307" cy="86" r="22" fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 3"/>
+          <text class="label" x="307" y="126" text-anchor="middle">約0.1ナノメートル</text>
+          <text class="label" x="307" y="158" text-anchor="middle">大きさは100万倍</text>
+          <text class="label" x="307" y="174" text-anchor="middle">以上違うのに、</text>
+          <text class="label" x="307" y="190" text-anchor="middle">どちらも「とびとび</text>
+          <text class="label" x="307" y="206" text-anchor="middle">の段」を持つ</text>
+        </svg>
+        <div class="diagram-caption">実物のチップの見取り図。<strong>①向かい合う2枚の大きな板がコンデンサ、②細長く折りたたんだ導線がコイルの役目</strong>。導線は立体的に巻かれてはいない。コイルの本体「電流の変化を妨げる性質」は<strong>ただの1本の導線にも備わっている</strong>ので、平面にしか描けないチップの上では、<strong>細長い線を折りたたんで長さで稼ぐ</strong>。本物の原子（約0.1ナノメートル）より<strong>100万倍以上も大きい</strong>回路が、原子と同じ「とびとびの段」を持つ。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">理屈は追えました。E＝hf が働くから、エネルギーは粒単位――そこは受け取れます。ただ、白状すると、まだ絵が浮かびません。井戸のときは「壁の間に立つ波」を描けば済みました。この回路の粒の階段には、<strong>どこに、どんな波を描けばいい</strong>んですか？ それとも、これは絵に描けない種類の話なんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">描けるんだ、実は井戸とそっくりの絵がね。ただし1つだけ、頭の切り替えが要る。<br>さっき私は「とびとびになるのは形ではなく音量だ」と言った。あれは「<strong>輪の中の空間には</strong>、選別される波の形がない」という意味であって、選別そのものはちゃんと起きている。場所が違うだけなんだ。<br>電気の振り子は、数学的には<strong>お椀の中を転がるボール</strong>と同じ姿をしている。お椀の<strong>横の位置</strong>が「板の電気のたまり具合」――右の端が＋にたっぷり、左の端が−にたっぷり、真ん中が空っぽ。お椀の<strong>高さ</strong>が、そのたまり具合に要るエネルギーだ。ボールが右の斜面を登っては転がり戻り、左の斜面を登っては戻る――これが電気の往復の、もう1つの描き方になる。<br>そして量子力学の主張は「<strong>ものの状態は波で書かれる</strong>」だった。井戸では、電子の「場所」が波になった。この回路で波になるのは、ボールの位置――つまり<strong>「いま、どのくらいたまっているか」という量そのもの</strong>だ。回路は「たまり具合いくつ」というただ1つの値ではなく、いろいろなたまり具合の<strong>重ね合わせの波</strong>として存在する。<br>その波は、お椀の斜面に<strong>閉じ込められている</strong>。閉じ込められた波には、きみのよく知る選別が働き、ちょうど収まる<strong>定在波</strong>だけが生き残る。いちばん穏やかな波が「粒0個」の空の状態で、段が1つ上がるごとに波の山が1つ増え、<strong>エネルギーが hf ずつ上がる</strong>。<br>ただし、ひとつ注意しておこう。この「山の数」は、たまり具合の目盛りの上での<strong>形</strong>の違いであって、音の高さの違いではない。外から観測できる姿で言えば、段が上がっても<strong>回路の振動のリズム（音の高さ）は変わらない。変わるのは揺れの振幅、つまり音量だけ</strong>だ。「粒を1個入れる」とは、リズムはそのままに、揺れをちょうど<strong>1目盛りぶん激しくする</strong>こと――お椀で言えば、ボールの往復が一段ぶん大きくなることなんだよ。<br>輪の中をいくら探しても波の形が見つからなかったのは、探す場所が違ったからだよ。波は空間の上ではなく、<strong>「たまり具合」の目盛りの上</strong>に立っている。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">井戸の絵の横軸を、「場所」から「たまり具合」に貼り替えるだけ……。<br>そうすると、最初の「何兆個のペアの波」の役割も見えてきます。ペアたちが1つの波にまとまってくれたおかげで、回路全体の状態を「たまり具合」という<strong>たった1つの目盛り</strong>で書けるようになった。そして今度は、その目盛りの上の値が、さらに波になる――<strong>2階建て</strong>だった、ということですか。輪の中に弦を探して、見つからなかったわけです。<br>そして、前の旅で聞いた<strong>壁</strong>も、これではっきりしました。粒の大きさ hf は<strong>リズムで決まり</strong>、等時性のせいでリズムは何段目でも同じ1種類――つまり粒も1種類で、この階段は<strong>全段が同じ間隔</strong>です。下2段を |0⟩ と |1⟩ に選んだつもりでも、1段目に上げる合図は2段目にも3段目にも同じように効いてしまう。条件①「区別できる2状態」は、<strong>2段だけを選び出す手段がない</strong>ままで、まだ達成とは言えません。</div>
+        </div>
+        
+      </div>
+
+      <div class="diagram-box">
+        <svg id="bw-svg" class="qh-svg" viewBox="0 0 372 268" width="100%" role="img" aria-label="お椀の階段と高さの記録のアニメーション。左は電気の振り子のお椀で、横軸はたまり具合、高さはエネルギー。影のボールが往復し、ボールが届く高さがいまの段の破線とぴったり一致する。破線の段の線は右の記録パネルまで延びていて、右にはボールの高さの時間記録が波として流れる。波の山の高さは段の線と文字通り一致し、段が上がると波の高さが粒単位でジャンプする。リズムはどの段でも同じ">
+          <text class="strong" x="186" y="16" text-anchor="middle">お椀の階段と、高さの記録 ― 高さ（音量）だけが粒単位で変わる</text>
+          <text class="label" x="120" y="36" text-anchor="middle">お椀（たまり具合の振り子）</text>
+          <text class="label" x="294" y="36" text-anchor="middle">ボールの高さの記録</text>
+          <!-- 段の高さ線（お椀から記録パネルまで共有） -->
+          <line x1="84" y1="170" x2="356" y2="170" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 3"/>
+          <line x1="63" y1="140" x2="356" y2="140" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 3"/>
+          <line x1="48" y1="110" x2="356" y2="110" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 3"/>
+          <line x1="36" y1="80" x2="356" y2="80" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 3"/>
+          <!-- お椀 -->
+          <path d="M 29 60 Q 120 320 211 60" stroke="var(--ink)" stroke-width="2.4" fill="none"/>
+          <!-- 記録パネル -->
+          <line x1="232" y1="60" x2="232" y2="190" stroke="var(--line)" stroke-width="1.4"/>
+          <line x1="232" y1="190" x2="356" y2="190" stroke="var(--line)" stroke-width="1.4"/>
+          <path id="bw-sig" fill="none" stroke="#2f8a8f" stroke-width="2.2"/>
+          <!-- hf矢印（左端） -->
+          <line x1="22" y1="142" x2="22" y2="168" stroke="#b5504a" stroke-width="1.6"/>
+          <path d="M 18 147 L 22 141 L 26 147 M 18 163 L 22 169 L 26 163" stroke="#b5504a" stroke-width="1.6" fill="none"/>
+          <text class="accent" x="22" y="134" text-anchor="middle" fill="#b5504a">hf</text>
+          <g id="bw-dyn"></g>
+          <text class="label" x="186" y="214" text-anchor="middle">ボールが届く高さ＝いまの段。記録の波の山の高さと文字通り一致する</text>
+          <text class="label" x="186" y="232" text-anchor="middle">リズムはどの段でも同じ。変わるのは高さ（音量）だけ</text>
+          <text class="label" x="186" y="250" text-anchor="middle">段が1つ上がる＝粒が1個増える（段差はどこも hf）</text>
+        </svg>
+        <div class="diagram-caption">左のお椀（横軸＝たまり具合、高さ＝エネルギー）で影のボールが往復し、<strong>ボールが届く高さが、いまの段の破線とぴったり一致する</strong>。段の破線は右の記録パネルまで延びていて、右には<strong>ボールの高さの時間記録</strong>が波として流れる（左端の点がいまのボールの高さ。水平の結び線で連動を示す）。<strong>波の山の高さは段の線と文字通り一致</strong>し、段が上がると波の高さが粒単位でジャンプする。1往復の時間はどの段でも同じ（等時性）なので、記録のリズム（波の間隔）も一定のまま――変わるのは高さ（音量）だけ。お椀がきれいな放物線（等時性の別の顔）なので、段差はどこも同じ hf になる。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのとおり、今日はあえて壁の前で終わろう。等間隔のはしごは、どの段差も同じ切符で乗れてしまう。これを壊すには、「揺れの大きさでリズムが変わる振り子」に作り替える部品が要る。<br>次のステージの主役、この方式の心臓部――<strong>ジョセフソン接合</strong>だ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【エネルギーの階段を作る ― 今日の積み上げ】</span>
+        <span class="step">・<strong>電気の振り子</strong>＝コンデンサ（電気をためる）＋コイル（流し続けようとする）の輪。板の電気エネルギー⇄コイルの磁気エネルギーの往復。実機は約5GHz（1秒に50億回）＝マイクロ波の世界</span>
+        <span class="step">・<strong>電気抵抗の正体</strong>＝熱で震える原子に電子がぶつかること。①エネルギーが熱として逃げ、②「どう流れていたか」の手がかりが漏れる。定在波の選別（＝階段）は波の何億回の往復が前提なので、抵抗があると階段は現れない</span>
+        <span class="step">・<strong>超伝導</strong>（1911年カマリング・オネス発見）：転移温度で抵抗が<span class="nw">突然・完全にゼロ</span>になる相転移。電子が2個ずつペア（クーパー対）を組み、金属全体が<strong>たった1つの波</strong>になる。1つの波は「1人だけつまずかせる」ことができず、乱すには低温世界にないほどの大きなエネルギーが要る → 抵抗ゼロ。ペアを組む理由は大学レベルのため事実として借用（BCS理論、1957年）</span>
+        <span class="step">・<strong>階段の正体＝振動の粒（マイクロ波光子）の個数</strong>。井戸・ギターの弦は「形の選別 → 音の高さがとびとび」だが、この回路は等時性で振動数が1つに固定 → とびとびになるのは<strong>音量＝ためたエネルギー</strong>。E＝hf より粒1個＝<span class="nw">プランク定数×周波数</span>（5GHzで約3×10⁻²⁴ジュール）。ふだんの回路は粒が何兆個で坂道に見え、抵抗があると段もぼやける</span>
+        <span class="step">・絵の描き方：電気の振り子＝<strong>お椀の中のボール</strong>（横軸＝たまり具合、高さ＝エネルギー）。量子ではボールの位置＝たまり具合そのものが<strong>波</strong>になり、お椀に閉じ込められた波に井戸と同じ<strong>定在波の選別</strong>が働く → <span class="nw">山が1つ増える＝粒が1個増える</span>。波が立つのは輪の空間ではなく「たまり具合」の目盛りの上（ペアの波が目盛りを作り、その上に波が立つ<strong>2階建て</strong>）</span>
+        <span class="step">・現物：シリコン等の板にアルミニウムの膜で描いた数百マイクロメートルの回路。目に見える大きさで原子のように振る舞う<strong>人工原子</strong></span>
+        <span class="step">・<strong>残った壁</strong>：振り子の等時性 → 階段が等間隔 → 下2段だけを狙う合図が作れない。次のステージで壊す</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. ふつうの金属の回路に「エネルギーの階段」が現れない理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">電子が熱で震える原子にぶつかり、エネルギーが熱として逃げて手がかりも漏れる。波が数回の往復で擦り切れ、定在波の選別が働く暇がないから</button>
+          <button class="choice-btn">ふつうの金属の中には波が存在しないから</button>
+          <button class="choice-btn">回路が大きすぎて、量子力学の法則が適用されないから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 量子力学の法則自体はふつうの回路にも働いている。階段（定在波の選別）は波が何度も往復して自分自身と干渉することで生まれるが、抵抗のある回路では波がすぐ擦り切れてしまい、選別が働く時間を確保できない。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 超伝導体の抵抗が「小さくなる」のではなく「完全にゼロになる」のはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">低温では原子の震えが完全に止まるから</button>
+          <button class="choice-btn">低温では電子の数が増えて、ぶつかっても平気になるから</button>
+          <button class="choice-btn">電子がペアを組んで金属全体が1つの波になり、「1人だけつまずかせる」ことが不可能になるから。波全体を乱すには低温世界にない大きなエネルギーが要る</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 原子の震えは低温でも完全には止まらない（それでも抵抗はゼロになる）。決め手は相転移で、全電子ペアが足並みをそろえた1つの波は、部分的に乱すことができない。まとめて乱すためのエネルギーが低温世界には存在しないため、抵抗が本物のゼロになる。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 階段はできたのに、このステージの終わりで条件①「区別できる2状態」がまだ達成できていない理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">階段の段数が2段しかなく、多すぎるから</button>
+          <button class="choice-btn">振り子の等時性のせいで階段が全段等間隔になり、下2段に上げる合図が上の段にも同じように効いてしまうから</button>
+          <button class="choice-btn">超伝導が数秒しか維持できないから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 振り子は揺れの大小によらずリズムが1つ（等時性）なので、エネルギーの階段は等間隔になる。どの段差も同じ「切符」で乗れてしまうため、下2段だけを |0⟩ |1⟩ として選び出せない。この等時性を壊す部品が次のステージの主役、ジョセフソン接合だ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage1.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QH.initStagePage(2);</script>
+
+<script>
+(function(){
+  // 図1: 電気の振り子アニメーション（振り子・LC回路・エネルギーバーを同期）
+  var g = document.getElementById('lc-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CB = '#2f5a9e', CR = '#b5504a', CG = '#8a6a24', CA = '#2f8a8f';
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+
+  // --- 左: 理科の振り子 ---
+  var px = 58, py = 46, plen = 62;
+  el('line', {x1: px - 26, y1: py, x2: px + 26, y2: py, stroke: 'var(--ink)', 'stroke-width': 2});
+  var rod = el('line', {x1: px, y1: py, stroke: 'var(--muted)', 'stroke-width': 2});
+  var bob = el('circle', {r: 8.5, fill: CA, stroke: '#1f5a5e', 'stroke-width': 1.5});
+  el('path', {d: 'M ' + (px - 30) + ' ' + (py + plen + 16) + ' Q ' + px + ' ' + (py + plen + 28) + ' ' + (px + 30) + ' ' + (py + plen + 16), stroke: 'var(--line)', 'stroke-width': 1.4, fill: 'none', 'stroke-dasharray': '3 3'});
+  txt(px, 152, 'strong', '理科の振り子');
+  txt(px, 168, 'label', '位置 ⇄ 運動の');
+  txt(px, 182, 'label', 'エネルギー');
+
+  // --- 中央: LC回路 ---
+  var L = 150, R = 240, T = 62, B = 168, gapT = 106, gapB = 124;
+  txt((L + R) / 2, 52, 'label', '電気の振り子（LC回路）');
+  // 導線（コンデンサの隙間を除く一筆書きの通り道）
+  var wire = 'M ' + L + ' ' + gapT +
+    ' L ' + L + ' ' + T + ' L ' + R + ' ' + T + ' L ' + R + ' ' + (B - 60) +
+    ' q 11 3.8 0 7.6 q -11 3.8 0 7.6 q 11 3.8 0 7.6 q -11 3.8 0 7.6' +
+    ' L ' + R + ' ' + B + ' L ' + L + ' ' + B + ' L ' + L + ' ' + gapB;
+  // コイルの磁気の光（背面）
+  var coilGlow = el('circle', {cx: R, cy: B - 45, r: 20, fill: CG, opacity: 0});
+  var wirePath = el('path', {d: wire, stroke: 'var(--ink)', 'stroke-width': 2, fill: 'none'});
+  // コンデンサの板と帯電の光
+  var glowT = el('rect', {x: L - 23, y: gapT - 9, width: 46, height: 8, rx: 2, opacity: 0});
+  var glowB = el('rect', {x: L - 23, y: gapB + 1, width: 46, height: 8, rx: 2, opacity: 0});
+  el('line', {x1: L - 22, y1: gapT, x2: L + 22, y2: gapT, stroke: CB, 'stroke-width': 4});
+  el('line', {x1: L - 22, y1: gapB, x2: L + 22, y2: gapB, stroke: CB, 'stroke-width': 4});
+  var signT = txt(L - 32, gapT + 4, 'strong', '＋');
+  var signB = txt(L - 32, gapB + 4, 'strong', '−');
+  // 板にたまる電子の粒（たまり具合を粒の数で見せる）
+  var plateT = [], plateB = [];
+  for (var j = 0; j < 5; j++) {
+    plateT.push(el('circle', {cx: L - 16 + j * 8, cy: gapT - 5, r: 3, fill: CA, opacity: 0}));
+    plateB.push(el('circle', {cx: L - 16 + j * 8, cy: gapB + 5, r: 3, fill: CA, opacity: 0}));
+  }
+  txt(186, 188, 'label', '左：コンデンサ（電気をためる）');
+  txt(186, 204, 'label', '右：コイル（流し続けようとする）');
+  txt(186, 222, 'label', '● ＝ 電子の群れ（回らずに、行ったり来たり）');
+  txt(186, 240, 'label', '実機では1秒に約50億回（5GHz）往復する');
+  // 電子の群れ（導線に沿って往復）
+  var wlen = wirePath.getTotalLength();
+  var dots = [];
+  for (var i = 0; i < 8; i++) {
+    var base = 26 + (wlen - 52) * i / 7;
+    dots.push({base: base, e: el('circle', {r: 3.4, fill: CA})});
+  }
+
+  // --- 右: エネルギーバー ---
+  var bx = 296, bw = 24, bh = 86, by = 158;
+  txt(bx + 25, 66, 'label', 'エネルギー');
+  var barE = el('rect', {x: bx, width: bw, fill: CB, opacity: .85});
+  var barM = el('rect', {x: bx + 34, width: bw, fill: CG, opacity: .85});
+  el('rect', {x: bx, y: by - bh, width: bw, height: bh, fill: 'none', stroke: 'var(--line)'});
+  el('rect', {x: bx + 34, y: by - bh, width: bw, height: bh, fill: 'none', stroke: 'var(--line)'});
+  txt(bx + bw / 2, by + 14, 'label', '電気');
+  txt(bx + 34 + bw / 2, by + 14, 'label', '磁気');
+  txt(bx + 29, by + 32, 'label', '合計はいつも一定');
+
+  function draw(th) {
+    var q = Math.cos(th), cur = Math.sin(th);
+    // 振り子（板が満タンのとき端に来るよう同期）
+    var ang = 0.52 * q;
+    var bxp = px + plen * Math.sin(ang), byp = py + plen * Math.cos(ang);
+    rod.setAttribute('x2', bxp); rod.setAttribute('y2', byp);
+    bob.setAttribute('cx', bxp); bob.setAttribute('cy', byp);
+    // 板の帯電（符号で色、量で濃さ）
+    var top = q >= 0;
+    glowT.setAttribute('fill', top ? CR : CB);
+    glowB.setAttribute('fill', top ? CB : CR);
+    glowT.setAttribute('opacity', Math.abs(q) * 0.55);
+    glowB.setAttribute('opacity', Math.abs(q) * 0.55);
+    signT.textContent = top ? '＋' : '−';
+    signB.textContent = top ? '−' : '＋';
+    var so = Math.max(0.15, Math.abs(q));
+    signT.setAttribute('opacity', so); signB.setAttribute('opacity', so);
+    signT.setAttribute('fill', top ? CR : CB); signB.setAttribute('fill', top ? CB : CR);
+    // 電子の群れ。変位 ∝ cosθ：板が満タンの瞬間に流れが止まり、
+    // たまった電気の押し返しで逆流が始まる（速さが最大なのは板が空の瞬間）
+    for (var i = 0; i < dots.length; i++) {
+      var p = wirePath.getPointAtLength(dots[i].base + 24 * q);
+      dots[i].e.setAttribute('cx', p.x); dots[i].e.setAttribute('cy', p.y);
+    }
+    // 板の上の電子の粒（−側の板に |q| に応じた数だけ現れる）
+    var nT = Math.round(5 * Math.max(0, -q));
+    var nB = Math.round(5 * Math.max(0, q));
+    for (var j = 0; j < 5; j++) {
+      plateT[j].setAttribute('opacity', j < nT ? 1 : 0);
+      plateB[j].setAttribute('opacity', j < nB ? 1 : 0);
+    }
+    // コイルの磁気の光
+    coilGlow.setAttribute('opacity', cur * cur * 0.4);
+    // エネルギーバー
+    var pe = q * q, pm = cur * cur;
+    barE.setAttribute('y', by - bh * pe); barE.setAttribute('height', Math.max(bh * pe, 0.5));
+    barM.setAttribute('y', by - bh * pm); barM.setAttribute('height', Math.max(bh * pm, 0.5));
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var th = 0.8, raf = null, running = false;
+  function tick() {
+    th += 0.030;
+    draw(th);
+    if (running) raf = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (running || reduced) return;
+    running = true;
+    raf = requestAnimationFrame(tick);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+  }
+  draw(th);
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.isIntersecting ? start() : stop(); });
+    }, {threshold: 0.2});
+    io.observe(document.getElementById('lc-svg'));
+  }
+})();
+</script>
+
+<script>
+(function(){
+  // 図2: ふつうの金属 vs 超伝導（1人の行進と全員の行進）
+  var g = document.getElementById('sc-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CA = '#2f8a8f', CB = '#2f5a9e', CR = '#b5504a';
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var PL = {x: 20, y: 40, w: 156, h: 152}, PR = {x: 196, y: 40, w: 156, h: 152};
+  txt(PL.x + PL.w / 2, 34, 'label', 'ふつうの金属');
+  txt(PR.x + PR.w / 2, 34, 'label', '超伝導体（低温）');
+  el('rect', {x: PL.x, y: PL.y, width: PL.w, height: PL.h, rx: 10, fill: 'none', stroke: 'var(--line)'});
+  el('rect', {x: PR.x, y: PR.y, width: PR.w, height: PR.h, rx: 10, fill: 'none', stroke: 'var(--line)'});
+  // 原子の格子（両パネルとも熱で震える）
+  var atoms = [];
+  [PL, PR].forEach(function (P, pi) {
+    for (var r = 0; r < 3; r++) for (var c = 0; c < 3; c++) {
+      var ax = P.x + 30 + c * 48, ay = P.y + 30 + r * 46;
+      var e = el('circle', {cx: ax, cy: ay, r: 6, fill: '#c8cfd8', stroke: 'var(--muted)', 'stroke-width': 1});
+      atoms.push({e: e, x: ax, y: ay, ph: (r * 3 + c) * 1.7 + pi, panel: pi, flash: 0});
+    }
+  });
+  // 左: ばらばらの電子
+  var seeds = [[34, 58], [58, 108], [42, 150], [96, 74], [120, 128], [146, 96]];
+  var eles = seeds.map(function (s, i) {
+    return {x: PL.x + s[0] - 20, y: s[1], a: (i * 1.3) % 2 - 1,
+            e: el('circle', {r: 3.4, fill: CA})};
+  });
+  // 右: ペアの隊列と1つの波
+  var wave = el('path', {fill: 'none', stroke: CB, 'stroke-width': 2, opacity: .65});
+  var pairs = [];
+  var rowsY = [PR.y + 53, PR.y + 99];
+  for (var ry = 0; ry < 2; ry++) for (var i = 0; i < 4; i++) {
+    var grp = {row: ry, off: i * 39 + ry * 19, d1: el('circle', {r: 3.2, fill: CA}), d2: el('circle', {r: 3.2, fill: CA}),
+               ln: el('line', {stroke: CA, 'stroke-width': 1.6, opacity: .8})};
+    pairs.push(grp);
+  }
+  txt(PL.x + PL.w / 2, 210, 'label', '電子が1個ずつ原子にぶつかる');
+  txt(PL.x + PL.w / 2, 226, 'label', '→ エネルギーが熱に ＝ 抵抗');
+  txt(PR.x + PR.w / 2, 210, 'label', 'ペア全員がそろって1つの波として行進');
+  txt(PR.x + PR.w / 2, 226, 'label', '→ 1人だけつまずけない ＝ 抵抗ゼロ');
+
+  var t = 0, base = 0;
+  function drawFrame(animate) {
+    t += 1;
+    // 原子の熱振動と、衝突の光
+    atoms.forEach(function (a) {
+      a.e.setAttribute('cx', a.x + 1.6 * Math.sin(t * 0.11 + a.ph));
+      a.e.setAttribute('cy', a.y + 1.6 * Math.cos(t * 0.13 + a.ph * 1.3));
+      a.flash *= 0.9;
+      a.e.setAttribute('fill', a.flash > 0.15 ? CR : '#c8cfd8');
+      a.e.setAttribute('opacity', 0.75 + Math.min(a.flash, 0.25));
+    });
+    // 左: 電子が原子に散乱される
+    eles.forEach(function (p) {
+      p.x += Math.cos(p.a) * 1.1;
+      p.y += Math.sin(p.a) * 1.1;
+      for (var i = 0; i < atoms.length; i++) {
+        var a = atoms[i];
+        if (a.panel !== 0) continue;
+        var dx = p.x - a.x, dy = p.y - a.y;
+        if (dx * dx + dy * dy < 100) {
+          p.a = (animate ? Math.random() : 0.5) * 2.4 - 1.2 + (dy > 0 ? 0.6 : -0.6);
+          a.flash = 1;
+          p.x += Math.cos(p.a) * 4; p.y += Math.sin(p.a) * 4;
+        }
+      }
+      if (p.y < PL.y + 8) { p.y = PL.y + 8; p.a = -p.a; }
+      if (p.y > PL.y + PL.h - 8) { p.y = PL.y + PL.h - 8; p.a = -p.a; }
+      if (p.x > PL.x + PL.w - 6) p.x = PL.x + 6;
+      if (p.x < PL.x + 6) p.x = PL.x + PL.w - 6;
+      p.e.setAttribute('cx', p.x); p.e.setAttribute('cy', p.y);
+    });
+    // 右: 隊列は乱れず一定速度で進む
+    base += 0.55;
+    pairs.forEach(function (q) {
+      var x = PR.x + 12 + ((q.off + base) % (PR.w - 24));
+      var y = rowsY[q.row];
+      q.d1.setAttribute('cx', x - 4); q.d1.setAttribute('cy', y);
+      q.d2.setAttribute('cx', x + 4); q.d2.setAttribute('cy', y);
+      q.ln.setAttribute('x1', x - 4); q.ln.setAttribute('y1', y);
+      q.ln.setAttribute('x2', x + 4); q.ln.setAttribute('y2', y);
+    });
+    // 1つの波（隊列と同じ速さで滑る）
+    var d = '';
+    for (var wx = 0; wx <= PR.w - 16; wx += 4) {
+      var wy = PR.y + 76 - 11 * Math.sin((wx - base * 2.4) * 0.09);
+      d += (wx === 0 ? 'M ' : 'L ') + (PR.x + 8 + wx).toFixed(1) + ' ' + wy.toFixed(1) + ' ';
+    }
+    wave.setAttribute('d', d);
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var raf = null, running = false;
+  function tick() {
+    drawFrame(true);
+    if (running) raf = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (running || reduced) return;
+    running = true;
+    raf = requestAnimationFrame(tick);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+  }
+  for (var k = 0; k < 3; k++) drawFrame(false);
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.isIntersecting ? start() : stop(); });
+    }, {threshold: 0.2});
+    io.observe(document.getElementById('sc-svg'));
+  }
+})();
+</script>
+
+<script>
+(function(){
+  // 図: 粒の居場所（揺れ→放出→検出のループ）
+  var svg = document.getElementById('gr-svg');
+  var g = document.getElementById('gr-elec');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CX = 90, CY = 112, R = 40;
+  var dots = [];
+  for (var i = 0; i < 8; i++) {
+    var e = document.createElementNS(ns, 'circle');
+    e.setAttribute('r', 3.4);
+    e.setAttribute('fill', '#2f8a8f');
+    g.appendChild(e);
+    dots.push({e: e, base: i * Math.PI / 4});
+  }
+  var haloF = document.getElementById('gr-halo-f');
+  var haloS = document.getElementById('gr-halo-s');
+  var haloT = document.getElementById('gr-halo-t');
+  var pkt = document.getElementById('gr-pkt');
+  var spark = document.getElementById('gr-spark');
+  var click = document.getElementById('gr-click');
+  var det = document.getElementById('gr-det');
+
+  var T = 6.0; // 1周の秒数
+  function draw(time, swing) {
+    var p = (time % T) / T;
+    var osc, halo, pktQ = -1, flash = 0;
+    if (p < 0.38) { osc = 1; halo = 1; }
+    else if (p < 0.72) {
+      var q = (p - 0.38) / 0.34;
+      osc = 1 - q; halo = 1 - q; pktQ = q;
+    }
+    else if (p < 0.86) {
+      osc = 0; halo = 0;
+      flash = 1 - (p - 0.72) / 0.14;
+    }
+    else { var r = (p - 0.86) / 0.14; osc = r; halo = r; }
+    // 電子の往復（輪に沿った角度の揺れ）
+    var a = 0.24 * Math.sin(swing) * osc;
+    for (var i = 0; i < dots.length; i++) {
+      var th = dots[i].base + a;
+      dots[i].e.setAttribute('cx', CX + R * Math.cos(th));
+      dots[i].e.setAttribute('cy', CY + R * Math.sin(th));
+    }
+    // ハロー（粒1個ぶんの揺れの光）
+    haloF.setAttribute('opacity', halo * (0.10 + 0.05 * Math.sin(swing * 0.7)));
+    haloS.setAttribute('opacity', halo);
+    haloT.setAttribute('opacity', 0.25 + 0.75 * halo);
+    // 波束（粒）の走行
+    if (pktQ >= 0) {
+      pkt.setAttribute('opacity', Math.min(1, pktQ * 5, (1 - pktQ) * 5 + 0.4));
+      pkt.setAttribute('transform', 'translate(' + (168 + 124 * pktQ) + ' ' + CY + ')');
+    } else {
+      pkt.setAttribute('opacity', 0);
+    }
+    // 検出のフラッシュ
+    spark.setAttribute('opacity', flash);
+    click.setAttribute('opacity', flash);
+    det.setAttribute('stroke', flash > 0.3 ? '#b5504a' : '#6b7480');
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var raf = null, running = false, t0 = null, swing = 0;
+  function tick(ts) {
+    if (t0 === null) t0 = ts;
+    swing += 0.11;
+    draw((ts - t0) / 1000, swing);
+    if (running) raf = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (running || reduced) return;
+    running = true;
+    raf = requestAnimationFrame(tick);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+  }
+  // 静止時は「放出の途中」を1コマで見せる
+  draw(T * 0.55, 0.9);
+  if (reduced) { spark.setAttribute('opacity', 0.8); click.setAttribute('opacity', 0.8); }
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.isIntersecting ? start() : stop(); });
+    }, {threshold: 0.2});
+    io.observe(svg);
+  }
+})();
+</script>
+
+<script>
+(function(){
+  // 図: お椀の階段と高さの記録（縦軸を共有した連動アニメ）
+  var svg = document.getElementById('bw-svg');
+  var g = document.getElementById('bw-dyn');
+  var sig = document.getElementById('bw-sig');
+  if (!svg || !g || !sig) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  var CXB = 120;
+  var COLORS = ['#2f5a9e', '#2f8a8f', '#8a6a24', '#b5504a'];
+  var LV = [
+    {y: 170, w: 35.8},
+    {y: 140, w: 56.6},
+    {y: 110, w: 71.6},
+    {y: 80,  w: 83.9}
+  ];
+  var labels = [];
+  for (var i = 0; i < 4; i++) {
+    var t = el('text', {x: CXB - LV[i].w - 6, y: LV[i].y + 4, 'class': 'label', 'text-anchor': 'end'});
+    t.textContent = '粒' + i + '個';
+    labels.push(t);
+  }
+  var tie = el('line', {stroke: '#2f8a8f', 'stroke-width': 1.2, 'stroke-dasharray': '4 3', opacity: 0.8});
+  var ball = el('circle', {r: 5.5, fill: '#c8cfd8', stroke: 'var(--muted)', 'stroke-width': 1.2, opacity: 0.7});
+  var dot = el('circle', {cx: 232, cy: 190, r: 3.2, fill: '#2f8a8f'});
+  var plus = el('text', {x: 0, y: 0, 'class': 'accent', 'text-anchor': 'middle', opacity: 0});
+  plus.textContent = '＋1粒';
+
+  var W = 3.4;
+  var TL = 3 * Math.PI / W; // 段の切り替えは、ボールが中心を通る瞬間（変位ゼロ）に揃える
+  var SPD = 26 * W / Math.PI; // 高さの波1つぶんが26pxに対応
+  function heightAt(tau) {
+    if (tau < 0) return 190;
+    var lv = LV[Math.floor(tau / TL) % 4];
+    var disp = lv.w * Math.sin(tau * W);
+    return 190 - Math.pow(disp / 8, 2);
+  }
+  function draw(time) {
+    var cur = Math.floor(time / TL) % 4;
+    var since = time % TL;
+    for (var i = 0; i < 4; i++) {
+      labels[i].setAttribute('opacity', i === cur ? 1 : 0.45);
+      labels[i].setAttribute('fill', i === cur ? COLORS[i] : '');
+      labels[i].setAttribute('font-weight', i === cur ? '900' : '700');
+    }
+    // 影のボール（端で、その段の高さ線にちょうど届く）
+    var bx = CXB + LV[cur].w * Math.sin(time * W);
+    var by = 190 - Math.pow((bx - CXB) / 8, 2);
+    ball.setAttribute('cx', bx);
+    ball.setAttribute('cy', by - 6);
+    // 高さの記録（左端＝いま）
+    var d = '';
+    for (var k = 0; k <= 62; k++) {
+      var u = k / 62;
+      var x = 232 + 124 * u;
+      var y = heightAt(time - u * (124 / SPD));
+      d += (k === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+    }
+    sig.setAttribute('d', d);
+    sig.setAttribute('stroke', COLORS[cur]);
+    var yNow = heightAt(time);
+    dot.setAttribute('cy', yNow);
+    dot.setAttribute('fill', COLORS[cur]);
+    // ボールと記録を結ぶ水平線（高さが同じことを示す）
+    tie.setAttribute('x1', bx);
+    tie.setAttribute('y1', yNow);
+    tie.setAttribute('x2', 232);
+    tie.setAttribute('y2', yNow);
+    tie.setAttribute('stroke', COLORS[cur]);
+    // 段が上がった直後の「＋1粒」
+    if (cur > 0 && since < 0.9) {
+      plus.setAttribute('opacity', 1 - since / 0.9);
+      plus.setAttribute('x', CXB - LV[cur].w - 14);
+      plus.setAttribute('y', LV[cur].y - 10 - since * 12);
+    } else {
+      plus.setAttribute('opacity', 0);
+    }
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var raf = null, running = false, t0 = null;
+  function tick(ts) {
+    if (t0 === null) t0 = ts;
+    draw((ts - t0) / 1000);
+    if (running) raf = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (running || reduced) return;
+    running = true;
+    raf = requestAnimationFrame(tick);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+  }
+  draw(TL * 1.4);
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.isIntersecting ? start() : stop(); });
+    }, {threshold: 0.2});
+    io.observe(svg);
+  }
+})();
+</script>
+</body>
+</html>

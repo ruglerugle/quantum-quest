@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12303c">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE4 宇宙より冷たい冷蔵庫 ― 量子コンピュータはどう作るのか</title>
+<meta name="description" content="量子コンピュータはなぜ絶対零度近くの10ミリケルビンで動くのか。熱の小突き（kT）とエネルギーの段差（hf）の比較から必要な温度を自分で導き、蒸発冷却の限界と、ヘリウム3がヘリウム4の中へ「蒸発」する希釈冷凍機のからくり、金色のシャンデリアの正体までを解き明かす。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage4.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはどう作るのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE4 宇宙より冷たい冷蔵庫 ― 量子コンピュータはどう作るのか">
+<meta property="og:description" content="実機は宇宙空間の100倍冷たい。10ミリケルビンへの道のりと希釈冷凍機のからくり。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage4.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qh-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qh-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qh-svg .accent{fill:#2f8a8f;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🧊</a> <span>量子コンピュータはどう作るのか</span></div>
+      <div class="brand-sub">STAGE 4 ― 宇宙より冷たい冷蔵庫 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 4</span><span class="chapter-title">宇宙より冷たい冷蔵庫</span>
+        <div class="chapter-sub">希釈冷凍機のしくみ</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">「なぜ10ミリケルビンなのか」を、熱の小突きと段差の比較から自分で導こう。さらに、ふつうの冷やし方がどこで頭打ちになるか、希釈冷凍機がその壁をどう越えるかを理解する。金色のシャンデリアの正体が分かれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日は「冷やす」の本気の話だ。その前に、<strong>温度とは何か</strong>をはっきりさせておこう。<br>物質の中では、原子や分子がでたらめに動き回ったり震えたりしている。<strong>温度とは、このでたらめな運動の激しさ</strong>のことだ。熱いお茶では分子が激しく暴れ、氷では小さく震えている。<br>そして環境の粒子が量子ビットに1回ぶつかるとき手渡すエネルギーの目安は、<strong>「ボルツマン定数×絶対温度」</strong>という積で見積もれる（ボルツマン定数は温度をエネルギーに換算する定数だ）。部屋の温度、絶対温度でいうと約300Kでは、この「小突き1回ぶん」は約4×10⁻²¹ジュールになる。<br>――前のステージの宿題と突き合わせてごらん。われわれの階段の段差は、いくつだった？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">段差は約3×10⁻²⁴ジュールでした。比べると、常温の小突き1回は段差の<strong>1000倍以上</strong>。つまり常温の環境は、1段の高さの1000倍の力で量子ビットをめった打ちにしている。|0⟩ に置いたつもりでも勝手に階段を蹴り上げられ、重ね合わせ以前に、<strong>初期化すら成立しません</strong>。<br>冷やすべき目安も出せます。小突き（ボルツマン定数×温度）が段差より小さくなればいい。小突きは温度に比例するということは、300Kで4×10⁻²¹ジュールなら、比例の計算で、小突きがちょうど段差の3×10⁻²⁴ジュールまで小さくなる温度は――約<strong>0.24K</strong>ですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">計算どおり、5GHzの段差は温度に直すと約0.24Kだ。ただし、0.24Kまで下げれば安心、とはいかない。「小突き1回ぶん」は<strong>平均の目安</strong>で、熱のでたらめさの中には、たまに平均よりずっと強い一撃が混じる。段差ちょうどの温度では、その「当たりくじ」がまだ頻繁に出てしまう。<br>救いは、強い一撃の出る割合が、温度を下げると<strong>急激に（指数的に）減る</strong>ことだ。段差換算温度の10分の1、つまり<strong>20mK前後</strong>まで下げると、段差を越える一撃は100万回に数回のレベルまで枯れる。実機の動作温度が<strong>10〜20mK</strong>（ミリケルビンは1000分の1ケルビン）なのはこの計算からだ。<br>この温度がどれほど異様か。夜空の果て、星も何もない宇宙空間にも、ビッグバンの残り火の電波が満ちていて、温度は<strong>2.7K</strong>ある。実機のチップはその<strong>100倍以上冷たい</strong>。稼働中の量子コンピュータの中身は、まず間違いなく<strong>宇宙でいちばん冷たい場所の一つ</strong>なんだよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 250" width="100%" role="img" aria-label="温度の物差し。対数目盛で、部屋の温度300K、宇宙空間2.7K、液体ヘリウム4K、蒸発冷却の限界1K、段差の換算温度0.24K、実機の動作温度10〜20mKを並べた図。常温の熱の小突きは段差の1000倍以上ある">
+          <text class="strong" x="186" y="18" text-anchor="middle">温度の物差し ― 実機は宇宙空間の100倍冷たい</text>
+          <!-- 温度計軸 -->
+          <line x1="80" y1="40" x2="80" y2="230" stroke="var(--ink)" stroke-width="2.4"/>
+          <!-- 目盛 -->
+          <g>
+            <line x1="72" y1="52" x2="88" y2="52" stroke="#b5504a" stroke-width="2.4"/>
+            <text class="strong" x="96" y="56" text-anchor="start" fill="#b5504a">300K ― 部屋の温度</text>
+            <text class="label" x="96" y="70" text-anchor="start">熱の小突きは段差の1000倍以上</text>
+            <line x1="72" y1="92" x2="88" y2="92" stroke="var(--ink)" stroke-width="2"/>
+            <text class="strong" x="96" y="96" text-anchor="start">2.7K ― 宇宙空間（ビッグバンの残り火）</text>
+            <line x1="72" y1="116" x2="88" y2="116" stroke="var(--ink)" stroke-width="2"/>
+            <text class="label" x="96" y="120" text-anchor="start">4.2K ― 液体ヘリウム（圧縮・膨張の冷凍はここまで）</text>
+            <line x1="72" y1="140" x2="88" y2="140" stroke="var(--ink)" stroke-width="2"/>
+            <text class="label" x="96" y="144" text-anchor="start">1K ― 蒸発冷却の限界（蒸気が枯れる）</text>
+            <line x1="72" y1="166" x2="88" y2="166" stroke="#8a6a24" stroke-width="2.4"/>
+            <text class="label" x="96" y="170" text-anchor="start">0.24K ― 段差（5GHz）を温度に換算した値</text>
+            <line x1="72" y1="206" x2="88" y2="206" stroke="#2f8a8f" stroke-width="3"/>
+            <text class="strong" x="96" y="210" text-anchor="start" fill="#2f8a8f">0.01〜0.02K ― 実機の動作温度</text>
+            <text class="label" x="96" y="224" text-anchor="start">段差を越える熱の一撃がほぼ枯れる ＋ 初期化がタダ</text>
+          </g>
+          <text class="label" x="42" y="136" text-anchor="middle" transform="rotate(-90 42 136)">↓ 冷たい（目盛は対数）</text>
+        </svg>
+        <div class="diagram-caption">温度の物差し（対数目盛）。「小突き1回ぶんのエネルギー」（ボルツマン定数×温度）が段差（プランク定数×5GHz＝換算0.24K）より確実に小さくなるところまで下げる必要がある。平均より強い一撃の混入まで枯らすには換算温度の10分の1程度、<strong>10〜20mK</strong>が必要で、これは星のない宇宙空間（2.7K）の100倍以上冷たい。この温度では量子ビットは自然に |0⟩ へ落ちてとどまるため、<strong>初期化もタダで手に入る</strong>。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">気づいたことがあります。20mKでは、環境のどの小突きにも段差を越える力がほぼ無い。だから |0⟩ から |1⟩ へ<strong>蹴り上げられることは、めったに起きません</strong>。<br>反対に、|1⟩ から落ちるほうは止まらないはずです。落ちるのに何かをもらう必要はなく、持っているぶんを<strong>手放せばいい</strong>のですから。熱いお茶が冷たい部屋で冷めるのと同じで、相手が冷たいほど受け取ってもらえます。<br>つまり<strong>一方通行</strong>。放っておけば、ほとんどの量子ビットが自然に |0⟩ にそろう――ステージ1の宿題の答えはこれですね。<strong>初期化は、冷蔵庫のおまけとしてタダで手に入る</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのとおりだ。手放す相手も言っておこう。量子ビットは段差ぶんのエネルギーを、<strong>まわりの電磁波や、基板のごく小さな震え</strong>に渡して落ちる。20mKでは、その逆――受け取って上がるほう――がほぼ起きないから、きみの言うとおり一方通行になる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……ただ、いま気になったのですが。その「手放して落ちる」は、こちらが命じたわけではなく、勝手に起きるんですよね。だとしたら計算の途中でも起きるはずで、せっかく |1⟩ にした量子ビットが、都合と関係なく |0⟩ に落ちてしまいませんか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通りで、そこが急所だ。この落下は<strong>こちらが仕組んだ操作ではなく、止めようのない漏れ</strong>で、まさに条件②の敵そのもの。前のステージで見た<strong>100マイクロ秒級の寿命</strong>とは、この漏れで消えてしまうまでの時間のことなんだ。だから作る側は、漏れを少しでも遅くしようと、材料も形も配線も磨き上げる。<br>そのうえで、同じ性質を<strong>計算を始める前だけ</strong>は味方に使う。まだ守るべき中身が入っていない時間に、漏れるに任せて全員を |0⟩ にそろえてしまう。敵の性質を、開始前の一度だけ利用する――冷やすことは条件②の防御であると同時に、初期化の供給源でもあるわけだ。<br>そして、計算し終えた答えを<strong>取り出す</strong>のは、これとはまったく別の操作だよ。漏れ落ちるのを待つのではなく、こちらのタイミングで、読みたいときだけ手がかりを出させる。それが条件④で、ステージ6の主題になる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">守るべき中身がまだ入っていない時間だけ、敵の性質に働いてもらう。開始前の一度きりなら、味方になるんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">では本題、<strong>どうやって20mKまで冷やすか</strong>。出発点は家の冷蔵庫と同じ原理だ。気体は<strong>圧縮すると熱くなり、膨張させると冷える</strong>。ポンプで気体を外で圧縮して熱を捨て、庫内で膨張させて熱を奪う――この繰り返しで熱を外へくみ出す。この原理の親戚を、凍りにくいヘリウムガスで動かすと、<strong>約4K</strong>（液体ヘリウムの温度）までは一直線に着く。超伝導が使える温度だ。<br>ところが、4Kから先が急に難所になる。理由を考えてみてほしい。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">4Kでは、ヘリウム以外の物質はぜんぶ凍りついているはずです。「気体を膨張させて冷やす」は<strong>気体がなければ使えない</strong>。ヘリウム自身はまだ液体だそうですが、液体は膨張させてもほとんど冷えません。<br>……でも、液体なら<strong>蒸発</strong>が使えませんか？ 汗が乾くと肌が涼しくなるのは、いちばん元気な分子が飛び出していって、残った分子の平均の元気が下がるからです。液体ヘリウムを蒸発させ続ければ、その分だけ冷えるはずです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その手は実際に使われていて、ヘリウムの蒸発冷却で<strong>約1K</strong>まで下がる。だが、そこで頭打ちになる。<br>蒸発は「元気な分子が飛び出す」現象だから、温度が下がるほど、飛び出せる元気を持った分子が<strong>指数的に減っていく</strong>。1Kを切るころには蒸気がほとんど出なくなり、くみ出せる熱が事実上ゼロになる。蒸発という乗り物は、ここでガス欠だ。<br>1Kから20mKへの<strong>最後の50倍</strong>を埋めるのが、20世紀半ばに発明された最終兵器――<strong>希釈冷凍機</strong>。主役は、ヘリウムの2人兄弟だ。ふつうのヘリウムは<strong>ヘリウム4</strong>。それより中性子が1個少ない軽い兄弟<strong>ヘリウム3</strong>というのがいて、こちらは地球上にごくわずかしかない希少品だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">その希少な兄弟を、わざわざ使うのですね。どう働かせるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">からくりはこうだ。ヘリウム3とヘリウム4を混ぜた液体を0.9Kより下まで冷やすと、不思議なことが起きる。混合液が、水と油のように<strong>2つの層に分かれる</strong>んだ。上の層はほぼ純粋なヘリウム3。下の層はヘリウム4の海に、ヘリウム3が<strong>6%ほどだけ溶けた</strong>薄い層。<br>そして、ここが心臓部だ。下の層のヘリウム4は、この温度では<strong>超流動</strong>という特別な状態になっていてね。粘りがなく、熱も運ばず、まわりの邪魔をしない背景に徹する。だから、そこに溶けたヘリウム3の原子にとって、ヘリウム4の海は<strong>ほとんど何もない空間</strong>のようなもので、その中を気体のように自由に飛び回れるんだ。<br>つまり上の濃い層は、ヘリウム3どうしがぎっしり詰まった<strong>液体</strong>。下の薄い層は、いわば<strong>ヘリウム3の気体</strong>。この境目を、ヘリウム3が下へ移っていくとき――さて、何が起きると思う？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble"><strong>蒸発</strong>ですか？ 窮屈な液体から、自由に飛び回れる場所へ出ていく――液面から真空へ飛び出す代わりに、ヘリウム3が<strong>ヘリウム4の海へ飛び出している</strong>。汗のときと同じで、飛び出すには元気が要るのだから、残されたほうから熱を奪うはずです。<br>……ただ、それなら同じ弱点も引き継ぎませんか。さっきの蒸発が止まったのは「低温では飛び出せる分子が枯れる」からでした。こちらも冷えるほど飛び移る原子が減って、途中で同じように止まってしまう気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこが、この方式が最終兵器たるゆえんだ。下の薄い層は、絶対零度の近くまで冷やしても、ヘリウム3を<strong>6%ほど溶かし込んだまま</strong>でいる。飛び込み先が枯れないんだ。<br>なぜ消えないか、深入りしない範囲で理由を2つ挙げよう。ひとつ、<strong>溶けること自体が得</strong>だからだ。軽いヘリウム3は、仲間どうしでいるよりも、重いヘリウム4に囲まれたほうが深く落ち着ける。ふつうの溶解は「かき混ぜられて散らばる」勢いが原動力だから、冷えると止まる。こちらはエネルギーの得が原動力なので、温度に頼らない。<br>ふたつ、<strong>それでも全部は溶けない</strong>。ヘリウム3の原子には「同じ状態には1個しか入れない」という決まりがあってね（電子が原子の中で席を順に埋めていくのと同じ決まりだ）。溶け込む原子が増えるほど、あとから入る原子は<strong>もっと速く動く席</strong>にしか座れず、そのぶん損をする。この損が最初の得を食いつぶしたところで、それ以上は溶けない。その釣り合いの濃度が約6%なんだ。<strong>得と損の釣り合いで決まる値だから、温度を下げても動かない</strong>。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">枯れる仕組みそのものが違うんですね。蒸発は「元気な分子」という、温度が下がれば消えてしまうものを当てにしていた。こちらが当てにしているのは、温度と関係のない釣り合いのほう。<br>では、冷やす力も最後まで一定なんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">一定ではなく、弱くはなる。くみ出せる熱は<strong>温度の2乗に比例して</strong>小さくなっていく。ただ、蒸発のように指数的に枯れる崖ではなく、なだらかな坂だ。だから壁にぶつからずに10mKまで下りられる。それでも坂は坂で、外から入り込む熱と釣り合うあたり――2mK前後が、この方式の実際の底になる。<br>あとは下の層に溶け込んだヘリウム3をポンプでくみ出し、冷やして上の層に戻せば、<strong>連続運転</strong>できる。<br>装置の実物は、写真で見たことがあるかもしれないね。<strong>金色のシャンデリア</strong>だ。金色の円盤が何段も吊り下がっていて、上から順に約50K、4K、1K弱、100mK、そして最下段が混合液の器を載せた<strong>10mKプレート</strong>。量子チップはそこにねじ止めされる。<br>金色の正体は<strong>金メッキした銅</strong>。銅は熱をよく伝えてプレート全体を同じ温度にそろえ、金メッキは表面の錆（熱の伝わりを悪くする）を防ぐ。全体をすっぽり真空の缶で覆う――魔法瓶と同じで、<strong>真空には熱を運ぶ粒子がいない</strong>。さらに各段に、外からの熱の光（放射）をさえぎる盾を重ねる。</div>
+        </div>
+      </div>
+
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 262" width="100%" role="img" aria-label="希釈冷凍機の模式図。左は金色のシャンデリア構造で、上から50K、4K、1K弱、100mK、10mKの円盤が吊り下がり、最下段に量子チップが付く。右は混合器の拡大図で、ほぼ純粋なヘリウム3の上層から、ヘリウム4にヘリウム3が6%溶けた下層へ、ヘリウム3原子が「蒸発」して熱を奪う">
+          <text class="strong" x="186" y="18" text-anchor="middle">希釈冷凍機 ― 液体の中への「蒸発」</text>
+          <!-- シャンデリア -->
+          <rect x="36" y="34" width="140" height="212" rx="10" fill="none" stroke="var(--line)" stroke-width="1.6"/>
+          <text class="label" x="106" y="48" text-anchor="middle">真空の缶（魔法瓶）</text>
+          <g>
+            <rect x="56" y="60" width="100" height="8" rx="3" fill="#e8d9a8" stroke="#8a6a24"/>
+            <text class="label" x="166" y="68" text-anchor="start">50K</text>
+            <rect x="60" y="92" width="92" height="8" rx="3" fill="#e8d9a8" stroke="#8a6a24"/>
+            <text class="label" x="166" y="100" text-anchor="start">4K</text>
+            <rect x="64" y="124" width="84" height="8" rx="3" fill="#e8d9a8" stroke="#8a6a24"/>
+            <text class="label" x="166" y="132" text-anchor="start">1K弱</text>
+            <rect x="68" y="156" width="76" height="8" rx="3" fill="#e8d9a8" stroke="#8a6a24"/>
+            <text class="label" x="166" y="164" text-anchor="start">100mK</text>
+            <rect x="72" y="192" width="68" height="9" rx="3" fill="#d8b169" stroke="#6d5518" stroke-width="1.6"/>
+            <text class="accent" x="166" y="200" text-anchor="start" fill="#8a6a24">10mK</text>
+            <line x1="76" y1="68" x2="76" y2="192" stroke="#8a6a24" stroke-width="1.4"/>
+            <line x1="136" y1="68" x2="136" y2="192" stroke="#8a6a24" stroke-width="1.4"/>
+            <rect x="94" y="212" width="24" height="14" rx="3" fill="#2f8a8f"/>
+            <text class="label" x="106" y="240" text-anchor="middle">量子チップ</text>
+          </g>
+          <text class="label" x="106" y="256" text-anchor="middle">円盤＝金メッキ銅（熱を均一に伝える）</text>
+          <!-- 混合器拡大 -->
+          <rect x="216" y="60" width="130" height="130" rx="10" fill="var(--paper2)" stroke="#2f8a8f" stroke-width="2"/>
+          <text class="label" x="281" y="52" text-anchor="middle">混合器（10mKの心臓部）の拡大</text>
+          <rect x="222" y="66" width="118" height="56" fill="#fdf3e3"/>
+          <rect x="222" y="122" width="118" height="62" fill="#e2eef8"/>
+          <line x1="222" y1="122" x2="340" y2="122" stroke="#2f5a9e" stroke-width="1.6" stroke-dasharray="5 3"/>
+          <text class="label" x="281" y="88" text-anchor="middle">上層：ほぼ純粋なヘリウム3</text>
+          <text class="label" x="281" y="146" text-anchor="middle">下層：ヘリウム4の海に</text>
+          <text class="label" x="281" y="161" text-anchor="middle">ヘリウム3が6%だけ</text>
+          <!-- 蒸発矢印 -->
+          <path d="M 250 112 L 250 136 M 281 112 L 281 136 M 312 112 L 312 136" stroke="#b5504a" stroke-width="2.2" fill="none"/>
+          <path d="M 245 130 L 250 138 L 255 130 M 276 130 L 281 138 L 286 130 M 307 130 L 312 138 L 317 130" stroke="#b5504a" stroke-width="2.2" fill="none"/>
+          <text class="accent" x="281" y="204" text-anchor="middle" fill="#b5504a">溶け込む＝液中への蒸発 → 熱を奪う</text>
+          <text class="label" x="281" y="222" text-anchor="middle">受け入れ枠6%は絶対零度近くでも消えない</text>
+          <text class="label" x="281" y="238" text-anchor="middle">→ 最後まで冷やし続けられる</text>
+        </svg>
+        <div class="diagram-caption">左：希釈冷凍機の全体像。金メッキ銅の円盤が上から50K→4K→1K弱→100mK→<strong>10mK</strong>と段階的に冷たくなり、最下段に量子チップが付く。全体は真空の缶（熱を運ぶ粒子がいない魔法瓶）と放射よけの盾で守られる。右：最下段の混合器。0.9K以下でヘリウム3・4の混合液が2層に分離し、ヘリウム3が上層から下層へ<strong>「液体の中へ蒸発」</strong>するときに熱を奪う。飛び込み先（下層の6%枠)が絶対零度近くでも消えないため、ふつうの蒸発冷却と違って頭打ちにならない。</div>
+      </div>
+
+      <div class="diagram-box photo-box">
+        <img src="images/dilution-fridge.jpg" width="904" height="1200" loading="lazy" alt="真空の缶を外した希釈冷凍機の実物。金メッキした銅の円盤が何段も吊り下がり、円盤のあいだを無数の細い同軸ケーブルが渦を巻いて降りている。最下段の底に量子チップが取り付けられている。">
+        <div class="diagram-caption">実物はこう見える。缶を外した希釈冷凍機――金メッキ銅の円盤が段ごとに吊り下がり、そのあいだを無数の同軸ケーブルが渦を巻いて降りていく。渦巻きは、熱をわざと遠回りさせて伝わりにくくする工夫だ。円盤に見える小さな部品のいくつかが、次のステージの主役になる減衰器。最下段の底、いちばん冷たい場所に量子チップが取り付けられている。</div>
+        <div class="photo-credit">写真: Onri Jay Benally（IBM T.J. ワトソン研究所 ThinkLab、2024年）／ <a href="https://commons.wikimedia.org/wiki/File:IBM_Quantum_System_One.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>・<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>（縮小のみ）</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ひとつ確認させてください。この冷蔵庫、<strong>くみ出せる熱の量</strong>はどのくらいなんですか？ 段差のエネルギーがあれほど小さい世界の話ですから、冷やす力のほうも相当ささやかな気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい質問だね。10mKプレートでくみ出せる熱は<strong>数マイクロワット</strong>――100万分の数ワットで、スマホの充電の約100万分の1しかない。ほんのわずかな熱が入り込むだけで、この温度は守れなくなる。<br>そして思い出してほしい。条件③のために、われわれは<strong>室温の機械から量子ビットまでマイクロ波の配線を通さなければならない</strong>。配線は金属だ。金属は熱をよく伝える。つまり配線の1本1本が、300Kの世界から10mKの聖域への<strong>熱の橋</strong>になってしまう。<br>②「閉じろ」と③「触らせろ」の綱引きが、今度は温度の戦いとして現れるわけだ。次のステージでは、この橋を渡って、矢印を回す合図がどうやって量子ビットに届くのかを見に行こう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【宇宙より冷たい冷蔵庫 ― 今日の積み上げ】</span>
+        <span class="step">・<strong>温度</strong>＝粒子のでたらめな運動の激しさ。小突き1回のエネルギーの目安＝<span class="nw">ボルツマン定数×絶対温度</span>。常温（300K）で約4×10⁻²¹J＝<strong>段差の1000倍以上</strong> → 常温では初期化すら不可能</span>
+        <span class="step">・段差（5GHz）の温度換算＝約0.24K。平均より強い一撃まで枯らすため、その10分の1の<strong>10〜20mK</strong>で運転（宇宙空間2.7Kの100倍以上冷たい）</span>
+        <span class="step">・おまけ：この温度では |1⟩ から落ちた量子ビットがめったに蹴り上げられない → <strong>初期化がタダ</strong>（ステージ1の宿題の答え）</span>
+        <span class="step">・道のり：圧縮・膨張の冷凍（家の冷蔵庫の原理）で4K → ヘリウムの蒸発冷却で1K（蒸気が枯れて頭打ち）→ <strong>希釈冷凍機</strong>で10mK</span>
+        <span class="step">・希釈冷凍機＝0.9K以下で分離したヘリウム3の濃い層から、ヘリウム4の海（6%枠）への<strong>「液中への蒸発」</strong>。受け入れ枠が低温でも消えないので最後まで冷える。ヘリウム3を循環させて連続運転</span>
+        <span class="step">・実物は<strong>金メッキ銅の円盤のシャンデリア</strong>＋真空の缶＋放射よけの盾。10mKでくみ出せる熱は<span class="nw">数マイクロワット</span>しかない → 配線が持ち込む熱との戦いへ（次ステージ）</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 実機を0.24K（段差の換算温度）ではなく、さらに10分の1の10〜20mKまで冷やす理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">冷やしすぎるくらいが機械の寿命によいから</button>
+          <button class="choice-btn">超伝導は20mK以下でしか働かないから</button>
+          <button class="choice-btn">熱の小突きには平均より強い一撃が混じっていて、段差を越える一撃まで枯らすには換算温度よりずっと低くする必要があるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ボルツマン定数×温度はあくまで「平均の目安」で、熱のでたらめさの中にはたまに強い一撃が混じる。強い一撃の割合は温度を下げると指数的に減るので、換算温度の10分の1まで下げれば段差を越える一撃は100万回に数回のレベルまで枯れる。なお超伝導自体はもっと高い温度（アルミで約1K）から働いている。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 希釈冷凍機が、蒸発冷却では届かない10mKまで冷やせる理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">ヘリウム3がヘリウム4より軽く、速く飛び回って熱を運ぶから</button>
+          <button class="choice-btn">ヘリウム3が濃い層からヘリウム4の海へ「液中への蒸発」をするとき熱を奪い、その飛び込み先（6%の受け入れ枠）が絶対零度近くでも消えないから</button>
+          <button class="choice-btn">ヘリウム3とヘリウム4が混ざるときに化学反応で熱を吸収するから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ふつうの蒸発冷却は「飛び出せる元気な分子」が低温で指数的に枯れて1K付近で頭打ちになる。希釈冷凍機では、ヘリウム3が真空の代わりにヘリウム4の液の中へ「蒸発」する。下層の6%の受け入れ枠は絶対零度に近づいても消えないため、冷やす力が最後まで残る。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. ステージ1で予告された「初期化がタダで手に入る」の種明かしは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">20mKでは環境に段差を越える小突きがほぼなく、量子ビットは放っておくと |0⟩ へ落ちてそのまま留まるから</button>
+          <button class="choice-btn">冷やすとすべての矢印が自動的に同じ向きにそろうから</button>
+          <button class="choice-btn">起動時に強いマイクロ波を当てて、全量子ビットを |0⟩ に書き込むから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ |1⟩ にいる量子ビットは、段差ぶんのエネルギーをまわりに手放して |0⟩ へ落ちる（もらう必要がないので、冷たくても進む）。常温ならすぐ蹴り上げられて元に戻ってしまうが、20mKの環境には段差を越える力の小突きがほぼ存在しないので、落ちたらほぼ落ちたまま。待つだけでほとんどの量子ビットが |0⟩ にそろう。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage3.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QH.initStagePage(4);</script>
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16224e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE8 最大の敵と誤り訂正 ― 量子コンピュータはなぜ速いのか</title>
+<meta name="description" content="計算のすべてが干渉でできている機械にとって、環境への手がかりの漏れ＝デコヒーレンスは死を意味する。コピーも測定も禁じられた世界で誤りをどう直すのか。シンドローム測定と表面符号、閾値定理、そして実機の現在地までを正直に見届ける、旅の最終ステージ。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage8.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはなぜ速いのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE8 最大の敵と誤り訂正 ― 量子コンピュータはなぜ速いのか">
+<meta property="og:description" content="コピーも測定も禁じられた世界で誤りを直す発明。シンドローム測定・表面符号・閾値定理と、実機の現在地。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage8.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qc-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qc-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qc-svg .accent{fill:#3f6191;font-size:11px;font-weight:900}
+  .anim-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .anim-ctrl .btn{padding:.4rem .95rem;font-size:13px;font-weight:900}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+  .gate-log{margin-top:8px;font-size:12.5px;font-weight:800;color:var(--ink);min-height:1.5em;word-break:break-all}
+  .gate-log .g{display:inline-block;background:#e6edf7;border:1px solid #a8bcd8;border-radius:5px;padding:0 6px;margin:0 2px 3px 0}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">💠</a> <span>量子コンピュータはなぜ速いのか</span></div>
+      <div class="brand-sub">STAGE 8 ― 最大の敵と誤り訂正 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 8</span><span class="chapter-title">最大の敵と誤り訂正</span>
+        <div class="chapter-sub">デコヒーレンスと現在地</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">量子コンピュータの最大の敵がデコヒーレンスであることを、干渉の話から導こう。そして「コピーできない・測定すると壊れる」という二重の縛りの中で誤りを直す発明――シンドローム測定――の仕組みを説明できれば、旅は完結だ。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最後のステージだ。ここまでで、量子コンピュータが速くなる仕組みは全部見た。ドイチュ、グローバー、ショア――形は違っても、中心にあった道具はいつも同じだったね。<br>では、その道具の<strong>弱点</strong>を考えてみよう。この機械にとって、いちばん恐ろしいことは何かな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">道具は<strong>干渉</strong>――打ち消し合いと強め合いです。そして干渉が使えるのは、道筋の区別がつかないあいだだけ。<strong>手がかりがどこかに残ったら、その瞬間に打ち消し合いは起きなくなる</strong>。<br>……つまり、量子コンピュータの敵は<strong><a href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/" target="_blank" rel="noopener" style="color:#3f6191;text-decoration:underline">デコヒーレンス</a></strong>ですね。空気の分子1個でも、光子1個でも、量子ビットにぶつかって「どちらの状態だったか」の手がかりを持ち去ってしまえば、計算の核心が失われる。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通りだ。しかも事態はもっと厳しい。ふつうのコンピュータの部品は、雑音に対して驚くほど頑丈だ。電圧が少しふらついても、「0.4ボルト以下なら0、2.4ボルト以上なら1」と<strong>丸めてしまえる</strong>からね。誤りは自然に消される。<br>量子ビットではそれができない。矢印の長さも向きも<strong>連続的な値</strong>で、しかも向きの情報こそが計算の中身だ。丸める先がない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">実際、どのくらい弱いんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">数字で見よう。いま主流の超伝導方式の量子ビットは、絶対零度からわずか100分の1度ほどの極低温、しかも高真空の中に置かれている。それだけ守っても、重ね合わせが保てる時間――<strong>コヒーレンス時間</strong>――は<strong>数十から数百マイクロ秒</strong>だ。1マイクロ秒は100万分の1秒だから、100マイクロ秒でも1万分の1秒だね。この一瞬のあいだに、計算を最後まで終えなければならない。<br>ゲート1回の誤り率も見よう。よく整備された装置で、量子ビット1個に当てるゲートで<strong>0.1%以下</strong>、2個をもつれさせるゲートで<strong>0.1〜1%程度</strong>。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">1回あたり0.1%……一見よさそうですが、計算はゲートを何回も重ねますよね。1000回のゲートを通したら、どこも間違えない確率は0.999を1000回掛けることになって、だいたい0.37。<strong>3回に2回は失敗</strong>です。<br>ショアのアルゴリズムで617桁の数を扱ったら、ゲートは何回くらい必要なんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble"><strong>10億回を超える</strong>と見積もられている。10兆回に達するという試算もある。<br>ということは、まともに答えを出すには、ゲート1回あたりの誤り率を<strong>10億分の1よりさらに小さく</strong>しなければならない。いまの1000分の1から、その水準まで――装置を丁寧に作り込むだけでは、どうやっても届かない距離だ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="err-svg" class="qc-svg" viewBox="0 0 372 176" width="100%" role="img" aria-label="ゲート1回あたりの誤り率と、計算全体が最後まで無事に終わる確率の関係を示すグラフ。ゲートの回数が増えるほど、要求される誤り率は急激に厳しくなる">
+          <text class="strong" x="186" y="16" text-anchor="middle">ゲートを重ねるほど、必要な精度は跳ね上がる</text>
+          <g id="err-body"></g>
+        </svg>
+        <div class="anim-ctrl">
+          <span class="ctrl-label">ゲート1回あたりの誤り率</span>
+          <input type="range" id="e-slider" min="0" max="90" step="10" value="20" aria-label="ゲート1回あたりの誤り率を変える" style="flex:1;max-width:240px;min-width:140px;accent-color:#3f6191">
+        </div>
+        <div class="readout">
+          <span>誤り率 <b id="e-rate">0.1%</b></span>
+          <span>1000回のゲート後に無事な確率 <b id="e-p3">37%</b></span>
+          <span>100万回後 <b id="e-p6">ほぼ0%</b></span>
+          <span>10億回後 <b id="e-p9">ほぼ0%</b></span>
+        </div>
+        <div class="diagram-caption">横軸はゲート1回あたりの誤り率（右へ行くほど高精度）、縦軸は計算全体が最後まで無事に終わる確率。線はゲートの回数ごとに引いてある。<strong>回数が10倍になるたび、要求される誤り率も10倍厳しくなる</strong>。いまの実機は左端あたり（0.1〜1%）で、ショアのアルゴリズムに必要な10億回の線に乗るには、右の端よりさらに先――装置の作り込みだけでは到達できない領域が必要になる。だから、別の発想が要る。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ふつうのコンピュータでも、通信や記憶装置では誤りが起きますよね。それは<strong>誤り訂正</strong>で直していると聞きました。同じ手は使えないんですか。<br>いちばん素朴なやり方は、同じデータを3つコピーしておいて、食い違ったら<strong>多数決</strong>を取る方法です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まさにそれをやりたい。ところが、量子ビットに対しては<strong>3つの壁</strong>が立ちはだかる。ひとつずつ見ていこう。<br><strong>壁①：コピーが作れない。</strong>未知の量子状態をそっくり複製する操作は、原理的に存在しないことが証明されている。<strong>複製不可能定理</strong>という。ゲートは長さの合計を保つ回転でなければならなかったが、「どんな状態でも複製する」操作はその条件を満たせないんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">コピーが作れないなら、多数決のための「同じもの3つ」が用意できない……。<br>それに、仮に3つあったとしても、<strong>壁②</strong>が思い浮かびます。多数決をするには3つの中身を<strong>見比べる</strong>必要がありますよね。でも量子ビットは、測定した瞬間に0か1に決まって、重ね合わせが壊れてしまう。<strong>誤りを探すために覗いた時点で、守りたかったものが消える</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">壁②を自分で見つけたね。そして<strong>壁③</strong>もある。ふつうのビットの誤りは「0が1に化けた」という1種類だけだ。ところが量子ビットは、<strong>ほんの少しだけ回ってしまう</strong>という誤り方をする。矢印が3度だけずれる、というような。誤りの種類が連続無限にあるように見える。<br>この3つの壁のせいで、1990年代の初めには「量子コンピュータは原理的に無理だ」と考える研究者も多かった。ところが1995年、ショア自身が――そしてほぼ同時にアンドリュー・スティーンが――突破口を開いた。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">3つとも本質的な壁に見えます。どうやって越えたんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まず壁①。コピーは作れないが、<strong>1個ぶんの情報を、たくさんの量子ビットのもつれた模様として広げて書く</strong>ことはできる。たとえば、守りたい状態が「|0⟩ に矢印 a、|1⟩ に矢印 b」だとしよう。これを量子ビット3個に、<strong>|000⟩ に a、|111⟩ に b</strong> という形で書く。<br>これはコピーではない。3個をばらばらに見ても、どこにも a や b は入っていないからね。情報は<strong>3個のあいだの関係</strong>として保存されている。こうして作った1個ぶんの単位を<strong>論理量子ビット</strong>と呼ぶ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">なるほど……。でも壁②はまだ残っています。3個のうち1個が反転して <strong>|010⟩ に a、|101⟩ に b</strong> のようになったとして、それを<strong>どうやって見つける</strong>んですか。見た瞬間に壊れるのに。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ここが、この旅でいちばん美しい場面かもしれない。答えの形は、きみがドイチュのところで自分で言い当てたものと<strong>まったく同じ</strong>だよ。――思い出してごらん。あのとき、読み出し口は1つしかないのに、なぜ答えが得られたのかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">個々の値ではなく、<strong>全体についての性質だけ</strong>を読んだからです。f(0) でも f(1) でもなく「2つが同じか違うか」だけを――<br>……<strong>そうか！</strong> 同じことをすればいいんですね。3個の量子ビットそれぞれの値を読むのではなく、<strong>「1番目と2番目は同じか、違うか」だけを読む</strong>。<br>元の状態は |000⟩ と |111⟩ の重ね合わせですから、どちらの行でも1番目と2番目は<strong>同じ</strong>です。だから「同じ」という答えは、a と b について何も語らない。<strong>覗いても、守りたい情報は漏れない！</strong></div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り、たどり着いたね。それが<strong>シンドローム測定</strong>だ。「症状だけを診る」という意味の名前だよ。<br>3個の量子ビットについて、「1番目と2番目は同じか」「2番目と3番目は同じか」の2つを測る。答えの組み合わせで、どこが反転したかが一意に決まる。<br>・両方「同じ」→ どこも壊れていない<br>・1組目だけ「違う」→ <strong>1番目</strong>が反転した<br>・両方「違う」→ <strong>2番目</strong>が反転した<br>・2組目だけ「違う」→ <strong>3番目</strong>が反転した<br>場所が分かったら、その量子ビットに X ゲートを当てて戻すだけ。<strong>a と b の値は最後まで一度も覗かれない</strong>。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">壁②が消えました。残るは<strong>壁③</strong>――「ほんの少しだけ回ってしまう」連続的な誤りです。3度だけずれた誤りは、「反転した／していない」のどちらでもありません。これはどうするんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ここでも測定が味方をする。「少しだけ反転しかけている状態」は、<strong>「反転していない状態」と「反転した状態」の重ね合わせ</strong>として書ける。3度のずれなら、「反転していない」の矢印がとても長く、「反転した」の矢印がとても短い重ね合わせだ。<br>そこにシンドローム測定をすると、答えは必ず「同じ」か「違う」のどちらか<strong>1つに決まる</strong>。ほとんどの場合は「同じ」（誤りなし）が出て、状態はきれいな元の形に戻る。ごくまれに「違う」が出るが、そのときは<strong>完全に反転した状態</strong>になっているので、X で戻せばいい。<br>つまり<strong>測定が、連続的な誤りを「あり」か「なし」かに丸めてくれる</strong>。ふつうのコンピュータが電圧を丸めていたのと同じことが、ここで起きるわけだね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">測定が敵ではなく味方になるんですね。3つの壁がぜんぶ越えられた。<br>ただ、いまの3個の符号は「反転」の誤りしか直せませんよね。矢印の<strong>向き</strong>が正反対になる誤り――Zゲートがかかってしまったような誤り――は、|000⟩ と |111⟩ のどちらも1番目と2番目は同じままなので、シンドロームに引っかかりません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい質問だね。その通りで、実用の符号は両方の誤りに備える。いま本命とされているのは<strong>表面符号</strong>という方式で、物理量子ビットを碁盤の目のように2次元に並べ、隣り合う仲間どうしのシンドロームを絶えず測り続ける。誤りは格子の上の「印」として現れ、その並び方から場所を推定して直す。<br>代償は数だ。誤りを十分に抑えた<strong>論理量子ビット1個を作るのに、物理量子ビットが1000個から数千個</strong>要る。前回話した「2048ビットRSAに物理量子ビット百万個規模」という見積もりは、ここから来ているんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">1000個で1個……。でも、ちょっと待ってください。誤りを直すための操作そのものにも、量子ビットとゲートを使いますよね。<strong>直そうとして、直す作業の中で新しい誤りが増える</strong>のでは。物理量子ビットを増やすほど誤りの起きる場所も増えるわけですし、これでは追いかけっこで、いつまでも終わらない気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それはこの分野で最も本質的な問いで、答えははっきりしている。<strong>閾値定理</strong>という定理だ。<br>訂正作業で増える誤りも全部数えたうえで、それでも――<strong>部品1個あたりの誤り率が、ある決まった値（しきい値）より小さくさえあれば、規模を大きくするほど、論理量子ビットの誤り率はいくらでも小さくできる</strong>。追いかけっこには勝てる、ということが証明されている。<br>逆に、しきい値より悪い部品をいくら並べても、誤りは減らない。<strong>この一線をまたげるかどうかが、実用化の分かれ目</strong>だ。表面符号のしきい値は<strong>およそ1%</strong>と見積もられている。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">1%……さっき聞いた実機のゲート誤り率は0.1〜1%程度でした。<strong>ちょうど、その一線のあたりにいる</strong>ということですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まさにいま、その一線をまたごうとしている段階だ。2024年には、符号の規模を大きくするほど論理量子ビットの誤り率が実際に下がっていくことが、超伝導方式の実機で示された。しきい値の内側に入った証拠として、大きな節目とされている。<br>とはいえ、実証されたのは<strong>論理量子ビット1個ぶんを保つところ</strong>までで、それを何千個も並べて長い計算を回すのは、まだこれからだ。いまの段階を、誤り訂正のない中規模な機械という意味で<strong>NISQ（ニスク）時代</strong>と呼ぶことがある。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="ecc-svg" class="qc-svg" viewBox="0 0 372 224" width="100%" role="img" aria-label="3量子ビットの誤り訂正シミュレータ。守りたい状態を3個の量子ビットのもつれた模様として保存し、1個が反転してもシンドローム測定で場所を突き止めて直す様子を示す">
+          <text class="strong" x="186" y="16" text-anchor="middle">シンドローム測定：中身を見ずに、誤りの場所だけを知る</text>
+          <g id="ecc-body"></g>
+        </svg>
+        <div class="anim-ctrl">
+          <button type="button" class="btn" id="c-e1">1番目を反転（雑音）</button>
+          <button type="button" class="btn" id="c-e2">2番目を反転</button>
+          <button type="button" class="btn" id="c-e3">3番目を反転</button>
+          <button type="button" class="btn" id="c-fix">🩺 シンドロームを測って直す</button>
+          <button type="button" class="btn" id="c-reset">↺ 最初から</button>
+        </div>
+        <div class="gate-log" id="c-log"></div>
+        <div class="diagram-caption">守りたい1個ぶんの情報は、|000⟩ に矢印 a、|111⟩ に矢印 b という<strong>3個の量子ビットにまたがる模様</strong>として保存されている（コピーではない――3個をばらばらに見ても a も b もどこにもない）。雑音のボタンを押すと、どれか1個が反転して模様が崩れる。<br>「シンドロームを測って直す」を押すと、<strong>各量子ビットの値ではなく、「1番目と2番目は同じか」「2番目と3番目は同じか」の2つだけ</strong>を測る。元の模様ではどちらの行でも隣どうしは同じなので、この答えは a と b について何も語らない――<strong>覗いても守りたい情報は漏れない</strong>。それでも答えの組み合わせから、反転した場所が一意に決まる。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">全体の見取り図がほしいです。<strong>いまの実機は、何ができて、何ができないんですか。</strong></div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">正直なところを並べよう。<br><strong>できていること</strong>：物理量子ビットを数百から千個ほど載せた機械が実際に動いている。ゲートの誤り率は誤り訂正のしきい値の周辺まで来た。規模を大きくすると論理誤り率が下がることも実証された。特定の人工的な課題で、ふつうのコンピュータより速く計算できたという報告もある。<br><strong>できていないこと</strong>：実用的な問題で、ふつうのコンピュータに確実に勝つこと。ショアのアルゴリズムで意味のある大きさの数を分解すること。誤り訂正済みの論理量子ビットをたくさん並べて長時間動かすこと。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">率直な整理をありがとうございます。……最後にひとつだけ。<strong>この機械は、いったい何の役に立つんでしょうか。</strong>暗号を破るためだけに、これだけの苦労をするわけではないですよね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい問いで旅を締めくくれるね。いちばん期待されているのは、暗号解読ではなく<strong>量子の世界そのものを計算すること</strong>だ。<br>分子の中で電子がどう振る舞うかは、まさにこの旅で扱ってきた矢印の表そのもので決まる。電子が数十個あれば、表は2ⁿの勢いで膨れ上がり、ふつうのコンピュータは正直な計算をあきらめて近似に頼るしかない。<strong>量子の振る舞いを量子で真似る</strong>のなら、この爆発は起こらない。1982年にリチャード・ファインマンが量子コンピュータを構想したとき、彼が念頭に置いていたのはまさにこれだった。<br>新しい薬の設計、より良い電池や触媒の材料探し、窒素を肥料に変える反応の解明――そういうところに効くと期待されている。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">旅の全体をまとめさせてください。<br>量子ビットは、答え候補それぞれに矢印を割り当てた<strong>一覧表</strong>。計算はその表を<strong>混ぜ、回す</strong>こと。読み出せるのは<strong>1つだけ</strong>。だから速さは「同時に計算するから」ではなく、<strong>いらない候補の矢印を打ち消し、欲しい候補を強め合わせる干渉の設計</strong>から生まれる。その設計が強く効くのは、問題に構造があるとき――ショアの周期のように。構造がなければグローバーの2次加速まで。<br>そして、その干渉こそが最大の弱点でもある。手がかりが1つ漏れれば計算は死ぬ。だから極低温と真空で守り、それでも足りない分を、<strong>中身を覗かずに症状だけを診る</strong>という発明で補っている。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">よくまとまったね。これで、きみは「量子コンピュータはすごい」という言葉を、中身から語れるようになった。<strong>すごい部分と、すごくない部分を、区別して語れる</strong>――それがいちばん大事なことだよ。<br>――そしてもうひとつ。二重スリットの縞から始まって、複素数の矢印、もつれ、デコヒーレンス、そして今日の計算機まで、きみが使った道具はずっと同じだった。<strong>区別がつかない道筋は、矢印を足してから2乗する。</strong>この1行が、世界のこれだけ広い範囲を説明してしまう。物理学が美しいと言われるのは、こういうところなんだ。<br>おつかれさま。旅は終わりだ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【最大の敵と誤り訂正 ― そして現在地】</span>
+        <span class="step">・計算のすべてが干渉でできている以上、<strong>手がかりの漏れ＝デコヒーレンス</strong>は致命傷。しかも量子ビットは電圧のように「丸める」ことができない</span>
+        <span class="step">・数字：超伝導方式でコヒーレンス時間は<strong>数十〜数百マイクロ秒</strong>、ゲート誤り率は<strong>0.1〜1%程度</strong>。<br class="wbr">ショアで大きな数を扱うにはゲート<strong>10億回超</strong>が必要で、そのままでは到底届かない</span>
+        <span class="step">・3つの壁：①<strong>コピーが作れない</strong>（複製不可能定理）②<strong>測定すると壊れる</strong> ③誤りが<strong>連続的</strong></span>
+        <span class="step">・突破口：①1個ぶんを<strong>複数の量子ビットにまたがる模様</strong>として書く（|000⟩ に a、|111⟩ に b ＝ 論理量子ビット）<br class="wbr">②<strong>シンドローム測定</strong>＝値ではなく「隣どうしが同じか違うか」だけを測る。守りたい情報は漏れず、誤りの場所だけ分かる<br class="wbr">③測定が連続的な誤りを「あり／なし」に丸めてくれる</span>
+        <span class="step">・<strong>表面符号</strong>：物理量子ビットを2次元に並べて絶えず症状を診る。<span class="nw">論理1個に物理1000〜数千個</span></span>
+        <span class="step">・<strong>閾値定理</strong>：訂正作業で増える誤りも数えたうえで、部品の誤り率が<span class="nw">しきい値（表面符号で約1%）</span>より小さければ、規模を大きくするほど論理誤り率をいくらでも下げられる</span>
+        <span class="step">・現在地：物理量子ビット<strong>数百〜千個</strong>、しきい値の周辺。2024年に「規模を上げると論理誤り率が下がる」ことが実機で実証された。実用計算はこれから（<span class="nw">NISQ時代</span>）</span>
+        <span class="step">・最有力の応用は暗号解読ではなく<strong>分子・材料のシミュレーション</strong>――量子の振る舞いを量子で真似る（ファインマンの構想、1982年）</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 量子コンピュータにとってデコヒーレンスが致命的なのはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">量子ビットが熱で壊れて、二度と使えなくなるから</button>
+          <button class="choice-btn">量子ビットの数が減ってしまい、計算できる問題が小さくなるから</button>
+          <button class="choice-btn">環境に手がかりが残ると道筋の区別がついてしまい、速さの源だった打ち消し合いが起きなくなるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 量子コンピュータの速さは、いらない候補の矢印を打ち消す干渉から来ていた。手がかりが漏れれば「それぞれ2乗してから足す」に切り替わり、干渉が消える。計算の中身そのものが失われるので、部品が壊れるより深刻だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. シンドローム測定が「守りたい情報を壊さずに誤りを見つけられる」のはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">各量子ビットの値ではなく「隣どうしが同じか違うか」だけを測るから。元の模様ではどちらの行でも隣どうしは同じなので、この答えは中身について何も語らない</button>
+          <button class="choice-btn">測定してもすぐ元に戻せる特別な測定装置を使うから</button>
+          <button class="choice-btn">誤りが起きた瞬間に自動で警報が鳴る仕組みがあるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ドイチュのアルゴリズムで「f(0) でも f(1) でもなく、2つが同じか違うかだけを読んだ」のとまったく同じ発想だ。全体についての性質だけを取り出せば、個々の中身は覗かずに済む。この一手で、量子誤り訂正は可能になった。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 閾値定理が言っていることは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">量子ビットを増やせば増やすほど、必ず誤りは減っていく</button>
+          <button class="choice-btn">部品1個あたりの誤り率がしきい値より小さければ、規模を大きくするほど論理量子ビットの誤り率をいくらでも小さくできる。しきい値より悪ければ、いくら並べても減らない</button>
+          <button class="choice-btn">誤り訂正をしても、訂正作業で増える誤りのせいで結局は追いつかれてしまう</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 訂正作業そのものが生む誤りまで数えたうえでの定理で、量子コンピュータが原理的に可能だと分かった決定的な結果だ。表面符号のしきい値は約1%。いまの実機はちょうどその一線をまたごうとしている段階にある。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage7.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>結果へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QC.initStagePage(8);</script>
+
+<script>
+(function(){
+  // 図1: 誤り率とゲート回数に対する「無事に終わる確率」
+  var g = document.getElementById('err-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  // 数字を上付き文字に変換（10のべき乗の表示用）
+  function sup(n) {
+    var d = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+    var s = String(Math.round(Math.abs(n))).split('').map(function (c) { return d[+c]; }).join('');
+    return (n < 0 ? '⁻' : '') + s;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  // 横軸: 誤り率の指数（10^-1 〜 10^-10）、縦軸: 成功確率 0..1
+  var X0 = 40, X1 = 344, Y0 = 138, Y1 = 34, EMIN = 1, EMAX = 10;
+  el('line', {x1: X0, y1: Y0, x2: X1, y2: Y0, stroke: 'var(--ink)', 'stroke-width': 1.4});
+  el('line', {x1: X0, y1: Y0, x2: X0, y2: Y1, stroke: 'var(--ink)', 'stroke-width': 1.4});
+  [1, 4, 7, 10].forEach(function (e) {
+    var x = X0 + (X1 - X0) * (e - EMIN) / (EMAX - EMIN);
+    el('line', {x1: x, y1: Y0, x2: x, y2: Y0 + 4, stroke: 'var(--ink)'});
+    txt(x, Y0 + 18, 'label', '10' + sup(-e));
+  });
+  txt((X0 + X1) / 2, Y0 + 32, 'label', 'ゲート1回あたりの誤り率（右ほど高精度）');
+  [0, 0.5, 1].forEach(function (p) {
+    var y = Y0 - (Y0 - Y1) * p;
+    el('line', {x1: X0 - 4, y1: y, x2: X0, y2: y, stroke: 'var(--ink)'});
+    txt(X0 - 6, y + 4, 'label', Math.round(p * 100) + '%', 'end');
+  });
+  var CURVES = [
+    {gates: 1e3, color: '#2f7a6b', label: '1000回'},
+    {gates: 1e6, color: '#8a5a2a', label: '100万回'},
+    {gates: 1e9, color: '#b5504a', label: '10億回'}
+  ];
+  CURVES.forEach(function (c, ci) {
+    var d = '';
+    for (var e = EMIN; e <= EMAX; e += 0.05) {
+      var p = Math.exp(-c.gates * Math.pow(10, -e));
+      var x = X0 + (X1 - X0) * (e - EMIN) / (EMAX - EMIN);
+      var y = Y0 - (Y0 - Y1) * p;
+      d += (e === EMIN ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+    }
+    el('path', {d: d, fill: 'none', stroke: c.color, 'stroke-width': 2.2});
+    var t = txt(X1 - 2, Y1 + 4 + ci * 14, 'accent', 'ゲート ' + c.label, 'end');
+    t.style.fill = c.color;
+  });
+  // 現在の実機の帯（0.1〜1%）
+  var xa = X0 + (X1 - X0) * (2 - EMIN) / (EMAX - EMIN);
+  var xb = X0 + (X1 - X0) * (3 - EMIN) / (EMAX - EMIN);
+  el('rect', {x: Math.min(xa, xb), y: Y1, width: Math.abs(xb - xa), height: Y0 - Y1, fill: '#3f6191', opacity: .10});
+  var nowT = txt((xa + xb) / 2, Y1 - 3, 'accent', 'いまの実機');
+  nowT.style.fill = '#3f6191';
+  var marker = el('line', {stroke: '#3f6191', 'stroke-width': 1.6, 'stroke-dasharray': '4 3'});
+  var slider = document.getElementById('e-slider');
+  var rEl = document.getElementById('e-rate'), p3 = document.getElementById('e-p3'),
+      p6 = document.getElementById('e-p6'), p9 = document.getElementById('e-p9');
+  function fmtP(v) {
+    if (v >= 0.995) return '約100%';
+    if (v < 0.0001) return 'ほぼ0%';
+    if (v < 0.01) return (v * 100).toFixed(2) + '%';
+    return Math.round(v * 100) + '%';
+  }
+  function fmtRate(e) {
+    var v = Math.pow(10, -e) * 100;
+    if (v >= 0.001) return v.toPrecision(2).replace(/0+$/, '').replace(/\.$/, '') + '%';
+    return '10' + sup(-(e - 2)) + ' %';
+  }
+  function upd() {
+    var e = EMIN + (EMAX - EMIN) * (slider ? parseInt(slider.value, 10) : 30) / 90;
+    var x = X0 + (X1 - X0) * (e - EMIN) / (EMAX - EMIN);
+    marker.setAttribute('x1', x); marker.setAttribute('y1', Y1);
+    marker.setAttribute('x2', x); marker.setAttribute('y2', Y0);
+    var p = Math.pow(10, -e);
+    if (rEl) rEl.textContent = fmtRate(e);
+    if (p3) p3.textContent = fmtP(Math.exp(-1e3 * p));
+    if (p6) p6.textContent = fmtP(Math.exp(-1e6 * p));
+    if (p9) p9.textContent = fmtP(Math.exp(-1e9 * p));
+  }
+  if (slider) slider.addEventListener('input', upd);
+  upd();
+})();
+</script>
+
+<script>
+(function(){
+  // 図2: 3量子ビット反復符号のシンドローム測定シミュレータ
+  var g = document.getElementById('ecc-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CA = '#3f6191', CB = '#2f7a6b', CN = '#b5504a';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  // 2行（aの行、bの行）×3量子ビットのマス目
+  var CX = [128, 186, 244], RY = [82, 126], BW = 44, BH = 30;
+  txt(60, 58, 'label', '行');
+  CX.forEach(function (x, i) { txt(x, 58, 'label', (i + 1) + '番目'); });
+  var cells = [], labels = [];
+  [0, 1].forEach(function (r) {
+    var lab = txt(64, RY[r] + 5, 'strong', r === 0 ? '矢印 a' : '矢印 b', 'middle');
+    lab.style.fill = r === 0 ? CA : CB;
+    var row = [], rowL = [];
+    CX.forEach(function (x) {
+      row.push(el('rect', {x: x - BW / 2, y: RY[r] - BH / 2, width: BW, height: BH, rx: 5, fill: 'var(--paper2)', stroke: 'var(--line)'}));
+      rowL.push(txt(x, RY[r] + 5, 'strong', '0'));
+    });
+    cells.push(row); labels.push(rowL);
+  });
+  var stateTxt = txt(186, 36, 'accent', '');
+  // シンドローム表示
+  txt(186, 154, 'label', 'シンドローム（測るのはこの2つだけ）');
+  var s1 = txt(128, 174, 'strong', '');
+  var s2 = txt(244, 174, 'strong', '');
+  txt(128, 190, 'label', '1番目と2番目');
+  txt(244, 190, 'label', '2番目と3番目');
+  var verdict = txt(186, 210, 'strong', '');
+
+  var bits = [0, 0, 0]; // 反転したかどうか（0=正常, 1=反転）
+  var revealed = false;
+  var logEl = document.getElementById('c-log');
+
+  function render() {
+    for (var r = 0; r < 2; r++) {
+      for (var i = 0; i < 3; i++) {
+        var base = r; // aの行は000、bの行は111
+        var v = base ^ bits[i];
+        labels[r][i].textContent = String(v);
+        var broken = bits[i] === 1;
+        cells[r][i].setAttribute('fill', broken ? '#fbe9e8' : 'var(--paper2)');
+        cells[r][i].setAttribute('stroke', broken ? CN : 'var(--line)');
+        labels[r][i].style.fill = broken ? CN : 'var(--ink)';
+      }
+    }
+    var row0 = labels[0].map(function (l) { return l.textContent; }).join('');
+    var row1 = labels[1].map(function (l) { return l.textContent; }).join('');
+    stateTxt.textContent = '|' + row0 + '⟩ に矢印 a、|' + row1 + '⟩ に矢印 b';
+    var d1 = bits[0] ^ bits[1], d2 = bits[1] ^ bits[2];
+    if (revealed) {
+      s1.textContent = d1 ? '違う' : '同じ';
+      s2.textContent = d2 ? '違う' : '同じ';
+      s1.style.fill = d1 ? CN : CB;
+      s2.style.fill = d2 ? CN : CB;
+    } else {
+      s1.textContent = '?'; s2.textContent = '?';
+      s1.style.fill = 'var(--muted)'; s2.style.fill = 'var(--muted)';
+    }
+    var err = bits[0] + bits[1] + bits[2];
+    if (logEl) {
+      if (err === 0) {
+        logEl.innerHTML = '状態: <strong style="color:#2f7a6b">正常</strong>（|000⟩ に a、|111⟩ に b の模様が保たれている）';
+      } else if (err === 1) {
+        var w = bits.indexOf(1) + 1;
+        logEl.innerHTML = '状態: <strong style="color:#b5504a">' + w + '番目が反転</strong>　→　シンドロームを測れば場所が特定でき、X ゲートで戻せる';
+      } else {
+        logEl.innerHTML = '状態: <strong style="color:#b5504a">2個以上が反転</strong>　→　3個の符号では直しきれない（これが「符号の規模を大きくする」動機になる）';
+      }
+    }
+  }
+  function diagnose() {
+    revealed = true;
+    var d1 = bits[0] ^ bits[1], d2 = bits[1] ^ bits[2];
+    var msg, which = -1;
+    if (!d1 && !d2) { msg = '両方「同じ」→ 誤りなし（何もしない）'; }
+    else if (d1 && !d2) { which = 0; msg = '1組目だけ「違う」→ 1番目が反転 → X で訂正'; }
+    else if (d1 && d2) { which = 1; msg = '両方「違う」→ 2番目が反転 → X で訂正'; }
+    else { which = 2; msg = '2組目だけ「違う」→ 3番目が反転 → X で訂正'; }
+    verdict.textContent = msg;
+    verdict.style.fill = which < 0 ? CB : CA;
+    render();
+    if (which >= 0) {
+      setTimeout(function () {
+        bits[which] ^= 1;
+        revealed = false;
+        verdict.textContent = '訂正完了：a も b も一度も覗かれていない';
+        verdict.style.fill = CB;
+        render();
+      }, 1100);
+    }
+  }
+  ['c-e1', 'c-e2', 'c-e3'].forEach(function (id, i) {
+    var b = document.getElementById(id);
+    if (b) b.addEventListener('click', function () {
+      bits[i] ^= 1; revealed = false; verdict.textContent = '';
+      render();
+    });
+  });
+  var f = document.getElementById('c-fix');
+  if (f) f.addEventListener('click', diagnose);
+  var rb = document.getElementById('c-reset');
+  if (rb) rb.addEventListener('click', function () {
+    bits = [0, 0, 0]; revealed = false; verdict.textContent = ''; render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>

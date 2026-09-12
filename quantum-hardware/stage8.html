@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12303c">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE8 100万量子ビットへの壁 ― 量子コンピュータはどう作るのか</title>
+<meta name="description" content="なぜまだ「役に立つ量子コンピュータ」がないのか。誤りの算数（0.3%の誤りが1000ゲートで計算を壊す）、誤り訂正のハードウェアコスト（1論理＝物理約1000個）、2024年の転換点、そして配線の洪水問題と多重化・極低温制御・モジュール化という突破口までを、誇張なしに直視する最終ステージ。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage8.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはどう作るのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE8 100万量子ビットへの壁 ― 量子コンピュータはどう作るのか">
+<meta property="og:description" content="数百量子ビットと「役に立つ100万量子ビット」の間にある谷を、誇張なしに直視する。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage8.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qh-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qh-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qh-svg .accent{fill:#2f8a8f;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🧊</a> <span>量子コンピュータはどう作るのか</span></div>
+      <div class="brand-sub">STAGE 8 ― 100万量子ビットへの壁 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 8</span><span class="chapter-title">100万量子ビットへの壁</span>
+        <div class="chapter-sub">スケールアップと現在地</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">最後の問い「なぜまだ役に立つ量子コンピュータがないのか」に、誇張も悲観もなしで答えよう。誤りの算数、誤り訂正のハードウェアコスト、配線の洪水――数百量子ビットと100万量子ビットの間の谷を自分の言葉で説明できれば、この旅は完結する。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最終ステージだ。まず<strong>誤りの算数</strong>から入ろう。<br>2量子ビットゲートの成功率を、気前よく99.7%（誤り0.3%）としよう。計算というのはゲートの積み重ねだから、誤りも積み重なる。では、ゲートを<strong>1000回</strong>続けたとき、一度も誤らずに走り切れる確率はどのくらいだと思う？ ざっくりでいい、0.997を1000回掛けるとどうなるか。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">見積もってみます。0.3%の誤りが1000回ですから、期待される誤りの回数は0.003×1000＝<strong>3回</strong>。平均3回はしくじる勘定ですから、一度も誤らずに走り切れる見込みは、<strong>ほとんど残らない</strong>はずです。<br>1000ゲートですでにこれ……。前の旅で、ショアのアルゴリズムで実用サイズの暗号を破るには<strong>何十億ゲート</strong>という規模が要ると教わりました。10億ゲートで誤り300万回。素の物理量子ビットでは、精度をどれだけ磨いても<strong>絶対に届かない</strong>。<br>だから前の旅の結論――<strong>誤り訂正</strong>で、たくさんの物理量子ビットに1個の「論理量子ビット」を守らせる――が必須になるんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その見積もりで合っている。きっちり掛け算すると、無傷で走り切れる確率は<strong>約5%</strong>まで落ちる。<br>そして誤り訂正のハードウェア代は、前の旅の最終ステージで請求書を見たはずだよ。どんな中身だったかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">復習します。<a href="https://quantum-mechanics.habatakijuku.com/quantum-computer/" target="_blank" rel="noopener" style="color:#2f8a8f;text-decoration:underline">量子コンピュータの旅</a>の結論は2つでした。1つ、訂正の装置そのものもゲートと測定でできているから、<strong>訂正作業自身が誤る</strong>。物理の誤り率がある境目（閾値）より悪いと、訂正すればするほどかえって誤りが増える。2つ、境目の良い側にいても、いまの誤り率0.1〜1%では、論理量子ビット1個を守るのに物理量子ビットが<strong>およそ1000個</strong>要る、でした。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。だから掛け算が重い。ショアで実用サイズの暗号を破るには論理量子ビットが数千個規模――物理に直すと<strong>数百万個</strong>だ。現在の実機は、最大級のもので物理<strong>数百〜1000個程度</strong>。つまり、いまの機械と「役に立つ機械」の間には、<strong>数千倍</strong>の谷が横たわっている。これが「まだ役に立たない」の第一の答えだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 240" width="100%" role="img" aria-label="現在地と必要規模の谷を示す図。対数目盛の棒グラフで、現在の実機は物理量子ビット数百〜1000個、実用アルゴリズムには論理数千個＝物理数百万個が必要で、数千倍の開きがある">
+          <text class="strong" x="186" y="18" text-anchor="middle">数千倍の谷 ― 現在地と「役に立つ規模」</text>
+          <!-- 軸 -->
+          <line x1="60" y1="200" x2="340" y2="200" stroke="var(--ink)" stroke-width="1.8"/>
+          <line x1="60" y1="200" x2="60" y2="40" stroke="var(--ink)" stroke-width="1.8"/>
+          <text class="label" x="34" y="124" text-anchor="middle" transform="rotate(-90 34 124)">物理量子ビット数（対数）</text>
+          <!-- 目盛 -->
+          <text class="label" x="54" y="196" text-anchor="end">100</text>
+          <text class="label" x="54" y="152" text-anchor="end">1000</text>
+          <text class="label" x="54" y="108" text-anchor="end">10万</text>
+          <text class="label" x="54" y="64" text-anchor="end">1000万</text>
+          <!-- 現在 -->
+          <rect x="92" y="160" width="60" height="40" fill="#2f8a8f" opacity=".85"/>
+          <text class="strong" x="122" y="152" text-anchor="middle" fill="#2f8a8f">現在の実機</text>
+          <text class="label" x="122" y="216" text-anchor="middle">数百〜1000個</text>
+          <!-- 必要 -->
+          <rect x="232" y="56" width="60" height="144" fill="#b5504a" opacity=".8"/>
+          <text class="strong" x="262" y="48" text-anchor="middle" fill="#b5504a">実用規模</text>
+          <text class="label" x="262" y="216" text-anchor="middle">数百万個</text>
+          <!-- 矢印 -->
+          <path d="M 158 168 Q 192 120 226 76" stroke="var(--muted)" stroke-width="2" fill="none" stroke-dasharray="6 4"/>
+          <path d="M 218 74 L 228 74 L 224 84" stroke="var(--muted)" stroke-width="2" fill="none"/>
+          <text class="label" x="186" y="140" text-anchor="middle">×数千</text>
+          <text class="label" x="192" y="160" text-anchor="middle">誤り訂正：1論理＝物理約1000個</text>
+        </svg>
+        <div class="diagram-caption">対数目盛での現在地。実用アルゴリズム（例：実用サイズの暗号を破るショア）には誤りを抑えた<strong>論理量子ビット</strong>が数千個必要で、誤り率0.1〜1%の物理量子ビットで論理1個を守るには<strong>約1000個</strong>かかるため、必要な物理量子ビットは<strong>数百万個</strong>。現在の実機（数百〜1000個）との間には数千倍の谷がある。2024年には「守りの陣地を広げるほど論理誤りが減る」ことが105量子ビットの実機で実証され、谷を渡る道具立て自体は動き始めた。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">谷の深さは分かりました。ただ、渡る前に確かめたいことがあります。復習の1つめ――閾値です。いまの0.1〜1%は、境目の<strong>どちら側</strong>にいるんですか？ そこが悪い側なら、数百万個並べても意味がありません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その質問への答えが、実はこの分野の<strong>2024年最大のニュース</strong>なんだ。<br>グーグルが105量子ビットのチップ（Willow）で、守りの陣地――誤り訂正に使う物理量子ビットの面積――を段階的に広げる実験をした。悪い側にいれば、広げるほど論理量子ビットの誤りは増える。結果は逆で、<strong>陣地を一回り広げるごとに、論理量子ビットの誤りがおよそ半分に減った</strong>。そして論理量子ビットの寿命が、そのチップ上の最良の物理量子ビットの寿命を超えた。<br>つまり人類は、ついに境目の<strong>良い側</strong>に立ったことを実験で確かめた。「物理量子ビットを増やせば増やすほど、計算は確実になる」――誤り訂正が絵に描いた餅から工学に変わった瞬間だ。<br>ただし誇張は禁物だよ。いまの論理誤り率は1000回に1回級。実用アルゴリズムには<strong>100万回に1回以下</strong>が要る。入口に立った、が正確な現在地だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">誤りの敵は分かりました。では、予告にあったもう1つの敵――<strong>配線の洪水</strong>とは何ですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">数えれば見えてくる。量子ビット1個を働かせるのに要る線を数えよう。矢印を回すパルスの線が1本。蛇口方式なら結合器の開閉線が加わる。読み出しは工夫して10個で1本を共有できる。ならして1個あたり<strong>2〜3本</strong>としよう。<br>1000個なら2000〜3000本の同軸ケーブルが、あの直径50センチほどの真空の缶の中を、室温から10mKまで這い降りることになる。ステージ5でやったとおり、<strong>1本1本が熱の橋で、1本1本に減衰器の階段が要る</strong>。そして10mKの冷やす力は数マイクロワットしかない。<br>では100万個なら？ <strong>200万〜300万本</strong>。物理的に缶に入らないし、熱収支は天文学的に破綻する。誤り訂正の谷を「数を増やして」渡ろうとした瞬間、こちらの壁が立ちはだかる。これが第二の答えだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 240" width="100%" role="img" aria-label="配線の洪水と突破口の図。左は現在方式で、量子ビット1個あたり2〜3本のケーブルが室温から10mKまで降りるため、100万個では数百万本となり破綻する。右は突破口で、読み出しの多重化、4Kに置く極低温制御チップ、冷蔵庫同士を光ファイバーでつなぐモジュール化を示す">
+          <text class="strong" x="186" y="18" text-anchor="middle">配線の洪水と3つの突破口</text>
+          <!-- 左: 現在 -->
+          <text class="strong" x="96" y="44" text-anchor="middle">力ずくで増やすと…</text>
+          <rect x="40" y="56" width="112" height="130" rx="10" fill="none" stroke="var(--line)" stroke-width="1.6"/>
+          <g stroke="#b5504a" stroke-width="1.6">
+            <line x1="56" y1="56" x2="66" y2="150"/><line x1="68" y1="56" x2="76" y2="150"/>
+            <line x1="80" y1="56" x2="86" y2="150"/><line x1="92" y1="56" x2="96" y2="150"/>
+            <line x1="104" y1="56" x2="106" y2="150"/><line x1="116" y1="56" x2="116" y2="150"/>
+            <line x1="128" y1="56" x2="126" y2="150"/><line x1="140" y1="56" x2="136" y2="150"/>
+          </g>
+          <rect x="72" y="150" width="56" height="16" rx="4" fill="#2f8a8f"/>
+          <text class="label" x="100" y="180" text-anchor="middle">チップ（10mK）</text>
+          <text class="label" x="96" y="204" text-anchor="middle">1個あたり2〜3本 ×100万個</text>
+          <text class="label" x="96" y="220" text-anchor="middle">＝数百万本 → 缶に入らず熱も破綻</text>
+          <!-- 右: 突破口 -->
+          <text class="strong" x="272" y="44" text-anchor="middle">突破口</text>
+          <rect x="200" y="56" width="144" height="40" rx="8" fill="var(--paper2)" stroke="#2f8a8f" stroke-width="1.8"/>
+          <text class="label" x="272" y="72" text-anchor="middle">① 多重化：1本の線を</text>
+          <text class="label" x="272" y="88" text-anchor="middle">多数の量子ビットで共有</text>
+          <rect x="200" y="106" width="144" height="40" rx="8" fill="var(--paper2)" stroke="#8a6a24" stroke-width="1.8"/>
+          <text class="label" x="272" y="122" text-anchor="middle">② 極低温CMOS：制御チップを</text>
+          <text class="label" x="272" y="138" text-anchor="middle">冷やす力に余裕のある4Kへ</text>
+          <rect x="200" y="156" width="144" height="40" rx="8" fill="var(--paper2)" stroke="#2f7a6b" stroke-width="1.8"/>
+          <text class="label" x="272" y="172" text-anchor="middle">③ モジュール化：冷蔵庫同士を</text>
+          <text class="label" x="272" y="188" text-anchor="middle">光ファイバーで量子的に接続</text>
+          <text class="label" x="272" y="220" text-anchor="middle">＋ 100万個の個体差を自動調整する仕組み</text>
+        </svg>
+        <div class="diagram-caption">「量子ビットを増やす」は実際には「ケーブルを増やす」であり、1本1本が熱の橋（ステージ5）なので、力ずくでは<strong>チップより先に冷蔵庫が破綻する</strong>。突破口は、①1本の線を多数で共有する<strong>多重化</strong>、②合図を作る回路自体を冷やす力に余裕のある4Kに引っ越させる<strong>極低温CMOS</strong>、③マイクロ波と光の変換器を鍵に冷蔵庫同士をつなぐ<strong>モジュール化</strong>。加えて、人工原子の個体差を機械学習で全自動調整する研究が進む。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">整理すると、「量子ビットを増やす」は実際には「ケーブルを増やす」で、チップより先に<strong>冷蔵庫が破綻する</strong>んですね。<br>なら、量子ビットを増やしながら<strong>線の本数は増やさない</strong>工夫を見つけるしかありません。でも、「1個に1本ずつ合図を届ける」のは操作の大前提に見えます。そんな工夫、本当にあるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">主戦場になっている筋を2つ紹介しよう。<br>1つめは<strong>多重化</strong>――1本の線を多数の量子ビットで共有する工夫だ。読み出しではすでに実用になっている（さっきの「10個で1本」）。これを徹底して、共有できる線を増やしていく。<br>2つめは大胆で、<strong>制御の機械そのものを冷蔵庫の中に引っ越させる</strong>。室温と缶の中を太いケーブルの束で結ぶ代わりに、極低温でも動く制御チップを缶の中に住まわせて、合図は<strong>手元で</strong>作らせる。そうすれば、外に出る線は指示を送る数本で済む。<br>――と、ここまで聞いて、引っかかるところはないかな。ステージ5の目で見てほしい。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">2つめが引っかかります。制御チップは電子機器ですから、<strong>電力を食って熱を出す</strong>はずです。くみ出せる熱が数マイクロワットしかない世界にそんな熱源を持ち込んだら、冷蔵庫が保たない気がするのですが、どうやって両立させるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いいところに気づいたね。だから引っ越し先は10mKではなく<strong>4Kのプレート</strong>だ。あそこなら冷やす力が桁違いに大きい（ワット級ある）。極低温でも動く特別な半導体チップ――<strong>極低温CMOS</strong>と呼ぶ――を4Kに置き、10mKへは短い線だけを降ろす。この開発が各社の主戦場のひとつだ。<br>もうひとつの大きな筋が<strong>モジュール化</strong>。1つの冷蔵庫に全部詰め込むのを諦めて、ほどよい大きさの量子チップを収めた冷蔵庫を複数用意し、<strong>光ファイバーで量子的につなぐ</strong>。マイクロ波の量子状態を光に翻訳する「変換器」が鍵で、これも世界中で開発中だ。<br>それから、地味だが巨大な壁も言っておこう。<strong>調整（キャリブレーション）</strong>だ。人工原子には個体差があるから、量子ビット1個1個の周波数もパルスの最適な形も微妙に違う。数百個ですら定期的な自動調整が欠かせない。100万個を人手で調整するのは論外で、<strong>機械学習による全自動調整</strong>の研究が本気で進んでいる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">現在地をまとめます。<br>・物理量子ビット：数百〜1000個、ゲート誤り0.1〜1%、読み出し誤り1%程度。<br>・誤り訂正：2024年、「増やせば良くなる」境目の良い側に立ったことを実証。ただし論理誤り率はまだ実用の1000倍上。<br>・役に立つ規模：物理数百万個＝現在の数千倍。配線・熱・調整の壁が待ち構える。<br>……正直に言って、遠いです。博士、量子コンピュータは結局、<strong>本当に来る</strong>んでしょうか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">誠実に答えよう。<strong>断言できる人間は、世界のどこにもいない</strong>。その上で、確かなことだけを並べる。<br>第一に、この旅できみが自分で確かめたとおり、行く手に<strong>物理法則の禁止札は1枚も見つかっていない</strong>。谷はすべて工学の谷だ。これは大きい。「原理的に不可能」と「まだ作れていない」は、まるで違う。<br>第二に、進歩は本物だ。寿命は25年で1ナノ秒から100マイクロ秒へ<strong>10万倍</strong>、誤り率は100分の1になり、誤り訂正は境目を越えた。<br>第三に、最有力の応用は暗号破りではなく<strong>分子や材料のシミュレーション</strong>――量子の振る舞いを量子で真似る、いちばん自然な使い道だ。そして世界はすでに備えを始めていて、量子コンピュータでも破れない<strong>耐量子計算機暗号</strong>が2024年に標準化された。<br>最初の電子計算機ENIACからスマホまで70年かかった。いまの量子コンピュータは、ENIACよりさらに手前の、歯車とリレーの時代なのかもしれない。それでも――谷の正体を知っている者にとって、谷は絶望ではなく<strong>工程表</strong>だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">旅の全体を、設計図の4条件で締めくくります。<br><strong>①区別できる2状態</strong>――超伝導の1つの波を輪に閉じ込め、ジョセフソン接合でブランコ化した階段の下2段。<br><strong>②重ね合わせの維持</strong>――宇宙より冷たい希釈冷凍機、真空の缶、減衰器の階段、電荷に鈍感なトランズモン設計。<br><strong>③操作</strong>――室温で設計した釣り鐘型のマイクロ波パルス。面積が回転角、位相が回転軸。橋は「ふだん閉じ、合図で開く」。<br><strong>④読み出し</strong>――隣の笛の音程を光子数個で聞き、量子限界増幅器の鎖で持ち上げる。<br>そして谷の正体は、誤りの算数と配線の洪水。どちらも物理の禁止ではなく、工学の宿題。――ぜんぶ、飛躍なしでつながりました。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">よくまとまったね。<br>最後にひとつだけ、旅の景色を言葉にしておこう。いまこの瞬間も、世界のどこかの金色のシャンデリアの底で、宇宙より冷たい闇の中、<strong>何兆個の電子がたった1つの波として、人間が設計した合図に合わせて踊っている</strong>。それがきみの学んだ機械の正体だ。<br>全8ステージ、おつかれさま。クリア画面で旅を振り返ろう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【100万量子ビットへの壁 ― 最終ステージのまとめ】</span>
+        <span class="step">・<strong>誤りの算数</strong>：誤り0.3%のゲートを1000回で無傷の確率は約5%。実用アルゴリズムは何十億ゲート → 素の物理量子ビットでは<span class="nw">絶対に届かない</span> → 誤り訂正が必須</span>
+        <span class="step">・<strong>誤り訂正の請求書</strong>：誤り率0.1〜1%では1論理＝物理約1000個。実用規模は論理数千個＝<strong>物理数百万個</strong>。現在は数百〜1000個 → <strong>数千倍の谷</strong></span>
+        <span class="step">・<strong>2024年の転換点</strong>：105量子ビットの実機で「守りの陣地を広げるほど論理誤りが半減」を実証＝閾値の良い側に立った。ただし論理誤り率はまだ実用の1000倍上</span>
+        <span class="step">・<strong>配線の洪水</strong>：1個あたり2〜3本 × 100万個＝数百万本。1本1本が熱の橋で、10mKの冷やす力は数マイクロワット → 力ずくでは冷蔵庫が先に破綻</span>
+        <span class="step">・突破口：<strong>多重化</strong>／<strong>極低温CMOS</strong>（4Kで合図を作る）／<strong>モジュール化</strong>（マイクロ波⇄光の変換で冷蔵庫間を接続）／<strong>自動調整</strong></span>
+        <span class="step">・現在地の誠実な要約：物理法則の禁止札はゼロ（すべて工学の谷）。寿命10万倍・誤り100分の1という進歩は本物。有力応用は<strong>化学・材料シミュレーション</strong>。備えとして<span class="nw">耐量子計算機暗号は2024年標準化済み</span></span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 物理量子ビットの精度をいくら磨いても、誤り訂正なしでは実用計算に届かない理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">誤り0.3%でも1000ゲートで無傷の確率は約5%まで落ちる。実用アルゴリズムは何十億ゲートの積み重ねなので、誤りが必ず何百万回も起きてしまうから</button>
+          <button class="choice-btn">物理量子ビットは1000個以上並べると互いに干渉して動かなくなるから</button>
+          <button class="choice-btn">ゲートの速度が遅すぎて、実用計算が終わる前に宇宙が終わるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 誤りはゲートの回数だけ積み重なる。0.997を1000回掛けると約0.05、つまり1000ゲートですでに95%の確率でどこかが壊れる。何十億ゲートの実用計算では、素の物理量子ビットの精度改善だけでは桁が何個も足りず、多数の物理量子ビットで論理量子ビットを守る誤り訂正が必須になる。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 2024年のWillowチップの実験が「転換点」と呼ばれる理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">世界で初めて量子ビットを100個以上並べたから</button>
+          <button class="choice-btn">誤り訂正なしで実用計算に成功したから</button>
+          <button class="choice-btn">守りの陣地を広げるほど論理量子ビットの誤りが減ることを実証し、「増やせば良くなる」閾値の良い側に立ったことを示したから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 物理誤り率が閾値より悪ければ、誤り訂正は広げるほど逆効果になる。Willowは陣地を一回り広げるごとに論理誤りがおよそ半分になることを示し、論理量子ビットの寿命が最良の物理量子ビットを超えた。「物理量子ビットを増やせば計算が確実になる」時代の入口に立った実証だ。ただし論理誤り率はまだ実用要求の1000倍上にある。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 「配線の洪水」問題への突破口として研究されている方向は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">ケーブルを細くして100万本を無理やり詰め込む</button>
+          <button class="choice-btn">1本の線を多数の量子ビットで共有する多重化、合図を作る制御チップを4Kに引っ越させる極低温CMOS、冷蔵庫同士を光でつなぐモジュール化</button>
+          <button class="choice-btn">冷蔵庫を100万台並べて、1台に量子ビットを1個ずつ入れる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 1本1本が熱の橋である以上、本数そのものを減らすしかない。読み出しの多重化はすでに実用（1本で10個程度）。制御チップの引っ越し先が10mKでなく4Kなのは、あちらには冷やす力がワット級あるから。モジュール化の鍵はマイクロ波の量子状態を光に翻訳する変換器で、世界中で開発が進む。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage7.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>クリア画面へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QH.initStagePage(8);</script>
+</body>
+</html>

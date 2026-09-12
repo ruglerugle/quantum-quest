@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12303c">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>量子コンピュータはどう作るのか ― ハードウェアの中身を理解する 全8ステージの無料学習ゲーム</title>
+<meta name="description" content="量子コンピュータの実機は、宇宙空間の100倍冷たい場所で動いている。超伝導とジョセフソン接合、希釈冷凍機、マイクロ波制御と減衰器の階段、量子限界増幅器、そして100万量子ビットへの壁まで――「矢印の一覧表」を現実の物質で作る工学を、論理の飛躍なく理解する全8ステージの無料学習サイト。ねこ博士とうさ美が案内します。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="量子コンピュータはどう作るのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="量子コンピュータはどう作るのか ― ハードウェアの中身を理解する">
+<meta property="og:description" content="その計算機の中は、宇宙より冷たい。超伝導量子ビットから希釈冷凍機、100万量子ビットへの壁まで、実機の工学を飛躍なしで理解する全8ステージ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "量子コンピュータはどう作るのか ― ハードウェアの中身を理解する",
+  "alternateName": "QUANTUM HARDWARE QUEST",
+  "description": "超伝導量子ビットのハードウェアを部品ひとつずつ理解する学習サイト。量子ビットの4条件・超伝導とLC回路・ジョセフソン接合とトランズモン・希釈冷凍機・マイクロ波制御・分散読み出しと量子限界増幅・2量子ビットゲートと各方式の比較・スケールアップの壁まで、論理の飛躍なく導く。全8ステージ。",
+  "url": "https://quantum-mechanics.habatakijuku.com/quantum-hardware/",
+  "inLanguage": "ja",
+  "learningResourceType": "learning activity",
+  "educationalLevel": "中学生以上",
+  "teaches": "量子コンピュータのハードウェア（超伝導量子ビット・ジョセフソン接合・トランズモン・希釈冷凍機・マイクロ波制御・量子測定・誤り訂正のコスト・各方式の比較）",
+  "isAccessibleForFree": true,
+  "author": { "@type": "Person", "name": "ruglerugle" }
+}
+</script>
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar" aria-label="サイト情報">
+    <span class="brand-badge" aria-hidden="true">🧊</span>
+    <span class="brand-copy">
+      <strong>量子コンピュータはどう作るのか</strong>
+      <small>QUANTUM HARDWARE QUEST</small>
+    </span>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <h1><span class="line">その計算機の中は、</span><span class="line accent">宇宙より冷たい。</span></h1>
+      <p>量子コンピュータの心臓部は、星のない宇宙空間の100倍以上冷たい、絶対零度まであと100分の1度の闇の中で動いている。なぜそこまで冷やすのか。原子数個分の膜がなぜ心臓部なのか。100万分の1に弱めた合図がなぜ届くのか。<span class="nowrap">「矢印の一覧表」という理論の道具を、</span><span class="nowrap">現実の金属と冷凍機で作り上げる工学</span>を、部品ひとつずつ、飛躍なしで理解しよう。<a href="https://quantum-mechanics.habatakijuku.com/quantum-computer/" style="color:#f5e3ba">前作「量子コンピュータはなぜ速いのか」</a>の続編です。</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="board" aria-labelledby="quest-heading">
+      <div class="board-head">
+        <div><h2 id="quest-heading">クエストを選ぼう！</h2></div>
+        <p>ステージ1から順番にクリアしよう（前のステージをクリアすると次が解放されます）</p>
+      </div>
+
+      <div class="quest-grid">
+        <a class="quest-card" href="stage1.html" data-stage="1" style="--accent:#2f5a9e;--accent-bg:#e9eff8">
+          <div class="q-top"><span class="q-num">1</span><span class="q-suit" aria-hidden="true">📐</span></div>
+          <div class="q-meta"><span class="q-tag">設計図</span><span class="q-time">⏱ 約10分</span></div>
+          <div class="q-title">量子ビットの設計図</div>
+          <p class="q-desc">コインの裏表はなぜ量子ビットになれないのか。「区別できる2状態・重ね合わせの維持・操作・読み出し」の4条件と、②と③の綱引きという中心的ジレンマをここで押さえる。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage2.html" data-stage="2" style="--accent:#2f8a8f;--accent-bg:#e6f5f5">
+          <div class="q-top"><span class="q-num">2</span><span class="q-suit" aria-hidden="true">🌀</span></div>
+          <div class="q-meta"><span class="q-tag">超伝導</span><span class="q-time">⏱ 約12分</span></div>
+          <div class="q-title">超伝導と電気の振り子</div>
+          <p class="q-desc">電気抵抗の正体は、震える原子への衝突＝熱と手がかりの漏れ。1911年の「突然の完全なゼロ」の謎から、何兆個の電子が1つの波になるしくみと、エネルギーの階段の出現まで。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage3.html" data-stage="3" style="--accent:#8a5a2a;--accent-bg:#f8f0e3">
+          <div class="q-top"><span class="q-num">3</span><span class="q-suit" aria-hidden="true">⚡</span></div>
+          <div class="q-meta"><span class="q-tag">心臓部</span><span class="q-time">⏱ 約13分</span></div>
+          <div class="q-title">ジョセフソン接合とトランズモン</div>
+          <p class="q-desc">原子数個分の絶縁膜を、波がしみ出して通り抜ける。ばね振り子をブランコに変えて下2段を切り出し、世界初の量子ビットが1ナノ秒で死んだ理由と、その10万倍の克服まで。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage4.html" data-stage="4" style="--accent:#3f6191;--accent-bg:#eaf0f8">
+          <div class="q-top"><span class="q-num">4</span><span class="q-suit" aria-hidden="true">❄️</span></div>
+          <div class="q-meta"><span class="q-tag">冷却</span><span class="q-time">⏱ 約12分</span></div>
+          <div class="q-title">宇宙より冷たい冷蔵庫</div>
+          <p class="q-desc">熱の小突きは段差の1000倍。だから10ミリケルビンまで冷やす。蒸発冷却の限界と、ヘリウム3が液体の中へ「蒸発」する希釈冷凍機のからくり、金色のシャンデリアの正体。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage5.html" data-stage="5" style="--accent:#b5504a;--accent-bg:#fdefed">
+          <div class="q-top"><span class="q-num">5</span><span class="q-suit" aria-hidden="true">📡</span></div>
+          <div class="q-meta"><span class="q-tag">制御</span><span class="q-time">⏱ 約12分</span></div>
+          <div class="q-title">矢印を回す配線</div>
+          <p class="q-desc">ゲートの実体は室温で設計されたマイクロ波パルス。なぜゲートは20ナノ秒より速くできないのか。300Kの騒音を殺しながら合図だけを届ける「減衰器の階段」の設計思想。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage6.html" data-stage="6" style="--accent:#5b3fa6;--accent-bg:#efe9f9">
+          <div class="q-top"><span class="q-num">6</span><span class="q-suit" aria-hidden="true">🎧</span></div>
+          <div class="q-meta"><span class="q-tag">読み出し</span><span class="q-time">⏱ 約12分</span></div>
+          <div class="q-title">壊さずに読み出す</div>
+          <p class="q-desc">直接測れば壊れる。だから隣の「笛」の音程を光子数個で聞く。声と騒音の比は最初の増幅器で確定する――ジョセフソン接合で作る量子限界増幅器と、増幅の鎖の工学。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage7.html" data-stage="7" style="--accent:#2f7a6b;--accent-bg:#e9f5f1">
+          <div class="q-top"><span class="q-num">7</span><span class="q-suit" aria-hidden="true">🔗</span></div>
+          <div class="q-meta"><span class="q-tag">接続と方式</span><span class="q-time">⏱ 約13分</span></div>
+          <div class="q-title">2量子ビットゲートと方式くらべ</div>
+          <p class="q-desc">量子ビットの橋は「ふだん閉じ、合図で開く」。さらにイオントラップ・中性原子・光・シリコンの設計図を4条件で読みくらべ、自然物陣営と人工物陣営の対決を整理する。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage8.html" data-stage="8" style="--accent:#7a6a2f;--accent-bg:#f7f3e2">
+          <div class="q-top"><span class="q-num">8</span><span class="q-suit" aria-hidden="true">🏗️</span></div>
+          <div class="q-meta"><span class="q-tag">スケール</span><span class="q-time">⏱ 約12分</span></div>
+          <div class="q-title">100万量子ビットへの壁</div>
+          <p class="q-desc">なぜまだ役に立たないのか。誤りの算数、1論理＝物理1000個の請求書、2024年の転換点、配線の洪水と3つの突破口――誇張も悲観もなしの現在地で旅を締めくくる。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+      </div>
+    </section>
+
+    <div id="book-recommend"></div>
+  </main>
+
+  <footer>
+    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;© <span id="year"></span> ruglerugle</p>
+    <div class="footer-suits" aria-hidden="true"><span>🧊</span><span>⚡</span><span>📡</span><span>⚛</span></div>
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<script src="js/progress.js"></script>
+<script>QH.initCoverPage();</script>
+</body>
+</html>

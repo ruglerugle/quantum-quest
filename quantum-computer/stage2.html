@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16224e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE2 量子ゲート ― 量子コンピュータはなぜ速いのか</title>
+<meta name="description" content="量子コンピュータにとって計算とは、矢印の一覧表を書き換えること。Xゲート・Zゲートを導入し、どんなゲートも「|0⟩と|1⟩の行き先の2列（行列）」で完全に決まり、当て方は「掛けて足す」の1つだけであることを、優秀な中学生うさ美と検算する。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage2.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはなぜ速いのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE2 量子ゲート ― 量子コンピュータはなぜ速いのか">
+<meta property="og:description" content="計算とは矢印の表を書き換えること。ゲートの正体は2列の対応表と「掛けて足す」のルールだ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage2.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qc-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qc-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qc-svg .accent{fill:#8a5a2a;font-size:11px;font-weight:900}
+  .anim-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .anim-ctrl .btn{padding:.4rem .95rem;font-size:13px;font-weight:900}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+  .gate-log{margin-top:8px;font-size:12.5px;font-weight:800;color:var(--ink);min-height:1.5em;word-break:break-all}
+  .gate-log .g{display:inline-block;background:#efe4cd;border:1px solid #d9c191;border-radius:5px;padding:0 6px;margin:0 2px 3px 0}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">💠</a> <span>量子コンピュータはなぜ速いのか</span></div>
+      <div class="brand-sub">STAGE 2 ― 量子ゲート ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 2</span><span class="chapter-title">量子ゲート</span>
+        <div class="chapter-sub">2列の対応表と掛け算のルール</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">量子コンピュータの「計算」が、矢印の一覧表の書き換えであることを理解しよう。どんなゲートも「2列の対応表」で完全に決まり、当て方は「掛けて足す」の1つだけ――このルールをXとZで検算できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">前回、量子ビットの状態は「|0⟩ の矢印と |1⟩ の矢印の一覧表」だと決めた。今日はその表を<strong>書き換える</strong>話をしよう。ここが「計算」にあたる部分だ。まず比較のために聞くけれど、ふつうのコンピュータは、ビットに対してどんな操作をしているのかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble"><a href="https://informatics.habatakijuku.com/cpu-logic-game/" target="_blank" rel="noopener" style="color:#8a5a2a;text-decoration:underline">論理回路の旅</a>でやった話ですよね。ANDは「2つとも1のときだけ1」、ORは「どちらか1なら1」、NOTは「0と1をひっくり返す」。こういう部品を<strong>ゲート</strong>と呼んで、大量につないで足し算や掛け算を作っているんでしたよね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。量子コンピュータにも同じ言葉を使って、<strong>量子ゲート</strong>と呼ぶ。ただし中身がまるで違う。量子ゲートは「0を1にする」のような値の書き換えではなく、<strong>矢印の表の書き換え</strong>なんだ。表の各行の矢印を、伸ばしたり、向きを変えたり、混ぜ合わせたりする。ただし、勝手な書き換えは許されない。ひとつだけ厳しい掟がある――何だと思う。前回決めた約束から考えてごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">規格化ですね。<strong>矢印の長さの2乗の合計は、いつでも1でなければならない</strong>。読み出せば必ず何かの答えが出るのだから、確率の合計が1から外れたらおかしい。だから量子ゲートは、表を書き換えたあとも合計1を保つ操作でなければならない――そういう掟ですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。長さの合計を保つ書き換えのことを、専門用語で<strong>ユニタリ</strong>な操作という。難しそうな名前だけれど、意味は「表全体を、伸び縮みさせずに回すだけ」ということだよ。そしてこの掟から、面白い帰結がひとつ出る。<strong>量子ゲートはすべて逆向きにたどれる</strong>――つまり、必ず「元に戻すゲート」が存在する。回した分だけ逆に回せばいいからね。この性質を<strong>可逆</strong>という。ふつうのANDゲートはそうではない。出力が0だったとき、入力が「0と0」「0と1」「1と0」のどれだったかは、もう分からない。情報が消えてしまうんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">量子ゲートは全部NOTのような「ひっくり返せば戻る」タイプばかり、ということですか。じゃあ、具体的にはどんなゲートがあるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まず3つ覚えれば、今日の話は全部つながる。1つめは <strong>Xゲート</strong>。表の2行を<strong>そっくり入れ替える</strong>。|0⟩ の矢印と |1⟩ の矢印が席替えするんだ。|0⟩ に当てれば |1⟩ になるから、ふつうのNOTの親戚だね。2つめは <strong>Zゲート</strong>。こちらは |0⟩ の矢印はそのままで、<strong>|1⟩ の矢印だけを正反対の向きにする</strong>。長さは変えないから、読み出しの確率は何も変わらない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">読み出しの確率を1ミリも変えないゲート……前回の |+⟩ と |−⟩ の話ですね。Zゲートは |+⟩ を |−⟩ に変える操作だ。確率だけ見ていると「何も起きていない」ように見えるのに、状態は確かに変わっている。<strong>位相を書き換える専門のゲート</strong>ということですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通りだ。ここで、この先ずっと使う大事な種明かしをしておこう。X も Z も「入れ替える」「反転する」と説明したけれど、実はどんな量子ゲートも、たった2つの質問への答えで<strong>完全に</strong>決まる。<strong>「|0⟩ をどこへ送るか」と「|1⟩ をどこへ送るか」</strong>――この2列の対応表が、ゲートのすべてだ。<br>そして、一般の入力への当て方の規則もただ1つ。入力が「|0⟩ の矢印 a、|1⟩ の矢印 b」の重ね合わせなら、出力は<br><strong>a×（|0⟩ の行き先）＋ b×（|1⟩ の行き先）</strong><br>――それぞれの行き先を a 倍・b 倍してから、行ごとに足す。<strong>「掛けて足す」</strong>、これだけだよ。ゲートは波全体に働き、波は足し算で重なっているから、成分ごとの行き先を求めて足せばいい。ちなみに数学では、この2列の対応表を<strong>行列</strong>と呼び、この「掛けて足す」を行列の掛け算と呼ぶ。名前だけ覚えておくといい。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">検算させてください。X の2列は「|0⟩ の行き先＝|1⟩」「|1⟩ の行き先＝|0⟩」。入力（a, b）に掛けて足すと、a×|1⟩ ＋ b×|0⟩ で、新しい表は<strong>（b, a）</strong>――確かに2行の席替えです。<br>Z の2列は「|0⟩ の行き先＝|0⟩」「|1⟩ の行き先＝正反対の |1⟩」。同じく当てると新しい表は<strong>（a, −b）</strong>――|1⟩ の矢印だけ反転。どちらも「入れ替える」「反転する」という言葉の説明と、ぴったり一致します。<br>つまりゲートは、入力を見て何かを判断しているのではなくて、<strong>2列の対応表を機械的に当てているだけ</strong>なんですね。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="gate-svg" class="qc-svg" viewBox="0 0 372 220" width="100%" role="img" aria-label="量子ゲートの操作シミュレータ。|0⟩と|1⟩の矢印の表に、Xゲート、Zゲート、アダマールゲートを順番に当てて、矢印の長さと向き、読み出し確率がどう変わるかを見る">
+          <text class="strong" x="186" y="16" text-anchor="middle">ゲートを当てて、矢印の表を書き換える</text>
+          <g id="gate-body"></g>
+        </svg>
+        <div class="readout">
+          <span style="color:#2f5a9e">|0⟩の矢印 <b id="g-a0">1.00</b></span>
+          <span style="color:#b5504a">|1⟩の矢印 <b id="g-a1">0.00</b></span>
+          <span>0が出る確率 <b id="g-p0">100%</b></span>
+          <span>1が出る確率 <b id="g-p1">0%</b></span>
+        </div>
+        <div class="anim-ctrl">
+          <button type="button" class="btn" id="g-x">X</button>
+          <button type="button" class="btn" id="g-z">Z</button>
+          <button type="button" class="btn" id="g-h">H</button>
+          <button type="button" class="btn" id="g-measure">📏 測定</button>
+          <button type="button" class="btn" id="g-reset">↺ |0⟩に戻す</button>
+        </div>
+        <div class="gate-log" id="g-log">現在の状態: <strong>|0⟩</strong>　（当てたゲート: なし）</div>
+        <div class="diagram-caption">矢印が右向きなら「そのままの向き」、左向きなら「正反対の向き」を表す。<strong>X</strong>は2つの矢印を入れ替え、<strong>Z</strong>は |1⟩ の矢印だけ向きを反転する。棒グラフは「長さの2乗＝読み出しの確率」。Zを押しても棒グラフが1ミリも動かないこと、Xを2回・Zを2回で必ず元に戻ること（可逆）を確かめてみてほしい。<strong>H</strong> は次のステージの主役――2つの矢印を「混ぜる」ゲートで、押してから「測定」すると結果が五分五分になる。ひと足先に触っておくと、次の話が読みやすい。</div>
+      </div>
+
+
+      <div class="formula-box">
+        <span class="step">【量子ゲート ― 矢印の表の書き換え】</span>
+        <span class="step">・掟：長さの2乗の合計を1に保つ書き換え（<strong>ユニタリ</strong>）だけが許される → すべてのゲートは<strong>可逆</strong></span>
+        <span class="step">・<strong>X</strong>：|0⟩ 行と |1⟩ 行の矢印を入れ替える（NOTの親戚）。入力（a, b）→（b, a）</span>
+        <span class="step">・<strong>Z</strong>：|1⟩ 行の矢印だけ正反対の向きにする（確率は変わらず、<span class="nw">位相だけ書き換える</span>）。入力（a, b）→（a, −b）</span>
+        <span class="step">・<strong>ゲートの正体＝2列の対応表</strong>：「|0⟩ の行き先」と「|1⟩ の行き先」だけでゲートは完全に決まる（数学の言葉で<strong>行列</strong>）</span>
+        <span class="step">・<strong>当て方の規則はただ1つ（掛けて足す）</strong>：入力（a, b）に対して<br class="wbr"><strong>a×（|0⟩ の行き先）＋ b×（|1⟩ の行き先）</strong> を行ごとに足す（行列の掛け算）。<br class="wbr">ゲートは入力を見て場合分けしない――同じ規則を機械的に当てるだけ</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 量子ゲートが必ず「可逆」（元に戻せる）なのはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">技術的にまだ未熟で、情報を捨てる回路が作れないから</button>
+          <button class="choice-btn">量子ビットの数が少ないので、情報を捨てるともったいないから</button>
+          <button class="choice-btn">矢印の長さの2乗の合計を1に保つ操作（ユニタリ）だけが許され、それは伸び縮みのない回転にあたるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 確率の合計は常に1でなければならないので、ゲートは表全体を伸び縮みさせずに回す操作に限られる。回したものは逆に回せば戻る。だからふつうのANDのように「情報が消えて元に戻せない」ゲートは、量子ゲートとしては存在できない。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 量子ゲートを1つ完全に指定するには、何を決めればいい？</p>
+        <div class="choice-list">
+          <button class="choice-btn">「|0⟩ をどこへ送るか」と「|1⟩ をどこへ送るか」の2列の対応表</button>
+          <button class="choice-btn">考えられるすべての入力（無限にある重ね合わせ）に対する出力の一覧</button>
+          <button class="choice-btn">ゲートを当てたときに0が出る確率と1が出る確率</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 一般の入力（a, b）への出力は「a×（|0⟩の行き先）＋b×（|1⟩の行き先）」と掛けて足すだけで求まるので、2列（＝行列）を決めれば無限にある入力すべてへの動作が決まる。確率だけでは向き（位相）の情報が抜け落ちる。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. Z ゲートを重ね合わせ（a, b）に当てると、表はどうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">（−a, −b）――両方の矢印が正反対になる</button>
+          <button class="choice-btn">（a, −b）――|1⟩ の矢印だけ正反対になる</button>
+          <button class="choice-btn">（b, a）――2つの矢印が入れ替わる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ Z の2列は「|0⟩ の行き先＝|0⟩」「|1⟩ の行き先＝正反対の |1⟩」。掛けて足すと a×|0⟩＋b×（−|1⟩）＝（a, −b）。長さは変わらないので読み出しの確率は1ミリも動かないが、状態は確かに変わっている（|+⟩ が |−⟩ になる）。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage1.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QC.initStagePage(2);</script>
+
+<script>
+(function(){
+  // 図1: 1量子ビットのゲート操作シミュレータ。振幅は実数（向きは ± のみ）で扱う
+  var g = document.getElementById('gate-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C0 = '#2f5a9e', C1 = '#b5504a';
+  var R2 = Math.SQRT1_2;
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var defs = el('defs', {});
+  [['g-ah0', C0], ['g-ah1', C1]].forEach(function (p) {
+    var m = el('marker', {id: p[0], viewBox: '0 0 8 8', refX: 7, refY: 4, markerWidth: 5.5, markerHeight: 5.5, markerUnits: 'userSpaceOnUse', orient: 'auto'}, defs);
+    el('path', {d: 'M0 0 L8 4 L0 8 z', fill: p[1]}, m);
+  });
+
+  // 左: 矢印の表（2行）
+  var rowY = [76, 150], cx = 100, R = 30;
+  txt(100, 44, 'label', '矢印の表');
+  [0, 1].forEach(function (i) {
+    el('circle', {cx: cx, cy: rowY[i], r: R, fill: 'var(--paper2)', stroke: 'var(--line)'});
+    el('line', {x1: cx - R, y1: rowY[i], x2: cx + R, y2: rowY[i], stroke: 'var(--line)', 'stroke-dasharray': '2 3'});
+    var t = txt(cx - R - 10, rowY[i] + 4, 'strong', i === 0 ? '|0⟩' : '|1⟩', 'end');
+    t.style.fill = i === 0 ? C0 : C1;
+  });
+  var ar0 = el('line', {stroke: C0, 'stroke-width': 3.2, 'marker-end': 'url(#g-ah0)'});
+  var ar1 = el('line', {stroke: C1, 'stroke-width': 3.2, 'marker-end': 'url(#g-ah1)'});
+  var val0 = txt(cx + R + 8, rowY[0] + 4, 'accent', '1.00', 'start');
+  var val1 = txt(cx + R + 8, rowY[1] + 4, 'accent', '0.00', 'start');
+  val0.style.fill = C0; val1.style.fill = C1;
+
+  // 右: 確率棒グラフ
+  var bx = 228, bw = 44, bh = 108, by = 172;
+  txt(288, 44, 'label', '長さの2乗＝読み出しの確率');
+  [0, 1].forEach(function (i) {
+    el('rect', {x: bx + i * 64, y: by - bh, width: bw, height: bh, fill: 'none', stroke: 'var(--line)'});
+    txt(bx + i * 64 + bw / 2, by + 15, 'label', (i === 0 ? '0' : '1') + 'が出る');
+  });
+  var bar0 = el('rect', {x: bx + 1, width: bw - 2, fill: C0, opacity: .85});
+  var bar1 = el('rect', {x: bx + 65, width: bw - 2, fill: C1, opacity: .85});
+  var pc0 = txt(bx + bw / 2, by + 31, 'accent', '100%');
+  var pc1 = txt(bx + 64 + bw / 2, by + 31, 'accent', '0%');
+  pc0.style.fill = C0; pc1.style.fill = C1;
+
+  var st = {a0: 1, a1: 0};
+  var log = [];
+  var logEl = document.getElementById('g-log');
+  var roA0 = document.getElementById('g-a0'), roA1 = document.getElementById('g-a1');
+  var roP0 = document.getElementById('g-p0'), roP1 = document.getElementById('g-p1');
+
+  function stateName() {
+    var e = 0.001;
+    function near(x, y) { return Math.abs(x - y) < e; }
+    if (near(st.a0, 1) && near(st.a1, 0)) return '|0⟩';
+    if (near(st.a0, -1) && near(st.a1, 0)) return '|0⟩（表全体の向きが反転／読み出しは同じ）';
+    if (near(st.a0, 0) && near(st.a1, 1)) return '|1⟩';
+    if (near(st.a0, 0) && near(st.a1, -1)) return '|1⟩（表全体の向きが反転／読み出しは同じ）';
+    if (near(st.a0, R2) && near(st.a1, R2)) return '|+⟩';
+    if (near(st.a0, R2) && near(st.a1, -R2)) return '|−⟩';
+    if (near(st.a0, -R2) && near(st.a1, -R2)) return '|+⟩（表全体の向きが反転）';
+    if (near(st.a0, -R2) && near(st.a1, R2)) return '|−⟩（表全体の向きが反転）';
+    return '重ね合わせ';
+  }
+  function render() {
+    var L = R - 6;
+    ar0.setAttribute('x1', cx); ar0.setAttribute('y1', rowY[0]);
+    ar0.setAttribute('x2', cx + st.a0 * L); ar0.setAttribute('y2', rowY[0]);
+    ar0.setAttribute('opacity', Math.abs(st.a0) < 0.02 ? 0 : 1);
+    ar1.setAttribute('x1', cx); ar1.setAttribute('y1', rowY[1]);
+    ar1.setAttribute('x2', cx + st.a1 * L); ar1.setAttribute('y2', rowY[1]);
+    ar1.setAttribute('opacity', Math.abs(st.a1) < 0.02 ? 0 : 1);
+    var p0 = st.a0 * st.a0, p1 = st.a1 * st.a1;
+    bar0.setAttribute('y', by - bh * p0); bar0.setAttribute('height', Math.max(bh * p0, 0.5));
+    bar1.setAttribute('y', by - bh * p1); bar1.setAttribute('height', Math.max(bh * p1, 0.5));
+    pc0.textContent = Math.round(p0 * 100) + '%';
+    pc1.textContent = Math.round(p1 * 100) + '%';
+    val0.textContent = (st.a0 < -0.001 ? '−' : '') + Math.abs(st.a0).toFixed(2);
+    val1.textContent = (st.a1 < -0.001 ? '−' : '') + Math.abs(st.a1).toFixed(2);
+    if (roA0) roA0.textContent = val0.textContent;
+    if (roA1) roA1.textContent = val1.textContent;
+    if (roP0) roP0.textContent = Math.round(p0 * 100) + '%';
+    if (roP1) roP1.textContent = Math.round(p1 * 100) + '%';
+    if (logEl) {
+      logEl.innerHTML = '現在の状態: <strong>' + stateName() + '</strong>　（当てたゲート: ' +
+        (log.length ? log.map(function (x) { return '<span class="g">' + x + '</span>'; }).join('') : 'なし') + '）';
+    }
+  }
+  function apply(name) {
+    if (name === 'X') { var t = st.a0; st.a0 = st.a1; st.a1 = t; }
+    else if (name === 'Z') { st.a1 = -st.a1; }
+    else if (name === 'H') {
+      var n0 = (st.a0 + st.a1) * R2, n1 = (st.a0 - st.a1) * R2;
+      st.a0 = n0; st.a1 = n1;
+    }
+    log.push(name);
+    render();
+  }
+  [['g-x', 'X'], ['g-z', 'Z'], ['g-h', 'H']].forEach(function (p) {
+    var b = document.getElementById(p[0]);
+    if (b) b.addEventListener('click', function () { apply(p[1]); });
+  });
+  var mb = document.getElementById('g-measure');
+  if (mb) mb.addEventListener('click', function () {
+    var r = Math.random() < st.a0 * st.a0 ? 0 : 1;
+    st.a0 = r === 0 ? 1 : 0;
+    st.a1 = r === 0 ? 0 : 1;
+    log.push('測定→' + r);
+    render();
+  });
+  var rb = document.getElementById('g-reset');
+  if (rb) rb.addEventListener('click', function () { st.a0 = 1; st.a1 = 0; log = []; render(); });
+  render();
+})();
+</script>
+
+</body>
+</html>

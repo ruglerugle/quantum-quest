@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12303c">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE3 ジョセフソン接合とトランズモン ― 量子コンピュータはどう作るのか</title>
+<meta name="description" content="超伝導量子ビットの心臓部、ジョセフソン接合を理解する。原子数個分の絶縁膜を波がしみ出して通るトンネル効果、ばね振り子をブランコに変えて等時性を壊すしくみ、世界初の超伝導量子ビット（1999年）、電荷雑音との戦いとトランズモンの発明（2007年）まで、論理の飛躍なく積み上げる。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage3.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはどう作るのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE3 ジョセフソン接合とトランズモン ― 量子コンピュータはどう作るのか">
+<meta property="og:description" content="原子数個分の絶縁膜が、量子コンピュータの心臓部になる。等時性を壊してトランズモンを完成させる。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage3.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qh-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qh-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qh-svg .accent{fill:#2f8a8f;font-size:11px;font-weight:900}
+  .anim-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .anim-ctrl .ctrl-label{font-size:11px;color:var(--muted);font-weight:700}
+  .anim-ctrl input[type=range]{flex:1;max-width:280px;min-width:140px;accent-color:#2f8a8f}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🧊</a> <span>量子コンピュータはどう作るのか</span></div>
+      <div class="brand-sub">STAGE 3 ― ジョセフソン接合とトランズモン ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 3</span><span class="chapter-title">ジョセフソン接合とトランズモン</span>
+        <div class="chapter-sub">心臓部とトランズモン</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">等時性を壊して、階段の下2段だけを切り出そう。原子数個分の絶縁膜がなぜ電流を通すのか、なぜそれが「ばねをブランコに変える」ことになるのか、そして世界初の超伝導量子ビットがわずか1ナノ秒しか生きられなかった理由と、その克服（トランズモン）までを組み立てる。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">前回の宿題は「揺れの大きさでリズムが変わる振り子に作り替えること」だった。まず、なぜ電気の振り子（コイル＝記号L、コンデンサ＝記号C の回路なので<strong>LC回路</strong>とも呼ぶ）のリズムが1種類しかないのかを、部品の性質までさかのぼっておこう。<br>コイルの逆らい方は<strong>まじめな正比例</strong>だ。電流が2倍になれば、逆らう力もきっかり2倍。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">待ってください。コイルは電気を<strong>流す</strong>ための部品のはずです。それなのに「電流に逆らう力」が働くというのは、電流を妨げる<strong>抵抗</strong>のような働きに聞こえます。抵抗は前のステージで倒した敵だったはずです。コイルと抵抗は、何が違うんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">似て見えるが、正反対の部品なんだ。違いは2つある。<br>1つめ、コイルが逆らうのは<strong>電流そのものではなく、電流の「変化」だけ</strong>。増えようとすれば妨げるが、<strong>減ろうとすれば、今度は背中を押して流し続けようとする</strong>。抵抗はこれを絶対にしない――流れていれば、いつでもブレーキだ。前のステージで、振り子が止まらず反対側まで行きすぎたのは、この「背中押し」のおかげだよ。<br>2つめ、エネルギーの行き先。抵抗は、奪ったエネルギーを<strong>熱として捨てて、二度と返さない</strong>。コイルは、逆らいながら受け取ったエネルギーを<strong>磁石の働き（磁界）として貯金し、あとで全額返す</strong>。1円も食べない。電気のエネルギーと磁気のエネルギーの行き来が延々と続くのは、この貯金のおかげだ。<br>たとえるなら、抵抗は<strong>摩擦</strong>、コイルは<strong>重い台車の慣性</strong>だ。重い台車は押し始めこそ重いが、動き出せば今度は止まりにくく、押すのに使った力は勢いとして残っている。「変化に逆らうこと」と「エネルギーを食うこと」は、別物なんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">そうか、思い出しました。前のステージで、板の電気のエネルギーとコイルの磁気のエネルギーが交互に入れ替わって、<strong>合計はいつも一定</strong>でした。あれが「1円も食べない貯金」の何よりの証拠だったんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。――その上で、今日の主役はこの逆らい方の<strong>正比例</strong>のほうだ。押した分だけきっかり押し返す性質を持つ振り子は、理科で言うと<strong>ばね</strong>の振り子で、ばね振り子は揺れの大小によらずリズムが完全に一定になる。等時性は、正比例の性質から必然的に出てくるんだ。<br>だからリズムを揺れで変えたければ、<strong>正比例からずれた逆らい方をする部品</strong>――電流が大きくなるほど、逆らう力の増え方が鈍っていくような部品――に置き換えればいい。そんな都合のいい部品を、超伝導ならではの現象が用意してくれる。<br>作り方はこうだ。前のステージのチップから<strong>コイル役の導線を取り外し、その代わり</strong>に、配線の途中のたった1点へ、こういう部品を入れる――<strong>2枚の超伝導体で、厚さ1〜2ナノメートルの絶縁体の膜を挟んだもの</strong>だ。ナノメートルは10億分の1メートル。この膜は原子を数個並べたのと同じ厚さしかない。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="tm-svg" class="qh-svg" viewBox="0 0 372 310" width="100%" role="img" aria-label="トランズモンを斜め上から見た立体図のアニメーション。シリコンやサファイアの基板の上に、紙のように薄くて面積の大きい2枚のアルミの箔（パッド）が載っている。2枚をつなぐ細い帯の途中で、下の帯と上の帯が少しだけ重なり、そこが接合になっている。電子が帯を通って行き来し、2枚のパッドが交互にプラスとマイナスに帯電し、パッドの間の電場が真空と基板の中を通って明滅する。左下は接合の分解図で、上のアルミ、厚さ1〜2ナノメートルの酸化膜、下のアルミの3層を離して描き、電子の波が酸化膜を上下に通り抜ける。右下には切れ目の厚さの対比がある">
+          <text class="strong" x="186" y="14" text-anchor="middle">トランズモンの立体見取り図 ― 箔と、帯の重なり</text>
+          <!-- パッド注記 -->
+          <text class="label" x="96" y="34" text-anchor="middle">アルミの板＝ぺらぺらの箔</text>
+          <text class="label" x="96" y="48" text-anchor="middle">（厚さ約100nm・幅は数百μm）</text>
+          <line x1="100" y1="52" x2="110" y2="112" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+          <g transform="translate(0,-42)">
+          <text class="label" x="193" y="134" text-anchor="middle">電場</text>
+          <!-- 基板（立体） -->
+          <polygon points="28,170 328,170 354,156 54,156" fill="#e9eef6" stroke="var(--line)" stroke-width="1"/>
+          <polygon points="28,170 328,170 328,180 28,180" fill="#d3dbe8" stroke="var(--line)" stroke-width="1"/>
+          <polygon points="328,170 354,156 354,166 328,180" fill="#c4cedd" stroke="var(--line)" stroke-width="1"/>
+          <!-- パッド2枚（極薄の箔） -->
+          <polygon points="54,166 166,166 182,157 70,157" fill="#dfe3e9" stroke="#6b7480" stroke-width="1"/>
+          <polygon points="54,166 166,166 166,168.5 54,168.5" fill="#bcc5d2" stroke="#6b7480" stroke-width="0.8"/>
+          <polygon points="166,166 182,157 182,159.5 166,168.5" fill="#aab4c4" stroke="#6b7480" stroke-width="0.8"/>
+          <polygon points="206,166 318,166 334,157 222,157" fill="#dfe3e9" stroke="#6b7480" stroke-width="1"/>
+          <polygon points="206,166 318,166 318,168.5 206,168.5" fill="#bcc5d2" stroke="#6b7480" stroke-width="0.8"/>
+          <polygon points="318,166 334,157 334,159.5 318,168.5" fill="#aab4c4" stroke="#6b7480" stroke-width="0.8"/>
+          <!-- 首の帯2本（下の帯と、重なって乗る上の帯） -->
+          <polygon points="166,163 188,163 194,159.5 172,159.5" fill="#cfd6df" stroke="#6b7480" stroke-width="0.8"/>
+          <polygon points="166,163 188,163 188,164.6 166,164.6" fill="#aab4c4" stroke="#6b7480" stroke-width="0.6"/>
+          <polygon points="184,160 206,160 212,156.5 190,156.5" fill="#dfe3e9" stroke="#6b7480" stroke-width="0.8"/>
+          <polygon points="184,160 206,160 206,161.6 184,161.6" fill="#bcc5d2" stroke="#6b7480" stroke-width="0.6"/>
+          <rect x="184" y="161.8" width="4.5" height="1.6" fill="#c9a227"/>
+          <circle cx="187" cy="160" r="10" fill="none" stroke="#b5504a" stroke-width="1.4" stroke-dasharray="4 3"/>
+          <line x1="184" y1="170" x2="140" y2="264" stroke="#b5504a" stroke-width="1" stroke-dasharray="4 3"/>
+          <!-- 電場の弧（真空と基板） -->
+          <path id="tm-arc1" d="M 178 150 Q 193 136 208 150" stroke="#2f8a8f" stroke-width="1.6" fill="none"/>
+          <path id="tm-arc2" d="M 172 156 Q 193 144 214 156" stroke="#2f8a8f" stroke-width="1.6" fill="none"/>
+          <path id="tm-arc3" d="M 178 172 Q 193 188 208 172" stroke="#2f8a8f" stroke-width="1.6" fill="none" stroke-dasharray="4 3"/>
+          <g id="tm-dyn"></g>
+          <text class="label" x="186" y="200" text-anchor="middle">シリコン／サファイア基板（＝絶縁体。点線の電場は基板の中を通る）</text>
+          </g>
+          <g id="tm-zdyn"></g>
+          <!-- 左下: 接合の分解図 -->
+          <text class="label" x="118" y="216" text-anchor="middle">接合の拡大（3層を離した分解図）</text>
+          <polygon points="96,238 166,238 186,227 116,227" fill="#dfe3e9" stroke="#6b7480" stroke-width="1"/>
+          <polygon points="96,238 166,238 166,246 96,246" fill="#bcc5d2" stroke="#6b7480" stroke-width="0.8"/>
+          <polygon points="166,238 186,227 186,235 166,246" fill="#aab4c4" stroke="#6b7480" stroke-width="0.8"/>
+          <polygon points="102,258 172,258 186,250 116,250" fill="#e8cf7a" stroke="#8a6a24" stroke-width="0.8"/>
+          <polygon points="102,258 172,258 172,260 102,260" fill="#c9a227" stroke="#8a6a24" stroke-width="0.6"/>
+          <polygon points="96,272 166,272 186,261 116,261" fill="#dfe3e9" stroke="#6b7480" stroke-width="1"/>
+          <polygon points="96,272 166,272 166,280 96,280" fill="#bcc5d2" stroke="#6b7480" stroke-width="0.8"/>
+          <polygon points="166,272 186,261 186,269 166,280" fill="#aab4c4" stroke="#6b7480" stroke-width="0.8"/>
+          <text class="label" x="88" y="238" text-anchor="end">上のアルミ</text>
+          <text class="label" x="88" y="258" text-anchor="end">酸化膜1〜2nm</text>
+          <text class="label" x="88" y="278" text-anchor="end">下のアルミ</text>
+          <text class="label" x="118" y="298" text-anchor="middle">※厚さの縮尺は誇張してある</text>
+          <!-- 右下: 切れ目の対比 -->
+          <text class="label" x="294" y="216" text-anchor="middle">切れ目の厚さで役割が決まる</text>
+          <rect x="232" y="224" width="26" height="20" fill="#dfe3e9" stroke="#6b7480" stroke-width="1.2"/>
+          <rect x="276" y="224" width="26" height="20" fill="#dfe3e9" stroke="#6b7480" stroke-width="1.2"/>
+          <line x1="261" y1="228" x2="273" y2="240" stroke="#b5504a" stroke-width="2"/>
+          <line x1="273" y1="228" x2="261" y2="240" stroke="#b5504a" stroke-width="2"/>
+          <text class="label" x="267" y="258" text-anchor="middle">厚い → ためる</text>
+          <rect x="232" y="266" width="26" height="20" fill="#dfe3e9" stroke="#6b7480" stroke-width="1.2"/>
+          <rect x="262" y="266" width="26" height="20" fill="#dfe3e9" stroke="#6b7480" stroke-width="1.2"/>
+          <path d="M 256 276 q 3 -5 6 0 q 3 5 6 0" stroke="#2f8a8f" stroke-width="1.6" fill="none"/>
+          <text class="label" x="267" y="298" text-anchor="middle">極薄 → 通す</text>
+        </svg>
+        <div class="diagram-caption">トランズモンを斜め上から見た立体図。<strong>2枚のアルミの板は、面積が数百μmと巨大なのに厚さは約100nmしかない、紙のような箔</strong>で、2枚をつなぐ帯の途中の小さな重なり（約100nm四方）が接合になる。アニメーションでは電子の群れ（●）が帯を行き来し、2枚の板が交互に＋と−へ帯電。<strong>ためる働きは板の間の電場</strong>（実線＝真空、点線＝基板の中）が担う。左下は接合の分解図（酸化膜は厚さ1〜2nm。厚さの縮尺は誇張）。右下: 同じ「導体・絶縁体・導体」でも、切れ目が厚ければためる係、極薄なら通す係になる。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">あれ？ これだと、コンデンサの中に実質<strong>小さなコンデンサ</strong>が挟まってる構造になってないですか？ コイルを外したのに、代わりに入れたのも「導体・絶縁体・導体」――コンデンサの親戚に見えます。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いいところに気づいたね。その通り、構造だけ見れば、これは<strong>コンデンサの親戚</strong>だ。実際、<strong>ふつうの金属</strong>でこれを作ると、本当に「漏れの多い小さなコンデンサ」にしかならず、振り子の相方は現れない。<br>それなのに超伝導では、なぜコイルの代わりが務まるのか――<strong>鍵は、この薄さにある</strong>。<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:#2f8a8f;text-decoration:underline">量子力学の旅</a>で学んだ、壁のそばでの<strong>波の振る舞い</strong>を思い出してごらん。原子数個分しかない膜は、何を起こすと思う？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">絶縁体は電気を通さない材料のはずです。挟んだら電流が止まってしまう……と言いたいところですが、思い出しました。量子力学の旅で、<strong>波は壁のところでぷつりとは消えず、壁の中へ少しだけしみ出す</strong>と学びました。<br>膜が原子数個分しかないなら、超伝導の「たった1つの波」は<strong>膜の向こう側までしみ出して届く</strong>はずです。両側の波が膜の中でつながって、電流が通り抜ける、ということですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。波のしみ出しで壁を通り抜ける現象を<strong>トンネル効果</strong>と呼ぶ。そして「超伝導の波がしみ出しでつながり、電池もないのに電流が流れる」ことを理論で予言したのが、1962年、当時22歳の大学院生<strong>ジョセフソン</strong>だ。あまりに意外な予言で大物理学者が公然と反対したが、翌年実験で確認され、彼はノーベル賞を受けた。この部品を<strong>ジョセフソン接合</strong>と呼ぶ。<br>これで、さっきのきみの疑問に答えられる。超伝導では、両側の「たった1つの波」がしみ出しで1本につながり、<strong>電池がなくても流れる超伝導の電流が、膜を渡る</strong>。そして実験で確かめると、この通り道は「電流の変化に逆らい、受け取ったエネルギーを貯金して、あとで全額返す」――さっき整理した、<strong>コイルの本体そのもの</strong>の応答を示すんだ。貯金の置き場所だけが違う。コイルは磁界に、接合は「膜の両側で波の足並みがどれだけずれているか」という形で蓄える（ここはこの旅では深入りせず、実験事実として使おう）。<br><strong>構造は、係を決めない。応答が、係を決める</strong>。形はコンデンサの親戚でも、応答はコイルの親戚。正確に言えば、接合は「コイル役」と「小さなコンデンサ成分」を<strong>併せ持つ部品</strong>で、振り子の相方は、ちゃんといるというわけだ。<br>そのコンデンサ成分が回路の邪魔をしないことも、先に確かめておこう。ためる量は「向かい合う面積÷距離」で決まる。接合は膜の薄さ＝近さで1万倍ほど稼ぐが、面積は約100ナノメートル四方と、回路の板の<strong>1000万分の1</strong>しかない。差し引きで、接合の容量は板の<strong>100分の1以下</strong>。だから<strong>接合は極小のまま「通す係」、板は大きな「ためる係」</strong>――役割ははっきり分かれている。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 234" width="100%" role="img" aria-label="ジョセフソン接合の断面図。2枚のアルミニウム超伝導体が厚さ1〜2ナノメートルの酸化アルミニウム絶縁膜を挟んでいる。左右の超伝導体の波が膜の中へしみ出し、膜の中で重なってつながることで電流が通り抜ける">
+          <text class="strong" x="186" y="18" text-anchor="middle">ジョセフソン接合 ― 波のしみ出しで通る「か細い吊り橋」</text>
+          <!-- 超伝導体2枚 -->
+          <rect x="40" y="52" width="128" height="90" rx="6" fill="#e9eff8" stroke="#2f5a9e" stroke-width="2"/>
+          <rect x="204" y="52" width="128" height="90" rx="6" fill="#e9eff8" stroke="#2f5a9e" stroke-width="2"/>
+          <rect x="168" y="52" width="36" height="90" fill="#f7f3e2" stroke="#8a6a24" stroke-width="1.6"/>
+          <text class="label" x="104" y="44" text-anchor="middle">超伝導体（アルミ）</text>
+          <text class="label" x="268" y="44" text-anchor="middle">超伝導体（アルミ）</text>
+          <text class="label" x="186" y="160" text-anchor="middle">絶縁膜（酸化アルミ、1〜2nm＝原子数個分）</text>
+          <!-- 波 -->
+          <path d="M 48 100 q 10 -18 20 0 q 10 18 20 0 q 10 -18 20 0 q 10 18 20 0 q 10 -18 20 0 q 10 18 20 0" stroke="#2f8a8f" stroke-width="2.4" fill="none"/>
+          <path d="M 168 100 q 9 -7 18 -1 q 9 5 18 1" stroke="#2f8a8f" stroke-width="2" fill="none" stroke-dasharray="4 3"/>
+          <path d="M 204 100 q 10 -18 20 0 q 10 18 20 0 q 10 -18 20 0 q 10 18 20 0 q 10 -18 20 0 q 10 18 20 0" stroke="#2f8a8f" stroke-width="2.4" fill="none"/>
+          <text class="accent" x="186" y="80" text-anchor="middle">しみ出しが重なる</text>
+          <text class="label" x="186" y="186" text-anchor="middle">膜の厚さは、アルミの自然酸化が「勝手に止まる」性質で毎回同じにできる</text>
+          <text class="label" x="186" y="204" text-anchor="middle">接合の大きさは約100nm四方 ― チップは目に見えるのに心臓部はウイルスより小さい</text>
+          <text class="label" x="186" y="222" text-anchor="middle">通れる電流に上限 → 逆らう力が頭打ち → 「正比例」が壊れる</text>
+        </svg>
+        <div class="diagram-caption">ジョセフソン接合の断面。2枚の超伝導アルミニウムが、厚さ1〜2ナノメートル（原子数個分）の酸化アルミニウム絶縁膜を挟む。左右の「たった1つの波」は膜の中へ指数的に弱まりながらしみ出し、膜が十分薄いため<strong>膜の中で重なってつながる</strong>（トンネル効果）。このか細い通り道は流せる電流に上限があり、電流が大きいほど逆らう力の増え方が鈍る――コイルの「正比例」を壊し、振り子をブランコに変える部品になる。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">あと気になったのは、中学で習ったコンデンサは、電極が絶縁体を挟んで<strong>重なった</strong>構造をしていましたが、ここでは重なっていないんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り、重なっていないんだ。2枚のパッドは、同一平面に<strong>横並びで置かれた箔</strong>だ。「向かい合っている」のは板の内側の縁どうし――そして広い面の全体も、空間と基板越しに向かい合っている。電場は板の間の<strong>真空と、下の基板の中を回り込んで</strong>、相手の板に届く。家庭用コンデンサのように「絶縁フィルムを挟んで重ねて巻く」形とは、まったく違う。<br>ためるのに必要なのは「<strong>電場でつながった、向かい合う導体2枚</strong>」であって、物理的に重なっている必要はない――横並びでも電場はちゃんと架かる、というのがミソだ。<br>そして、あえて重ねない理由がある。重ねるには間に絶縁膜を挟む必要があるが、蒸着で作る膜は、マイクロ波のエネルギーを少しずつ食べる<strong>欠陥だらけ</strong>で、条件②の敵なんだ。横並びなら、絶縁体は<strong>真空と結晶の基板</strong>という「エネルギーを食べない絶縁体」で済む。<br>逆に、「絶縁体を挟んで重なっている」構造をしているのは、この回路では<strong>接合だけ</strong>。ただしそちらは膜が極薄すぎて波が渡ってしまうから、ためる係ではなく通す係――さっき作ったサンドイッチが、まさにそれだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">重なっている場所が通す係で、重なっていない場所がためる係……見た目の印象と逆なんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">さて、肝心なのはこの通り道の<strong>性格</strong>だ。通り道は、膜の中でかろうじて重なった波のしみ出し部分だけが頼りの、いわば<strong>か細い吊り橋</strong>で、流せる電流に上限がある。電流が小さいうちはコイルとそっくりに振る舞うが、電流が上限に近づくほど、<strong>逆らう力の増え方がどんどん鈍っていく</strong>。<br>――さっきの注文どおりの部品だと気づいたかな。「正比例からずれた逆らい方」そのものだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">つなげます。コイルの正比例＝ばね振り子＝等時性。ジョセフソン接合は、揺れが大きくなるほど押し返しが頭打ちになる。押し返しが弱ければ戻りが遅くなるから、<strong>大きく揺れるほどリズムがゆっくりになる振り子</strong>に変わる。公園のブランコで大きく漕ぐと1往復が間延びする、あの感覚です。<br>リズムが揺れの大きさで変わるなら、エネルギーの階段は<strong>上の段ほど段差が縮む</strong>。全部の段差が違う値になるから、いちばん下の段差にぴったり合わせた合図は、他のどの段差にも合わない。<strong>下2段だけが選び出せて、条件①が達成</strong>です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。数字も入れておこう。実機では、|0⟩ から |1⟩ への段差が約5GHz。|1⟩ から |2⟩ への段差は、それより<strong>約200〜300MHz</strong>（1秒に2〜3億回）だけ小さい。割合にしてわずか5%ほどの違いだが、パルスの周波数はそれよりずっと精密に合わせられるから、十分に区別できる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">そこが引っかかります。1段目の段差にぴったりの合図は、2段目の<strong>小さい</strong>段差より大きいエネルギーを持っているはずです。エネルギーが足りているのに、なぜ2段目には効かないんですか？ 大は小を兼ねて、飛び越えてしまう気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いちばん誤解しやすいところを突いてくれたね。合図の効き方を決めるのは、<strong>エネルギーの大小ではなく、リズムの一致</strong>なんだ。順に見ていこう。<br>まず、周波数の違いは急に出てきたわけではない。前のステージで確かめたルールは「<strong>段差 ＝ h × 振り子のリズム</strong>」だった。ばね振り子には厳密な等時性があって、どの段にいてもリズムが同じ5GHz。だから「h×リズム」が全段で共通になり、周波数の違いが<strong>見えなかった</strong>んだ。ブランコ化した今は、どの段にいるか（＝揺れの大きさ）でリズムが変わる。だから段差もそれぞれ「h×<strong>その段でのリズム</strong>」になり、初めて段ごとに違う周波数が顔を出す。振幅の違いは「どの段にいるか」を、段差の大きさは「その段でのリズム×h」を表す――役割が別で、矛盾はしていないんだよ。<br>次に、合図のパルスの実像だ。パルスは、1発のドンではない。5GHzで振動する電場を数十ナノ秒――<strong>数百往復ぶん</strong>――かけ続ける、<strong>小さな押しの連続</strong>だ。1回の押しで渡せるエネルギーは段差よりずっと小さく、何百回の押しを毎回同じ位相で積み上げて、初めて1段上がれる。ブランコを、1往復に1回、同じ位置で押し続けるのと同じだね。<br>ここでリズムがずれると、どうなるか。2段目のリズムは5%遅い。1段目用の合図で押すと、押すたびにタイミングが少しずつずれ、十往復ほどで完全に逆向き――<strong>ブレーキ</strong>に回る。加速と減速が交互に来て、足し引きはゼロ。前の旅で見た「リズムのずれた電波は効かない」はこのことだ。「効きが弱い」のではなく、「<strong>積み上がらない</strong>」んだ。<br>「大は小を兼ねる」は、エネルギーにしきい値がある世界の話。共鳴の世界の合言葉は「<strong>ぴったりだけが効く</strong>」だ。――ただし、この「ぴったり」には守るべき条件がひとつあって、それを破ると本当に飛び越えが起きてしまう。その話はステージ5でしよう。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">なるほど……。私は合図を、段差を飛び越えさせる「エネルギーの塊」として考えていました。でも実際は、何百回もの「押しの積み重ね」なんですね。それなら、塊の大きさではなくリズムの一致が決め手になるのは当然です。引っかかりが取れました。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ところでこの接合、作る側の身になると無茶な注文なんだ。数百マイクロメートルの回路の中に、厚さ1〜2ナノメートルの膜を、毎回同じ品質で挟み込む。かんなで削って作れる厚さではないし、置いた膜を測って調整するにも、原子数個分を狙う精度が要る。それを解決するのが、回路の材料に選んだ<strong>アルミニウム</strong>の性質だ。アルミは空気に触れると、表面が酸素と結びついて<strong>酸化アルミニウム</strong>という絶縁体の膜になる。そして、この膜がある厚さ――ちょうど1〜2ナノメートル――まで育つと、膜自身が酸素をブロックして、<strong>酸化がそれ以上進まなくなる</strong>。自然が勝手に、毎回同じ厚さで止めてくれるんだ。<br>だから作り方はこうなる。真空の装置の中で、1枚目のアルミの膜を蒸気にして基板に降らせて描く。そこへ<strong>酸素をひと呼吸ぶんだけ</strong>入れ、表面に酸化膜を育てる。真空に戻して、2枚目のアルミを少しずらして重ねる。その重なりが、さっき話した100ナノメートル四方のジョセフソン接合になる。チップ全体は目に見える大きさなのに、心臓部は<strong>ウイルスより小さい</strong>。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">部品はそろいました。振り子回路にジョセフソン接合を入れて、下2段を |0⟩ |1⟩ にする。これで量子ビットの完成……と言いたいのですが、条件②を思い出すと、まだ確認していないことがあります。<strong>この回路の重ね合わせは、実際どのくらい保つんですか？</strong> 作ってみたら一瞬で壊れました、では設計図倒れです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">歴史が、まさにその「設計図倒れ」から始まったんだ。<br>1999年、NECの研究所で<strong>中村泰信</strong>と<strong>蔡兆申</strong>が、世界で初めて超伝導回路の重ね合わせを制御してみせた。人類が「人工原子」を自在に操った最初の瞬間で、いま世界中で動いている超伝導量子コンピュータは、すべてこの実験の子孫だ。<br>ただし――その最初の量子ビットの重ね合わせの寿命は、約<strong>1ナノ秒</strong>。10億分の1秒だった。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">1ナノ秒……5GHzの振り子なら<strong>数回揺れて終わり</strong>です。前の旅で、ゲート1回はパルス1発で数十ナノ秒と教わりました。ゲートを1回もかけ終わらないうちに重ね合わせが死ぬのでは、計算になりません。<br>何がそんなに速く手がかりを漏らしていたんですか？ 冷やして超伝導にしてあるなら、抵抗の敵は倒したはずです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">新しい敵だ。名前は<strong>電荷雑音</strong>という。<br>チップの表面や基板の中には、製造のときに入り込んだ<strong>迷子の電荷</strong>――静電気のかけらのようなもの――があちこちに貼りついていて、ときどきふらっと居場所を変える。初期の量子ビットは回路が小さく、<strong>板の電気のたまり具合に敏感な設計</strong>だったから、近くの迷子電荷が1個動くだけで、振り子のリズム（つまり |0⟩ と |1⟩ の段差）がふらついた。<br>リズムがふらつくと何が起きるか。矢印の時計法則を思い出してほしい。|1⟩ の矢印は段差に比例した速さで回る。段差がでたらめに揺らげば、矢印の向きがでたらめにずれていく。重ね合わせの「向き」の情報は数回転で読めなくなる――手がかりを盗まれたのと同じ結末だ。倒しても倒しても現れる、条件②の敵の第2陣だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">迷子の電荷を全部掃除するのは無理そうです。製造をどれだけ丁寧にしても、ゼロにはできないでしょうから。掃除できないのに、どうやって勝ったんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">攻め方を逆にしたんだ。掃除できないなら、<strong>量子ビットの側を、電荷に鈍感にする</strong>。2007年にイェール大学のチームが出した答えは、拍子抜けするほど単純――ジョセフソン接合に<strong>大きなコンデンサを並列につなぐ</strong>。<br>効く理由は水槽で考えると分かる。コップ1杯の水は、小さな水槽に注げば水位をはっきり変えるが、大きな水槽ではほとんど何も変えない。コンデンサを大きくするのは水槽を大きくすることで、迷子電荷1個ぶんの変化は<strong>大水槽の1しずく</strong>になり、リズムがほとんど動かなくなる。逆に言えば、大きな板を持たなかった初代は、実質、接合の極小の容量だけが水槽だった――1しずくで水位が激変した、寿命1ナノ秒の正体だよ。この改良版が<strong>トランズモン</strong>――現在、グーグルもIBMも採用している主流の量子ビットだ。<br>タダではないよ。コンデンサを大きくすると、段差の不揃い（さっきの5%）も一緒に薄まってしまう。でも、ぎりぎり2段を選べるだけの不揃いを残しつつ、電荷への鈍感さを桁違いに稼ぐ<strong>ちょうどいい落としどころ</strong>が存在した。それがトランズモンの発明の本体だ。<br>成果は数字が語る。重ね合わせの寿命は1ナノ秒から改良を重ねて、いまや<strong>100マイクロ秒級</strong>――10万倍だ。ゲート1回が数十ナノ秒だから、寿命の中に<strong>数千回のゲート</strong>を詰め込める。ようやく計算機の名に値する部品になった。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="cn-svg" class="qh-svg" viewBox="0 0 372 224" width="100%" role="img" aria-label="電荷雑音とコンデンサの大きさの関係を示すシミュレータ。コンデンサが小さいと迷子の電荷が動くたびに量子ビットのリズムが大きくふらつき、コンデンサを大きくするとふらつきが小さくなって重ね合わせの寿命が延びる">
+          <text class="strong" x="186" y="16" text-anchor="middle">コンデンサを大きくすると、リズムのふらつきが消える</text>
+          <g id="cn-body"></g>
+        </svg>
+        <div class="readout">
+          <span>リズムのふらつき <b id="cn-jit">±100</b>（相対値）</span>
+          <span>向きが読めなくなるまで <b id="cn-life">約1ナノ秒</b></span>
+        </div>
+        <div class="anim-ctrl">
+          <span class="ctrl-label">コンデンサの大きさ</span>
+          <input type="range" id="cn-slider" min="0" max="100" step="1" value="0" aria-label="コンデンサの大きさを変える">
+        </div>
+        <div class="diagram-caption">チップ表面の<strong>迷子の電荷</strong>（黄色の点）はときどき居場所を変え、量子ビットのリズム（緑の線＝段差の値）を揺さぶる。スライダーでコンデンサを大きくすると、迷子電荷1個ぶんの影響が「大水槽の1しずく」になってふらつきが小さくなり、矢印の向きが読めなくなるまでの時間（＝重ね合わせの寿命の目安）が延びる。左端が初代クーパー対箱（寿命約1ナノ秒）、右端がトランズモン（10万倍長生き）に対応する。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">その大きなコンデンサで、気になることがあります。板は横並びで、<strong>近さではまったく稼いでいない</strong>のでした。前のステージで「広く・近く」が有利と学びましたから、これで<strong>ためる量が足りるのか</strong>が心配です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">足りる理由は3つある。第一に、必要な量がそもそも少ない――水槽は、接合まわりの何万倍かあれば十分だ。第二に、<strong>面積で稼ぐ</strong>。パッドが数百マイクロメートルと巨大なのは、近さの不利の埋め合わせだ。第三に、<strong>基板が手伝う</strong>。板の間の電場の大半は基板の中を通り、シリコンやサファイアは真空より約10倍「電場を通してためやすい」性質を持つ。<br>さっき話した通り、この平べったい設計は、小型化を捨てて<strong>重ね合わせの寿命</strong>を取ったトレードオフなんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">まとめます。<br>①コイルの<strong>正比例</strong>がばね振り子＝等時性の根源だった。<br>②<strong>ジョセフソン接合</strong>（超伝導体2枚で原子数個分の絶縁膜を挟む）は、波のしみ出し（トンネル効果）でつながる「か細い吊り橋」。逆らい方が頭打ちになるので、回路が<strong>ブランコ</strong>に変わり、段差が不揃いになって下2段を選べる。<br>③膜は<strong>アルミの自然酸化が勝手に止まる</strong>性質で作る。<br>④初代（1999年、世界初）は<strong>電荷雑音</strong>で寿命1ナノ秒。<strong>大きなコンデンサ</strong>で鈍感にしたのが<strong>トランズモン</strong>（2007年）、寿命は10万倍の100マイクロ秒級。<br>条件①達成、条件②も大きく前進です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">よくまとまったね。ただし条件②の敵には、まだ最大の大物が残っている。<strong>熱</strong>だ。前のステージの宿題を覚えているかな――段差はたった3×10⁻²⁴ジュール。実は、部屋の温かさが持つエネルギーは、この段差の<strong>1000倍以上</strong>ある。つまり常温では、環境が量子ビットを勝手に階段の上へ蹴り上げ放題なんだ。<br>次のステージでは、この機械が<strong>宇宙のどこよりも冷たい場所</strong>で動いている理由と、そこまで冷やす冷蔵庫のからくりを見に行こう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【心臓部の完成 ― 今日の積み上げ】</span>
+        <span class="step">・等時性の根源＝コイルの<strong>正比例</strong>の逆らい方（ばね振り子）。壊すには<span class="nw">正比例からずれた部品</span>が要る</span>
+        <span class="step">・<strong>ジョセフソン接合</strong>（1962年予言）＝超伝導体2枚＋絶縁膜1〜2nm。波が膜へしみ出してつながる<strong>トンネル効果</strong>の通り道。流せる電流に上限があり、逆らう力が頭打ち → 振り子が<strong>ブランコ</strong>化（大きく揺れるとリズムが遅い）</span>
+        <span class="step">・ブランコ化 → 階段の段差が上ほど縮んで<strong>不揃い</strong>に → 最下段の段差（約5GHz）だけに合う合図が作れる（|1⟩→|2⟩ は約200〜300MHz小さい）→ <strong>条件①達成</strong></span>
+        <span class="step">・製法：アルミの<strong>自然酸化が1〜2nmで勝手に止まる</strong>性質を利用。接合は約100nm四方</span>
+        <span class="step">・1999年 NECの中村泰信・蔡兆申が<strong>世界初の超伝導量子ビット</strong>。ただし<strong>電荷雑音</strong>（迷子電荷がリズムを揺さぶり、矢印の向きが読めなくなる）で寿命約1ナノ秒</span>
+        <span class="step">・<strong>トランズモン</strong>（2007年）＝大きなコンデンサで電荷に鈍感化（大水槽の1しずく）。段差の不揃いを少し犠牲にする落としどころ。寿命は100マイクロ秒級＝<span class="nw">ゲート数千回ぶん</span></span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 絶縁体の膜を挟んだのに、ジョセフソン接合を電流が通り抜けられる理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">強い電圧をかけて絶縁膜を破壊しているから</button>
+          <button class="choice-btn">波は壁際でぷつりとは消えず、原子数個分の膜の向こうへしみ出してつながるから（トンネル効果）</button>
+          <button class="choice-btn">絶縁膜に目に見えない穴が開いていて、そこを電子が通るから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 超伝導の「たった1つの波」は絶縁膜の中へ指数的に弱まりながらしみ出す。膜が1〜2ナノメートルと薄いため、両側からのしみ出しが膜の中で重なってつながり、電流が流れる。1962年に22歳の大学院生ジョセフソンが理論予言し、翌年実験で確認された。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. ジョセフソン接合を入れると、階段の下2段だけを選び出せるようになる理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">逆らう力が正比例から外れて頭打ちになるため、回路が「大きく揺れるとリズムが変わるブランコ」になり、段差が不揃いになるから</button>
+          <button class="choice-btn">接合が上の段へのエネルギーの通り道を物理的にふさぐから</button>
+          <button class="choice-btn">接合が階段の段数そのものを2段に減らすから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ コイルの正比例（ばね振り子＝等時性）が等間隔の階段を生んでいた。接合は流せる電流に上限があるため逆らい方が頭打ちになり、揺れの大きさでリズムが変わる。すると段差が上の段ほど縮んで不揃いになり、最下段の段差（約5GHz）ちょうどの合図は他の段に効かなくなる。段は無限にあるままで、「選べる」ようになったのがポイント。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. トランズモン（2007年）が初代の量子ビットに加えた工夫は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">絶縁膜を厚くして、波のしみ出しを強くした</button>
+          <button class="choice-btn">回路を小さくして、迷子の電荷が入り込む場所をなくした</button>
+          <button class="choice-btn">大きなコンデンサを並列につなぎ、迷子の電荷が動いてもリズムがほとんど変わらないようにした</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 大水槽に1しずく足しても水位が変わらないように、コンデンサを大きくすると迷子電荷1個の影響が薄まり、リズム（段差）が安定する。代わりに段差の不揃いも少し薄まるが、2段を選べるだけの不揃いを残す落としどころが存在した。寿命は約1ナノ秒から100マイクロ秒級へ、10万倍延びた。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage2.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QH.initStagePage(3);</script>
+
+<script>
+(function(){
+  // 図2: 電荷雑音とコンデンサの大きさ（インタラクティブ＋常時アニメ）
+  var g = document.getElementById('cn-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CA = '#2f8a8f', CN = '#b5504a', CY = '#c9a227';
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  // 左: チップと迷子電荷
+  el('rect', {x: 30, y: 46, width: 120, height: 120, rx: 8, fill: '#e8f1f1', stroke: 'var(--line)'});
+  txt(90, 40, 'label', 'チップ表面');
+  // 量子ビット（中央の小回路）
+  var qr = el('rect', {x: 66, y: 86, width: 48, height: 40, rx: 5, fill: 'var(--paper2)', stroke: CA, 'stroke-width': 2});
+  txt(90, 110, 'accent', '量子ビット');
+  // 迷子電荷
+  var charges = [];
+  var seeds = [[46,64],[132,72],[44,142],[126,148],[86,158]];
+  seeds.forEach(function (p) {
+    var c = el('circle', {cx: p[0], cy: p[1], r: 4, fill: CY, stroke: '#8a6a24', 'stroke-width': 1});
+    charges.push({e: c, x: p[0], y: p[1], t: Math.random() * 100});
+  });
+  txt(90, 184, 'label', '● ＝ 迷子の電荷（ときどき動く）');
+  // 右: リズムの線
+  txt(262, 40, 'label', '量子ビットのリズム（段差の値）');
+  el('line', {x1: 176, y1: 106, x2: 348, y2: 106, stroke: 'var(--line)', 'stroke-width': 1, 'stroke-dasharray': '3 3'});
+  var rhythm = el('path', {fill: 'none', stroke: CA, 'stroke-width': 2.2});
+  txt(262, 184, 'label', 'ふらつくほど、矢印の向きが早く読めなくなる');
+
+  var slider = document.getElementById('cn-slider');
+  var roJit = document.getElementById('cn-jit'), roLife = document.getElementById('cn-life');
+  var phase = 0, raf = null, running = false;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function jitterAmp() {
+    var v = slider ? parseFloat(slider.value) : 0;
+    return Math.pow(10, -v / 50); // 1 → 0.01
+  }
+  function lifeLabel() {
+    var v = slider ? parseFloat(slider.value) : 0;
+    var ns2 = Math.pow(10, v / 20); // 1ns → 100000ns
+    if (ns2 < 1000) return '約' + Math.round(ns2) + 'ナノ秒';
+    return '約' + (ns2 / 1000 >= 100 ? Math.round(ns2 / 1000) : (ns2 / 1000).toFixed(1)) + 'マイクロ秒';
+  }
+  function noise(t) {
+    return Math.sin(t * 0.9) * 0.5 + Math.sin(t * 2.3 + 1.7) * 0.3 + Math.sin(t * 5.1 + 0.4) * 0.2;
+  }
+  function draw() {
+    var amp = jitterAmp();
+    var d = '';
+    for (var x = 0; x <= 172; x += 3) {
+      var y = 106 - noise((x + phase) * 0.08) * 38 * amp;
+      d += (x === 0 ? 'M ' : 'L ') + (176 + x) + ' ' + y.toFixed(1) + ' ';
+    }
+    rhythm.setAttribute('d', d);
+    charges.forEach(function (c) {
+      c.t += 0.02;
+      var dx = Math.sin(c.t * 1.3) * 5 * Math.min(1, amp * 3 + 0.3);
+      var dy = Math.cos(c.t * 0.9) * 4 * Math.min(1, amp * 3 + 0.3);
+      c.e.setAttribute('cx', c.x + dx);
+      c.e.setAttribute('cy', c.y + dy);
+    });
+    if (roJit) roJit.textContent = '±' + (amp * 100 >= 10 ? Math.round(amp * 100) : (amp * 100).toFixed(1));
+    if (roLife) roLife.textContent = lifeLabel();
+  }
+  function tick() {
+    phase += 1.6;
+    draw();
+    if (running) raf = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (running || reduced) return;
+    running = true;
+    raf = requestAnimationFrame(tick);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+  }
+  if (slider) slider.addEventListener('input', draw);
+  draw();
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.isIntersecting ? start() : stop(); });
+    }, {threshold: 0.2});
+    io.observe(document.getElementById('cn-svg'));
+  }
+})();
+</script>
+<script>
+(function(){
+  // 図: トランズモンの立体見取り図（帯電・電場・接合の行き来を同期）
+  var svg = document.getElementById('tm-svg');
+  var g = document.getElementById('tm-dyn');
+  var zg = document.getElementById('tm-zdyn');
+  if (!svg || !g || !zg) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CR = '#b5504a', CB = '#2f5a9e', CA = '#2f8a8f';
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  var glowA = el('polygon', {points: '152,166 166,166 182,157 168,157', opacity: 0});
+  var glowB = el('polygon', {points: '206,166 220,166 236,157 222,157', opacity: 0});
+  var signA = el('text', {x: 110, y: 164, 'class': 'strong', 'text-anchor': 'middle', 'font-size': 15});
+  var signB = el('text', {x: 262, y: 164, 'class': 'strong', 'text-anchor': 'middle', 'font-size': 15});
+  var arcs = ['tm-arc1', 'tm-arc2', 'tm-arc3'].map(function (id) { return document.getElementById(id); });
+  var dots = [];
+  for (var i = 0; i < 3; i++) {
+    dots.push({base: 172 + i * 14, e: el('circle', {cy: 161.5, r: 2.6, fill: CA})});
+  }
+  var zdots = [];
+  for (var j = 0; j < 2; j++) {
+    zdots.push({ph: j * 0.6, e: el('circle', {cx: 124 + j * 16, r: 2.6, fill: CA}, zg)});
+  }
+  function draw(th) {
+    var q = Math.cos(th);
+    var top = q >= 0;
+    glowA.setAttribute('fill', top ? CR : CB);
+    glowB.setAttribute('fill', top ? CB : CR);
+    glowA.setAttribute('opacity', Math.abs(q) * 0.6);
+    glowB.setAttribute('opacity', Math.abs(q) * 0.6);
+    signA.textContent = top ? '＋' : '−';
+    signB.textContent = top ? '−' : '＋';
+    signA.setAttribute('fill', top ? CR : CB);
+    signB.setAttribute('fill', top ? CB : CR);
+    var so = Math.max(0.2, Math.abs(q));
+    signA.setAttribute('opacity', so);
+    signB.setAttribute('opacity', so);
+    for (var i = 0; i < arcs.length; i++) {
+      arcs[i].setAttribute('opacity', 0.12 + 0.55 * Math.abs(q));
+    }
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].e.setAttribute('cx', dots[i].base + 9 * q);
+    }
+    for (var j = 0; j < zdots.length; j++) {
+      zdots[j].e.setAttribute('cy', 254 + 20 * Math.sin(th - zdots[j].ph));
+    }
+  }
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var raf = null, running = false, th = 0.7;
+  function tick() {
+    th += 0.028;
+    draw(th);
+    if (running) raf = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (running || reduced) return;
+    running = true;
+    raf = requestAnimationFrame(tick);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+  }
+  draw(th);
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.isIntersecting ? start() : stop(); });
+    }, {threshold: 0.2});
+    io.observe(svg);
+  }
+})();
+</script>
+</body>
+</html>

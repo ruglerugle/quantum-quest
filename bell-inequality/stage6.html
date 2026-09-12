@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1b2a4a">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE6 月への答え ― ベルの不等式を破る</title>
+<meta name="description" content="ベルの不等式の破れから何が言えて、何が言えないのか。実在性と局所性のどちらを手放すか、もつれで通信ができない理由、月が消えない理由、そして量子暗号への応用まで。アインシュタインの問いへの現代物理学の答え。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage6.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ベルの不等式を破る">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE6 月への答え ― ベルの不等式を破る">
+<meta property="og:description" content="「月は見ていなくても存在するか」への現代物理学の答え。破れの意味の整理と、量子暗号への応用まで。旅の総まとめ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage6.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .bq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .bq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .bq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .bq-svg .panel{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .bq-svg .panel-dead{fill:#fbe9e8;stroke:#e79a97;stroke-width:1.5}
+  .bq-svg .cross{stroke:var(--ng);stroke-width:3;stroke-linecap:round}
+  .bq-svg .ok-text{fill:var(--ok);font-size:11px;font-weight:900}
+  .bq-svg .ng-text{fill:var(--ng);font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🔔</a> <span>ベルの不等式を破る</span></div>
+      <div class="brand-sub">STAGE 6 ― 月への答え ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 6</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 6</span><span class="chapter-title">月への答え</span>
+        <div class="chapter-sub">局所実在論のその後</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">旅の総決算。不等式の破れから「言えること」と「言えないこと」を仕分けし、もつれで通信ができない理由と、それでも月が消えない理由を説明できれば、全クエスト制覇。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">判決は確定した。では、この判決文を正しく読もう。実験が処刑したのは<strong>局所実在論</strong>――「実在性」と「局所性」を<strong>両方同時に</strong>仮定する立場だ。ここは慎重に言わないといけない。死んだのはあくまで<strong>セット</strong>であって、どちらか片方は生き残れる。自然は少なくとも一方を裏切っている。さて、どちらを手放すか。量子力学の標準的な立場は、<strong>実在性のほうを手放す</strong>。測定結果は測る前には存在せず、測った瞬間に生まれる。説明書は最初から1冊もなかった、という読み方だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">でも先生、それなら局所性のほうにも傷がついていませんか？ STAGE4の計算ルールでは、アリスが測った瞬間、遠くのボブの光子の状態が<strong>一瞬で</strong>変わりました。あれはどう見ても「遠くの出来事が瞬時にこちらへ影響する」……光速の制限を破っているように見えます。相対性理論と正面衝突してしまうのでは？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最重要の論点だ。結論から言うと、<strong>相対性理論は無傷</strong>なんだよ。理由を実験で考えよう。アリスがもつれを使ってボブに「今すぐ帰れ」と伝えたいとする。アリスにできるのは角度を選ぶことだけだ。ではボブの手元には何が見える？ ボブの光子の測定結果は――アリスが<strong>どの角度を選ぼうと、そもそも測ろうと測るまいと</strong>――○と×が半々のランダムな列にしか見えない。STAGE2で確認した実験事実だね。ボブの手元のデータ<strong>だけ</strong>からは、アリスの行動について1ビットの情報も読み取れない。あの見事な相関は、2人が後日会って、記録を<strong>突き合わせたとき</strong>に初めて浮かび上がる。そして記録を届ける手段は電話でもメールでも、必ず光速以下だ。<strong>もつれは通信には使えない</strong>。これを専門用語で「非通信定理」という。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……ちょっと感動しています。ボブに情報が漏れない理由は、<strong>結果が完全にランダムだから</strong>ですよね。アインシュタインが「神はサイコロを振らない」と嫌った、まさにそのサイコロが、彼の作った光速の制限を守る盾になっている。ランダムさが宇宙の検閲官として、不気味な相関から「使える情報」を握りつぶしているなんて。皮肉というか、できすぎというか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">歴史の妙だね。だから現代物理の標準的な整理はこうなる。<strong>捨てるもの：実在性</strong>（測る前の値は存在しない）。<strong>守るもの：通信としての局所性</strong>（情報は光速を超えない）。ただし公平のために言っておくと、別の道を選ぶ理論も存在するよ。ボームという物理学者の理論は、実在性を守る代わりに<strong>あからさまに非局所的な</strong>隠れた変数を認める。ほかにも、測定のたびに世界が分岐すると考える解釈や、前のステージで触れた超決定論まである。ベルの不等式が証明したのは「<strong>どの道を選んでも、局所実在論という常識には戻れない</strong>」ということ。どの代償を払うかは、いまも物理学者の間で議論が続いている。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" viewBox="0 0 340 190" width="100%" role="img" aria-label="実験結果の整理図。実在性と局所性の両方を仮定する局所実在論には大きなバツ印がつき、実在性を手放す標準的量子力学、局所性を手放すボーム理論などの選択肢が下に並ぶ">
+          <text class="strong" x="170" y="16" text-anchor="middle">判決文の読み方 ― 死んだのは「セット」</text>
+          <rect class="panel-dead" x="85" y="26" width="170" height="46" rx="8"></rect>
+          <text class="strong" x="170" y="45" text-anchor="middle">局所実在論</text>
+          <text class="label" x="170" y="62" text-anchor="middle">実在性 ＋ 局所性（両方仮定）</text>
+          <line class="cross" x1="100" y1="30" x2="240" y2="68"></line>
+          <line class="cross" x1="240" y1="30" x2="100" y2="68"></line>
+          <text class="ng-text" x="264" y="52">実験で否定</text>
+          <line stroke="var(--muted)" stroke-width="1.5" x1="170" y1="72" x2="170" y2="88"></line>
+          <line stroke="var(--muted)" stroke-width="1.5" x1="60" y1="88" x2="280" y2="88"></line>
+          <line stroke="var(--muted)" stroke-width="1.5" x1="60" y1="88" x2="60" y2="100"></line>
+          <line stroke="var(--muted)" stroke-width="1.5" x1="280" y1="88" x2="280" y2="100"></line>
+          <rect class="panel" x="14" y="100" width="150" height="56" rx="8"></rect>
+          <text class="lbA" x="89" y="119" text-anchor="middle">標準的な量子力学</text>
+          <text class="label" x="89" y="135" text-anchor="middle">実在性を手放す</text>
+          <text class="label" x="89" y="149" text-anchor="middle">（値は測った瞬間に生まれる）</text>
+          <rect class="panel" x="176" y="100" width="150" height="56" rx="8"></rect>
+          <text class="lbA" x="251" y="119" text-anchor="middle">ボーム理論など</text>
+          <text class="label" x="251" y="135" text-anchor="middle">局所性を手放す</text>
+          <text class="label" x="251" y="149" text-anchor="middle">（非局所的な隠れた変数）</text>
+          <text class="ok-text" x="170" y="178" text-anchor="middle">どちらの道でも、情報が光速を超えないこと（非通信定理）は守られる</text>
+        </svg>
+        <div class="diagram-caption">実験が否定したのは「実在性＋局所性」の<strong>セット</strong>。少なくとも一方を手放さなければならない。標準的な量子力学は実在性を捨てる道を選ぶが、局所性を捨てる理論も論理的には生き残っている。ただしどの道でも、もつれを使った超光速通信は不可能だ</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">それでは最後に、出発点の質問に戻らせてください。<strong>月は、見ていないときも存在するんですか？</strong> ミクロの光子に「まだ聞かれていない質問への答え」が存在しないなら、月だって原子でできています。誰も見ていない夜の月は、消えているんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">安心してほしい、<strong>月はある</strong>。鍵は「見る」の意味だよ。実験室のもつれ光子は、外界から完璧に隔離されているからこそ「答えのない状態」を保てた。ところが月はどうか。太陽の光が絶え間なく当たり、はね返り、宇宙のちりや粒子が衝突し続けている。月は毎瞬、何兆個もの粒子から<strong>「測定」を受け続けている</strong>ようなものなんだ。人間が見ているかどうかは関係ない。環境との相互作用がやまないかぎり、月のような巨大な物体の位置や形は、実質的に常に確定し続ける。だから正確な答えはこうだ。<strong>「量子力学は月を消さない。ただし、孤立したミクロの世界では、『聞かれていない質問の答え』は本当に存在しない」</strong>。アインシュタインの直観は日常の世界では正しく、宇宙の最深部では覆された、ということだね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そして物語には続きがある。ベルの不等式は、宇宙の姿を裁いた後、<strong>実用の道具</strong>に転職したんだ。代表が<strong>量子暗号</strong>だよ。もつれ光子ペアで暗号の鍵を配る方式では、盗聴者が光子に手を出すと、もつれが壊れて<strong>ベルの不等式の破れが弱まってしまう</strong>。つまり通信のあいまに不等式をテストし続ければ、盗聴の有無を<strong>物理法則が保証する形で</strong>検知できる。「不等式がしっかり破れている＝誰にも覗かれていない」という品質保証書だ。量子コンピュータも量子テレポーテーションも、もつれを資源として動く。アインシュタインが「不気味」と呼んだ相関は、いまや21世紀の技術の心臓部になっている。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">振り返ると、不思議な旅でした。出発点は「月はあるか」という、物理なのか哲学なのか分からない問い。それが偏光板の○×の数え上げになり、3つの分数の衝突になり、実験室の判決になり、最後は暗号技術の保証書になった。……いちばん心に残ったのは、STAGE3の導出です。使ったのは「B欄は○か×のどちらか」という、当たり前すぎて疑いようのない一歩だけ。<strong>あの当たり前を自然が破ってみせた</strong>ということは、「測る前から答えがある」という前提こそが幻だった――そう認めるしかないんですね。常識が実験に負ける瞬間を、自分の手で計算できたのが嬉しいです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それこそがこの旅の宝物だよ。ベル自身の言葉を借りれば、彼が示したのは「素朴に見える仮定が、実は検証可能な物理的主張だった」ということだ。哲学と物理の境界線は、賢い問いの立て方ひとつで動く。そして境界線を動かしたのは、豪華な実験装置でも難解な数学でもなく、<strong>個数を数えるという最も素朴な論法</strong>だった。きみが今日やった計算は、本物のベルの定理そのものだ。胸を張っていい。最後のクイズを解いて、旅を締めくくろう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果 ― 判決文の読み方】</span>
+        <span class="step">否定されたのは局所実在論（実在性＋局所性のセット）。標準的な量子力学は実在性を手放す</span>
+        <span class="step">非通信定理：手元の結果はランダムにしか見えないため、もつれで情報は送れない。相対性理論は無傷</span>
+        <span class="step">月は環境から「測定」され続けているので消えない。孤立したミクロ系にだけ「答えのない質問」がある</span>
+        <span class="step">応用：ベルテストは量子暗号の盗聴検知など、量子技術の品質保証として現役で働いている</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. ベル実験の「破れ」によって否定されたのはどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">実在性だけが単独で否定された</button>
+          <button class="choice-btn">局所性だけが単独で否定された</button>
+          <button class="choice-btn">実在性と局所性を両方同時に仮定する立場（局所実在論）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 死んだのはセットであって、片方ずつなら生き残れる。標準的な量子力学は実在性を手放し、ボーム理論のように局所性を手放して実在性を守る理論もある。確定したのは「常識のセットには戻れない」ということだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. もつれを使って光より速く通信できない理由はどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">光子がすぐに壊れてしまうから</button>
+          <button class="choice-btn">受け手の測定結果は、送り手が何をしようとランダムな列にしか見えず、相関は後日、光速以下の連絡で記録を突き合わせて初めて分かるから</button>
+          <button class="choice-btn">偏光板の角度を変えるのに時間がかかるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ボブの手元のデータだけからはアリスの行動を1ビットも読み取れない。結果の完全なランダムさが「使える情報」を握りつぶすので、相対性理論の光速制限は破られない（非通信定理）。アインシュタインの嫌ったサイコロが、彼の理論を守っている。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. ベルの不等式の、現代における実用的な使い道はどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">量子暗号で、不等式の破れ具合を監視することで盗聴の有無を物理法則のレベルで検知する</button>
+          <button class="choice-btn">月の位置を正確に測定する</button>
+          <button class="choice-btn">サイコロの出目を予言する</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 盗聴者がもつれ光子に触れるともつれが壊れ、不等式の破れが弱まる。「しっかり破れている＝覗かれていない」という品質保証書だ。宇宙の姿を裁いた定理が、いまは通信の安全を守る道具として働いている。全ステージクリア、おめでとう！</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>クリア画面へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>BQ.initStagePage(6);</script>
+</body>
+</html>

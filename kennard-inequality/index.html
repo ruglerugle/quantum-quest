@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2947">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>不確定性原理を証明する ― ケナードの不等式・全7ステージの無料学習ゲーム</title>
+<meta name="description" content="1927年、ケナードは不確定性原理 Δx·Δp ≥ ℏ/2 を波の数学から厳密な定理として証明した。標準偏差・積分・部分積分・判別式――道具を一つずつ発見しながら、証明を最後まで自分の手でたどる全7ステージの無料学習サイト。ねこ博士とうさ美が案内します。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="不確定性原理を証明する">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="不確定性原理を証明する ― ケナードの不等式・全7ステージの無料学習ゲーム">
+<meta property="og:description" content="Δx·Δp ≥ ℏ/2 はどうやって発見され、どうやって証明されたのか。微分積分と判別式だけで、1927年の証明を最後まで自分の手でたどる。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "不確定性原理を証明する ― ケナードの不等式",
+  "alternateName": "KENNARD QUEST",
+  "description": "1927年にケナードが与えた不確定性原理 Δx·Δp ≥ ℏ/2 の厳密な証明を、公式の発見物語とともに全7ステージでたどる無料学習サイト。",
+  "url": "https://quantum-mechanics.habatakijuku.com/kennard-inequality/",
+  "inLanguage": "ja",
+  "learningResourceType": "learning activity",
+  "educationalLevel": "中学生以上",
+  "teaches": "不確定性原理の証明（標準偏差・確率密度と期待値・運動量演算子・部分積分・コーシーの不等式の手法・二次関数の判別式・ガウス波束）",
+  "isAccessibleForFree": true,
+  "author": { "@type": "Person", "name": "ruglerugle" }
+}
+</script>
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar" aria-label="サイト情報">
+    <span class="brand-badge" aria-hidden="true">📐</span>
+    <span class="brand-copy">
+      <strong>不確定性原理を証明する</strong>
+      <small>KENNARD QUEST</small>
+    </span>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <h1><span class="line">Δx·Δp ≥ ℏ/2 は、信じるものではない。</span><span class="line accent">1927年の証明を、自分の手で最後までたどろう。</span></h1>
+      <p>ハイゼンベルクが思考実験で「だいたいこのくらい」と見積もった不確定性原理を、同じ1927年、ケナードは波の数学から<span class="nw">厳密な定理</span>として証明した。このクエストでは、標準偏差・積分・部分積分・判別式と、証明に必要な道具を一つずつ「発見」しながら、最後の1行まで省略なしで証明を組み立てる。数式がどうやって思いつかれたのか――発見の論理こそが主役だ。</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="board" aria-labelledby="quest-heading">
+      <div class="board-head">
+        <div><h2 id="quest-heading">クエストを選ぼう！</h2></div>
+        <p>ステージ1から順番にクリアしよう（前のステージをクリアすると次が解放されます）</p>
+      </div>
+
+      <div class="quest-grid">
+        <a class="quest-card" href="stage1.html" data-stage="1" style="--accent:#a6742a;--accent-bg:#fdf3e0">
+          <div class="q-top"><span class="q-num">1</span><span class="q-suit" aria-hidden="true">✦</span></div>
+          <div class="q-meta"><span class="q-tag">標準偏差</span><span class="q-time">⏱ 約8分</span></div>
+          <div class="q-title">1927年の宿題</div>
+          <p class="q-desc">ハイゼンベルクの「だいたい」を定理に変えるには、まず「ばらつき」を測れる数にしなければ。ガウスの誤差論から道具を借りよう。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage2.html" data-stage="2" style="--accent:#2f6fa6;--accent-bg:#e8f1fa">
+          <div class="q-top"><span class="q-num">2</span><span class="q-suit" aria-hidden="true">✦</span></div>
+          <div class="q-meta"><span class="q-tag">⟨x⟩ と Δx</span><span class="q-time">⏱ 約8分</span></div>
+          <div class="q-title">確率の波と積分</div>
+          <p class="q-desc">|ψ|² は確率の濃さ。それなら平均もばらつきも「積分」で書けるはず。細く切って足すだけの道具で、Δx を式にしよう。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage3.html" data-stage="3" style="--accent:#5b3fa6;--accent-bg:#efe9f9">
+          <div class="q-top"><span class="q-num">3</span><span class="q-suit" aria-hidden="true">✦</span></div>
+          <div class="q-meta"><span class="q-tag">−iℏ d/dx</span><span class="q-time">⏱ 約14分</span></div>
+          <div class="q-title">運動量をつかまえる</div>
+          <p class="q-desc">運動量は波の細かさに隠れている。波形の傾きを読む「微分」が、運動量の検出器になる瞬間を目撃しよう。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage4.html" data-stage="4" style="--accent:#2f8f65;--accent-bg:#eaf7ef">
+          <div class="q-top"><span class="q-num">4</span><span class="q-suit" aria-hidden="true">✦</span></div>
+          <div class="q-meta"><span class="q-tag">部分積分</span><span class="q-time">⏱ 約6分</span></div>
+          <div class="q-title">部分積分の魔法</div>
+          <p class="q-desc">微分を相手に押し付けると符号が反転する――19世紀の職人芸で、証明に必要な2つの補題を先に仕込んでおこう。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage5.html" data-stage="5" style="--accent:#a63f6f;--accent-bg:#fbe9f1">
+          <div class="q-top"><span class="q-num">5</span><span class="q-suit" aria-hidden="true">✦</span></div>
+          <div class="q-meta"><span class="q-tag">I(λ) ≥ 0</span><span class="q-time">⏱ 約9分</span></div>
+          <div class="q-title">魔法の関数 I(λ)</div>
+          <p class="q-desc">証明の心臓部はどうやって「思いつかれた」のか。コーシー以来の狩りの型と、ゴールからの逆算。発見の論理を体験する山場。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage6.html" data-stage="6" style="--accent:#2f8a8f;--accent-bg:#e6f5f5">
+          <div class="q-top"><span class="q-num">6</span><span class="q-suit" aria-hidden="true">✦</span></div>
+          <div class="q-meta"><span class="q-tag">判別式 ≤ 0</span><span class="q-time">⏱ 約6分</span></div>
+          <div class="q-title">判別式でフィニッシュ</div>
+          <p class="q-desc">残った式は、ただの二次関数。中学で習った判別式が、量子力学最深の定理にとどめを刺す。証明完成の瞬間へ。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage7.html" data-stage="7" style="--accent:#b5504a;--accent-bg:#fdefed">
+          <div class="q-top"><span class="q-num">7</span><span class="q-suit" aria-hidden="true">✦</span></div>
+          <div class="q-meta"><span class="q-tag">ガウス波束</span><span class="q-time">⏱ 約7分</span></div>
+          <div class="q-title">等号の波と歴史</div>
+          <p class="q-desc">下限 ℏ/2 をぴったり達成する波はどれか。そしてケナード本人と、ワイル、ロバートソン、小澤へと続く証明のその後の物語。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+      </div>
+    </section>
+
+    <div id="book-recommend"></div>
+  </main>
+
+  <footer>
+    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;© <span id="year"></span> ruglerugle</p>
+    <div class="footer-suits" aria-hidden="true"><span>✦</span><span>☾</span><span>✧</span><span>★</span></div>
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<script src="js/progress.js"></script>
+<script>KQ.initCoverPage();</script>
+</body>
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2947">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE3 運動量をつかまえる ― 不確定性原理を証明する</title>
+<meta name="description" content="運動量は波の細かさに隠れている。波形の傾きを読む「微分」を道具にすると、平面波から運動量 p＝ℏk がそのまま取り出せる。運動量演算子 −iℏ d/dx が発見される瞬間をたどるステージ。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage3.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="不確定性原理を証明する">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE3 運動量をつかまえる ― 不確定性原理を証明する">
+<meta property="og:description" content="波形の傾きを読む「微分」が、運動量の検出器になる瞬間を目撃する。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage3.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .kq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .kq-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+  .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .kq-svg .axis{stroke:var(--muted);stroke-width:1.5}
+  .kq-svg .ah{fill:var(--muted)}
+  .kq-svg .tri{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 4;fill:none}
+  .kq-svg .lineA{stroke:#b5504a;stroke-width:2.5;fill:none;stroke-linecap:round}
+  .kq-svg .lineB{stroke:var(--gold);stroke-width:2.5;fill:none;stroke-linecap:round}
+  .kq-svg .lbA{fill:#b5504a;font-size:12px;font-weight:900}
+  .kq-svg .lbB{fill:var(--gold-dark);font-size:12px;font-weight:900}
+  .kq-svg .mhead{fill:var(--muted)}
+  .kq-svg .mline{stroke:var(--line);stroke-width:1}
+  .kq-svg .ktick{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+  .kq-svg .karr{stroke:var(--muted);stroke-width:1.5}
+  .kq-svg .sbox{fill:var(--paper2);stroke:var(--line);stroke-width:1.2;rx:5}
+  .kq-svg .sfillA{fill:rgba(217,164,65,.30);stroke:var(--gold-dark);stroke-width:1.5;rx:5}
+  .kq-svg .sfillB{fill:rgba(47,111,166,.22);stroke:#2f6fa6;stroke-width:1.5;rx:5}
+  .kq-svg .stxt{fill:var(--ink);font-size:13px;font-weight:800}
+  .kq-svg .sint{fill:var(--ink);font-size:21px}
+  .kq-svg .plocal{fill:none;stroke:#2f6fa6;stroke-width:2}
+  .kq-svg .pfill{fill:rgba(217,164,65,.35);stroke:var(--gold-dark);stroke-width:1.8}
+  .kq-svg .pop{fill:var(--muted);font-size:17px;font-weight:900}
+  .kq-svg .kaxis{stroke:var(--muted);stroke-width:1.5}
+  .kq-svg .kwaveB{fill:none;stroke:#2f6fa6;stroke-width:2}
+  .kq-svg .klineA{stroke:var(--gold-dark);stroke-width:2.5;fill:none;stroke-linecap:round}
+  .kq-svg .klineB{stroke:#2f6fa6;stroke-width:2.5;fill:none;stroke-linecap:round}
+  .kq-svg .ktA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .kq-svg .ktB{fill:#2f6fa6;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">📐</a> <span>不確定性原理を証明する</span></div>
+      <div class="brand-sub">STAGE 3 ― 運動量をつかまえる ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 3</span><span class="chapter-title">運動量をつかまえる</span>
+        <div class="chapter-sub">微分という検出器</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">微分を「傾きを読む道具」として手に入れ、運動量が −iℏ d/dx という演算で波から取り出せる理由を説明できるようになろう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">前のステージの宿題からですね。|ψ|² のグラフには位置の確率しか写っていないのに、運動量のばらつき Δp をどう計算するのか。……手がかりは、あの式しか思い当たりません。p＝h/λ。運動量は波長で決まる。ということは、運動量の情報は「波の細かさ」に隠れているはずです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その手がかりで合っているよ。p＝h/λ――波長と運動量をつなぐこの辞書は、<a href="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/" target="_blank" rel="noopener" style="color:var(--gold-dark);text-decoration:underline">シュレディンガー方程式の教室</a>で組み立てたものだったね。この旅でも土台になる式だから、先へ進む前に、どう組み立てたのだったかを整理し直しておこう。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">はい。出発点は光子でした。光電効果で確立した <strong>E＝hν</strong> と、相対性理論が質量ゼロの粒子に与える <strong>E＝pc</strong>。同じ光子のエネルギーを2通りに書いたのだから等号でつないでよくて、hν＝pc。波の基本式 c＝νλ を代入すると ν が約分されて、<strong>p＝h/λ</strong>。光子については、仮定を足さずに導出できる式でした。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">そして1924年、ド・ブロイがこの式を<strong>質量のある電子にも要求した</strong>んでしたよね。質量があると導出の足場 E＝pc は使えないのに、結論の関係だけは光と物質に共通のはずだ、という賭け。3年後、電子の回折の実験で本当に波が見つかって、賭けは当たった。……ですから、安心して使えます。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">土台は固まったね。では、いよいよ Δp を計算する式を作りにかかろう。今日の新しい道具は、<strong>微分</strong>だよ。これも正体は素朴で、「グラフの<strong>ある点での傾き</strong>を読む」道具なんだ。曲線でも、1点のまわりをどんどん拡大していけば、ほとんどまっすぐな線に見えてくる。そのまっすぐな線の傾きが、その点での微分の値。関数 ψ(x) の各点での傾きを並べたものを ψ′(x) や dψ/dx と書く。きみは「速さ＝距離÷時間」を知っているね。あれは実は、位置のグラフの<strong>傾き</strong>を読んでいるんだ。グラフが急なほど、短い時間で大きく進む――つまり速い。微分は「変化の速さを読む道具」と言ってもいい。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 320 205" width="100%" role="img" aria-label="位置と時間のグラフ。急な直線は同じ時間で大きく進むので速く、なだらかな直線は少ししか進まないので遅い。傾きが速さを表すことを示す図">
+          <line class="axis" x1="40" y1="185" x2="40" y2="22"></line>
+          <polygon class="ah" points="40,12 35,24 45,24"></polygon>
+          <line class="axis" x1="40" y1="185" x2="298" y2="185"></line>
+          <polygon class="ah" points="308,185 296,180 296,190"></polygon>
+          <text class="label" x="8" y="32">位置</text>
+          <text class="label" x="278" y="201">時間</text>
+          <text class="strong" x="70" y="16">グラフの傾き ＝ 速さ</text>
+          <line class="lineA" x1="40" y1="185" x2="150" y2="45"></line>
+          <line class="lineB" x1="40" y1="185" x2="295" y2="130"></line>
+          <text class="lbA" x="128" y="34">速い</text>
+          <text class="lbB" x="268" y="118">遅い</text>
+          <polyline class="tri" points="75,140.5 115,140.5 115,89.5"></polyline>
+          <text class="label" x="72" y="156">同じ時間</text>
+          <text class="label" x="121" y="118">大きく進む</text>
+          <polyline class="tri" points="180,154.8 220,154.8 220,146.2"></polyline>
+          <text class="label" x="177" y="171">同じ時間</text>
+          <text class="label" x="226" y="143">少しだけ進む</text>
+        </svg>
+        <div class="diagram-caption">位置と時間のグラフ。同じ時間ぶん（横の幅）に対して、どれだけ進んだか（縦の伸び）の割合が「傾き」。急な線ほど速く、なだらかな線ほど遅い。この傾きを1点ごとに読み出す道具が微分だ</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">傾きを読む道具、ですか。……<strong>波長さえ測れば p＝h/λ で運動量は出る</strong>はずですよね。なぜわざわざ微分なんて道具を持ち出す必要があるんでしょう。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その疑問こそ、この道具が存在する理由そのものだよ。きみの言うとおり、<strong>波長が1つにはっきり決まった波</strong>なら、λ を読んで p＝h/λ で終わりだ。微分なんて要らない。……ところで、そういう波は、どんな姿をしていたかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……あっ。同じ形がどこまでも続く波、<strong>位置がまったく決まらない波</strong>です。運動量を確定させると位置が完全に不定になる、あの話。逆に言えば、位置がある程度でも決まっている波は、いろいろな波長を混ぜて作るしかない。混ざっているということは……その波に「きみの波長は？」と聞いても、<strong>答えが1つに決まらない</strong>。λ という記号を、式に書くことすらできないんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこだよ。「波長を測って代入する」やり方は、<strong>きれいな平面波1本にしか通用しない</strong>んだ。ところが私たちが Δp を計算したい相手は、平面波ではなく<strong>あらゆる形の ψ</strong>だ。だから必要なのは、どんな形の波にも機械的に施せて、波長が1つに決まる波に対してだけは正しく p を返してくれる、そういう<strong>装置</strong>なんだよ。しかも ⟨x⟩ のときと同じ ∫ … dx の形に収めたいから、その装置は<strong>各点ごとに答えを返す</strong>ものでなければならない。波長のように、離れた2点を見比べてやっと分かる量では、積分の中身に書けないからね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">待ってください、その前にひとつ。<strong>いくつもの波長を混ぜて作った波の運動量は、結局いくつになるんですか？</strong> 「答えが1つに決まらない」で終わりでは、Δp を計算するどころではない気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい踏み込みだ。答えは――<strong>位置のときとまったく同じ</strong>だよ。混ぜて作った波の運動量は、ひとつの数には決まらない。その波の運動量を測ると、<strong>混ぜた材料の波長のどれか</strong>に対応する値が出てくる。どれが出るかは測ってみるまで分からなくて、<strong>濃く混ぜた波長ほど出やすい</strong>。位置のときに |ψ|² が「その場所で見つかる確率の濃さ」だったのと、そっくり同じ構図なんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">それなら、⟨x⟩ が位置の平均だったのと同じように、運動量にも平均 ⟨p⟩ が考えられますね。<strong>測るたびに出る値を、混ぜた濃さで重みをつけて平らにならした値</strong>。……あっ、ということは Δp も同じです。<strong>Δp は「出てくる値がどれくらいばらつくか」</strong>――混ぜ方が偏っていて1つの波長がほとんどを占めていれば Δp は小さく、たくさんの波長を平等に混ぜていれば Δp は大きい。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのとおり。ここで、いま私たちが追いかけている式の正体が少し見えてくるね。<strong>Δx は「ψ がどれだけ広がっているか」、Δp は「波長をどれだけ混ぜたか」</strong>。この2つは無関係ではいられない。ψ を狭い範囲に閉じ込めようとすれば、たくさんの波長を混ぜないと形が作れないからね。Δx·Δp ≥ ℏ/2 という式は、その<strong>「広がり」と「混ぜ具合」のせめぎ合い</strong>を書いたものなんだよ。片方を押し下げればもう片方が必ず持ち上がる、シーソーのような関係だ。</div>
+        </div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">その「どの波長をどれだけ濃く混ぜたか」という分布、位置のときに描いた |ψ|² の山と同じ役目に聞こえます。どの値が出やすいかを表す山。……ということは、位置に ψ(x) があったように、<strong>運動量のほうにも波動関数のようなものがある</strong>んですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">あるよ。ふつう <strong>φ(p)</strong>（ファイ）と書いて、<strong>|φ(p)|² が運動量の確率の濃さ</strong>を表す。ψ(x) と完全に対をなす相棒だ。ただし ψ に p を代入したものではなくて、まったく別の関数でね。ψ(x) が「どの場所にどれだけいるか」を、φ(p) が「どの波長をどれだけ混ぜたか」を語っている。<strong>同じ状態を、場所の言葉で書くか、波長の言葉で書くかの違い</strong>なんだ。そしてここが大事なところ。<strong>Δx が |ψ(x)|² の広がりだったように、Δp の本当の意味は「|φ(p)|² の広がり」</strong>なんだ。2つは完全に対等で、証明したい Δx·Δp ≥ ℏ/2 は「<strong>ψ と φ の両方を同時に細くはできない</strong>」と言い換えられる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">そちらのほうが、よほど分かりやすい定義に思えます。Δx は ψ の山の幅、Δp は φ の山の幅。……ではそれで進めないんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">よく見ている。ψ から φ を作る操作は<strong>フーリエ変換</strong>といって、波を平面波の成分に分解する道具だ。<strong>ケナード自身の1927年の論文は、まさにこの道を通っている</strong>。ただしこの道具を持ち込むと、それが本当に正しく確率を移し替えているかを保証する定理まで、もう一つ用意しなければならない。荷物が2つ増えるんだ。……ところが不思議なことに、<strong>φ を一度も作らず、ψ(x) のままで計算しても、まったく同じ Δp が出てくる</strong>。その近道を通してくれるのが、いま手に入れかけている微分なんだよ。翌1928年、ワイルとパウリが「フーリエの道を通らなくても証明できる」と示して、それ以来こちらが主流になった。<strong>意味を掴むのは φ、計算するのは微分</strong>――この分業だけ覚えておけば、今日は φ とお別れして大丈夫だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">φ とお別れ、ですか。……でも博士、その近道はずいぶん虫のいい話に聞こえます。装置に注文できることといえば、せいぜい「<strong>波長が1つに決まった波には、その p を返す</strong>」くらいですよね。混ぜ物の波を渡したときに、<strong>混ぜた濃さで重みづけした平均</strong>がちゃんと出てくる保証は、どこにあるんでしょう。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが、この道具立ての一番うまくできているところでね。<strong>注文はひとつで足りる</strong>んだ。「1本の波に施すと、その波の p を掛けた形で返す」――この性質さえ持っていれば、混ぜ物の波に施したときには、混ぜた材料のそれぞれに、それぞれの p が掛かった形で出てくる。あとは ⟨x⟩ のときと同じように ψ* を掛けて ∫ … dx で足し上げれば、<strong>混ぜた濃さで重みづけした平均が、ひとりでに出てくる</strong>。1本の波のために作った装置が、そのまま混ぜ物の平均装置になってくれるんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble"><strong>1本ぶんの注文だけで、混ぜ物の平均まで面倒を見てくれる</strong>んですね。ずいぶん出来のいい装置です。……そして、その正体が微分だと。たしかに、<strong>同じ高さの波なら</strong>、波長が短いほど波形は急峻ですから、傾きには「細かさ」の情報が入っています。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その直感でいい。ただし、ひとつ注意しておこう。「同じ高さの波なら」と、きみは正しく断りを入れたね。<strong>傾きの大きさそのものは、波の高さにも左右される</strong>。背の高いゆるやかな波のほうが、背の低い細かい波より傾きが急、ということが起こりうるんだ。だから傾きだけでは運動量にならない。効いてくるのは「<strong>傾きが、もとの値の何倍か</strong>」という比のほうだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">割り算で高さの影響を消してしまうわけですね。「その点での傾き ÷ その点での値」なら、波を2倍に大きくしても、分子も分母も2倍になって比は変わらない。高さによらず、細かさだけが残る……。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" id="slope-svg" viewBox="0 0 320 200" width="100%" role="img" aria-label="波長の長い波はなだらかで傾きが小さく、波長の短い波は急で傾きが大きいことを比べる図">
+          <line class="base" x1="15" y1="55" x2="305" y2="55"></line>
+          <path class="wave" id="wave-long" d=""></path>
+          <line class="base" x1="15" y1="150" x2="305" y2="150"></line>
+          <path class="wave" id="wave-short" d=""></path>
+          <text class="strong" x="18" y="16">波長が長い（p 小）→ 傾きなだらか</text>
+          <text class="strong" x="18" y="112">波長が短い（p 大）→ 傾きが急</text>
+        </svg>
+        <div class="diagram-caption">同じ高さの波でも、波長が短いほど波形の傾きは急になる。運動量 p＝h/λ の情報は「波形の傾き」に刻まれている――だから傾きを読む微分が、運動量を取り出す道具の候補になる。ただし傾きは波の高さにも左右されるので、実際に効くのは「傾き ÷ もとの値」の比のほうだ</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">では、その直感を精密な式にしよう。目標は「運動量がぴったり決まった波」を式で書くことだ。準備として、波長 λ の代わりに<strong>波数 k＝2π/λ</strong> という量を使う。x が 1 進むごとに、波の「進み具合（角度）」が k ずつ増える、と読める量だよ。波長が短いほど k は大きい。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 340 252" width="100%" role="img" aria-label="上に波長の違う2つの波、下に角度のグラフを並べた図。縦軸が角度で、2πの高さは波長によらず一定。その2πに届くまでに進んだ距離が波長λで、グラフの傾きが波数k。波長が短いほど傾きが急になる">
+          <text class="strong" x="170" y="13" text-anchor="middle">2π に届くまでの距離が λ、その傾きが k</text>
+          <path class="wave" d="M40 26.0 L42 26.0 L44 26.1 L46 26.3 L48 26.5 L50 26.7 L52 27.0 L54 27.4 L56 27.8 L58 28.3 L60 28.8 L62 29.4 L64 30.0 L66 30.6 L68 31.3 L70 32.0 L72 32.7 L74 33.5 L76 34.3 L78 35.1 L80 35.9 L82 36.7 L84 37.6 L86 38.4 L88 39.3 L90 40.1 L92 40.9 L94 41.7 L96 42.5 L98 43.3 L100 44.0 L102 44.7 L104 45.4 L106 46.0 L108 46.6 L110 47.2 L112 47.7 L114 48.2 L116 48.6 L118 49.0 L120 49.3 L122 49.5 L124 49.7 L126 49.9 L128 50.0 L130 50.0 L132 50.0 L134 49.9 L136 49.7 L138 49.5 L140 49.3 L142 49.0 L144 48.6 L146 48.2 L148 47.7 L150 47.2 L152 46.6 L154 46.0 L156 45.4 L158 44.7 L160 44.0 L162 43.3 L164 42.5 L166 41.7 L168 40.9 L170 40.1 L172 39.3 L174 38.4 L176 37.6 L178 36.7 L180 35.9 L182 35.1 L184 34.3 L186 33.5 L188 32.7 L190 32.0 L192 31.3 L194 30.6 L196 30.0 L198 29.4 L200 28.8 L202 28.3 L204 27.8 L206 27.4 L208 27.0 L210 26.7 L212 26.5 L214 26.3 L216 26.1 L218 26.0 L220 26.0 L222 26.0 L224 26.1 L226 26.3 L228 26.5 L230 26.7 L232 27.0 L234 27.4 L236 27.8 L238 28.3 L240 28.8 L242 29.4 L244 30.0 L246 30.6 L248 31.3 L250 32.0 L252 32.7 L254 33.5 L256 34.3 L258 35.1 L260 35.9 L262 36.7 L264 37.6 L266 38.4 L268 39.3 L270 40.1 L272 40.9 L274 41.7 L276 42.5 L278 43.3 L280 44.0 L282 44.7 L284 45.4 L286 46.0 L288 46.6 L290 47.2 L292 47.7 L294 48.2 L296 48.6 L298 49.0 L300 49.3 L302 49.5 L304 49.7 L306 49.9 L308 50.0 L310 50.0 L312 50.0 L314 49.9 L316 49.7 L318 49.5 L320 49.3"></path>
+          <text class="ktA" x="322" y="62" text-anchor="end">波長が長い</text>
+          <path class="kwaveB" d="M40 64.0 L42 64.2 L44 64.8 L46 65.7 L48 67.0 L50 68.5 L52 70.3 L54 72.3 L56 74.4 L58 76.5 L60 78.7 L62 80.7 L64 82.6 L66 84.3 L68 85.7 L70 86.8 L72 87.6 L74 88.0 L76 88.0 L78 87.6 L80 86.8 L82 85.7 L84 84.3 L86 82.6 L88 80.7 L90 78.7 L92 76.5 L94 74.4 L96 72.3 L98 70.3 L100 68.5 L102 67.0 L104 65.7 L106 64.8 L108 64.2 L110 64.0 L112 64.2 L114 64.8 L116 65.7 L118 67.0 L120 68.5 L122 70.3 L124 72.3 L126 74.4 L128 76.5 L130 78.7 L132 80.7 L134 82.6 L136 84.3 L138 85.7 L140 86.8 L142 87.6 L144 88.0 L146 88.0 L148 87.6 L150 86.8 L152 85.7 L154 84.3 L156 82.6 L158 80.7 L160 78.7 L162 76.5 L164 74.4 L166 72.3 L168 70.3 L170 68.5 L172 67.0 L174 65.7 L176 64.8 L178 64.2 L180 64.0 L182 64.2 L184 64.8 L186 65.7 L188 67.0 L190 68.5 L192 70.3 L194 72.3 L196 74.4 L198 76.5 L200 78.7 L202 80.7 L204 82.6 L206 84.3 L208 85.7 L210 86.8 L212 87.6 L214 88.0 L216 88.0 L218 87.6 L220 86.8 L222 85.7 L224 84.3 L226 82.6 L228 80.7 L230 78.7 L232 76.5 L234 74.4 L236 72.3 L238 70.3 L240 68.5 L242 67.0 L244 65.7 L246 64.8 L248 64.2 L250 64.0 L252 64.2 L254 64.8 L256 65.7 L258 67.0 L260 68.5 L262 70.3 L264 72.3 L266 74.4 L268 76.5 L270 78.7 L272 80.7 L274 82.6 L276 84.3 L278 85.7 L280 86.8 L282 87.6 L284 88.0 L286 88.0 L288 87.6 L290 86.8 L292 85.7 L294 84.3 L296 82.6 L298 80.7 L300 78.7 L302 76.5 L304 74.4 L306 72.3 L308 70.3 L310 68.5 L312 67.0 L314 65.7 L316 64.8 L318 64.2 L320 64.0"></path>
+          <text class="ktB" x="322" y="99" text-anchor="end">波長が短い</text>
+          <line class="kaxis" x1="40" y1="232" x2="40" y2="112"></line>
+          <polygon class="mhead" points="40,105 36,116 44,116"></polygon>
+          <line class="kaxis" x1="40" y1="232" x2="322" y2="232"></line>
+          <polygon class="mhead" points="329,232 318,228 318,236"></polygon>
+          <line class="ktick" x1="40" y1="122" x2="300" y2="122"></line>
+          <text class="label" x="34" y="126" text-anchor="end">2π</text>
+          <text class="label" x="34" y="236" text-anchor="end">0</text>
+          <text class="label" x="16" y="180">角度</text>
+          <text class="label" x="316" y="248" text-anchor="end">距離 x</text>
+          <line class="klineA" x1="40" y1="232" x2="220" y2="122"></line>
+          <line class="klineB" x1="40" y1="232" x2="110" y2="122"></line>
+          <line class="ktick" x1="110" y1="122" x2="110" y2="232"></line>
+          <line class="ktick" x1="220" y1="122" x2="220" y2="232"></line>
+          <circle cx="110" cy="122" r="3.5" fill="#2f6fa6"></circle>
+          <circle cx="220" cy="122" r="3.5" fill="var(--gold-dark)"></circle>
+          <text class="ktB" x="110" y="247" text-anchor="middle">λ（短い）</text>
+          <text class="ktA" x="232" y="247" text-anchor="middle">λ（長い）</text>
+          <text class="ktB" x="118" y="168">傾きが急 → k 大</text>
+          <text class="ktA" x="232" y="150">傾きがゆるい → k 小</text>
+        </svg>
+        <div class="diagram-caption">下のグラフは、進んだ距離に対して「角度」がどこまで進んだかを表したもの。波がちょうど1周ぶん形を繰り返すと、角度は 2π 進む。<strong>この 2π という高さは、波長がいくつであっても同じ</strong>――だから横に引いた 2π の線は動かない。その線に届くまでに進んだ距離が λ で、<strong>k はこのグラフの傾き</strong>だ。同じ高さ 2π に短い距離で届く波ほど傾きが急、つまり <strong>λ が小さいほど k ＝ 2π/λ は大きい</strong></div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">あの、ひとつ確認させてください。<strong>波数</strong>と<strong>振動数</strong>は、違うものですか？ どちらも「波の細かさ」を表しているように聞こえるんですけど。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">大事な区別だよ。<strong>振動数 ν は「時間」の細かさ</strong>――ある一点に立って波を眺めたとき、1秒のあいだに何回、山が通り過ぎるか。いっぽう<strong>波数 k は「空間」の細かさ</strong>――ある瞬間の波を写真に撮ったとき、距離を1進むあいだに角度がいくつ進むか。<strong>同じ波を、時間で切るか、場所で切るか</strong>の違いなんだ。単位も違っていて、ν は「1秒あたり」、k は「1メートルあたり」だよ。……もっとも、どんな長さで測るかは人間の決めごとでね。分野によっては「1センチあたり」で数えることもある。物理ではメートルと秒を標準にしておく、と約束しておこう。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">時間版と空間版の兄弟のようなものですね。……となると、光の場合はどうでしょう。速さが一定ですから――1メートルあたり波が1個なら、振動数は3億。2個なら6億。<strong>振動数と波数は比例する</strong>んですね。……ただ、いまのは「個数」で数えた話です。単位を「角度」に変えたら、<strong>2π が紛れ込んでくる</strong>んですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">走り出したと思ったら、もう答えの半分まで来ているね。そのとおりだよ。波1個ぶんが 2π の角度にあたるから、同じ状況でも k のほうは 2π 倍にふくらむ。きみの見つけた関係を k で書き直すと <strong>2πν＝ck</strong> となって、たしかに 2π が顔を出す。c は秒速3億メートルだから、<strong>2πν＝3億×k</strong> と書いてもいい。<strong>あの 2π は、個数で数えるか角度で数えるかの「翻訳料」</strong>なんだ。……では、なぜわざわざ角度で数えるのか。<strong>これから作る式が、角度を欲しがるから</strong>だよ。それはすぐに分かる。ついでに、時間のほうも角度にそろえておこう。2πν には <strong>角振動数 ω</strong>（オメガ）という名前があって、k が空間の 2π 版なら、ω は時間の 2π 版――まさに兄弟だ。おかげで関係式は <strong>ω＝ck</strong> と、すっきり書ける。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">両方を角度でそろえたから、翻訳料が要らなくなったんですね。……あっ、それで分かりました。光の色を言うのに「波長 500 ナノメートル」と数字ひとつで足りるのは、これが理由なんだ。<strong>波長を決めた時点で、振動数まで決まってしまう</strong>から。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。ただし念のため、これは<strong>光にかぎった話</strong>だよ。質量のある電子では c＝νλ が使えないから、ω と k の結びつき方が変わってくる。さて、今日の主役は<strong>空間のほう</strong>だ。運動量は p＝h/λ で波長――つまり場所の刻みで決まるからね。準備の仕上げに、その p＝h/λ を k で書き直すと <strong>p＝ℏk</strong> になる（ℏ＝h/2π だからね）。運動量は波数にきれいに比例する、と読める式だ。では本題。「波長 2π/k で繰り返す波」と聞いて、まず思いつく式は何かな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">それもシュレディンガー方程式の教室でやりました。最初の候補は <strong>cos(kx)</strong>――x が 2π/k 進むごとに同じ値に戻るので、波長 2π/k の波にはなります。でも、運動量がぴったり決まった波では位置の情報が完全に失われるはずなのに、2乗した cos²(kx) は場所ごとに濃くなったり薄くなったりする。「|ψ|² がどこでも同じ濃さ」という検査に不合格でした。合格するのは複素数の平面波 <strong>e<sup>ikx</sup>＝cos kx＋i sin kx</strong>。単位円の上を回る数ですから、<strong>絶対値はずっと1のまま、向きだけが回る</strong>。確率の濃さはどこでも1で完全に一様、それでいて向きは x が 2π/k 進むごとに一回転して、波長 2π/k でちゃんと繰り返します。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。波打つのは「向き」だけで、絶対値は動かない――波動関数が複素数なのは飾りではない、という話だったね。そしてこの e<sup>ikx</sup> には、<strong>微分すると自分自身の ik 倍になる</strong>という性質があるのだった。e は、傾きが自分の高さのちょうど1倍になるように選ばれた数だからね。さっききみが言った「傾き ÷ もとの値」をこの波でやってみると、ψ′ ÷ ψ ＝ ik――波の高さがきれいに消えて、<strong>波数 k だけが残る</strong>。求めていた比が、本当に細かさだけを取り出したわけだ。ここからが見どころ。微分に −iℏ という係数を付けて、平面波に施してごらん。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">平面波の微分： <br class="wbr">d/dx e<sup>ikx</sup> ＝ ik e<sup>ikx</sup></span>
+        <span class="step">−iℏ を掛けると： <br class="wbr">−iℏ × ik e<sup>ikx</sup> ＝ ℏk e<sup>ikx</sup> ＝ <strong>p × e<sup>ikx</sup></strong>　（−i×i＝1 を使った）</span>
+        <span class="step">つまり演算 −iℏ d/dx は、波の形を変えずに、運動量の値 p を前に取り出す</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">波はそのままで、運動量の値だけが係数として出てくる……。まるで、波に「あなたの運動量は？」と質問して、答えを前に書いてもらうような操作ですね。−i を掛けているのは、微分で出てきた余計な i を打ち消すため、ℏ は k を p の単位に直すため。1つずつ意味があります。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その比喩はいいね。この「質問する操作」を<strong>運動量演算子</strong>と呼ぶ。1925年から26年にかけて、ハイゼンベルクやシュレーディンガーたちが量子力学を建設したとき、一番の発明がこれだった――<strong>物理量を「数」ではなく「操作」で表す</strong>という発想の転換だよ。位置はどうかというと、実はもう使っている。⟨x⟩＝∫ψ* x ψ dx という式は、「ψ* と ψ で挟んで、間に x を掛けて、積分する」というサンドイッチの形だ。運動量の平均も同じサンドイッチで、間に挟むものを x から −iℏ d/dx に替えるだけなんだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 340 178" width="100%" role="img" aria-label="平均を求める式を、ψ*とψでものを挟んだサンドイッチとして描いた図。上は位置の平均で真ん中にx、下は運動量の平均で真ん中に−iℏd/dxが入る。外側のψ*とψ、そして積分は共通で、真ん中の具だけが入れ替わる">
+          <text class="strong" x="170" y="14" text-anchor="middle">同じサンドイッチ、具を入れ替えるだけ</text>
+          <text class="label" x="62" y="38">位置の平均 ⟨x⟩</text>
+          <text class="sint" x="62" y="68">∫</text>
+          <rect class="sbox" x="76" y="46" width="40" height="30"></rect>
+          <text class="stxt" x="96" y="66" text-anchor="middle">ψ*</text>
+          <rect class="sfillA" x="120" y="46" width="90" height="30"></rect>
+          <text class="stxt" x="165" y="66" text-anchor="middle">x</text>
+          <rect class="sbox" x="214" y="46" width="40" height="30"></rect>
+          <text class="stxt" x="234" y="66" text-anchor="middle">ψ</text>
+          <text class="stxt" x="260" y="66">dx</text>
+          <line class="karr" x1="165" y1="84" x2="165" y2="106"></line>
+          <polygon class="mhead" points="165,113 160,102 170,102"></polygon>
+          <text class="label" x="178" y="101">ここだけ替える</text>
+          <text class="label" x="62" y="116">運動量の平均 ⟨p⟩</text>
+          <text class="sint" x="62" y="146">∫</text>
+          <rect class="sbox" x="76" y="124" width="40" height="30"></rect>
+          <text class="stxt" x="96" y="144" text-anchor="middle">ψ*</text>
+          <rect class="sfillB" x="120" y="124" width="90" height="30"></rect>
+          <text class="stxt" x="165" y="144" text-anchor="middle">−iℏ d/dx</text>
+          <rect class="sbox" x="214" y="124" width="40" height="30"></rect>
+          <text class="stxt" x="234" y="144" text-anchor="middle">ψ</text>
+          <text class="stxt" x="260" y="144">dx</text>
+        </svg>
+        <div class="diagram-caption">平均を求める式の形。<strong>外側の ψ* と ψ、それを足し上げる ∫ … dx は、位置でも運動量でも共通</strong>で、変わるのは真ん中に挟むものだけ。位置なら「x を掛ける」、運動量なら「−iℏ d/dx を施す」。この共通の型があるおかげで、位置のときに作った仕組みが運動量にもそのまま使える</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">形が同じなのは分かりました。でも、位置のほうは ∫x|ψ|²dx で「<strong>その点の位置 × 確率密度</strong>」とはっきり読めます。運動量のほうは、挟むものが「x を掛ける」ではなく「<strong>微分する</strong>」ですよね。……<strong>何を足し合わせていることになるのか、まるで読めません</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい引っかかり方だ。まず、挟むものを施した結果を書いてみよう。ψ を微分すれば ψ′ だから、−iℏ d/dx を施した結果は <strong>−iℏψ′</strong>。つまりサンドイッチの中身は <strong>ψ*·(−iℏψ′)</strong> だね。では、これを開いてみせよう。ψ は複素数だから、いつでも「<strong>絶対値 R</strong>」と「<strong>向きを決める角度 S</strong>」に分けて <strong>ψ ＝ R·e<sup>iS</sup></strong> と書ける。R も S も、場所ごとに決まる値だよ。実際に代入して、順に計算してみよう。最後に顔を出す <strong>S′(x)</strong> が何なのか、考えながら見ていてごらん。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【サンドイッチの中身 ψ*·(−iℏψ′) を開く】 <br class="wbr">ψ ＝ R·e<sup>iS</sup>（R＝絶対値、S＝角度。どちらも場所ごとの値）</span>
+        <span class="step">①&nbsp;ψ を微分： <br class="wbr">ψ′ ＝ R′·e<sup>iS</sup> ＋ R·iS′·e<sup>iS</sup> ＝ <span class="nw">(R′＋iRS′)</span>·e<sup>iS</sup>　（肩の微分 S′ が i とともに前に出る。e<sup>ikx</sup> で ik が出たのと同じ規則）</span>
+        <span class="step">②&nbsp;複素共役： <br class="wbr">ψ* ＝ R·e<sup>−iS</sup>　（向きを逆にするだけ）</span>
+        <span class="step">③&nbsp;掛け合わせる： <br class="wbr">ψ*ψ′ ＝ R·e<sup>−iS</sup>·<span class="nw">(R′＋iRS′)</span>·e<sup>iS</sup> ＝ R<span class="nw">(R′＋iRS′)</span> ＝ RR′ ＋ iR²S′　（<strong>向きの e が打ち消し合って消える</strong>）</span>
+        <span class="step">④&nbsp;−iℏ を掛ける： <br class="wbr">−iℏ(RR′＋iR²S′) ＝ <strong>ℏR²S′</strong> − iℏRR′　（−i×i＝1 を使った）</span>
+        <span class="step">⑤&nbsp;R²＝|ψ|² だから　<strong>実部 ＝ ℏ·S′(x)·|ψ(x)|²</strong>、　虚部 ＝ −ℏRR′</span>
+        <span class="step">※ もうひとつの虚部 −ℏRR′ は、<strong>絶対値 |ψ|² の増え方</strong>にあたる量だ。波の絶対値は遠方でどちらも 0 に戻るのだから、道中で増えた分と減った分はきっちり打ち消し合う。だから<strong>足し集めると 0</strong> になり、⟨p⟩ には効かない（きちんとした計算は、次のステージで部分積分を手に入れるとできるようになる）</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">S は角度で、S′ は<strong>その点で角度がどれだけ進むか</strong>……あっ、それは<strong>その場所での k</strong> そのものです！ さっき「k は1メートル進む間に角度がいくつ進むか」と習ったばかりですから。だったら <strong>ℏS′(x) はその場所での運動量</strong>。つまりこの式は「<strong>その点の運動量 × その点の確率密度</strong>」を足し合わせた形――位置のときと<strong>まったく同じ</strong>じゃないですか。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 340 252" width="100%" role="img" aria-label="上は右へ行くほど波長が短くなる波、下はその角度Sのグラフ。角度のグラフの傾きが場所ごとに変わり、傾きがゆるい場所は波長が長くkが小さい、傾きが急な場所は波長が短くkが大きいことを、2本の接線で示している">
+          <text class="strong" x="170" y="14" text-anchor="middle">S の傾きが、その場所の k</text>
+          <text class="label" x="40" y="32">波（右へ行くほど細かくなる）</text>
+          <polyline class="wave" points="40.0,44.0 41.5,44.3 43.0,45.1 44.5,46.5 46.0,48.4 47.5,50.8 49.0,53.7 50.5,57.0 52.0,60.7 53.5,64.5 55.0,68.5 56.5,72.6 58.0,76.5 59.5,80.3 61.0,83.7 62.5,86.6 64.0,89.0 65.5,90.8 67.0,91.8 68.5,92.0 70.0,91.4 71.5,89.9 73.0,87.7 74.5,84.7 76.0,81.0 77.5,76.9 79.0,72.3 80.5,67.6 82.0,62.8 83.5,58.1 85.0,53.9 86.5,50.2 88.0,47.3 89.5,45.2 91.0,44.1 92.5,44.1 94.0,45.3 95.5,47.5 97.0,50.7 98.5,54.8 100.0,59.6 101.5,64.8 103.0,70.2 104.5,75.6 106.0,80.6 107.5,85.0 109.0,88.5 110.5,90.8 112.0,91.9 113.5,91.7 115.0,90.0 116.5,87.0 118.0,82.9 119.5,77.8 121.0,72.1 122.5,66.1 124.0,60.1 125.5,54.7 127.0,50.0 128.5,46.6 130.0,44.5 131.5,44.0 133.0,45.2 134.5,48.1 136.0,52.3 137.5,57.8 139.0,64.0 140.5,70.5 142.0,76.9 143.5,82.7 145.0,87.4 146.5,90.5 148.0,91.9 149.5,91.4 151.0,89.0 152.5,84.8 154.0,79.2 155.5,72.6 157.0,65.5 158.5,58.7 160.0,52.6 161.5,47.8 163.0,44.9 164.5,44.0 166.0,45.4 167.5,48.9 169.0,54.2 170.5,60.9 172.0,68.3 173.5,75.7 175.0,82.4 176.5,87.7 178.0,91.0 179.5,92.0 181.0,90.5 182.5,86.5 184.0,80.6 185.5,73.3 187.0,65.4 188.5,57.7 190.0,51.2 191.5,46.4 193.0,44.2 194.5,44.6 196.0,47.8 197.5,53.3 199.0,60.7 200.5,68.9 202.0,77.1 203.5,84.2 205.0,89.4 206.5,91.8 208.0,91.3 209.5,87.8 211.0,81.7 212.5,73.8 214.0,65.1 215.5,56.7 217.0,49.8 218.5,45.4 220.0,44.0 221.5,46.0 223.0,51.0 224.5,58.5 226.0,67.4 227.5,76.4 229.0,84.2 230.5,89.7 232.0,92.0 233.5,90.7 235.0,85.9 236.5,78.5 238.0,69.3 239.5,59.9 241.0,51.8 242.5,46.2 244.0,44.0 245.5,45.7 247.0,51.1 248.5,59.2 250.0,68.9 251.5,78.4 253.0,86.2 254.5,91.0 256.0,91.8 257.5,88.5 259.0,81.6 260.5,72.3 262.0,62.2 263.5,53.0 265.0,46.6 266.5,44.0 268.0,45.9 269.5,51.8 271.0,60.8 272.5,71.2 274.0,81.1 275.5,88.4 277.0,91.9 278.5,90.6 280.0,85.0 281.5,75.9 283.0,65.2 284.5,55.1 286.0,47.5 287.5,44.1 289.0,45.6 290.5,51.8 292.0,61.5 293.5,72.5 295.0,82.6 296.5,89.6 298.0,92.0 299.5,89.1 301.0,81.6 302.5,71.0 304.0,59.7"></polyline>
+          <line class="ktick" x1="85" y1="44" x2="85" y2="200"></line>
+          <line class="ktick" x1="265" y1="44" x2="265" y2="200"></line>
+          <text class="label" x="40" y="112">角度 S(x)</text>
+          <line class="kaxis" x1="40" y1="200" x2="312" y2="200"></line>
+          <polygon class="mhead" points="320,200 309,196 309,204"></polygon>
+          <line class="kaxis" x1="40" y1="200" x2="40" y2="90"></line>
+          <polygon class="mhead" points="40,83 36,94 44,94"></polygon>
+          <polyline class="plocal" points="40.0,200.0 41.5,199.7 43.0,199.4 44.5,199.1 46.0,198.8 47.5,198.5 49.0,198.2 50.5,197.8 52.0,197.5 53.5,197.2 55.0,196.8 56.5,196.5 58.0,196.2 59.5,195.8 61.0,195.5 62.5,195.1 64.0,194.8 65.5,194.4 67.0,194.1 68.5,193.7 70.0,193.3 71.5,192.9 73.0,192.6 74.5,192.2 76.0,191.8 77.5,191.4 79.0,191.0 80.5,190.6 82.0,190.2 83.5,189.8 85.0,189.4 86.5,189.0 88.0,188.6 89.5,188.2 91.0,187.8 92.5,187.3 94.0,186.9 95.5,186.5 97.0,186.0 98.5,185.6 100.0,185.2 101.5,184.7 103.0,184.3 104.5,183.8 106.0,183.4 107.5,182.9 109.0,182.4 110.5,182.0 112.0,181.5 113.5,181.0 115.0,180.5 116.5,180.0 118.0,179.6 119.5,179.1 121.0,178.6 122.5,178.1 124.0,177.6 125.5,177.1 127.0,176.6 128.5,176.0 130.0,175.5 131.5,175.0 133.0,174.5 134.5,173.9 136.0,173.4 137.5,172.9 139.0,172.3 140.5,171.8 142.0,171.3 143.5,170.7 145.0,170.1 146.5,169.6 148.0,169.0 149.5,168.5 151.0,167.9 152.5,167.3 154.0,166.7 155.5,166.2 157.0,165.6 158.5,165.0 160.0,164.4 161.5,163.8 163.0,163.2 164.5,162.6 166.0,162.0 167.5,161.4 169.0,160.8 170.5,160.2 172.0,159.5 173.5,158.9 175.0,158.3 176.5,157.7 178.0,157.0 179.5,156.4 181.0,155.7 182.5,155.1 184.0,154.4 185.5,153.8 187.0,153.1 188.5,152.5 190.0,151.8 191.5,151.1 193.0,150.5 194.5,149.8 196.0,149.1 197.5,148.4 199.0,147.7 200.5,147.0 202.0,146.4 203.5,145.7 205.0,145.0 206.5,144.2 208.0,143.5 209.5,142.8 211.0,142.1 212.5,141.4 214.0,140.7 215.5,139.9 217.0,139.2 218.5,138.5 220.0,137.7 221.5,137.0 223.0,136.2 224.5,135.5 226.0,134.7 227.5,134.0 229.0,133.2 230.5,132.5 232.0,131.7 233.5,130.9 235.0,130.1 236.5,129.4 238.0,128.6 239.5,127.8 241.0,127.0 242.5,126.2 244.0,125.4 245.5,124.6 247.0,123.8 248.5,123.0 250.0,122.2 251.5,121.4 253.0,120.5 254.5,119.7 256.0,118.9 257.5,118.1 259.0,117.2 260.5,116.4 262.0,115.5 263.5,114.7 265.0,113.8 266.5,113.0 268.0,112.1 269.5,111.3 271.0,110.4 272.5,109.5 274.0,108.7 275.5,107.8 277.0,106.9 278.5,106.0 280.0,105.1 281.5,104.2 283.0,103.4 284.5,102.5 286.0,101.6 287.5,100.6 289.0,99.7 290.5,98.8 292.0,97.9 293.5,97.0 295.0,96.1 296.5,95.1 298.0,94.2 299.5,93.3 301.0,92.3 302.5,91.4 304.0,90.4"></polyline>
+          <polyline class="klineA" points="53.0,198.1 117.0,180.7"></polyline>
+          <polyline class="klineA" points="233.0,132.0 297.0,95.7"></polyline>
+          <circle cx="85" cy="189.4" r="3.5" fill="var(--gold-dark)"></circle>
+          <circle cx="265" cy="113.8" r="3.5" fill="var(--gold-dark)"></circle>
+          <text class="ktA" x="122" y="195">k 小</text>
+          <text class="ktA" x="300" y="86" text-anchor="end">k 大</text>
+          <text class="label" x="310" y="216" text-anchor="end">位置 x</text>
+          <text class="strong" x="170" y="240" text-anchor="middle">S′(x) ＝ その点の傾き ＝ その場所の k</text>
+        </svg>
+        <div class="diagram-caption">平面波なら角度は S＝kx で、このグラフは<strong>まっすぐな直線</strong>になり、傾き（＝k）はどこでも同じだった。ところが一般の波では S は<strong>曲がった線</strong>になり、傾きが場所ごとに変わる。その点での傾き <strong>S′(x)</strong> が「<strong>その場所での k</strong>」で、<strong>傾きがゆるい場所は波長が長く（k 小）、急な場所は波長が短い（k 大）</strong>。ℏ を掛ければ、そのまま「その場所での運動量」だ</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そういうことだよ。サンドイッチの具を x から −iℏ d/dx に替えるというのは、<strong>掛ける値を「その点の位置」から「その点の運動量」に替える</strong>ことだったんだ。……ただし、ひとつ釘を刺しておこう。この ℏS′(x) は<strong>平均を出すための見方</strong>であって、「電子がそこで見つかったなら、運動量は ℏS′ だった」という意味ではない。運動量を測って出てくる値は、あくまで φ(p) の散らばりに従うからね。実際、この見方で<strong>平均 ⟨p⟩ はぴったり合うのに、ばらつき Δp までは背負っていない</strong>。ψ が実数の波なら S′ はどこでも 0 で ⟨p⟩＝0 になるけれど、Δp のほうはゼロにならないんだ。……さて、絵にすると、こうなる。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 340 286" width="100%" role="img" aria-label="3段のグラフ。上はその点その点での運動量で右へ行くほど大きい、中は確率密度、下はその2つを掛け合わせたもの。掛け合わせた結果は山の位置が右へずれ、その下の面積が運動量の平均になることを示している">
+          <text class="strong" x="170" y="15" text-anchor="middle">その点の運動量 × 確率密度 を足し上げる</text>
+          <text class="label" x="20" y="34">その点の運動量 ℏS′(x)</text>
+          <line class="mline" x1="40" y1="78" x2="305" y2="78"></line>
+          <polyline class="plocal" points="40,73.1 42,73.1 44,73.1 46,73.1 48,73.1 50,73.1 52,73.0 54,73.0 56,73.0 58,73.0 60,73.0 62,72.9 64,72.9 66,72.9 68,72.9 70,72.8 72,72.8 74,72.8 76,72.7 78,72.7 80,72.6 82,72.6 84,72.5 86,72.4 88,72.4 90,72.3 92,72.2 94,72.1 96,72.0 98,71.9 100,71.8 102,71.7 104,71.5 106,71.4 108,71.2 110,71.0 112,70.8 114,70.6 116,70.4 118,70.2 120,69.9 122,69.6 124,69.3 126,69.0 128,68.7 130,68.3 132,67.9 134,67.5 136,67.0 138,66.5 140,66.0 142,65.5 144,64.9 146,64.3 148,63.7 150,63.1 152,62.4 154,61.7 156,61.0 158,60.3 160,59.5 162,58.8 164,58.0 166,57.2 168,56.4 170,55.6 172,54.8 174,54.0 176,53.2 178,52.4 180,51.7 182,50.9 184,50.2 186,49.5 188,48.8 190,48.1 192,47.5 194,46.9 196,46.3 198,45.7 200,45.2 202,44.7 204,44.2 206,43.7 208,43.3 210,42.9 212,42.5 214,42.2 216,41.9 218,41.6 220,41.3 222,41.0 224,40.8 226,40.6 228,40.4 230,40.2 232,40.0 234,39.8 236,39.7 238,39.5 240,39.4 242,39.3 244,39.2 246,39.1 248,39.0 250,38.9 252,38.8 254,38.8 256,38.7 258,38.6 260,38.6 262,38.5 264,38.5 266,38.4 268,38.4 270,38.4 272,38.3 274,38.3 276,38.3 278,38.3 280,38.2 282,38.2 284,38.2 286,38.2 288,38.2 290,38.1 292,38.1 294,38.1 296,38.1 298,38.1 300,38.1 302,38.1 304,38.1"></polyline>
+          <text class="pop" x="170" y="99" text-anchor="middle">×</text>
+          <text class="label" x="20" y="118">確率密度 |ψ(x)|²</text>
+          <line class="mline" x1="40" y1="162" x2="305" y2="162"></line>
+          <polyline class="wave" points="40,161.3 42,161.2 44,161.1 46,160.9 48,160.8 50,160.7 52,160.5 54,160.3 56,160.2 58,159.9 60,159.7 62,159.5 64,159.2 66,158.9 68,158.6 70,158.2 72,157.9 74,157.5 76,157.1 78,156.6 80,156.1 82,155.6 84,155.1 86,154.5 88,153.9 90,153.2 92,152.5 94,151.8 96,151.1 98,150.3 100,149.5 102,148.6 104,147.7 106,146.8 108,145.9 110,144.9 112,144.0 114,143.0 116,141.9 118,140.9 120,139.9 122,138.8 124,137.8 126,136.7 128,135.7 130,134.6 132,133.6 134,132.6 136,131.6 138,130.6 140,129.7 142,128.8 144,127.9 146,127.1 148,126.3 150,125.6 152,125.0 154,124.4 156,123.8 158,123.3 160,122.9 162,122.6 164,122.3 166,122.2 168,122.0 170,122.0 172,122.0 174,122.2 176,122.3 178,122.6 180,122.9 182,123.3 184,123.8 186,124.4 188,125.0 190,125.6 192,126.3 194,127.1 196,127.9 198,128.8 200,129.7 202,130.6 204,131.6 206,132.6 208,133.6 210,134.6 212,135.7 214,136.7 216,137.8 218,138.8 220,139.9 222,140.9 224,141.9 226,143.0 228,144.0 230,144.9 232,145.9 234,146.8 236,147.7 238,148.6 240,149.5 242,150.3 244,151.1 246,151.8 248,152.5 250,153.2 252,153.9 254,154.5 256,155.1 258,155.6 260,156.1 262,156.6 264,157.1 266,157.5 268,157.9 270,158.2 272,158.6 274,158.9 276,159.2 278,159.5 280,159.7 282,159.9 284,160.2 286,160.3 288,160.5 290,160.7 292,160.8 294,160.9 296,161.1 298,161.2 300,161.3 302,161.4 304,161.4"></polyline>
+          <text class="pop" x="170" y="183" text-anchor="middle">＝</text>
+          <text class="label" x="20" y="202">かけ算した中身 ψ*(−iℏψ′) の実部</text>
+          <line class="mline" x1="40" y1="256" x2="305" y2="256"></line>
+          <polygon class="pfill" points="40,256 40,255.8 42,255.8 44,255.8 46,255.8 48,255.8 50,255.7 52,255.7 54,255.7 56,255.6 58,255.6 60,255.5 62,255.5 64,255.4 66,255.3 68,255.3 70,255.2 72,255.1 74,255.0 76,254.9 78,254.8 80,254.7 82,254.5 84,254.4 86,254.2 88,254.1 90,253.9 92,253.7 94,253.5 96,253.2 98,253.0 100,252.7 102,252.4 104,252.1 106,251.8 108,251.4 110,251.0 112,250.5 114,250.1 116,249.6 118,249.0 120,248.4 122,247.8 124,247.1 126,246.4 128,245.6 130,244.8 132,243.9 134,242.9 136,241.9 138,240.8 140,239.7 142,238.5 144,237.2 146,235.9 148,234.5 150,233.1 152,231.6 154,230.1 156,228.6 158,227.1 160,225.5 162,224.0 164,222.5 166,221.0 168,219.5 170,218.2 172,216.8 174,215.6 176,214.5 178,213.5 180,212.6 182,211.8 184,211.1 186,210.6 188,210.3 190,210.1 192,210.0 194,210.1 196,210.3 198,210.7 200,211.2 202,211.8 204,212.5 206,213.4 208,214.4 210,215.4 212,216.5 214,217.7 216,219.0 218,220.3 220,221.7 222,223.1 224,224.5 226,225.9 228,227.3 230,228.7 232,230.1 234,231.5 236,232.9 238,234.2 240,235.6 242,236.8 244,238.1 246,239.2 248,240.4 250,241.5 252,242.5 254,243.5 256,244.5 258,245.4 260,246.2 262,247.0 264,247.8 266,248.5 268,249.1 270,249.7 272,250.3 274,250.8 276,251.3 278,251.8 280,252.2 282,252.5 284,252.9 286,253.2 288,253.5 290,253.8 292,254.0 294,254.2 296,254.4 298,254.6 300,254.8 302,254.9 304,255.0 305,256"></polygon>
+          <line class="ktick" x1="170" y1="120" x2="170" y2="168"></line>
+          <line class="ktick" x1="170" y1="194" x2="170" y2="256"></line>
+          <line class="ktick" x1="192" y1="120" x2="192" y2="168"></line>
+          <line class="ktick" x1="192" y1="194" x2="192" y2="256"></line>
+          <text class="ktB" x="166" y="116" text-anchor="end">密度の山</text>
+          <text class="ktA" x="197" y="116">→ 山が右へずれる</text>
+          <text class="strong" x="60" y="238">この面積 ＝ ⟨p⟩</text>
+          <text class="label" x="316" y="274" text-anchor="end">位置 x</text>
+        </svg>
+        <div class="diagram-caption">上：その点その点での運動量 ℏS′(x)（角度の進み方に ℏ を掛けたもの）。中：確率密度 |ψ(x)|²。下：この2つを掛け合わせたものがサンドイッチの中身の正体で、<strong>その面積が運動量の平均 ⟨p⟩</strong> になる。位置のときに ⟨x⟩＝∫x|ψ|²dx で「その点の位置 × 確率密度」を足し上げたのと、まったく同じ形だ。ここでは運動量が右へ行くほど大きくなる例を描いた。掛け合わせると<strong>山の位置が右へずれる</strong>――運動量の大きい側が強調されるからだ。平面波のように運動量がどこでも同じなら、ずれは起きず、下の形は確率密度をそのまま定数倍したものになる。※ ℏS′(x) は<strong>平均を出すための量</strong>で、測るたびにこの値が出るわけではない（測定値の散らばりを決めるのは |φ(p)|² のほう）</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">2乗の平均 ⟨p²⟩ はどうなりますか？ 位置のときは x を2回掛けて ∫ψ* x² ψ dx でしたから……操作の場合は、<strong>2回続けて施す</strong>のでしょうか。微分を2回、係数も2回分。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その類推で正しいよ。微分を2回施したものを ψ″ と書くと、(−iℏ)² ＝ −ℏ² だから、⟨p²⟩ ＝ −ℏ² ∫ψ* ψ″ dx。平面波なら確かめられる：1回目で p が出て、2回目でもう1つ p が出るから、ちゃんと p² が返ってくる。一般の波は平面波の重ね合わせだから、この規則がそのまま通用するんだ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">運動量の平均： <br class="wbr">⟨p⟩ ＝ ∫ ψ* (−iℏ ψ′) dx　（サンドイッチの具を −iℏ d/dx に）</span>
+        <span class="step">運動量の2乗平均： <br class="wbr">⟨p²⟩ ＝ ∫ ψ* (−iℏ)² ψ″ dx ＝ −ℏ² ∫ ψ* ψ″ dx</span>
+        <span class="step">⟨p⟩＝0 と下ごしらえ済みなので： <br class="wbr">(Δp)² ＝ ⟨p²⟩　（分散＝2乗の平均）</span>
+        <span class="step">※ この式で出る Δp は、<strong>|φ(p)|² の広がりとして測った Δp とぴったり一致する</strong>。意味は φ、計算は微分という分業</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">これで Δx も Δp も、波動関数から計算する式が手に入った。ただ、(Δp)² の式には ψ″ という2階微分が入っていて、このままでは扱いにくい。次のステージでは、19世紀の解析学の職人芸「部分積分」を使って、この式をもっと美しい形に磨き上げる。証明の弾丸を2発、そこで込めることになるよ。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 平面波 e<sup>ikx</sup> に演算 −iℏ d/dx を施すと、何が起きる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">波が打ち消されて0になる</button>
+          <button class="choice-btn">波の形はそのまま、運動量の値 p＝ℏk が係数として前に出てくる</button>
+          <button class="choice-btn">波長が半分の波に変わる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ d/dx e<sup>ikx</sup>＝ik e<sup>ikx</sup> に −iℏ を掛けると ℏk e<sup>ikx</sup>＝p e<sup>ikx</sup>。波に「運動量は？」と質問して答えを書いてもらう操作――これが運動量演算子だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 波長が短い波ほど、運動量は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">大きい（p＝h/λ なので波長と運動量は反比例）</button>
+          <button class="choice-btn">小さい</button>
+          <button class="choice-btn">波長と運動量は無関係</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ド・ブロイの関係 p＝h/λ。波長が短い＝波形が細かい＝傾きが急、が高い運動量に対応する。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 「微分」が運動量の検出器になる理由として正しいのは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">微分すると波の面積が求まるから</button>
+          <button class="choice-btn">微分すると波の高さの最大値が分かるから</button>
+          <button class="choice-btn">運動量は波の細かさ（波長）に対応し、微分は波形の傾き＝細かさを読み取る道具だから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 波長の短い波ほど傾きが急。傾きを読む微分は、波に刻まれた「細かさ＝運動量」の情報を取り出せる。この直感は次のステージの補題「(Δp)²＝ℏ²∫|ψ′|²dx」で完璧な形になる。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>
+  // 波長の長い波・短い波を描く（静止画）
+  (function () {
+    function makePath(yc, amp, wavelen, x0, x1) {
+      var k = 2 * Math.PI / wavelen;
+      var d = "M" + x0 + " " + (yc - amp * Math.sin(k * x0)).toFixed(1);
+      for (var x = x0 + 2; x <= x1; x += 2) {
+        d += " L" + x + " " + (yc - amp * Math.sin(k * x)).toFixed(1);
+      }
+      return d;
+    }
+    var wl = document.getElementById("wave-long");
+    var ws = document.getElementById("wave-short");
+    if (wl) wl.setAttribute("d", makePath(55, 22, 150, 15, 305));
+    if (ws) ws.setAttribute("d", makePath(150, 22, 34, 15, 305));
+  })();
+</script>
+<script>KQ.initStagePage(3);</script>
+</body>
+</html>

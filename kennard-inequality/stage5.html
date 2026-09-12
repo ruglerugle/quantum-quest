@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2947">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE5 魔法の関数 I(λ) ― 不確定性原理を証明する</title>
+<meta name="description" content="証明の心臓部 I(λ)＝∫|λxψ＋ψ′|²dx はどうやって「思いつかれた」のか。2乗和≥0というコーシー以来の狩りの型と、ガウス波束からの逆算。数学の証明が発見される論理を体験する山場のステージ。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage5.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="不確定性原理を証明する">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE5 魔法の関数 I(λ) ― 不確定性原理を証明する">
+<meta property="og:description" content="証明の心臓部はどうやって思いつかれたのか。コーシー以来の狩りの型と、ゴールからの逆算。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage5.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .kq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .kq-svg .wave2{fill:none;stroke:#2f6fa6;stroke-width:2}
+  .kq-svg .wave3{fill:none;stroke:#b5504a;stroke-width:2.4}
+  .kq-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+  .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">📐</a> <span>不確定性原理を証明する</span></div>
+      <div class="brand-sub">STAGE 5 ― 魔法の関数 I(λ) ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 5</span><span class="chapter-title">魔法の関数 I(λ)</span>
+        <div class="chapter-sub">証明はこうして発見される</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">「2乗和は0以上」という狩りの型と「ゴールからの逆算」を使って、証明の心臓 I(λ)＝∫|λxψ＋ψ′|²dx を自分で発見し、展開して (Δx)²λ²−λ＋(Δp)²/ℏ² ≥ 0 まで磨き上げよう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いよいよ山場だよ。教科書だと、ここで天から降ってきたように「I(λ)＝∫|λxψ＋ψ′|²dx を考える」と書いてあって、読者は面食らうことになる。でも今日は順番を変えて、<strong>この式をどうやったら自分で思いつけるのか</strong>、発見の論理をたどろう。まずは準備運動だ。数学の質問：どんな実数 a, b についても a²＋b² ≥ 2ab が成り立つ。これを証明できるかな。ヒントは、きみが STAGE1 で言った「2乗すれば0以上になる」だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">2乗は必ず0以上……。それなら (a−b)² ≥ 0 は文句なしに正しいです。左辺を展開すると a²−2ab＋b² ≥ 0。2ab を右に移項して、a²＋b² ≥ 2ab。……できました。というより、<strong>展開して移項しただけ</strong>です。証明ってこんなにあっけないものなんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">あっけないのに、これが不等式証明の<strong>王道の型</strong>なんだ。手順を抜き出すとこうなる。<strong>①明らかに0以上の量（2乗）を仕込む → ②展開する → ③欲しい不等式が転がり出る</strong>。「大小関係はどこから来るのか」というきみの前ステージの問いの答えがこれだよ。世界中の不等式のかなりの部分が、この型の親戚で証明されている。1821年、コーシーは有名な不等式をまさにこの型で証明したし、後にシュワルツが積分の世界に拡張した。19世紀の数学者にとって、これは誰もが腰に差している剣だったんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">型は分かりました。私たちの獲物は Δx·Δp ≥ ℏ/2。この型で狩るなら、「明らかに0以上の量」をうまく仕込んで、展開したら Δx と Δp が出てくるようにすればいい。……問題は、<strong>何を2乗するか</strong>ですね。それが分からないと始まりません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこで<strong>ゴールからの逆算</strong>だ。道具箱の式を、少しだけ書き直して見比べてごらん。(Δx)²＝∫x²|ψ|²dx は、x²|ψ|²＝|xψ|² だから、<strong>「関数 xψ の2乗の積分」</strong>と読める。補題2の (Δp)²＝ℏ²∫|ψ′|²dx は、<strong>「関数 ψ′ の2乗の積分」</strong>。……気づくことはないかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">両方とも「何かの2乗の積分」！ Δx を担当するのが xψ という関数で、Δp を担当するのが ψ′ という関数。それなら、2乗して仕込むべきものは決まりです。<strong>xψ と ψ′ を混ぜたもの</strong>を2乗すれば、展開したときに |xψ|² の項と |ψ′|² の項――つまり (Δx)² と (Δp)² が両方出てきます。(a−b)² から a² と b² が出てきたのと同じ仕組みで！</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが答えの9割だよ。仕上げにプロの工夫を1つ足そう。混ぜるとき、配合比を固定せず、<strong>自由に調整できるつまみ λ（ラムダ）</strong>を付けておくんだ。λxψ＋ψ′ という混合物を作って、その2乗を積分する。これが魔法の関数 I(λ) だよ。どんな実数 λ を選んでも、中身は絶対値の2乗――0以上の量の足し合わせだから、<strong>I(λ) ≥ 0 は無条件で正しい</strong>。つまり、λ の数だけ<strong>無限個の不等式</strong>が一度に手に入る。後でいちばん強いものを選び抜けばいい。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【魔法の関数】 <br class="wbr">I(λ) ＝ ∫ |λxψ(x) ＋ ψ′(x)|² dx ≥ 0　（すべての実数 λ で成り立つ）</span>
+        <span class="step">仕込みの理由： <br class="wbr">(Δx)²＝∫|xψ|²dx、 <span class="nw">(Δp)²/ℏ²</span>＝∫<span class="nw">|ψ′|²</span>dx　――ゴールの2人が「2乗の積分」で並んでいる</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ひとつ引っかかることがあります。なぜ「足し算」で混ぜるとうまくいくと信じられるんでしょう。xψ と ψ′ なんて、全然違う種類の関数に見えます。混ぜてもぐちゃぐちゃになるだけかもしれないのに。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最高の質問だ。ここに、発見の物語のいちばん美しい伏線が隠れているんだよ。実はハイゼンベルクは1927年の論文で、<strong>釣鐘型のガウス波束</strong>という具体的な波について Δx·Δp を計算して、ちょうど ℏ/2 になることを確かめていた。もし ℏ/2 が本当の下限なら、ガウス波束は「これ以上縮められない<strong>最良の波</strong>」ということになる。ではガウス型 ψ＝e<sup>−ax²</sup> を微分してみてごらん。指数の微分の規則で、肩の −ax² の微分 −2ax が前に降りてくるから――</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ψ′ ＝ −2ax·e<sup>−ax²</sup> ＝ <strong>−2a×(xψ)</strong>。……！ 驚きました。ガウス波束では、ψ′ と xψ は<strong>定数倍しか違わない、実質同じ関数</strong>なんですね。ということは λ＝2a と選べば λxψ＋ψ′ はぴったり0、つまり I(λ)＝0。魔法の関数は、<strong>「最良の波からのズレ」を測る物差し</strong>だったんだ。最良の波ならズレはゼロ、それ以外の波では必ずプラス……。ぐちゃぐちゃどころか、この2つは混ぜるために生まれてきたような組み合わせです。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" id="gauss-svg" viewBox="0 0 320 210" width="100%" role="img" aria-label="ガウス波束では xψ の曲線と ψ′ の曲線が定数倍しか違わず、適切な λ で足すとぴったり打ち消し合って0になる">
+          <line class="base" x1="15" y1="45" x2="305" y2="45"></line>
+          <path class="wave2" id="g-xpsi" d=""></path>
+          <line class="base" x1="15" y1="115" x2="305" y2="115"></line>
+          <path class="wave" id="g-dpsi" d=""></path>
+          <line class="base" x1="15" y1="180" x2="305" y2="180"></line>
+          <path class="wave3" id="g-sum" d=""></path>
+          <text class="strong" x="18" y="16">xψ（位置の担当）</text>
+          <text class="strong" x="18" y="86">ψ′（運動量の担当）</text>
+          <text class="strong" x="18" y="153">λxψ ＋ ψ′（λ をうまく選ぶ）</text>
+          <text class="label" x="200" y="174">→ ぴったり0！</text>
+        </svg>
+        <div class="diagram-caption">ガウス波束 ψ＝e<sup>−ax²</sup> では ψ′＝−2a·xψ。上の2本は上下が逆なだけの同じ形で、λ＝2a と選んで足すと完全に打ち消し合う。I(λ) は「最良の波（ガウス波束）からのズレ」を測っている</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">見抜いたね。では狩りの型の②、<strong>展開</strong>に進もう。複素数の2乗の展開公式は |A＋B|²＝(A＋B)(A*＋B*)＝|A|²＋AB*＋A*B＋|B|²。A＝λxψ、B＝ψ′ を入れる。λ も x も実数だから A*＝λxψ* となって、真ん中の2項は λx(ψψ′*＋ψ*ψ′) とまとまるよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">括弧の中の ψψ′*＋ψ*ψ′、これ、見覚えがあります。積の微分公式です！ |ψ|²＝ψψ* を微分すると (ψψ*)′＝ψ′ψ*＋ψ(ψ*)′。同じものです。つまり真ん中の項は <strong>λx(|ψ|²)′</strong>。……あっ、だから補題1だったんですね。∫x(|ψ|²)′dx が証明のどこで出てくるのか不思議でしたが、ここで登場するために仕込んであったんだ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">伏線回収だよ。それでは積分して、3つの項を道具箱の言葉に翻訳してごらん。λ² の項、λ の項、定数項の順でね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">λ² の項は λ²∫x²|ψ|²dx ＝ <strong>(Δx)²λ²</strong>。λ の項は λ∫x(|ψ|²)′dx で、補題1からこの積分は −1、だから <strong>−λ</strong>。定数項は ∫|ψ′|²dx で、補題2から <strong>(Δp)²/ℏ²</strong>。全部そろって……I(λ) ＝ (Δx)²λ² − λ ＋ (Δp)²/ℏ²。これが、どんな λ でも0以上。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">立ち止まって、いま起きたことの凄みを味わってほしい。出発点には波動関数 ψ――無限にありうる、あらゆる波の形――がいた。ところが展開して道具箱で翻訳したら、<strong>ψ は式から完全に消えてしまった</strong>。残ったのは Δx と Δp という2つの数と、つまみ λ だけの、ただの二次関数だ。無限にある波の形を一網打尽にする仕掛けの正体はこれだよ。どんな ψ から出発しても、必ずこの同じ二次関数の形に流れ込む。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">展開： <br class="wbr">|λxψ＋ψ′|² ＝ λ²x²|ψ|² ＋ λx(|ψ|²)′ ＋ <span class="nw">|ψ′|²</span>　（真ん中は積の微分公式で束ねた）</span>
+        <span class="step">積分して道具箱で翻訳：</span>
+        <span class="step">　λ²<span class="nw">∫x²|ψ|²dx</span> ＝ (Δx)²λ²　／　λ∫x(|ψ|²)′dx ＝ −λ（補題1）　／　∫<span class="nw">|ψ′|²</span>dx ＝ <span class="nw">(Δp)²/ℏ²</span>（補題2）</span>
+        <span class="step">【到達点】 <br class="wbr">I(λ) ＝ <strong>(Δx)²λ² − λ ＋ <span class="nw">(Δp)²/ℏ²</span> ≥ 0</strong>　（すべての実数 λ で）</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「どんな λ を入れても0以上になる二次関数」……。グラフで言えば、下に凸の放物線が、横軸より下に<strong>一度も潜らない</strong>ということですよね。放物線がそういう形になれる条件なら、学校で習った道具で書けそうな気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り、次のステージはきみのホームグラウンドだ。1927年の物理学の最深部に、中学校の数学がとどめを刺しに行くよ。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. I(λ)＝∫|λxψ＋ψ′|²dx が、どんな λ でも必ず0以上になる理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">中身が絶対値の2乗で、0以上の量を足し集めた積分だから</button>
+          <button class="choice-btn">λ が正の数に限られているから</button>
+          <button class="choice-btn">実験で確かめられているから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 「2乗は0以上」――STAGE1でばらつきを定義したときと同じ、いちばん素朴な事実が証明全体を支えている。(a−b)²≥0 から a²+b²≥2ab を出した狩りの型の、積分版だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 2乗する中身として「xψ と ψ′ の混合」を選ぶ理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">xψ と ψ′ だけが実数の関数だから</button>
+          <button class="choice-btn">この2つは足すと必ず0になるから</button>
+          <button class="choice-btn">ゴールの (Δx)² と (Δp)²/ℏ² が、それぞれ xψ と ψ′ の「2乗の積分」だから（ゴールからの逆算）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 展開すれば |xψ|² と |ψ′|² の項が現れて、狙い通り (Δx)² と (Δp)² が式に登場する。さらにガウス波束では ψ′∝xψ なので、この混合は「最良の波からのズレ」という意味まで持っている。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 展開後の式 (Δx)²λ² − λ ＋ (Δp)²/ℏ² に現れる「−λ」の係数 −1 の出どころは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">λ の定義から自動的に出てくる</button>
+          <button class="choice-btn">クロス項の ∫x(|ψ|²)′dx に補題1（部分積分＋規格化条件）を使った結果</button>
+          <button class="choice-btn">ガウス波束の場合だけに成り立つ近似</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 「電子は必ずどこかにいる」という規格化条件が、部分積分を経由して −1 という数に化け、λ の1次の係数として証明の急所に座る。どんな波形でも同じ −1 になるのがポイントだ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>
+  // ガウス波束の xψ・ψ′・打ち消しの図（静止画）
+  (function () {
+    function makePath(yc, amp, fn, x0, x1) {
+      var d = "M" + x0 + " " + (yc - amp * fn((x0 - 160) / 40)).toFixed(1);
+      for (var x = x0 + 2; x <= x1; x += 2) {
+        d += " L" + x + " " + (yc - amp * fn((x - 160) / 40)).toFixed(1);
+      }
+      return d;
+    }
+    var g = function (u) { return Math.exp(-u * u); };       // ψ = e^(-u²)（a=1）
+    var xpsi = function (u) { return u * g(u); };            // xψ
+    var dpsi = function (u) { return -2 * u * g(u); };       // ψ′ = -2xψ
+    var sum  = function (u) { return 2 * xpsi(u) + dpsi(u); };// λ=2 で 0
+    var p1 = document.getElementById("g-xpsi");
+    var p2 = document.getElementById("g-dpsi");
+    var p3 = document.getElementById("g-sum");
+    if (p1) p1.setAttribute("d", makePath(45, 38, xpsi, 15, 305));
+    if (p2) p2.setAttribute("d", makePath(115, 19, dpsi, 15, 305));
+    if (p3) p3.setAttribute("d", makePath(180, 38, sum, 15, 305));
+  })();
+</script>
+<script>KQ.initStagePage(5);</script>
+</body>
+</html>

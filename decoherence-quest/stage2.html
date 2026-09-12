@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#143a3e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE2 経路検出器を置くと ― 消える干渉縞</title>
+<meta name="description" content="スリットのそばに経路検出器を置くと干渉縞が消える理由を導く。矢印は粒子だけでなく検出器まで含めた筋書き全体につく。針の最終状態が直交すると矢印を足せなくなり、確率の足し算に退化して縞が消える。誰も読まなくても消える理由、不完全な検出器で縞が薄く残る理由まで。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage2.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="消える干渉縞">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE2 経路検出器を置くと ― 消える干渉縞">
+<meta property="og:description" content="検出器の針が倒れた瞬間、筋書きの終わり方が区別可能になり、矢印の足し算が禁止される。「観測」に意識が要らない理由。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage2.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .dq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .dq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .dq-svg .accent{fill:#8a5a2a;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌫️</a> <span>消える干渉縞</span></div>
+      <div class="brand-sub">STAGE 2 ― 経路検出器を置くと ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 2</span><span class="chapter-title">経路検出器を置くと</span>
+        <div class="chapter-sub">縞が消える仕組み</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">検出器を置くと縞が消える理由を、「針の最終状態が直交し、筋書きの終わり方が区別可能になって、矢印を足せなくなるから」と自分の言葉で説明できれば合格。誰も針を読まなくても縞が消える理由まで言えれば満点。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">では、実験を改造しよう。左スリットのすぐそばに、小さな検出器を置く。粒子が左を通り抜けると、検出器の<strong>針</strong>が左に倒れる仕掛けだ。右スリットにも同じものを置いて、右を通れば針が右に倒れる。粒子の飛び方はほとんど乱さない、そっと記録するだけの上等な検出器だとしよう。実験結果は知っているね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">縞は消えます。そして今日は、理由を導く番です。前回の予想を使うなら――針の倒れた向きが「どちらを通ったか」の<strong>手がかり</strong>として残る。だからルールの後半「それぞれ2乗してから足す」が発動して、のっぺりになる。……ただ白状すると、「手がかりが残る」という言い方がまだ少しふわっとしています。何と何を比べて「区別がつく」と判定するのか、正確な手続きを知りたいです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこを詰めるのが今日の仕事だ。鍵はこれだよ。<strong>矢印は、粒子だけの道筋につくのではない。関わったものすべてを含めた「世界の筋書き」全体につく</strong>んだ。今回の実験の筋書きを、省略せずに最後まで書いてみよう。筋書き1「粒子が左を通り、左の針が倒れ、粒子が点xに当たる」。筋書き2「粒子が右を通り、右の針が倒れ、粒子が点xに当たる」。さて、この2つの筋書きの<strong>終わり方</strong>を比べてごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">筋書き1の終わりは「粒子が点xにいて、<strong>左の針が倒れている</strong>世界」。筋書き2の終わりは「粒子が同じ点xにいて、<strong>右の針が倒れている</strong>世界」。粒子の側だけ見れば同じなのに、針の状態が違う。つまり2つの筋書きは、<strong>違う終わり方</strong>をしている――だから区別がつく。だから矢印を足してはいけない。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。これでルールを完全版に書き直せる。<strong>「2つの筋書きは、終わり方まで含めて完全に同じ状態に合流するときだけ、矢印を足せる」</strong>。終わりの状態が一部分でも違っていれば――たとえ針1本の向きでも――足し算は禁止で、それぞれ2乗してから確率を足す。ここで用語をひとつ渡そう。「完全に区別できる2つの状態」のことを、物理学者は<strong>直交</strong>していると言うんだ。左に倒れきった針と右に倒れきった針は直交している。前のステージで縞が出たのは、検出器なしの2つの筋書きが「粒子が点xにいる」というまったく同じ終わり方に合流していたからだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">待ってください、そこに引っかかります。左を通った粒子と右を通った粒子では、たどった道がまるで違います。それなのに「完全に同じ状態」と言えるんですか？ 途中が違う2つのものを「同じ」と呼ぶのは、ずるをしている気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いいところに引っかかった。ここで「状態」という言葉の意味をはっきりさせておこう。物理でいう状態とは、<strong>いまこの瞬間の、世界のありさま</strong>のことで、<strong>そこに至るまでの履歴は含まれない</strong>んだ。たとえるなら、最後の瞬間に世界全体を写した1枚の写真だね。筋書き1の最後の写真と、筋書き2の最後の写真を並べてみて、<strong>どこにも違いが見つからなければ「同じ状態」</strong>と判定する。検出器なしの二重スリットで写真に写っているのは、「点xに粒子がいる」ことだけ。左を通ったか右を通ったかという履歴は、<strong>どこにも記録が残っていない以上、写真のどこにも写らない</strong>。だから2枚は完全に一致して、筋書きは合流できるんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">まだ納得しきれません。「どこにも違いが見つからなければ」と言いますが、写真には世界全体が写るんですよね？ 撃つタイミングが少しずれれば気流は揺らぎますし、地球ごと宇宙の中を動いています。隅から隅まで完全に一致する写真なんて、用意できるはずがないと思います。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこは、この話でいちばん誤解しやすい急所だ。比べている2枚は、<strong>別々の2回の実験の写真ではない</strong>んだよ。<strong>同じ1発の粒子の、同じ瞬間について、「左を通っていたら」と「右を通っていたら」という2通りの筋書きを並べたもの</strong>だ。気流のゆらぎも、宇宙の中の地球の位置も、どちらの筋書きにもまったく同じ背景としてそのまま写っている。「同じにする」必要は最初からない――もともと1つの世界の、枝分かれした2通りの話だからね。だから、2枚の写真に違いが生まれうる場所はただひとつ。<strong>粒子が途中で触れたもの</strong>だけだ。真空の装置の中を何にも触れずに飛んだのなら、違いはどこにも生まれようがない。逆に、途中で空気の分子1個にでもぶつかれば、その分子の写り方が2枚で違ってしまう――だから本物の干渉実験は、装置の中を真空にして行うんだ。この「触れたものはすべて写真に写る」という事実がどれほど恐ろしいかは、後のステージでじっくり味わうことになるよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「何にも触れずに」と言いますが、真空にしたところで、本当に<strong>何ものにも影響を与えない</strong>なんてことがありうるんでしょうか。粒子は少なくともスリット板の穴を通り抜けるわけで、板とは必ず関わっているはずです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">実にいいところを突く。その通りで、<strong>影響ゼロはありえない</strong>。粒子はスリット板に力を及ぼすし、左の穴を通れば板の受ける反動はわずかに左寄り、右なら右寄りになる。実は1927年、物理学者たちが集まったソルベー会議で、まさにそこを突いたのがアインシュタインだった。「スリット板をバネで吊るして反動を測れば、縞を保ったまま、どちらの穴を通ったか分かるはずだ」とね。ボーアの答えはこうだ。条件は「影響を与えないこと」ではなく、<strong>「左右で見分けのつく痕跡を残さないこと」</strong>。どっしり重く固定された板は、左右の反動のごくわずかな違いを、自分自身の量子的なゆらぎの中に飲み込んでしまう。「左の場合の板」と「右の場合の板」の写真は<strong>ほとんど完全に重なって、見分けがつかない</strong>――手がかりとしてはほぼゼロで、縞はほぼ満点のまま残るんだ。逆に、反動を読み取れるほど軽い板にすれば、たしかに通った穴は分かる。そのかわり計算すると、板の揺れが粒子の矢印の向きを乱して、縞はちょうど消える。どちらを取っても、ルールは破れない。この「見分けのつきにくさは0か100かではなく程度問題」という話は、このあとすぐ主役になるよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">なるほど、途中の道が違うこと自体は問題にならないんですね。問題になるのは、その違いが<strong>痕跡として写真に写り込んだとき</strong>だけ。検出器を置いた場合はまさにそれで、履歴が針の向きという形で残るから、「点x＋左に倒れた針」の写真と「点x＋右に倒れた針」の写真は見分けられる。だから別の状態で、合流できない。……「終わり方まで含めて同じ」という条件は、「<strong>最後の写真が完全に一致するか</strong>」と読み替えればいいわけですね。ただ、最後にもうひとつ引っかかりが残っています。縞ができる場合とできない場合とでは、粒子の当たる場所の分布が変わりますよね。違いが出るということは、そもそも左経由と右経由とで<strong>到達点そのものが違っている</strong>、ということになりそうな気がします。到達点が違うなら、終わりの写真も違うはずです。どう考えればいいですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこも大事な区別だ。答えはこうだよ。<strong>道筋は、到達点を決めない</strong>。左を通った粒子はスクリーンのどの点にも当たりうるし、右を通った粒子も、やはりどの点にも当たりうる。だからルールの正しい使い方は、こうなる。まずスクリーンの点を1つ選ぶ――たとえば点x。そして<strong>「同じ点xで終わる筋書きだけ」を集めて</strong>、合流できるかを判定し、その点の明るさを計算する。「左を通って点xへ」と「右を通って点xへ」――比べるのは、いつでもこのペアだ。次に別の点を選んだら、今度はその点で終わる筋書きどうしを比べる。これをスクリーンの全部の点で繰り返してできあがる明るさの一覧表が、分布なんだ。つまり、縞があるかないかというのは<strong>各点で計算される確率の「値」が変わる</strong>という違いであって、筋書きの到達点がずれるという話ではないんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">分かりました。比べる相手はいつも「同じ到達点で終わる筋書き」どうしで、到達点が違う筋書きは写真が違うのだから、最初から合流しない――ルールはそれも正しく区別しているんですね。そうなると、重大なことが言えてしまいます。いまの理屈のどこにも、「誰かが針を<strong>読む</strong>」という手続きが出てきませんでした。針が倒れた時点で――手がかりが世界のどこかに記録された時点で――終わり方はもう違ってしまっている。ということは、人間が見ても見なくても縞は消える。<strong>「観測」に意識は要らない</strong>、ですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">要らないんだ。これは実験でも確かめられている。検出器を動かしたまま、記録を一度も読み出さず捨ててしまっても、縞は消える。観測の正体は「見ること」ではなく、<strong>「手がかりが残ること」</strong>。目も意識も脳も、どこにも出てこない。ここが旅の最初の峠だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">もうひとつ気になることがあります。いまの話は針が「倒れる／倒れない」の両極端でした。もし検出器が<strong>中途半端</strong>だったら？ たとえば、粒子が通っても針が少ししか傾かない頼りない検出器なら、縞は出るんでしょうか、消えるんでしょうか。0か100かで急に切り替わるのは、かえって不自然な気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">実にいい質問だ。答えは「<strong>縞は連続的に薄くなる</strong>」。針が少ししか傾かないと、「左のときの針」と「右のときの針」の最終状態は、直交ではなく<strong>少しだけ違う</strong>状態になる。似た者どうしの状態は部分的に「同じ終わり方」とみなせるから、矢印も部分的に足せる。結果、縞の濃さは満点と0の中間になる。手がかりが完全なら縞は0、手がかりが皆無なら縞は満点。<strong>手がかりの完全さと縞の濃さは、正確にシーソーの関係</strong>にあるんだ。これも実験で細かく確認されているよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">まとめます。縞を消すのに必要なのは、粒子を乱すことでも、人間が見ることでもなく、<strong>「どちらを通ったか」の手がかりが世界のどこかに残ること</strong>。残り方が中途半端なら、縞も中途半端に薄まる。……でも博士、そうだとすると逆の手が使えませんか？ 一度残った手がかりを、粒子がスクリーンに当たったあとで<strong>消して</strong>しまえたら――縞は戻るのでは？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それこそが次のステージの主役、<strong>量子消しゴム</strong>だよ。先に答えだけ言っておくと――戻る。ただしその戻り方が、因果律を1ミリも破らない、実に見事な戻り方なんだ。楽しみにしておいで。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="detector-svg" class="dq-svg" viewBox="0 0 372 240" width="100%" role="img" aria-label="経路検出器つき二重スリットのアニメーション。粒子が左右どちらかのスリットを通るたびに検出器の針がその向きに倒れ、スクリーンには縞のない、山をふたつ重ねた分布の点が積もっていく">
+          <text class="strong" x="186" y="16" text-anchor="middle">針が倒れると、縞は積もらない</text>
+          <g id="detector-body"></g>
+        </svg>
+        <div class="diagram-caption">粒子が通るたびに針が左または右へ倒れ、「どちらを通ったか」の手がかりが残る。スクリーンに積もる点は、左経由の山と右経由の山を重ねただけの、のっぺりした分布。縞は一度も現れない</div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="contrast-svg" class="dq-svg" viewBox="0 0 372 220" width="100%" role="img" aria-label="手がかりの完全さと縞の濃さのシーソー関係のアニメーション。針の傾きの差が0度から90度まで連続的に変化し、それに応じてスクリーンの縞の濃さが満点から0まで連続的に変化する">
+          <text class="strong" x="186" y="16" text-anchor="middle">手がかりの完全さと縞の濃さはシーソー</text>
+          <g id="contrast-body"></g>
+        </svg>
+        <div class="diagram-caption">左：粒子が左を通ったときの針（青緑）と右を通ったときの針（オレンジ）。2本の開きが「手がかりの完全さ」。右：そのときスクリーンに現れる分布。針の状態が同じ（開き0°）なら縞は満点、直交（開き90°）なら縞は0。中間では薄い縞が残り、0か100かではなく連続的に変わる</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果 ― 足し算ルールの完全版】</span>
+        <span class="step">・矢印は、粒子だけでなく<strong>関わったものすべてを含む「筋書き」全体</strong>につく</span>
+        <span class="step">・2つの筋書きは、<strong>終わり方まで含めて完全に同じ状態に合流するときだけ</strong>矢印を足せる。針1本の向きでも違えば、それぞれ2乗して確率を足す</span>
+        <span class="step">・「状態」＝最後の瞬間の世界のありさま（1枚の写真）。<strong>途中の履歴は含まれない</strong>。途中の道の違いは、痕跡として写真に写り込んだときだけ「区別」になる</span>
+        <span class="step">・比べる2枚は<strong>同じ1発・同じ瞬間の「2通りの筋書き」</strong>の写真（別々の実験ではない）。気流や地球の位置は共通の背景として最初から同じで、違いが生まれうるのは<strong>粒子が途中で触れたもの</strong>だけ。厳密には影響ゼロはありえず、条件は「左右で<strong>見分けのつく</strong>痕跡を残さない」こと（重く固定したスリット板の反動は写真がほぼ重なり、手がかりにならない＝アインシュタインとボーアの1927年の論争）</span>
+        <span class="step">・ルールの使い方：スクリーンの点ごとに<strong>「同じ点で終わる筋書き」だけ</strong>を集めて判定する（道筋は到達点を決めない）。縞の有無は各点の確率の値の違いで、到達点の違う筋書きは写真が違うから最初から合流しない</span>
+        <span class="step">・完全に区別できる2状態＝<strong>直交</strong>。針が直交すれば縞は0。読む人がいるかどうかは無関係</span>
+        <span class="step">・手がかりが不完全なら、縞は連続的に薄くなる（手がかりの完全さと縞の濃さはシーソー）</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 経路検出器を置くと縞が消える理由として、このステージで導いたものはどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">検出器が粒子にぶつかって、飛び方を乱してしまうから</button>
+          <button class="choice-btn">針の最終状態が直交し、2つの筋書きの終わり方が区別可能になって、矢印を足せなくなるから</button>
+          <button class="choice-btn">検出器の熱がスクリーンを歪めるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 粒子をほとんど乱さない検出器でも、針の向きという手がかりが残れば縞は消える。「乱すから消える」説では、この後のステージで見る「手がかりを消すと縞が戻る」現象を説明できない。犯人は乱れではなく、手がかりの記録だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 検出器は動いていて針は毎回倒れるが、記録は誰も一度も読まずに捨てた。縞はどうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">読まれていないので、縞は残る</button>
+          <button class="choice-btn">半分だけ消える</button>
+          <button class="choice-btn">それでも縞は消える。手がかりが世界に残ること自体が条件だから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 足し算ルールの判定に使うのは「筋書きの終わり方が同じ状態に合流するか」だけで、「誰かが読むか」はどこにも出てこない。針が倒れた時点で終わり方は違ってしまっている。「観測」に意識や視線は要らない。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 粒子が通っても針が少ししか傾かない、頼りない検出器を置いた。縞はどうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">薄くなって残る。手がかりの完全さに応じて縞の濃さは連続的に変わる</button>
+          <button class="choice-btn">少しでも傾く以上、完全に消える</button>
+          <button class="choice-btn">検出器が完全でない以上、まったく変わらない</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 「左のときの針」と「右のときの針」が直交しきらなければ、筋書きは部分的に同じ終わり方に合流でき、矢印も部分的に足せる。縞の濃さと手がかりの完全さはシーソーの関係で、0か100かのスイッチではない。この連続性が、次のステージ以降で環境デコヒーレンスを理解する鍵になる。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>DQ.initStagePage(2);</script>
+
+<script>
+(function(){
+  // 図1: 検出器つき二重スリット。粒子が飛ぶたび針が倒れ、のっぺり分布が積もる
+  var svg = document.getElementById('detector-svg');
+  var g = document.getElementById('detector-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C1 = '#2f7a6b', C2 = '#b98a2e';
+  var SL = {x: 110, y: 105}, SR = {x: 110, y: 165}, SRCX = 30, SRCY = 135, SCX = 250, TOP = 45, BOT = 225;
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+
+  el('circle', {cx: SRCX, cy: SRCY, r: 5, fill: C2});
+  txt(SRCX, SRCY + 20, 'label', '光源');
+  el('line', {x1: 110, y1: 40, x2: 110, y2: SL.y - 8, stroke: 'var(--ink)', 'stroke-width': 4});
+  el('line', {x1: 110, y1: SL.y + 8, x2: 110, y2: SR.y - 8, stroke: 'var(--ink)', 'stroke-width': 4});
+  el('line', {x1: 110, y1: SR.y + 8, x2: 110, y2: 230, stroke: 'var(--ink)', 'stroke-width': 4});
+  el('line', {x1: SCX, y1: TOP, x2: SCX, y2: BOT, stroke: 'var(--ink)', 'stroke-width': 3});
+  txt(SCX, 38, 'label', 'スクリーン');
+
+  // 検出器（針つきダイヤル）×2
+  function dial(cx, cy, label) {
+    el('path', {d: 'M ' + (cx - 16) + ' ' + cy + ' A 16 16 0 0 1 ' + (cx + 16) + ' ' + cy, fill: 'var(--paper2)', stroke: 'var(--line)', 'stroke-width': 1.5});
+    txt(cx, cy + 14, 'label', label);
+    return el('line', {x1: cx, y1: cy, x2: cx, y2: cy - 14, stroke: 'var(--ng)', 'stroke-width': 2.5, 'stroke-linecap': 'round'});
+  }
+  var needleL = dial(66, SL.y - 6, '検出器(左)');
+  var needleR = dial(66, SR.y + 26, '検出器(右)');
+
+  function setNeedle(needle, cx, cy, angleDeg) {
+    var a = (angleDeg - 90) * Math.PI / 180;
+    needle.setAttribute('x2', cx + 14 * Math.cos(a));
+    needle.setAttribute('y2', cy + 14 * Math.sin(a));
+  }
+  setNeedle(needleL, 66, SL.y - 6, 0);
+  setNeedle(needleR, 66, SR.y + 26, 0);
+
+  // のっぺり分布の理論カーブ
+  function hump(y, c) { return Math.exp(-Math.pow((y - c) / 34, 2)); }
+  function pdf(y) { return 0.5 * hump(y, SL.y + 15) + 0.5 * hump(y, SR.y - 15); }
+  var d = '';
+  for (var y = TOP; y <= BOT; y += 2) {
+    var x = SCX + 8 + pdf(y) * 70;
+    d += (d === '' ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y + ' ';
+  }
+  el('path', {d: d, fill: 'none', stroke: '#8a6a24', 'stroke-width': 1.6, 'stroke-dasharray': '3 3'});
+  txt(320, 38, 'label', '積もった点の分布');
+
+  var dotsG = el('g', {});
+  var particle = el('circle', {r: 4, fill: 'var(--ink)', opacity: 0});
+
+  // 棄却法で分布からyをサンプリング
+  function sampleY() {
+    for (var i = 0; i < 60; i++) {
+      var y = TOP + Math.random() * (BOT - TOP);
+      if (Math.random() < pdf(y)) return y;
+    }
+    return SRCY;
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dots = [];
+  function addDot(y) {
+    if (dots.length >= 700) return; // 点は増える一方。十分たまったら追加を止める
+    var c = el('circle', {cx: (SCX + 5 + Math.random() * 8).toFixed(1), cy: y.toFixed(1), r: 1.6, fill: 'var(--ink)', opacity: .75}, dotsG);
+    dots.push(c);
+  }
+  if (reduced) {
+    for (var i = 0; i < 260; i++) addDot(sampleY());
+    setNeedle(needleL, 66, SL.y - 6, -50);
+    return;
+  }
+
+  var t = 0, running = false, raf = null;
+  var cur = {slit: 'L', y: sampleY()};
+  function loop() {
+    if (!running) return;
+    t += 0.016;
+    var phase = (t % 0.85) / 0.85;
+    var slitP = cur.slit === 'L' ? SL : SR;
+    if (phase < 0.4) { // 光源→スリット
+      var p = phase / 0.4;
+      particle.setAttribute('opacity', 1);
+      particle.setAttribute('cx', (SRCX + (slitP.x - SRCX) * p).toFixed(1));
+      particle.setAttribute('cy', (SRCY + (slitP.y - SRCY) * p).toFixed(1));
+      setNeedle(needleL, 66, SL.y - 6, 0); setNeedle(needleR, 66, SR.y + 26, 0);
+    } else if (phase < 0.8) { // スリット→スクリーン（針が倒れる）
+      var p2 = (phase - 0.4) / 0.4;
+      particle.setAttribute('cx', (slitP.x + (SCX - slitP.x) * p2).toFixed(1));
+      particle.setAttribute('cy', (slitP.y + (cur.y - slitP.y) * p2).toFixed(1));
+      var ang = Math.min(1, p2 * 2.2) * 55;
+      if (cur.slit === 'L') setNeedle(needleL, 66, SL.y - 6, -ang);
+      else setNeedle(needleR, 66, SR.y + 26, ang);
+    } else {
+      if (particle.getAttribute('opacity') !== '0') {
+        particle.setAttribute('opacity', 0);
+        addDot(cur.y);
+        var y2 = sampleY();
+        cur = {slit: hump(y2, SL.y + 15) > hump(y2, SR.y - 15) ? 'L' : 'R', y: y2};
+      }
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+<script>
+(function(){
+  // 図2: 手がかりの完全さ（針の開き）と縞コントラストのシーソー
+  var svg = document.getElementById('contrast-svg');
+  var g = document.getElementById('contrast-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C1 = '#2f7a6b', C2 = '#b98a2e';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': 'middle'});
+    t.textContent = content;
+    return t;
+  }
+
+  // 左パネル: 針の状態2つ
+  var PX = 95, PY = 120, R = 52;
+  el('path', {d: 'M ' + (PX - R) + ' ' + PY + ' A ' + R + ' ' + R + ' 0 0 1 ' + (PX + R) + ' ' + PY, fill: 'var(--paper2)', stroke: 'var(--line)', 'stroke-width': 1.5});
+  el('line', {x1: PX - R - 6, y1: PY, x2: PX + R + 6, y2: PY, stroke: 'var(--line)'});
+  txt(PX, 42, 'strong', '2本の針の開き');
+  txt(PX, PY + 20, 'label', '左を通ったときの針／右を通ったときの針');
+  var nL = el('line', {x1: PX, y1: PY, x2: PX, y2: PY - R + 8, stroke: C1, 'stroke-width': 3, 'stroke-linecap': 'round'});
+  var nR = el('line', {x1: PX, y1: PY, x2: PX, y2: PY - R + 8, stroke: C2, 'stroke-width': 3, 'stroke-linecap': 'round'});
+  var angTxt = txt(PX, PY + 40, 'accent', '開き 0°（手がかりなし）');
+
+  // 右パネル: 縞カーブ
+  var QX = 245, QW = 110, QH = 110, QY0 = 168;
+  el('rect', {x: QX, y: QY0 - QH, width: QW, height: QH, fill: 'var(--paper2)', stroke: 'var(--line)', rx: 6});
+  txt(QX + QW / 2, 42, 'strong', 'スクリーンの分布');
+  var curve = el('path', {fill: 'none', stroke: '#8a6a24', 'stroke-width': 2.2});
+  var vTxt = txt(QX + QW / 2, QY0 + 20, 'accent', '縞の濃さ 100%');
+
+  function draw(theta) { // theta: 0..90（度）
+    var a = theta * Math.PI / 180;
+    var v = Math.cos(a); // 縞の濃さ
+    var half = a / 2;
+    function setN(n, s) {
+      n.setAttribute('x2', PX + (R - 8) * Math.sin(s * half));
+      n.setAttribute('y2', PY - (R - 8) * Math.cos(s * half));
+    }
+    setN(nL, -1); setN(nR, 1);
+    angTxt.textContent = '開き ' + Math.round(theta) + '°' + (theta < 3 ? '（手がかりなし）' : theta > 87 ? '（直交＝完全な手がかり）' : '');
+    var d = '';
+    for (var i = 0; i <= 100; i++) {
+      var u = (i - 50) / 50;
+      var env = Math.exp(-u * u * 2.2);
+      var I = env * (1 + v * Math.cos(u * 9)) / 2;
+      var x = QX + 4 + (QW - 8) * i / 100;
+      var y = QY0 - 6 - I * (QH - 16);
+      d += (i === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+    }
+    curve.setAttribute('d', d);
+    vTxt.textContent = '縞の濃さ ' + Math.round(v * 100) + '%';
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) { draw(45); return; }
+
+  var t = 0, running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    t += 0.016;
+    var ph = (t % 6) / 6; // 0..1
+    var tri = ph < 0.5 ? ph * 2 : (1 - ph) * 2; // 0→1→0
+    draw(tri * 90);
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+</body>
+</html>

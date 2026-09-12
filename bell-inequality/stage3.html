@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1b2a4a">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE3 数え上げで不等式を導く ― ベルの不等式を破る</title>
+<meta name="description" content="アインシュタイン側の「隠れた変数」を、光子ペアが共通の説明書を持つというモデルに翻訳し、8タイプに分類。そこから「AとCで食い違う説明書は、AとBまたはBとCでも食い違う」という個数の当たり前だけで、ベルの不等式 D(A,C)≤D(A,B)+D(B,C) を自分の手で導く。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage3.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ベルの不等式を破る">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE3 数え上げで不等式を導く ― ベルの不等式を破る">
+<meta property="og:description" content="隠れた変数を「説明書」モデルに翻訳し、個数の数え上げだけからベルの不等式 D(A,C)≤D(A,B)+D(B,C) を自分の手で導く。旅の最大の山場。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage3.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .bq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .bq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .bq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .bq-svg .sheet{fill:var(--paper2);stroke:#48688f;stroke-width:1.5}
+  .bq-svg .src{fill:#e8c07f;stroke:#a6742a;stroke-width:1.5}
+  .bq-svg .row-line{stroke:var(--line);stroke-width:1}
+  .bq-svg .cell{fill:var(--ink);font-size:12px;font-weight:800}
+  .bq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
+  .bq-svg .arrowhead{fill:var(--muted)}
+  .bq-svg .grid{stroke:var(--line);stroke-width:1}
+  .bq-svg .ok{fill:var(--ok);font-weight:900;font-size:13px}
+  .bq-svg .ng{fill:var(--ng);font-weight:900;font-size:13px}
+  .bq-svg .head-cell{fill:var(--gold-dark);font-size:11.5px;font-weight:900}
+  .bq-svg .check{fill:#b5504a;font-size:13px;font-weight:900}
+  .bq-svg .hl{fill:rgba(181,80,74,.12)}
+  .bq-svg .tv-label{font-size:13px;font-weight:900}
+  .bq-svg .tv-letter{font-size:10px;font-weight:900}
+  .bq-svg .tv-num{font-size:11px;font-weight:900;paint-order:stroke;stroke:#fdfcf8;stroke-width:3px;stroke-linejoin:round}
+  .bq-svg .tv-num-dim{font-size:11px;font-weight:700;fill:#8a93a5;paint-order:stroke;stroke:#fdfcf8;stroke-width:3px;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🔔</a> <span>ベルの不等式を破る</span></div>
+      <div class="brand-sub">STAGE 3 ― 数え上げで不等式を導く ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 6</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 3</span><span class="chapter-title">数え上げで不等式を導く</span>
+        <div class="chapter-sub">説明書モデルからベルの不等式へ</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">旅の最大の山場。手袋派（局所実在論）の主張を「光子ペアは共通の説明書を持つ」というモデルに翻訳し、個数の数え上げだけを武器に、ベルの不等式 D(A,C) ≤ D(A,B)＋D(B,C) を自分の手で導こう。「なぜこの不等式は、どんな隠れた変数の理論でも成り立つのか」を説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いよいよ、この旅の山場だよ。前のステージで出てきた手袋派の説明――「答えは生まれた瞬間に仕込まれていた」――を、まず、あいまいさゼロのモデルに翻訳する。裁判にたとえるなら、被告「局所実在論」の主張を正確な調書にとる作業だね。主張を歪めて書いたら、あとでどんな判決を下しても意味がない。準備として、アリスとボブが使う偏光板の角度を<strong>3種類</strong>に決めておこう。<strong>A＝0°、B＝30°、C＝60°</strong>だ。2人はペアが届くたびに、この3つの中から好きな角度を選んで質問する。なぜ2種類ではなく3種類なのか――それはこのステージの後半で効いてくるよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">わかりました。では手袋派の主張を、私なりに調書に書き直してみます。「光子は、生まれた瞬間から答えを持っている」――これを厳密に言うと、こうなるはずです。<strong>それぞれの光子は、『角度Aで聞かれたら○、Bで聞かれたら×、Cで聞かれたら○』のような回答リストを、生まれたときから携帯している</strong>。測定の瞬間に決まるのではなく、リストを読み上げているだけ。……家電の説明書みたいですね。「この操作をされたらこう応答する」と全部書いてある。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その「説明書」という言葉、いただこう。まさにそれが物理学者のいう<strong>隠れた変数</strong>の正体だよ。調書は2本の柱にまとめられる。<strong>仮定1（実在性）：各光子は、A・B・C各角度への答え（○か×）をすべて書き込んだ説明書を、生まれた瞬間から持っている。</strong>測定はそれを読み上げるだけ。実際に測らなかった角度の答えは読まれずに終わるが、手袋派によれば、読まれなかった答えも<strong>ちゃんと存在していた</strong>。<strong>仮定2（局所性）：アリスがどの角度を選んで測っても、遠くにあるボブの光子の説明書は書き換わらない</strong>。逆もまた同じ。説明書は光源で書き込まれたら、あとは読まれるのを待つだけで、遠くの出来事に反応してこっそり内容が変わる――そんな光速超えの通信は禁止だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">だとすると、ペアの2枚の説明書は<strong>一字一句同じ</strong>でなければなりませんね。どこか1か所でも違えば、その角度で2人がそろって測ったとき結果が食い違って、「同じ角度なら必ず一致」という実験事実に反してしまいますから。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのとおり。<strong>仕込みは2枚とも同一</strong>――これで局所実在論の調書が完成した。仕上げに、ありえる説明書を全部リストアップしておこう。1冊の説明書は、A・B・Cという3つの質問への答え（それぞれ○か×）で決まる。すると説明書は何通りあるかな。数えてごらん。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" viewBox="0 0 340 175" width="100%" role="img" aria-label="中央の光源から左右に飛び出す2つの光子が、A・B・Cの3つの角度への答えが書かれた同一の説明書をそれぞれ持っている図">
+          <text class="strong" x="170" y="16" text-anchor="middle">「説明書」モデル ― 2枚は必ず同一</text>
+          <circle class="src" cx="170" cy="90" r="12"></circle>
+          <text class="label" x="170" y="118" text-anchor="middle">光源で2枚の</text>
+          <text class="label" x="170" y="132" text-anchor="middle">説明書に同じ内容を書き込む</text>
+          <line class="arrow" x1="152" y1="90" x2="122" y2="90"></line>
+          <polygon class="arrowhead" points="116,90 125,86 125,94"></polygon>
+          <line class="arrow" x1="188" y1="90" x2="218" y2="90"></line>
+          <polygon class="arrowhead" points="224,90 215,86 215,94"></polygon>
+          <rect class="sheet" x="24" y="38" width="88" height="104" rx="8"></rect>
+          <text class="lbA" x="68" y="58" text-anchor="middle">左の光子の説明書</text>
+          <line class="row-line" x1="34" y1="66" x2="102" y2="66"></line>
+          <text class="cell" x="38" y="84">A（0°）：</text><text class="ok" x="88" y="84">○</text>
+          <text class="cell" x="38" y="106">B（30°）：</text><text class="ng" x="88" y="106">×</text>
+          <text class="cell" x="38" y="128">C（60°）：</text><text class="ok" x="88" y="128">○</text>
+          <rect class="sheet" x="228" y="38" width="88" height="104" rx="8"></rect>
+          <text class="lbA" x="272" y="58" text-anchor="middle">右の光子の説明書</text>
+          <line class="row-line" x1="238" y1="66" x2="306" y2="66"></line>
+          <text class="cell" x="242" y="84">A（0°）：</text><text class="ok" x="292" y="84">○</text>
+          <text class="cell" x="242" y="106">B（30°）：</text><text class="ng" x="292" y="106">×</text>
+          <text class="cell" x="242" y="128">C（60°）：</text><text class="ok" x="292" y="128">○</text>
+          <text class="label" x="170" y="165" text-anchor="middle">どこか1か所でも違えば、その角度でそろえて測ったとき完全相関が破れてしまう</text>
+        </svg>
+        <div class="diagram-caption">説明書モデル。各光子はA・B・C全部への答えを生まれつき持ち（<strong>実在性</strong>）、ペアの2枚は同一で、遠くの測定で書き換わることもない（<strong>局所性</strong>）。図の例は「A:○ B:× C:○」タイプのペア</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">Aの答えが2通り、そのそれぞれにBが2通り、さらにCが2通りだから、2×2×2＝<strong>8通り</strong>です。書き出すと、(A,B,C)＝(○○○)、(○○×)、(○×○)、(○××)、(×○○)、(×○×)、(××○)、(×××)。どんな光子ペアも、この<strong>8タイプのどれか1つ</strong>に必ず入りますね。……ただ、気になるのは<strong>各タイプの割合</strong>です。光源がどのタイプをどれくらいの頻度で作るかは、隠れた変数の理論の詳細によって変わるはずです。私たちはその中身を知りません。割合が分からないのに、この先どうやって議論を進めるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">割合が分からない――そここそが、ベルの発見の凄みが光る場所なんだ。ベルはこう考えた。<strong>割合がどう配分されていても、絶対に成り立ってしまう関係だけを使おう</strong>、と。たとえばね、クラスの生徒の血液型の割合を知らなくても、「A型の人数は、A型で犬を飼っている人数より少なくない」ことは断言できる。全体は部分より少なくないからだ。中身を知らなくても言えることは、ちゃんとあるんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">なるほど。相手の理論の中身（割合）を当てにいくのではなく、<strong>どんな中身でも逃れられない土俵</strong>を先に作ってしまうんですね。8タイプという有限のリストに閉じ込めた時点で、勝負は半分始まっている……。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そういうことだ。では、これから注目する量を決めよう。アリスとボブが<strong>違う角度</strong>で測ったとき、2人の結果（○×）が<strong>食い違う</strong>ことがある。たとえばアリスがA（0°）で測って○、ボブがB（30°）で測って×、という具合だ。たくさんのペアで実験を繰り返して、<strong>「角度AとBで測ったとき、結果が食い違う割合」</strong>を記録する。これを<strong>D(A,B)</strong>と書こう。Dは食い違い（Difference）の頭文字だ。同じように D(B,C)、D(A,C) も測れる。説明書は2枚とも同一だから、観測されるD(A,B)は<strong>「A欄とB欄の答えが食い違う説明書の割合」</strong>そのものだね。なお2人は毎回サイコロで角度を選ぶことにしよう。光源が2人の質問を先読みして説明書の配合を変える、なんてズルを封じておくためだ。今日の目標は、説明書モデルが正しければ、この3つの数のあいだに<strong>必ず成り立ってしまう関係</strong>を見つけることだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" viewBox="0 0 340 205" width="100%" role="img" aria-label="8タイプの説明書の表。下段に、A欄とC欄が食い違うか、A欄とB欄が食い違うか、B欄とC欄が食い違うかのチェック欄があり、AとCが食い違う4タイプはすべて、他の2つのどちらかにもチェックが入っている">
+          <text class="strong" x="170" y="16" text-anchor="middle">「A≠C」の列は、必ず「A≠B」か「B≠C」にも入っている</text>
+          <g>
+            <rect class="grid" x="14" y="26" width="312" height="166" rx="8" fill="var(--paper2)"></rect>
+            <line class="grid" x1="14" y1="48" x2="326" y2="48"></line>
+            <line class="grid" x1="14" y1="70" x2="326" y2="70"></line>
+            <line class="grid" x1="14" y1="92" x2="326" y2="92"></line>
+            <line class="grid" x1="14" y1="114" x2="326" y2="114"></line>
+            <line class="grid" x1="14" y1="140" x2="326" y2="140"></line>
+            <line class="grid" x1="14" y1="166" x2="326" y2="166"></line>
+            <line class="grid" x1="66" y1="26" x2="66" y2="192"></line>
+            <text class="head-cell" x="40" y="42" text-anchor="middle">タイプ</text>
+            <text class="head-cell" x="40" y="64" text-anchor="middle">A(0°)</text>
+            <text class="head-cell" x="40" y="86" text-anchor="middle">B(30°)</text>
+            <text class="head-cell" x="40" y="108" text-anchor="middle">C(60°)</text>
+            <text class="head-cell" x="40" y="130" text-anchor="middle">A≠C？</text>
+            <text class="head-cell" x="40" y="156" text-anchor="middle">A≠B？</text>
+            <text class="head-cell" x="40" y="182" text-anchor="middle">B≠C？</text>
+          </g>
+          <g id="count-cols"></g>
+        </svg>
+        <div class="diagram-caption">ありえる説明書の全8タイプ（2×2×2＝8通り）の下に「食い違いチェック」を並べた表。どんな隠れた変数の理論でも、作られるペアは必ずこの8タイプのどれかに分類できる。<strong>A≠Cの4タイプ（薄い赤の列）を見ると、そのすべてがA≠BかB≠Cの少なくとも一方にもチェックが入っている</strong>。だから「A≠Cのペアの個数」は「A≠Bの個数＋B≠Cの個数」を超えられない</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">紙に8タイプを書き出して数えようとして、気づいてしまいました。これ、表を作らなくても言えることです。<strong>A欄とC欄が食い違っている説明書</strong>を1冊、手に取ったとしますね。その説明書のB欄を見ると、答えは○か×のどちらかです。ところがA欄とC欄は違う答えなのだから、<strong>B欄は、A欄とC欄の両方と同じではいられません</strong>。BがAと同じなら、BはCと違う。BがAと違うなら、その時点でAとBが食い違っています。つまり――<strong>「A≠C」の説明書は、1冊残らず「A≠B」グループか「B≠C」グループのどちらか（または両方）に入っている</strong>！</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それだ！ それがベルの発見の心臓部だよ。では個数の言葉に翻訳してごらん。全部でN組のペアを作ったとして、A≠Cの説明書がN₁冊、A≠BがN₂冊、B≠CがN₃冊あったとしよう。いまきみが証明したのは、<strong>N₁冊のメンバー全員が、N₂かN₃のグループにも所属している</strong>ということだ。すると？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">N₁のメンバーを1冊ずつ、所属先のグループに置いていくと、全員がN₂かN₃のどこかに収まります。同じ冊数を2つの入れ物に分配するのだから、入れ物の大きさの合計は中身より小さくなれません。つまり<strong>N₁ ≤ N₂＋N₃</strong>。全体をNで割れば割合になって……<strong>D(A,C) ≤ D(A,B)＋D(B,C)</strong>。……できました。これが、ベルの不等式ですか？ 使ったのは「B欄は○か×のどちらか」ということと、個数の足し算だけです。こんなに単純でいいんでしょうか。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" viewBox="0 0 340 205" width="100%" role="img" aria-label="同じ形の3つの円（A欄が○、B欄が○、C欄が○）のベン図を3つ並べ、左はN(A≠C)の4領域を赤、中央はN(A≠B)の4領域を紫、右はN(B≠C)の4領域を緑で塗った図。8タイプは8つの領域に対応し、丸数字で示されている。左で赤く塗られた4領域は、中央の紫か右の緑でも必ず塗られている">
+          <text class="strong" x="170" y="16" text-anchor="middle">3つの数え上げを、同じベン図の上で塗り分ける</text>
+          <g id="triple-venn"></g>
+          <text class="label" x="170" y="198" text-anchor="middle">色つきの丸数字 ＝ その数え上げに入る4タイプ（番号は上の表と対応）</text>
+        </svg>
+        <div class="diagram-caption">同じベン図（円は「A欄が○」「B欄が○」「C欄が○」、8タイプ＝8領域）を3枚並べ、<strong style="color:#b5504a">左＝N(A≠C)＝N₁</strong>・<strong style="color:#5b3fa6">中央＝N(A≠B)＝N₂</strong>・<strong style="color:#2f8f65">右＝N(B≠C)＝N₃</strong>に入る領域だけを塗った。どの図でも、塗られるのは該当する2つの円の「片方だけ」に入る4領域だ。ここで左の赤い4領域（②④⑤⑦）を、中央と右で探してみてほしい。<strong>④⑤は中央で紫に、②⑦は右で緑に塗られている</strong>――赤の領域は1つ残らず、紫か緑のどちらかでも塗られる。これが N₁ ≤ N₂＋N₃ の中身だ</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それでいいんだ。おめでとう、いまきみは1964年のジョン・ベルと同じ景色を見た。正確には、これは物理学者ウィグナーが整理した形で、教科書では<strong>ベルの不等式（ウィグナー型）</strong>と呼ばれるものだよ。意味を日常の言葉で言い直しておこう。Bは30°で、AとCのちょうど<strong>中間の角度</strong>だったね。不等式が言っているのは、<strong>「遠回りした食い違いの合計は、直行の食い違いを下回れない」</strong>ということだ。意見の合わない2人、AさんとCさんの間にBさんが立つ場面を想像してごらん。AとCの意見が違うなら、Bさんは少なくともどちらか一方とは意見が違うはずだね。全員と同時に同じ意見ではいられない。それを割合の式にしただけなんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">そして、あらためて驚くのは<strong>使わなかったもの</strong>の多さです。8タイプの割合の配分、説明書の中身の仕組み、光子の物理――全部使っていません。使った仮定は「説明書が存在して（実在性）、遠隔で書き換わらず（局所性）、だから測定は同じ説明書の2つの欄の読み上げになる」ということだけ。……ということは、この不等式は<strong>どんな隠れた変数の理論を持ってきても絶対に破れない</strong>。というより、ほとんど個数の当たり前なので、<strong>実験で確かめるまでもなく成り立つに決まっている</strong>、とすら思えます。これのどこが、歴史に残る大発見なんでしょうか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その「成り立つに決まっている」という感覚こそ、正しく導出できた証拠だよ。そして、だからこそこの式は恐ろしいんだ。万が一、この一線を越えるデータが自然から出てきたら――崩れるのは個々の理論の細部ではなく、<strong>説明書モデルそのもの、つまり局所実在論そのもの</strong>になるからね。これで裁判の基準ができた。<strong>D(A,C) ≤ D(A,B)＋D(B,C)</strong>――局所実在論である限り、被告が誰であってもこの一線は越えられない。では次のステージで、量子力学に食い違い率Dの予言を出させてみよう。偏光板を斜めに通る光の確率を計算して、<strong>D＝sin²(角度差)</strong> を手に入れる。きみの「成り立つに決まっている」が本当かどうか、そこで分かるよ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果 ― 調書とベルの不等式（ウィグナー型）】</span>
+        <span class="step">局所実在論の調書 ＝ 仮定1（実在性）：各光子は、角度A（0°）・B（30°）・C（60°）への答え（○/×）をすべて書いた「説明書」を生まれつき持つ　＋　仮定2（局所性）：遠くの測定で説明書は書き換わらない</span>
+        <span class="step">完全相関より、ペアの2枚の説明書は<strong>同一</strong>。説明書は全8タイプ。各タイプの割合は不明のままでよい</span>
+        <span class="step"><span class="nw">D(A,C) ≤ D(A,B) ＋ D(B,C)</span>　（D(a,b)＝角度a,bで測ったとき結果が食い違う割合）</span>
+        <span class="step">根拠：A欄とC欄が違う説明書は、B欄が○でも×でも、必ず「A≠B」か「B≠C」のグループに入る。個数の分配だけで証明でき、8タイプの割合の配分には一切よらない</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. ペアの2枚の説明書が「同一」でなければならない理由はどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">どこか1つの角度でも内容が違うと、その角度でそろえて測ったときに結果が食い違い、完全相関という実験事実に反するから</button>
+          <button class="choice-btn">光子は全て同じ性質を持つ粒子だから</button>
+          <button class="choice-btn">説明書は1枚しか印刷できないから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 「同じ角度なら必ず一致」を仕込みで説明するには、仕込みが完全に同じでなければならない。1か所でも違うペアが混ざっていれば、その角度を2人が選んだとき不一致が観測されてしまう。実験事実からの逆算で、モデルの形が絞られた。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. タイプ(A:○, B:×, C:×)の説明書は「A≠C」グループの一員。この説明書は、他にどのグループに入っている？</p>
+        <div class="choice-list">
+          <button class="choice-btn">どのグループにも入らない</button>
+          <button class="choice-btn">「B≠C」グループ</button>
+          <button class="choice-btn">「A≠B」グループ</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ A欄は○、B欄は×なので「A≠B」グループに入る（B欄とC欄はどちらも×なのでB≠Cには入らない）。A≠Cの4タイプすべてについて同じ確認をすると、全員がA≠BかB≠Cのどちらかに収容されることが分かる。これが N(A≠C) ≤ N(A≠B)＋N(B≠C) の中身だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 1個の光子には1回しか質問できないのに、説明書の2つの欄が読めるのはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">ペアの2枚の説明書は同一なので、左の光子にA、右の光子にBを質問すれば、同じ内容の説明書のA欄とB欄を読んだことになるから</button>
+          <button class="choice-btn">高性能な偏光板なら1個の光子に2回質問できるから</button>
+          <button class="choice-btn">説明書の内容を直接撮影できるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ もつれペアの完全相関（＝説明書の同一性）のおかげで、左右で手分けして別の欄を読める。ベルの不等式の実験に「もつれ」が不可欠なのはこのためだ。局所性の仮定により、この読み取りが互いを乱すこともない。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>BQ.initStagePage(3);</script>
+
+<script>
+(function(){
+  // 3枚並びのベン図（N(A≠C)・N(A≠B)・N(B≠C)を1色ずつ塗り分け）をJSで生成
+  var g = document.getElementById('triple-venn');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var cy = 110, r = 24;
+  var CIRCLE_COLORS = { A: '#48688f', B: '#2f8a8f', C: '#7a6a2f' };
+  var panels = [
+    { cx: 62,  pair: ['A', 'C'], color: '#b5504a', label: 'N(A≠C)', members: [2, 4, 5, 7] },
+    { cx: 170, pair: ['A', 'B'], color: '#5b3fa6', label: 'N(A≠B)', members: [3, 4, 5, 6] },
+    { cx: 278, pair: ['B', 'C'], color: '#2f8f65', label: 'N(B≠C)', members: [2, 3, 6, 7] }
+  ];
+  var OFF = { A: [-15, -11], B: [15, -11], C: [0, 11] };       // 各円の中心（パネル中心からのずれ）
+  var REG = { 1: [0, -6], 2: [0, -26], 3: [-18, 6], 4: [-27, -20], 5: [18, 6], 6: [27, -20], 7: [0, 26], 8: [-40, 30] };
+  var LETTER = { A: [-33, -36], B: [33, -36], C: [32, 36] };
+  var NUMS = '①②③④⑤⑥⑦⑧';
+
+  function circlePath(cx0, cy0) {
+    return 'M ' + (cx0 - r) + ' ' + cy0 + ' a ' + r + ' ' + r + ' 0 1 0 ' + (2 * r) + ' 0 a ' + r + ' ' + r + ' 0 1 0 ' + (-2 * r) + ' 0 ';
+  }
+  function text(x, y, cls, fill, content) {
+    var t = document.createElementNS(ns, 'text');
+    t.setAttribute('x', x); t.setAttribute('y', y); t.setAttribute('text-anchor', 'middle');
+    t.setAttribute('class', cls);
+    if (fill) t.setAttribute('fill', fill);
+    t.textContent = content;
+    g.appendChild(t);
+  }
+
+  panels.forEach(function (p) {
+    text(p.cx, 44, 'tv-label', p.color, p.label);
+    // 2つの円のevenodd塗り＝「片方だけ」に入る領域（対称差）
+    var d = '';
+    p.pair.forEach(function (k) { d += circlePath(p.cx + OFF[k][0], cy + OFF[k][1]); });
+    var path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', d); path.setAttribute('fill-rule', 'evenodd');
+    path.setAttribute('fill', p.color); path.setAttribute('opacity', '0.35');
+    g.appendChild(path);
+    ['A', 'B', 'C'].forEach(function (k) {
+      var ci = document.createElementNS(ns, 'circle');
+      ci.setAttribute('cx', p.cx + OFF[k][0]); ci.setAttribute('cy', cy + OFF[k][1]); ci.setAttribute('r', r);
+      ci.setAttribute('fill', 'none'); ci.setAttribute('stroke', CIRCLE_COLORS[k]); ci.setAttribute('stroke-width', '1.6');
+      g.appendChild(ci);
+      text(p.cx + LETTER[k][0], cy + LETTER[k][1] + 4, 'tv-letter', CIRCLE_COLORS[k], k);
+    });
+    for (var n = 1; n <= 8; n++) {
+      var mem = p.members.indexOf(n) !== -1;
+      text(p.cx + REG[n][0], cy + REG[n][1] + 4, mem ? 'tv-num' : 'tv-num-dim', mem ? p.color : null, NUMS.charAt(n - 1));
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // 8タイプ＋食い違いチェック表の列をJSで生成
+  var g = document.getElementById('count-cols');
+  if (!g) return;
+  var types = [
+    ['○','○','○'], ['○','○','×'], ['○','×','○'], ['○','×','×'],
+    ['×','○','○'], ['×','○','×'], ['×','×','○'], ['×','×','×']
+  ];
+  var ns = 'http://www.w3.org/2000/svg';
+  var x0 = 66, colW = (326 - x0) / 8;
+  types.forEach(function (t, i) {
+    var cx = x0 + colW * (i + 0.5);
+    var neqAC = t[0] !== t[2], neqAB = t[0] !== t[1], neqBC = t[1] !== t[2];
+    if (neqAC) {
+      var hl = document.createElementNS(ns, 'rect');
+      hl.setAttribute('class', 'hl');
+      hl.setAttribute('x', (x0 + colW * i).toFixed(1)); hl.setAttribute('y', '26');
+      hl.setAttribute('width', colW.toFixed(1)); hl.setAttribute('height', '166');
+      g.appendChild(hl);
+    }
+    if (i > 0) {
+      var vl = document.createElementNS(ns, 'line');
+      vl.setAttribute('class', 'grid');
+      vl.setAttribute('x1', (x0 + colW * i).toFixed(1)); vl.setAttribute('x2', (x0 + colW * i).toFixed(1));
+      vl.setAttribute('y1', '26'); vl.setAttribute('y2', '192');
+      g.appendChild(vl);
+    }
+    function put(text, y, cls) {
+      var el = document.createElementNS(ns, 'text');
+      el.setAttribute('class', cls);
+      el.setAttribute('x', cx.toFixed(1)); el.setAttribute('y', String(y));
+      el.setAttribute('text-anchor', 'middle');
+      el.textContent = text;
+      g.appendChild(el);
+    }
+    put(String(i + 1), 42, 'head-cell');
+    put(t[0], 64, t[0] === '○' ? 'ok' : 'ng');
+    put(t[1], 86, t[1] === '○' ? 'ok' : 'ng');
+    put(t[2], 108, t[2] === '○' ? 'ok' : 'ng');
+    put(neqAC ? '✓' : '−', 130, neqAC ? 'check' : 'label');
+    put(neqAB ? '✓' : '−', 156, neqAB ? 'check' : 'label');
+    put(neqBC ? '✓' : '−', 182, neqBC ? 'check' : 'label');
+  });
+})();
+</script>
+</body>
+</html>

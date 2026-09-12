@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16224e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE6 グローバーの探索 ― 量子コンピュータはなぜ速いのか</title>
+<meta name="description" content="100万個の中から当たりを約1000回で見つけるグローバーのアルゴリズム。当たりの矢印だけを反転させ、平均のまわりで折り返す――この2手を繰り返すと、正解の矢印だけが育っていく。足し算と引き算だけで振幅増幅の仕組みを追い、2次加速の限界まで正直に確かめる。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage6.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはなぜ速いのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE6 グローバーの探索 ― 量子コンピュータはなぜ速いのか">
+<meta property="og:description" content="100万個から当たりを約1000回で。反転と折り返しの2手だけで正解の矢印が育つ、振幅増幅の仕組みを追う。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage6.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qc-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qc-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qc-svg .accent{fill:#2f7a6b;font-size:11px;font-weight:900}
+  .anim-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .anim-ctrl .btn{padding:.4rem .95rem;font-size:13px;font-weight:900}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+  .gate-log{margin-top:8px;font-size:12.5px;font-weight:800;color:var(--ink);min-height:1.5em;word-break:break-all}
+  .gate-log .g{display:inline-block;background:#dff0ea;border:1px solid #9fcdbd;border-radius:5px;padding:0 6px;margin:0 2px 3px 0}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">💠</a> <span>量子コンピュータはなぜ速いのか</span></div>
+      <div class="brand-sub">STAGE 6 ― グローバーの探索 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 6</span><span class="chapter-title">グローバーの探索</span>
+        <div class="chapter-sub">振幅増幅</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">「当たりの矢印を反転させる」「平均のまわりで折り返す」という2手だけで、正解の矢印が育っていく仕組みを理解しよう。必要な回数が約√N であること、そしてそれが2次加速にとどまることまで説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日は、誰もが本当に困っている問題を扱おう。<strong>並べ替えられていない大量の候補の中から、条件に合う1個を探す</strong>問題だ。<br>たとえば、電話帳から「この電話番号の持ち主は誰か」を調べるとする。電話帳は名前の五十音順に並んでいて、番号順には並んでいない。この場合、どう探すことになるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">端から順に見ていくしかありません。運がよければ1件目、悪ければ最後の1件。候補が N 件あれば、平均で N の半分くらい、最悪 N 回調べることになります。<br>並び順に手がかりがない以上、これより速い方法はないはずです。だって、調べていない項目が当たりでない保証はどこにもないので。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その推論はふつうのコンピュータについては完全に正しくて、証明もされている。<strong>N 件の総当たり探索は、N に比例する回数がどうしても必要</strong>だ。<br>ところが1996年、ロブ・グローバーが量子コンピュータでこれを <strong>約√N 回</strong>に減らす方法を見つけた。N が100万なら、100万回ではなく<strong>約1000回</strong>。1兆件なら100万回だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">100万件を1000回で……。でも、どうやって。全部の候補に矢印を立てて重ね合わせても、そのまま測ったら100万分の1の確率で当たりが出るだけです。それでは100万回引かないと当たりません。<br>――ということは、測る前に<strong>当たりの矢印だけを長くする</strong>操作があるんですね。でも、どれが当たりか分かっていないのに、どうやってその1本だけを狙うんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい問いの立て方だ。答えはこうだよ。<strong>私たちは当たりが「どれ」かを知らないが、当たりを「見分ける箱」は持っている</strong>。電話番号の例なら、名前を1つ渡されて「この人の番号は探している番号か」と聞けば、はい・いいえは即答できる。これがオラクルだ。前回と同じ道具だね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">引っかかることがあります。名前を渡せば「はい・いいえ」を即答できるなら、箱は答えを知っているも同然に見えます。回りくどいことをせずに、<strong>「当たりはどれ？」と箱に聞けば済む</strong>ように思えます。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">聞いても、箱には答えられないんだ。箱が持っているのは<strong>照合の手順</strong>であって、答えの一覧表ではない。電話帳の例で言えば、1枚の<strong>板に電話帳と探す番号を刻みつけた</strong>ようなものだね。渡された名前の欄と探す番号を1桁ずつ照らし合わせる手順が、板の上に回路として書いてある。錠前と同じだよ。錠前は、差し込まれた鍵が正しいかどうかを一瞬で完璧に判定する。でも錠前に「正しい鍵の形を教えて」と頼むことはできない。暗号の鍵探しも、パズルの答え探しも同じ形をしている――<strong>1つの候補を確かめるのは一瞬、でも正しい1つを見つけるのは大仕事</strong>。世の中の難問の多くがこのタイプで、グローバーの方法はこの「照合の箱」だけを頼りに、<strong>たった2手を何度も繰り返す</strong>。</div>
+        </div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">準備は想像がつきます。前回と同じで、全部の量子ビットに H を当てて、<strong>N 個の候補すべてに同じ長さの矢印</strong>を立てるんですよね。長さは√N分の1――2乗して N分の1、N 個で合計1です。……そこから、どうするんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通りの準備でいい。ここから2手を繰り返す。<br><strong>【第1手・反転】</strong>オラクルに聞いて、<strong>当たりの行の矢印だけを正反対の向きにする</strong>。前回の位相キックバックがそのまま使える。当たりを名指しできなくても、<strong>重ね合わせの全候補を箱に通せば、照合に引っかかった行だけが反転する</strong>――照合の手順さえあれば、この操作は組めるんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">でも、向きを変えただけでは長さは変わりません。2乗すれば向きは消えるので、いま測っても当たる確率は N分の1 のまま。<strong>目印を付けただけ</strong>ですね。……いえ、待ってください。箱は<strong>当たりの行だけを狙って</strong>反転できたわけですよね。だったら、どの行を反転したのかを教えてもらえば、それで終わりなのでは？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">教えられないんだ、2つの理由で。第一に、箱のどこにも「当たりは◯番」と計算する部分がない。反転は<strong>行ごと</strong>に「この行は照合に引っかかったか」で起きるだけで、当たりの番号はどこにも書き出されない。教えたくても、教える中身を箱は持っていないんだ。第二に、きみが言った通り、印は<strong>向き（位相）</strong>で書かれている――いわば<strong>見えないインク</strong>だ。測っても確率に現れない以上、外から読む方法がない。<br>できる唯一のことは、この見えない印を、干渉で<strong>長さ</strong>という見える形に変換していくこと――それだけなんだ。</div>
+        </div>
+      </div>
+
+
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">その変換、候補が2個なら私は知っています！ 準備の状態は |0⟩ と |1⟩ が0.71ずつ――<strong>|+⟩</strong> です。箱が当たり（たとえば |1⟩）の矢印を反転すると、|0⟩ に0.71、|1⟩ に正反対の0.71――<strong>|−⟩</strong> そのものです。そのまま測れば五分五分で何も分かりませんが、<strong>H を1発かけてから測れば、確実に 1 が出る</strong>。STAGE3でやった、|+⟩ と |−⟩ の見分けそのものだ。<br>……でも、候補が N 個に増えたら、この H にあたる変換は何になるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。候補2個なら H 1発で印を読み切れる。<strong>その N 行版を担うのが第2手</strong>――ただし N が大きいと1発では変換しきれず、少しずつ進めることになる。<br><strong>【第2手・平均のまわりの折り返し】</strong>全部の矢印の<strong>平均</strong>を計算して、それを鏡だと思って、<strong>すべての矢印を平均の反対側へ折り返す</strong>。式で書けば、新しい値＝<strong>2×平均 − 元の値</strong>。平均より下にあったものは同じだけ上に、上にあったものは同じだけ下に移る。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">なるほど、<strong>当たりだけが平均からうんと離れている</strong>から、折り返すと当たりだけが大きく動くんですね。<br>小さい例で確かめます。候補が4個なら量子ビットは2個――表は |00⟩ |01⟩ |10⟩ |11⟩ の4行です。当たりを |10⟩ としましょう。最初はみんな0.5（0.5の2乗が0.25で、4行足して1）。<br><strong>第1手</strong>：|10⟩ だけ反転して、0.5、0.5、−0.5、0.5。<br><strong>平均</strong>：(0.5＋0.5−0.5＋0.5)÷4 ＝ 0.25。<br><strong>第2手</strong>：|10⟩ は 2×0.25 −(−0.5)＝<strong>1.0</strong>。他の行は 2×0.25 − 0.5 ＝<strong>0</strong>。<br>……できてしまいました。<strong>|10⟩ の矢印が1.0、他は全部ゼロ</strong>。測れば100%で「10」が出ます。4個の中から、箱への質問<strong>1回</strong>で確実に。</div>
+        </div>
+      </div>
+
+<div class="diagram-box">
+        <svg id="grover-svg" class="qc-svg" viewBox="0 0 372 208" width="100%" role="img" aria-label="グローバーのアルゴリズムのシミュレータ。候補ごとの矢印の長さを棒グラフで表し、当たりの反転と平均のまわりの折り返しを繰り返すたびに、当たりの棒だけが伸びていく様子を示す">
+          <text class="strong" x="186" y="16" text-anchor="middle">反転 → 平均で折り返す。当たりだけが育つ</text>
+          <g id="grover-body"></g>
+        </svg>
+        <div class="readout">
+          <span>候補の数 <b id="gr-n">16</b></span>
+          <span>くり返した回数 <b id="gr-step">0</b></span>
+          <span>当たりが出る確率 <b id="gr-prob">6%</b></span>
+          <span>ちょうどよい回数 <b id="gr-opt">3</b></span>
+        </div>
+        <div class="anim-ctrl">
+          <button type="button" class="btn" id="gr-invert">① 当たりを反転</button>
+          <button type="button" class="btn" id="gr-flip">② 平均で折り返す</button>
+          <button type="button" class="btn" id="gr-step1">①②をまとめて1回</button>
+          <button type="button" class="btn" id="gr-reset">↺ 最初から</button>
+        </div>
+        <div class="anim-ctrl">
+          <span class="ctrl-label">候補の数</span>
+          <input type="range" id="gr-slider" min="4" max="64" step="4" value="16" aria-label="候補の数を変える" style="flex:1;max-width:240px;min-width:140px;accent-color:#2f7a6b">
+        </div>
+        <div class="diagram-caption">棒1本が候補1つの矢印。上向きが「そのままの向き」、下向きが「正反対の向き」で、棒の長さの2乗がその候補が出る確率。緑の棒が当たり（本来はどれが当たりか分からないが、仕組みを見るために色を付けてある）。点線は全部の矢印の<strong>平均</strong>。<br>①を押すと当たりだけが下に反転し、平均がわずかに下がる。②を押すと全部の棒が平均の反対側へ折り返され、平均から大きく離れていた当たりだけが大きく跳ね上がる。<strong>繰り返すほど当たりが育つが、行き過ぎると今度は縮んでいく</strong>――ちょうどよい回数で止めるのがコツだ。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">では、反転と折り返しを繰り返せば繰り返すほど、当たりの矢印は育っていくわけですね。</div>
+        </div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが、そう単純でもないんだ。反転と折り返しは、どちらも矢印を<strong>回す</strong>操作だからね。回転を続ければ、いつか行き過ぎて戻ってくる――<strong>回しすぎると、育てた矢印がまた縮んでいく</strong>。ブランコを押すタイミングを間違えると勢いが落ちるのと同じだよ。ふつうの探索なら探し続けて損をすることはないのだから、ここも「探索」ではなく<strong>干渉</strong>である証拠だね。<br>ちょうどよい回数は決まっていて、<strong>約 0.785×√N 回</strong>――円周率πの4分の1が0.785だ。N が100万なら785回くらい。この回数で当たりの確率がほぼ1になり、それを過ぎると下がり始める。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">100万件が785回。確かにものすごい進歩です。<br>……それでも、やっぱり最初の疑問が解けません。箱は、4行のそれぞれについて「この行は当たりか」に応じて反転する・しないを決めていますよね。それは、<strong>内部で候補を1個ずつ判定しているのと何が違うんですか？</strong> それなら、質問は1回ではなく実質4回では。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい問いだ、そこが「同時に計算」の正確な中身だよ。<br>まず、<strong>箱に入る物は1つだけ</strong>だ。量子ビットのかたまりが1つあって、その状態が1つ。N行の表というのは、その<strong>たった1つの状態を書き下した姿</strong>であって、N個の物が詰まっているわけではない。<br>そしてゲートは、表全体への<strong>書き換え規則</strong>だ。行が4行でも100万行でも<strong>適用は1回</strong>で、かかる時間は照合の手順の複雑さぶんだけ。候補の数には比例しない。<br>では、なぜ1回通しただけで行ごとに違う結果が出るのか。量子力学の法則が<strong>線形</strong>だからだ――「AとBを足したものを入れたら、Aの結果とBの結果を足したものが出てくる」という性質だよ。箱は行1つずつを正しく照合するように組んであるだけで、あとは法則のほうが重ね合わせを勝手に分配してくれる。<strong>こちらは場合分けを1度もしていないのに、全行ぶんの照合が済んでいる</strong>――手品の種はここなんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「場合分けをしていない」のは、こちらの手順の話ですよね。装置の側が、目にも留まらぬ速さで、こっそり成分を1行ずつ順番に照合している――ということは、ないんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それは、やりたくてもできないんだ。ゲートの実体は、装置に電磁波のパルスを一瞬当てることだったね。パルスは<strong>波全体に一度に働く</strong>。矢印の表というのは、たった1つの波の成分帳簿だから、成分を1つずつ触るボタンは、<strong>装置のどこにも存在しない</strong>。「1行ずつ順番に」は、この機械にはそもそもできない芸当なんだよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="lin-svg" class="qc-svg" viewBox="0 0 372 286" width="100%" role="img" aria-label="線形性のアニメーション。左に候補0番から3番までの4行が縦に並び、中央に照合の箱、右に出口がある。前半では4行を1行ずつ箱に通し、箱を4回通ることになる。当たりの2番の行だけ、箱を出ると矢印が下向き（反対向き）に変わる。後半では4行が重ね合わせのまま一度に箱を通り、箱を通った回数は1回のまま、出口には4行ぶんの結果が同時に並ぶ。行ごとの結果は前半とまったく同じで、当たりの行だけが下向きになる">
+          <text class="strong" x="186" y="14" text-anchor="middle">線形とは ― 1行ずつでも、まとめてでも、行ごとの結果は同じ</text>
+          <text id="lin-phase" class="accent" x="186" y="32" text-anchor="middle">① 1行ずつ通す</text>
+          <!-- 箱 -->
+          <rect x="150" y="46" width="72" height="168" rx="8" fill="#e9eef6" stroke="var(--line)" stroke-width="1.4"/>
+          <text class="strong" x="186" y="128" text-anchor="middle">照合の箱</text>
+          <text class="label" x="186" y="144" text-anchor="middle">当たりなら</text>
+          <text class="label" x="186" y="158" text-anchor="middle">向きを反転</text>
+          <!-- 入口・出口の目盛り -->
+          <line x1="120" y1="46" x2="120" y2="214" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="250" y1="46" x2="250" y2="214" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 3"/>
+          <text class="label" x="120" y="228" text-anchor="middle">入口</text>
+          <text class="label" x="250" y="228" text-anchor="middle">出口</text>
+          <g id="lin-rows"></g>
+          <text class="label" x="186" y="250" text-anchor="middle">箱を通した回数 <tspan id="lin-count" class="strong">0</tspan></text>
+          <text id="lin-note" class="label" x="186" y="268" text-anchor="middle">4行を順番に。4回かかる</text>
+        </svg>
+        <div class="diagram-caption">同じ箱に、①1行ずつ通した場合と、②4行を重ね合わせのまま通した場合の比べ図。<strong>行ごとの結果はどちらもまったく同じ</strong>――当たりの2番（|10⟩）だけが向きを反転され、他の3行はそのまま出てくる。違うのは<strong>箱を通した回数</strong>だけで、①は4回、②は1回。これが「法則が線形」ということの中身だ。箱は行を1つずつ入れたときに正しく照合するように組んであるだけで、<strong>重ね合わせ用の仕掛けは何も入っていない</strong>。それでも重ね合わせを入れれば、各行はそれぞれ自分の結果になって出てくる。候補が100万行でも、箱を通るのは1回のままだ。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">まだ腑に落ちません。ふつうのコンピュータでも、<strong>候補の数だけCPUを並べて、いっせいに判定させれば</strong>「1回で全候補を処理」になりますよね。それと何が違うんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい比較だね。決定的な違いは<strong>設備の数</strong>だ。CPU並列は候補の数だけ物理的な機械が要る。候補が2¹²⁸個なら、宇宙の原子を全部使ってもコアが足りない。量子の側は、候補が2倍になっても量子ビットが<strong>1個増えるだけ</strong>。なぜそんなに安いのか――候補たちが「N台の機械」ではなく、<strong>1つの波のN個の成分</strong>だからだ。さっき言ったとおり、成分ごとの処理を装置がやっているのではなく、法則のほうが勝手に分配してくれるからね。</div>
+        </div>
+<div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">でも、「板には電話帳が刻まれている」とおっしゃいましたよね。それは<strong>実際にはどうやる</strong>んですか。100万件なら、板のほうに100万件ぶんを刻むことになりませんか。だとしたら、その刻む手間はどこへ行ったんでしょう。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこを見逃さないのが大事だ。まず素朴なやり方から言うと、問い合わせのたびに<strong>電話帳ぜんぶを回路に焼き直す</strong>ことになる。100万件なら100万件ぶんの部品だ。しかもグローバーは√N回くり返すから、合計すると<strong>ふつうの総当たりより高くつく</strong>。「量子コンピュータはデータベース検索が速い」がほとんど神話だと言われるのは、この計算のせいなんだよ。<br>そこで考えられているのが <strong>QRAM</strong>（量子RAM）という装置だ。RAMというのは、ふつうのコンピュータの記憶装置のこと。「<strong>何番地の中身をくれ</strong>」と言うと、その番地に入れてある中身を出してくれる箱だと思えばいい。その量子版を作ろう、という構想だね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……でも、それで手間はどこへ消えたんでしょうか。<br>いえ、消えていませんね。<strong>番地ごとに中身を置いておく場所が要る</strong>のだから、100万件なら装置のほうに100万か所ぶんの部品が必要です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこに気づけば十分だ。<strong>手間は消えたのではなく、装置の側へ移った</strong>。装置ぜんたいが100万個規模になるんだ。しかも、それだけの部品を誤りから守り続けられるのか――QRAMが実際に作れるのかどうかは、いまも決着がついていない。あくまで<strong>構想</strong>の段階だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">最初の電話帳の話ですが、そもそも<strong>番号順に並べ替えて</strong>しまえばいいのではありませんか。順番に並んでいれば、辞書を引くように半分ずつ絞り込めます。100万件でも、半分にするのを20回ほど繰り返せば1件に届く計算です。785回よりずっと速い。<br>並べ替えるのも、板に刻む作業に比べれば効率的です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その見立てで合っている。ただ、分かれ目がひとつある。<strong>一度きりの調べものなら、並べ替えは損</strong>になる。全部の行を読んで並べ替える手間のほうが、端から順に照合していく手間より大きいからね。逆に<strong>何度も引くなら、並べ替えたほうが勝つ</strong>。手間を最初に一度だけ払えば、あとは1件あたり20回で済む。これは古典の完勝で、世の中のデータベースはみなこれをやっている。<br>ついでに、量子の側の言い分も言っておこう。<strong>オラクルは、行どうしを比べない</strong>。1つの行を渡されて「照合に引っかかるか」を答えるだけだ。並べ替えというのは行どうしの大小を使う作業だから、この箱にとって<strong>並び順は最初から関係がない</strong>。だから重ね合わせにそのまま通せるんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">結局、手順をぜんぶ数えれば、<a href="https://informatics.habatakijuku.com/algo-quest/" target="_blank" rel="noopener" style="color:#2f7a6b;text-decoration:underline">アルゴリズムの旅</a>で習った<strong>クイックソート</strong>で番号順に並べ替えて索引を付けておき、探すたびに<strong>二分探索</strong>で見つけるほうが、はるかに速いですね。一回限りの操作なら、<strong>線形探索</strong>のほうが速いですし。<br>では、並べ替えられる相手にグローバーを持ち出しても、あまり意味がないということですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そうだ。だから本当の出番は、<strong>並べ替えるべき一覧表が、そもそも存在しない問題</strong>のほうなんだ。<br>たとえば、暗号の鍵を総当たりで探す問題だ。候補は2¹²⁸通り。これは「並べ替えるのが大変」なのではなく、<strong>書き出すことすらできない</strong>。宇宙にそれだけの紙がない。索引も辞書も作りようがなくて、できるのは鍵を1つ決めて錠前に差してみることだけだ。<br>こういう問題は世の中にいくらでもある。「条件を満たす組み合わせを探せ」「この計算結果になる入力を探せ」――どれも候補を一覧にできず、1つずつ試すしかない。その世界で N 回が √N 回になる。グローバーの居場所は、電話帳ではなく<strong>こちら側</strong>なんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">待ってください。それだと、もっとひどいことになりませんか。100万件の電話帳で装置に100万個の部品が要ったのなら、候補が2¹²⁸通りの鍵探しでは、<strong>2¹²⁸個の部品</strong>が要るはずです。宇宙に紙がないのと同じで、装置も作れません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこが、電話帳と鍵探しの<strong>決定的な違い</strong>だよ。板に刻むものが、まるで違うんだ。<br>電話帳で刻んでいたのは<strong>データそのもの</strong>だった。「0番は鈴木さんで、番号はこれこれ」「1番は大谷さんで――」と、1件ずつが互いに無関係だから、規則で書けない。100万件なら100万件ぶんを刻むしかない。<br>ところが鍵探しで刻むのは<strong>手順のほう</strong>だ。「渡された鍵で暗号文を復号して、意味のある文になるか調べよ」――これは<strong>計算の手順を1つ書けば済む</strong>。候補が2⁶⁴通りだろうと2¹²⁸通りだろうと、<strong>板の大きさはまったく変わらない</strong>。暗号1つぶんの回路で足りるんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">では、2¹²⁸通りの候補のほうは、どこにいるんですか。板になければ、どこかに置き場所が要るはずです。<br>……あ。<strong>量子ビットの中</strong>ですね。ステージ4で確かめたとおり、n本の量子ビットの表は 2ⁿ 行になるのだから、128本並べれば、表は自動的に2¹²⁸行になる。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そういうことだ。<strong>候補の数を決めるのは、装置の大きさではなく量子ビットの本数</strong>。だから宇宙の原子より多い候補を、手のひらに載るチップが相手にできる。<br>逆に言えば、電話帳がやっかいだったのは、量子のせいではない。<strong>規則で書けないデータを、まるごと持ち込もうとした</strong>からだ。世の中で本当に困っている大きな問題は、たいてい候補を規則で作れて、正しいかどうかも計算で判定できる。表を持たなくていいから、板は小さいままでいられるんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ここまで聞くと、量子コンピュータが魔法の箱ではないことが、よく分かります。<br>まとめます。グローバーの方法は、当たりの矢印を反転して目印を付け、平均のまわりで折り返して目印を長さに変える。これを約0.785×√N 回。<strong>使うのは、いつもの「打ち消し合いと強め合い」だけ</strong>で、新しい原理は何も足していない。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのまとめで十分だよ。効き目の大きさも、数字で押さえておこう。グローバーの加速は、回数が N から √N になる<strong>2次加速</strong>で、指数加速ではない。鍵の候補が2¹²⁸通りある暗号なら、総当たりが2⁶⁴回くらいに減る――深刻ではあるけれど、鍵の長さを2倍にすれば元の強さに戻る。しかも<strong>この2次加速が限界</strong>であることも証明されていてね。構造のない総当たり探索を、量子コンピュータでこれ以上速くする方法は存在しない。何も構造のない問題にも効く汎用の道具だからこそ、効き目もそこまでにとどまるんだ。<br>――では、本当に世界を揺るがしたアルゴリズムはどれか。それは、問題に隠れている<strong>構造</strong>を干渉で暴き出すものだ。次のステージでは、インターネットの安全を支えている暗号を根こそぎにする力を持つ、ショアのアルゴリズムを扱うよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="cmp-svg" class="qc-svg" viewBox="0 0 372 186" width="100%" role="img" aria-label="候補の数に対する必要な質問回数の比較グラフ。ふつうのコンピュータはNに比例して増えるのに対し、グローバーの方法はルートNに比例するため、はるかに緩やかに増える">
+          <text class="strong" x="186" y="16" text-anchor="middle">必要な質問回数：N に比例 vs √N に比例</text>
+          <g id="cmp-body"></g>
+        </svg>
+        <div class="diagram-caption">横軸が候補の数、縦軸が必要な質問回数（どちらも対数目盛り＝1目盛りで10倍）。ふつうのコンピュータは候補が10倍になれば回数も10倍になるが、グローバーの方法では約3.2倍にしか増えない。<strong>差は確かに大きいが、傾きが半分になっただけで、指数の壁が消えたわけではない</strong>。次のステージで扱うショアのアルゴリズムは、この図の直線そのものを別の形に変えてしまう。</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【グローバーの探索 ― 振幅増幅】</span>
+        <span class="step">・問題：構造のない N 個の候補から当たり1個を探す。ふつうのコンピュータは平均 N/2 回、最悪 N 回の質問が必要（これが限界であることも証明済み）</span>
+        <span class="step">・準備：全候補に H を当て、すべての矢印を長さ <span class="nw">√N分の1</span> にそろえる</span>
+        <span class="step">・<strong>第1手（反転）</strong>：オラクルで<strong>当たりの行の矢印だけ正反対の向き</strong>にする（位相キックバック）。長さは変わらず、目印が付くだけ</span>
+        <span class="step">・1パスで全行に効くのは<strong>波の並列</strong>（二重スリットで両道筋が同時に変換されたのと同じ）。<br class="wbr">コアN個の並列と違い設備は量子ビット log₂N 個。ただし<span class="nw">読み出せるのは1行だけ</span></span>
+        <span class="step">・<strong>第2手（平均のまわりの折り返し）</strong>：新しい値＝<strong>2×平均 − 元の値</strong>。平均から大きく外れた当たりだけが大きく伸び、外れは少しずつ縮む</span>
+        <span class="step">・くり返す回数は<strong>約 0.785×√N 回</strong>（πの4分の1×√N）。<span class="nw">行き過ぎると確率は下がる</span>――回転だから</span>
+        <span class="step">・加速は<strong>2次まで</strong>（N → √N）で、指数加速ではない。128ビット鍵の総当たりは実質64ビット分になるが、<span class="nw">鍵長を2倍にすれば対策できる</span></span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 候補が4個、当たりが1個。全部の矢印を0.5にそろえてから、当たりを反転し、平均のまわりで折り返した。当たりの矢印の長さは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">1.0（測れば100%当たりが出る）</button>
+          <button class="choice-btn">0.5のまま（向きを変えただけなので長さは変わらない）</button>
+          <button class="choice-btn">0.25（平均と同じ長さになる）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 反転後は −0.5、0.5、0.5、0.5 で平均は0.25。折り返しの式「2×平均 − 元の値」を使うと、当たりは 0.5 −(−0.5)＝1.0、外れは 0.5 − 0.5 ＝ 0。候補が4個のときだけ、1回で確率100%に到達する。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. グローバーの方法で、ちょうどよい回数を過ぎても繰り返し続けるとどうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">当たりの確率は100%のまま変わらない</button>
+          <button class="choice-btn">当たりの確率がさらに上がって100%を超える</button>
+          <button class="choice-btn">当たりの確率が下がり始める</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 反転と折り返しは矢印を回す操作なので、回し続ければ行き過ぎて戻ってしまう。だから約0.785×√N 回で止めるのが肝心。「探すほど得をする」ふつうの探索とはまったく別の原理――干渉であることの証拠だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. グローバーの加速について正しい説明は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">回数が指数関数的に減るので、どんな総当たり問題も一瞬で解ける</button>
+          <button class="choice-btn">回数が N から √N になる2次加速で、指数加速ではない。しかもこれが限界だと証明されている</button>
+          <button class="choice-btn">当たりが複数あるときにしか使えず、1個のときは効果がない</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 100万件が約1000回になるのは大きな進歩だが、指数の壁が消えたわけではない。だから128ビット鍵の暗号も、鍵長を2倍にすれば安全性を取り戻せる。構造のない探索でこれ以上速くする方法が存在しないことも証明されている。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage5.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QC.initStagePage(6);</script>
+
+<script>
+(function(){
+  // 図1: グローバーの反復シミュレータ（振幅は実数の配列）
+  var svg = document.getElementById('grover-svg');
+  var g = document.getElementById('grover-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CT = '#2f7a6b', CO = '#8fa3b8', CM = '#b5504a';
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var X0 = 26, X1 = 348, MID = 116, HALF = 64;
+  el('line', {x1: X0 - 4, y1: MID, x2: X1 + 4, y2: MID, stroke: 'var(--ink)', 'stroke-width': 1.2});
+  txt(X0 - 6, MID - 52, 'label', '長さ', 'end');
+  var avgLine = el('line', {stroke: CM, 'stroke-width': 1.6, 'stroke-dasharray': '5 3'});
+  var avgLabel = txt(X1, 0, 'accent', '平均', 'end');
+  avgLabel.style.fill = CM;
+  txt(186, 196, 'label', '候補（横に並んだ棒1本ずつ）');
+
+  var N = 16, target = 5, amps = [], step = 0, bars = [];
+  var nEl = document.getElementById('gr-n'), stEl = document.getElementById('gr-step'),
+      pEl = document.getElementById('gr-prob'), optEl = document.getElementById('gr-opt');
+
+  function build() {
+    bars.forEach(function (b) { g.removeChild(b); });
+    bars = [];
+    var w = (X1 - X0) / N;
+    for (var i = 0; i < N; i++) {
+      bars.push(el('rect', {x: X0 + i * w + 1, width: Math.max(w - 2, 1.5), fill: i === target ? CT : CO}));
+    }
+    g.appendChild(avgLine);
+    g.appendChild(avgLabel);
+  }
+  function reset() {
+    amps = [];
+    var a = 1 / Math.sqrt(N);
+    for (var i = 0; i < N; i++) amps.push(a);
+    step = 0;
+    render();
+  }
+  function render() {
+    var sum = 0;
+    for (var i = 0; i < N; i++) sum += amps[i];
+    var avg = sum / N;
+    for (var j = 0; j < N; j++) {
+      var h = amps[j] * HALF;
+      var b = bars[j];
+      if (h >= 0) { b.setAttribute('y', MID - h); b.setAttribute('height', Math.max(h, 0.6)); }
+      else { b.setAttribute('y', MID); b.setAttribute('height', Math.max(-h, 0.6)); }
+    }
+    var ay = MID - avg * HALF;
+    avgLine.setAttribute('x1', X0 - 4); avgLine.setAttribute('y1', ay);
+    avgLine.setAttribute('x2', X1 + 4); avgLine.setAttribute('y2', ay);
+    avgLabel.setAttribute('y', ay - 5);
+    if (nEl) nEl.textContent = String(N);
+    if (stEl) stEl.textContent = String(step);
+    if (pEl) pEl.textContent = Math.round(amps[target] * amps[target] * 100) + '%';
+    if (optEl) optEl.textContent = String(Math.max(1, Math.round(Math.PI / 4 * Math.sqrt(N))));
+  }
+  function invert() { amps[target] = -amps[target]; render(); }
+  function flip() {
+    var sum = 0, i;
+    for (i = 0; i < N; i++) sum += amps[i];
+    var avg = sum / N;
+    for (i = 0; i < N; i++) amps[i] = 2 * avg - amps[i];
+    step++;
+    render();
+  }
+  var b;
+  b = document.getElementById('gr-invert'); if (b) b.addEventListener('click', invert);
+  b = document.getElementById('gr-flip'); if (b) b.addEventListener('click', flip);
+  b = document.getElementById('gr-step1'); if (b) b.addEventListener('click', function () { invert(); flip(); });
+  b = document.getElementById('gr-reset'); if (b) b.addEventListener('click', reset);
+  var slider = document.getElementById('gr-slider');
+  if (slider) slider.addEventListener('input', function () {
+    N = parseInt(slider.value, 10);
+    target = Math.floor(N * 0.35);
+    build(); reset();
+  });
+  build(); reset();
+})();
+</script>
+
+<script>
+(function(){
+  // 図2: N に比例 vs √N に比例（両対数）
+  var g = document.getElementById('cmp-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  // 数字を上付き文字に変換（10のべき乗の表示用）
+  function sup(n) {
+    var d = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+    var s = String(Math.round(Math.abs(n))).split('').map(function (c) { return d[+c]; }).join('');
+    return (n < 0 ? '⁻' : '') + s;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var X0 = 44, X1 = 340, Y0 = 148, Y1 = 36, MAXX = 12, MAXY = 12;
+  el('line', {x1: X0, y1: Y0, x2: X1, y2: Y0, stroke: 'var(--ink)', 'stroke-width': 1.4});
+  el('line', {x1: X0, y1: Y0, x2: X0, y2: Y1, stroke: 'var(--ink)', 'stroke-width': 1.4});
+  [0, 3, 6, 9, 12].forEach(function (p) {
+    var x = X0 + (X1 - X0) * p / MAXX;
+    el('line', {x1: x, y1: Y0, x2: x, y2: Y0 + 4, stroke: 'var(--ink)'});
+    txt(x, Y0 + 16, 'label', p === 0 ? '1' : '10' + sup(p));
+    var y = Y0 - (Y0 - Y1) * p / MAXY;
+    el('line', {x1: X0 - 4, y1: y, x2: X0, y2: y, stroke: 'var(--ink)'});
+    txt(X0 - 6, y + 4, 'label', p === 0 ? '1' : '10' + sup(p), 'end');
+  });
+  txt((X0 + X1) / 2, Y0 + 32, 'label', '候補の数 N');
+  function line(slope, color, label, ly) {
+    var d = '';
+    for (var p = 0; p <= MAXX; p += 0.5) {
+      var x = X0 + (X1 - X0) * p / MAXX;
+      var y = Y0 - (Y0 - Y1) * (p * slope) / MAXY;
+      d += (p === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+    }
+    el('path', {d: d, fill: 'none', stroke: color, 'stroke-width': 2.4});
+    var t = txt(X1 - 4, ly, 'accent', label, 'end');
+    t.style.fill = color;
+  }
+  line(1, '#b5504a', 'ふつうのコンピュータ（N に比例）', 46);
+  line(0.5, '#2f7a6b', 'グローバー（√N に比例）', 96);
+  txt(X0 + 8, Y1 - 4, 'label', '必要な質問回数', 'start');
+})();
+</script>
+<script>
+(function(){
+  // 図: 線形性（1行ずつ vs 重ね合わせ）
+  var svg = document.getElementById('lin-svg');
+  var g = document.getElementById('lin-rows');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CA = '#2f7a6b', CR = '#b5504a';
+  var NAMES = ['0番 |00⟩', '1番 |01⟩', '2番 |10⟩', '3番 |11⟩'];
+  var HIT = 2;
+  var Y = [66, 106, 146, 186];
+  var X0 = 120, X1 = 302, XIN = 150, XOUT = 222;
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  var rows = [];
+  for (var i = 0; i < 4; i++) {
+    var t = el('text', {x: 104, y: Y[i] + 4, 'class': 'label', 'text-anchor': 'end'});
+    t.textContent = NAMES[i];
+    var grp = el('g', {});
+    var body = el('circle', {cx: 0, cy: 0, r: 9, fill: '#dfe3e9', stroke: '#6b7480', 'stroke-width': 1.2}, grp);
+    var arw = el('path', {d: 'M 0 6 L 0 -6 M -3.5 -2.5 L 0 -6 L 3.5 -2.5', stroke: CA, 'stroke-width': 2, fill: 'none'}, grp);
+    rows.push({label: t, grp: grp, arw: arw, y: Y[i]});
+  }
+  var phase = document.getElementById('lin-phase');
+  var count = document.getElementById('lin-count');
+  var note = document.getElementById('lin-note');
+  function place(i, x, flipped) {
+    var r = rows[i];
+    r.grp.setAttribute('transform', 'translate(' + x.toFixed(1) + ',' + r.y + ')');
+    r.arw.setAttribute('d', flipped ? 'M 0 -6 L 0 6 M -3.5 2.5 L 0 6 L 3.5 2.5' : 'M 0 6 L 0 -6 M -3.5 -2.5 L 0 -6 L 3.5 -2.5');
+    r.arw.setAttribute('stroke', flipped ? CR : CA);
+  }
+  // 進行台本: t は 0..1 の通し時間
+  var T_ONE = 1.7, T_GAP = 0.25, T_HOLD = 1.1;   // 1行ぶんの所要・間・保持
+  var startAll = 4 * (T_ONE + T_GAP) + T_HOLD;
+  var total = startAll + T_ONE + T_HOLD + 0.6;
+  function draw(t) {
+    if (t < startAll) {
+      phase.textContent = '① 1行ずつ通す';
+      note.textContent = '4行を順番に。4回かかる';
+      var done = 0;
+      for (var i = 0; i < 4; i++) {
+        var s0 = i * (T_ONE + T_GAP);
+        var u = (t - s0) / T_ONE;
+        if (u <= 0) { place(i, X0, false); }
+        else if (u >= 1) { place(i, X1, i === HIT); done = i + 1; }
+        else {
+          var x = X0 + (X1 - X0) * u;
+          place(i, x, i === HIT && x > XOUT);
+          done = i;
+        }
+      }
+      count.textContent = String(done);
+    } else {
+      phase.textContent = '② 重ね合わせのまま通す';
+      note.textContent = '4行がひとかたまり。1回で済む';
+      var u2 = (t - startAll) / T_ONE;
+      for (var j = 0; j < 4; j++) {
+        if (u2 <= 0) place(j, X0, false);
+        else if (u2 >= 1) place(j, X1, j === HIT);
+        else {
+          var x2 = X0 + (X1 - X0) * u2;
+          place(j, x2, j === HIT && x2 > XOUT);
+        }
+      }
+      count.textContent = (u2 >= 1) ? '1' : (u2 > 0 ? '1' : '0');
+    }
+  }
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var raf = null, running = false, t0 = null;
+  function tick(ts) {
+    if (t0 === null) t0 = ts;
+    var t = ((ts - t0) / 1000) % total;
+    draw(t);
+    if (running) raf = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (running || reduced) return;
+    running = true;
+    raf = requestAnimationFrame(tick);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+  }
+  draw(reduced ? startAll + T_ONE : 0);
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.isIntersecting ? start() : stop(); });
+    }, {threshold: 0.2});
+    io.observe(svg);
+  }
+})();
+</script>
+</body>
+</html>

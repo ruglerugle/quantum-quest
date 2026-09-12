@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1b2a4a">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE4 量子力学の予言 ― ベルの不等式を破る</title>
+<meta name="description" content="量子力学はもつれ光子の食い違い率をいくつと予言するのか。マルスの法則（偏光板を通る確率cos²θ）を矢印の分解から導き、もつれペアの食い違い率 D＝sin²(角度差) を計算する。sin30°=1/2、sin60°=√3/2 から D(30°)=1/4、D(60°)=3/4。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage4.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ベルの不等式を破る">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE4 量子力学の予言 ― ベルの不等式を破る">
+<meta property="og:description" content="マルスの法則 cos²θ から、もつれ光子ペアの食い違い率 D＝sin²(角度差) を導く。対決の弾丸を込める回。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage4.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .bq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .bq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .bq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .bq-svg .lbR{fill:#b5504a;font-size:11px;font-weight:900}
+  .bq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .bq-svg .vecmain{stroke:#48688f;stroke-width:2.6}
+  .bq-svg .vecmain-h{fill:#48688f}
+  .bq-svg .veccos{stroke:var(--ok);stroke-width:2.4}
+  .bq-svg .veccos-h{fill:var(--ok)}
+  .bq-svg .vecsin{stroke:var(--ng);stroke-width:2.4}
+  .bq-svg .vecsin-h{fill:var(--ng)}
+  .bq-svg .tie{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
+  .bq-svg .curve{fill:none;stroke:#48688f;stroke-width:2.2}
+  .bq-svg .pt{fill:#b5504a}
+  .bq-svg .grid{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
+  .bq-svg .uc-axis{stroke:var(--muted);stroke-width:1.2}
+  .bq-svg .uc-circle{fill:none;stroke:var(--line);stroke-width:1.6}
+  .bq-svg .uc-radius{stroke:#7a6a2f;stroke-width:2.2}
+  .bq-svg .uc-sin{stroke:#b5504a;stroke-width:3}
+  .bq-svg .uc-cos{stroke:#48688f;stroke-width:3}
+  .bq-svg .uc-arc{fill:none;stroke:#7a6a2f;stroke-width:1.4}
+  .bq-svg .uc-dot{fill:#7a6a2f}
+  .bq-svg .uc-sintxt{fill:#b5504a;font-size:11.5px;font-weight:900}
+  .bq-svg .uc-costxt{fill:#48688f;font-size:11.5px;font-weight:900}
+  .bq-svg .rp-outline{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:5 4}
+  .bq-svg .rp-axis{stroke:#b5504a;stroke-width:2.6;stroke-linecap:round}
+  .bq-svg .rp-grate-line{stroke:#48688f;stroke-width:1.5;opacity:.5;stroke-linecap:round}
+  .bq-svg .cl-src{fill:#e8c07f;stroke:#a6742a;stroke-width:1.5}
+  .bq-svg .cl-pol{fill:#dfe9f6;stroke:#48688f;stroke-width:1.5}
+  .bq-svg .cl-dial{stroke:#b5504a;stroke-width:2.2;stroke-linecap:round}
+  .bq-svg .cl-ph{fill:#dbe6f5;stroke:#48688f;stroke-width:1.2}
+  .bq-svg .cl-fuzzy line{stroke:#48688f;stroke-width:1.2;opacity:.35}
+  .bq-svg .cl-arrow{stroke:#2f8f65;stroke-width:3}
+  .bq-svg .cl-arrow-h{fill:#2f8f65}
+  .bq-svg .cl-ok{fill:var(--ok);font-size:18px;font-weight:900}
+  .bq-svg .cl-ng{fill:var(--ng);font-size:18px;font-weight:900}
+  .bq-svg .cs-ok{fill:var(--ok);font-size:12px;font-weight:900}
+  .bq-svg .cs-ng{fill:var(--ng);font-size:11px;font-weight:900}
+  .bq-svg .cs-plain{fill:var(--ink);font-size:11px;font-weight:800}
+  .bq-svg .arrow2{stroke:var(--muted);stroke-width:1.5}
+  .bq-svg .fork{stroke:var(--muted);stroke-width:1.3}
+  .bq-svg .barL{fill:#b5504a}
+  .bq-svg .barR{fill:#48688f}
+  .bq-svg .verdict-ng{fill:var(--ng);font-size:15px;font-weight:900}
+  .bq-svg .verdict-ok{fill:var(--ok);font-size:15px;font-weight:900}
+  .sim-controls label{font-size:13px;font-weight:800;color:var(--ink)}
+  .sim-controls input[type="range"]{width:min(60%,260px);accent-color:#48688f}
+  .sim-value{font-size:13px;font-weight:900;color:var(--gold-dark);min-width:4.5em;display:inline-block}
+  .sim-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+  .sim-controls .btn{font-size:12.5px;padding:.45rem .9rem}
+  .sim-controls .btn[aria-pressed="true"]{background:linear-gradient(#7d9fce,#48688f);border-color:#35507a;color:#fff}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🔔</a> <span>ベルの不等式を破る</span></div>
+      <div class="brand-sub">STAGE 4 ― 量子力学の予言 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 6</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 4</span><span class="chapter-title">量子力学の予言</span>
+        <div class="chapter-sub">食い違いは sin²(角度差)</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">量子力学が予言する食い違い率を計算しよう。マルスの法則「光子は確率cos²θで偏光板を通る」を矢印の分解から理解し、もつれペアの食い違い率 D＝sin²(角度差) を導く。さらにベルの不等式に代入して、3/4 ≤ 1/2 という衝突を自分の手で確かめられれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">裁判の基準はできた。今度は原告側――量子力学に、具体的な数字を予言してもらう番だ。鍵になるのは、STAGE2で宿題にしておいた問い。<strong>斜めに振動する光が偏光板に入ると、どうなるか？</strong> 答えを出すために、まず角度の道具を2つ用意するよ。半径1の円を描いて、中心から角度θの方向に線を引き、円周との交点を見る。この点の<strong>高さ</strong>を<strong>sinθ（サイン）</strong>、<strong>横の位置</strong>を<strong>cosθ（コサイン）</strong>と呼ぶ。たとえば θ＝0° なら点は真横にあるから、高さ sin0°＝0、横 cos0°＝1。θ＝90° なら真上だから sin90°＝1、cos90°＝0。よく使う値も挙げておこう。<strong>sin30°＝1/2、cos30°＝√3/2（＝約0.87）、sin60°＝√3/2、cos60°＝1/2、sin45°＝cos45°＝1/√2（＝約0.71）</strong>だ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" id="uc-svg" viewBox="0 0 340 195" width="100%" role="img" aria-label="半径1の円の図。中心から角度θの方向に引いた線と円周の交点について、その高さがsinθ、横の位置がcosθであることを示す。ボタンで角度を0°・30°・45°・60°・90°に切り替えると、点の位置とsin・cosの値が変わる">
+          <text class="strong" x="14" y="16">sinθ＝点の高さ、cosθ＝点の横の位置</text>
+          <line class="uc-axis" x1="22" y1="110" x2="184" y2="110"></line>
+          <line class="uc-axis" x1="100" y1="188" x2="100" y2="32"></line>
+          <circle class="uc-circle" cx="100" cy="110" r="70"></circle>
+          <line class="uc-cos" id="uc-cosline" x1="100" y1="110" x2="160" y2="110"></line>
+          <line class="uc-sin" id="uc-sinline" x1="160" y1="110" x2="160" y2="75"></line>
+          <line class="uc-radius" id="uc-radius" x1="100" y1="110" x2="160" y2="75"></line>
+          <path class="uc-arc" id="uc-arc" d=""></path>
+          <text class="lbA" id="uc-theta" x="130" y="104">θ</text>
+          <circle class="uc-dot" id="uc-dot" cx="160" cy="75" r="5"></circle>
+          <text class="uc-sintxt" id="uc-sinlabel" x="168" y="95">sinθ</text>
+          <text class="uc-costxt" id="uc-coslabel" x="128" y="124">cosθ</text>
+          <text class="strong" id="uc-ang" x="255" y="66" text-anchor="middle">θ＝30°</text>
+          <text class="uc-sintxt" id="uc-sinval" x="198" y="96">sin30°＝1/2＝0.50</text>
+          <text class="uc-costxt" id="uc-cosval" x="198" y="118">cos30°＝√3/2≈0.87</text>
+          <text class="label" x="190" y="146">半径が1なので、高さと横の</text>
+          <text class="label" x="190" y="160">位置がそのままsin・cosの値</text>
+        </svg>
+        <div class="sim-controls" id="uc-controls">
+          <button class="btn" data-ucangle="0" aria-pressed="false">0°</button>
+          <button class="btn" data-ucangle="30" aria-pressed="true">30°</button>
+          <button class="btn" data-ucangle="45" aria-pressed="false">45°</button>
+          <button class="btn" data-ucangle="60" aria-pressed="false">60°</button>
+          <button class="btn" data-ucangle="90" aria-pressed="false">90°</button>
+        </div>
+        <div class="diagram-caption">sinとcosの定義。半径1の円で、中心から角度θの方向へ引いた線が円周と交わる点を見る。<strong style="color:#b5504a">点の高さ＝sinθ</strong>、<strong style="color:#48688f">点の横の位置＝cosθ</strong>。ボタンで角度を切り替えて、30°の高さがちょうど半径の半分（1/2）になること、45°で高さと横がそろうこと、シーソーのように片方が増えると片方が減ることを確かめよう</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「角度θの方向を向いた長さ1の矢印の、縦の成分がsinθ、横の成分がcosθ」と覚えればよさそうですね。θが0°から90°へ増えると、cosθは1から0へ減っていき、sinθは0から1へ増えていく。2つはシーソーの関係……。それで、この道具で斜めの光をどう料理するんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">光の振動を<strong>矢印</strong>として描くんだ。矢印の向きが偏光の向き、矢印の長さが振動の大きさ（<strong>振幅</strong>と呼ぶ）だよ。偏光板の軸から角度θだけ傾いた、長さ1の矢印を考えよう。この矢印は、<strong>軸に沿った成分</strong>と<strong>軸に直角な成分</strong>の2本に分解できる。いま定義した道具そのままに、軸に沿った成分の長さは<strong>cosθ</strong>、直角な成分は<strong>sinθ</strong>だ。偏光板は軸に沿った振動だけを通す柵だったから、通り抜けるのは cosθ の成分だけ。ここでもう1つ、波の大事な性質を教えよう。<strong>波の明るさ（エネルギー）は、振幅の2乗に比例する</strong>。振れ幅が2倍になると、動きの速さも働く力も2倍ずつになって、エネルギーは2×2＝4倍になる、という理屈だ。すると、通った後の明るさは元の――</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">振幅がcosθ倍になったのだから、明るさは<strong>cos²θ倍</strong>ですね（cos²θは「コサインθの2乗」の書き方でしたね）。検算します。θ＝0°なら cos²0°＝1で全部通る。θ＝90°なら cos²90°＝0で全滅。STAGE2の柵の話と一致します。θ＝45°なら (1/√2)²＝1/2でちょうど半分。……あ、でも先生、ここで前と同じ問題が起きます。<strong>光子1個は割れない</strong>んでした。明るさが cos²θ倍になるということは、光子の数が cos²θ倍に減るしかない。つまり<strong>1個1個の光子は、確率 cos²θ で通り、確率 sin²θ で吸収される</strong>（三平方の定理でcos²θ＋sin²θ＝1）。そういうことですか？</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" id="rp-svg" viewBox="0 0 340 318" width="100%" role="img" aria-label="縦に振動する光が回転する偏光板に入るアニメーション。偏光板の軸が回るにつれて通過後の光の明るさがcos²θで変わり、0°と180°では元の明るさのまま、90°と270°では真っ暗になる。下には横軸θ・縦軸cos²θのグラフがあり、現在の角度を示す点がカーブの上を動く">
+          <defs>
+            <linearGradient id="beam-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f3c47a" stop-opacity="0"></stop>
+              <stop offset="0.28" stop-color="#f8d68e" stop-opacity="0.9"></stop>
+              <stop offset="0.5" stop-color="#fff7d2"></stop>
+              <stop offset="0.72" stop-color="#f8d68e" stop-opacity="0.9"></stop>
+              <stop offset="1" stop-color="#f3c47a" stop-opacity="0"></stop>
+            </linearGradient>
+            <filter id="beam-glow" x="-30%" y="-120%" width="160%" height="340%">
+              <feGaussianBlur stdDeviation="6"></feGaussianBlur>
+            </filter>
+            <radialGradient id="pol-face" cx="0.35" cy="0.3" r="0.9">
+              <stop offset="0" stop-color="#f5f9ff"></stop>
+              <stop offset="0.55" stop-color="#dfe9f6"></stop>
+              <stop offset="1" stop-color="#b3c6e0"></stop>
+            </radialGradient>
+          </defs>
+          <text class="strong" x="14" y="16">偏光板を回すと、通る明るさが cos²θ で変わる</text>
+          <g>
+            <rect x="20" y="80" width="132" height="22" rx="8" fill="#f3c47a" filter="url(#beam-glow)" opacity="0.85"></rect>
+            <rect x="20" y="76" width="132" height="30" rx="6" fill="url(#beam-grad)"></rect>
+          </g>
+          <line class="vecmain" x1="76" y1="102" x2="76" y2="80"></line>
+          <polygon class="vecmain-h" points="76,74 72,84 80,84"></polygon>
+          <polygon class="vecmain-h" points="76,108 72,98 80,98"></polygon>
+          <text class="label" x="20" y="52">入ってくる光</text>
+          <text class="label" x="20" y="66">（明るさ1、振動は縦）</text>
+          <ellipse cx="162" cy="91" rx="13" ry="42" fill="#8fa8c8" stroke="#48688f" stroke-width="1.2"></ellipse>
+          <rect x="162" y="49" width="8" height="84" fill="#a7bcd8"></rect>
+          <ellipse cx="170" cy="91" rx="13" ry="42" fill="url(#pol-face)" stroke="#48688f" stroke-width="1.8"></ellipse>
+          <g id="rp-grate" transform="translate(170 91) scale(0.31 1) rotate(0) translate(-170 -91)">
+            <line class="rp-grate-line" x1="136" y1="72" x2="136" y2="110"></line>
+            <line class="rp-grate-line" x1="146" y1="61" x2="146" y2="121"></line>
+            <line class="rp-grate-line" x1="158" y1="55" x2="158" y2="127"></line>
+            <line class="rp-axis" x1="170" y1="53" x2="170" y2="129"></line>
+            <line class="rp-grate-line" x1="182" y1="55" x2="182" y2="127"></line>
+            <line class="rp-grate-line" x1="194" y1="61" x2="194" y2="121"></line>
+            <line class="rp-grate-line" x1="204" y1="72" x2="204" y2="110"></line>
+          </g>
+          <text class="label" x="170" y="40" text-anchor="middle">偏光板（筋が回転中）</text>
+          <rect class="rp-outline" x="192" y="76" width="128" height="30" rx="6"></rect>
+          <g id="rp-out" opacity="1">
+            <rect x="192" y="80" width="128" height="22" rx="8" fill="#f3c47a" filter="url(#beam-glow)" opacity="0.85"></rect>
+            <rect x="192" y="76" width="128" height="30" rx="6" fill="url(#beam-grad)"></rect>
+          </g>
+          <text class="label" x="208" y="70">通った光</text>
+          <text class="lbA" id="rp-theta" x="208" y="130">θ＝0°</text>
+          <text class="strong" id="rp-bright" x="208" y="146">明るさ cos²θ＝100%</text>
+          <text class="label" x="170" y="176" text-anchor="middle">0°・180°で元の明るさ、90°・270°で真っ暗。その間はなめらかに変化する</text>
+          <text class="strong" x="45" y="204">グラフで見る：通る明るさ cos²θ</text>
+          <line class="axis" x1="45" y1="296" x2="326" y2="296"></line>
+          <line class="axis" x1="45" y1="302" x2="45" y2="210"></line>
+          <line class="grid" x1="45" y1="216" x2="320" y2="216"></line>
+          <text class="label" x="39" y="220" text-anchor="end">1</text>
+          <line class="grid" x1="45" y1="256" x2="320" y2="256"></line>
+          <text class="label" x="39" y="260" text-anchor="end">1/2</text>
+          <text class="label" x="39" y="300" text-anchor="end">0</text>
+          <line class="grid" x1="113.75" y1="296" x2="113.75" y2="216"></line>
+          <line class="grid" x1="182.5" y1="296" x2="182.5" y2="216"></line>
+          <line class="grid" x1="251.25" y1="296" x2="251.25" y2="216"></line>
+          <text class="label" x="45" y="312" text-anchor="middle">0°</text>
+          <text class="label" x="113.75" y="312" text-anchor="middle">90°</text>
+          <text class="label" x="182.5" y="312" text-anchor="middle">180°</text>
+          <text class="label" x="251.25" y="312" text-anchor="middle">270°</text>
+          <text class="label" x="320" y="312" text-anchor="middle">360°</text>
+          <path class="curve" id="rp-curve"></path>
+          <circle class="pt" id="rp-gdot" cx="45" cy="216" r="5"></circle>
+        </svg>
+        <div class="diagram-caption">縦に振動する光（明るさ1）の先で、偏光板をぐるりと回してみる。筋が縦（θ＝0°・180°）のときは全部通り、横（θ＝90°・270°）のときは全滅、その間は<strong>cos²θ倍</strong>の明るさでなめらかに明滅する――これが<strong>マルスの法則</strong>。下のグラフは角度θと通る明るさの関係で、<strong>赤い点がいまの角度</strong>を指しながらcos²θのカーブの上を走る。光子1個の言葉に翻訳すると、この「明るさの割合cos²θ」が「1個が通る確率cos²θ」になる</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">満点だよ。これが<strong>マルスの法則</strong>の光子版だ。マルスは19世紀初めに明るさの法則 cos²θ を見つけた物理学者で、量子力学はそれを「1個あたりの確率」と読み替えた。<strong>軸から角度θ傾いた偏光の光子は、確率 cos²θ で通る（○）、確率 sin²θ で吸収される（×）</strong>。これが量子力学の基本ルールだ。そしてどちらになるかは、量子力学によれば本物の偶然で、誰にも――光子自身にも――事前には分からない。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" viewBox="0 0 340 185" width="100%" role="img" aria-label="偏光板の軸から角度θ傾いた長さ1の矢印を、軸に沿ったcosθ成分と直角なsinθ成分に分解する図。通り抜けるのはcosθ成分で、明るさはcos²θ倍になる">
+          <text class="strong" x="14" y="18">矢印の分解 ― マルスの法則 cos²θ の正体</text>
+          <line class="axis" x1="40" y1="160" x2="240" y2="160"></line>
+          <line class="axis" x1="60" y1="175" x2="60" y2="40"></line>
+          <text class="label" x="238" y="150" text-anchor="end">偏光板の軸の向き</text>
+          <line class="vecmain" x1="60" y1="160" x2="204" y2="76"></line>
+          <polygon class="vecmain-h" points="210,72 196,76 203,86"></polygon>
+          <text class="lbA" x="140" y="102">光の振動（長さ1）</text>
+          <line class="veccos" x1="60" y1="160" x2="204" y2="160"></line>
+          <polygon class="veccos-h" points="212,160 202,156 202,164"></polygon>
+          <text class="label" x="130" y="174" fill="var(--ok)">軸に沿った成分＝cosθ → 通る</text>
+          <line class="vecsin" x1="60" y1="160" x2="60" y2="76"></line>
+          <polygon class="vecsin-h" points="60,68 56,78 64,78"></polygon>
+          <text class="label" x="14" y="60" fill="var(--ng)">直角な成分＝sinθ</text>
+          <text class="label" x="14" y="74" fill="var(--ng)">→ 吸収</text>
+          <line class="tie" x1="204" y1="76" x2="204" y2="160"></line>
+          <line class="tie" x1="204" y1="76" x2="60" y2="76"></line>
+          <path class="axis" d="M100 160 A40 40 0 0 0 94.6 139.7" fill="none"></path>
+          <text class="lbA" x="106" y="146">θ</text>
+          <text class="strong" x="236" y="100">明るさは振幅の2乗</text>
+          <text class="strong" x="236" y="118">→ cos²θ 倍</text>
+          <text class="label" x="252" y="140">光子1個なら</text>
+          <text class="label" x="252" y="154">確率 cos²θ で○</text>
+        </svg>
+        <div class="diagram-caption">軸から角度θ傾いた振動（長さ1の矢印）は、軸に沿った<strong>cosθ成分</strong>と直角な<strong>sinθ成分</strong>に分解できる。柵を通るのはcosθ成分だけで、明るさは振幅の2乗だから<strong>cos²θ倍</strong>。割れない光子1個にとって、これは<strong>通る確率cos²θ・吸収される確率sin²θ</strong>を意味する</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">では本題。<strong>もつれペア</strong>を量子力学で料理しよう。量子力学の教科書は、もつれペアをこう描く。<strong>測る前は、どちらの光子も決まった偏光を持っていない</strong>。説明書は白紙どころか、存在しない。そしてアリスが角度aの偏光板で測って、たとえば○（通過）だったとする。その瞬間、ペア全体の状態がガラリと変わり、<strong>ボブの光子は「角度aの偏光を持つ光子」になる</strong>。アリスが×なら、ボブの光子は「aと直角（a＋90°）の偏光を持つ光子」になる。この「瞬間に変わる」がアインシュタインの憎んだ不気味な遠隔作用だね。本当にそんな作用があるのかは、まさに裁判で審理中だから、いまは<strong>量子力学の計算ルール</strong>として受け入れて、予言だけを取り出そう。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" id="cl-svg" viewBox="0 0 340 190" width="100%" role="img" aria-label="もつれた光子ペアのアニメーション。中央の光源から左右に光子が飛び、左の光子は偏光の向きが決まっていないままアリスの偏光板（角度a）に届く。アリスの結果が○なら、飛行中のボブの光子の偏光がその瞬間に角度aに決まり、×ならa+90°に決まる">
+          <text class="strong" x="170" y="16" text-anchor="middle">アリスが測った瞬間、ボブの光子の偏光が決まる</text>
+          <circle class="cl-src" cx="170" cy="90" r="11"></circle>
+          <text class="label" x="170" y="118" text-anchor="middle">光源</text>
+          <rect class="cl-pol" x="56" y="60" width="12" height="60" rx="4"></rect>
+          <line class="cl-dial" x1="51" y1="108" x2="73" y2="72"></line>
+          <text class="label" x="62" y="136" text-anchor="middle">アリスの偏光板</text>
+          <text class="label" x="62" y="150" text-anchor="middle">（角度a）</text>
+          <text class="cl-ok" id="cl-res" x="28" y="96" text-anchor="middle"></text>
+          <g id="cl-pairs"></g>
+          <text class="label" x="278" y="136" text-anchor="middle">ボブへ向かう光子</text>
+          <text class="strong" id="cl-status" x="170" y="176" text-anchor="middle">もつれペア：どちらの光子も、偏光の向きはまだ決まっていない</text>
+        </svg>
+        <div class="diagram-caption">測る前の2つの光子は、偏光の向きが決まっていない（<strong>薄い米印</strong>＝向き未定）。左の光子がアリスの偏光板（角度a）に届いて結果が出た瞬間――<strong>○なら、まだ飛行中のボブの光子の偏光が角度aに決まる（太い両矢印）。×なら a＋90°に決まる</strong>。ペアは次々と送り出され、アリスの結果はランダムなので、ペアごとに違う結末になる。この「瞬間に決まる」が本当の作用なのかは、まさに裁判の争点だ</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">待ってください、その規則、引っかかります。通過したら偏光aに決まる――でも、aと直角以外なら、<strong>どんな偏光でも確率cos²θで通過できる</strong>んですよね。通過したという事実だけから、どうして「偏光aになった」と言えるんですか？ 元の偏光bのまま通り抜けたのかもしれないのに。ブロック側も同じです。a＋90°以外でも吸収されることはあるのに、なぜ吸収＝a＋90°なんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">素晴らしい違和感だ。鍵は、偏光板が「元の偏光を当てる装置」ではなく、<strong>出口が2つしかない装置</strong>だという点にあるんだ。波の絵に戻ろう。どんな向きの振動が入ってきても、柵をすり抜けられるのは軸方向の成分だけだったね。つまり通過した後の光は――入射前が何であれ――<strong>軸方向（a）の振動しか含んでいない</strong>。元の偏光bの違いは「どのくらいの確率で通るか」にだけ現れて、通った後の姿には残らない。実験でも確かめられるよ。角度aの板のすぐ後ろに<strong>もう1枚、角度aの板</strong>を置くと、通過してきた光子は100%通る。a＋90°の板なら0%。通過後の光子は、偏光aの光子と完全に同じふるまいをするんだ。ブロック側は、吸収型の板だと光子が消えてしまうから直接は見えないけれど、方解石という透明な結晶のように<strong>出口が2つある</strong>測定器を使えば、もう一方の出口から出る光は必ずa＋90°偏光になっている。だから理論では、吸収も「a＋90°側の答えが出た」として扱う。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">偏光板は質問装置で、答えの選択肢が2つしかないから、<strong>答えた後の状態も2通りしかない</strong>んですね。……そうすると、ボブの光子のほうは、私にも理由が組み立てられそうです。アリスが角度aで○だったとします。完全相関より、ボブも角度aで測れば<strong>必ず○</strong>のはず。マルスの法則で「確率1で通る」偏光は cos²θ＝1、つまり<strong>偏光aだけ</strong>です。だからボブの光子は偏光aになっていないと、つじつまが合わない。アリスが×なら、ボブは必ず×＝「確率0で通る」＝<strong>a＋90°だけ</strong>。さっきの規則は、<strong>完全相関からの逆算</strong>で一通りに決まっていたんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。教科書の規則の根っこを、自分の手で掘り当てたね。では安心して、この規則で食い違い率を計算しよう。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">計算、やらせてください。アリスが角度a、ボブが角度bで測ります。角度差をΔ（デルタ）＝b−aと書きますね。<strong>場合1：アリスが○</strong>（確率は対称性から1/2）。ボブの光子は角度aの偏光になったので、角度bの偏光板を通る確率は、軸との角度差がΔだから<strong>cos²Δ</strong>。食い違うのはボブが×のときで、確率<strong>sin²Δ</strong>。<strong>場合2：アリスが×</strong>（確率1/2）。ボブの光子はa＋90°の偏光。角度bの板との角度差は90°−Δで……cos²(90°−Δ)。90°−Δの矢印の横成分はΔの矢印の縦成分と同じだから、cos(90°−Δ)＝sinΔ。よって通る確率はsin²Δ。今度は<strong>ボブが○のとき食い違う</strong>ので、やはり確率sin²Δ。……どちらの場合も同じですね。<strong>食い違い率 D＝sin²Δ</strong>。角度差だけで決まりました。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" viewBox="0 0 340 225" width="100%" role="img" aria-label="うさ美の場合分けの樹形図。場合1ではアリスが○となりボブの光子は偏光aになる。ボブが○で一致する確率はcos²Δ、×で食い違う確率はsin²Δ。場合2ではアリスが×でボブの光子はa+90°になり、○で食い違う確率がsin²Δ、×で一致する確率がcos²Δ。どちらの場合も食い違いはsin²Δで、合計するとD=sin²Δ">
+          <text class="strong" x="170" y="16" text-anchor="middle">場合分けで計算 ― どちらの枝でも食い違いは sin²Δ</text>
+          <text class="cs-ok" x="16" y="62">場合1：アリスが○</text>
+          <text class="label" x="16" y="78">（確率 1/2）</text>
+          <line class="arrow2" x1="112" y1="64" x2="126" y2="64"></line>
+          <g transform="translate(148 64)">
+            <circle class="cl-ph" cx="0" cy="0" r="7"></circle>
+            <g transform="rotate(30)">
+              <line x1="0" y1="14" x2="0" y2="-14" stroke="#2f8f65" stroke-width="2.6"></line>
+              <polygon points="0,-18 -4,-10 4,-10" fill="#2f8f65"></polygon>
+              <polygon points="0,18 -4,10 4,10" fill="#2f8f65"></polygon>
+            </g>
+          </g>
+          <text class="label" x="148" y="96" text-anchor="middle">ボブの光子＝偏光a</text>
+          <line class="fork" x1="168" y1="64" x2="200" y2="50"></line>
+          <line class="fork" x1="168" y1="64" x2="200" y2="80"></line>
+          <text class="cs-plain" x="206" y="54">ボブ○：cos²Δ → 一致</text>
+          <text class="cs-ng" x="206" y="84">ボブ×：sin²Δ → 食い違い</text>
+          <text class="cs-ng" x="16" y="138">場合2：アリスが×</text>
+          <text class="label" x="16" y="154">（確率 1/2）</text>
+          <line class="arrow2" x1="112" y1="140" x2="126" y2="140"></line>
+          <g transform="translate(148 140)">
+            <circle class="cl-ph" cx="0" cy="0" r="7"></circle>
+            <g transform="rotate(120)">
+              <line x1="0" y1="14" x2="0" y2="-14" stroke="#b5504a" stroke-width="2.6"></line>
+              <polygon points="0,-18 -4,-10 4,-10" fill="#b5504a"></polygon>
+              <polygon points="0,18 -4,10 4,10" fill="#b5504a"></polygon>
+            </g>
+          </g>
+          <text class="label" x="148" y="172" text-anchor="middle">ボブの光子＝a＋90°</text>
+          <line class="fork" x1="168" y1="140" x2="200" y2="126"></line>
+          <line class="fork" x1="168" y1="140" x2="200" y2="156"></line>
+          <text class="cs-ng" x="206" y="130">ボブ○：sin²Δ → 食い違い</text>
+          <text class="cs-plain" x="206" y="160">ボブ×：cos²Δ → 一致</text>
+          <text class="strong" x="170" y="208" text-anchor="middle">D ＝ 1/2 × sin²Δ ＋ 1/2 × sin²Δ ＝ sin²Δ</text>
+        </svg>
+        <div class="diagram-caption">うさ美の場合分けを図にしたもの。アリスの結果が○でも×でも、<strong style="color:#b5504a">食い違いが起きる枝の確率はどちらも sin²Δ</strong>（場合2では、ボブの光子と角度bの板の角度差が90°−Δになるため、通る確率が cos²(90°−Δ)＝sin²Δ に入れ替わる）。2つの場合を確率1/2ずつで足し合わせると、食い違い率は角度差だけで決まる <strong>D＝sin²Δ</strong> になる</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">計算はそれで合っているよ。検算もしておこう。角度差Δ＝0°、つまり2人が同じ角度なら、D＝sin²0°＝0。<strong>食い違いゼロ、完全相関</strong>――STAGE2の実験事実がちゃんと再現された。Δ＝90°ならD＝sin²90°＝1で、必ず食い違う。そして裁判に使う値を計算しよう。<strong>Δ＝30°のとき：D＝sin²30°＝(1/2)²＝1/4</strong>。<strong>Δ＝60°のとき：D＝sin²60°＝(√3/2)²＝3/4</strong>。√3を2乗すれば3に戻るから、3/4だね。この2つの数字が、次のステージで法廷に提出される証拠になる。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" viewBox="0 0 340 190" width="100%" role="img" aria-label="横軸に角度差、縦軸に食い違い率をとったsin²カーブのグラフ。30°で4分の1、60°で4分の3、90°で1になる点が印されている">
+          <text class="strong" x="14" y="16">量子力学の予言：食い違い率 D＝sin²(角度差)</text>
+          <line class="axis" x1="40" y1="160" x2="326" y2="160"></line>
+          <line class="axis" x1="40" y1="170" x2="40" y2="30"></line>
+          <line class="grid" x1="40" y1="40" x2="326" y2="40"></line>
+          <text class="label" x="34" y="44" text-anchor="end">1</text>
+          <line class="grid" x1="40" y1="70" x2="326" y2="70"></line>
+          <text class="label" x="34" y="74" text-anchor="end">3/4</text>
+          <line class="grid" x1="40" y1="130" x2="326" y2="130"></line>
+          <text class="label" x="34" y="134" text-anchor="end">1/4</text>
+          <path class="curve" id="sin2-curve"></path>
+          <circle class="pt" cx="135" cy="130" r="4.5"></circle>
+          <text class="lbR" x="135" y="120" text-anchor="middle">30°→1/4</text>
+          <circle class="pt" cx="230" cy="70" r="4.5"></circle>
+          <text class="lbR" x="230" y="60" text-anchor="middle">60°→3/4</text>
+          <circle class="pt" cx="326" cy="40" r="4.5"></circle>
+          <text class="label" x="320" y="30" text-anchor="middle">90°→1</text>
+          <text class="label" x="40" y="176">0°</text>
+          <text class="label" x="320" y="176" text-anchor="end">角度差Δ→</text>
+          <text class="label" x="48" y="38">食い違い率D</text>
+        </svg>
+        <div class="diagram-caption">量子力学の予言カーブ。角度差0°で食い違いゼロ（完全相関）、90°で必ず食い違う。注目は<strong>カーブの形</strong>だ。0°付近ではなかなか立ち上がらず、あとから一気に急になる。30°で1/4だった食い違いが、60°では2倍の1/2ではなく<strong>3倍の3/4</strong>まで跳ね上がる――この「加速」が次のステージで事件を起こす</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">並べた瞬間に、気づいてしまいました。ベルの不等式は D(A,C) ≤ D(A,B)＋D(B,C)。いま出た数字を入れると、左辺は3/4、右辺は1/4＋1/4＝1/2。<strong>3/4 ≤ 1/2――成り立ちません。仮に量子力学の予言が正しければ、実際の光子はベルの不等式を破ることになります</strong>。あの「成り立つに決まっている」が、現実の実験で破られうる。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【衝突の計算】</span>
+        <span class="step">ベルの不等式：<span class="nw">D(A,C) ≤ D(A,B) ＋ D(B,C)</span>　（A＝0°、B＝30°、C＝60°）</span>
+        <span class="step">量子力学の予言を代入：<span class="nw">sin²60° ≤ sin²30° ＋ sin²30°</span></span>
+        <span class="step">値を入れると：<span class="nw">3/4 ≤ 1/4 ＋ 1/4 ＝ 1/2</span>　→　<strong>不成立！</strong>　量子力学の予言はベルの不等式と両立しない</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">きみはいま、1964年のベルが見たのと同じ景色を見ているんだよ。300年の物理学の常識と量子力学の予言が、たった3つの分数の上で正面衝突している。意味を正確に言っておこう。ベルの不等式は「説明書があるなら<strong>絶対に</strong>成り立つ」ものだった。つまり、量子力学の予言する3つの食い違い率 (3/4, 1/4, 1/4) を同時に出せる説明書のセットは、<strong>この世に存在しない</strong>。しかもこの衝突は、30°と60°という角度の偶然でもないんだ。A＝0°、B＝θ、C＝2θと一般化すると、不等式は sin²(2θ) ≤ 2sin²θ となるべきところだ。ところがθが小さいとき、sinθはほぼθに比例するから、sin²(2θ)は約(2θ)²＝4θ²、右辺は約2θ²。<strong>θが45°より小さいかぎり、左辺が勝ち続ける</strong>。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" id="sim-svg" viewBox="0 0 340 150" width="100%" role="img" aria-label="角度θを変えながら、ベルの不等式の左辺sin²(2θ)と右辺2sin²θを棒グラフで比べるシミュレータ。θが45°未満では左辺が右辺を上回り、不等式が破れる">
+          <text class="strong" x="170" y="16" text-anchor="middle">破れシミュレータ（A＝0°、B＝θ、C＝2θ）</text>
+          <line class="axis" x1="60" y1="120" x2="326" y2="120"></line>
+          <line class="axis" x1="60" y1="130" x2="60" y2="28"></line>
+          <text class="label" x="54" y="36" text-anchor="end">1</text>
+          <rect class="barL" id="bar-l" x="90" y="120" width="60" height="0"></rect>
+          <text class="label" x="120" y="134" text-anchor="middle">左辺 sin²(2θ)</text>
+          <text class="lbA" id="val-l" x="120" y="112" text-anchor="middle"></text>
+          <rect class="barR" id="bar-r" x="210" y="120" width="60" height="0"></rect>
+          <text class="label" x="240" y="134" text-anchor="middle">右辺 2sin²θ</text>
+          <text class="lbA" id="val-r" x="240" y="112" text-anchor="middle"></text>
+          <text class="verdict-ng" id="verdict" x="170" y="146" text-anchor="middle"></text>
+        </svg>
+        <div class="sim-controls">
+          <label for="theta-slider">θ ＝ <span class="sim-value" id="theta-label">30°</span></label>
+          <input type="range" id="theta-slider" min="5" max="60" value="30" step="1" aria-label="角度θを選ぶ">
+        </div>
+        <div class="diagram-caption">スライダーでθを動かすと、左辺（2θぶん一気にずらしたときの食い違い）と右辺（θずつ2回の食い違いの合計）が変わる。<strong>θが45°未満のあいだ、左辺は常に右辺を上回る</strong>＝不等式は破れ続ける。θ＝45°でちょうど引き分け、それより大きいと不等式はおとなしく成り立つ。破れは特定の角度のマジックではなく、sin²カーブの「出だしなだらか、あとから加速」という形そのものに刻まれている</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">いろいろなθで計算してみて、破れがカーブの形そのものに刻まれていることは納得しました。それでも冷静に言えば、今日示せたのは<strong>「予言同士の衝突」</strong>までです。本当に自然がどちらに従うかは、実際の光子で測らないと分かりません。ただ――DやD(A,B)は<strong>実際に測れる数</strong>でしたよね。だったらこの対立は、解釈や哲学ではなく、<strong>実験データそのもの</strong>で白黒つけられます。データが不等式の内側に収まれば局所実在論の勝ち、はみ出せば負け。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それこそが、ベルの不等式の最大の美点だよ。量子力学の計算が正しいかどうかさえ、判決には関係ない。装置を組んで、数を数えれば、自然自身が答えてくれる。次のステージでは、この実験に人生を賭けた物理学者たちの50年を追いかけよう。舞台は数式の世界から、レーザーと偏光板の並ぶ実験室へ移るよ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果】</span>
+        <span class="step">マルスの法則（光子版）：軸から角度θ傾いた偏光の光子は、確率 <span class="nw">cos²θ</span> で通り、確率 <span class="nw">sin²θ</span> で吸収される</span>
+        <span class="step">もつれペアの食い違い率（量子力学の予言）：<span class="nw">D＝sin²(角度差Δ)</span></span>
+        <span class="step multi"><span class="item">Δ＝0°：D＝0（完全相関）</span>　<span class="item">Δ＝30°：D＝1/4</span>　<span class="item">Δ＝60°：D＝3/4</span>　<span class="item">Δ＝90°：D＝1</span></span>
+        <span class="step">ベルの不等式に代入すると <span class="nw">3/4 ≤ 1/2</span> で不成立。量子力学の予言はベルの不等式と両立しない（決着は実験データに委ねられる）</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 偏光板の軸から角度θ傾いた偏光を持つ光子1個は、どうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">明るさが cos²θ倍になって通り抜ける</button>
+          <button class="choice-btn">θが90°未満なら必ず通る</button>
+          <button class="choice-btn">確率 cos²θ で丸ごと通り、確率 sin²θ で丸ごと吸収される</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 波としての明るさの法則（cos²θ倍）を、割れない光子1個に読み替えると「通る確率cos²θ」になる。矢印を軸方向（cosθ）と直角方向（sinθ）に分解し、明るさ＝振幅の2乗、と組み合わせた結果だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 量子力学の予言 D＝sin²Δ の検算として正しいのはどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">角度差0°なら必ず一致し（D＝0）、角度差90°なら必ず食い違う（D＝1）</button>
+          <button class="choice-btn">角度差0°でも半分は食い違う</button>
+          <button class="choice-btn">角度差90°なら必ず一致する</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ sin²0°＝0なので同じ角度では食い違いゼロ――STAGE2の完全相関が再現される。sin²90°＝1なので直角では必ず食い違う。両端が実験事実と合っていることを確かめてから、中間の角度を信用するのが物理の作法だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 角度差60°のときの食い違い率 D＝sin²60° の値は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">1/2</button>
+          <button class="choice-btn">3/4</button>
+          <button class="choice-btn">1/4</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ sin60°＝√3/2 だから、2乗して (√3/2)²＝3/4。30°のときの1/4に対して、角度が2倍になると食い違いは3倍になる。この「2倍を超える加速」こそが、ベルの不等式と衝突する火種だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q4. ベルの不等式に量子力学の予言（A＝0°、B＝30°、C＝60°）を代入した結果はどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">左辺3/4、右辺1/2となり、不等式は成り立たない</button>
+          <button class="choice-btn">左辺1/2、右辺3/4となり、不等式は成り立つ</button>
+          <button class="choice-btn">左辺と右辺がともに1/2で、ちょうど等しい</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 左辺D(A,C)＝sin²60°＝3/4、右辺D(A,B)＋D(B,C)＝1/4＋1/4＝1/2。局所実在論なら絶対に成り立つはずの不等式と、量子力学の予言は両立しない。どちらが自然の姿かは、次のステージの実験が決める。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>BQ.initStagePage(4);</script>
+
+<script>
+(function(){
+  // 単位円のsin/cos図解（角度切り替えボタン付き）
+  var svg = document.getElementById('uc-svg');
+  if (!svg) return;
+  var CX = 100, CY = 110, R = 70;
+  var VALS = {
+    0:  { sin: 'sin0°＝0',            cos: 'cos0°＝1' },
+    30: { sin: 'sin30°＝1/2＝0.50',   cos: 'cos30°＝√3/2≈0.87' },
+    45: { sin: 'sin45°＝1/√2≈0.71',  cos: 'cos45°＝1/√2≈0.71' },
+    60: { sin: 'sin60°＝√3/2≈0.87',  cos: 'cos60°＝1/2＝0.50' },
+    90: { sin: 'sin90°＝1',            cos: 'cos90°＝0' }
+  };
+  function el(id) { return document.getElementById(id); }
+  var radius = el('uc-radius'), sinl = el('uc-sinline'), cosl = el('uc-cosline'), dot = el('uc-dot'),
+      arc = el('uc-arc'), theta = el('uc-theta'), sinLabel = el('uc-sinlabel'), cosLabel = el('uc-coslabel'),
+      ang = el('uc-ang'), sinval = el('uc-sinval'), cosval = el('uc-cosval');
+
+  function draw(deg) {
+    var r = deg * Math.PI / 180, c = Math.cos(r), s = Math.sin(r);
+    var px = CX + R * c, py = CY - R * s;
+    radius.setAttribute('x2', px.toFixed(1)); radius.setAttribute('y2', py.toFixed(1));
+    dot.setAttribute('cx', px.toFixed(1)); dot.setAttribute('cy', py.toFixed(1));
+    sinl.setAttribute('x1', px.toFixed(1)); sinl.setAttribute('x2', px.toFixed(1));
+    sinl.setAttribute('y1', CY); sinl.setAttribute('y2', py.toFixed(1));
+    sinl.setAttribute('visibility', deg === 0 ? 'hidden' : 'visible');
+    cosl.setAttribute('x2', px.toFixed(1));
+    cosl.setAttribute('visibility', deg === 90 ? 'hidden' : 'visible');
+    if (deg === 0) {
+      arc.setAttribute('d', '');
+      theta.setAttribute('visibility', 'hidden');
+    } else {
+      var ar = 24, bx = CX + ar * c, by = CY - ar * s;
+      arc.setAttribute('d', 'M ' + (CX + ar) + ' ' + CY + ' A ' + ar + ' ' + ar + ' 0 0 0 ' + bx.toFixed(1) + ' ' + by.toFixed(1));
+      theta.setAttribute('visibility', 'visible');
+      var mr = deg * Math.PI / 360;
+      theta.setAttribute('x', (CX + 34 * Math.cos(mr)).toFixed(1));
+      theta.setAttribute('y', (CY - 34 * Math.sin(mr) + 4).toFixed(1));
+    }
+    sinLabel.setAttribute('x', (px + 7).toFixed(1));
+    sinLabel.setAttribute('y', ((CY + py) / 2 + 4).toFixed(1));
+    sinLabel.setAttribute('visibility', deg === 0 ? 'hidden' : 'visible');
+    cosLabel.setAttribute('x', ((CX + px) / 2).toFixed(1));
+    cosLabel.setAttribute('y', CY + 15);
+    cosLabel.setAttribute('visibility', deg === 90 ? 'hidden' : 'visible');
+    ang.textContent = 'θ＝' + deg + '°';
+    sinval.textContent = VALS[deg].sin;
+    cosval.textContent = VALS[deg].cos;
+  }
+
+  document.querySelectorAll('[data-ucangle]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('[data-ucangle]').forEach(function (b) {
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      draw(parseInt(btn.getAttribute('data-ucangle'), 10));
+    });
+  });
+  draw(30);
+})();
+</script>
+
+<script>
+(function(){
+  // 回転する偏光板アニメ：軸の角度θとともに、通過光の明るさが cos²θ で変わる
+  var svg = document.getElementById('rp-svg');
+  if (!svg) return;
+  var grate = document.getElementById('rp-grate'), out = document.getElementById('rp-out'),
+      thetaTxt = document.getElementById('rp-theta'), brightTxt = document.getElementById('rp-bright'),
+      gdot = document.getElementById('rp-gdot');
+  var GX0 = 45, GX1 = 320, GY0 = 296, GY1 = 216;
+
+  // cos²θのカーブ（0°〜360°）を一度だけ描く
+  (function () {
+    var d = '', first = true;
+    for (var a = 0; a <= 360; a += 3) {
+      var c = Math.cos(a * Math.PI / 180);
+      var x = GX0 + (GX1 - GX0) * a / 360;
+      var y = GY0 + (GY1 - GY0) * c * c;
+      d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
+      first = false;
+    }
+    document.getElementById('rp-curve').setAttribute('d', d);
+  })();
+
+  function draw(deg) {
+    var r = deg * Math.PI / 180;
+    // θ=0で筋は縦。円盤面内でθだけ回し、斜めから見た分だけ横方向を圧縮して楕円に投影する
+    grate.setAttribute('transform', 'translate(170 91) scale(0.31 1) rotate(' + (deg % 360).toFixed(1) + ') translate(-170 -91)');
+    var c2 = Math.cos(r) * Math.cos(r);
+    out.setAttribute('opacity', c2.toFixed(3));
+    thetaTxt.textContent = 'θ＝' + Math.round(deg % 360) + '°';
+    brightTxt.textContent = '明るさ cos²θ＝' + Math.round(c2 * 100) + '%';
+    gdot.setAttribute('cx', (GX0 + (GX1 - GX0) * (deg % 360) / 360).toFixed(1));
+    gdot.setAttribute('cy', (GY0 + (GY1 - GY0) * c2).toFixed(1));
+  }
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    draw(30);
+    return;
+  }
+
+  var deg = 0, running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    deg += 0.5;
+    if (deg >= 360) deg -= 360;
+    draw(deg);
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+<script>
+(function(){
+  // sin²カーブを描画（0°〜90°を x=40〜326、D=0〜1 を y=160〜40 に対応）
+  var curve = document.getElementById('sin2-curve');
+  if (!curve) return;
+  var X0 = 40, X1 = 326, Y0 = 160, Y1 = 40;
+  var d = '', first = true;
+  for (var deg = 0; deg <= 90; deg += 2) {
+    var s = Math.sin(deg * Math.PI / 180);
+    var x = X0 + (X1 - X0) * deg / 90;
+    var y = Y0 + (Y1 - Y0) * s * s;
+    d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
+    first = false;
+  }
+  curve.setAttribute('d', d);
+})();
+</script>
+
+<script>
+(function(){
+  // 破れシミュレータ：左辺sin²(2θ)と右辺2sin²θを棒グラフで比較
+  var slider = document.getElementById('theta-slider');
+  if (!slider) return;
+  var barL = document.getElementById('bar-l'), barR = document.getElementById('bar-r'),
+      valL = document.getElementById('val-l'), valR = document.getElementById('val-r'),
+      verdict = document.getElementById('verdict'), thetaLabel = document.getElementById('theta-label');
+  var BASE = 120, MAXH = 88;
+
+  function update() {
+    var deg = parseInt(slider.value, 10);
+    var rad = deg * Math.PI / 180;
+    var lhs = Math.pow(Math.sin(2 * rad), 2);
+    var rhsTrue = 2 * Math.pow(Math.sin(rad), 2);
+    var rhs = Math.min(rhsTrue, 1.0); // 表示上のクリップ（θ>45°で2sin²θは1を超えうる）
+    var hL = MAXH * lhs, hR = MAXH * rhs;
+    barL.setAttribute('y', (BASE - hL).toFixed(1)); barL.setAttribute('height', hL.toFixed(1));
+    barR.setAttribute('y', (BASE - hR).toFixed(1)); barR.setAttribute('height', hR.toFixed(1));
+    valL.textContent = lhs.toFixed(2);
+    valR.textContent = rhsTrue.toFixed(2);
+    thetaLabel.textContent = deg + '°';
+    if (lhs > rhsTrue + 1e-9) {
+      verdict.textContent = '⚡ 不等式が破れている！（左辺 > 右辺）';
+      verdict.setAttribute('class', 'verdict-ng');
+    } else {
+      verdict.textContent = '不等式は成立中（左辺 ≤ 右辺）';
+      verdict.setAttribute('class', 'verdict-ok');
+    }
+  }
+  slider.addEventListener('input', update);
+  update();
+})();
+</script>
+
+<script>
+(function(){
+  // 収縮アニメ：ペアが連続して流れ、アリスの測定の瞬間にボブの光子の偏光が決まる
+  var svg = document.getElementById('cl-svg');
+  if (!svg) return;
+  var container = document.getElementById('cl-pairs'),
+      res = document.getElementById('cl-res'), status = document.getElementById('cl-status');
+  var ns = 'http://www.w3.org/2000/svg';
+  var CX = 170, CY = 90, XL = 74, XR1 = 266, XR2 = 308;
+  var T = 168, ARRIVE = 92; // 1ペアの周期と、左の光子が偏光板に届くフレーム
+  var N = 3; // 同時に流すペア数（T/Nごとに新しいペアが出発）
+
+  function fuzzyGroup() {
+    var g = document.createElementNS(ns, 'g');
+    g.setAttribute('class', 'cl-fuzzy');
+    [[-11,0,11,0],[0,-11,0,11],[-8,-8,8,8],[-8,8,8,-8]].forEach(function (c) {
+      var l = document.createElementNS(ns, 'line');
+      l.setAttribute('x1', c[0]); l.setAttribute('y1', c[1]);
+      l.setAttribute('x2', c[2]); l.setAttribute('y2', c[3]);
+      g.appendChild(l);
+    });
+    return g;
+  }
+  function photonGroup(withDef) {
+    var g = document.createElementNS(ns, 'g');
+    var c = document.createElementNS(ns, 'circle');
+    c.setAttribute('class', 'cl-ph'); c.setAttribute('r', 6);
+    g.appendChild(c);
+    g.appendChild(fuzzyGroup());
+    if (withDef) {
+      var d = document.createElementNS(ns, 'g');
+      d.setAttribute('visibility', 'hidden');
+      var l = document.createElementNS(ns, 'line');
+      l.setAttribute('x1', 0); l.setAttribute('y1', 16); l.setAttribute('x2', 0); l.setAttribute('y2', -16);
+      l.setAttribute('stroke-width', 3);
+      d.appendChild(l);
+      [[0,-20,-4,-12,4,-12],[0,20,-4,12,4,12]].forEach(function (p) {
+        var po = document.createElementNS(ns, 'polygon');
+        po.setAttribute('points', p[0]+','+p[1]+' '+p[2]+','+p[3]+' '+p[4]+','+p[5]);
+        d.appendChild(po);
+      });
+      g.appendChild(d);
+    }
+    container.appendChild(g);
+    return g;
+  }
+
+  var pairs = [];
+  for (var i = 0; i < N; i++) {
+    pairs.push({
+      gL: photonGroup(false),
+      gR: photonGroup(true),
+      phase: -Math.round(i * T / N), // 時間差で出発させる
+      decided: false, ok: true
+    });
+  }
+
+  function setPos(g, x) { g.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + CY + ')'); }
+
+  function decide(pair) {
+    pair.decided = true;
+    pair.ok = Math.random() < 0.5;
+    var col = pair.ok ? '#2f8f65' : '#b5504a';
+    var def = pair.gR.childNodes[2], fuzzy = pair.gR.childNodes[1];
+    def.setAttribute('transform', 'rotate(' + (pair.ok ? 30 : 120) + ')');
+    def.childNodes.forEach(function (el) {
+      el.setAttribute('stroke', col); el.setAttribute('fill', col);
+    });
+    def.setAttribute('visibility', 'visible');
+    fuzzy.setAttribute('visibility', 'hidden');
+    res.textContent = pair.ok ? '○' : '×';
+    res.setAttribute('class', pair.ok ? 'cl-ok' : 'cl-ng');
+    status.textContent = pair.ok
+      ? 'アリス：○ → その瞬間、ボブの光子は「角度aの偏光」に決まった'
+      : 'アリス：× → その瞬間、ボブの光子は「a＋90°の偏光」に決まった';
+  }
+
+  function resetPair(pair) {
+    pair.decided = false;
+    pair.gL.setAttribute('opacity', 1);
+    pair.gR.childNodes[1].setAttribute('visibility', 'visible');
+    pair.gR.childNodes[2].setAttribute('visibility', 'hidden');
+  }
+
+  function drawPair(pair) {
+    var t = pair.phase;
+    if (t < 0) { setPos(pair.gL, CX); setPos(pair.gR, CX); pair.gL.setAttribute('opacity', 0); pair.gR.setAttribute('opacity', 0); return; }
+    pair.gR.setAttribute('opacity', 1);
+    if (t <= ARRIVE) {
+      var p = t / ARRIVE;
+      if (!pair.decided) pair.gL.setAttribute('opacity', 1);
+      setPos(pair.gL, CX - (CX - XL) * p);
+      setPos(pair.gR, CX + (XR1 - CX) * p);
+      if (t === ARRIVE) { decide(pair); pair.gL.setAttribute('opacity', 0); }
+    } else {
+      var q = (t - ARRIVE) / (T - ARRIVE - 8);
+      setPos(pair.gR, XR1 + (XR2 - XR1) * Math.min(q, 1));
+      if (q >= 1) pair.gR.setAttribute('opacity', 0);
+    }
+  }
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // 静止画：決定済みのペアを1組だけ表示
+    var p0 = pairs[0];
+    p0.phase = ARRIVE; drawPair(p0);
+    pairs.slice(1).forEach(function (p) { p.phase = -1; drawPair(p); });
+    setPos(p0.gR, XR1 + 20);
+    return;
+  }
+
+  var running = false, raf = null;
+  function step() {
+    if (!running) return;
+    pairs.forEach(function (pair) {
+      pair.phase += 1;
+      if (pair.phase >= T) { pair.phase = 0; resetPair(pair); }
+      drawPair(pair);
+    });
+    raf = requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; step(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; step(); }
+})();
+</script>
+</body>
+</html>

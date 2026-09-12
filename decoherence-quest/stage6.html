@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#143a3e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE6 デコヒーレンスが説明しないもの ― 消える干渉縞</title>
+<meta name="description" content="デコヒーレンスは「なぜ縞が消えるか」を説明したが、「なぜ毎回1つの結果が選ばれるか」は説明していない――観測問題の現代の形と、コペンハーゲン的立場・多世界解釈・客観的収縮理論の中立な紹介。解けた謎と解けていない謎の境界線を、ごまかさずに引く。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage6.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="消える干渉縞">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE6 デコヒーレンスが説明しないもの ― 消える干渉縞">
+<meta property="og:description" content="部屋のドアが閉まるところまでは説明した。だが部屋の数は1つに減っていない――観測問題との誠実な線引き。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage6.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .dq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .dq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .dq-svg .ok{fill:var(--ok);font-size:11.5px;font-weight:900}
+  .dq-svg .ng{fill:var(--ng);font-size:11.5px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌫️</a> <span>消える干渉縞</span></div>
+      <div class="brand-sub">STAGE 6 ― デコヒーレンスが説明しないもの ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 6</span><span class="chapter-title">デコヒーレンスが説明しないもの</span>
+        <div class="chapter-sub">観測問題との線引き</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">「なぜ縞が消えるか」（デコヒーレンスが説明済み）と「なぜ毎回1つの結果が選ばれるか」（未解決＝観測問題）を区別して語れるようになろう。3つの解釈の違いを中立に説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日は、この旅でいちばん大人な話をしよう。その前に、ここまでの成果をきみの口から整理してもらえるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">はい。使った道具は足し算ルール1つだけでした。そこから、検出器で縞が消える理由、消しゴムで戻る理由、環境がすべてを検出してしまう理由、月が位置の定まった姿で安定する理由――全部を導けました。特別な「観測のルール」を後から書き足す必要は、一度もなかった。……正直に言うと、<strong>観測の謎はもう解決した</strong>、と言いたくなっています。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その気持ちはよく分かる。だからこそ今日は、その「解決した」に<strong>線を引く</strong>日なんだ。デコヒーレンスが終わったあとの世界を、もう一度よく見てほしい。たとえば塵の実験なら、「塵は左＋環境はそれを写した状態」という枝と、「塵は右＋環境はそれを写した状態」という枝が、確率半々で並んでいる。ところで、実験を1回行うと、結果は毎回<strong>どちらか一方だけ</strong>が起きるね。さて――この枝の一覧のどこに、「今回は<strong>こちら</strong>が起きる」と決める仕組みが書いてあるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……どこにも、ありません。枝の一覧が言っているのは「枝どうしは互いに干渉できない」ということと「割合は半々」ということだけ。<strong>どちらの枝が現実になるかを選ぶ部品</strong>は、一覧にも、足し算ルールにも、見当たりません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。デコヒーレンスが示したことを正確に言うと、こうなる。<strong>「枝と枝は、互いに影響を及ぼす手段（干渉）を実際上失う」</strong>。候補たちが別々の部屋に分かれて、部屋のあいだのドアが閉まる――そこまでは、みごとに説明した。だが<strong>部屋の数が1つに減ったわけではない</strong>んだ。式の上では、どの枝も残ったまま。消えてはいない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">つまり、デコヒーレンスは「なぜ縞が消えるか」には答えたけれど、「なぜ毎回<strong>1つの結果だけ</strong>が起きるのか」「その確率がなぜ矢印の長さの<strong>2乗</strong>なのか」には、答えていない――。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが<strong>観測問題</strong>の現代の形だ。そして正直に言えば、こちらは未解決なんだ。物理学者の立場は分かれている。代表的な3つを、どれにも肩入れせずに紹介しよう。1つめ、<strong>コペンハーゲン的な立場</strong>。「量子力学は測定結果の確率を計算する道具であり、『1つに決まる瞬間の仕組み』はそもそも理論に求めない」という実用主義の構え。2つめ、<strong>多世界解釈</strong>。「どの枝も本当に起きている。デコヒーレンスで枝同士は干渉できなくなるから、それぞれの枝の住人には、自分の結果だけが起きたように見える」。選ばれたのではなく、全部ある、という考えだ。3つめ、<strong>客観的収縮理論</strong>。「まだ知られていない物理法則があって、大きな系では本当に1つへ絞り込まれる」。これは通常の量子力学とわずかに違う予言をするから、将来の実験で白黒がつく可能性がある。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">確認させてください。この3つの立場は、枝の一覧の<strong>読み方</strong>が違うだけで、一覧の中身――実験の予言――は同じなんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今のところ、ほぼ同じだ。だから今日の実験技術では決着がついていない（例外は客観的収縮で、大きな系での小さなずれを探す検証実験が現在進行中だよ）。ここでいちばん大事なことを言っておこう。デコヒーレンスの研究を切り開いた本人たち――ツェー、ヨース、そして<strong>ズレク</strong>――が、繰り返しこう釘を刺しているんだ。「<strong>デコヒーレンスは観測問題を解決しない</strong>」。デコヒーレンスは、どの解釈を選ぶ人にとっても共通の土台、つまり「なぜ世界が古典的に<strong>見える</strong>か」の説明であって、解釈の代わりにはならない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">解けた範囲を正確に言えること。そして、解けていない範囲を隠さないこと。……この旅で学んだ中で、いちばん科学らしい教訓かもしれません。「観測すると世界はどう変わるか」という問いは、半分は物理できちんと答えが出て、残りの半分はまだ開いたまま。この線引きを曖昧にした瞬間、デコヒーレンスは「なんでも説明した気になれる魔法の言葉」に堕ちてしまいます。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">線引きできる人だけが、この言葉を正しく使える。きみはもう、その1人だよ。次はいよいよ最終ステージ。この旅の知識のすべてが、いま現実の技術の最前線でどう戦われているか――<strong>量子コンピュータ</strong>の話で旅を締めくくろう。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="boundary-svg" class="dq-svg" viewBox="0 0 372 220" width="100%" role="img" aria-label="デコヒーレンスが説明した範囲と説明していない範囲の境界図。左側には縞の消失・縞の復活・部分系のランダムさ・古典的な見え方が説明済みとして並び、右側には1つの結果の選択と確率が2乗になる理由が未解決として並ぶ">
+          <text class="strong" x="186" y="16" text-anchor="middle">解けた謎と、開いたままの謎</text>
+          <g id="boundary-body"></g>
+        </svg>
+        <div class="diagram-caption">左（説明済み）：足し算ルール＋環境で導けたこと。右（未解決＝観測問題）：デコヒーレンスの発見者たち自身が「解決していない」と明言している問い。この境界線を保つことが、デコヒーレンスを正しく語る条件になる</div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="interp-svg" class="dq-svg" viewBox="0 0 372 230" width="100%" role="img" aria-label="同じ枝分かれをする世界の図を、3つの解釈がどう読むかの比較。コペンハーゲン的立場は片方の枝だけを結果として採用し、多世界解釈は両方の枝が実在するとみなし、客観的収縮理論は未知の法則が片方の枝を実際に消すと考える">
+          <text class="strong" x="186" y="16" text-anchor="middle">同じ枝分かれ、3つの読み方</text>
+          <g id="interp-body"></g>
+        </svg>
+        <div class="diagram-caption">デコヒーレンスが用意する「互いに干渉できない枝分かれ」はどの立場にも共通（だから実験の予言もほぼ同じ）。違うのはその読み方――コペンハーゲン的立場「起きた枝だけが結果。仕組みは問わない」、多世界「全部の枝が実在する」、客観的収縮「未知の法則が片方を本当に消す」。決着をつける実験は、まだない</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果 ― 誠実な線引き】</span>
+        <span class="step">・デコヒーレンスが<strong>説明したこと</strong>：干渉が実際上消える仕組み（縞の消失・復活・部分系のランダムさ・世界が古典的に見える理由）</span>
+        <span class="step">・<strong>説明していないこと</strong>：なぜ毎回1つの結果だけが起きるのか。確率がなぜ矢印の長さの2乗なのか（＝観測問題、未解決）</span>
+        <span class="step">・枝は「互いに干渉できなくなる」だけで、<strong>1つに減りはしない</strong>（部屋のドアは閉まるが、部屋は残る）</span>
+        <span class="step">・解釈：コペンハーゲン的立場／多世界／客観的収縮。実験では未決着。デコヒーレンスは全立場に共通の土台であって、解釈の代役ではない</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. デコヒーレンスが「説明したこと」はどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">なぜ毎回1つの結果だけが選ばれるのか</button>
+          <button class="choice-btn">確率が矢印の長さの2乗になる理由</button>
+          <button class="choice-btn">候補どうしの干渉が実際上消えていく仕組み（世界が古典的に見える理由）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ デコヒーレンスの守備範囲は「なぜ縞が消え、重ね合わせが見えなくなるか」まで。1つの結果の選択とボルンの規則（確率＝2乗）の起源は、その外側にある未解決問題だ。この区別を言えることが、このステージのゴール。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 多世界解釈の主張として正しいのは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">人間の意識が1つの結果を選び出す</button>
+          <button class="choice-btn">どの枝（候補）も実際に起きていて、枝同士が干渉できないため、各枝の住人には自分の結果だけが起きたように見える</button>
+          <button class="choice-btn">未知の物理法則が、大きな系で本当に1つへ絞り込む</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 多世界解釈では「選ばれる」という出来事自体が存在せず、すべての枝が実在する。枝同士のドアを閉めるのがデコヒーレンスなので、この解釈はデコヒーレンスと相性がよい――ただし「確率がなぜ2乗か」の説明には今も議論が続いている。3つめの選択肢は客観的収縮理論の主張だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 「デコヒーレンスは観測問題を解決したのか」への正確な答えは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">解決していない。発見者たち自身がそう明言しており、どの解釈にも共通する土台を与えたが、解釈の代わりにはならない</button>
+          <button class="choice-btn">完全に解決した。もう解釈は不要になった</button>
+          <button class="choice-btn">観測問題はもともと存在しなかったことが分かった</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ツェー、ヨース、ズレクらデコヒーレンス研究の開拓者たちは、「デコヒーレンスだけでは観測問題は解けない」と繰り返し明言している。解けた範囲（古典的な見え方）と開いたままの範囲（1つの結果の選択）の線引きこそ、この分野の誠実さの証だ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>DQ.initStagePage(6);</script>
+
+<script>
+(function(){
+  // 図1: 説明済み／未解決の境界図（静的）
+  var g = document.getElementById('boundary-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  // 左ゾーン
+  el('rect', {x: 16, y: 30, width: 190, height: 178, rx: 10, fill: 'rgba(47,158,92,.08)', stroke: 'var(--ok)', 'stroke-width': 1.6});
+  txt(111, 52, 'ok', '✔ デコヒーレンスが説明');
+  ['縞が消える仕組み', '消しゴムで縞が戻る仕組み', '環境がすべてを検出すること', '世界が古典的に「見える」理由'].forEach(function(s, i){
+    txt(30, 78 + i * 24, 'label', '・' + s, 'start');
+  });
+  // 右ゾーン
+  el('rect', {x: 222, y: 30, width: 134, height: 178, rx: 10, fill: 'rgba(200,67,63,.07)', stroke: 'var(--ng)', 'stroke-width': 1.6, 'stroke-dasharray': '6 4'});
+  txt(289, 52, 'ng', '？ 未解決（観測問題）');
+  txt(232, 84, 'label', '・なぜ毎回1つの', 'start');
+  txt(242, 100, 'label', '結果だけが起きるのか', 'start');
+  txt(232, 128, 'label', '・なぜ確率は矢印の', 'start');
+  txt(242, 144, 'label', '長さの2乗なのか', 'start');
+  txt(232, 180, 'label', '→ 解釈が分かれる', 'start');
+})();
+</script>
+
+<script>
+(function(){
+  // 図2: 3解釈の読み方比較（静的）
+  var g = document.getElementById('interp-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var panels = [
+    {x: 62, name: 'コペンハーゲン的', sub: '起きた枝だけ採用', mode: 'copenhagen'},
+    {x: 186, name: '多世界', sub: '全部の枝が実在', mode: 'many'},
+    {x: 310, name: '客観的収縮', sub: '未知の法則が片方を消す', mode: 'collapse'}
+  ];
+  panels.forEach(function(p){
+    txt(p.x, 44, 'strong', p.name);
+    // 幹
+    var Y0 = 190, YB = 130, spread = 34;
+    el('line', {x1: p.x, y1: Y0, x2: p.x, y2: YB, stroke: 'var(--ink)', 'stroke-width': 2.4});
+    // 左右の枝
+    function branch(sign, style) {
+      var x2 = p.x + sign * spread, y2 = 74;
+      var attrs = {x1: p.x, y1: YB, x2: x2, y2: y2, 'stroke-width': 2.4, 'stroke-linecap': 'round'};
+      if (style === 'solid') { attrs.stroke = '#2f7a6b'; }
+      else if (style === 'ghost') { attrs.stroke = '#9aa8a2'; attrs['stroke-dasharray'] = '4 4'; }
+      else if (style === 'dead') { attrs.stroke = '#c8433f'; attrs['stroke-dasharray'] = '2 4'; }
+      el('line', attrs);
+      return {x: x2, y: y2};
+    }
+    if (p.mode === 'copenhagen') {
+      branch(-1, 'solid'); var b = branch(1, 'ghost');
+      txt(b.x, b.y - 10, 'label', '問わない');
+    } else if (p.mode === 'many') {
+      var a = branch(-1, 'solid'), b2 = branch(1, 'solid');
+      txt(a.x, a.y - 10, 'ok', '実在');
+      txt(b2.x, b2.y - 10, 'ok', '実在');
+    } else {
+      branch(-1, 'solid'); var c = branch(1, 'dead');
+      txt(c.x, c.y - 10, 'ng', '×消える');
+    }
+    txt(p.x, 212, 'label', p.sub);
+  });
+})();
+</script>
+</body>
+</html>

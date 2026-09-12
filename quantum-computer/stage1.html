@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16224e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE1 量子ビットとは何か ― 量子コンピュータはなぜ速いのか</title>
+<meta name="description" content="ふつうのビットは0か1のスイッチ。量子ビットは「0の矢印」と「1の矢印」の2本組で表される。重ね合わせの正しい意味、読み出しの確率が矢印の長さの2乗になること、そして向き（位相）の違いも状態の違いであることを、優秀な中学生うさ美と一緒に導く。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage1.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはなぜ速いのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE1 量子ビットとは何か ― 量子コンピュータはなぜ速いのか">
+<meta property="og:description" content="量子ビットは「0の矢印」と「1の矢印」の2本組。重ね合わせの正しい意味をここで押さえる。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage1.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qc-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qc-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qc-svg .accent{fill:#2f5a9e;font-size:11px;font-weight:900}
+  .anim-ctrl{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .anim-ctrl input[type=range]{flex:1;max-width:280px;min-width:140px;accent-color:#2f5a9e}
+  .anim-ctrl .btn{padding:.35rem .9rem;font-size:12px}
+  .anim-ctrl .ctrl-label{font-size:11px;color:var(--muted);font-weight:700}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">💠</a> <span>量子コンピュータはなぜ速いのか</span></div>
+      <div class="brand-sub">STAGE 1 ― 量子ビットとは何か ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 1</span><span class="chapter-title">量子ビットとは何か</span>
+        <div class="chapter-sub">0と1の重ね合わせ</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">量子ビットの状態を「0の矢印と1の矢印の2本組」として説明できるようになろう。読み出しの確率が矢印の長さの2乗で決まること、そして「向きの違いも状態の違い」であることまで押さえられれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日から新しい旅を始めよう。テーマは<strong>量子コンピュータの中身</strong>だ。前の旅の最後に「量子コンピュータの敵はデコヒーレンス」という話をしたけれど、そもそもこの機械が<strong>どうやって計算するのか</strong>、そして<strong>なぜ特定の問題を桁違いに速く解けるのか</strong>は、まだ話していなかった。今回はそこを最後まで解き切る。出発点として、まずふつうのコンピュータが情報をどう持っているか、整理してもらえるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">はい。ふつうのコンピュータの情報の最小単位は<strong>ビット</strong>で、0か1のどちらか一方の値を取るスイッチです。文章も画像も音楽も、ぜんぶ0と1の長い列で表されている。スマホの中には、そういうスイッチが何十億個も入っているんですよね。それで質問です。<strong>量子ビット</strong>という言葉を聞いたことがありますが、ふつうのビットと何が違うんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">量子ビット（キュービットとも読む）は、0と1にあたる2つの状態を持つ、<strong>とても小さな物理系</strong>だ。実物としては、超伝導回路を流れる電流だったり、電磁場に浮かべたイオン1個だったり、光子1個だったりする。ここで記号をひとつ導入しよう。0にあたる状態を <strong>|0⟩</strong> と書いて「ゼロの状態」と読む。同じく |1⟩ は「イチの状態」。縦棒とカギ括弧はただの飾りで、「これは状態の名前です」という目印だと思えばいい。そして肝心なのはここだ。量子ビットの状態は「0か1のどちらか」ではなく、<strong>|0⟩ に矢印1本、|1⟩ に矢印1本、合わせて2本の矢印の表</strong>で表される。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">矢印――前の旅の<strong>振幅</strong>ですね。復習として整理します。振幅は長さと向きを持つ矢印で、正体は複素数。そして<strong>ある結果が起きる確率は、その矢印の長さの2乗</strong>で決まる。……ということは、です。|0⟩ の矢印の長さを a、|1⟩ の矢印の長さを b とすると、読み出したら0か1のどちらかにはなるのだから、<strong>aの2乗＋bの2乗＝1</strong>になっていないといけませんね。確率の合計は100%のはずですから。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。その約束を<strong>規格化</strong>と呼ぶよ。たとえば |0⟩ の矢印の長さが0.8、|1⟩ の矢印の長さが0.6なら、0.64＋0.36＝1でちゃんと規格化されている。この量子ビットを<strong>測定</strong>――つまり読み出すと、<strong>64%の確率で0、36%の確率で1</strong>が出る。そして測定した瞬間、結果の手がかりが測定装置と環境に残るから、それ以降この量子ビットは<strong>出た方の状態そのもの</strong>になる。0が出たなら、状態は |0⟩ に変わり、もう一度読んでも0しか出ない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble"><a href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/" target="_blank" rel="noopener" style="color:#2f5a9e;text-decoration:underline">前の旅</a>の足し算ルールの後半――「手がかりが残った道筋は、もう干渉できない」と同じ話ですね。そこは納得です。でも、いちばん気になる言葉がまだ出ていません。<strong>「重ね合わせ」</strong>です。2本の矢印がどちらも0でない状態のことだと思うのですが、それは結局どういう意味なんですか？ 「本当は0か1のどちらかに決まっているけれど、隠れていて分からないだけ」とは違うんですか？</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="qubit-svg" class="qc-svg" viewBox="0 0 372 216" width="100%" role="img" aria-label="量子ビットの状態シミュレータ。左に|0⟩の矢印と|1⟩の矢印、中央に読み出し確率の棒グラフ。スライダーで2本の矢印の長さの配分を変え、測定ボタンで実際に0か1を読み出して回数を集計する">
+          <text class="strong" x="186" y="16" text-anchor="middle">量子ビット＝2本の矢印の表</text>
+          <g id="qubit-body"></g>
+        </svg>
+        <div class="readout">
+          <span style="color:#2f5a9e">|0⟩の矢印の長さ <b id="q1-a0">0.71</b></span>
+          <span style="color:#b5504a">|1⟩の矢印の長さ <b id="q1-a1">0.71</b></span>
+          <span>0が出る確率 <b id="q1-p0">50%</b></span>
+          <span>1が出る確率 <b id="q1-p1">50%</b></span>
+        </div>
+        <div class="anim-ctrl">
+          <span class="ctrl-label">矢印の配分</span>
+          <input type="range" id="q1-slider" min="0" max="90" step="1" value="45" aria-label="|0⟩と|1⟩の矢印の長さの配分を変える">
+          <button type="button" class="btn" id="q1-measure">📏 測定する</button>
+          <button type="button" class="btn" id="q1-measure100">×100回</button>
+        </div>
+        <div class="readout">
+          <span>測定結果の集計 → 0: <b id="q1-c0">0</b>回 / 1: <b id="q1-c1">0</b>回 <b id="q1-last"></b></span>
+        </div>
+        <div class="diagram-caption">スライダーで |0⟩ の矢印（青）と |1⟩ の矢印（赤）の長さの配分を変えられる。規格化の約束（長さの2乗の合計＝1）は自動で守られ、棒グラフは「長さの2乗＝読み出しの確率」。「測定する」を押すと、その確率にしたがって実際に0か1が1つだけ出る。×100回でまとめて測ると、集計が確率の比に近づいていくのが分かる。1回1回の結果は誰にも予言できない――予言できるのは確率だけ、というのが量子力学の約束だった。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい質問だ。「隠れているだけ」説――つまり<strong>局所実在論</strong>の仲間は、きみが<a href="https://quantum-mechanics.habatakijuku.com/bell-inequality/" target="_blank" rel="noopener" style="color:#2f5a9e;text-decoration:underline">ベルの不等式の旅</a>で実験的に否定されるのを見届けた通り、量子力学の答えではない。ただ今日は、もっと小さくて具体的な証拠を見せよう。2つの状態を比べる。ひとつは |0⟩ の矢印と |1⟩ の矢印が<strong>同じ向き</strong>で、長さが√2分の1（約0.71）ずつの状態。もうひとつは、|1⟩ の矢印だけが<strong>正反対の向き</strong>（半回転ずれた向き）になっている状態だ。前者を <strong>|+⟩</strong>（プラス状態）、後者を <strong>|−⟩</strong>（マイナス状態）と呼ぶ。それぞれ読み出したら、何が出るかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">確率は長さの2乗で決まって、<strong>向きは2乗すると消えます</strong>。長さはどちらの状態でも0.71ずつだから、2乗して0.5。つまり |+⟩ も |−⟩ も、読み出せば<strong>50%で0、50%で1</strong>。読み出しでは全く区別がつきません。……あれ？ それなら |+⟩ と |−⟩ は同じ状態ということになりませんか？ 区別する方法がないなら、違いに意味はないはずです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ところが、<strong>区別する方法があるんだ</strong>。そこが今日いちばん大事なところだよ。矢印の向き――<strong>位相</strong>――の違いは、そのまま読み出しても現れない。でも、読み出す前に矢印の表を<strong>混ぜる操作</strong>をすると、足し算ルールの出番になって、向きの違いが表に飛び出してくる。実は、|+⟩ を<strong>確実に0</strong>に、|−⟩ を<strong>確実に1</strong>に変えてから読む操作が実在する。次のステージでその操作を自分で作ってもらうから、今日は予告だけにしておこう。大事な結論はこうだ。<strong>「読み出しの確率が同じ」でも「同じ状態」とは限らない</strong>。量子ビットの状態には、確率の表よりも多くの情報――矢印の向き――が入っている。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">なるほど……。ふつうのビットなら「読んだら何が出るか」が状態のすべてなのに、量子ビットは<strong>読んだだけでは見えない中身</strong>を持っている。たとえて言うと、回っているコマは、止まった瞬間の倒れる向きだけ見ても、時計回りだったか反時計回りだったかは分からない。でも回り方そのものは確かに違っていて、他のコマとぶつけたら違いが結果に出る――そんな感じでしょうか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いいアナロジーだね。もちろんコマは古典的な物体で、回り方は「隠れて決まっている」だけだから、例えとしては入り口までだよ。でも「単独の読み出しに現れない違いが、組み合わせたときに結果を変える」という構図はよく捉えている。これで「重ね合わせ」の正しい読み方が言える。重ね合わせとは、<strong>「0でもあり1でもある」ことでも、「決まっているのに隠れている」ことでもなく、「0の矢印と1の矢印が両方あって、これからの操作でお互いに干渉できる状態」</strong>のことだ。矢印が干渉できる、というこの一点が、量子コンピュータの動力源のすべてになる。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="phase-svg" class="qc-svg" viewBox="0 0 372 206" width="100%" role="img" aria-label="プラス状態とマイナス状態の比較。どちらも|0⟩と|1⟩の矢印の長さは0.71ずつで、読み出し確率は50%対50%と同じ。ただしマイナス状態は|1⟩の矢印だけが正反対を向いている">
+          <text class="strong" x="186" y="16" text-anchor="middle">読み出し確率が同じでも、同じ状態とは限らない</text>
+          <g id="phase-body"></g>
+        </svg>
+        <div class="diagram-caption">左が |+⟩、右が |−⟩。矢印の<strong>長さ</strong>はどちらも0.71ずつなので、読み出しの確率はともに50%対50%（下の棒グラフ）。違いは |1⟩ の矢印の<strong>向き</strong>だけ。この向き（位相）の違いは単独の読み出しには一切現れないが、STAGE3で矢印を混ぜる操作をすると、|+⟩ は確実に0、|−⟩ は確実に1を出す状態に変わる――つまり完全に区別できる、正真正銘の「別の状態」だ。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ひとつ確認させてください。矢印が2本あるといっても、読み出したときに出てくる答えは<strong>1つだけ</strong>ですよね。0.8と0.6の量子ビットを1回読んでも、出るのは「0」か「1」のどちらかで、「0.8」という数字が出てくるわけではない。矢印の長さそのものを直接読むことは、できないんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">できない。<strong>1回の測定で得られるのは、候補のうちの1つだけ</strong>。しかも測定した瞬間に状態は出た方に変わってしまうから、同じ量子ビットを測り直して情報を追加で搾り取ることもできない。矢印の長さを推定したければ、<strong>同じ状態をたくさん用意して何度も測り、統計を取る</strong>しかないんだ。この「表の中身は豊かなのに、読み出し口は狭い」という性質は、この旅でこれから何度も壁として立ちはだかる。そして量子アルゴリズムの賢さは、ぜんぶこの壁との付き合い方にある。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">整理します。①量子ビットの状態は、候補 |0⟩ と |1⟩ に1本ずつ割り当てた<strong>矢印の一覧表</strong>。②矢印の長さの2乗が読み出しの確率で、合計は必ず1（規格化）。③読み出すと答えは1つだけ出て、手がかりが残るので状態は出た方に変わる。④矢印の<strong>向き（位相）の違いも状態の違い</strong>で、読み出しには現れないが、矢印を混ぜる操作で表に出せる。――ふつうのビットとの違いは、スイッチが「増えた」のではなく、状態の記述が<strong>表ごと豊かになった</strong>ことなんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">よくまとまったね。実物の話も少しだけしておこう。よく使われる量子ビットは、絶対零度近くまで冷やした<strong>超伝導回路</strong>（電流の量子状態）、電磁場の罠に浮かべた<strong>イオン</strong>（電子のエネルギー状態）、そして<strong>光子</strong>（偏光など）だ。どの方式でも、矢印の配分――0.8と0.6のような中間の状態――は、外から電磁波のパルスを当てるなどの操作で自在に作れる。その「操作」こそが計算の正体で、次のステージの主役だよ。<strong>計算とは、矢印の表を書き換えること</strong>。そこで今日の |+⟩ と |−⟩ の区別も、約束通り実演しよう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【量子ビットの基本ルール】</span>
+        <span class="step">・状態＝候補 |0⟩ と |1⟩ に1本ずつの<strong>矢印（振幅）の一覧表</strong>。矢印は長さと向き（位相）を持つ</span>
+        <span class="step">・読み出しの確率＝<strong>矢印の長さの2乗</strong>。全候補の合計は必ず1（<span class="nw">規格化</span>）</span>
+        <span class="step">・測定すると答えは<strong>1つだけ</strong>出て、手がかりが残るので状態は出た候補そのものに変わる</span>
+        <span class="step">・矢印の<strong>向きの違いも状態の違い</strong>（例: |+⟩ と |−⟩）。単独の読み出しには現れないが、矢印を混ぜる操作で完全に区別できる</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. ある量子ビットの |0⟩ の矢印の長さが0.6、|1⟩ の矢印の長さが0.8のとき、読み出して0が出る確率は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">60%（矢印の長さがそのまま確率になる）</button>
+          <button class="choice-btn">36%（長さ0.6の2乗）</button>
+          <button class="choice-btn">50%（0か1かの二択だから）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 確率は矢印の長さの2乗。0.6の2乗＝0.36で36%。|1⟩ の方は0.8の2乗＝0.64で64%となり、合計はちゃんと1（規格化）になっている。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. |+⟩（矢印が同じ向き）と |−⟩（|1⟩ の矢印だけ正反対）の関係として正しいのは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">読み出しの確率が同じ（50%対50%）だから、物理的に同じ状態</button>
+          <button class="choice-btn">読み出しの確率が違うので、区別できる別の状態</button>
+          <button class="choice-btn">読み出しの確率は同じだが、矢印を混ぜる操作で完全に区別できる別の状態</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 向き（位相）の違いは2乗すると消えるので、そのまま読んだのでは区別できない。しかし矢印を混ぜる操作（STAGE3のアダマールゲート）を挟めば、|+⟩ は確実に0、|−⟩ は確実に1を出す。状態には確率の表以上の情報が入っている。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 量子ビットの「重ね合わせ」の意味として、この旅で採用した正しい読み方は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">0の矢印と1の矢印が両方あって、これからの操作で干渉できる状態</button>
+          <button class="choice-btn">本当は0か1に決まっているが、隠れていて分からないだけの状態</button>
+          <button class="choice-btn">0と1の中間の値（0.5など）を取っている状態</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 「隠れて決まっている」説（局所実在論）はベルの不等式の実験で否定済み。また量子ビットは中間の値を取るアナログ量でもない――読み出せば必ず0か1のどちらかが出る。矢印が2本あって干渉できる、これが重ね合わせの中身だ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QC.initStagePage(1);</script>
+
+<script>
+(function(){
+  // 図1: 量子ビット状態シミュレータ。スライダーで矢印の配分を変え、測定ボタンで読み出す
+  var g = document.getElementById('qubit-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C0 = '#2f5a9e', C1 = '#b5504a';
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+
+  el('defs', {});
+  var defs = g.lastChild;
+  var m0 = el('marker', {id: 'q1-ah0', viewBox: '0 0 8 8', refX: 7, refY: 4, markerWidth: 5.5, markerHeight: 5.5, markerUnits: 'userSpaceOnUse', orient: 'auto'}, defs);
+  el('path', {d: 'M0 0 L8 4 L0 8 z', fill: C0}, m0);
+  var m1 = el('marker', {id: 'q1-ah1', viewBox: '0 0 8 8', refX: 7, refY: 4, markerWidth: 5.5, markerHeight: 5.5, markerUnits: 'userSpaceOnUse', orient: 'auto'}, defs);
+  el('path', {d: 'M0 0 L8 4 L0 8 z', fill: C1}, m1);
+
+  // 左: 2つの矢印円盤（|0⟩ と |1⟩）
+  var c0 = {x: 70, y: 92}, c1 = {x: 170, y: 92}, R = 34;
+  el('circle', {cx: c0.x, cy: c0.y, r: R, fill: 'var(--paper2)', stroke: 'var(--line)'});
+  el('circle', {cx: c1.x, cy: c1.y, r: R, fill: 'var(--paper2)', stroke: 'var(--line)'});
+  txt(c0.x, c0.y + R + 18, 'strong', '|0⟩ の矢印');
+  txt(c1.x, c1.y + R + 18, 'strong', '|1⟩ の矢印');
+  var ar0 = el('line', {stroke: C0, 'stroke-width': 3, 'marker-end': 'url(#q1-ah0)'});
+  var ar1 = el('line', {stroke: C1, 'stroke-width': 3, 'marker-end': 'url(#q1-ah1)'});
+
+  // 右: 確率棒グラフ
+  var bx = 252, bw = 40, bh = 92, by = 140;
+  txt(bx + bw + 12, 46, 'label', '長さの2乗＝確率');
+  el('rect', {x: bx, y: by - bh, width: bw, height: bh, fill: 'none', stroke: 'var(--line)'});
+  el('rect', {x: bx + 56, y: by - bh, width: bw, height: bh, fill: 'none', stroke: 'var(--line)'});
+  var bar0 = el('rect', {x: bx + 1, width: bw - 2, fill: C0, opacity: .85});
+  var bar1 = el('rect', {x: bx + 57, width: bw - 2, fill: C1, opacity: .85});
+  txt(bx + bw / 2, by + 16, 'label', '0が出る');
+  txt(bx + 56 + bw / 2, by + 16, 'label', '1が出る');
+  var pt0 = txt(bx + bw / 2, by + 30, 'accent', '50%');
+  var pt1 = txt(bx + 56 + bw / 2, by + 30, 'accent', '50%');
+  pt1.style.fill = C1;
+
+  // 測定結果の大表示
+  var resultTxt = txt(186, 196, 'strong', '');
+  resultTxt.style.fontSize = '15px';
+
+  var slider = document.getElementById('q1-slider');
+  var roA0 = document.getElementById('q1-a0'), roA1 = document.getElementById('q1-a1');
+  var roP0 = document.getElementById('q1-p0'), roP1 = document.getElementById('q1-p1');
+  var cnt0El = document.getElementById('q1-c0'), cnt1El = document.getElementById('q1-c1');
+  var lastEl = document.getElementById('q1-last');
+  var count0 = 0, count1 = 0;
+
+  function amps() {
+    var th = (slider ? parseFloat(slider.value) : 45) * Math.PI / 180;
+    return {a0: Math.cos(th), a1: Math.sin(th)};
+  }
+  function draw() {
+    var a = amps();
+    ar0.setAttribute('x1', c0.x); ar0.setAttribute('y1', c0.y);
+    ar0.setAttribute('x2', c0.x + a.a0 * (R - 5)); ar0.setAttribute('y2', c0.y);
+    ar0.setAttribute('opacity', a.a0 < 0.04 ? 0 : 1);
+    ar1.setAttribute('x1', c1.x); ar1.setAttribute('y1', c1.y);
+    ar1.setAttribute('x2', c1.x + a.a1 * (R - 5)); ar1.setAttribute('y2', c1.y);
+    ar1.setAttribute('opacity', a.a1 < 0.04 ? 0 : 1);
+    var p0 = a.a0 * a.a0, p1 = a.a1 * a.a1;
+    bar0.setAttribute('y', by - bh * p0); bar0.setAttribute('height', Math.max(bh * p0, 0.5));
+    bar1.setAttribute('y', by - bh * p1); bar1.setAttribute('height', Math.max(bh * p1, 0.5));
+    pt0.textContent = Math.round(p0 * 100) + '%';
+    pt1.textContent = Math.round(p1 * 100) + '%';
+    if (roA0) roA0.textContent = a.a0.toFixed(2);
+    if (roA1) roA1.textContent = a.a1.toFixed(2);
+    if (roP0) roP0.textContent = Math.round(p0 * 100) + '%';
+    if (roP1) roP1.textContent = Math.round(p1 * 100) + '%';
+  }
+  function resetCounts() {
+    count0 = 0; count1 = 0;
+    if (cnt0El) cnt0El.textContent = '0';
+    if (cnt1El) cnt1El.textContent = '0';
+    if (lastEl) lastEl.textContent = '';
+    resultTxt.textContent = '';
+  }
+  function measureOnce() {
+    var a = amps();
+    return Math.random() < a.a0 * a.a0 ? 0 : 1;
+  }
+  function updateCounts(last) {
+    if (cnt0El) cnt0El.textContent = String(count0);
+    if (cnt1El) cnt1El.textContent = String(count1);
+    if (lastEl) lastEl.textContent = '（直近: ' + last + '）';
+  }
+  if (slider) slider.addEventListener('input', function () { resetCounts(); draw(); });
+  var mBtn = document.getElementById('q1-measure');
+  if (mBtn) mBtn.addEventListener('click', function () {
+    var r = measureOnce();
+    if (r === 0) count0++; else count1++;
+    resultTxt.textContent = '測定結果 → ' + r;
+    resultTxt.style.fill = r === 0 ? C0 : C1;
+    updateCounts(r);
+  });
+  var m100 = document.getElementById('q1-measure100');
+  if (m100) m100.addEventListener('click', function () {
+    var last = 0;
+    for (var i = 0; i < 100; i++) {
+      last = measureOnce();
+      if (last === 0) count0++; else count1++;
+    }
+    resultTxt.textContent = '100回まとめて測定';
+    resultTxt.style.fill = 'var(--ink)';
+    updateCounts(last);
+  });
+  draw();
+})();
+</script>
+
+<script>
+(function(){
+  // 図2: |+⟩ と |−⟩ の比較（静的）
+  var g = document.getElementById('phase-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C0 = '#2f5a9e', C1 = '#b5504a';
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  el('defs', {});
+  var defs = g.lastChild;
+  ['p0', 'p1'].forEach(function (id, i) {
+    var m = el('marker', {id: 'ph-' + id, viewBox: '0 0 8 8', refX: 7, refY: 4, markerWidth: 5.5, markerHeight: 5.5, markerUnits: 'userSpaceOnUse', orient: 'auto'}, defs);
+    el('path', {d: 'M0 0 L8 4 L0 8 z', fill: i === 0 ? C0 : C1}, m);
+  });
+
+  var panels = [
+    {x0: 96, name: '|+⟩（プラス状態）', flip: 1},
+    {x0: 276, name: '|−⟩（マイナス状態）', flip: -1}
+  ];
+  panels.forEach(function (p) {
+    txt(p.x0, 40, 'strong', p.name);
+    var cy = 84, R = 26, gap = 62;
+    [{c: C0, lbl: '|0⟩', dx: -gap / 2 - R + 10, dir: 1, mk: 'ph-p0'},
+     {c: C1, lbl: '|1⟩', dx: gap / 2 - R + 24, dir: p.flip, mk: 'ph-p1'}].forEach(function (a, i) {
+      var cx = p.x0 + (i === 0 ? -38 : 38);
+      el('circle', {cx: cx, cy: cy, r: R, fill: 'var(--paper2)', stroke: 'var(--line)'});
+      el('line', {x1: cx, y1: cy, x2: cx + a.dir * (R - 5) * 0.71 * 1.3, y2: cy, stroke: a.c, 'stroke-width': 2.6, 'marker-end': 'url(#' + a.mk + ')'});
+      txt(cx, cy + R + 15, 'label', a.lbl + ' 長さ0.71');
+    });
+    // 確率バー
+    var by = 178, bh = 26, bw = 26;
+    [0, 1].forEach(function (i) {
+      var bx = p.x0 + (i === 0 ? -50 : 12);
+      el('rect', {x: bx, y: by - bh, width: bw, height: bh, fill: 'none', stroke: 'var(--line)'});
+      el('rect', {x: bx + 1, y: by - bh / 2, width: bw - 2, height: bh / 2 - 1, fill: i === 0 ? C0 : C1, opacity: .85});
+      txt(bx + bw / 2, by + 13, 'label', (i === 0 ? '0' : '1') + ': 50%');
+    });
+  });
+  // 中央の区切りと注記
+  el('line', {x1: 186, y1: 30, x2: 186, y2: 192, stroke: 'var(--line)', 'stroke-dasharray': '4 4'});
+  var note = txt(276, 141, 'accent', '|1⟩ の矢印だけ正反対');
+  note.style.fill = '#b5504a';
+})();
+</script>
+</body>
+</html>

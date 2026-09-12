@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#143a3e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE4 環境という巨大な検出器 ― 消える干渉縞</title>
+<meta name="description" content="検出器は人工物でなくていい。光子や空気分子が塵粒子に当たって跳ね返るだけで、経路の手がかりが環境へ漏れ出す――デコヒーレンスの仕組みと速さを導く。1回の衝突は不完全な手がかりでも、毎秒10²⁰回の掛け算で縞は実質瞬時にゼロ。空気中の塵粒子は約10⁻³¹秒。コヒーレンスとデコヒーレンスという用語、大きな分子の干渉実験まで。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage4.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="消える干渉縞">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE4 環境という巨大な検出器 ― 消える干渉縞">
+<meta property="og:description" content="散乱は目印製造機。環境は誰も読まず、誰にも消せない検出器。塵粒子の縞は10⁻³¹秒で死ぬ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage4.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .dq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .dq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .dq-svg .accent{fill:#3f6191;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌫️</a> <span>消える干渉縞</span></div>
+      <div class="brand-sub">STAGE 4 ― 環境という巨大な検出器 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 4</span><span class="chapter-title">環境という巨大な検出器</span>
+        <div class="chapter-sub">デコヒーレンス</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">光子1個・空気分子1個の衝突が経路検出器と同じ働きをすることを理解し、「不完全な手がかり×莫大な回数」の掛け算でデコヒーレンスの速さの桁（空気中の塵粒子で約10⁻³¹秒）を見積もれれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">前回予告した最強の相手と、今日は正面から向き合おう。実験装置ではなく、実験室の外の世界――<strong>環境</strong>だ。舞台を用意する。目に見えないほど小さな塵粒子を、左と右の2か所の<strong>重ね合わせ</strong>にしたとしよう。腕のいい実験家なら本当に作れる状態だよ。そこへ光子が1個だけ飛んできて、塵に当たって跳ね返る。さて、何が起きるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">光は物に当たった場所によって跳ね返り方が変わります。塵が左にいれば光子は左寄りの跳ね方、右にいれば右寄りの跳ね方。つまり跳ね返った光子は、塵の位置に応じて<strong>違う状態</strong>になる。……これ、目印粒子の作られ方と同じです。誰も設計していないのに、<strong>光子が勝手に目印になって、手がかりを持って飛び去っていく</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。<strong>散乱は目印製造機</strong>なんだ。筋書きの終わり方が、散乱光子の分だけ分かれる。筋書き1「塵は左、光子は左寄りの状態」、筋書き2「塵は右、光子は右寄りの状態」。光子の2つの状態が直交に近ければ、塵の縞はほぼ消える。ただし、ここで「不完全な検出器」の話が効いてくるよ。光子1個の目印としての性能は、光子の<strong>波長</strong>で決まる。<strong>波長が左右の間隔より長い光子は、ぼやけた目しか持たない</strong>んだ。跳ね返り方の違いがごくわずかで、2つの状態はほとんど重なったまま。手がかりは不完全で、縞はほんの少ししか薄まらない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">1個だけなら平気そうです。でも、続きがあります。飛んでくるのは1個では済まない、ですよね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこが桁の恐ろしさだよ。空気中では、塵粒子に空気の分子が毎秒およそ<strong>10²⁰回</strong>ぶつかる。1回の衝突で縞の濃さがほんのわずか――仮に1%だけ――減るとしよう。10回ぶつかれば約10%減。では10²⁰回では、どうなると思う？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">足し算ではなく<strong>掛け算</strong>です。0.99を繰り返し掛ける。100乗で約0.37倍、1000乗だと0.00004倍程度……。10²⁰乗なんて、小数点の下に0が何十桁どころではない数になります。実質、<strong>完全にゼロ</strong>。毎秒どころか、ほんの一瞬のうちに縞は死にます。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">理論計算の答えを教えよう。空気中の小さな塵粒子の場合、縞が消えるまでの時間はおよそ<strong>10⁻³¹秒</strong>。物理学者の<strong>ヨース</strong>と<strong>ツェー</strong>が1985年に見積もった数字だ。宇宙の年齢が約10¹⁷秒だから、どれほど桁外れの速さか分かるね。ここで用語を2つ渡そう。矢印を足せる資格が保たれていることを<strong>コヒーレンス</strong>、環境へ手がかりが漏れてその資格が壊れていくことを<strong>デコヒーレンス</strong>と呼ぶんだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="scatter-svg" class="dq-svg" viewBox="0 0 372 240" width="100%" role="img" aria-label="塵粒子のデコヒーレンスのアニメーション。左と右の重ね合わせ状態の塵粒子に光子が次々と当たって散乱し、手がかりを持って飛び去るたびに、下の干渉縞の濃さが減衰していく。縞が消えるとまた最初から繰り返す">
+          <text class="strong" x="186" y="16" text-anchor="middle">散乱のたびに、縞の濃さは掛け算で減る</text>
+          <g id="scatter-body"></g>
+        </svg>
+        <div class="diagram-caption">左右の重ね合わせ状態の塵粒子（点線の2つの円）に、環境の光子・空気分子（小さな点）が次々に衝突して散乱し、経路の手がかりを持ち去っていく。1回ごとの目減りはわずかでも掛け算で効くため、下の縞は加速度的に薄まり、のっぺりに落ちる。実際の空気中では毎秒10²⁰回ぶつかるので、この過程は約10⁻³¹秒で完了する</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">デコヒーレンス……「足し算の資格を失うこと」ですね。ただ、環境を検出器と呼ぶのは乱暴な気もします。針のような読みやすい記録を残してくれるわけでもないのに。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう、環境は<strong>誰も読まない、そして誰にも消せない検出器</strong>だ。読みにくさは問題にならない――ルールが問うのは「手がかりが世界に残ったか」だけで、「読みやすいか」ではないからね。消しゴムが効かない理由も同じだ。散乱した光子と空気分子を1個残らずつかまえて、全部に斜めの質問をする――それができない限り、＋と−の仕分けは永遠にできない。手がかりは宇宙へ、光速で逃げていく。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">逆向きの質問をさせてください。電子の二重スリット実験は、現に成功していますよね。デコヒーレンスがそれほど強力なら、なぜ実験室では縞が出せるんでしょう。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい質問だ。電子は小さすぎて、環境とほとんど衝突しないからだよ。デコヒーレンスの速さは、<strong>物体が大きいほど、環境が濃い（分子や光子が多い）ほど</strong>、桁違いに速くなる。だから実験家は真空にして、冷やして、小さい粒子を使う。実際、炭素原子60個でできたサッカーボール型の大きな分子でも、超高真空なら縞が出せた。そして同じ種類の分子を<strong>熱してやる</strong>と、分子が自分から光を放ち始めて、縞は消えた。放った光が経路の手がかりを運び去ったからだ。2004年にウィーンで行われた実験で、消え方はデコヒーレンス理論の予言どおりだったよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">もうひとつ、前に習ったことの宿題のような疑問が残っています。スリット板は、粒子が通るたびに必ず反動を受けるのでした。反動という手がかりを毎回受け取っているのに、なぜ<strong>スリット板はデコヒーレンスを起こさない</strong>んでしょうか。光子1個の散乱でさえ縞を薄めるのに、つり合いが取れていない気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい復習だ。判定基準は、板も光子もまったく同じ――<strong>「相手の写真2枚が、どれだけ見分けられるか」</strong>だよ。違うのは、答えの桁なんだ。光子や空気分子は<strong>軽くて自由に飛んでいる相手</strong>で、わずかな蹴りでも飛ぶ方向がはっきり変わるから、写真はそれなりに見分けられる。そのうえ毎秒10²⁰回もぶつかる。一方、重く固定された板の写真がほぼ重なるのは、ボーアが答えた通り。見積もると縞の目減りは<strong>小数点の下に0が30個以上並ぶ小ささ</strong>で、しかも蹴りは粒子1個につき1回きり――掛け算も起きない。つまり板は「デコヒーレンスを起こさない」のではなく、<strong>目減りが小さすぎて見えない</strong>だけ。差は仕組みではなく、桁なんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">縞が出る条件と消える条件、両方が定量的に当たっているんですね。まとめます。「観測装置」も「観測者」も、特別な存在ではありませんでした。<strong>手がかりを持ち去るものすべてが観測者</strong>で、宇宙は空気と光で満ちている。だから大きな物体は、生まれた瞬間から絶え間なく観測され続けている。日常の世界が縞のない普通の確率の世界に見えるのは、そのせいだったんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが「量子の世界と日常の世界の境目」の正体だよ。次のステージでは、この理屈を宇宙でいちばん有名な物体に当てはめる。<strong>月</strong>だ。もつれの旅の最後に残した、あの問いに決着をつけよう。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="timescale-svg" class="dq-svg" viewBox="0 0 372 200" width="100%" role="img" aria-label="デコヒーレンス時間の桁の比較。対数スケールの横軸に、空気中の塵粒子は10のマイナス31乗秒、宇宙空間で背景放射だけを浴びる塵粒子は約1秒、宇宙の年齢は10の17乗秒が示されている。電子は超高真空なら縞の実験ができるほど長く保てる">
+          <text class="strong" x="186" y="16" text-anchor="middle">縞が保てる時間（1目盛＝10倍）</text>
+          <g id="timescale-body"></g>
+        </svg>
+        <div class="diagram-caption">ヨース＆ツェーらの見積もりによる桁の比較。同じ塵粒子でも、空気中なら10⁻³¹秒、ほぼ何もない宇宙空間で宇宙背景放射（宇宙を満たすかすかな光）だけを浴びる場合なら1秒程度と、環境の濃さで50桁近く変わる。電子のような小さな粒子は環境とほとんど相互作用せず、実験室で縞を観測できる</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果 ― デコヒーレンス】</span>
+        <span class="step">・<strong>散乱は目印製造機</strong>：光子・空気分子が経路の手がかりを持ち去る。波長が左右の間隔より長ければ、手がかりは不完全（ぼやけた目）</span>
+        <span class="step">・不完全でも回数が莫大：縞の濃さは衝突のたびに<strong>掛け算</strong>で減る。毎秒10²⁰回なら実質瞬時にゼロ</span>
+        <span class="step">・空気中の塵粒子：約<span class="nw">10⁻³¹秒</span>で縞が消える（ヨース＆ツェー、1985年）</span>
+        <span class="step">・<strong>コヒーレンス</strong>＝矢印を足せる資格。<strong>デコヒーレンス</strong>＝環境に手がかりが漏れて資格を失うこと。環境は誰も読まず、誰にも消せない検出器</span>
+        <span class="step">・速さは「大きいほど・環境が濃いほど」桁違いに速い。だから電子は縞を出せて、塵は出せない</span>
+        <span class="step">・スリット板が縞を薄めないのも同じ基準：重く固定された相手は写真がほぼ重なり（目減りは0が30個以上並ぶ小ささ）、蹴りも粒子1個につき1回きり。<strong>軽くて自由な相手×莫大な回数</strong>こそが環境の強さ</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 光子1個が塵粒子に当たって跳ね返ると、縞が薄くなるのはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">光子が塵を強く押して、位置を動かしてしまうから</button>
+          <button class="choice-btn">跳ね返った光子の状態が塵の位置に応じて変わり、経路の手がかりを持ち去るから</button>
+          <button class="choice-btn">光子のエネルギーで塵が温まるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 散乱光子は「塵が左寄りの跳ね方をさせたか、右寄りの跳ね方をさせたか」という情報を状態に刻んで飛び去る。つまり誰も設計していない目印粒子だ。押す力や熱は本質ではない――手がかりの漏れがすべてを決める。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 散乱した光子は誰も観測せず、宇宙の彼方へ飛んでいくだけ。それでも縞が消えるのは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">手がかりが世界のどこかに残ること自体が「区別可能」の条件だから</button>
+          <button class="choice-btn">光子が特別な粒子だから</button>
+          <button class="choice-btn">実は誰かが見るまで縞は残っている</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 足し算ルールの判定基準は「筋書きの終わり方が合流できるか」だけで、読む人の有無は無関係。散乱光子の状態が塵の経路ごとに違ってしまった時点で、筋書きは別の終わり方になる。環境は「誰も読まない、誰にも消せない検出器」だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. デコヒーレンスが速くなるのはどんな条件？</p>
+        <div class="choice-list">
+          <button class="choice-btn">物体が小さく、環境が薄いほど速い</button>
+          <button class="choice-btn">物体の大きさや環境の濃さには依存しない</button>
+          <button class="choice-btn">物体が大きく、環境の分子や光子が多い（空気中・高温）ほど、桁違いに速い</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 大きい物体ほど環境とよく衝突し、環境が濃いほど衝突回数が増える。掛け算で効くので、差は桁違いになる――空気中の塵は10⁻³¹秒、電子は実験室で縞を出せるほど長持ち。実験家が真空・低温・小さな粒子にこだわる理由がこれだ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>DQ.initStagePage(4);</script>
+
+<script>
+(function(){
+  // 図1: 塵の重ね合わせ＋光子散乱→縞コントラスト減衰アニメ
+  var svg = document.getElementById('scatter-svg');
+  var g = document.getElementById('scatter-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CL = {x: 130, y: 90}, CR = {x: 242, y: 90};
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+
+  // 重ね合わせの塵（左右2つのゴースト）
+  [CL, CR].forEach(function(c, i){
+    el('circle', {cx: c.x, cy: c.y, r: 17, fill: 'rgba(63,97,145,.15)', stroke: '#3f6191', 'stroke-width': 1.6, 'stroke-dasharray': '5 4'});
+    txt(c.x, c.y + 4, 'accent', i === 0 ? '左' : '右');
+  });
+  txt(186, 60, 'label', '塵粒子（左右の重ね合わせ）');
+
+  // 縞メーター（下部）
+  var MX = 60, MW = 252, MH = 66, MY0 = 218;
+  el('rect', {x: MX, y: MY0 - MH, width: MW, height: MH, fill: 'var(--paper2)', stroke: 'var(--line)', rx: 6});
+  var curve = el('path', {fill: 'none', stroke: '#8a6a24', 'stroke-width': 2.2});
+  var vLabel = txt(330, MY0 - MH / 2, 'accent', '', 'start');
+
+  function drawFringe(v) {
+    var d = '';
+    for (var i = 0; i <= 110; i++) {
+      var u = (i - 55) / 55;
+      var env = Math.exp(-u * u * 2.2);
+      var I = env * (1 + v * Math.cos(u * 10)) / 2;
+      var x = MX + 4 + (MW - 8) * i / 110;
+      var y = MY0 - 5 - I * (MH - 14);
+      d += (i === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+    }
+    curve.setAttribute('d', d);
+    vLabel.textContent = Math.round(v * 100) + '%';
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) {
+    drawFringe(0.35);
+    // 静止画: 散乱光子を数個描いておく
+    for (var i = 0; i < 5; i++) {
+      var a = i * 1.25;
+      el('circle', {cx: 186 + Math.cos(a) * 80, cy: 90 + Math.sin(a) * 55, r: 3, fill: '#b98a2e'});
+    }
+    return;
+  }
+
+  // 飛来する光子たち
+  var photons = [];
+  function spawn() {
+    var target = Math.random() < 0.5 ? CL : CR;
+    var ang = Math.random() * Math.PI * 2;
+    var R0 = 160;
+    photons.push({
+      el: el('circle', {r: 2.6, fill: '#b98a2e', opacity: .9}),
+      tx: target.x, ty: target.y,
+      sx: target.x + Math.cos(ang) * R0, sy: target.y + Math.sin(ang) * R0,
+      oa: Math.random() * Math.PI * 2, // 散乱後の方向
+      p: 0, hit: false
+    });
+  }
+
+  var v = 1, running = false, raf = null, spawnT = 0;
+  function loop() {
+    if (!running) return;
+    spawnT += 1;
+    if (spawnT % 26 === 0) spawn();
+    photons.forEach(function(ph){
+      ph.p += 0.02;
+      var x, y;
+      if (ph.p < 0.5) { // 飛来
+        var q = ph.p / 0.5;
+        x = ph.sx + (ph.tx - ph.sx) * q; y = ph.sy + (ph.ty - ph.sy) * q;
+      } else { // 散乱して飛び去る（手がかりを持って）
+        if (!ph.hit) { ph.hit = true; v = Math.max(0, v * 0.86 - 0.004); }
+        var q2 = (ph.p - 0.5) / 0.5;
+        x = ph.tx + Math.cos(ph.oa) * 170 * q2; y = ph.ty + Math.sin(ph.oa) * 170 * q2;
+        ph.el.setAttribute('opacity', (0.9 * (1 - q2)).toFixed(2));
+      }
+      ph.el.setAttribute('cx', x.toFixed(1)); ph.el.setAttribute('cy', y.toFixed(1));
+    });
+    for (var i = photons.length - 1; i >= 0; i--) {
+      if (photons[i].p >= 1) { photons[i].el.parentNode.removeChild(photons[i].el); photons.splice(i, 1); }
+    }
+    if (v < 0.02) v = 1; // 消えきったら最初から（連続ループ）
+    drawFringe(v);
+    raf = requestAnimationFrame(loop);
+  }
+  drawFringe(1);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+<script>
+(function(){
+  // 図2: デコヒーレンス時間の対数スケール比較（静的）
+  var g = document.getElementById('timescale-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  // 対数軸: 10^-31 .. 10^17（48桁）を x=40..340 に割り当て
+  var X0 = 40, X1 = 340, E0 = -31, E1 = 17;
+  function xOf(e) { return X0 + (e - E0) / (E1 - E0) * (X1 - X0); }
+  var AY = 150;
+  el('line', {x1: X0 - 6, y1: AY, x2: X1 + 6, y2: AY, stroke: 'var(--ink)', 'stroke-width': 1.6});
+  [-31, -20, -10, 0, 10, 17].forEach(function(e){
+    el('line', {x1: xOf(e), y1: AY - 3, x2: xOf(e), y2: AY + 3, stroke: 'var(--ink)'});
+    txt(xOf(e), AY + 16, 'label', e === 0 ? '1秒' : '10' + String(e).replace('-', '⁻').replace(/1/g, '¹').replace(/2/g, '²').replace(/3/g, '³').replace(/7/g, '⁷').replace(/0/g, '⁰') + '秒');
+  });
+  // 項目（点＋ラベル）
+  var items = [
+    {e: -31, label: '塵粒子・空気中', color: '#b5504a', y: 56},
+    {e: 0, label: '塵粒子・宇宙空間（背景放射のみ）', color: '#3f6191', y: 82},
+    {e: 17, label: '宇宙の年齢', color: '#7a6a2f', y: 108}
+  ];
+  items.forEach(function(it){
+    var x = xOf(it.e);
+    el('line', {x1: x, y1: it.y + 6, x2: x, y2: AY - 4, stroke: it.color, 'stroke-width': 1.2, 'stroke-dasharray': '3 3'});
+    el('circle', {cx: x, cy: AY, r: 4.5, fill: it.color});
+    var anchor = it.e < -15 ? 'start' : it.e > 8 ? 'end' : 'middle';
+    var t = txt(x, it.y, 'label', it.label, anchor);
+    t.style.fill = it.color; t.style.fontWeight = '900';
+  });
+  txt(186, 186, 'label', '電子（超高真空）は環境とほぼ相互作用せず、縞の実験が可能なほど長く保てる');
+})();
+</script>
+</body>
+</html>

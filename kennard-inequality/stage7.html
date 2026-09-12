@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2947">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE7 等号の波と歴史 ― 不確定性原理を証明する</title>
+<meta name="description" content="下限 ℏ/2 をぴったり達成するのはガウス波束だけ。そして定理を証明したケナードとは何者だったのか。ワイルとパウリ、ロバートソンの一般化、小澤の不等式へ――証明のその後の物語で旅を締めくくる。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage7.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="不確定性原理を証明する">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE7 等号の波と歴史 ― 不確定性原理を証明する">
+<meta property="og:description" content="下限をぴったり達成するガウス波束と、ケナード・ワイル・ロバートソン・小澤へ続く証明の物語。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage7.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .kq-svg .waveA{fill:none;stroke:#b5504a;stroke-width:2.2}
+  .kq-svg .waveB{fill:none;stroke:#2f6fa6;stroke-width:2.2}
+  .kq-svg .base{stroke:var(--line);stroke-width:1}
+  .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .legend-row{display:flex;gap:18px;justify-content:center;font-size:12px;color:var(--muted);font-weight:700;margin-top:6px;flex-wrap:wrap}
+  .legend-row .swA,.legend-row .swB{display:inline-block;width:20px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+  .legend-row .swA{background:#b5504a}
+  .legend-row .swB{background:#2f6fa6}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">📐</a> <span>不確定性原理を証明する</span></div>
+      <div class="brand-sub">STAGE 7 ― 等号の波と歴史 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 7</span><span class="chapter-title">等号の波と歴史</span>
+        <div class="chapter-sub">ガウス波束とその後の物語</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">等号 Δx·Δp＝ℏ/2 を達成する波がガウス波束だけであることを導き、ケナードから小澤まで続く「証明のその後」を知って旅を締めくくろう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">最後に残った楽しみ、等号の話からお願いします。不等式 Δx·Δp ≥ ℏ/2 で、ちょうど等号になる――これ以上ないほど「引き締まった」波は、どんな形なんでしょう。STAGE5 の伏線からすると、答えはもう予想がついていますけど……。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">予想を証明に変えよう。等号になるのは、判別式の言葉で言えば D＝0、放物線が横軸に<strong>接する</strong>とき。接点の λ を λ₀ とすると、そこでは I(λ₀)＝0 だ。さて、I は「2乗の積分」――0以上の量の足し合わせだった。足し合わせがぴったり0になれるのは、どんなときかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">0以上のものを足して0になるなら、<strong>全部が0</strong>しかありえません。1か所でも正の場所があれば、合計は正になってしまいますから。つまり、中身がどこでも λ₀xψ＋ψ′＝0。移項すると <strong>ψ′＝−λ₀xψ</strong>――「微分すると −λ₀x 倍になる関数」を探せ、という問題になりました。……STAGE5 でガウス型を微分したとき、まさにこの形が出ました。e<sup>−ax²</sup> の微分は −2ax 倍。λ₀＝2a と合わせれば一致します。答えは <strong>ψ＝C e<sup>−λ₀x²/2</sup></strong>、ガウス波束です！</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。検算すると、指数の肩 −λ₀x²/2 の微分 −λ₀x が前に降りてきて、確かに ψ′＝−λ₀xψ を満たす。逆に、この性質を持つ関数はガウス型しかないことも知られている。つまり<strong>下限 ℏ/2 をぴったり達成するのは、釣鐘型のガウス波束だけ</strong>。「最小不確定状態」と呼ばれる、量子力学でいちばん引き締まった波だ。ハイゼンベルクが例として計算し、ケナードが特別な地位を証明した。レーザー光の理論などで、今も現役の主役だよ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">等号の条件： <br class="wbr">I(λ₀)＝0　⇔　すべての x で λ₀xψ＋ψ′＝0　⇔　ψ′＝−λ₀xψ</span>
+        <span class="step">解： <br class="wbr">ψ(x) ＝ C e<sup>−λ₀x²/2</sup>　（ガウス波束。これだけが Δx·Δp ＝ ℏ/2 を達成する）</span>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" id="seesaw-svg" viewBox="0 0 320 190" width="100%" role="img" aria-label="位置の分布と運動量の分布のシーソー。位置を絞った波束は運動量が広がり、位置を広げた波束は運動量が締まる">
+          <line class="base" x1="15" y1="150" x2="150" y2="150"></line>
+          <line class="base" x1="170" y1="150" x2="305" y2="150"></line>
+          <path class="waveA" id="ss-xa" d=""></path>
+          <path class="waveB" id="ss-xb" d=""></path>
+          <path class="waveA" id="ss-pa" d=""></path>
+          <path class="waveB" id="ss-pb" d=""></path>
+          <text class="strong" x="45" y="20">位置の分布</text>
+          <text class="strong" x="200" y="20">運動量の分布</text>
+          <text class="label" x="70" y="170">x</text>
+          <text class="label" x="228" y="170">p</text>
+        </svg>
+        <div class="legend-row">
+          <span><span class="swA"></span>波束A：位置を絞った（Δx小 → Δp大）</span>
+          <span><span class="swB"></span>波束B：位置を広げた（Δx大 → Δp小）</span>
+        </div>
+        <div class="diagram-caption">2つのガウス波束の、位置の分布（左）と運動量の分布（右）。片方を絞れば、もう片方が必ず広がる。どちらの波束も積は同じ Δx·Δp＝ℏ/2――シーソーの支点が ℏ/2 に固定されている</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">これで数学は完結ですね。……最後に、人の話を聞かせてください。この定理を証明したケナードという人のこと、私、名前しか知りません。ハイゼンベルクやアインシュタインと違って、教科書にも登場しませんし。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">アール・ヘッセ・ケナード（1885–1968）。アメリカのコーネル大学の物理学者だ。1926年から27年にかけてヨーロッパに渡り、ゲッティンゲンやコペンハーゲン――まさに量子力学が建設されている現場――に滞在していた。ハイゼンベルクの論文が出たのと同じ1927年、彼はドイツの学術誌に「単純な運動タイプの量子力学について」という論文を発表して、その中で、ばらつきを標準偏差で定義し、Δx·Δp ≥ ℏ/2 を<strong>任意の状態について成り立つ定理</strong>として初めて証明したんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">私たちがたどった証明は、ケナードの論文に書いてあったそのままの道筋なんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">正直に言うと、道筋は少し違う。ケナード自身は、波をいろいろな波長の成分に分解するフーリエ変換という道具立てで証明した。私たちがたどったのは、その後の人々が磨き上げた、いちばん道具の少ない最短ルートだよ。翌1928年には数学者ワイルが、教科書に載る有名な証明を著書で発表した――ワイル自身は「この証明はパウリに教わった」と記している。定理の中身はどれも同じで、<strong>定理はケナードのもの、証明の磨き上げはみんなのもの</strong>。数学ではよくあることなんだ。そして1929年、ロバートソンが決定版を出す。位置と運動量に限らず、<strong>どんな2つの物理量のペアにも</strong>、同じ形の不等式が成り立つことを証明したんだ。エネルギーと時間、スピンの縦と横――量子力学のあらゆる「両立できない量」に、ケナード型の不等式が配られた。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">確認させてください。私たちが証明したのは「測る前の状態そのものが持つばらつき」の定理でした。ではハイゼンベルクの元々の直感――「観測すると乱してしまう」という話は、結局どうなったんですか？ あれはあれで、正しそうに聞こえるんですが。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが、この物語のいちばん驚くべき後日談だよ。「測定の誤差」と「測定が与える乱れ」の関係を厳密な定理にする仕事は、ケナードの定理とは別の、ずっと難しい問題だったんだ。きちんと定式化されたのは、なんと<strong>2003年</strong>。日本の数学者、小澤正直による「小澤の不等式」だ。ハイゼンベルクの直感が正確な定理の形になるまで、76年かかったことになる。そしてその小澤の不等式の中にも、ケナードの Δx や Δp はちゃんと部品として生きている。1927年の証明は、いまも現役なんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">着想したハイゼンベルク、定理にしたケナード、磨いたワイルとパウリ、広げたロバートソン、そして76年後に元の直感を救い出した小澤……。教科書の1行の不等式に、こんなに大勢の手が入っていたんですね。「ハイゼンベルクの不確定性原理」という名前だけでは、もったいない気がしてきました。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">だから物理学者は、あの不等式をしばしば<strong>「ケナードの不等式」</strong>と呼ぶんだ。着想の栄光はハイゼンベルクに、証明の栄光はケナードに。そしてきみはもう、その証明を人に説明できる側の人間だよ。最後にもう一度だけ、旅の全体を5行で振り返っておこう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【証明の全体像・5行版】</span>
+        <span class="step">①&nbsp;ばらつきを標準偏差で定義： <br class="wbr">(Δx)²＝<span class="nw">∫x²|ψ|²dx</span>,　(Δp)²＝<span class="nw">ℏ²∫<span class="nw">|ψ′|²</span>dx</span>（部分積分）</span>
+        <span class="step">②&nbsp;魔法の関数 I(λ)＝∫|λxψ＋ψ′|²dx ≥ 0 を、すべての実数 λ で考える</span>
+        <span class="step">③&nbsp;展開して翻訳： <br class="wbr">I(λ)＝(Δx)²λ² − λ ＋ <span class="nw">(Δp)²/ℏ²</span>（−1 は規格化条件の化身）</span>
+        <span class="step">④&nbsp;常に0以上の二次関数だから判別式 ≤ 0： <br class="wbr">1 − 4(Δx)²<span class="nw">(Δp)²/ℏ²</span> ≤ 0</span>
+        <span class="step">⑤&nbsp;整理して Δx·Δp ≥ ℏ/2。等号はガウス波束のみ ∎</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 等号 Δx·Δp＝ℏ/2 をぴったり達成する波動関数は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">完全な正弦波（波長が1つに決まった波）</button>
+          <button class="choice-btn">どんな波形でも達成できる</button>
+          <button class="choice-btn">ガウス波束（微分すると −λ₀x 倍になる、釣鐘型の波）だけ</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ I(λ₀)＝0 ⇔ λ₀xψ＋ψ′＝0 ⇔ ψ＝Ce<sup>−λ₀x²/2</sup>。2乗の積分が0になるには中身が恒等的に0になるしかなく、その条件を満たすのはガウス波束だけだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. ケナードの定理と「観測すると乱してしまう」という話の関係は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">別物。ケナードの定理は測る前の状態そのものが持つばらつきの定理で、測定誤差と乱れの厳密な定理は2003年の小澤の不等式まで待つことになった</button>
+          <button class="choice-btn">同じことを別の言葉で言っているだけ</button>
+          <button class="choice-btn">ケナードの定理は測定の乱れを計算するための定理である</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ グループを分けて測るケナードの設定には「1回目の測定が2回目を乱す」余地がない。測定誤差と擾乱の定理化はずっと難しく、76年後の小澤の不等式でようやく実現した。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. ロバートソン（1929）が付け加えたことは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">ガウス波束が等号を達成することの証明</button>
+          <button class="choice-btn">位置と運動量に限らず、任意の2つの物理量のペアに同じ形の不等式が成り立つことの証明</button>
+          <button class="choice-btn">不確定性原理が誤りであることの証明</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ エネルギーと時間、スピンの成分同士など、量子力学の「両立できない量」すべてに、ケナード型の不等式が一般化された。きみのたどった証明は、その一般化の原型だ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>クリア画面へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>
+  // 位置分布と運動量分布のシーソー図（静止画）
+  (function () {
+    function makePath(cx, yc, amp, sig, x0, x1) {
+      var d = "";
+      for (var x = x0; x <= x1; x += 2) {
+        var u = (x - cx) / 20;
+        var v = Math.exp(-u * u / (2 * sig * sig)) / sig;
+        d += (d ? " L" : "M") + x + " " + (yc - amp * v).toFixed(1);
+      }
+      return d;
+    }
+    // 左パネル（位置）: A=幅0.55（鋭い）, B=幅1.6（広い）
+    var xa = document.getElementById("ss-xa");
+    var xb = document.getElementById("ss-xb");
+    // 右パネル（運動量）: A=幅1.6（広い）, B=幅0.55（鋭い）
+    var pa = document.getElementById("ss-pa");
+    var pb = document.getElementById("ss-pb");
+    var amp = 62;
+    if (xa) xa.setAttribute("d", makePath(82, 150, amp, 0.55, 17, 148));
+    if (xb) xb.setAttribute("d", makePath(82, 150, amp, 1.6, 17, 148));
+    if (pa) pa.setAttribute("d", makePath(237, 150, amp, 1.6, 172, 303));
+    if (pb) pb.setAttribute("d", makePath(237, 150, amp, 0.55, 172, 303));
+  })();
+</script>
+<script>KQ.initStagePage(7);</script>
+</body>
+</html>

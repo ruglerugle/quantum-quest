@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16224e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE4 もつれを作る ― 量子コンピュータはなぜ速いのか</title>
+<meta name="description" content="量子ビットが2個なら矢印は4本、n個なら2のn乗本。指数関数的に広がる一覧表の正体と、CNOTゲートでもつれを作る手順、そして「もつれは2つの表の掛け算では書けない」ことを自分の手で確かめる。指数の力と、読み出しの壁の両方を知るステージ。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage4.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはなぜ速いのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE4 もつれを作る ― 量子コンピュータはなぜ速いのか">
+<meta property="og:description" content="量子ビット2個で矢印は4本、300個で宇宙の原子より多い。CNOTでもつれを作り、指数の力と読み出しの壁を知る。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage4.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qc-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qc-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qc-svg .accent{fill:#5b3fa6;font-size:11px;font-weight:900}
+  .anim-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .anim-ctrl .btn{padding:.4rem .95rem;font-size:13px;font-weight:900}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+  .gate-log{margin-top:8px;font-size:12.5px;font-weight:800;color:var(--ink);min-height:1.5em;word-break:break-all}
+  .gate-log .g{display:inline-block;background:#eae2f7;border:1px solid #c3b0e6;border-radius:5px;padding:0 6px;margin:0 2px 3px 0}
+  .column-box{background:var(--paper2);border:1.5px dashed #b09ac8;border-radius:10px;padding:12px 15px;margin:16px 0;font-size:13.5px;line-height:1.85;color:var(--ink);font-weight:700}
+  .column-label{display:inline-block;font-size:10.5px;font-weight:900;color:#5b3fa6;border:1px solid #5b3fa6;border-radius:4px;padding:0 6px;margin-bottom:6px}
+  .column-title{font-size:14px;font-weight:900;color:#3a2a66;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">💠</a> <span>量子コンピュータはなぜ速いのか</span></div>
+      <div class="brand-sub">STAGE 4 ― もつれを作る ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 4</span><span class="chapter-title">もつれを作る</span>
+        <div class="chapter-sub">2量子ビットとCNOT</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">量子ビットが増えると矢印の表が2ⁿ行に膨れ上がることを理解し、CNOTゲートでもつれを自分の手で作ろう。「もつれた状態は2つの表の掛け算では書けない」ことを説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ここまでは量子ビット1個の話だった。今日は2個に増やす。まず、ふつうのビットが2個あったら、全体としてどんな値を取れるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">00、01、10、11 の4通りです。3個なら8通り、n個なら2ⁿ通り。……ということは量子ビットが2個なら、この<strong>4つの候補それぞれに矢印が1本ずつ</strong>つくんですね。表が4行になる。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り、先回りできたね。書き方も決めておこう。2個の値を |00⟩ のように並べて書き、<strong>左の桁を1桁目、右の桁を2桁目</strong>と呼ぶことにして、<strong>|00⟩ |01⟩ |10⟩ |11⟩</strong> の4行に矢印が1本ずつ。規格化の約束は変わらない――4本の矢印の長さの2乗を全部足すと1だ。読み出せば、この4通りのうちどれか1つが出る。<br>そして、ここからが量子コンピュータの人を驚かせる部分だよ。<strong>量子ビットがn個なら、表は2ⁿ行になる</strong>。10個で1024行、20個で約100万行、50個で約1000兆行。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">行の名前を見ていて気づいたのですが、|00⟩ |01⟩ |10⟩ |11⟩ という並びは、0が1に繰り上がっていく<strong>数の数え方</strong>そのものに見えます。00、01、10、11……これは2つの記号だけで数を書いているのではありませんか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り、0と1の2つだけで数を書く書き方で、<strong>2進法</strong>と呼ぶ。|00⟩ |01⟩ |10⟩ |11⟩ は、順に0番・1番・2番・3番だ。<br>これは後で効いてくるから、はっきりさせておこう。<strong>表の行の名前は、候補に振った通し番号そのもの</strong>なんだ。量子ビットがn個なら、行は0番から 2ⁿ−1 番まで。だから「全部の行に矢印が立っている状態」と言えば、それは「<strong>0番からいちばん最後までの候補を、全部いっぺんに持っている状態</strong>」を意味する。候補に名前を付ける手間も、番号を書き込む作業も要らない――量子ビットを並べた時点で、行の名前として最初からそこにあるんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">2倍、2倍で増えるから、あっという間に手に負えない数になりますね。300個だと……2を300回かける。ざっと10⁹⁰くらいでしょうか。それは、宇宙にある原子の個数よりも多い気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">正確な見積もりだ。観測できる宇宙の原子の数は10⁸⁰個くらいと見積もられているから、<strong>たった300個の量子ビットの状態を書き下すには、宇宙の全原子を紙にしても足りない</strong>。この途方もない大きさが「量子コンピュータはすごい」と言われる根拠として、よく引き合いに出される。<br>――でも、ここで立ち止まってほしい。前回までに決めたルールから、冷や水を浴びせる帰結が出るんだ。何か分かるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……<strong>読み出せる答えは1つだけ</strong>、ですね。表が10⁹⁰行あっても、測定すればそのうち1行が選ばれて、出てくるのは300桁の0と1の列がひとつ。しかも測ったらその1つに変わってしまうので、残りの行を後から見ることもできない。<strong>表がどれだけ巨大でも、外に取り出せる情報の量はふつうのコンピュータと変わらない</strong>ということですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まさにそこだ。だから「全部の答えを同時に計算するから速い」という説明は、そのままでは成り立たない。同時に計算できても、読めなければ意味がないからね。この壁をどう乗り越えるかが、これから先の全ステージのテーマになる。今日はその前に、巨大な表を<strong>本物にする道具</strong>を手に入れよう。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="exp-svg" class="qc-svg" viewBox="0 0 372 190" width="100%" role="img" aria-label="量子ビットの個数と矢印の表の行数の関係を示す図。1個で2行、2個で4行、10個で1024行と2倍ずつ増え、300個では10の90乗行に達する">
+          <text class="strong" x="186" y="16" text-anchor="middle">量子ビットが1個増えるたび、表は2倍になる</text>
+          <g id="exp-body"></g>
+        </svg>
+        <div class="anim-ctrl">
+          <span class="ctrl-label">量子ビットの個数</span>
+          <input type="range" id="exp-slider" min="1" max="300" step="1" value="2" aria-label="量子ビットの個数を変える" style="flex:1;max-width:280px;min-width:140px;accent-color:#5b3fa6">
+        </div>
+        <div class="readout">
+          <span>量子ビット <b id="exp-n">2</b> 個</span>
+          <span>矢印の表の行数 <b id="exp-rows">4</b></span>
+          <span>1回の測定で読める答え <b>1個</b></span>
+        </div>
+        <div class="diagram-caption">スライダーで量子ビットの個数を変えると、矢印の表の行数（＝答え候補の数）が2倍ずつ増えていく。目盛りは対数――1目盛りごとに10倍になる物差しで、そうしないと画面に収まらない。参考の横線は「観測できる宇宙の原子の数（約10⁸⁰個）」。<strong>およそ266個の量子ビットで、表の行数はこの線を超える</strong>。ただし、行がいくつあっても<strong>1回の測定で外に出てくる答えはつねに1個だけ</strong>。この非対称が、量子アルゴリズム設計のすべての出発点になる。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「本物にする道具」というのは、どういう意味ですか。表が4行あるのは、もう本物では。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい聞き返しだね。例で示そう。量子ビットを2個用意して、<strong>それぞれ別々に</strong> H を当てたとする。1桁目は |0⟩ と |1⟩ が0.71ずつ、2桁目も0.71ずつ。このとき全体の4行の表はどうなるか、計算してみてほしい。「1桁目が |0⟩ で2桁目も |0⟩」という候補 |00⟩ の矢印は、どれくらいの長さになるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">それぞれ独立に起きることだから、<strong>掛け算</strong>だと思います。0.71×0.71＝0.5。同じように |01⟩ も |10⟩ も |11⟩ も0.5。4行とも0.5で、2乗して0.25ずつ、合計1。ちゃんと規格化された、立派な4行の表です。……これのどこが、「本物ではない」んですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いまの計算の手順に、答えが出ているんだよ。きみは4本の矢印を1本ずつ調べたわけではなく、<strong>1桁目の2個と2桁目の2個を、掛け算しただけ</strong>だ。九九の表と同じ構造だね。九九は81マスあるけれど、覚えるのは縦と横の見出しだけで、マスの中身はいつでも掛け算で再現できる。この表も同じで、<strong>「2＋2」の見出しさえ控えておけば、4行を丸ごと再現できる</strong>――つまり、<strong>ふつうのコンピュータでも簡単に真似できてしまう</strong>。こういう「別々の表の掛け算で書ける状態」を<strong>積状態</strong>という。量子ビットをn個持ってきて、それぞれ勝手に操作しているだけなら、状態はずっと積状態のままで、表の行数は2ⁿでも、覚えておくべき数字は1個あたり2個ずつ、合わせて2×n個しかない。300個なら600個――10⁹⁰行の表が、たった600個の見出しで書けてしまう。<br>本物の2ⁿは、<strong>積状態では書けない状態</strong>を作ったときに初めて現れる。そして実は、その状態にきみはもう出会っている。ベルの不等式の旅で調べた、<strong>もつれ</strong>だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">もつれ……あの状態ですか。復習すると、2つの粒子の測定結果が必ず一致する。片方だけ見ればまったくのランダムなのに、2つを突き合わせると完全な相関がある。しかもその相関は「あらかじめ決めておいた答え合わせ」では説明がつかない――ベルの不等式が破れることで、それは実験で確かめられていました。<br>あの不思議な相関と、「掛け算で書けない表」が、同じものだと言うんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">同じものなんだ。それを言葉ではなく計算で確かめるために、今日はもつれを<strong>自分の手で作る</strong>。必要なのは新しいゲート1つだけ――<strong>CNOTゲート</strong>だ。名前は「制御つきNOT」の略で、2つの量子ビットを使う。役割を持たせて、1桁目（左の桁）を<strong>制御ビット</strong>、2桁目（右の桁）を<strong>標的ビット</strong>と呼ぶ。動きはこうだ。<strong>制御ビットが1の行だけ、標的ビットをひっくり返す。制御ビットが0の行は何もしない。</strong><br>表で言えば、|10⟩ の矢印と |11⟩ の矢印を入れ替えるだけ。|00⟩ と |01⟩ には触らない。とても素朴な操作だね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">これでもつれが作れるんですか？ 行を2つ入れ替えるだけの、ずいぶん素朴な操作に見えますが……。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その素朴さで何ができるか、お題で試してみよう。作ってほしいのは、<strong>|00⟩ に0.71、|11⟩ に0.71、残り2行はゼロ</strong>という表だ。使える道具は H と CNOT、出発点は |00⟩。さて、どんな順番で当てればいいかな。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="two-svg" class="qc-svg" viewBox="0 0 372 236" width="100%" role="img" aria-label="2量子ビットの状態シミュレータ。00、01、10、11の4行の矢印の表に、1桁目や2桁目へのアダマールゲート、Xゲート、CNOTゲートを当てて、表がどう変わるかを見る">
+          <text class="strong" x="186" y="16" text-anchor="middle">2量子ビット＝4行の矢印の表</text>
+          <g id="two-body"></g>
+        </svg>
+        <div class="anim-ctrl">
+          <button type="button" class="btn" id="t-h1">H（1桁目）</button>
+          <button type="button" class="btn" id="t-h2">H（2桁目）</button>
+          <button type="button" class="btn" id="t-x1">X（1桁目）</button>
+          <button type="button" class="btn" id="t-cnot">CNOT</button>
+          <button type="button" class="btn" id="t-measure">📏 測定</button>
+          <button type="button" class="btn" id="t-reset">↺ |00⟩に戻す</button>
+        </div>
+        <div class="gate-log" id="t-log"></div>
+        <div class="diagram-caption">4行それぞれに矢印が1本。右向きが「そのままの向き」、左向きが「正反対の向き」。棒グラフは長さの2乗＝その答えが出る確率。<strong>もつれの作り方は2手だけ</strong>：「H（1桁目）」→「CNOT」。すると |00⟩ と |11⟩ にだけ矢印が立ち、|01⟩ と |10⟩ はゼロになる。この状態を測ると、00 か 11 しか出ない――<strong>2つの量子ビットは必ず同じ値になる</strong>。判定欄には、その表が「別々の表の掛け算で書けるか（積状態）」「書けないか（もつれ）」が表示される。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">できました。目標の表では <strong>|11⟩ に矢印が要ります</strong>。CNOT は |10⟩ と |11⟩ の入れ替えですから、<strong>先に |10⟩ に矢印を立てておいて、CNOT で |11⟩ へ運べばいい</strong>。そして |10⟩ に矢印を立てるのは、1桁目に H を当てればできます。<br>やってみます。|00⟩ に H（1桁目）を当てると、表は <strong>|00⟩ が0.71、|10⟩ が0.71</strong>、残り2行はゼロ。次に CNOT。|00⟩ の行は制御が0だからそのまま、|10⟩ の行は制御が1だから標的がひっくり返って <strong>|11⟩</strong> に移る。<br>結果は <strong>|00⟩ が0.71、|11⟩ が0.71、他はゼロ</strong>――お題の表になりました。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">では、いま作った表が本当に<strong>積状態ではない</strong>――別々の表の掛け算では書けないことを、確かめよう。もし掛け算で書けるとしたら、1桁目の表を「|0⟩ に a、|1⟩ に b」、2桁目を「|0⟩ に c、|1⟩ に d」と置ける。このとき4行の矢印はどうなるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">さっきと同じで掛け算です。|00⟩ は a×c、|01⟩ は a×d、|10⟩ は b×c、|11⟩ は b×d。<br>これがいま作った表と一致するには、<strong>a×d＝0</strong> かつ <strong>b×c＝0</strong>、そして <strong>a×c＝0.71</strong>、<strong>b×d＝0.71</strong> でなければいけません。<br>……矛盾します！ a×c が0でないなら、a も c も0ではない。b×d が0でないなら、b も d も0ではない。すると a×d も b×c も0にならないはずです。<strong>そんな a, b, c, d は存在しない</strong>。この表は、どうやっても2つの表の掛け算では書けません。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qc-svg" viewBox="0 0 372 268" width="100%" role="img" aria-label="作った表が積状態で書けないことを示す掛け算の表。1桁目の見出しをaとb、2桁目の見出しをcとdとすると、4行はa×c、a×d、b×c、b×dになる。作った表にはa×cとb×dが0.71、a×dとb×cが0であることが必要だが、条件を順にたどると矛盾する">
+          <text class="strong" x="186" y="16" text-anchor="middle">作った表は「見出しの掛け算」で書けるか？</text>
+          <text class="label" x="70" y="52" text-anchor="middle">見出し</text>
+          <rect x="132" y="34" width="104" height="30" rx="5" fill="var(--paper2)" stroke="var(--line)"/>
+          <text class="label" x="184" y="53" text-anchor="middle">2桁目 |0⟩：c</text>
+          <rect x="248" y="34" width="104" height="30" rx="5" fill="var(--paper2)" stroke="var(--line)"/>
+          <text class="label" x="300" y="53" text-anchor="middle">2桁目 |1⟩：d</text>
+          <rect x="14" y="72" width="104" height="44" rx="5" fill="var(--paper2)" stroke="var(--line)"/>
+          <text class="label" x="66" y="98" text-anchor="middle">1桁目 |0⟩：a</text>
+          <rect x="14" y="124" width="104" height="44" rx="5" fill="var(--paper2)" stroke="var(--line)"/>
+          <text class="label" x="66" y="150" text-anchor="middle">1桁目 |1⟩：b</text>
+          <rect x="132" y="72" width="104" height="44" rx="5" fill="#efe9f9" stroke="#5b3fa6" stroke-width="1.5"/>
+          <text class="strong" x="184" y="90" text-anchor="middle">|00⟩ ＝ a×c</text>
+          <text class="accent" x="184" y="107" text-anchor="middle">0.71 にしたい</text>
+          <rect x="248" y="72" width="104" height="44" rx="5" fill="var(--paper2)" stroke="var(--line)"/>
+          <text class="strong" x="300" y="90" text-anchor="middle">|01⟩ ＝ a×d</text>
+          <text class="label" x="300" y="107" text-anchor="middle">0 にしたい</text>
+          <rect x="132" y="124" width="104" height="44" rx="5" fill="var(--paper2)" stroke="var(--line)"/>
+          <text class="strong" x="184" y="142" text-anchor="middle">|10⟩ ＝ b×c</text>
+          <text class="label" x="184" y="159" text-anchor="middle">0 にしたい</text>
+          <rect x="248" y="124" width="104" height="44" rx="5" fill="#efe9f9" stroke="#5b3fa6" stroke-width="1.5"/>
+          <text class="strong" x="300" y="142" text-anchor="middle">|11⟩ ＝ b×d</text>
+          <text class="accent" x="300" y="159" text-anchor="middle">0.71 にしたい</text>
+          <text class="label" x="186" y="192" text-anchor="middle">|00⟩ のために a×c＝0.71 → a も c も 0 ではない</text>
+          <text class="label" x="186" y="211" text-anchor="middle">|01⟩ のために a×d＝0 → a≠0 なので d＝0 のはず</text>
+          <text class="label" x="186" y="230" text-anchor="middle">すると |11⟩ の b×d は必ず 0 ―― 0.71 にできない</text>
+          <text class="accent" x="186" y="254" text-anchor="middle" style="fill:#b5504a">矛盾！ どんな a, b, c, d でも書けない ＝ もつれ</text>
+        </svg>
+        <div class="diagram-caption">積状態なら、4行は必ずこの掛け算の表の形になる（九九の表と同じ）。いま作った表（|00⟩ と |11⟩ に0.71）にするには4マスの条件が同時に成り立つ必要があるが、上から順にたどると連鎖して行き詰まる。<strong>見出しに戻せない表が存在する</strong>――それがもつれであり、この4行は正真正銘4個ぶんの独立した情報になっている。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その背理法で正しいよ。<strong>それが、もつれ状態だ</strong>。物理学者はこの表を<strong>ベル状態</strong>と呼んでいる。たった2手で作れてしまう。これで「2ⁿ行の表」が本物になる条件が分かったね。<strong>もつれがあるとき、表全体は、各量子ビットの情報をばらばらに集めても再現できない</strong>。300個の量子ビットがしっかりもつれた状態を、ふつうのコンピュータで正直に記録しようとすれば、10⁹⁰個の数字を書き留めることになる。だからこそ、量子コンピュータのシミュレーションは50個あたりでもう手に負えなくなるんだ。<strong>もつれこそが、量子コンピュータをふつうのコンピュータで真似できなくしている当のもの</strong>だよ。</div>
+        </div>
+      </div>
+
+      <div class="column-box">
+        <span class="column-label">発展コラム</span>
+        <div class="column-title">積では書けない。でも、和なら書けている</div>
+        本文で示したのは、正確には「積<strong>1個</strong>では書けない」ということだ。表の各行は、それ単体なら積状態そのもの（たとえば |00⟩ は a＝1、b＝0、c＝1、d＝0 の掛け算で書ける）。だから、どんな状態も「積状態の<strong>和</strong>」としてなら必ず書ける。いま作った表も、0.71×|00⟩ ＋ 0.71×|11⟩ という<strong>積2個の和</strong>だ。もつれとは、和の形にしたとき、<strong>どう工夫しても2項以上の積が必要になる</strong>状態のこと――そして「最低で何項の積が要るか」は、もつれの強さを測る物差しとして実際に使われている。<br>
+        おまけをもうひとつ。2項目の符号だけを変えた 0.71×|00⟩ <strong>−</strong> 0.71×|11⟩ も積2個の和で、読み出せば「00 か 11 が半々で、必ず一致」という同じ結果を与える。でもこれは、元の表とは<strong>別のもつれ状態</strong>だ。STAGE1 で見た |+⟩ と |−⟩ の関係――符号の違いは読み出しには現れないが、干渉させると区別できる――が、もつれた2量子ビットの世界でもそのまま生きている。
+      </div>
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ところで、もつれは「超光速の電話線」ではない――片方だけを見ればただのランダム、というのは前の旅で確かめた通りだ。量子コンピュータでのもつれの役目は、通信ではなく<strong>計算</strong>にある。CNOT が効くのは、こういう場面だよ。2桁目の量子ビットに「1桁目についての何らかの計算結果」を書き込むと、<strong>1桁目のすべての候補について、その計算結果が同時に表に書き込まれる</strong>。しかも書き込みは矢印の付け替えだから、あとで干渉させることができる。<br>――ここまでで、道具はすべてそろった。矢印の表、それを混ぜる H、そして候補ごとに計算結果を結びつける CNOT。次のステージでは、この3つを組み合わせて<strong>世界最小の量子アルゴリズム</strong>を作り、「並列計算だから速い」という説明のどこが間違っているのかを、はっきりさせる。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【複数の量子ビット ― 表の指数関数的な広がりと、もつれ】</span>
+        <span class="step">・量子ビットn個 → 答え候補は2ⁿ通り、<strong>矢印の表は2ⁿ行</strong>。300個で10⁹⁰行（宇宙の原子より多い）</span>
+        <span class="step">・ただし<strong>読み出せるのは1回に1行だけ</strong>。表が巨大でも取り出せる情報は増えない</span>
+        <span class="step">・<strong>積状態</strong>：各量子ビットの表の掛け算で書ける状態（例: |00⟩ |01⟩ |10⟩ |11⟩ が全部0.5）。見出し2×n個で丸ごと再現できる（九九の表と同じ）</span>
+        <span class="step">・<strong>CNOT</strong>：制御ビットが1の行だけ、標的ビットを反転（＝|10⟩ 行と |11⟩ 行の矢印を入れ替える）</span>
+        <span class="step">・<strong>もつれの作り方</strong>：|00⟩ → H（1桁目） → CNOT → |00⟩ と |11⟩ に0.71ずつ（ベル状態）。掛け算では書けないことが背理法で示せる</span>
+        <span class="step">・もつれがあって初めて2ⁿの表は本物になる。ふつうのコンピュータで真似できなくなる原因はここにある。ただし<span class="nw">もつれで通信はできない</span></span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 量子ビットが300個あると矢印の表は約10⁹⁰行になる。ここから言えることは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">1回の測定で10⁹⁰個の答えをまとめて取り出せる</button>
+          <button class="choice-btn">表は途方もなく大きいが、1回の測定で読めるのは1つの答えだけ</button>
+          <button class="choice-btn">量子ビットが300個あれば、どんな問題でもふつうのコンピュータより速く解ける</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 表の大きさと、外に取り出せる情報の量はまったく別の話。測定すれば300桁のビット列が1つ出るだけで、しかも状態はそれに変わってしまう。「表が巨大だから速い」という説明が成り立たない理由がここにある。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. |00⟩ から出発して、1桁目の量子ビットに H を当ててから CNOT をかけた。できあがる表は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">|00⟩ と |11⟩ に0.71ずつ、|01⟩ と |10⟩ はゼロ</button>
+          <button class="choice-btn">4行とも0.5ずつ</button>
+          <button class="choice-btn">|01⟩ と |10⟩ に0.71ずつ、|00⟩ と |11⟩ はゼロ</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ H で |00⟩ と |10⟩ が0.71ずつになり、CNOT は制御（1桁目）が1の行だけ標的を反転するので |10⟩ が |11⟩ に移る。測れば 00 か 11 しか出ない、値が必ず一致するもつれ状態（ベル状態）だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 「もつれ」が量子コンピュータにとって決定的に重要なのはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">もつれを使えば、離れた量子ビットの間で瞬時に情報を送れるから</button>
+          <button class="choice-btn">もつれた量子ビットは測定しても状態が変わらないから</button>
+          <button class="choice-btn">もつれがあると状態が各量子ビットの表の掛け算では書けなくなり、2ⁿ行の表が本物の大きさを持つから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 積状態のままなら、覚えるべき数字は2×n個しかなく、ふつうのコンピュータでも簡単に真似できる。もつれて初めて表全体が「ばらしては再現できない」ものになる。なお、もつれで通信はできない――片方だけを見れば、いつでもただのランダムだ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage3.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QC.initStagePage(4);</script>
+
+<script>
+(function(){
+  // 図1: 量子ビット数と表の行数（対数目盛り）
+  var g = document.getElementById('exp-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CA = '#5b3fa6';
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  // 数字を上付き文字に変換（10のべき乗の表示用）
+  function sup(n) {
+    var d = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+    var s = String(Math.round(Math.abs(n))).split('').map(function (c) { return d[+c]; }).join('');
+    return (n < 0 ? '⁻' : '') + s;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var X0 = 40, X1 = 348, Y0 = 150, Y1 = 40, MAXLOG = 92;
+  el('line', {x1: X0, y1: Y0, x2: X1, y2: Y0, stroke: 'var(--ink)', 'stroke-width': 1.5});
+  el('line', {x1: X0, y1: Y0, x2: X0, y2: Y1, stroke: 'var(--ink)', 'stroke-width': 1.5});
+  txt((X0 + X1) / 2, 172, 'label', '量子ビットの個数（1〜300）');
+  txt(X0 + 6, Y1 - 8, 'label', '表の行数', 'start');
+  // 縦の目盛り（10の何乗）
+  [0, 20, 40, 60, 80].forEach(function (p) {
+    var y = Y0 - (Y0 - Y1) * p / MAXLOG;
+    el('line', {x1: X0, y1: y, x2: X1, y2: y, stroke: 'var(--line)', 'stroke-dasharray': '2 4'});
+    txt(X0 - 4, y + 4, 'label', p === 0 ? '1' : '10' + sup(p), 'end');
+  });
+  // 宇宙の原子数の線
+  var yAtom = Y0 - (Y0 - Y1) * 80 / MAXLOG;
+  el('line', {x1: X0, y1: yAtom, x2: X1, y2: yAtom, stroke: '#b5504a', 'stroke-width': 1.6});
+  var at = txt(X1 - 2, yAtom - 6, 'accent', '宇宙の原子の数 約10⁸⁰個', 'end');
+  at.style.fill = '#b5504a';
+  // 曲線（log10(2^n) = n*log10(2)）
+  var d = '';
+  for (var n = 1; n <= 300; n += 1) {
+    var lx = X0 + (X1 - X0) * (n - 1) / 299;
+    var ly = Y0 - (Y0 - Y1) * (n * Math.LOG10E * Math.LN2) / MAXLOG;
+    d += (n === 1 ? 'M ' : 'L ') + lx.toFixed(1) + ' ' + ly.toFixed(1) + ' ';
+  }
+  el('path', {d: d, fill: 'none', stroke: CA, 'stroke-width': 2.4});
+  var dot = el('circle', {r: 4.5, fill: CA});
+  var slider = document.getElementById('exp-slider');
+  var nEl = document.getElementById('exp-n'), rowsEl = document.getElementById('exp-rows');
+  function fmtRows(n) {
+    if (n <= 53) {
+      var v = Math.pow(2, n);
+      return v.toLocaleString('en-US') + ' 行';
+    }
+    var lg = n * Math.LOG10E * Math.LN2;
+    var e = Math.floor(lg);
+    var m = Math.pow(10, lg - e);
+    return m.toFixed(1) + ' × 10' + sup(e) + ' 行';
+  }
+  function upd() {
+    var n = slider ? parseInt(slider.value, 10) : 2;
+    var lx = X0 + (X1 - X0) * (n - 1) / 299;
+    var ly = Y0 - (Y0 - Y1) * (n * Math.LOG10E * Math.LN2) / MAXLOG;
+    dot.setAttribute('cx', lx); dot.setAttribute('cy', ly);
+    if (nEl) nEl.textContent = String(n);
+    if (rowsEl) rowsEl.textContent = fmtRows(n);
+  }
+  if (slider) slider.addEventListener('input', upd);
+  upd();
+})();
+</script>
+
+<script>
+(function(){
+  // 図2: 2量子ビットのゲート操作シミュレータ（振幅は実数）
+  var g = document.getElementById('two-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CA = '#5b3fa6', CB = '#8a5a2a';
+  var R2 = Math.SQRT1_2;
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var defs = el('defs', {});
+  var mk = el('marker', {id: 't-ah', viewBox: '0 0 8 8', refX: 7, refY: 4, markerWidth: 5.5, markerHeight: 5.5, markerUnits: 'userSpaceOnUse', orient: 'auto'}, defs);
+  el('path', {d: 'M0 0 L8 4 L0 8 z', fill: CA}, mk);
+
+  var names = ['|00⟩', '|01⟩', '|10⟩', '|11⟩'];
+  var rowY = [56, 96, 136, 176];
+  var ax = 96, AL = 30;
+  txt(46, 36, 'label', '候補');
+  txt(ax, 36, 'label', '矢印（振幅）');
+  txt(268, 36, 'label', 'その答えが出る確率');
+  var arrows = [], vals = [], bars = [], pcts = [];
+  names.forEach(function (nm, i) {
+    txt(46, rowY[i] + 4, 'strong', nm, 'middle');
+    el('line', {x1: ax - AL, y1: rowY[i], x2: ax + AL, y2: rowY[i], stroke: 'var(--line)', 'stroke-dasharray': '2 3'});
+    el('circle', {cx: ax, cy: rowY[i], r: 3, fill: 'var(--line)'});
+    arrows.push(el('line', {stroke: CA, 'stroke-width': 3, 'marker-end': 'url(#t-ah)'}));
+    var v = txt(ax + AL + 8, rowY[i] + 4, 'accent', '0.00', 'start');
+    v.style.fill = CA;
+    vals.push(v);
+    el('rect', {x: 196, y: rowY[i] - 9, width: 120, height: 18, fill: 'none', stroke: 'var(--line)'});
+    bars.push(el('rect', {x: 197, y: rowY[i] - 8, height: 16, width: 0, fill: CB, opacity: .85}));
+    pcts.push(txt(322, rowY[i] + 4, 'accent', '0%', 'start'));
+  });
+
+  var st = [1, 0, 0, 0];
+  var log = [];
+  var logEl = document.getElementById('t-log');
+
+  function isProduct() {
+    // a*d - b*c ≈ 0 なら積状態（|00⟩=ac, |01⟩=ad, |10⟩=bc, |11⟩=bd）
+    return Math.abs(st[0] * st[3] - st[1] * st[2]) < 1e-9;
+  }
+  function render() {
+    for (var i = 0; i < 4; i++) {
+      var v = st[i];
+      var sgn = v < 0 ? -1 : 1;
+      arrows[i].setAttribute('x1', ax); arrows[i].setAttribute('y1', rowY[i]);
+      arrows[i].setAttribute('x2', ax + sgn * Math.min(Math.abs(v), 1) * (AL - 4));
+      arrows[i].setAttribute('y2', rowY[i]);
+      arrows[i].setAttribute('opacity', Math.abs(v) > 0.005 ? 1 : 0);
+      vals[i].textContent = (v < -0.0005 ? '−' : '') + Math.abs(v).toFixed(2);
+      var p = v * v;
+      bars[i].setAttribute('width', Math.max(118 * p, 0));
+      pcts[i].textContent = Math.round(p * 100) + '%';
+    }
+    if (logEl) {
+      var kind = isProduct()
+        ? '<strong style="color:#6b7480">積状態</strong>（別々の表の掛け算で書ける）'
+        : '<strong style="color:#5b3fa6">もつれ状態</strong>（掛け算では書けない）';
+      logEl.innerHTML = '判定: ' + kind + '　（当てたゲート: ' +
+        (log.length ? log.map(function (x) { return '<span class="g">' + x + '</span>'; }).join('') : 'なし') + '）';
+    }
+  }
+  function hOn(which) {
+    // which: 0 = 1桁目（左の桁）, 1 = 2桁目（右の桁）に H を当てる
+    // H: |0⟩ →(|0⟩+|1⟩)/√2 ／ |1⟩ →(|0⟩−|1⟩)/√2 を、対象ビットだけに適用する
+    var n = [0, 0, 0, 0];
+    for (var j = 0; j < 4; j++) {
+      var bit = which === 0 ? ((j >> 1) & 1) : (j & 1);
+      var flip = which === 0 ? (j ^ 2) : (j ^ 1);
+      n[j] += st[j] * R2 * (bit === 1 ? -1 : 1);
+      n[flip] += st[j] * R2;
+    }
+    st = n;
+  }
+  function xOn(which) {
+    var n = [0, 0, 0, 0];
+    for (var j = 0; j < 4; j++) {
+      var flip = which === 0 ? (j ^ 2) : (j ^ 1);
+      n[flip] = st[j];
+    }
+    st = n;
+  }
+  function cnot() {
+    var t = st[2]; st[2] = st[3]; st[3] = t;
+  }
+  function push(label) { log.push(label); render(); }
+  var b;
+  b = document.getElementById('t-h1'); if (b) b.addEventListener('click', function () { hOn(0); push('H 1桁目'); });
+  b = document.getElementById('t-h2'); if (b) b.addEventListener('click', function () { hOn(1); push('H 2桁目'); });
+  b = document.getElementById('t-x1'); if (b) b.addEventListener('click', function () { xOn(0); push('X 1桁目'); });
+  b = document.getElementById('t-cnot'); if (b) b.addEventListener('click', function () { cnot(); push('CNOT'); });
+  b = document.getElementById('t-measure');
+  if (b) b.addEventListener('click', function () {
+    var r = Math.random(), acc = 0, pick = 3;
+    for (var i = 0; i < 4; i++) { acc += st[i] * st[i]; if (r < acc) { pick = i; break; } }
+    st = [0, 0, 0, 0]; st[pick] = 1;
+    push('測定→' + ['00', '01', '10', '11'][pick]);
+  });
+  b = document.getElementById('t-reset');
+  if (b) b.addEventListener('click', function () { st = [1, 0, 0, 0]; log = []; render(); });
+  render();
+})();
+</script>
+</body>
+</html>

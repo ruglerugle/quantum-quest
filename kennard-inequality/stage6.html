@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2947">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE6 判別式でフィニッシュ ― 不確定性原理を証明する</title>
+<meta name="description" content="残った式は λ のただの二次関数。「すべての λ で0以上」なら判別式は0以下――中学校で習う判別式が、量子力学最深の定理 Δx·Δp ≥ ℏ/2 にとどめを刺す。証明完成の瞬間。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage6.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="不確定性原理を証明する">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE6 判別式でフィニッシュ ― 不確定性原理を証明する">
+<meta property="og:description" content="中学数学の判別式が、量子力学最深の定理にとどめを刺す。証明完成の瞬間へ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage6.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .kq-svg .par1{fill:none;stroke:#2f6fa6;stroke-width:2.2}
+  .kq-svg .par2{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:6 5}
+  .kq-svg .par3{fill:none;stroke:#b5504a;stroke-width:2;stroke-dasharray:3 4}
+  .kq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .kq-svg .ngzone{fill:rgba(181,80,74,.08)}
+  .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .kq-svg .lb1{fill:#2f6fa6;font-size:12px;font-weight:900}
+  .kq-svg .lb3{fill:#b5504a;font-size:12px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">📐</a> <span>不確定性原理を証明する</span></div>
+      <div class="brand-sub">STAGE 6 ― 判別式でフィニッシュ ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 6</span><span class="chapter-title">判別式でフィニッシュ</span>
+        <div class="chapter-sub">中学数学が定理を倒す</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">「すべての λ で0以上の二次関数は判別式が0以下」を使って、Δx·Δp ≥ ℏ/2 の証明を完成させよう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">前のステージで手に入れた到達点を、あらためて眺めよう。I(λ) ＝ (Δx)²λ² − λ ＋ (Δp)²/ℏ² が、<strong>すべての実数 λ で0以上</strong>。λ² の係数 (Δx)² は正だから（ゼロの場合は後で退治する）、グラフは<strong>下に凸の放物線</strong>だ。ここから先は、きみのホームグラウンドだよ。放物線と横軸の位置関係を調べる道具を、学校で習っているね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">判別式ですね。二次方程式 Aλ²＋Bλ＋C＝0 の解の公式に出てくる、ルートの中身 <strong>D＝B²−4AC</strong>。D が正なら解が2つ――つまり放物線は横軸と2点で交わる。D＝0 なら1点で接する。D が負なら交わらない。解の公式のルートの中がマイナスになったら実数の解なし、という、あれです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それで、「すべての λ で I(λ) ≥ 0」という条件は、D についての条件に言い換えられる。考えてごらん。もし D が正だったら、何が起きてしまうかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">D が正だと、放物線は横軸を2点で突き抜けます。下に凸ですから、<strong>2つの交点の間では放物線は横軸より下</strong>――I(λ) が負になる λ が存在してしまう。でも I(λ) は「2乗の積分」で、負には絶対なれません。矛盾です。だから D は正であってはならない。<strong>D ≤ 0</strong> が必要です。接する（D＝0）のと、浮いている（D＜0）のはセーフですね。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 400 215" width="100%" role="img" aria-label="下に凸の放物線3本。横軸より上に浮いているものと接しているものは許されるが、横軸を突き抜けて負になるものは2乗の積分としてありえない">
+          <rect class="ngzone" x="34" y="150" width="340" height="50"></rect>
+          <line class="axis" x1="30" y1="150" x2="384" y2="150"></line>
+          <line class="axis" x1="44" y1="14" x2="44" y2="200"></line>
+          <path class="par1" d="M90 18 Q210 174 330 18"></path>
+          <path class="par2" d="M80 25 Q210 275 340 25"></path>
+          <path class="par3" d="M110 30 Q210 346 310 30"></path>
+          <text class="lb1" x="336" y="86">D＜0 セーフ</text>
+          <text class="label" x="346" y="140">D＝0 接する</text>
+          <text class="lb3" x="222" y="186">D＞0 は矛盾（負になる）</text>
+          <text class="label" x="376" y="166">λ</text>
+          <text class="label" x="54" y="26">I(λ)</text>
+        </svg>
+        <div class="diagram-caption">I(λ) のグラフとして許されるのは、横軸より上（D＜0）か、接する（D＝0）まで。横軸を突き抜ける放物線（D＞0）は、負になる区間を持つので「2乗の積分」ではありえない。よって D ≤ 0</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">では、いよいよフィニッシュだ。私たちの二次関数の係数は A＝(Δx)²、B＝−1、C＝(Δp)²/ℏ²。判別式 D＝B²−4AC に代入して、D ≤ 0 を整理してごらん。最後まで、きみの手で。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">代入します。D ＝ (−1)² − 4×(Δx)²×(Δp)²/ℏ² ＝ 1 − 4(Δx)²(Δp)²/ℏ² ≤ 0。1 を右に移項して、4(Δx)²(Δp)²/ℏ² ≥ 1。両辺に ℏ² を掛けて4で割ると、(Δx)²(Δp)² ≥ ℏ²/4。両辺とも0以上ですから、平方根をとって大小関係はそのまま……<strong>Δx·Δp ≥ ℏ/2</strong>。……出ました。出てしまいました。証明終わり、です……！</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">おめでとう。それが、1927年にケナードが世界に示した定理だよ。きみはいま、その証明を最初の定義から最後の1行まで、自分の手でたどり切ったんだ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">判別式に代入： <br class="wbr">D ＝ (−1)² − 4·(Δx)²·<span class="nw">(Δp)²/ℏ²</span> ＝ 1 − 4(Δx)²<span class="nw">(Δp)²/ℏ²</span> ≤ 0</span>
+        <span class="step">整理すると： <br class="wbr">(Δx)²(Δp)² ≥ ℏ²/4</span>
+        <span class="step">平方根をとって――【定理（ケナード, 1927）】 <br class="wbr"><strong><span class="nw">Δx·Δp ≥ ℏ/2</span></strong>　∎</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">振り返ると、使った道具は「2乗は0以上」「電子は必ずどこかにいる」「部分積分」「判別式」……たったこれだけです。宇宙のどんな粒子も、どんな最新技術でも破れない限界が、こんなに少ない道具から論理だけで出てくるなんて。それと、ハイゼンベルクの見積もり「およそ h」と比べると、正確な下限 ℏ/2＝h/4π は h の13分の1くらいですね。桁の見積もりとしては彼も良い線だったんだ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい観察だ。ところで、さっき棚上げにした宿題を片付けておこう。判別式の議論は A＝(Δx)² が正であることを使った。では、もし <strong>Δx＝0</strong>――位置が完全に確定した状態――だったらどうなるか。I(λ) の式に A＝0 を入れて、考えてごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">λ² の項が消えて、I(λ) ＝ −λ ＋ (Δp)²/ℏ²。これは傾き −1 の<strong>一次関数</strong>です。一次関数は、λ をどんどん大きくすればいくらでも下がっていく。つまりどこかで必ず負になります。「すべての λ で0以上」と矛盾……。ということは、そもそも <strong>Δx＝0 になる波動関数は存在しない</strong>んですね。位置が完全に確定した電子は、量子力学には存在を許されていない。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。穴は塞がって、証明は完全になった。残る楽しみはあと2つ。等号 Δx·Δp ＝ ℏ/2 を<strong>ぴったり達成する波</strong>は何者なのか。そして、この定理を証明したケナードとは何者で、証明はその後どう磨かれていったのか。最終ステージで、物語を締めくくろう。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 「すべての λ で I(λ) ≥ 0」から、判別式 D について言えることは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">D ≥ 0（解が必ず存在する）</button>
+          <button class="choice-btn">D ≤ 0（D が正だと横軸と2点で交わり、その間で I(λ) が負になって矛盾するから）</button>
+          <button class="choice-btn">D ＝ 1（判別式は常に1になる）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 下に凸の放物線が横軸を突き抜けると、交点の間で必ず負になる。「2乗の積分」は負になれないので、D ≤ 0 しか許されない。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. D ＝ 1 − 4(Δx)²(Δp)²/ℏ² ≤ 0 を整理すると？</p>
+        <div class="choice-list">
+          <button class="choice-btn">Δx·Δp ≤ ℏ/2（ばらつきの積には上限がある）</button>
+          <button class="choice-btn">Δx＋Δp ≥ ℏ/2（ばらつきの和に下限がある）</button>
+          <button class="choice-btn">(Δx)²(Δp)² ≥ ℏ²/4、平方根をとって Δx·Δp ≥ ℏ/2</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 移項と平方根だけで、ケナードの定理 Δx·Δp ≥ ℏ/2 が完成する。1927年の物理学の最深部にとどめを刺したのは、中学校で習う判別式だった。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. Δx＝0（λ² の係数がゼロ）の場合はどうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">I(λ) が一次関数になり、λ を大きくすると必ず負になって矛盾。つまり Δx＝0 の波動関数はそもそも存在しない</button>
+          <button class="choice-btn">判別式が使えないので、その場合だけ定理は成り立たない</button>
+          <button class="choice-btn">Δp も0になって、つじつまが合う</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ I(λ)＝−λ＋(Δp)²/ℏ² は λ が大きいと必ず負になり、「すべての λ で0以上」に矛盾する。位置が完全に確定した状態は量子力学に存在しない――証明の穴を塞ぐと、おまけの定理まで手に入った。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>KQ.initStagePage(6);</script>
+</body>
+</html>

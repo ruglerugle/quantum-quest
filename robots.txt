@@ -3,3 +3,9 @@ Allow: /
 
 Sitemap: https://quantum-mechanics.habatakijuku.com/sitemap.xml
 Sitemap: https://quantum-mechanics.habatakijuku.com/general/sitemap.xml
+Sitemap: https://quantum-mechanics.habatakijuku.com/schrodinger-equation/sitemap.xml
+Sitemap: https://quantum-mechanics.habatakijuku.com/kennard-inequality/sitemap.xml
+Sitemap: https://quantum-mechanics.habatakijuku.com/bell-inequality/sitemap.xml
+Sitemap: https://quantum-mechanics.habatakijuku.com/decoherence-quest/sitemap.xml
+Sitemap: https://quantum-mechanics.habatakijuku.com/quantum-computer/sitemap.xml
+Sitemap: https://quantum-mechanics.habatakijuku.com/quantum-hardware/sitemap.xml

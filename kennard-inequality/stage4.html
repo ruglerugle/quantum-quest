@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2947">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE4 部分積分の魔法 ― 不確定性原理を証明する</title>
+<meta name="description" content="積の微分公式を逆再生すると「微分を相手に押し付けて符号を反転させる」技になる。部分積分で、規格化条件が −1 に化ける補題1と、Δp が波形の傾きの総量になる補題2――証明の弾丸を2発込める。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage4.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="不確定性原理を証明する">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE4 部分積分の魔法 ― 不確定性原理を証明する">
+<meta property="og:description" content="微分を相手に押し付けると符号が反転する。証明の弾丸となる2つの補題を仕込む。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage4.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .kq-svg .boxf{fill:rgba(217,164,65,.25);stroke:var(--gold-dark);stroke-width:1.2}
+  .kq-svg .boxd1{fill:rgba(47,111,166,.3);stroke:#2f6fa6;stroke-width:1}
+  .kq-svg .boxd2{fill:rgba(181,80,74,.3);stroke:#b5504a;stroke-width:1}
+  .kq-svg .boxd3{fill:rgba(138,122,92,.25);stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+  .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">📐</a> <span>不確定性原理を証明する</span></div>
+      <div class="brand-sub">STAGE 4 ― 部分積分の魔法 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 4</span><span class="chapter-title">部分積分の魔法</span>
+        <div class="chapter-sub">証明の弾丸を2つ込める</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">部分積分「微分を相手に押し付けると符号が反転する」を使いこなし、証明の核弾頭になる補題1（∫x(|ψ|²)′dx＝−1）と補題2（(Δp)²＝ℏ²∫|ψ′|²dx）を導こう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日の道具は、19世紀の解析学者たちが毎日のように振るった職人芸「部分積分」だ。出発点は、2つの関数の<strong>積を微分する規則</strong>。f×g という積の傾きはどうなるか。いい考え方があるよ。縦 f、横 g の長方形の面積を思い浮かべてごらん。x がほんの少し進んで、縦が Δf、横が Δg だけ増えたとき、面積はどれだけ増えるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">展開してみます。(f＋Δf)(g＋Δg) − fg ＝ Δf·g ＋ f·Δg ＋ Δf·Δg。図で言うと、右に足される細長い帯と、上に足される細長い帯と、角の小さな正方形ですね。ΔfもΔgも微小なら、角の Δf·Δg は「微小×微小」でほとんど消える。残るのは <strong>Δf·g ＋ f·Δg</strong> の2つの帯です。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 320 190" width="100%" role="img" aria-label="縦f横gの長方形が少し成長すると、増えた面積は2本の帯と小さな角に分かれる。角は微小×微小で無視できる">
+          <rect class="boxf" x="60" y="55" width="130" height="90"></rect>
+          <rect class="boxd1" x="190" y="55" width="22" height="90"></rect>
+          <rect class="boxd2" x="60" y="33" width="130" height="22"></rect>
+          <rect class="boxd3" x="190" y="33" width="22" height="22"></rect>
+          <text class="strong" x="103" y="105">f × g</text>
+          <text class="label" x="222" y="105">Δf·g（横の帯）</text>
+          <text class="label" x="222" y="48">Δf·Δg → 無視</text>
+          <text class="label" x="63" y="24">f·Δg（上の帯）</text>
+          <text class="label" x="60" y="170">面積の増分 ≈ Δf·g ＋ f·Δg　→　(fg)′ ＝ f′g ＋ fg′</text>
+        </svg>
+        <div class="diagram-caption">積の微分公式の図解。長方形の面積 f×g の増え方は「帯2本ぶん」。微小×微小の角は極限で消える。これが (fg)′＝f′g＋fg′ の正体</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう、それが<strong>積の微分公式 (fg)′＝f′g＋fg′</strong> だ。部分積分は、この公式の「逆再生」にすぎない。まず移項して f′g ＝ (fg)′ − fg′。この両辺を −∞ から ＋∞ まで積分する。右辺第1項の「(fg)′ の積分」は、傾きを足し集めたものだから、単純に<strong>両端での値の差</strong> [fg] になる（山道の傾きを全部足せば、ゴールとスタートの標高差になる、というのと同じ理屈だよ）。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">そして私たちの相手は波動関数。前のステージまでの約束で、<strong>遠方では ψ → 0</strong> でした。電子は無限の彼方にはいないから。ということは、f や g に ψ が絡んでいるかぎり、「両端での値」はどちらも0。差の [fg] はまるごと消えます！</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。だから物理の計算では、部分積分はこう覚えるのが実戦的だ――<strong>「積分の中の微分は、相手の関数に押し付けられる。ただし符号が反転する」</strong>。∫f′g dx ＝ −∫fg′ dx。この「押し付けの術」が今日の魔法だよ。さっそく1発目の弾丸を作ろう。証明で後で出会うことになる、こんな積分だ：∫ x (|ψ|²)′ dx。x と、「|ψ|² の微分」の積の積分。押し付けの術を使ってごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">微分が (|ψ|²) に付いているので、これを相手の x に押し付けます。符号を反転して、∫ x (|ψ|²)′ dx ＝ −∫ x′ |ψ|² dx。x を微分したら……傾き1の直線だから x′＝1。つまり −∫ |ψ|² dx。えっ、これ、規格化条件の積分そのものじゃないですか。値は1と決まっています。答えは <strong>−1</strong>！</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り、それが<strong>補題1</strong>だ。ここで起きたことをよく味わってほしいんだ。波の形が何であれ――ガウス型でも、ギザギザでも、二山でも――この積分は<strong>必ず −1</strong> になる。「電子は必ずどこかにいる」という物理の当たり前が、−1 という具体的な数に化けた。無限にある波の形を一網打尽にする仕掛けの、これが最初の歯車だよ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">部分積分（押し付けの術）： <br class="wbr">∫ f′g dx ＝ [fg] − ∫ fg′ dx ＝ −∫ fg′ dx　（ψ が絡めば境界項 [fg]＝0）</span>
+        <span class="step">【補題1】 <br class="wbr">∫ x (|ψ|²)′ dx ＝ −∫ |ψ|² dx ＝ <strong>−1</strong>　（どんな波形でも！ 規格化が −1 に化ける）</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">2発目の弾丸は、前のステージの宿題だった (Δp)² の磨き上げだ。⟨p²⟩ ＝ −ℏ²∫ψ*ψ″dx には2階微分 ψ″ が入っていて扱いにくい。そこで ψ″＝(ψ′)′ とみなして、微分を1回だけ ψ* に押し付けてごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">−ℏ²∫ψ*(ψ′)′dx で、微分を ψ* に押し付けて符号反転。−ℏ² × (−1) × ∫(ψ*)′ψ′dx ＝ ＋ℏ²∫(ψ*)′ψ′dx。……ここで (ψ*)′ は「共役してから微分」ですけど、微分してから共役しても同じことなので (ψ′)* と書けます。すると中身は (ψ′)*×ψ′ ＝ |ψ′|²。複素数 z に対する z*z＝|z|² の関係ですね。つまり <strong>(Δp)² ＝ ℏ²∫|ψ′|²dx</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが<strong>補題2</strong>。この式の美しさに注目してほしい。ごちゃごちゃした複素数の式が、「<strong>傾きの2乗を足し集めたもの</strong>」という、明快で必ず0以上の量に化けた。前のステージできみが見抜いた直感――波形が急峻なほど運動量が大きい――が、これで寸分たがわぬ定理になったんだ。運動量のばらつきとは、波形の傾きの総量。それ以上でも以下でもない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">道具箱を確認させてください。手元にあるのは、規格化条件 ∫|ψ|²dx＝1、位置のばらつき (Δx)²＝∫x²|ψ|²dx、補題1の「−1」、補題2の (Δp)²＝ℏ²∫|ψ′|²dx。……材料はそろった気がします。でも、この4つをどう組み合わせたら「不等式」が出てくるのか、まだ道筋がまったく見えません。等式ばかりで、大小関係がどこにもないんです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いいところに気づいたね。不等式を生む種は、実はきみが STAGE1 で自分の口にした一言の中にあるんだ。「<strong>2乗すれば0以上になる</strong>」――次のステージで、その種が証明の心臓になる。数学者たちが200年前から使ってきた、由緒ある狩りの型を見せよう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【補題2】 <br class="wbr">(Δp)² ＝ ℏ² ∫ |ψ′(x)|² dx　（運動量のばらつき＝波形の傾きの2乗の総量）</span>
+        <span class="step">【道具箱】 <br class="wbr">①∫|ψ|²dx＝1　②(Δx)²＝<span class="nw">∫x²|ψ|²dx</span>　③補題1： ∫x(|ψ|²)′dx＝−1　④補題2</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 部分積分を使うと、∫f′g dx はどう書き換えられる？（ψ が絡む場合）</p>
+        <div class="choice-list">
+          <button class="choice-btn">∫fg′dx（微分が移るだけで符号はそのまま）</button>
+          <button class="choice-btn">∫f′g′dx（両方に微分が付く）</button>
+          <button class="choice-btn">−∫fg′dx（微分が相手に移り、符号が反転する。境界項は遠方で消える）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 積の微分公式の逆再生で ∫f′g dx＝[fg]−∫fg′dx。波動関数は遠方でゼロだから境界項が消え、「押し付けると符号反転」だけが残る。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 境界項 [fg] が消えるのはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">積分の定義でそう決められているから</button>
+          <button class="choice-btn">物理的な波動関数は遠方でゼロに近づくから（電子は無限の彼方にはいない）</button>
+          <button class="choice-btn">f と g がいつも等しいから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ [fg] は「両端での値の差」。電子がどこか有限の範囲に局在している以上、±∞ での値はゼロ。物理の事実が数学の計算を軽くしてくれる場面だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 補題2「(Δp)²＝ℏ²∫|ψ′|²dx」が語っていることは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">運動量のばらつきは、波形の傾きの2乗を足し集めた総量である</button>
+          <button class="choice-btn">運動量のばらつきは、波の高さの最大値で決まる</button>
+          <button class="choice-btn">運動量のばらつきは、波の面積で決まる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 傾きの急な波形ほど Δp が大きい。「波の細かさ＝運動量」という直感が、部分積分によって正確な等式になった。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>KQ.initStagePage(4);</script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2947">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE1 1927年の宿題 ― 不確定性原理を証明する</title>
+<meta name="description" content="ハイゼンベルクの「だいたい h くらい」を定理に変えるには、まず「ばらつき」を誰が計算しても同じ値になる数にする必要がある。ガウスの誤差論から標準偏差を借りてくる、証明の第一歩。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage1.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="不確定性原理を証明する">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE1 1927年の宿題 ― 不確定性原理を証明する">
+<meta property="og:description" content="「ばらつき」を測れる数にする。ガウスの誤差論から標準偏差を借りてくる、証明の第一歩。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage1.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .kq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .kq-svg .base{stroke:var(--line);stroke-width:1}
+  .kq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
+  .kq-svg .arrowhead{fill:var(--muted)}
+  .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">📐</a> <span>不確定性原理を証明する</span></div>
+      <div class="brand-sub">STAGE 1 ― 1927年の宿題 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 1</span><span class="chapter-title">1927年の宿題</span>
+        <div class="chapter-sub">「ばらつき」を数学にする</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">「だいたいの幅」だったΔを、誰が計算しても同じ値になる「標準偏差」で定義し直し、証明すべき定理を一つの式で言えるようになろう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">量子力学の教室で、不確定性原理の正体を突き止めたのを覚えているかな。電子は波動関数 ψ で表される波で、位置の決まった「波束」を作るには、いろいろな波長の波を混ぜるしかない。そして波長は p＝h/λ で運動量に対応しているから、<strong>位置を絞るほど運動量がばらつく</strong>。ハイゼンベルクは1927年、思考実験からこのトレードオフを「Δx と Δp の積は、およそ h より小さくできない」と見積もった。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">覚えています。それで、あのときからずっと気になっていたことがあるんです。その式の <strong>Δx って、正確には何ですか？</strong> 「位置のばらつきの幅」と言われれば分かった気になりますけど、「幅」の測り方は人によって違いそうです。端から端までを測る人もいれば、真ん中あたりの太さを測る人もいる。測り方が決まっていない量の不等式は、証明のしようがないと思うんです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">素晴らしい着眼だよ。それこそが、1927年に物理学界に残された宿題そのものなんだ。ハイゼンベルクの論文の Δ は、実は「だいたいの幅」という曖昧なままだった。だから彼の主張は、正確には定理ではなく<strong>見積もり</strong>だ。これを定理に格上げするには、2つの問いに答えなければいけない。<strong>①「ばらつき」を、誰が計算しても同じ値になるように定義する。②その定義のもとで、積の下限が正確にいくつなのかを、どんな状態についても証明する。</strong>この宿題を同じ年のうちに片付けたのが、アメリカの物理学者ケナードだよ。今回のクエストでは、彼の定理の証明を、最後の1行まで自分の手でたどる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">望むところです。でも①からして難問に見えます。「ばらつき」なんて、あやふやさの代名詞みたいな言葉なのに、それを数学にできるんでしょうか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">実はね、ぴったりの道具が、量子力学が生まれる<strong>100年以上前から</strong>存在していたんだ。天文学者たちは昔から悩んでいた。同じ星の位置を何度測っても、結果が毎回すこしずつ違う。どの値を信じればいいのか、測定の「ぶれ」はどのくらい深刻なのか。この悩みに答えるために、数学者ガウスたちが19世紀はじめに<strong>誤差論</strong>という分野を作り上げた。測定値の散らばりを一つの数にまとめる方法が、そこにきちんと用意されていたんだよ。ケナードの最初の一手は、発明ではなく<strong>借用</strong>だった。星のばらつきのために作られた道具を、電子のばらつきに使ったんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">言われてみれば、同じ構図ですね。星は「何度も測ると毎回違う値」、電子も「同じ状態を何個も測ると毎回違う値」。散らばりを数値にしたいという悩みまで同じです。その道具、どういう仕組みなんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">実際に作ってみるのが早いね。小さな例でやってみよう。5回の測定で 3, 5, 5, 6, 6 という値が出たとする。平均は (3+5+5+6+6)÷5＝5 だ。ばらつきを測りたいから、まず各測定値の「平均からのずれ」を書き出してごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ずれは −2, 0, 0, +1, +1 です。……あ、これをそのまま平均したらダメですね。(−2＋0＋0＋1＋1)÷5＝0。プラスのずれとマイナスのずれが打ち消し合って、どんなにばらついていても答えが0になってしまいます。ずれの「符号」ではなく「大きさ」を見たいわけですから……<strong>絶対値をとってから足せば</strong>よさそうです。2＋0＋0＋1＋1＝4、5で割って 0.8。これで「ばらつきは 0.8」と言えませんか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい筋だよ。それで正しく「ばらつき」を測れている。<strong>平均絶対偏差</strong>という名前もついていて、いまでも使われる立派な指標だ。……ただ、もうひとつ<strong>賢いやり方</strong>がある。絶対値の弱点はね、<strong>符号を消したところで話が終わってしまう</strong>ことなんだ。|−2| は 2、それだけ。式のまま変形して先へ進む、ということができない。ところが<strong>2乗</strong>なら、符号を消したうえで<strong>展開できる</strong>。(a−b)²＝a²−2ab＋b² のようにね。同じ「符号消し」でも、<strong>2乗のほうは、そのあとの計算に使える形で消してくれる</strong>んだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">符号を消すだけなら、どちらでも同じ……。正直、「展開できる」ことがそこまで大事なのかは、まだ実感が湧きません。ただ、<strong>あとの計算に残せる形かどうかで選ぶ</strong>、という考え方は分かりました。<strong>2乗</strong>が選ばれた理由は、そこにあるんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのとおり。ガウスたちが2乗を選んだのも、まさにその理由だよ。では実際に計算してみよう。ずれの2乗は 4, 0, 0, 1, 1。この平均 (4+0+0+1+1)÷5＝1.2 を<strong>分散</strong>と呼ぶ。ただし2乗したせいで単位が「点²」みたいになってしまうから、最後に平方根をとって単位を元に戻す。√1.2 ≈ 1.1。これが<strong>標準偏差</strong>――「ばらつきの幅」の世界標準の定義だ。いま言った「<strong>展開できる</strong>」という強みが、後のステージで証明そのものを動かすことになるよ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">標準偏差の作り方（レシピ）：</span>
+        <span class="step multi"><span class="item">①&nbsp;平均を求める</span>　<span class="item">②&nbsp;各値の「平均からのずれ」を出す</span>　<span class="item">③&nbsp;ずれを2乗する（符号を消す）</span></span>
+        <span class="step multi"><span class="item">④&nbsp;2乗したずれを平均する（＝分散）</span>　<span class="item">⑤&nbsp;平方根をとって単位を戻す（＝標準偏差）</span></span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">これを量子の世界に持ち込もう。<strong>まったく同じ状態の電子を、たくさん用意する</strong>。半分のグループでは位置 x を測り、残り半分のグループでは運動量 p を測る。位置の測定結果の標準偏差、それが <strong>Δx</strong>。運動量の測定結果の標準偏差、それが <strong>Δp</strong> だ。これがケナードの定義だよ。曖昧さはもうどこにもない。状態（つまり波動関数 ψ）を決めれば、Δx も Δp もただ一つの値に決まる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">定義ははっきりしました。……ただ、ひとつ素朴な疑問が。<strong>位置や運動量は、具体的にはどうやって測るんですか？</strong> 電子は目に見えないのに。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">もっともな質問だ。どちらも実在する装置で測れるよ。<strong>位置</strong>は、蛍光スクリーンや検出器にぶつけて、光った場所を読む。二重スリット実験でスクリーンに点が光ったね、あの点の座標だ。<strong>運動量</strong>は、磁場の中で電子がどれだけ曲がるかを見たり、結晶に当てて回折する角度を測ったりする。……ただ、装置がどう働くかという詳しい話は、<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:var(--gold-dark);text-decoration:underline">量子力学の教室</a>に譲ろう。この旅にとって大事なのは、装置の中身ではなく、そのひとつ手前にある区別だからね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">区別、ですか。測り方さえ決まれば、あとは証明するだけだと思っていました。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ハイゼンベルクが1927年にやった議論はね、まさに<strong>装置の話</strong>だった。顕微鏡で電子の位置を見ようとすれば光をぶつけることになり、その光が電子を突き飛ばして運動量を乱してしまう――「<strong>測定が乱すから</strong>」という描像だ。ところが、これから追いかける<strong>ケナードの証明には、測定装置がひとつも出てこない</strong>。波の数学だけで ℏ/2 が出てくるんだ。装置が下手だから測れない、のではなく、<strong>位置と運動量の両方が狭い波は、そもそも存在しない</strong>。本質は、電子が波であることそのものなんだよ。この違いがどれだけ大きいかは、旅の最後で確かめよう。……さあ、定義が決まったから、証明すべきことも一つの式で書けるようになった。これが今回のクエストの頂上だよ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【証明したい定理】 <br class="wbr">どんな波動関数 ψ に対しても：　Δx·Δp ≥ ℏ/2</span>
+        <span class="step multi"><span class="item">Δx：位置測定の標準偏差</span>　<span class="item">Δp：運動量測定の標準偏差</span>　<span class="item">ℏ＝h/2π ≈ 1.05×10⁻³⁴ J·s</span></span>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 320 180" width="100%" role="img" aria-label="ばらつきの小さい分布は細く高い山、ばらつきの大きい分布は広く低い山。標準偏差は山の幅を表す">
+          <line class="base" x1="15" y1="140" x2="305" y2="140"></line>
+          <path class="wave" d="M30 140 Q62 138 70 100 Q80 30 90 100 Q98 138 130 140"></path>
+          <path class="wave" d="M165 140 Q195 132 210 105 Q240 60 270 105 Q285 132 315 140" transform="translate(-10 0)"></path>
+          <line class="arrow" x1="72" y1="155" x2="88" y2="155"></line>
+          <polygon class="arrowhead" points="72,155 77,152 77,158"></polygon>
+          <polygon class="arrowhead" points="88,155 83,152 83,158"></polygon>
+          <line class="arrow" x1="192" y1="155" x2="248" y2="155"></line>
+          <polygon class="arrowhead" points="192,155 197,152 197,158"></polygon>
+          <polygon class="arrowhead" points="248,155 243,152 243,158"></polygon>
+          <text class="strong" x="45" y="20">ばらつき小（Δが小さい）</text>
+          <text class="strong" x="185" y="20">ばらつき大（Δが大きい）</text>
+          <text class="label" x="60" y="172">測定値が集中している</text>
+          <text class="label" x="190" y="172">測定値が散らばっている</text>
+        </svg>
+        <div class="diagram-caption">同じ状態をたくさん用意して測定した結果の分布。標準偏差 Δ は「山の幅」を1つの数で表す。左のように分布が集中していれば Δ は小さく、右のように散らばっていれば大きい</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">頂上がはっきり見えました。あとは Δx と Δp を波動関数 ψ から計算する式に直して、その積が ℏ/2 を下回れないことを、どんな ψ についても示せばいいんですね。……でも、「どんな ψ についても」って、波の形は無限にありますよ。全部を一つずつ調べるわけにはいきません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこが数学の証明の凄みであり、面白さだよ。無限にある波を一網打尽にする論法が、ちゃんと存在するんだ。そのために次のステージから、道具を一つずつ手に入れていく。最初の道具は「積分」――といっても怖がらなくていい、正体は<strong>細かく切って足すだけ</strong>の、素朴な足し算なんだ。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 「平均からのずれ」をそのまま平均してもばらつきの指標にならないのはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">ずれの計算には高度な数学が必要だから</button>
+          <button class="choice-btn">プラスのずれとマイナスのずれが打ち消し合って、必ず0になってしまうから</button>
+          <button class="choice-btn">ずれが整数にならないことがあるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ どんなにばらついた測定値でも、平均からのずれを全部足すと必ず0になる。だから2乗して符号を消してから平均する。これが分散、その平方根が標準偏差だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. ケナードによる Δx の定義は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">まったく同じ状態をたくさん用意して位置を測定した、結果の標準偏差</button>
+          <button class="choice-btn">1回の測定でどうしても生じてしまう誤差の大きさ</button>
+          <button class="choice-btn">測定器の目盛りの細かさの限界</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ Δx は測定器の性能でも1回の誤差でもなく、「測る前の状態そのものが持つばらつき」を標準偏差で測ったもの。状態 ψ を決めれば Δx はただ一つに決まる。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. ハイゼンベルクの1927年の議論と、ケナードの定理の違いは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">ハイゼンベルクの方が数学的に厳密だった</button>
+          <button class="choice-btn">ケナードは実験を繰り返して不等式を確かめた</button>
+          <button class="choice-btn">ハイゼンベルクは思考実験による桁の見積もり、ケナードは曖昧さのない定義のもとで数学的に証明した</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ハイゼンベルクの Δ は「だいたいの幅」のままで、主張も「およそ h より小さくできない」という見積もりだった。ケナードは標準偏差で定義を固定し、どんな状態でも成り立つ定理 Δx·Δp ≥ ℏ/2 として証明したんだ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>KQ.initStagePage(1);</script>
+
+</body>
+</html>

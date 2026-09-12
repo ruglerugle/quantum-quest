@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#143a3e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE3 量子消しゴム ― 消える干渉縞</title>
+<meta name="description" content="経路の手がかりを「読み出せない形の質問」で上書きすると、消えた干渉縞がよみがえる――量子消しゴム実験の仕組みを足し算ルールから導く。全体は常にのっぺりのままで、仕分けによって＋の縞と−の逆縞が現れる。過去の書き換えも超光速通信も起きない理由、「乱すから消える」説と「意識が消す」説が成り立たない理由。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage3.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="消える干渉縞">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE3 量子消しゴム ― 消える干渉縞">
+<meta property="og:description" content="手がかりを消せば縞は戻る。ただし全体は常にのっぺりのまま――量子消しゴムの見事な種明かし。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage3.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .dq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .dq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .dq-svg .accent{fill:#5b3fa6;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌫️</a> <span>消える干渉縞</span></div>
+      <div class="brand-sub">STAGE 3 ― 量子消しゴム ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 3</span><span class="chapter-title">量子消しゴム</span>
+        <div class="chapter-sub">縞の復活実験</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">経路の手がかりを消すと縞が復活する仕組みを、足し算ルールの逆適用として説明しよう。「全体は常にのっぺりのままで、仕分けたときだけ縞が見える」理由と、これが過去の書き換えにならない理由まで言えれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">前回の宿題、「手がかりを消せば縞は戻るか」を実験しよう。ただし、倒れた針を手で立て直すのは「消した」ことにならないよ。立て直す装置の側に、針が倒れていたという記録が移ってしまうだけだからね。手がかりというのは、押しても引いても、どこかに残りやすい。そこで装置を素性のいいものに替えよう。針の代わりに、粒子が左を通ると相棒の<strong>目印粒子</strong>が「<strong>左印</strong>」という状態になり、右を通ると「<strong>右印</strong>」になる仕掛けだ。左印と右印は直交している。つまり働きは前回の検出器と同じ。実際、光子のペアを使うとこういう装置が作れるんだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="marker-svg" class="dq-svg" viewBox="0 0 372 240" width="100%" role="img" aria-label="目印粒子の仕掛けのアニメーション。粒子が左のスリットを通ると、相棒の目印粒子が左印の状態になって飛び去り、右を通ると右印になる。左印と右印の向きは90度開いた直交状態で、完全に区別できる。スクリーンには縞のない分布が積もる">
+          <text class="strong" x="186" y="16" text-anchor="middle">目印粒子が、経路を記録して飛び去る</text>
+          <defs>
+            <marker id="ah-m" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#5b3fa6"></path></marker>
+          </defs>
+          <g id="marker-body"></g>
+        </svg>
+        <div class="diagram-caption">粒子が左を通ると、相棒の<strong>目印粒子</strong>（紫）が「<strong>左印</strong>」の状態（青緑の向き）になって飛び去り、右を通ると「<strong>右印</strong>」（オレンジの向き）になる。左印と右印の開きは90°＝<strong>直交</strong>で、完全に区別できる。つまり働きは、針の倒れる検出器とまったく同じ――スクリーンには縞のない分布が積もる。もつれた光子のペアを使うと、この仕掛けが実際に作れる</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">直交する目印が残る以上、縞は消える。ここまでは前回の理屈そのままです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。ところで、目印粒子への「質問」は1種類ではないんだ。もつれ光子の旅で、偏光板の角度を変えるといろいろな質問ができたのと同じ発想だよ。まず、質問とは何かをはっきりさせておこう。質問というのは、<strong>直交する2本1組の「物差し」を、目印の矢印にあてがう操作</strong>なんだ。答えは必ずどちらかの物差しに決まり、その確率は、<strong>目印の矢印を物差しに沿って分解した「影」の長さの2乗</strong>で決まる――明るさの計算と同じ、いつもの2乗ルールだよ。「左印ですか、右印ですか」という質問は、左印の向きと右印の向きに物差しをあてがうこと。左印の目印はその片方にぴったり沿うから、影は全部そちらに落ちて、答えは100%「左印」になる。そして物差しは、<strong>好きな角度に回してあてがってよい</strong>。例えば、左印・右印の向きから<strong>45°回転させた2本1組の物差し</strong>を用意し、その軸を「<strong>＋</strong>」「<strong>−</strong>」と名づけよう――これが<strong>斜めの質問</strong>だ。左印の矢印は、＋からも−からも同じ45°だけ離れているから、影の長さはぴったり等しく、答えは＋と−が<strong>半々のランダム</strong>。右印の矢印も＋と−から45°ずつだから、やはり半々。つまり、答えを聞いても左印か右印かはまったく分からない、というわけだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="question-svg" class="dq-svg" viewBox="0 0 372 240" width="100%" role="img" aria-label="2種類の質問の比較アニメーション。左のパネルでは左印か右印かの質問の物差しに目印の矢印をあてがい、左印の目印なら影が左印の物差しに全部落ちて答えは100%左印になる。右のパネルでは45度回した斜めの質問の物差しにあてがい、左印の矢印はプラスからもマイナスからも45度離れているので影が等しく、答えは半々になる。目印が右印に切り替わっても、斜めの質問の答えはやはり半々のまま変わらない">
+          <text class="strong" x="186" y="16" text-anchor="middle">同じ目印に、2種類の質問をあてがう</text>
+          <g id="question-body"></g>
+        </svg>
+        <div class="diagram-caption">質問＝直交する2本1組の「物差し」。答えの確率は、目印の矢印（紫）を物差しに沿って分解した<strong>影の長さの2乗</strong>で決まる。左：「左印か右印か」の質問では、左印の目印は物差しにぴったり沿うので答えは100%確定。右：<strong>斜めの質問（＋／−）は物差しを45°回したもの</strong>。左印の矢印は＋からも−からも45°離れているので影は等しく、答えは半々。目印が右印に切り替わっても（アニメで交互に入れ替わる）、斜めの質問の答えは<strong>やはり半々のまま</strong>――だから答えを聞いても、どちらの印だったかは分からない</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">左印でも右印でも答えの出方が同じなら、＋か−かを聞いたところで、目印がどちらの印だったかはまったく分からない。……つまり斜めの質問の答えは、「どちらを通ったか」の手がかりとして<strong>使えない</strong>。これが「消す」の正体ですか。消すというより、<strong>手がかりを読み出せない形の質問で上書きする</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。では本番の実験だ。粒子を1個ずつ飛ばしてスクリーンの点を記録し、同時に毎回、目印に斜めの質問をして＋か−かをメモしておく。さて、まず<strong>スクリーン全体</strong>の点の分布はどうなると思うかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">のっぺりのまま、だと思います。もし目印への質問の仕方を変えただけでスクリーンの点の付き方が変わるなら、遠く離れた場所への瞬間通信に使えてしまいます。もつれで通信はできない、ともつれの旅で学びました。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。全体の分布はのっぺりのまま、1ミリも変わらない。ところが、だ。メモを頼りに点を2つのグループに<strong>仕分け</strong>してごらん。＋の回の点だけを集めると――<strong>縞が現れる</strong>。−の回の点だけを集めると――こちらにも縞。ただし明るい帯と暗い帯が互い違いの、<strong>逆向きの縞</strong>だ。2枚を重ねると、明るい帯が暗い帯をぴったり埋めて、のっぺりに戻る。なぜ仕分けると縞が出るのか――種明かしの鍵をひとつ渡そう。物差しの質問には、答えを返すだけでなく、<strong>目印の状態を、答えの向きに書き換えてしまう</strong>働きがあるんだ。＋と答えた目印は、もう左印でも右印でもない。<strong>＋の状態そのもの</strong>になっている。元がどちらの印だったかの痕跡は、目印の中から消えている。ここまで材料がそろえば、きみなら導けるはずだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">のっぺりの中に、逆向きの縞が2枚、隠れて埋まっていたんですね。その鍵を使って、仕分けで縞が出る理由を導いてみます。答えが＋だった回の筋書きを、終わり方まで省略せずに書きます。筋書き1「粒子が左を通り、目印は<strong>左印</strong>になり、斜めの質問に＋と答えて<strong>＋の状態に書き換わり</strong>、粒子は点xに当たる」。筋書き2「粒子が右を通り、目印は<strong>右印</strong>になり、やはり＋と答えて<strong>＋に書き換わり</strong>、点xに当たる」。最後の写真を並べると――どちらも「粒子は点x、目印は＋」。途中にあった左印と右印の違いは、書き換えで消えてしまって、もう写真のどこにも写っていません。<strong>2枚は完全に一致。合流できる。矢印を足してよい――縞が出る</strong>！</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="merge-svg" class="dq-svg" viewBox="0 0 372 200" width="100%" role="img" aria-label="プラスと答えた回の筋書きの流れ図。左を通った筋書きでは目印が左印になり、右を通った筋書きでは右印になるが、どちらも斜めの質問にプラスと答えた瞬間、目印はプラスの状態に書き換わる。その結果、2つの筋書きの最後の写真は、粒子は点x・目印はプラス、で完全に一致して合流し、矢印を足せるので縞が出る">
+          <text class="strong" x="186" y="16" text-anchor="middle">＋と答えた回：2つの筋書きが同じ写真に合流する</text>
+          <g id="merge-body"></g>
+        </svg>
+        <div class="diagram-caption">＋の回だけを集めたときの筋書きの流れ。途中では「左印／右印」と分かれていた目印が、斜めの質問に＋と答えた瞬間に<strong>＋の状態へ書き換わる</strong>。その結果、2つの筋書きの最後の写真は「粒子は点x・目印は＋」で完全に一致し、<strong>合流できる</strong>――矢印を足してよいので、＋のグループの中には縞が現れる。−と答えた回も同じ理屈で合流するが、計算すると片方の矢印の向きが反転していて、明るい帯と暗い帯が入れ替わった逆縞になる</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。そして−と答えた回も、目印が「−の状態」に書き換わるから、同じ理屈で合流して縞が出るよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">そこで疑問があります。＋の縞の明るい帯は、ふつうの縞と同じ理屈なら、<strong>道のり差が波長のちょうど整数倍</strong>のところのはずです。逆縞と言うからには、−の縞の明るい帯は<strong>道のり差が0.5倍、1.5倍、2.5倍……という半端なところ</strong>に来るのだと思います。どうしてそんなにきれいに、互い違いに分かれるんでしょうか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">影の<strong>符号</strong>まで見れば、きみのその予想ごと証明できるよ。筋書きの矢印は、掛け算で作られる。「左を通って目印が＋と答える」筋書きの矢印は、<strong>左の道のりの矢印 ×（左印が＋の物差しに落とす影の分）</strong>だ。ここで、影には長さだけでなく<strong>どちら側に落ちるか</strong>という向きがあったね。＋の物差しには、左印の影も右印の影も<strong>同じ側</strong>に落ちる。だから＋グループの合計は「左の矢印＋右の矢印」。ところが<strong>−の物差しには、左印の影と右印の影が互いに反対側に落ちる</strong>。反対側に落ちた影の分を掛けるということは、その矢印を<strong>半回転させる</strong>ということだ。だから−グループの合計は「左の矢印−右の矢印」――片方を半回転させてから足したものになる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">それなら結末まで一気に行けます。道のり差が波長の整数倍の点では、左右の矢印は<strong>同じ向き</strong>。足せば最大――その点は＋の縞の<strong>明るい帯</strong>。引けばゼロ――−の縞の<strong>暗い帯</strong>。道のり差が半端な点では左右の矢印は<strong>正反対</strong>。足せばゼロ、引けば最大。つまり＋の明るい帯の場所は必ず−の暗い帯で、−の明るい帯は必ず＋の暗い帯。<strong>きれいに互い違いになるのは偶然ではなく、「足す」と「引く」が正確に裏返しだから</strong>なんですね。2枚を合わせれば明るい帯が暗い帯を埋めてのっぺり――全体の分布が変わらないことともつじつまが合います。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">文句なしの証明だ。＋と−は直交する物差しのペアとして、「足す」と「引く」をちょうど手分けしている。だから縞と逆縞は2枚で1組、合わせてのっぺりになるのは必然なんだよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="alt-svg" class="dq-svg" viewBox="0 0 372 224" width="100%" role="img" aria-label="縞と逆縞が互い違いになる理由の図。道のり差が波長の整数倍の点では左右の矢印が同じ向きで、足すと最大でその点は＋の縞の明るい帯になり、引くとゼロで−の縞の暗い帯になる。道のり差が半端な点では左右の矢印が正反対で、足すとゼロ、引くと最大。足すと引くが正確に裏返しなので、＋の明るい帯は必ず−の暗い帯と同じ位置になる">
+          <text class="strong" x="186" y="16" text-anchor="middle">なぜ互い違いになるのか：足すか、引くか</text>
+          <defs>
+            <marker id="ah3-t" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2f7a6b"></path></marker>
+            <marker id="ah3-o" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#b98a2e"></path></marker>
+            <marker id="ah3-k" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5.5" markerHeight="5.5" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--ink)"></path></marker>
+          </defs>
+          <g id="alt-body"></g>
+        </svg>
+        <div class="diagram-caption">左の矢印（青緑）と右の矢印（オレンジ）の合成。上の段（＋グループ）はそのまま足し、下の段（−グループ）は右の矢印を半回転させてから足す。道のり差が波長の整数倍の点（左列）では、足すと最大＝その点は＋の縞の<strong>明るい帯</strong>になり、引くとゼロ＝−の縞の<strong>暗い帯</strong>になる。半端な点（右列）ではその逆。「足す」と「引く」が正確に裏返しなので、＋の明るい帯の位置は−の暗い帯の位置とぴったり一致し、2枚合わせるとのっぺりに戻る（※「明るい帯・暗い帯」はスクリーン上の縞の話。波の振動の山・谷とは別ものであることに注意）</div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="wave-svg" class="dq-svg" viewBox="0 0 372 288" width="100%" role="img" aria-label="波の重ね合わせで見るアニメーション。上の段では左からの波と右からの波をそのまま重ね、下の段では右の波の山と谷をひっくり返してから重ねる。道のり差が波長の整数倍のときは、そのまま重ねると大きく振れ、ひっくり返して重ねると打ち消し合う。道のり差が半端なときはその逆になる。下のグラフでは、道のり差を動かしたときの2つのグループの明るさが正確に互い違いになることが示される">
+          <text class="strong" x="186" y="16" text-anchor="middle">波で見る：そのまま重ねるか、ひっくり返して重ねるか</text>
+          <g id="wave-body"></g>
+        </svg>
+        <div class="diagram-caption">矢印の足し算は、波の重ね合わせと同じもの（矢印の向き＝波の山が来るタイミング、矢印の長さ＝波の振れ幅）。上段（＋グループ）：左からの波（青緑）と右からの波（オレンジ）を<strong>そのまま重ねる</strong>と、黒い合計の波になる。下段（−グループ）：右の波の<strong>山と谷をひっくり返してから</strong>（＝矢印の半回転）重ねる。道のり差が波長の整数倍なら、2つの波は<strong>山と山・谷と谷がそろう</strong>ので、そのまま重ねれば強め合って大きく振れ――その点は＋の縞の<strong>明るい帯</strong>になる。ひっくり返して重ねれば山と谷が出会って打ち消し合い――−の縞の<strong>暗い帯</strong>になる。半端ならその逆。下のグラフは道のり差を動かしたときの両グループの明るさで、ピークが正確に互い違いになり、合わせると常に一定＝のっぺりに戻る（※波の山・谷は振動の話、明るい帯・暗い帯はスクリーン上の縞の場所の話）</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">1つだけ、気持ち悪さが残ります。目印への質問は、粒子がスクリーンに当たった<strong>あと</strong>に行ってもいいわけですよね。あとから斜めの質問を選んだら縞が見えた――これは過去にさかのぼって縞を作ったことになりませんか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ならないんだ。そこがこの実験のいちばん美しいところだよ。スクリーンの点は最初から最後までのっぺりのまま、<strong>1点も動いていない</strong>。あとから変わるのは「どう仕分けられるか」だけで、仕分けに使うメモは目印に質問して初めて手に入る。過去の書き換えも、光より速い通信も、どこにも起きていない。この実験は実際に光子で行われていてね、偏光を使った量子消しゴム実験の決定版が2000年代に報告されている。結果は、今日きみが導いた計算のとおりだった。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">確認させてください。それなら実質的には、こういうことになりますか――スクリーンには最初から、ばらばらにまんべんなく散った点があるだけ。あとからメモを見て、＋の札と−の札で<strong>グループ分けしただけ</strong>、という。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">半分は正しくて、半分は足りない。「点は最初からのっぺりで、あとから仕分けただけ。過去には何も起きていない」――ここは完全に正しい。だが「ばらばらにまんべんなく」では足りないんだ。無関係なコイン投げで点を2組に仕分けても、のっぺりの薄いコピーが2枚できるだけ――これは当たり前だね。その当たり前と比べたとき、<strong>＋か−で仕分けると縞が出る</strong>という事実の異様さが際立つ。＋か−かというメモが、<strong>点の位置と相関している</strong>――＋の縞の明るい帯にあたる場所の点には＋のメモが付きやすく、暗い帯の場所には−が付きやすいという偏りが、のっぺりの中に最初から仕込まれているんだ。それがもつれの正体だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">なるほど……すると今度は、こう考えたくなります。粒子は最初から「＋族」と「−族」の2種類で、族ごとに明るい帯の場所が決まっていた。まんべんなく見えたのは2つの族が混ざっていたからだ――という説明です。でも、これは怪しい。質問の仕方を変えれば、同じ粒子たちが「左印の族」と「右印の族」（のっぺりの山2つ）にも仕分けられるはずです。<strong>あらゆる質問への答えを書いた札を、あらかじめ全部持っている</strong>という説明は……<a href="https://quantum-mechanics.habatakijuku.com/bell-inequality/" target="_blank" rel="noopener" style="color:#2f7a6b;text-decoration:underline">ベルの旅</a>で葬った、あの<strong>説明書モデル</strong>そのものです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">よく気づいた、その通りだよ。仕分けの札は、粒子が最初から持っているのではなく、<strong>目印に質問したときに初めて決まる</strong>。斜めの質問なら＋と−（縞と逆縞）に、まっすぐの質問なら左と右（山2つ）に――どの向きで切っても、切り口に応じた模様がきちんと現れる。あらかじめ書き込んだ札では、この全対応は再現できない。それこそが、きみがベルの不等式で証明したことだった。つまりこの実験は「あとから仕分けただけ」でありながら、ただの分類作業ではない。そこが、もつれの深さなんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">それから、この実験でひとつはっきりすることがあります。<strong>「検出器が粒子を乱すから縞が消える」という説は、成り立たない</strong>ということです。もし乱れが原因なら、粒子が飛び終わったあとで目印への質問の仕方を変えても、縞が見えるようになるはずがありません。縞が出るかどうかを決めていたのは乱れではなく、<strong>手がかりが読み出せる形で残っているかどうか</strong>だった、ということになります。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが今日いちばんの収穫だ。もうひとつ、<strong>「人間の意識が縞を消す」という説</strong>も、同じ理由で成り立たない。今日の実験のどこにも意識の出番はなかったね。目印と質問の仕方という物理の道具立てだけで、縞は消え、そして戻った。そして、大事な補足をひとつ。目印は、遠く離れた<strong>もつれの相方</strong>でも、わざわざ作った装置でなくても構わない。どの粒子とどの粒子がペアなのか、対応を誰も知らなくてもいい。<strong>手がかりが世界に残る限り、縞は消える</strong>――今日の理屈のまっすぐな延長だ。次のステージでは、その最強の相手と向き合おう。実験室の外の世界ぜんぶ――<strong>環境</strong>だ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="eraser-svg" class="dq-svg" viewBox="0 0 372 250" width="100%" role="img" aria-label="量子消しゴムのアニメーション。上の帯には全部の点が灰色で積もり、縞のないのっぺりした分布になる。下の帯では同じ点が目印の答え＋と−で色分けされ、＋の点は縞、−の点は明るい帯と暗い帯が互い違いの逆縞を作る">
+          <text class="strong" x="186" y="16" text-anchor="middle">同じデータでも、仕分けると縞が見える</text>
+          <g id="eraser-body"></g>
+        </svg>
+        <div class="diagram-caption">上：全部の点をそのまま見ると、のっぺり（縞なし）。下：同じ点を目印の答えで仕分けると、＋の回（紫）は縞、−の回（オレンジ）は明るい帯と暗い帯が入れ替わった逆縞。2色を合わせると明るい帯が暗い帯をちょうど埋めて、上の分布に戻る。点は1つも動いていない――変わったのは「見方」だけ。仕分けなしで見えるのは上の帯だけだから、質問の仕方をあとから変えてもスクリーン全体の見た目は変えられず、超光速通信には使えない</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果 ― 量子消しゴム】</span>
+        <span class="step">・直交する目印（左印／右印）が残る → 縞は消える（前ステージの通り）</span>
+        <span class="step">・目印への<strong>斜めの質問</strong>：答えは＋か−で、左印でも右印でも半々 → 答えは経路の手がかりにならない</span>
+        <span class="step">・＋の回だけ仕分けると、筋書きの終わり方が「＋」に合流 → 矢印を足せる → <strong>縞が復活</strong>。−の回は逆向きの縞</span>
+        <span class="step">・全体（＋と−の合計）は常にのっぺり → 過去の書き換えなし、超光速通信なし</span>
+        <span class="step">・仕分けは「あとからのグループ分け」だが、ただの分類ではない：無関係なコインで分けても縞は出ない。<strong>ラベルが点の位置と相関している</strong>ことが本体で、しかもラベルは質問時に初めて決まる（あらゆる質問対応の札＝説明書モデルはベルの不等式で否定済み）</span>
+        <span class="step">・この実験で否定されること：「乱すから消える」説・「意識が消す」説。縞が出るかどうかを決めるのは<strong>読み出せる手がかりの有無</strong>だけ</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 消えた縞が「復活」して見えるのは、どんなときだった？</p>
+        <div class="choice-list">
+          <button class="choice-btn">目印に斜めの質問をして、その答え（＋／−）ごとに点を仕分けたとき</button>
+          <button class="choice-btn">目印粒子をゴミ箱に捨てたとき</button>
+          <button class="choice-btn">スクリーンの感度を上げたとき</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 斜めの質問の答えが＋なら、左経由の筋書きも右経由の筋書きも「目印は＋」という同じ終わり方に合流する。合流すれば矢印を足せるので、仕分けたグループの中には縞が現れる。目印を捨てるだけでは手がかりが世界から消えないので、縞は戻らない。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 仕分けをせずに、スクリーン全体の点の分布を見ると？</p>
+        <div class="choice-list">
+          <button class="choice-btn">斜めの質問をした日から薄い縞が出る</button>
+          <button class="choice-btn">質問の仕方によって縞になったりのっぺりになったりする</button>
+          <button class="choice-btn">常にのっぺりのまま。だから過去の書き換えにも超光速通信にもならない</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ＋の縞と−の逆縞は明るい帯と暗い帯が互い違いなので、合計すると必ずのっぺりに戻る。目印側で何をしようとスクリーン全体の見た目は不変――これが、もつれを使っても通信できないことと、消しゴムが過去を書き換えていないことの、両方を保証している。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 量子消しゴム実験によって、成り立たないと分かった説はどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">「手がかりが残ると縞が消える」説</button>
+          <button class="choice-btn">「検出器が粒子を乱すから縞が消える」説と「人間の意識が縞を消す」説</button>
+          <button class="choice-btn">「もつれた粒子は同じ質問に同じ答えを返す」という完全相関</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 粒子が飛び終わったあとに目印への質問を変えるだけで縞が見えるようになる以上、「飛行中に乱されたかどうか」は縞が出るかどうかとは無関係。また実験のどこにも意識は登場しない。縞が出るかどうかを決めるのは「読み出せる手がかりが世界に残っているか」だけ――これがこの旅の背骨になる。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>DQ.initStagePage(3);</script>
+
+<script>
+(function(){
+  // 図0: 目印粒子の仕掛け。粒子が通ったスリットに応じて目印が左印/右印になって飛び去る
+  var svg = document.getElementById('marker-svg');
+  var g = document.getElementById('marker-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C1 = '#2f7a6b', C2 = '#b98a2e', CM = '#5b3fa6';
+  var SRC = {x: 30, y: 135}, SL = {x: 110, y: 105}, SR = {x: 110, y: 165};
+  var SCX = 250, TOP = 45, BOT = 225;
+  var PX = 332, PY = 88, PR = 28;
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+
+  // 装置
+  el('circle', {cx: SRC.x, cy: SRC.y, r: 5, fill: C2});
+  txt(SRC.x, SRC.y + 20, 'label', '光源');
+  el('line', {x1: 110, y1: 40, x2: 110, y2: SL.y - 8, stroke: 'var(--ink)', 'stroke-width': 4});
+  el('line', {x1: 110, y1: SL.y + 8, x2: 110, y2: SR.y - 8, stroke: 'var(--ink)', 'stroke-width': 4});
+  el('line', {x1: 110, y1: SR.y + 8, x2: 110, y2: 230, stroke: 'var(--ink)', 'stroke-width': 4});
+  txt(96, SL.y + 4, 'label', '左', 'end');
+  txt(96, SR.y + 4, 'label', '右', 'end');
+  el('line', {x1: SCX, y1: TOP, x2: SCX, y2: BOT, stroke: 'var(--ink)', 'stroke-width': 3});
+  txt(SCX, 38, 'label', 'スクリーン');
+
+  // のっぺり分布（理論カーブ）と点
+  function hump(y, c) { return Math.exp(-Math.pow((y - c) / 34, 2)); }
+  function pdf(y) { return 0.5 * hump(y, SL.y + 15) + 0.5 * hump(y, SR.y - 15); }
+  var d = '';
+  for (var yy = TOP; yy <= BOT; yy += 2) {
+    d += (d === '' ? 'M ' : 'L ') + (SCX + 8 + pdf(yy) * 60).toFixed(1) + ' ' + yy + ' ';
+  }
+  el('path', {d: d, fill: 'none', stroke: '#8a6a24', 'stroke-width': 1.6, 'stroke-dasharray': '3 3'});
+  var dotsG = el('g', {});
+  var dots = [];
+  function addDot(y) {
+    if (dots.length >= 700) return; // 点は増える一方。十分たまったら追加を止める
+    var c = el('circle', {cx: (SCX + 5 + Math.random() * 8).toFixed(1), cy: y.toFixed(1), r: 1.6, fill: 'var(--ink)', opacity: .75}, dotsG);
+    dots.push(c);
+  }
+  function sampleY() {
+    for (var i = 0; i < 60; i++) {
+      var y = TOP + Math.random() * (BOT - TOP);
+      if (Math.random() < pdf(y)) return y;
+    }
+    return SRC.y;
+  }
+
+  // 目印の状態パネル（左印と右印は90°＝直交）
+  txt(PX, 46, 'label', '目印の状態');
+  el('circle', {cx: PX, cy: PY, r: PR, fill: 'var(--paper2)', stroke: 'var(--line)'});
+  var DIRL = {x: -0.707, y: -0.707}, DIRR = {x: 0.707, y: -0.707};
+  el('line', {x1: PX, y1: PY, x2: PX + DIRL.x * 23, y2: PY + DIRL.y * 23, stroke: C1, 'stroke-width': 1.6, 'stroke-dasharray': '3 3'});
+  el('line', {x1: PX, y1: PY, x2: PX + DIRR.x * 23, y2: PY + DIRR.y * 23, stroke: C2, 'stroke-width': 1.6, 'stroke-dasharray': '3 3'});
+  var lblL = txt(PX - 26, 60, 'label', '左印');
+  lblL.style.fill = C1; lblL.style.fontWeight = '900';
+  var lblR = txt(PX + 26, 60, 'label', '右印');
+  lblR.style.fill = C2; lblR.style.fontWeight = '900';
+  var stateArrow = el('line', {x1: PX, y1: PY, x2: PX, y2: PY, stroke: CM, 'stroke-width': 3, 'stroke-linecap': 'round', 'marker-end': 'url(#ah-m)', opacity: 0});
+  var stateTxt = txt(PX, PY + PR + 18, 'strong', '');
+  txt(PX, PY + PR + 33, 'label', '開き90°＝直交');
+
+  var particle = el('circle', {r: 4, fill: 'var(--ink)', opacity: 0});
+  var markerDot = el('circle', {r: 3, fill: CM, opacity: 0});
+
+  function setState(isLeft) {
+    var dir = isLeft ? DIRL : DIRR;
+    stateArrow.setAttribute('x2', PX + dir.x * 20);
+    stateArrow.setAttribute('y2', PY + dir.y * 20);
+    stateArrow.setAttribute('opacity', 1);
+    stateTxt.textContent = isLeft ? '左印' : '右印';
+    stateTxt.style.fill = isLeft ? C1 : C2;
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) {
+    for (var i = 0; i < 240; i++) addDot(sampleY());
+    setState(true);
+    return;
+  }
+
+  var t = 0, running = false, raf = null;
+  var cur = {slit: 'L', y: sampleY()};
+  function loop() {
+    if (!running) return;
+    t += 0.016;
+    var phase = (t % 1.0) / 1.0;
+    var slitP = cur.slit === 'L' ? SL : SR;
+    if (phase < 0.35) { // 光源→スリット
+      var p = phase / 0.35;
+      particle.setAttribute('opacity', 1);
+      particle.setAttribute('cx', (SRC.x + (slitP.x - SRC.x) * p).toFixed(1));
+      particle.setAttribute('cy', (SRC.y + (slitP.y - SRC.y) * p).toFixed(1));
+      markerDot.setAttribute('opacity', 0);
+      if (phase < 0.03) { stateArrow.setAttribute('opacity', 0.25); }
+    } else if (phase < 0.8) { // スリット→スクリーン。同時に目印がパネルへ飛ぶ
+      var p2 = (phase - 0.35) / 0.45;
+      particle.setAttribute('cx', (slitP.x + (SCX - slitP.x) * p2).toFixed(1));
+      particle.setAttribute('cy', (slitP.y + (cur.y - slitP.y) * p2).toFixed(1));
+      markerDot.setAttribute('opacity', 1);
+      markerDot.setAttribute('cx', (slitP.x + (PX - slitP.x) * p2).toFixed(1));
+      markerDot.setAttribute('cy', (slitP.y + (PY - slitP.y) * p2).toFixed(1));
+      if (p2 > 0.96) { setState(cur.slit === 'L'); markerDot.setAttribute('opacity', 0); }
+    } else {
+      if (particle.getAttribute('opacity') !== '0') {
+        particle.setAttribute('opacity', 0);
+        markerDot.setAttribute('opacity', 0);
+        setState(cur.slit === 'L');
+        addDot(cur.y);
+        var y2 = sampleY();
+        cur = {slit: hump(y2, SL.y + 15) > hump(y2, SR.y - 15) ? 'L' : 'R', y: y2};
+      }
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+<script>
+(function(){
+  // 図0b: 2種類の質問（物差し）の比較。影の長さの2乗＝答えの確率
+  var svg = document.getElementById('question-svg');
+  var g = document.getElementById('question-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C1 = '#2f7a6b', C2 = '#b98a2e', CM = '#5b3fa6';
+  var L = 40, R = 50;
+  var P1 = {x: 100, y: 128}, P2 = {x: 272, y: 128};
+  var U135 = {x: -0.7071, y: -0.7071}, U45 = {x: 0.7071, y: -0.7071};
+  var UP = {x: 0, y: -1}, RIGHT = {x: 1, y: 0};
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  function axis(c, u, color) {
+    el('line', {x1: c.x - u.x * (R - 4), y1: c.y - u.y * (R - 4), x2: c.x + u.x * (R - 4), y2: c.y + u.y * (R - 4), stroke: color, 'stroke-width': 1.4});
+  }
+  function axisLabel(c, u, color, content) {
+    var t = txt(c.x + u.x * (R + 12), c.y + u.y * (R + 12) + 4, 'label', content);
+    t.style.fill = color; t.style.fontWeight = '900';
+  }
+
+  txt(P1.x, 52, 'strong', '「左印か右印か」の質問');
+  txt(P2.x, 52, 'strong', '斜めの質問（＋か−か）');
+  var stateLbl = txt(186, 34, 'label', '');
+  stateLbl.style.fontWeight = '900';
+
+  var panels = [
+    {c: P1, axes: [{u: U135, color: C1, name: '左印'}, {u: U45, color: C2, name: '右印'}]},
+    {c: P2, axes: [{u: UP, color: CM, name: '＋'}, {u: RIGHT, color: CM, name: '−'}]}
+  ];
+  var dyn = [];
+  panels.forEach(function(p){
+    el('circle', {cx: p.c.x, cy: p.c.y, r: R, fill: 'var(--paper2)', stroke: 'var(--line)'});
+    p.axes.forEach(function(a){ axis(p.c, a.u, a.color); axisLabel(p.c, a.u, a.color, a.name); });
+    var d = {
+      sh: p.axes.map(function(a){ return el('line', {stroke: a.color, 'stroke-width': 4, opacity: .55, 'stroke-linecap': 'round'}); }),
+      drop: p.axes.map(function(){ return el('line', {stroke: 'var(--muted)', 'stroke-width': 1, 'stroke-dasharray': '2 3'}); }),
+      arrow: el('line', {stroke: CM, 'stroke-width': 3, 'stroke-linecap': 'round', 'marker-end': 'url(#ah-m)'}),
+      read: txt(p.c.x, p.c.y + R + 26, 'strong', '')
+    };
+    dyn.push(d);
+  });
+  txt(186, 232, 'label', '答えの確率＝影の長さの2乗（いつもの2乗ルール）');
+
+  function draw(angDeg) {
+    var a = angDeg * Math.PI / 180;
+    var dir = {x: Math.cos(a), y: -Math.sin(a)};
+    var isLeft = angDeg > 90;
+    stateLbl.textContent = '目印の状態：' + (angDeg === 135 ? '左印' : angDeg === 45 ? '右印' : '（切り替え中）');
+    stateLbl.style.fill = isLeft ? C1 : C2;
+    panels.forEach(function(p, i){
+      var d = dyn[i];
+      var tip = {x: p.c.x + dir.x * L, y: p.c.y + dir.y * L};
+      d.arrow.setAttribute('x1', p.c.x); d.arrow.setAttribute('y1', p.c.y);
+      d.arrow.setAttribute('x2', tip.x.toFixed(1)); d.arrow.setAttribute('y2', tip.y.toFixed(1));
+      var probs = [];
+      p.axes.forEach(function(ax, j){
+        var s = dir.x * ax.u.x + dir.y * ax.u.y; // 物差しへの成分（符号つき）
+        var foot = {x: p.c.x + ax.u.x * s * L, y: p.c.y + ax.u.y * s * L};
+        d.sh[j].setAttribute('x1', p.c.x); d.sh[j].setAttribute('y1', p.c.y);
+        d.sh[j].setAttribute('x2', foot.x.toFixed(1)); d.sh[j].setAttribute('y2', foot.y.toFixed(1));
+        d.drop[j].setAttribute('x1', tip.x.toFixed(1)); d.drop[j].setAttribute('y1', tip.y.toFixed(1));
+        d.drop[j].setAttribute('x2', foot.x.toFixed(1)); d.drop[j].setAttribute('y2', foot.y.toFixed(1));
+        probs.push(ax.name + ' ' + Math.round(s * s * 100) + '%');
+      });
+      d.read.textContent = probs.join('　');
+    });
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) { draw(135); return; }
+
+  var t = 0, running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    t += 0.016;
+    var ph = t % 5;
+    var ang;
+    if (ph < 2.0) ang = 135;
+    else if (ph < 2.5) ang = 135 - (ph - 2.0) / 0.5 * 90;
+    else if (ph < 4.5) ang = 45;
+    else ang = 45 + (ph - 4.5) / 0.5 * 90;
+    draw(ang);
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+<script>
+(function(){
+  // 図0c: ＋の回の筋書き合流図（静的）
+  var g = document.getElementById('merge-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C1 = '#2f7a6b', C2 = '#b98a2e', CM = '#5b3fa6', CG = '#8a6a24';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, size) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': 'middle'});
+    t.textContent = content;
+    if (size) t.style.fontSize = size + 'px';
+    return t;
+  }
+  function box(x, y, w, h, color) {
+    el('rect', {x: x, y: y, width: w, height: h, rx: 7, fill: 'var(--paper2)', stroke: color, 'stroke-width': 1.8});
+  }
+  function arrow(x1, y1, x2, y2) {
+    el('line', {x1: x1, y1: y1, x2: x2 - 2, y2: y2, stroke: 'var(--muted)', 'stroke-width': 1.6});
+    var ang = Math.atan2(y2 - y1, x2 - x1);
+    var hx = x2, hy = y2;
+    el('path', {d: 'M ' + hx + ' ' + hy + ' L ' + (hx - 8 * Math.cos(ang) + 3.5 * Math.sin(ang)) + ' ' + (hy - 8 * Math.sin(ang) - 3.5 * Math.cos(ang)) + ' L ' + (hx - 8 * Math.cos(ang) - 3.5 * Math.sin(ang)) + ' ' + (hy - 8 * Math.sin(ang) + 3.5 * Math.cos(ang)) + ' z', fill: 'var(--muted)'});
+  }
+
+  var Y1 = 64, Y2 = 136, H = 30;
+  // 左経由レーン
+  box(14, Y1 - H / 2, 68, H, C1); txt(48, Y1 + 4, 'strong', '左を通る', 10.5);
+  box(100, Y1 - H / 2, 68, H, C1); txt(134, Y1 + 4, 'strong', '目印は左印', 10);
+  // 右経由レーン
+  box(14, Y2 - H / 2, 68, H, C2); txt(48, Y2 + 4, 'strong', '右を通る', 10.5);
+  box(100, Y2 - H / 2, 68, H, C2); txt(134, Y2 + 4, 'strong', '目印は右印', 10);
+  // 共有: 書き換え
+  box(186, 78, 96, 44, CM);
+  txt(234, 96, 'strong', '斜めの質問に「＋」', 9.5);
+  txt(234, 112, 'strong', '目印は＋に書き換え', 9.5);
+  var m = txt(234, 72, 'label', '合流！', 10.5);
+  m.style.fill = CM; m.style.fontWeight = '900';
+  // 最終: 写真一致
+  box(296, 78, 72, 44, CG);
+  txt(332, 96, 'strong', '写真が一致', 10);
+  txt(332, 112, 'strong', '点x・目印＋', 9.5);
+  // 矢印
+  arrow(82, Y1, 100, Y1);
+  arrow(82, Y2, 100, Y2);
+  arrow(168, Y1, 186, 90);
+  arrow(168, Y2, 186, 110);
+  arrow(282, 100, 296, 100);
+  txt(186, 188, 'label', '終わりが一致 → 矢印を足せる → 縞（−の回も同様、ただし逆向きの縞）');
+})();
+</script>
+
+<script>
+(function(){
+  // 図0d: 足すか引くか（＋縞と−逆縞が互い違いになる理由、静的）
+  var g = document.getElementById('alt-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C1 = '#2f7a6b', C2 = '#b98a2e';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, size, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    if (size) t.style.fontSize = size + 'px';
+    return t;
+  }
+  function arrowLine(x1, y, x2, color, marker) {
+    el('line', {x1: x1, y1: y, x2: x2, y2: y, stroke: color, 'stroke-width': 2.5, 'stroke-linecap': 'round', 'marker-end': 'url(#' + marker + ')'});
+  }
+
+  // 列見出し
+  txt(160, 42, 'strong', '道のり差＝波長の整数倍', 11);
+  txt(305, 42, 'strong', '半端（0.5倍、1.5倍…）', 11);
+  // 行見出し
+  var rp = txt(46, 84, 'strong', '＋：足す', 11);
+  rp.style.fill = '#5b3fa6';
+  var rm = txt(46, 148, 'strong', '−：引く', 11);
+  rm.style.fill = '#5b3fa6';
+  txt(46, 163, 'label', '（半回転して足す）', 8.5);
+
+  // セル: [列cx, 行y, 右矢印の向き(1=右,-1=左), 結果(max/zero)]
+  var L = 30;
+  var cells = [
+    {cx: 160, y: 72, dir: 1, res: 'max'},   // ＋ × 整数倍: →→
+    {cx: 305, y: 72, dir: -1, res: 'zero'}, // ＋ × 半端: →←
+    {cx: 160, y: 136, dir: -1, res: 'zero'},// − × 整数倍: 半回転で →←
+    {cx: 305, y: 136, dir: 1, res: 'max'}   // − × 半端: 半回転で →→
+  ];
+  cells.forEach(function(c){
+    var x0 = c.cx - 45;
+    // 左の矢印（青緑、常に右向き）
+    arrowLine(x0, c.y, x0 + L, C1, 'ah3-t');
+    // 右の矢印（オレンジ）: つなぎ足し
+    if (c.dir === 1) arrowLine(x0 + L, c.y, x0 + 2 * L, C2, 'ah3-o');
+    else arrowLine(x0 + L, c.y, x0, C2, 'ah3-o');
+    // 合計
+    if (c.res === 'max') {
+      arrowLine(x0, c.y + 16, x0 + 2 * L, 'var(--ink)', 'ah3-k');
+      var t1 = txt(c.cx + 28, c.y + 20, 'label', '明るい', 10, 'start');
+      t1.style.fill = 'var(--ok)'; t1.style.fontWeight = '900';
+    } else {
+      el('circle', {cx: x0, cy: c.y + 16, r: 2.5, fill: 'var(--ink)'});
+      var t2 = txt(c.cx + 28, c.y + 20, 'label', '暗い', 10, 'start');
+      t2.style.fill = 'var(--ng)'; t2.style.fontWeight = '900';
+    }
+  });
+  el('line', {x1: 20, y1: 110, x2: 352, y2: 110, stroke: 'var(--line)', 'stroke-width': 1, 'stroke-dasharray': '4 4'});
+  txt(186, 196, 'label', '「足す」と「引く」は正確に裏返し → ＋の明るい帯＝−の暗い帯', 10.5);
+  txt(186, 212, 'label', '→ 2枚合わせると、明るい帯が暗い帯を埋めてのっぺり', 10.5);
+})();
+</script>
+
+<script>
+(function(){
+  // 図0e: 波の重ね合わせで見る＋/−グループのアニメ
+  var svg = document.getElementById('wave-svg');
+  var g = document.getElementById('wave-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C1 = '#2f7a6b', C2 = '#b98a2e', CP = '#5b3fa6';
+  var X0 = 20, X1 = 268, A = 15, LAMPX = 62;
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+
+  var deltaTxt = txt(186, 34, 'label', '');
+  deltaTxt.style.fontWeight = '900';
+
+  // 上下2パネル
+  var P = [
+    {base: 86, title: '＋グループ：そのまま重ねる', flip: 1},
+    {base: 170, title: '−グループ：右の波をひっくり返してから重ねる', flip: -1}
+  ];
+  var readouts = [];
+  P.forEach(function(p){
+    var t = txt(X0, p.base - 2 * A - 8, 'label', p.title, 'start');
+    t.style.fontWeight = '900';
+    el('line', {x1: X0, y1: p.base, x2: X1, y2: p.base, stroke: 'var(--line)', 'stroke-width': 1});
+    p.wL = el('path', {fill: 'none', stroke: C1, 'stroke-width': 1.5, opacity: .8});
+    p.wR = el('path', {fill: 'none', stroke: C2, 'stroke-width': 1.5, opacity: .8});
+    p.wS = el('path', {fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2.6});
+    var r = txt(320, p.base + 4, 'strong', '');
+    readouts.push(r);
+  });
+
+  // 下: 明るさ vs 道のり差 のグラフ
+  var GX0 = 40, GX1 = 340, GY0 = 258, GH = 36, UMAX = 2.5;
+  function gx(u) { return GX0 + u / UMAX * (GX1 - GX0); }
+  el('line', {x1: GX0 - 6, y1: GY0, x2: GX1 + 6, y2: GY0, stroke: 'var(--ink)', 'stroke-width': 1.4});
+  [0, 0.5, 1, 1.5, 2, 2.5].forEach(function(u){
+    el('line', {x1: gx(u), y1: GY0, x2: gx(u), y2: GY0 + 4, stroke: 'var(--ink)'});
+    txt(gx(u), GY0 + 15, 'label', String(u));
+  });
+  txt(186, 284, 'label', '道のり差（波長の何倍か）');
+  function curve(f, color) {
+    var d = '';
+    for (var i = 0; i <= 120; i++) {
+      var u = UMAX * i / 120;
+      d += (i === 0 ? 'M ' : 'L ') + gx(u).toFixed(1) + ' ' + (GY0 - 5 - f(u) * GH).toFixed(1) + ' ';
+    }
+    el('path', {d: d, fill: 'none', stroke: color, 'stroke-width': 2});
+  }
+  function fP(u) { return Math.pow(Math.cos(Math.PI * u), 2); }
+  function fM(u) { return Math.pow(Math.sin(Math.PI * u), 2); }
+  curve(fP, CP); curve(fM, C2);
+  var lg1 = txt(112, 212, 'label', '＋の明るさ', 'start');
+  lg1.style.fill = CP; lg1.style.fontWeight = '900';
+  var lg2 = txt(206, 212, 'label', '−の明るさ', 'start');
+  lg2.style.fill = C2; lg2.style.fontWeight = '900';
+  var dotP = el('circle', {r: 4, fill: CP});
+  var dotM = el('circle', {r: 4, fill: C2});
+
+  function wavePath(base, phase, sign) {
+    var d = '';
+    for (var x = X0; x <= X1; x += 4) {
+      var y = base - sign * A * Math.sin(2 * Math.PI * x / LAMPX - phase);
+      d += (d === '' ? 'M ' : 'L ') + x + ' ' + y.toFixed(1) + ' ';
+    }
+    return d;
+  }
+  function sumPath(base, phi, flip) {
+    var d = '';
+    for (var x = X0; x <= X1; x += 4) {
+      var arg = 2 * Math.PI * x / LAMPX;
+      var y = base - A * (Math.sin(arg) + flip * Math.sin(arg - phi));
+      d += (d === '' ? 'M ' : 'L ') + x + ' ' + y.toFixed(1) + ' ';
+    }
+    return d;
+  }
+
+  function draw(u, tphase) {
+    var phi = 2 * Math.PI * u;
+    deltaTxt.textContent = '道のり差 ＝ 波長 × ' + u.toFixed(2);
+    P.forEach(function(p, i){
+      // 時間位相 tphase で波を流す（表示は空間波形＋時間シフト）
+      var d1 = '', d2 = '', ds = '';
+      for (var x = X0; x <= X1; x += 4) {
+        var arg = 2 * Math.PI * x / LAMPX - tphase;
+        var yL = p.base - A * Math.sin(arg);
+        var yR = p.base - p.flip * A * Math.sin(arg - phi);
+        var yS = p.base - A * (Math.sin(arg) + p.flip * Math.sin(arg - phi));
+        d1 += (d1 === '' ? 'M ' : 'L ') + x + ' ' + yL.toFixed(1) + ' ';
+        d2 += (d2 === '' ? 'M ' : 'L ') + x + ' ' + yR.toFixed(1) + ' ';
+        ds += (ds === '' ? 'M ' : 'L ') + x + ' ' + yS.toFixed(1) + ' ';
+      }
+      p.wL.setAttribute('d', d1); p.wR.setAttribute('d', d2); p.wS.setAttribute('d', ds);
+      var v = i === 0 ? fP(u) : fM(u);
+      readouts[i].textContent = '明るさ ' + Math.round(v * 100) + '%';
+    });
+    dotP.setAttribute('cx', gx(u)); dotP.setAttribute('cy', GY0 - 5 - fP(u) * GH);
+    dotM.setAttribute('cx', gx(u)); dotM.setAttribute('cy', GY0 - 5 - fM(u) * GH);
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) { draw(1.0, 0.8); return; }
+
+  var t = 0, running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    t += 0.016;
+    var ph = (t % 16) / 16;
+    var tri = ph < 0.5 ? ph * 2 : (1 - ph) * 2;
+    draw(tri * UMAX, t * 3.2);
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+<script>
+(function(){
+  // 図1: 仕分け前（灰色のっぺり）と仕分け後（＋縞/−逆縞）の2帯アニメ
+  var svg = document.getElementById('eraser-svg');
+  var g = document.getElementById('eraser-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CP = '#5b3fa6', CM = '#b98a2e';
+  var X0 = 40, W = 300;
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+
+  // 帯: 上=全体 下=仕分け
+  var BANDS = [
+    {y: 46, h: 62, label: '仕分け前（全部の点）'},
+    {y: 140, h: 84, label: '仕分け後（＋は紫、−はオレンジ）'}
+  ];
+  BANDS.forEach(function(b){
+    el('rect', {x: X0, y: b.y, width: W, height: b.h, fill: 'var(--paper2)', stroke: 'var(--line)', rx: 6});
+    txt(X0 + W / 2, b.y - 6, 'label', b.label);
+  });
+  txt(X0 + W / 2, 244, 'label', '横方向＝スクリーン上の位置');
+
+  function env(u) { return Math.exp(-u * u * 2.2); }
+  // ＋: env*(1+cos(ku))/2, −: env*(1-cos(ku))/2
+  function pdfPlus(u) { return env(u) * (1 + Math.cos(u * 9)) / 2; }
+  function pdfMinus(u) { return env(u) * (1 - Math.cos(u * 9)) / 2; }
+
+  function sampleU(pdf) {
+    for (var i = 0; i < 80; i++) {
+      var u = Math.random() * 2 - 1;
+      if (Math.random() < pdf(u)) return u;
+    }
+    return 0;
+  }
+
+  var dotsTop = el('g', {}), dotsBot = el('g', {});
+  var listT = [], listB = [];
+  function addDot(u, isPlus) {
+    // 点は増える一方（実験データは消えない）。十分たまったら追加を止める
+    if (listT.length >= 900) return;
+    var x = X0 + (u + 1) / 2 * W;
+    var t = el('circle', {cx: x.toFixed(1), cy: (BANDS[0].y + 6 + Math.random() * (BANDS[0].h - 12)).toFixed(1), r: 1.7, fill: '#7a8580', opacity: .8}, dotsTop);
+    // 下帯: ＋は上半分、−は下半分に分けて縞の違いを見せる
+    var half = BANDS[1].h / 2;
+    var yb = isPlus ? BANDS[1].y + 4 + Math.random() * (half - 8) : BANDS[1].y + half + 4 + Math.random() * (half - 8);
+    var b = el('circle', {cx: x.toFixed(1), cy: yb.toFixed(1), r: 1.7, fill: isPlus ? CP : CM, opacity: .85}, dotsBot);
+    listT.push(t); listB.push(b);
+  }
+  txt(X0 - 8, BANDS[1].y + BANDS[1].h / 4 + 4, 'accent', '＋', 'end');
+  var mtxt = txt(X0 - 8, BANDS[1].y + BANDS[1].h * 3 / 4 + 4, 'label', '−', 'end');
+  mtxt.style.fill = CM; mtxt.style.fontWeight = '900';
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function emit() {
+    var isPlus = Math.random() < 0.5;
+    addDot(sampleU(isPlus ? pdfPlus : pdfMinus), isPlus);
+  }
+  if (reduced) {
+    for (var i = 0; i < 500; i++) emit();
+    return;
+  }
+  var running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    emit();
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+</body>
+</html>

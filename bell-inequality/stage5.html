@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1b2a4a">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE5 実験による決着 ― ベルの不等式を破る</title>
+<meta name="description" content="ベルの不等式は本物の実験でどう裁かれたのか。1972年フリードマンとクラウザーの初実験、1982年アスペの高速スイッチ実験、2015年の抜け穴なし実験、そして2022年ノーベル物理学賞まで。局所性と検出の2大抜け穴が塞がれていく50年の歴史。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage5.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ベルの不等式を破る">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE5 実験による決着 ― ベルの不等式を破る">
+<meta property="og:description" content="クラウザー、アスペ、ツァイリンガー。抜け穴を一つずつ塞いだ50年の実験史と、2022年ノーベル物理学賞。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage5.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .bq-svg .label-sm{fill:var(--muted);font-size:10.5px;font-weight:700} /* 年表の行間都合で他ページの.label(11px)よりやや小さい意図的調整 */
+  .bq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .bq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .bq-svg .tline{stroke:#48688f;stroke-width:2.5}
+  .bq-svg .tdot{fill:#48688f}
+  .bq-svg .tdot-star{fill:#b5504a}
+  .bq-svg .year{fill:#b5504a;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🔔</a> <span>ベルの不等式を破る</span></div>
+      <div class="brand-sub">STAGE 5 ― 実験による決着 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 6</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 5</span><span class="chapter-title">実験による決着</span>
+        <div class="chapter-sub">アスペからノーベル賞まで</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">自然の法廷の記録を読もう。初期実験から抜け穴なし実験までの流れと、「局所性の抜け穴」「検出の抜け穴」がどう塞がれたかを説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">1964年のベルの論文は、実はほとんど誰にも読まれなかった。ベルの本業はCERNでの加速器の理論計算で、この研究はいわば休暇中の趣味。しかも掲載されたのは創刊まもない無名の雑誌だった。「解釈問題に関わると経歴が終わる」と言われた時代でもあったしね。それを掘り起こしたのが、アメリカの若手物理学者<strong>ジョン・クラウザー</strong>だ。彼は1969年、同僚たち（ホーン、シモニー、ホルト）とともに、ベルの不等式を実際の装置で測りやすい形に改良した。頭文字をとって<strong>CHSH不等式</strong>と呼ばれる、私たちが導いた不等式のいとこ分だよ。本物の実験ではこちらの形がよく使われるけれど、意味していることは同じ――「局所実在論なら、この数値は超えられない」だ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">面白いのはね、クラウザー本人は<strong>アインシュタイン側が勝つ</strong>と予想していたことなんだ。量子力学の底が抜けるところを見てやろう、という動機で実験に挑んだ。1972年、彼はフリードマンとともに、カルシウム原子が光を放つときに生まれるもつれ光子ペアを使って、史上初のベル実験を行った。200時間を超える測定の結果は――<strong>不等式は破れていた</strong>。食い違い方は、量子力学の予言とぴったり一致。挑戦者の期待に反して、自然は量子力学に軍配を上げたんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">これで決着……と言いたいところですが、待ってください。被告側の弁護人になったつもりで、判決に文句をつけてみます。STAGE3で、局所性の仮定はこう使いました。「アリスの角度選びは、ボブ側にも光源にも影響しない」。でも、もし偏光板の角度が<strong>実験の前からずっと固定</strong>されていたらどうでしょう。光源や装置のあいだを、光速以下のゆっくりした信号が行き来する時間はたっぷりあります。何らかの形で「今日の角度」が光源に伝わって、光源がそれに合わせた説明書を発行していたとしたら……不等式の破れを、局所的な仕組みのままでっち上げられませんか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい弁護だね。それはプロの物理学者たちが<strong>局所性の抜け穴</strong>と呼んだ、正真正銘の弱点だよ。これを塞いだのがフランスの<strong>アラン・アスペ</strong>だ。1982年、彼のチームは約12メートル離した2台の測定装置の設定を、<strong>光子が飛んでいる最中に</strong>、数十ナノ秒（1ナノ秒は10億分の1秒）という速さで切り替えた。光子が光源を出発した時点では、どの角度で質問されるかまだ決まっていない。決まるのは光子の飛行中で、その情報が光速で反対側に走っても、相手の測定には間に合わない。つまり「角度の前バレ」は物理的に不可能になった。結果は――それでも<strong>不等式は破れた</strong>。測定値はS＝2.697±0.015。局所実在論の限界は2、量子力学の予言は約2.70。誤差の範囲でぴたりだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">弁護人として、まだ食い下がります。実験で使う光子の検出器は、飛んできた光子を<strong>全部は捕まえられない</strong>はずです。たとえば3割しか検出できないなら、統計は「捕まった光子」だけで作られています。もし説明書に「検出されやすさ」まで書き込まれていて、都合のいいペアだけが検出されがちだったら？ 捕まえ損ねた7割の中に、不等式を満たす証拠が隠れているかもしれません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが第二の弱点、<strong>検出の抜け穴</strong>だ。きみは今日だけで、20世紀の懐疑派が数十年かけて絞り出した反論を2つとも再発見したことになるね。この抜け穴との戦いは長引いたが、2015年、ついに決着の年が来る。オランダ・デルフト工科大学のチームは、光子ではなく<strong>ダイヤモンド中の電子</strong>のもつれを使った。電子は逃げないから、測定はほぼ100%成功する。しかも2つの電子は1.3km離れたキャンパスの両端に置かれ、局所性の抜け穴も同時に塞いだ。同じ年、アメリカNISTとウィーンのチームも、超高効率の光子検出器で同様の「<strong>抜け穴なし実験</strong>」を達成した。3つの独立な実験の結論はすべて同じ。<strong>不等式は、破れる</strong>。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">弁護人として、最後の抵抗をさせてください。局所性の抜け穴を塞いだ仕組みは「飛行中に設定を<strong>ランダムに</strong>切り替える」でした。でも、その乱数発生器も物理の装置です。もし乱数発生器と光源が、過去のどこかで<strong>共通の原因</strong>を持っていて、「これから選ばれる角度」と「説明書の中身」がこっそり相関していたら？ 私たちがサイコロと呼んでいるものが、実は光源と示し合わせているのかもしれません。そうなら、STAGE3の「光源は2人の質問を知らない」という前提が崩れて、説明書モデルのままで破れを偽装できます。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">恐れ入った。それが第三の抜け穴、<strong>自由選択の抜け穴</strong>だよ。実験家たちの返答が痛快でね。2017年には、角度の選択を<strong>数百光年離れた恒星の光の色</strong>に委ねる実験が行われた。共謀を疑うなら、数百年前に星を出発した光まで仕込みに参加していたことになる。より遠いクエーサーを使った版では、仕込みは<strong>数十億年前</strong>まで遡る。2018年には、世界中の約10万人が気まぐれにボタンを連打して設定を決める実験まで行われた。結果はすべて同じ――<strong>不等式は破れ続けた</strong>。ただし正直に言うと、この抜け穴だけは論理的には完全に塞げない。「宇宙の初期条件の時点で、星の光も光子源もきみの指の動きも、すべて調整済みだった」と主張する<strong>超決定論</strong>は、原理的に反証できないんだ。その代わり代償が重い。その調整がなぜ量子力学の統計をぴったり再現するのかの説明がないし、何より「実験のサンプルは信用できる」という<strong>科学の方法論そのもの</strong>が崩れてしまう。だから大多数の物理学者はこの道を選ばない。この最後の逃げ道の話は、最終ステージでもう一度出てくるよ。……ともかく、塞げる抜け穴はすべて塞がれた。この一連の検証に対して、2022年、ノーベル物理学賞が贈られた。受賞者は<strong>クラウザー、アスペ、ツァイリンガー</strong>の3人だ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" viewBox="0 0 340 210" width="100%" role="img" aria-label="1935年のEPR論文から2022年のノーベル物理学賞までの年表。1964年ベルの不等式、1972年初実験、1982年アスペ実験、2015年抜け穴なし実験という節目が並ぶ">
+          <text class="strong" x="170" y="16" text-anchor="middle">哲学が実験になるまでの87年</text>
+          <line class="tline" x1="40" y1="30" x2="40" y2="196"></line>
+          <circle class="tdot" cx="40" cy="40" r="5"></circle>
+          <text class="year" x="54" y="38">1935</text><text class="label-sm" x="92" y="38">EPR論文「量子力学は完全か？」</text>
+          <circle class="tdot" cx="40" cy="66" r="5"></circle>
+          <text class="year" x="54" y="64">1964</text><text class="label-sm" x="92" y="64">ベル、不等式を発見（趣味の研究だった）</text>
+          <circle class="tdot" cx="40" cy="92" r="5"></circle>
+          <text class="year" x="54" y="90">1969</text><text class="label-sm" x="92" y="90">CHSH不等式：実験できる形に改良</text>
+          <circle class="tdot" cx="40" cy="118" r="5"></circle>
+          <text class="year" x="54" y="116">1972</text><text class="label-sm" x="92" y="116">フリードマン＆クラウザー、初のベル実験 → 破れた</text>
+          <circle class="tdot" cx="40" cy="144" r="5"></circle>
+          <text class="year" x="54" y="142">1982</text><text class="label-sm" x="92" y="142">アスペ、飛行中スイッチで局所性の抜け穴を封鎖 → 破れた</text>
+          <circle class="tdot" cx="40" cy="170" r="5"></circle>
+          <text class="year" x="54" y="168">2015</text><text class="label-sm" x="92" y="168">デルフト・NIST・ウィーン、抜け穴なし実験 → 破れた</text>
+          <circle class="tdot-star" cx="40" cy="196" r="6"></circle>
+          <text class="year" x="54" y="194">2022</text><text class="label-sm" x="92" y="194">クラウザー、アスペ、ツァイリンガーにノーベル物理学賞 🏅</text>
+        </svg>
+        <div class="diagram-caption">ベルの不等式をめぐる年表。実験技術が一歩進むたびに抜け穴が1つ塞がれ、そのたびに答えは同じだった――<strong>不等式は破れる</strong>。量子力学の予言との一致は、現代までのあらゆる追試で確認されている</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">クラウザーさんとアスペさんの功績は、いまのお話で分かりました。でも3人目の<strong>ツァイリンガー</strong>という人は、まだ登場していませんよね。この人は、どの抜け穴を塞いだんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">オーストリアの<strong>アントン・ツァイリンガー</strong>は、検証と並ぶもう1つの流れ――<strong>もつれを道具として使う</strong>研究を切り開いた人だ。3個以上の光子のもつれを作り、量子テレポーテーション（もつれを使って量子状態を別の場所の粒子に移す技術）を実証し、カナリア諸島では144km離れた島の間でもつれを飛ばした。ウィーンでの2015年の抜け穴なし実験も彼のチームだよ。ベルの不等式は、彼らの手で「量子力学の検証手段」から「新技術の品質保証書」へと役割を広げていった――その話は最終ステージでしよう。ともかく、判決は確定した。<strong>局所実在論は、自然の姿ではなかった</strong>。では、実在性と局所性、いったいどちらを手放せばいいのか？ 「月」はどうなるのか？ 最後のステージで旅を締めくくろう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果】</span>
+        <span class="step">1972 クラウザーら：初のベル実験で破れを観測。1982 アスペ：飛行中の高速スイッチで「局所性の抜け穴」を封鎖</span>
+        <span class="step">2015 デルフト・NIST・ウィーン：検出の抜け穴も同時に塞いだ「抜け穴なし実験」でも破れを確認</span>
+        <span class="step">第三の「自由選択の抜け穴」も、恒星・クエーサーの光や約10万人の選択で角度を決める実験により追い詰められた（超決定論だけは論理的に残るが、科学の方法論を捨てる代償を伴う）</span>
+        <span class="step">2022 ノーベル物理学賞（クラウザー、アスペ、ツァイリンガー）。判決：局所実在論は自然の姿ではない</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. アスペの実験（1982年）の決定的な工夫はどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">偏光板の枚数を2倍に増やした</button>
+          <button class="choice-btn">光子が飛んでいる最中に測定の設定を高速で切り替え、「角度の情報」が光速でも相手側に間に合わないようにした</button>
+          <button class="choice-btn">実験を真空中で行った</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 角度が事前に固定されていると、光速以下の信号で「今日の角度」が光源に伝わる余地が残る（局所性の抜け穴）。飛行中に切り替えれば、どんな光速以下の連絡も間に合わない。それでも不等式は破れ、S＝2.697±0.015と量子力学の予言（約2.70）に一致した。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 「検出の抜け穴」とはどんな心配？</p>
+        <div class="choice-list">
+          <button class="choice-btn">検出器が一部の光子しか捕まえられないと、「都合のいいペアだけが検出された」可能性が残り、統計が偏っているかもしれないこと</button>
+          <button class="choice-btn">検出器が光子を2回数えてしまうこと</button>
+          <button class="choice-btn">検出器が高価すぎて実験できないこと</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 捕まえ損ねた光子の中に不等式を満たす証拠が隠れているかもしれない、という反論だ。2015年、ほぼ100%測定できるダイヤモンド中の電子（デルフト）や超高効率検出器（NIST・ウィーン）によって、この抜け穴は局所性の抜け穴と同時に塞がれた。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 50年にわたる実験の最終的な結論はどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">初期の実験では破れたが、精密になるほど破れは消えていった</button>
+          <button class="choice-btn">実験ごとに結果がバラバラで、決着はついていない</button>
+          <button class="choice-btn">抜け穴を塞ぐほど確実に、どの実験でも不等式は破れ、量子力学の予言と一致した</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 1972年の初実験から2015年の抜け穴なし実験まで、答えはずっと同じだった。実験が精密になるほど、局所実在論の生き残る余地は狭まっていった。この一連の検証に対して2022年のノーベル物理学賞が贈られた。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>BQ.initStagePage(5);</script>
+</body>
+</html>

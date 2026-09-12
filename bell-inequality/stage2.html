@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1b2a4a">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE2 もつれた光子のふしぎな一致 ― ベルの不等式を破る</title>
+<meta name="description" content="ベルの不等式の実験舞台は「もつれた光子ペア」。光の偏光と偏光板の基本から、1個の光子の全か無かの測定、そして左右どちらの偏光板をどの角度にしても必ず同じ結果になる「完全相関」という実験事実までを丁寧に整理する。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage2.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ベルの不等式を破る">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE2 もつれた光子のふしぎな一致 ― ベルの不等式を破る">
+<meta property="og:description" content="偏光の基本から、もつれた光子ペアの「完全相関」という実験事実まで。ベルの不等式の実験舞台を組み立てる。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/stage2.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/bell-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .bq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .bq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .bq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .bq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .bq-svg .wave{fill:none;stroke:var(--gold-dark);stroke-width:2}
+  .bq-svg .waveH{fill:none;stroke:#b5504a;stroke-width:2}
+  .bq-svg .filter{fill:#dfe9f6;stroke:#48688f;stroke-width:1.5}
+  .bq-svg .slit{stroke:#48688f;stroke-width:1.4}
+  .bq-svg .src{fill:#e8c07f;stroke:#a6742a;stroke-width:1.5}
+  .bq-svg .photon{fill:#48688f}
+  .bq-svg .pol{fill:#dfe9f6;stroke:#48688f;stroke-width:1.5}
+  .bq-svg .dial{stroke:#b5504a;stroke-width:2.2}
+  .bq-svg .resOK{fill:var(--ok);font-size:17px;font-weight:900}
+  .bq-svg .resNG{fill:var(--ng);font-size:17px;font-weight:900}
+  .bq-svg .arrowhead2{fill:var(--muted)}
+  .bq-svg .polwave{fill:none;stroke:#48688f;stroke-width:2}
+  .bq-svg .polvec{stroke:#9fb9de;stroke-width:1.4}
+  .bq-svg .crosssec{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .bq-svg .polaxis{stroke:#b5504a;stroke-width:2;stroke-dasharray:5 4}
+  .bq-svg .poldot{fill:#48688f}
+  .sim-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+  .sim-controls .btn{font-size:12.5px;padding:.45rem .9rem}
+  .sim-controls .btn[aria-pressed="true"]{background:linear-gradient(#7d9fce,#48688f);border-color:#35507a;color:#fff}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🔔</a> <span>ベルの不等式を破る</span></div>
+      <div class="brand-sub">STAGE 2 ― もつれた光子のふしぎな一致 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 6</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 2</span><span class="chapter-title">もつれた光子のふしぎな一致</span>
+        <div class="chapter-sub">偏光と完全相関</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">実験の舞台装置を組み立てよう。光の偏光と偏光板のはたらき、1個の光子の「全か無か」の測定、そして、もつれた光子ペアの「同じ角度なら必ず同じ結果」という完全相関を説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ベルの不等式の対決が行われる「試合会場」を組み立てよう。使う道具は光だ。<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:var(--gold-dark);text-decoration:underline">量子力学の教室</a>で、光は波の性質と粒（<strong>光子</strong>）の性質を併せ持つことを学んだね。今日はその光の、まだ話していなかった性質をひとつ紹介する。<strong>偏光（へんこう）</strong>だ。光は電気の場（電場）が振動しながら進む波で、その<strong>振動の向きは、進む方向と直角</strong>になっている。たとえば真横に進む光なら、振動は縦方向かもしれないし、横方向かもしれないし、斜め45°かもしれない。この<strong>振動の向き</strong>のことを偏光と呼ぶんだ。ロープを張って手で上下に揺らせば縦揺れの波、左右に揺らせば横揺れの波ができるのと同じだよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" id="pol-svg" viewBox="0 0 340 170" width="100%" role="img" aria-label="右へ進む光の波のアニメーション。進行方向と直角な向きに電場が振動しており、ボタンで振動の向きを縦・横・斜め45°に切り替えられる。右側には光を正面から見たときの振動の向きが両矢印で示される">
+          <text class="strong" x="14" y="18">偏光 ＝ 波の「揺れる向き」（進む方向とは直角）</text>
+          <line class="axis" x1="16" y1="90" x2="222" y2="90"></line>
+          <polygon class="arrowhead2" points="230,90 220,86 220,94"></polygon>
+          <text class="label" x="180" y="108">進む方向 →</text>
+          <g id="pol-vecs"></g>
+          <path class="polwave" id="pol-tips"></path>
+          <text class="label" x="285" y="34" text-anchor="middle">正面から見ると</text>
+          <circle class="crosssec" cx="285" cy="88" r="36"></circle>
+          <line class="polaxis" id="pol-cross-axis" x1="285" y1="52" x2="285" y2="124"></line>
+          <circle class="poldot" id="pol-cross-dot" cx="285" cy="88" r="5"></circle>
+          <text class="lbA" id="pol-mode-label" x="285" y="146" text-anchor="middle">振動の向き：縦</text>
+        </svg>
+        <div class="sim-controls">
+          <button class="btn" data-polmode="0" aria-pressed="true">縦揺れ</button>
+          <button class="btn" data-polmode="90" aria-pressed="false">横揺れ</button>
+          <button class="btn" data-polmode="45" aria-pressed="false">斜め45°</button>
+        </div>
+        <div class="diagram-caption">右へ進む光の波。細い線の1本1本が、その場所での電場の振動（揺れ）を表す。揺れの向きは<strong>進む方向と直角</strong>で、縦・横・斜め45°など自由な向きがありえる――この向きが<strong>偏光</strong>。ボタンで切り替えて、右の「正面から見た図」（光がこちらへ向かってくるところを想像した図）と見比べてみよう。横揺れは画面の手前↔奥の揺れなので、横から見ると浅く、正面から見るとはっきり分かる</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">波の進む方向とは別に、「揺れる向き」という自由度があるんですね。ロープのたとえなら、同じ「右へ進む波」でも、上下に揺れる波と左右に揺れる波は明らかに別物です。……それで、この揺れの向きは、どうやって測るんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">測る道具が<strong>偏光板</strong>だ。偏光サングラスに入っている、あのフィルムだよ。偏光板には目に見えない「すき間の向き」のような軸があって、<strong>軸と同じ向きに振動する光は通し、軸と直角に振動する光は吸収してしまう</strong>。ロープの波が、縦長のすき間の空いた柵を通るところを想像してごらん。上下の揺れはすき間をすり抜けるけれど、左右の揺れは柵に止められる。偏光板は自由な角度に回して置けるから、「この角度で通るか？」という<strong>質問装置</strong>として使えるわけだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" viewBox="0 0 340 170" width="100%" role="img" aria-label="縦向きの軸を持つ偏光板に、縦に振動する波は通過し、横に振動する波は吸収される様子の図">
+          <text class="strong" x="14" y="18">偏光板 ＝ 振動の向きを選り分ける柵</text>
+          <path class="wave" d="M14 60 q10 -16 20 0 q10 16 20 0 q10 -16 20 0 q10 16 20 0 q10 -16 20 0"></path>
+          <text class="lbA" x="14" y="38">縦に振動する光</text>
+          <rect class="filter" x="150" y="35" width="14" height="60" rx="4"></rect>
+          <line class="slit" x1="157" y1="42" x2="157" y2="58"></line>
+          <line class="slit" x1="157" y1="64" x2="157" y2="80"></line>
+          <text class="label" x="157" y="110" text-anchor="middle">軸：縦</text>
+          <path class="wave" d="M178 60 q10 -16 20 0 q10 16 20 0 q10 -16 20 0 q10 16 20 0 q10 -16 20 0"></path>
+          <text class="resOK" x="310" y="65">○</text>
+          <text class="label" x="14" y="135">横に振動する光</text>
+          <path class="waveH" d="M14 150 h100" stroke-dasharray="7 5"></path>
+          <text class="label" x="70" y="145" text-anchor="middle">（振動は画面の手前↔奥）</text>
+          <rect class="filter" x="150" y="122" width="14" height="46" rx="4"></rect>
+          <text class="resNG" x="178" y="152">× 吸収</text>
+        </svg>
+        <div class="diagram-caption">偏光板は、軸と同じ向きに振動する光は<strong>通し（○）</strong>、直角に振動する光は<strong>吸収する（×）</strong>。軸は自由な角度に回せるので、「角度θで通るか？」という質問装置になる。斜めの光がどうなるかは STAGE4 の主役なので、お楽しみに</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">気になることがあります。いまの説明は光を「波」として扱っていますよね。波なら、一部だけ通るような中途半端もありえます。でも量子力学の教室で、光は<strong>光子という粒</strong>で、1個2個と数えられると学びました。光子を<strong>1個だけ</strong>偏光板に打ち込んだら、どうなるんですか？ 1個の粒の「半分だけ通る」なんて、できない気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最高の質問だよ。そのとおり、光子は分割できない。だから1個の光子に対する偏光板の答えは、<strong>丸ごと通る（○）か、丸ごと吸収される（×）か、必ず二択</strong>になる。中間はない。「全か無か」だ。そしてどちらになるかは――量子力学によれば――確率的にしか決まらない。つまり偏光板は、1個の光子に「この角度で通りますか？」と尋ねて、<strong>○か×かの答えを1つ受け取る装置</strong>なんだ。この「角度を選んで質問し、○×の答えを得る」が、今後すべての議論の基本の型になる。ここまでが準備。いよいよ主役を登場させよう。<strong>もつれた光子ペア</strong>だ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">特殊な結晶にレーザー光を当てると、まれに1個の光子が<strong>2個の光子のペア</strong>に生まれ変わり、左右反対向きに飛び出していくことがある。この2個は、生まれが同じ「双子」だ。さて、左の光子をアリスさんの偏光板、右の光子をボブさんの偏光板で測るとしよう。2人はうんと離れていてかまわない。実験してみると、驚くべきことが起きる。<strong>アリスとボブが偏光板を同じ角度にそろえておくと、2人の結果は必ず一致する</strong>んだ。アリスが○ならボブも○、アリスが×ならボブも×。そろえる角度は0°でも30°でも88°でも、<strong>どの角度でもいい</strong>。そして一人ひとりの結果だけを見ると、○と×はほぼ半々のランダムだ。この「必ず一致」を<strong>完全相関</strong>と呼ぶ。相関とは「片方を知るともう片方の見当がつく」という関係のことだよ。こういう特別なペアの状態を、物理学では<strong>量子もつれ</strong>（エンタングルメント）と呼ぶ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" id="pair-svg" viewBox="0 0 340 150" width="100%" role="img" aria-label="中央の光源から左右に光子が飛び出し、アリスとボブの偏光板に届く。2人の偏光板の角度が同じとき、結果は毎回ランダムだが必ず一致する">
+          <text class="strong" x="170" y="16" text-anchor="middle">同じ角度なら、結果は必ず一致する（完全相関）</text>
+          <circle class="src" cx="170" cy="75" r="12"></circle>
+          <text class="label" x="170" y="105" text-anchor="middle">光源（結晶）</text>
+          <circle class="photon" id="ph-l" cx="170" cy="75" r="5"></circle>
+          <circle class="photon" id="ph-r" cx="170" cy="75" r="5"></circle>
+          <rect class="pol" x="52" y="45" width="12" height="60" rx="4"></rect>
+          <line class="dial" id="dial-l" x1="58" y1="88" x2="58" y2="62"></line>
+          <text class="label" x="58" y="122" text-anchor="middle">アリスの偏光板</text>
+          <text class="lbA" id="ang-l" x="58" y="38" text-anchor="middle">角度θ</text>
+          <rect class="pol" x="276" y="45" width="12" height="60" rx="4"></rect>
+          <line class="dial" id="dial-r" x1="282" y1="88" x2="282" y2="62"></line>
+          <text class="label" x="282" y="122" text-anchor="middle">ボブの偏光板</text>
+          <text class="lbA" id="ang-r" x="282" y="38" text-anchor="middle">角度θ</text>
+          <text class="resOK" id="res-l" x="24" y="82" text-anchor="middle"></text>
+          <text class="resOK" id="res-r" x="316" y="82" text-anchor="middle"></text>
+          <text class="label" id="pair-log" x="170" y="142" text-anchor="middle"></text>
+        </svg>
+        <div class="diagram-caption">中央の光源から双子の光子が左右に飛び、アリスとボブが<strong>同じ角度</strong>の偏光板で測る。1回1回の結果（○か×か）はランダムなのに、2人の結果は<strong>毎回必ず一致</strong>する。2人がどれだけ離れていても、どの角度にそろえても成り立つ実験事実だ</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……先生、これ、そんなに不思議でしょうか？ 私にはむしろ自然に思えます。たとえば<strong>手袋</strong>です。左右一組の手袋を1枚ずつ箱に詰めて、片方を東京に、片方がブラジルに送られたとします。東京で箱を開けて左手用が出たら、その瞬間、ブラジルの箱の中身は右手用だと分かる。でも誰も驚きません。<strong>詰めた時点で中身は決まっていた</strong>んですから。光子のペアも同じで、生まれた瞬間に「答えの組」を持って別れた、と考えればいいだけでは？ 双子が同じ遺伝子を持っているようなものです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">みごとな筋立てだよ。それこそが、まさに<strong>アインシュタイン側の説明</strong>なんだ。手袋のたとえは、STAGE1の言葉でいえば「隠れた変数」そのものだね。生まれた瞬間に結果が仕込まれていた――実在性の立場だ。一方、量子力学の教科書はまったく違う描像を語る。<strong>測るまで、どちらの光子の偏光も決まっていない</strong>。アリスが測った瞬間に彼女の光子の答えが生まれ、同時に、どんなに離れていてもボブの光子の状態が「同じ答えを出す状態」に変わる――と。アインシュタインはこれを<strong>「不気味な遠隔作用」</strong>と呼んで嫌った。光より速い「何か」を認めるくらいなら、手袋の説明のほうがずっとまともに見えるからね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">整理すると、同じ「完全相関」という実験事実に、2つの説明が立候補しているんですね。<strong>説明①（手袋派）</strong>：答えは生まれた瞬間から2つの光子に仕込まれていた。<strong>説明②（量子力学派）</strong>：測った瞬間に答えが生まれ、相棒に瞬時に伝わる（ように見える）。……そしてまた、STAGE1で見た膠着です。<strong>同じ角度で測っているかぎり、区別がつかない</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">「同じ角度で測っているかぎり」――いま、きみはとても大事な条件を自分で口にしたよ。ベルの発見の入り口は、まさにそこにある。<strong>2人がわざと違う角度で測ったら、何が起きるか？</strong> 同じ角度なら一致率は100%。では30°ずらしたら？ 60°なら？ 一致率は角度差に応じて変わっていくはずだ。手袋派の理屈でこの「ずらしたときの一致率」を予想すると、実は<strong>どうしても超えられない限界</strong>が現れる。次のステージでは、まず手袋派の主張を「説明書」というモデルにきっちり翻訳しよう。裁判の前に、被告の主張を正確に書き取るんだ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果】</span>
+        <span class="step">偏光：光の振動の向き。偏光板は「角度θで通るか？」と尋ねる質問装置</span>
+        <span class="step">光子1個の答えは、丸ごと通る（○）か丸ごと吸収（×）かの二択（全か無か）</span>
+        <span class="step">もつれた光子ペア：同じ角度で測ると、どの角度でも必ず同じ結果（完全相関）。一人ひとりの結果は半々のランダム</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 1個の光子が偏光板に出会ったときに起きることはどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">半分に割れて、半分だけ通る</button>
+          <button class="choice-btn">必ず通り抜ける</button>
+          <button class="choice-btn">丸ごと通る（○）か丸ごと吸収される（×）かの二択で、中間はない</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 光子は分割できない粒なので、答えは「全か無か」。偏光板は1個の光子に「この角度で通るか？」と質問して、○か×の答えを1つ受け取る装置だと考えられる。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. もつれた光子ペアの「完全相関」とはどんな実験事実？</p>
+        <div class="choice-list">
+          <button class="choice-btn">左右の光子は必ず両方とも偏光板を通り抜ける</button>
+          <button class="choice-btn">左右の偏光板を同じ角度にすると、どの角度を選んでも2人の結果（○×）が必ず一致する</button>
+          <button class="choice-btn">左右の光子は必ず反対の結果になる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ そろえる角度は何度でもよく、2人がどれだけ離れていてもよい。しかも一人ひとりの結果だけを見ると○×は半々のランダム。「個々はランダム、ペアでは必ず一致」がこの現象の不思議さの核心だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. うさ美の「手袋のたとえ」が主張していることはどれ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">完全相関は、生まれた瞬間に2つの光子へ答えが仕込まれていたと考えれば説明できる</button>
+          <button class="choice-btn">手袋と光子は同じ物質でできている</button>
+          <button class="choice-btn">離れた場所には光より速く情報が伝わる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 左手用が出た瞬間に相方が右手用と分かっても、誰も驚かない。詰めた時点で決まっていたからだ。これは「隠れた変数」＝実在性の立場そのもので、アインシュタイン側の説明にあたる。これと量子力学の「測るまで決まっていない」を区別するのが、この先の課題になる。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>BQ.initStagePage(2);</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('pol-svg');
+  if (!svg) return;
+  var vecsG = document.getElementById('pol-vecs'), tips = document.getElementById('pol-tips'),
+      crossAxis = document.getElementById('pol-cross-axis'), crossDot = document.getElementById('pol-cross-dot'),
+      modeLabel = document.getElementById('pol-mode-label');
+  var ns = 'http://www.w3.org/2000/svg';
+  var X0 = 20, X1 = 214, AXY = 90, A = 30, LAM = 72, CCX = 285, CCY = 88, CR = 32;
+  var mode = 0; // 振動の向き（度）: 0=縦, 90=横（奥行き）, 45=斜め
+  var MODE_NAMES = { 0: '縦', 90: '横', 45: '斜め45°' };
+
+  // 横から見た図での、振動1単位ぶんの画面上のずれ。
+  // 縦揺れは画面の上方向、横揺れ（奥行き）は手前＝左下方向に浅く投影して立体感を出す
+  function unit(m) {
+    var r = m * Math.PI / 180;
+    return { x: Math.sin(r) * -0.42, y: Math.cos(r) * -1 + Math.sin(r) * 0.26 };
+  }
+  // 正面から見た図では、奥行き方向がそのまま画面の横方向になる
+  function crossUnit(m) {
+    var r = m * Math.PI / 180;
+    return { x: Math.sin(r), y: -Math.cos(r) };
+  }
+
+  var lines = [];
+  for (var x = X0; x <= X1; x += 12) {
+    var l = document.createElementNS(ns, 'line');
+    l.setAttribute('class', 'polvec');
+    vecsG.appendChild(l);
+    lines.push({ el: l, x: x });
+  }
+
+  function draw(t) {
+    var u = unit(mode);
+    var d = '', first = true;
+    for (var x = X0; x <= X1; x += 4) {
+      var s = A * Math.sin(2 * Math.PI * (x - t) / LAM);
+      d += (first ? 'M' : 'L') + (x + s * u.x).toFixed(1) + ' ' + (AXY + s * u.y).toFixed(1);
+      first = false;
+    }
+    tips.setAttribute('d', d);
+    lines.forEach(function (o) {
+      var s = A * Math.sin(2 * Math.PI * (o.x - t) / LAM);
+      o.el.setAttribute('x1', o.x); o.el.setAttribute('y1', AXY);
+      o.el.setAttribute('x2', (o.x + s * u.x).toFixed(1)); o.el.setAttribute('y2', (AXY + s * u.y).toFixed(1));
+    });
+    var cu = crossUnit(mode);
+    crossAxis.setAttribute('x1', (CCX - cu.x * CR).toFixed(1)); crossAxis.setAttribute('y1', (CCY - cu.y * CR).toFixed(1));
+    crossAxis.setAttribute('x2', (CCX + cu.x * CR).toFixed(1)); crossAxis.setAttribute('y2', (CCY + cu.y * CR).toFixed(1));
+    var s0 = Math.sin(2 * Math.PI * (X0 - t) / LAM) * (CR - 6);
+    crossDot.setAttribute('cx', (CCX + s0 * cu.x).toFixed(1)); crossDot.setAttribute('cy', (CCY + s0 * cu.y).toFixed(1));
+    modeLabel.textContent = '振動の向き：' + MODE_NAMES[mode];
+  }
+
+  var t = 18;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll('[data-polmode]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      mode = parseInt(btn.getAttribute('data-polmode'), 10);
+      document.querySelectorAll('[data-polmode]').forEach(function (b) {
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      draw(t);
+    });
+  });
+
+  draw(t);
+  if (reduced) return;
+
+  var running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    t += 0.9;
+    if (t > 1000 * LAM) t -= 1000 * LAM;
+    draw(t);
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('pair-svg');
+  if (!svg) return;
+  var phL = document.getElementById('ph-l'), phR = document.getElementById('ph-r'),
+      resL = document.getElementById('res-l'), resR = document.getElementById('res-r'),
+      log = document.getElementById('pair-log');
+  var CX = 170, CY = 75, XL = 70, XR = 270;
+  var history = [];
+
+  function setResult(ok) {
+    var mark = ok ? '○' : '×';
+    var cls = ok ? 'resOK' : 'resNG';
+    resL.textContent = mark; resR.textContent = mark;
+    resL.setAttribute('class', cls); resR.setAttribute('class', cls);
+    history.push(mark);
+    if (history.length > 12) history.shift();
+    log.textContent = '記録（左＝右）: ' + history.join(' ');
+  }
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    phL.setAttribute('cx', XL); phR.setAttribute('cx', XR);
+    resL.textContent = '○'; resR.textContent = '○';
+    log.textContent = '記録（左＝右）: ○ × × ○ ×（毎回ランダムだが必ず一致）';
+    return;
+  }
+
+  var t = 0, running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    t += 0.016;
+    var phase = t % 2.2;
+    if (phase < 1.0) {
+      var p = phase / 1.0;
+      phL.setAttribute('cx', (CX + (XL - CX) * p).toFixed(1));
+      phR.setAttribute('cx', (CX + (XR - CX) * p).toFixed(1));
+      phL.setAttribute('opacity', 1); phR.setAttribute('opacity', 1);
+      if (phase < 0.03 && resL.textContent !== '') { resL.textContent = ''; resR.textContent = ''; }
+    } else {
+      if (resL.textContent === '') setResult(Math.random() < 0.5);
+      phL.setAttribute('opacity', 0); phR.setAttribute('opacity', 0);
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+</body>
+</html>

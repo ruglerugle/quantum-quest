@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16224e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE5 並列計算の神話 ― 量子コンピュータはなぜ速いのか</title>
+<meta name="description" content="「量子コンピュータは全部の答えを同時に計算するから速い」――この説明のどこが間違っているのか。世界最小の量子アルゴリズム、ドイチュの問題を実際に解いて、速さの正体が並列計算ではなく「干渉の設計」であることを確かめる。位相キックバックの仕組みも図解。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage5.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはなぜ速いのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE5 並列計算の神話 ― 量子コンピュータはなぜ速いのか">
+<meta property="og:description" content="ドイチュの問題を1回の質問で解く。速さの正体は「同時に計算」ではなく、いらない答えを打ち消す干渉の設計だった。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage5.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qc-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qc-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qc-svg .accent{fill:#b5504a;font-size:11px;font-weight:900}
+  .anim-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .anim-ctrl .btn{padding:.4rem .95rem;font-size:13px;font-weight:900}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+  .gate-log{margin-top:8px;font-size:12.5px;font-weight:800;color:var(--ink);min-height:1.5em;word-break:break-all}
+  .gate-log .g{display:inline-block;background:#fae3e1;border:1px solid #e6b0ac;border-radius:5px;padding:0 6px;margin:0 2px 3px 0}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">💠</a> <span>量子コンピュータはなぜ速いのか</span></div>
+      <div class="brand-sub">STAGE 5 ― 並列計算の神話 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 5</span><span class="chapter-title">並列計算の神話</span>
+        <div class="chapter-sub">ドイチュのアルゴリズム</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">「全部の答えを同時に計算するから速い」という説明の、どこが正しくてどこが間違っているのかを見極めよう。ドイチュの問題を1回の質問で解き、速さの正体が<strong>干渉の設計</strong>であることを説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">道具はそろった。今日はいよいよ、量子コンピュータで<strong>実際に問題を解く</strong>。世界でいちばん小さな量子アルゴリズム――1985年にデイヴィッド・ドイチュが考えた問題だ。<br>ここに、中身の見えない箱がある。0か1を1個入れると、0か1を1個返してくる。この箱の中の対応づけを <strong>f</strong> と呼ぼう。f のあり得るパターンは何通りかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">入力2通りに対して出力が2通りずつなので、4通りです。<br>①0を入れても1を入れても0を返す　②どちらを入れても1を返す　③入れたものをそのまま返す　④入れたものを逆にして返す。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その4通りを2組に分けよう。①と②は、入力によらず答えが変わらないから<strong>定数タイプ</strong>。③と④は、0を入れたときと1を入れたときで答えが違うから<strong>バランスタイプ</strong>と呼ぶ。<br>さて、問題はこうだ。<strong>「この箱は定数タイプか、バランスタイプか」だけを知りたい。箱に何回質問すればいいか。</strong>箱の中身を分解して覗くのはなしだよ。入力を入れて出力を見る、それだけが許された操作だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ふつうに考えると<strong>2回</strong>です。0を入れて答えを見て、1を入れて答えを見る。2つが同じなら定数、違えばバランス。<br>1回では絶対に無理ですよね。たとえば0を入れて0が返ってきても、それだけでは①（いつも0）なのか③（そのまま返す）なのか決められません。もう片方を試さないと、区別のしようがない。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">きみの理屈は完全に正しい。ふつうのコンピュータでは、どう工夫しても2回必要だ。<strong>ところが、量子コンピュータなら1回で済む。</strong></div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">えっ……でも、1回の質問で得られる情報は1個の答えだけのはずです。0を入れた答えと1を入れた答え、両方を知らないと判定できないのに。<br>――もしかして、入力を<strong>重ね合わせ</strong>にするんですか？ |0⟩ と |1⟩ が0.71ずつの状態を箱に入れる。そうすれば、箱は両方の入力について同時に計算してくれる。でも、それでも読み出せるのは1つだけですよね。「同時に計算」しても、答えを1つしか取り出せないなら、結局2回測ることになりませんか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いま、きみは「量子コンピュータは全部同時に計算するから速い」という有名な説明の、いちばん弱いところを自力で突いた。その説明はここで必ず行き詰まる。<strong>同時に計算できても、読み出しは1回1つ</strong>。だから並列計算だけでは、1ミリも速くならないんだ。<br>ドイチュの発明は、この壁を別の角度から破ったところにある。ヒントは、きみが立てた問いの中にある――「知りたいのは f(0) でも f(1) でもなく、<strong>その2つが同じかどうか</strong>」だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……<strong>全体についての1個の性質</strong>。個々の答えは要らない。読み出しの窓は1つしかないけれど、そこから出てくるのが「f(0) の値」ではなく「f(0) と f(1) が同じかどうか」なら、1回で足りる。<br>そんな読み出し方が作れるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">作れる。そのために、まず箱を量子ゲートの形に直そう。量子ゲートは可逆でなければならなかったから、箱にも入力を残してもらう。約束はこうだ。<strong>量子ビットを2個用意して、1個目に入力 x、2個目に答えを書き込む場所 y を割り当てる。箱は、y のところに「f(x) が1ならひっくり返す、0なら何もしない」という書き込みをする。</strong>x はそのまま残る。<br>この形の箱を<strong>オラクル</strong>と呼ぶ。「神託を告げる者」という意味で、中身は分からないが質問には答えてくれる、という気持ちの名前だね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「ひっくり返すか、何もしないか」……それはCNOTと同じ形ですね。制御が「f(x)が1かどうか」に変わっただけだ。<br>それで、答えを書き込む2個目の量子ビットは、最初どんな状態にしておくんですか。ふつうに考えれば |0⟩ ですけれど。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこが、この手品のいちばん美しい部分だ。2個目を <strong>|−⟩</strong> にしておく。前に作ったね――|0⟩ に0.71、|1⟩ に<strong>正反対の向きで</strong>0.71 の状態だ。|1⟩ に H を当てれば作れる。<br>この |−⟩ を、箱がひっくり返すとどうなるか、計算してみてほしい。「ひっくり返す」は |0⟩ 行と |1⟩ 行の入れ替えだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">|−⟩ は「|0⟩ に0.71、|1⟩ に正反対の0.71」。入れ替えると「|0⟩ に正反対の0.71、|1⟩ に0.71」……<br>あれ、これは元の |−⟩ の<strong>矢印を2本ともまとめて反転させたもの</strong>です。形は |−⟩ のまま！ 状態としては |−⟩ で、ただ<strong>全体の向きが正反対</strong>になっただけ。<br>……つまり、箱が2個目に書き込んだはずの答えは、2個目の状態を何も変えていない。代わりに、<strong>表全体の向きの反転</strong>という形で残った。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。この現象には名前がついていて、<strong>位相キックバック</strong>という。「答えが、値としてではなく、矢印の向きとして跳ね返ってくる」という意味だ。整理するとこうなる。<br>・f(x)＝0 のとき → 何も起きない（向きはそのまま）<br>・f(x)＝1 のとき → <strong>その x の行の矢印が、正反対の向きになる</strong><br>2個目の量子ビットは最初から最後まで |−⟩ のままで、何の情報も持たない。答えは全部、<strong>1個目の表の矢印の向き</strong>に書き込まれる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">つながりました！ 1個目を H で重ね合わせ（|+⟩）にしてから箱に通せば、<strong>|0⟩ の行と |1⟩ の行が、それぞれ f(0)、f(1) に応じて向きを変える</strong>。<br>そして、向きの違いを長さの違いに変える道具を、私たちはもう持っています。<strong>H をもう一度当てればいい</strong>。<br>計算します。箱を通ったあと、1個目の表は「|0⟩ 行が0.71（f(0)が1なら正反対）」「|1⟩ 行が0.71（f(1)が1なら正反対）」。<br>・<strong>定数タイプ</strong>なら f(0) と f(1) が同じなので、2つの矢印は<strong>同じ向き</strong>。これは |+⟩（あるいは全体が反転した |+⟩）なので、H を当てると |0⟩ に戻る。測れば<strong>必ず0</strong>。<br>・<strong>バランスタイプ</strong>なら2つの矢印は<strong>逆向き</strong>。これは |−⟩ なので、H を当てると |1⟩ になる。測れば<strong>必ず1</strong>。<br>……できました。<strong>箱への質問はたった1回</strong>。そして出てきた1ビットが、まさに知りたかった「同じか違うか」そのものです！</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="deutsch-svg" class="qc-svg" viewBox="0 0 372 270" width="100%" role="img" aria-label="ドイチュのアルゴリズムの動作図。4種類の箱それぞれについて、重ね合わせを作り、位相キックバックで矢印の向きが変わり、最後のアダマールで定数タイプなら0、バランスタイプなら1が確実に出る様子を示す">
+          <text class="strong" x="186" y="16" text-anchor="middle">ドイチュのアルゴリズム：箱への質問はたった1回</text>
+          <g id="deutsch-body"></g>
+        </svg>
+        <div class="anim-ctrl">
+          <span class="ctrl-label">箱の中身を選ぶ</span>
+          <button type="button" class="btn" id="d-f0">①いつも0</button>
+          <button type="button" class="btn" id="d-f1">②いつも1</button>
+          <button type="button" class="btn" id="d-f2">③そのまま</button>
+          <button type="button" class="btn" id="d-f3">④逆にする</button>
+        </div>
+        <div class="readout">
+          <span>f(0)＝<b id="d-v0">0</b></span>
+          <span>f(1)＝<b id="d-v1">0</b></span>
+          <span>タイプ <b id="d-type">定数</b></span>
+          <span>測定結果 <b id="d-out">必ず 0</b></span>
+        </div>
+        <div class="diagram-caption">上段が1個目の量子ビットの表（|0⟩ 行と |1⟩ 行）の変化。左から順に、①H で五分五分の重ね合わせにする、②箱を1回だけ通す（f(x)が1の行だけ矢印が正反対になる＝位相キックバック）、③もう一度 H を当てる、④測定。<strong>4種類の箱を切り替えても、箱を通る回数はつねに1回だけ</strong>。それでも、定数タイプ（①②）なら測定結果は必ず0、バランスタイプ（③④）なら必ず1になる。最後の H のところで、いらない答えの矢印が打ち消し合い、欲しい答えの矢印だけが残っているのが読み取れる。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">よく組み上げたね。ではここで、今日いちばん大事な問いに答えてほしい。<strong>この手品は、どこが決定的だったのかな。</strong>「重ね合わせで同時に計算したから」でいいのか。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">違いますね。重ね合わせで箱に通しただけの段階では、まだ何も得していません。そこで測ってしまえば、0か1が五分五分で出るだけで、f についてほとんど何も分からない。<br>決定的だったのは<strong>最後の H</strong> です。あそこで、f(0) と f(1) が同じ場合には |1⟩ 行の矢印が打ち消し合ってゼロになり、違う場合には |0⟩ 行の矢印が打ち消し合ってゼロになる。<strong>いらない答えの側を必ずゼロにする</strong>から、残った側を読むだけで確実に判定できる。<br>……つまり、重ね合わせは<strong>材料</strong>にすぎなくて、速さを生んだのは<strong>干渉のさせ方</strong>だったんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが今日の結論だ。「量子コンピュータは全部の答えを同時に計算するから速い」――この説明は、前半だけ正しくて後半が抜けている。正しくはこうだよ。<br><strong>すべての答え候補に矢印を割り当てて計算し、そのあとで、いらない候補の矢印が打ち消し合い、欲しい候補の矢印が強め合うように干渉させる。</strong>この後半の設計ができて初めて速くなる。<br>そして、その設計は問題ごとに人間が発明しなければならない。どんな問題にも効く万能の設計は見つかっていない――ここが、量子コンピュータが「何でも速くする魔法の箱」ではない理由だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">納得しました。でも正直に言うと、腑に落ちない点があります。手順を書き出してみたんです。素朴な方法は、|0⟩ を箱に通す、測る、X で |1⟩ を作る、箱に通す、測る、測定結果を照らし合わせる、で6手。ドイチュの方法も、X、H、H、箱、H、測る、で6手。<strong>合計の手数はほとんど変わらず、浮いたのは箱1回だけ</strong>です。これで「速くなった」と言えるんでしょうか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい検算だ。その通り、合計はほとんど変わらない。ここで数えているのは合計ではなく、<strong>箱への質問の回数だけ</strong>なんだ。H や X は、装置に電磁波を一瞬当てるだけの安い操作。一方、箱の中身は正体不明で、実際の応用では巨大な計算が丸ごと入っている想定だ。箱1回に1秒かかり、H が10億分の1秒なら、勝負は箱の回数だけで決まる。逆に言えば、<strong>箱が H 並みに安いなら、この技は何の得にもならない</strong>。ドイチュの問題それ自体は「干渉で得ができる」ことを世界で初めて示した見本であって、実用はない――と言われるのは、そのためでもある。<br>でも、この形は素直に大きくできる。入力を n ビットに広げて、「箱はすべての入力に同じ答えを返す（定数）か、ちょうど半分ずつ0と1を返す（バランス）か」を判定する問題を考えよう。これは<strong>ドイチュ＝ジョサの問題</strong>と呼ばれている。ふつうのコンピュータで確実に答えるには、最悪の場合 <strong>2ⁿ⁻¹＋1回</strong>――入力の半分より1つ多く質問しなければならない。n が40なら5000億回を超える。<br>量子コンピュータなら、まったく同じ骨組みで<strong>1回</strong>。増える安い操作は H が 2n＋2 個――n に比例してしか増えない。節約される質問は指数で増えるから、1ビットでは箱1回ぶんの得にすぎなかったものが、40ビットでは圧勝に変わる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">5000億回が1回……。それは確かに桁が違います。<br>骨組みは同じということは、<strong>n個の量子ビット全部に H を当てて2ⁿ通りの候補をそろえ、箱を1回通して各候補の矢印に向きを付け、もう一度全部に H を当てて干渉させる</strong>、ということですね。定数タイプなら全部の候補が同じ向きだから、干渉の結果すべてが |00…0⟩ に集まる。バランスタイプなら向きが半々なので、|00…0⟩ の行はきれいに打ち消し合ってゼロになる。だから、測って全部0が出たら定数、1が1個でも混じっていたらバランス。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まさにその通りに動くよ。<br>ただし公平を期して言えば、ドイチュ＝ジョサの問題も実用の問題ではないし、「必ず正解する」という条件を緩めて<strong>ほぼ確実でよい</strong>ことにすると、ふつうのコンピュータでも数回の質問で済んでしまう。だから、これは「量子が指数的に速い」という主張の完全な証拠ではないんだ。<br>本物の勝負は次からだよ。次のステージでは、<strong>誰もが本当に困っている問題</strong>――膨大な選択肢から当たりを探す問題を、干渉の設計で速くする。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【ドイチュのアルゴリズム ― 干渉が「全体の性質」を取り出す】</span>
+        <span class="step">・問題：箱 f が<strong>定数タイプ</strong>（f(0)＝f(1)）か<strong>バランスタイプ</strong>（f(0)≠f(1)）かを判定する。ふつうのコンピュータは<span class="nw">2回の質問が必要</span></span>
+        <span class="step">・道具1 <strong>オラクル</strong>：可逆にするため、2個目の量子ビットに「f(x)が1ならひっくり返す」形で答えを書き込む</span>
+        <span class="step">・道具2 <strong>位相キックバック</strong>：2個目を |−⟩ にしておくと、ひっくり返しても状態は |−⟩ のまま、<strong>矢印の向きだけが反転</strong>する。答えは値ではなく1個目の表の向きに残る</span>
+        <span class="step">・手順：1個目に H → 箱を<strong>1回</strong>通す → 1個目に H → 測定。<br class="wbr">定数タイプなら<strong>必ず0</strong>、バランスタイプなら<strong>必ず1</strong></span>
+        <span class="step">・速さの正体：重ね合わせ（材料）ではなく、<strong>いらない候補の矢印を打ち消し、欲しい候補を残す干渉の設計</strong>。この設計は問題ごとに発明が要る</span>
+        <span class="step">・この勝負で数えるのは<strong>箱への質問の回数</strong>だけ（H や X は安い操作という前提）。<br class="wbr">1ビットでは浮くのは箱1回だけ。箱が安ければ得はない</span>
+        <span class="step">・n ビットへの拡張＝<strong>ドイチュ＝ジョサの問題</strong>：ふつうは最悪 2ⁿ⁻¹＋1回、量子なら1回。ただし「ほぼ確実でよい」と条件を緩めると<span class="nw">ふつうのコンピュータでも数回で済む</span></span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 「量子コンピュータは全部の答えを同時に計算するから速い」という説明の、決定的に抜けている部分は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">同時に計算するには量子ビットがまだ足りない、という技術的な事情</button>
+          <button class="choice-btn">同時に計算するとエネルギーを大量に消費する、という事情</button>
+          <button class="choice-btn">読み出せる答えは1つだけなので、いらない候補の矢印を打ち消して欲しい候補を残す「干渉の設計」がないと速くならない、という点</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 重ね合わせて計算するところまでは誰でも書けるが、それだけでは測定でランダムに1つ出るだけ。ドイチュのアルゴリズムで決定的だったのは最後のアダマール――そこで、いらない側の矢印が必ずゼロになるよう設計されていた。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 答えを書き込む2個目の量子ビットを |−⟩ にしておくと何が起きる？（位相キックバック）</p>
+        <div class="choice-list">
+          <button class="choice-btn">2個目に f(x) の値が数字として書き込まれ、それを読めば答えが分かる</button>
+          <button class="choice-btn">2個目の状態は |−⟩ のまま変わらず、f(x)＝1 の行の矢印だけが正反対の向きになる</button>
+          <button class="choice-btn">2個目がもつれて、1個目の測定結果が完全にランダムになる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ |−⟩ をひっくり返すと、矢印が2本ともまとめて反転した |−⟩ になる――状態の形は同じで、向きだけが変わる。だから答えは2個目には残らず、1個目の表の「向き」として跳ね返る。これがあとで干渉の材料になる。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. ドイチュのアルゴリズムの測定で「1」が出た。分かることは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">箱はバランスタイプ（f(0) と f(1) が違う）。ただし f(0) と f(1) それぞれの値は分からない</button>
+          <button class="choice-btn">f(1)＝1 である</button>
+          <button class="choice-btn">f(0)＝1 かつ f(1)＝1 である</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 得られたのは f(0) でも f(1) でもなく、「2つが同じか違うか」という全体についての1個の性質だけ。個々の値は干渉で消えている。読み出し口が1つしかない量子コンピュータで得をするには、こういう「まとめて1個」の問いを設計するしかない。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage4.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QC.initStagePage(5);</script>
+
+<script>
+(function(){
+  // 図: ドイチュのアルゴリズムのステップ表示。4種類の箱を切り替えられる
+  var svg = document.getElementById('deutsch-svg');
+  var g = document.getElementById('deutsch-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var C0 = '#2f5a9e', C1 = '#b5504a', CA = '#8a5a2a';
+  var R2 = Math.SQRT1_2;
+  var COL = [56, 152, 248, 330], Y = [76, 132];
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var defs = el('defs', {});
+  [['d-a0', C0], ['d-a1', C1]].forEach(function (p) {
+    var m = el('marker', {id: p[0], viewBox: '0 0 8 8', refX: 7, refY: 4, markerWidth: 5, markerHeight: 5, markerUnits: 'userSpaceOnUse', orient: 'auto'}, defs);
+    el('path', {d: 'M0 0 L8 4 L0 8 z', fill: p[1]}, m);
+  });
+
+  // 列見出し
+  var heads = ['①H で重ね合わせ', '②箱を1回通す', '③もう一度 H', '④測定'];
+  heads.forEach(function (h, i) {
+    txt(COL[i], 44, 'accent', h);
+  });
+  // 行ラベル
+  [0, 1].forEach(function (i) {
+    var t = txt(12, Y[i] + 4, 'strong', i === 0 ? '|0⟩' : '|1⟩', 'start');
+    t.style.fill = i === 0 ? C0 : C1;
+  });
+  // ノード（3列ぶんの矢印。4列目は結果表示）
+  var nodes = [];
+  [0, 1, 2].forEach(function (c) {
+    [0, 1].forEach(function (r) {
+      el('circle', {cx: COL[c], cy: Y[r], r: 21, fill: 'var(--paper2)', stroke: 'var(--line)'});
+      var arr = el('line', {stroke: r === 0 ? C0 : C1, 'stroke-width': 3, 'marker-end': 'url(#' + (r === 0 ? 'd-a0' : 'd-a1') + ')'});
+      var lab = txt(COL[c], Y[r] + 35, 'label', '');
+      lab.style.fill = r === 0 ? C0 : C1;
+      lab.style.fontWeight = '900';
+      nodes.push({arr: arr, lab: lab});
+    });
+  });
+  // 列をつなぐ矢印
+  [0, 1].forEach(function (c) {
+    el('line', {x1: COL[c] + 26, y1: 104, x2: COL[c + 1] - 26, y2: 104, stroke: 'var(--muted)', 'stroke-width': 1.4, 'stroke-dasharray': '4 3'});
+  });
+  el('line', {x1: COL[2] + 26, y1: 104, x2: COL[3] - 22, y2: 104, stroke: 'var(--muted)', 'stroke-width': 1.4, 'stroke-dasharray': '4 3'});
+  // 測定結果の枠
+  var outBox = el('rect', {x: COL[3] - 24, y: 84, width: 48, height: 40, rx: 8, fill: 'var(--paper2)', stroke: CA, 'stroke-width': 2});
+  var outTxt = txt(COL[3], 110, 'strong', '0');
+  outTxt.style.fontSize = '20px';
+  // 箱の説明
+  var boxTxt = txt(186, 188, 'strong', '');
+  var kickTxt = txt(186, 204, 'label', '');
+  var kickTxt2 = txt(186, 218, 'label', '');
+  var sumTxt = txt(186, 236, 'label', '');
+  var concTxt = txt(186, 256, 'strong', '');
+
+  function setNode(c, r, v) {
+    var n = nodes[c * 2 + r];
+    var L = 15;
+    var sgn = v < 0 ? -1 : 1;
+    n.arr.setAttribute('x1', COL[c]); n.arr.setAttribute('y1', Y[r]);
+    n.arr.setAttribute('x2', COL[c] + sgn * Math.min(Math.abs(v), 1) * L);
+    n.arr.setAttribute('y2', Y[r]);
+    n.arr.setAttribute('opacity', Math.abs(v) > 0.02 ? 1 : 0);
+    n.lab.textContent = (v < -0.001 ? '−' : '') + Math.abs(v).toFixed(2);
+  }
+
+  var FUNCS = [
+    {id: 0, name: '①いつも0', f: [0, 0], type: '定数'},
+    {id: 1, name: '②いつも1', f: [1, 1], type: '定数'},
+    {id: 2, name: '③そのまま', f: [0, 1], type: 'バランス'},
+    {id: 3, name: '④逆にする', f: [1, 0], type: 'バランス'}
+  ];
+  var cur = FUNCS[0];
+  var v0 = document.getElementById('d-v0'), v1 = document.getElementById('d-v1');
+  var tEl = document.getElementById('d-type'), oEl = document.getElementById('d-out');
+
+  function draw() {
+    var f0 = cur.f[0], f1 = cur.f[1];
+    // ①H のあと
+    setNode(0, 0, R2); setNode(0, 1, R2);
+    // ②箱のあと（位相キックバック）
+    var a0 = R2 * (f0 === 1 ? -1 : 1), a1 = R2 * (f1 === 1 ? -1 : 1);
+    setNode(1, 0, a0); setNode(1, 1, a1);
+    // ③H のあと
+    var n0 = (a0 + a1) * R2, n1 = (a0 - a1) * R2;
+    setNode(2, 0, n0); setNode(2, 1, n1);
+    var out = Math.abs(n0) > Math.abs(n1) ? 0 : 1;
+    outTxt.textContent = String(out);
+    outTxt.style.fill = out === 0 ? C0 : C1;
+    outBox.setAttribute('stroke', out === 0 ? C0 : C1);
+    boxTxt.textContent = '箱：' + cur.name + '　→　f(0)＝' + f0 + '、f(1)＝' + f1 + '（' + cur.type + 'タイプ）';
+    kickTxt.textContent = '位相キックバック：f(x)＝1 の行だけ矢印が正反対になる';
+    kickTxt2.textContent = (f0 === 0 && f1 === 0) ? '（今回はどちらも0なので、向きは変化しない）' : '';
+    sumTxt.textContent = '最後の H：|0⟩ 行は ' + n0.toFixed(2) + '、|1⟩ 行は ' + n1.toFixed(2)
+      + '　→　片方が打ち消し合ってゼロ';
+    concTxt.textContent = cur.type === '定数'
+      ? '2つの矢印が同じ向き → 測定は必ず 0 → 定数タイプと判定'
+      : '2つの矢印が逆向き → 測定は必ず 1 → バランスタイプと判定';
+    concTxt.style.fill = cur.type === '定数' ? C0 : C1;
+    if (v0) v0.textContent = String(f0);
+    if (v1) v1.textContent = String(f1);
+    if (tEl) tEl.textContent = cur.type;
+    if (oEl) oEl.textContent = '必ず ' + out;
+  }
+  ['d-f0', 'd-f1', 'd-f2', 'd-f3'].forEach(function (id, i) {
+    var b = document.getElementById(id);
+    if (b) b.addEventListener('click', function () { cur = FUNCS[i]; draw(); });
+  });
+  draw();
+
+  // ビューポート内にあるとき、箱を自動で切り替えて見せる（手動で選んだら以後は止める）
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced && 'IntersectionObserver' in window) {
+    var timer = null, idx = 0, manual = false;
+    new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting && !timer && !manual) {
+        timer = setInterval(function () { idx = (idx + 1) % 4; cur = FUNCS[idx]; draw(); }, 2600);
+      } else if (!es[0].isIntersecting && timer) {
+        clearInterval(timer); timer = null;
+      }
+    }, {threshold: 0.2}).observe(svg);
+    ['d-f0', 'd-f1', 'd-f2', 'd-f3'].forEach(function (id) {
+      var b = document.getElementById(id);
+      if (b) b.addEventListener('click', function () {
+        manual = true;
+        if (timer) { clearInterval(timer); timer = null; }
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

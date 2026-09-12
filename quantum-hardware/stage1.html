@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12303c">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE1 量子ビットの設計図 ― 量子コンピュータはどう作るのか</title>
+<meta name="description" content="量子ビットを「物」で作るには何が必要か。区別できる2つの状態・重ね合わせの維持・外からの操作・読み出しという4つの条件を、コインの裏表がなぜ量子ビットになれないのかから出発して、論理の飛躍なく導く。ディヴィンチェンゾの基準への入口。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage1.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはどう作るのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE1 量子ビットの設計図 ― 量子コンピュータはどう作るのか">
+<meta property="og:description" content="量子ビットを「物」で作るための4つの条件を、コインの裏表がなぜダメなのかから導く。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage1.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qh-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qh-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qh-svg .accent{fill:#2f8a8f;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🧊</a> <span>量子コンピュータはどう作るのか</span></div>
+      <div class="brand-sub">STAGE 1 ― 量子ビットの設計図 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 1</span><span class="chapter-title">量子ビットの設計図</span>
+        <div class="chapter-sub">満たすべき4つの条件</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">量子ビットを「物」で作るとき、その物が満たすべき条件を洗い出そう。「コインの裏表ではなぜダメなのか」に自分の言葉で答えられれば、この旅の設計図は手に入ったことになる。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">前の旅（<a href="https://quantum-mechanics.habatakijuku.com/quantum-computer/" target="_blank" rel="noopener" style="color:#2f8a8f;text-decoration:underline">量子コンピュータはなぜ速いのか</a>）では、量子計算の中身――矢印の一覧表と、それを書き換える干渉の設計――を見届けたね。途中で一度だけ、チップの上に量子ビットを組み立てる回り道もした。<br>今回の旅は、あのとき駆け足で通った<strong>ハードウェアの世界</strong>を、工場見学のようにじっくり歩く。部品ひとつひとつに「なぜそれが要るのか」を問いながらね。<br>最初の仕事は<strong>設計図</strong>だ。何かを作るとき、職人はまず「作る物が満たすべき条件」を書き出す。とはいえ、条件はいきなり全部は見えてこない。ひとつずつ攻めよう。まずは復習から――<strong>量子ビットとは、何だった？</strong></div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">整理し直します。量子ビットの状態は<strong>「0の矢印と1の矢印、2本の矢印の一覧表」</strong>でした。|0⟩（「ゼロの状態」と読む記号）と |1⟩ のそれぞれに、長さと向きを持つ矢印が1本ずつ。読み出すと、矢印の長さの2乗の確率でどちらか<strong>1つだけ</strong>が出る。計算は、この表を回したり混ぜたりする書き換えでした。<br>物で作るなら、少なくとも<strong>0と1にあたる、区別できる2つの状態</strong>を持つ物が要る――表に2つの行がなければ始まりませんから、ここまでは分かります。でも正直、その先に何が要るのかは見当がつきません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それで十分だよ。いまの「区別できる2つの状態を持つこと」を<strong>条件①</strong>として書き留めよう。<br>そして実は、条件①だけなら世界は候補であふれている。コインには裏と表がある。スイッチにはONとOFFがある。電気を「ためた・ためてない」で区別するふつうのコンピュータのメモリも、立派な2状態だ。でも、コインを積んだ机が量子コンピュータになったという話は聞かない。何かが足りない。<br>きみが<a href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/" target="_blank" rel="noopener" style="color:#2f8a8f;text-decoration:underline">デコヒーレンスの旅</a>でさんざん戦った、あの敵のことを思い出しながら考えてごらん。コインの「裏でも表でもある状態」を、なぜ誰も見たことがないのかな？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble"><strong>手がかり</strong>、ですね。思い出しました。デコヒーレンスの旅で学んだ通り、量子力学の法則自体はコインのような大きい物にも働いているはずでした。「裏でも表でもある状態」は作れないのではなく、<strong>一瞬で壊れる</strong>んです。コインには空気の分子や光が絶え間なくぶつかっていて、その一つひとつが「コインは今どっち向きか」という<strong>手がかり</strong>を持ち去る。手がかりが漏れれば道筋に区別がついて、干渉は死ぬ――デコヒーレンスです。<br>つまり足りないのは<strong>重ね合わせ</strong>。重ね合わせを長く保てる物でないと、量子ビットにはなれない、ということですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。これを<strong>条件②：重ね合わせを長く保てること――言い換えると、手がかりを環境に漏らさないこと</strong>として書き留める。先に言っておくと、この②こそが<strong>ハードウェア作りの最難関</strong>で、この旅に登場する部品の半分は、実は②のためだけに存在している。<br>さて、①と②で「量子ビットを<strong>保管</strong>する」ことはできる。でも保管庫は計算機ではないね。計算とは表の書き換えだった。だから<strong>条件③：外から、狙いどおりに矢印を回せること</strong>。ゲートをかける手段だ。<br>――ここで、ひとつ立ち止まってほしい。いま書き留めた②と③を並べて、見比べてごらん。何か引っかからないかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……<strong>矛盾していませんか？</strong> 条件②は「外の世界と関わるな。ぶつかってくる何もかもが手がかりを持ち去るから」。条件③は「外の世界から触って、矢印を回せ」。<br>閉じ込めれば操作できず、操作できるようにすれば手がかりが漏れる。両方を同時に満たす物なんて、あるんでしょうか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り、矛盾しているんだ。そしてこの緊張関係こそ、量子ハードウェア設計の<strong>中心的ジレンマ</strong>でね。完全に密閉すれば操作できない。扉を開けっぱなしにすれば重ね合わせが死ぬ。<br>だから作り手が探すのは、「<strong>ふだんは外界にほとんど応答しないのに、こちらが特定の合図を送ったときだけ応答する</strong>」という、都合のいい性質を持った物だ。合図の「鍵」が合わない限り、扉は閉じたまま――そんな鍵穴つきの箱だね。そんな虫のいい話が本当に実現できるのか、どんな鍵を使うのかは、ステージ3と5でチップの上に実物を見る。今日は「これが要求だ」と書き留めておこう。<br>そして最後が<strong>条件④：計算が終わったら、答えの0か1を読み出せること</strong>。――「読み出し」の正体なら、きみは前の旅で一度見ているね。デコヒーレンスの言葉で言うと、何をすることだった？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble"><strong>手がかりをわざと外に出す</strong>こと、でした。ふだんは全力で密閉しておいて、読みたいときだけ漏れ口を開ける――測定装置は「手がかりの小窓」だと教わりました。<br>すると条件④は、②の密閉と喧嘩しない形で、<strong>小窓を1か所だけ作っておくこと</strong>、と言い換えられそうです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい言い換えだね。ひとつ付け加えておくと、「読める」と「正しく読める」は別問題でね。せっかく干渉の設計で正解の矢印を育てても、最後の読み取りで間違えたら台無しだ。読み出しの<strong>正確さ</strong>はステージ6の主役になる。<br>これで4条件がそろった。実はこの整理は、2000年ごろに物理学者<strong>ディヴィンチェンゾ</strong>がまとめた有名なチェックリスト（<strong>ディヴィンチェンゾの基準</strong>）とほぼ重なる。彼の表には、この4条件に加えてあと2つ載っている。1つは「<strong>たくさん並べて増やせること</strong>」。量子ビット1個では計算にならないからね。これは最終ステージの主役だ。<br>もう1つは、計算の「終わり」ではなく「始まり」に関わる条件なんだ。何だと思う？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">始まり……。計算は決まった出発点から始めないと意味がありません。前の旅の回路は、ぜんぶ「全部の量子ビットが |0⟩」からスタートしていました。出発点がバラバラなら、同じゲート列をかけても出てくる答えの意味が定まりません。<br>つまり「<strong>計算の最初に、確実に |0⟩ にそろえられること</strong>」ですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう。これを<strong>初期化</strong>と呼ぶ。これは面白いことに、超伝導方式では<strong>ある部品の「おまけ」としてほぼタダで手に入る</strong>。どの部品のおまけなのかは、ステージ4のお楽しみにしよう。<br>では、この設計図を持って世界を見回すと、候補はどんな物になるか。原子ひとつぶは、電子の配置ごとにとびとびのエネルギーを持つ――区別できる2状態が最初から備わっている。電子や原子核が持つ<strong>スピン</strong>という小さな磁石の性質も2状態だ。光の粒（光子）の振動の向きも使える。そして、この旅の主役――<strong>人間がゼロから設計して工場で刷る、人工の電気回路</strong>。<br>自然物と人工物にはそれぞれ言い分がある。原子は宇宙のどこでも寸分たがわず同じで、放っておいても壊れない。回路は個体差だらけだが、性質を<strong>設計で自由に決められて</strong>、操作が速い。この対決はステージ7でじっくりやる。まずは主流の超伝導回路で、4条件をひとつずつ攻略していこう。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">設計図をまとめます。量子ビットになれる「物」の条件は――<br><strong>①区別できる2つの状態</strong>を持つこと。<br><strong>②重ね合わせが保てる</strong>こと（手がかりを環境に漏らさない）。<br><strong>③外から狙いどおりに矢印を回せる</strong>こと。ただし②と③は綱引きの関係で、「合図したときだけ応答する」性質が要る。<br><strong>④最後に正確に読み出せる</strong>こと（手がかりをわざと出す）。<br>おまけに<strong>初期化</strong>（最初に |0⟩ にそろえる）と<strong>増やせること</strong>。<br>コインは①しか満たしません。空気と光が手がかりを持ち去り続けるから②で全滅です。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 240" width="100%" role="img" aria-label="量子ビットの4条件の図。中央に2段のエネルギー状態を持つ量子ビットがあり、密閉された箱に守られている。箱には操作の合図を入れる鍵穴と、読み出しのときだけ開く小窓が付いている">
+          <text class="strong" x="186" y="18" text-anchor="middle">量子ビットの設計図 ― 4つの条件</text>
+          <!-- 密閉箱 -->
+          <rect x="116" y="42" width="140" height="150" rx="12" fill="#e8f1f1" stroke="#2f8a8f" stroke-width="2.4"/>
+          <!-- 2段 -->
+          <line x1="146" y1="156" x2="226" y2="156" stroke="#2f5a9e" stroke-width="3"/>
+          <line x1="146" y1="104" x2="226" y2="104" stroke="#b5504a" stroke-width="3"/>
+          <text class="strong" x="140" y="160" text-anchor="end" fill="#2f5a9e">|0⟩</text>
+          <text class="strong" x="140" y="108" text-anchor="end" fill="#b5504a">|1⟩</text>
+          <text class="accent" x="186" y="136" text-anchor="middle">① 区別できる2状態</text>
+          <text class="label" x="186" y="182" text-anchor="middle">② 密閉＝手がかりを漏らさない</text>
+          <!-- 鍵穴（操作） -->
+          <circle cx="116" cy="86" r="9" fill="var(--paper2)" stroke="#8a6a24" stroke-width="2"/>
+          <rect x="113.5" y="86" width="5" height="10" fill="#8a6a24"/>
+          <path d="M 34 86 L 100 86" stroke="#8a6a24" stroke-width="2.4" fill="none"/>
+          <path d="M 94 81 L 102 86 L 94 91" stroke="#8a6a24" stroke-width="2.4" fill="none"/>
+          <text class="label" x="62" y="74" text-anchor="middle">③ 合図したとき</text>
+          <text class="label" x="62" y="106" text-anchor="middle">だけ効く操作</text>
+          <!-- 小窓（読み出し） -->
+          <rect x="248" y="140" width="16" height="24" rx="3" fill="var(--paper2)" stroke="#2f7a6b" stroke-width="2"/>
+          <path d="M 268 152 L 330 152" stroke="#2f7a6b" stroke-width="2.4" fill="none"/>
+          <path d="M 324 147 L 332 152 L 324 157" stroke="#2f7a6b" stroke-width="2.4" fill="none"/>
+          <text class="label" x="304" y="138" text-anchor="middle">④ 読むとき</text>
+          <text class="label" x="304" y="172" text-anchor="middle">だけ開く小窓</text>
+          <text class="label" x="186" y="222" text-anchor="middle">②「閉じろ」と③「触らせろ」の綱引きが、設計の中心的ジレンマ</text>
+        </svg>
+        <div class="diagram-caption">量子ビットに求められる条件の見取り図。<strong>①区別できる2つの状態</strong>（エネルギーの2段）を、<strong>②手がかりが漏れない密閉箱</strong>で守る。ただし完全密閉では計算できないので、<strong>③合図（鍵）が合ったときだけ矢印を回せる鍵穴</strong>と、<strong>④読み出したいときだけ開ける小窓</strong>が要る。②と③は正反対の要求であり、この綱引きをどう両立させるかがハードウェア設計の核心になる。</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【量子ビットの設計図 ― まとめ】</span>
+        <span class="step">・<strong>条件①</strong>：0と1にあたる、区別できる2つの状態を持つ</span>
+        <span class="step">・<strong>条件②</strong>：重ね合わせを長く保てる＝<span class="nw">手がかりを環境に漏らさない</span>（コインが失格になる理由。ハードウェア最難関）</span>
+        <span class="step">・<strong>条件③</strong>：外から狙いどおりに矢印を回せる。②と③は綱引きの関係 → 「合図したときだけ応答する」性質が必要</span>
+        <span class="step">・<strong>条件④</strong>：最後に正確に読み出せる＝<span class="nw">手がかりをわざと外に出す小窓</span></span>
+        <span class="step">・追加で<strong>初期化</strong>（確実に |0⟩ から始める）と<strong>拡張性</strong>（たくさん並べられる）。あわせて<strong>ディヴィンチェンゾの基準</strong>（2000年ごろ）</span>
+        <span class="step">・候補：原子・イオン・スピン・光子（自然物：均一で長持ち）／超伝導回路（人工物：設計自由で高速）→ この旅は超伝導方式を軸に進む</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. コインの裏表が量子ビットとして使えない、いちばんの理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">裏と表という2つの状態を持っていないから</button>
+          <button class="choice-btn">重すぎて、ひっくり返す操作に時間がかかるから</button>
+          <button class="choice-btn">空気の分子や光が絶えずぶつかって手がかりを持ち去り、重ね合わせが一瞬で壊れるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ コインは条件①（2状態）は満たしている。失格の理由は条件②。大きな物体には環境の粒子が絶え間なくぶつかり、「今どっち向きか」の手がかりを持ち去り続けるため、裏と表の重ね合わせは干渉できる時間を一瞬も確保できない。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 条件②（重ね合わせの維持）と条件③（外からの操作）の間にある「緊張関係」とは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">②は外界から完全に切り離せと要求し、③は外から触らせろと要求する。正反対の要求を両立させる必要がある</button>
+          <button class="choice-btn">②を満たす材料は高価で、③を満たす装置は安価なので、予算配分が難しい</button>
+          <button class="choice-btn">②は低温を要求し、③は高温を要求する</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 密閉すれば操作できず、扉を開ければ手がかりが漏れる。だから「ふだんは外界に応答せず、特定の合図を送ったときだけ応答する」という鍵穴つきの箱のような性質を持つ物を探すことになる。これが量子ハードウェア設計の中心的ジレンマだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 4条件のほかに「初期化」（最初に確実に |0⟩ にそろえること）が必要な理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">|1⟩ から始めると量子ビットが壊れてしまうから</button>
+          <button class="choice-btn">計算は決まった出発点から始めないと、同じゲート列をかけても出てくる答えの意味が定まらないから</button>
+          <button class="choice-btn">|0⟩ のほうが |1⟩ よりも読み出しやすいから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ゲート列（プログラム）は「この出発点から始めればこの答えが出る」という設計になっている。出発点がバラバラでは答えの意味が定まらない。なお超伝導方式では、初期化はある部品のおまけとしてほぼタダで手に入る――種明かしはステージ4で。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QH.initStagePage(1);</script>
+</body>
+</html>

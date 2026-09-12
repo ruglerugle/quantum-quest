@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#143a3e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE7 量子コンピュータと未来 ― 消える干渉縞</title>
+<meta name="description" content="旅の総まとめ。足し算ルールから観測問題の線引きまでを1本の鎖として再構成し、現代技術に接続する。量子計算の力の源は干渉の設計であり、敵はデコヒーレンスそのもの。極低温・真空の意味、そして情報をもつれのパターンに隠して環境に読ませない量子誤り訂正まで。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage7.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="消える干渉縞">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE7 量子コンピュータと未来 ― 消える干渉縞">
+<meta property="og:description" content="量子コンピュータ開発は、正真正銘デコヒーレンスとの戦争だ。もつれのランダムさを盾に変える量子誤り訂正まで、旅の総決算。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage7.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .dq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .dq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .dq-svg .accent{fill:#2f8a8f;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌫️</a> <span>消える干渉縞</span></div>
+      <div class="brand-sub">STAGE 7 ― 量子コンピュータと未来 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 7</span><span class="chapter-title">量子コンピュータと未来</span>
+        <div class="chapter-sub">総まとめ</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">卒業試験。旅の論理を1本の鎖として自分の言葉で再構成し、「量子コンピュータの敵がなぜデコヒーレンスなのか」「量子誤り訂正がなぜもつれのランダムさを盾にできるのか」まで語れれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最終ステージだ。まず卒業試験から。この旅の論理を、1本の鎖として最初から最後まで、きみの言葉で通して語ってごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">はい。<strong>①</strong>出発点は足し算ルール――終わり方まで含めて区別がつかない道筋は矢印を足してから2乗、手がかりが残るなら2乗してから足す。<strong>②</strong>検出器を置くと針の状態が直交して筋書きの終わり方が分かれ、縞が消える。読む人は要らない。<strong>③</strong>手がかりを読み出せない質問で上書きし、答えで仕分ければ縞は戻る。ただし全体は常にのっぺりで、因果律は守られる。<strong>④</strong>環境は誰も読まず誰にも消せない検出器の大群。不完全な手がかり×莫大な回数の掛け算で、空気中の塵の縞は10⁻³¹秒で死ぬ――デコヒーレンス。<strong>⑤</strong>月は毎秒10³⁴個の光子に見られ続け、位置の定まった姿だけが生き残る。もつれは宇宙に薄まって回収不能。<strong>⑥</strong>そしてデコヒーレンスは「なぜ縞が消えるか」を説明するけれど、「なぜ1つの結果が選ばれるか」は説明しない。そこから先は観測問題として、まだ開いています。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい答案だね。これで卒業だ。では最後の授業として、この知識がいま現実のどこで戦われているかを話す。<strong>量子コンピュータ</strong>だ。普通のコンピュータのビットは0か1のどちらか。量子ビットは<strong>0と1の重ね合わせ</strong>を保てる。ただし、量子計算の力の源は重ね合わせそのものではなく、<strong>干渉</strong>なんだ。計算のあらゆる道筋に矢印を割り当てて、<strong>間違った答えへ向かう矢印たちが打ち消し合い、正しい答えへ向かう矢印たちが強め合う</strong>ように計算の手順を設計する。最後に測定すると、高い確率で正しい答えだけが残る――そういう仕掛けだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">矢印の打ち消し合いが計算の本体……。それなら、この旅を歩いた者として敵の正体は明白です。<strong>デコヒーレンス</strong>ですね。量子ビットの「0の道筋」と「1の道筋」の手がかりが、光子1個・分子1個にでも漏れたら、矢印を足す資格が失われて、せっかくの干渉の設計が崩れてしまう。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。量子コンピュータ開発は、正真正銘<strong>デコヒーレンスとの戦争</strong>なんだ。第一の対策は、この旅で学んだ条件の裏返し。手がかりを漏らさないために、量子ビットを<strong>小さく、冷たく、静かな場所へ</strong>。超伝導型の量子コンピュータが絶対零度近く――約0.01ケルビン、セ氏でいえばマイナス273.14度――まで冷やされ、真空容器と電磁波の遮蔽で包まれるのはこのためだ。それでも、重ね合わせを保てる時間――<strong>コヒーレンス時間</strong>と呼ぶ――は、現在の水準でおおむね<strong>1万分の1秒</strong>ほどしかない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">塵の10⁻³¹秒に比べれば27桁も長いですが、それでも長い計算の途中で必ず尽きます。冷やして遮るだけでは足りない――何か根本的に違う対策があるはずです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが最後の切り札、<strong>量子誤り訂正</strong>だ。発想がふるっているよ。情報を量子ビット1個に置くから、環境に読まれて壊れる。ならば――<strong>1個分の情報を、多数の量子ビットにまたがる「もつれのパターン」として、薄く広く隠してしまえ</strong>、というんだ。環境が個々の量子ビットを覗いても、そこに見えるのはランダムな断片だけで、計算内容の手がかりは何も取れない。もつれの片割れは、単独では完全にランダムに見える――もつれの旅で出会った、あの性質そのものを、今度は<strong>盾として</strong>使うんだよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……美しい反撃です。環境に読まれて壊されるのが干渉なら、<strong>環境に読めない場所へ情報を隠せばいい</strong>。「単独ではランダム、本体は関係の中にだけある」というもつれの性質は、弱点ではなく最強の金庫だったんですね。デコヒーレンスの理論を、そっくり裏返して武器にしている。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そして2020年代に入って、この誤り訂正が実験で「損益分岐点」を超え始めた。訂正に使う量子ビットの数を増やすほど、本当に誤りが減ることが確かめられたんだ。戦いはまだ続くけれど、理論の見取り図は、きみが歩いてきたこの旅の中に全部ある。……さあ、最後の問いに答えてもらおう。<strong>「観測すると、世界はどう変わるか」</strong>。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">観測とは、特別な装置や意識のことではなく、<strong>「区別の手がかりが、相手の状態に記録されること」</strong>です。それは検出器の針でも、散乱していく光子1個でも同じ。記録が環境へ広がるほど、矢印を足す資格――干渉――は実際上取り戻せなくなり、世界は縞のない、位置の定まった、古典的な顔になります。ただし、「そのうちの1つの結果がなぜ選ばれるのか」は、まだ誰も知らない。……ここまでが、いまの物理学が誠実に言えることの全部です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">満点だ。アインシュタインの月から始まった問いは、ベルの不等式を経て、いまきみの中で「環境と手がかり」の物理になった。この道具立ては、量子コンピュータの設計図であると同時に、宇宙がなぜ古典的に見えるかの説明でもある。全7ステージ、本当によく歩き切ったね。<strong>卒業おめでとう！</strong></div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="chain-svg" class="dq-svg" viewBox="0 0 372 232" width="100%" role="img" aria-label="旅の論理の鎖の一枚絵。足し算ルールから、経路検出器、量子消しゴム、環境デコヒーレンス、月と古典世界、観測問題の線引きまで、6つの結論が矢印でつながっている">
+          <text class="strong" x="186" y="16" text-anchor="middle">この旅の論理の鎖</text>
+          <g id="chain-body"></g>
+        </svg>
+        <div class="diagram-caption">たった1つの足し算ルールから、6つの結論が一本道でつながる。途中に論理の飛躍はひとつもない――これがこの旅の設計図だ</div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="qc-svg" class="dq-svg" viewBox="0 0 372 210" width="100%" role="img" aria-label="超伝導量子ビットのコヒーレンス時間の進歩。縦軸は対数スケールで、1999年の約1ナノ秒から、2000年代後半の約1マイクロ秒、2010年代の約100マイクロ秒、2020年代の1ミリ秒級まで、およそ25年で100万倍に伸びている">
+          <text class="strong" x="186" y="16" text-anchor="middle">量子ビットが重ね合わせを保てる時間（超伝導型・目安）</text>
+          <g id="qc-body"></g>
+        </svg>
+        <div class="diagram-caption">超伝導量子ビットのコヒーレンス時間のおおよその歩み（1目盛＝10倍の対数スケール）。1999年の約1ナノ秒から2020年代の1ミリ秒級まで、四半世紀でおよそ100万倍。デコヒーレンスとの戦いは、素材・設計・誤り訂正の三正面で今も進んでいる</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【旅の総まとめ】</span>
+        <span class="step">・武器は1つ：<strong>終わり方まで含めて区別がつかない道筋は、矢印を足してから2乗。手がかりが残るなら、2乗してから足す</strong></span>
+        <span class="step">・観測＝手がかりが相手の状態に記録されること。検出器の針も、散乱光子1個も、環境も同じ。意識は不要</span>
+        <span class="step">・量子計算の力＝干渉の設計（間違いの矢印を打ち消し合わせ、正解を強め合わせる）。敵はデコヒーレンス</span>
+        <span class="step">・対策：小さく・冷たく（約0.01K）・静かに。それでもコヒーレンス時間は1万分の1秒級 → <strong>量子誤り訂正</strong>：情報を多数の量子ビットのもつれのパターンに薄く隠し、環境に読ませない</span>
+        <span class="step">・そして誠実な線引き：「なぜ1つの結果が選ばれるか」は未解決の観測問題として、いまも開いている</span>
+      </div>
+
+      <div class="quiz-head">卒業クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 量子計算の力の源は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">量子ビットが普通のビットより物理的に小さいこと</button>
+          <button class="choice-btn">計算のあらゆる道筋の矢印を干渉させ、間違った答えを打ち消し合わせ、正しい答えを強め合わせる設計ができること</button>
+          <button class="choice-btn">量子ビットの中を信号が光速で伝わること</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 重ね合わせで道筋を大量に並走させるだけでは足りず、矢印の向きを操って正解だけが生き残るように干渉を設計することが量子アルゴリズムの本体。だから干渉を殺すデコヒーレンスが最大の敵になる。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 量子コンピュータを絶対零度近くまで冷やし、真空と遮蔽で包む理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">量子ビットの動作速度を上げるため</button>
+          <button class="choice-btn">消費電力を節約するため</button>
+          <button class="choice-btn">環境への手がかりの漏れ（デコヒーレンス）を抑えて、干渉の設計を守るため</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 熱い環境ほど光子や分子が多く、手がかりが漏れる機会が増える――塵粒子の10⁻³¹秒と同じ理屈だ。冷却・真空・遮蔽はすべて「環境という検出器を黙らせる」工夫。それでもコヒーレンス時間は有限なので、最後は誤り訂正が要る。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 量子誤り訂正の基本アイデアは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">情報を多数の量子ビットにまたがるもつれのパターンとして隠し、環境が個々の量子ビットを覗いても手がかりを得られないようにする</button>
+          <button class="choice-btn">量子ビットの状態を毎回コピーしてバックアップを取る</button>
+          <button class="choice-btn">誤りが起きるたびに計算を最初からやり直す</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ もつれの片割れは単独では完全にランダム――もつれの旅で出会った性質を盾に変える発想だ。環境が読めるのはランダムな断片だけで、情報の本体は「関係の中」に安全に隠れる。ちなみに量子状態は原理的にコピーできない（複製禁止定理）ので、バックアップ作戦はそもそも不可能だ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>クリア画面へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>DQ.initStagePage(7);</script>
+
+<script>
+(function(){
+  // 図1: 旅の論理の鎖（静的フローチャート）
+  var g = document.getElementById('chain-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var nodes = [
+    {t: '① 足し算ルール', s: '区別がつかないなら矢印を足す', c: '#2f7a6b'},
+    {t: '② 経路検出器', s: '手がかりが残ると縞が消える', c: '#8a5a2a'},
+    {t: '③ 量子消しゴム', s: '手がかりを消せば縞は戻る', c: '#5b3fa6'},
+    {t: '④ 環境デコヒーレンス', s: '塵の縞は10⁻³¹秒で死ぬ', c: '#3f6191'},
+    {t: '⑤ 月と古典世界', s: '位置の定まった姿が生き残る', c: '#7a6a2f'},
+    {t: '⑥ 誠実な線引き', s: '「1つに決まる仕組み」は未解決', c: '#b5504a'}
+  ];
+  // 2列ジグザグ配置
+  var W = 158, H = 44, GX = 22, GY = 26;
+  nodes.forEach(function(n, i){
+    var col = i % 2, row = Math.floor(i / 2);
+    var x = GX + col * (W + 30), y = 30 + row * (H + 6) + (col ? 22 : 0);
+    n.x = x; n.y = y;
+    el('rect', {x: x, y: y, width: W, height: H, rx: 8, fill: 'var(--paper2)', stroke: n.c, 'stroke-width': 1.8});
+    var t1 = txt(x + W / 2, y + 18, 'strong', n.t);
+    t1.style.fill = n.c;
+    t1.style.fontSize = '11.5px';
+    var t2 = txt(x + W / 2, y + 34, 'label', n.s);
+    t2.style.fontSize = '9.5px';
+  });
+  // 接続矢印
+  for (var i = 0; i < nodes.length - 1; i++) {
+    var a = nodes[i], b = nodes[i + 1];
+    var x1 = a.x + W * (i % 2 === 0 ? 1 : 0), y1 = a.y + H / 2;
+    var x2 = b.x + W * (i % 2 === 0 ? 0 : 1), y2 = b.y + H / 2;
+    if (i % 2 === 0) { // 左→右
+      el('line', {x1: x1, y1: y1, x2: x2 - 2, y2: y2, stroke: 'var(--muted)', 'stroke-width': 1.6});
+      el('path', {d: 'M ' + (x2 - 2) + ' ' + y2 + ' l -7 -4 l 0 8 z', fill: 'var(--muted)'});
+    } else { // 右→左（下の行へ）
+      var my = (y1 + y2) / 2 + 4;
+      el('path', {d: 'M ' + (a.x + W / 2) + ' ' + (a.y + H) + ' L ' + (a.x + W / 2) + ' ' + (my) + ' L ' + (b.x + W / 2) + ' ' + (my) + ' L ' + (b.x + W / 2) + ' ' + (b.y - 3), fill: 'none', stroke: 'var(--muted)', 'stroke-width': 1.6});
+      el('path', {d: 'M ' + (b.x + W / 2) + ' ' + (b.y - 2) + ' l -4 -7 l 8 0 z', fill: 'var(--muted)'});
+    }
+  }
+})();
+</script>
+
+<script>
+(function(){
+  // 図2: コヒーレンス時間の進歩（対数・静的）
+  var g = document.getElementById('qc-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  // 軸: x=年(1996..2028), y=log10秒(-10..-2)
+  var X0 = 56, X1 = 344, Y0 = 176, Y1 = 40;
+  function xOf(yr) { return X0 + (yr - 1996) / (2028 - 1996) * (X1 - X0); }
+  function yOf(e) { return Y0 + (e - (-10)) / ((-2) - (-10)) * (Y1 - Y0); }
+  el('line', {x1: X0, y1: Y0, x2: X1, y2: Y0, stroke: 'var(--ink)', 'stroke-width': 1.6});
+  el('line', {x1: X0, y1: Y0, x2: X0, y2: Y1 - 6, stroke: 'var(--ink)', 'stroke-width': 1.6});
+  [[-9, '1ナノ秒'], [-6, '1マイクロ秒'], [-3, '1ミリ秒']].forEach(function(t){
+    el('line', {x1: X0 - 4, y1: yOf(t[0]), x2: X1, y2: yOf(t[0]), stroke: 'var(--line)', 'stroke-width': 1, 'stroke-dasharray': '3 4'});
+    txt(X0 - 8, yOf(t[0]) + 4, 'label', t[1], 'end');
+  });
+  [2000, 2010, 2020].forEach(function(yr){
+    el('line', {x1: xOf(yr), y1: Y0, x2: xOf(yr), y2: Y0 + 4, stroke: 'var(--ink)'});
+    txt(xOf(yr), Y0 + 18, 'label', String(yr) + '年');
+  });
+  var pts = [[1999, -9], [2007, -6], [2013, -4], [2023, -3]];
+  var d = '';
+  pts.forEach(function(p, i){ d += (i === 0 ? 'M ' : 'L ') + xOf(p[0]).toFixed(1) + ' ' + yOf(p[1]).toFixed(1) + ' '; });
+  el('path', {d: d, fill: 'none', stroke: '#2f8a8f', 'stroke-width': 2.4});
+  pts.forEach(function(p){ el('circle', {cx: xOf(p[0]), cy: yOf(p[1]), r: 4.5, fill: '#2f8a8f'}); });
+  txt(xOf(2010), 34, 'accent', '25年でおよそ100万倍');
+})();
+</script>
+</body>
+</html>

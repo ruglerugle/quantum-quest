@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12303c">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE6 壊さずに読み出す ― 量子コンピュータはどう作るのか</title>
+<meta name="description" content="量子ビットの読み出しの工学。なぜ直接測らずに隣の共振器（笛）の音程を聞くのか（量子非破壊測定）、光子数個ぶんの小声を室温まで持ち上げる増幅の鎖、最初の1段がすべてを決める理由、ジョセフソン接合で作る量子限界増幅器と一方通行の弁まで、論理の飛躍なく積み上げる。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage6.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはどう作るのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE6 壊さずに読み出す ― 量子コンピュータはどう作るのか">
+<meta property="og:description" content="光子数個ぶんの小声を、雑音を足さずに100万倍へ。読み出しと増幅の鎖の工学。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage6.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qh-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qh-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qh-svg .accent{fill:#2f8a8f;font-size:11px;font-weight:900}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🧊</a> <span>量子コンピュータはどう作るのか</span></div>
+      <div class="brand-sub">STAGE 6 ― 壊さずに読み出す ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 6</span><span class="chapter-title">壊さずに読み出す</span>
+        <div class="chapter-sub">共振器と増幅の鎖</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">条件④「最後に正確に読み出せる」を工学として完成させよう。なぜ量子ビットに直接聞かないのか、光子数個ぶんの小声をどうやって室温まで持ち上げるのか、なぜ最初の増幅器がすべてを決めるのか――「壊さず・騒がせず・聞き取る」の3拍子を自分の言葉で説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最後は条件④、読み出しだ。考えてみると、これは注文が矛盾すれすれでね。計算の間はさんざん「手がかりを漏らすな」と言っておいて、最後の瞬間だけは「はっきり手がかりを出せ」と言う。この虫のいい注文に応える仕掛けを、前の旅でひとつ見ているね。どんな仕掛けだった？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">量子ビットの隣に、読み出し専用の小さなマイクロ波の空洞――決まった音程で鳴る<strong>笛</strong>のようなもの――を置いておく。量子ビットが |0⟩ か |1⟩ かで、隣どうしの波の押し合いのせいで<strong>笛の音程がごくわずかに変わる</strong>。そこで弱い電波を笛に通して音程の変化を読み取れば、0か1かが分かる。電波に手がかりが乗って外に出た瞬間、状態は出た方に確定する――でした。<br>ただ、今回の旅の目で見ると、まず設計の動機が気になります。<strong>なぜこんな回りくどいことを？</strong> 量子ビット本体に直接電波を当てて、返事を聞けばいいように思えます。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">直接聞くとは、つまり量子ビットとエネルギーをやり取りすることだ。たとえば |1⟩ が持つエネルギーの粒を検出器で吸い取れば、確かに「|1⟩ だった」と分かる。だが吸い取った瞬間、状態は跡形もない。しかも読み取りに失敗したら（検出器は完璧ではない）、やり直しがきかない。<strong>一発勝負の破壊検査</strong>になってしまう。<br>笛方式の賢さはここにある。笛の音程は、量子ビットと笛の<strong>波の押し合い</strong>で決まる。押し合いはエネルギーの受け渡しではない――現に、量子ビットの周波数は約5GHz、笛は約7GHzと、わざと<strong>2GHzもずらして</strong>作ってある。リズムの合わない相手とは乗り移り（エネルギー交換）が起きないことは、共鳴の勉強で見たとおりだ。<br>エネルギーを渡さず、<strong>「隣にいる」ことによる音程の押し合いだけ</strong>を読む。だから読んでも量子ビットのエネルギーは壊れず、疑わしければ<strong>すぐもう一度読み直せる</strong>。この性質を<strong>量子非破壊測定</strong>と呼ぶ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 240" width="100%" role="img" aria-label="分散読み出しの図。量子ビット（5GHz）と共振器（7GHz）が隣り合い、弱い電波を共振器に当てると、量子ビットが|0⟩か|1⟩かで返ってくる波の位相がわずかに違う。この違いが手がかりになる">
+          <text class="strong" x="186" y="18" text-anchor="middle">分散読み出し ― 返ってきた波の「ずれ」に手がかりが乗る</text>
+          <!-- 量子ビットと笛 -->
+          <rect x="36" y="52" width="88" height="56" rx="8" fill="#e8f1f1" stroke="#2f8a8f" stroke-width="2"/>
+          <text class="label" x="80" y="76" text-anchor="middle">量子ビット</text>
+          <text class="label" x="80" y="92" text-anchor="middle">約5GHz</text>
+          <rect x="152" y="52" width="88" height="56" rx="8" fill="#f7f3e2" stroke="#8a6a24" stroke-width="2"/>
+          <text class="label" x="196" y="76" text-anchor="middle">共振器（笛）</text>
+          <text class="label" x="196" y="92" text-anchor="middle">約7GHz</text>
+          <path d="M 126 74 q 6 -6 12 0 q 6 6 12 0" stroke="var(--muted)" stroke-width="2" fill="none"/>
+          <text class="label" x="138" y="118" text-anchor="middle">押し合い（エネルギー交換なし）</text>
+          <!-- プローブ -->
+          <path d="M 262 66 L 340 66" stroke="#2f5a9e" stroke-width="2" fill="none"/>
+          <path d="M 268 61 L 260 66 L 268 71" stroke="#2f5a9e" stroke-width="2" fill="none"/>
+          <text class="label" x="300" y="56" text-anchor="middle">弱い電波（光子数個）</text>
+          <path d="M 262 94 L 340 94" stroke="#b5504a" stroke-width="2" fill="none"/>
+          <path d="M 332 89 L 341 94 L 332 99" stroke="#b5504a" stroke-width="2" fill="none"/>
+          <text class="label" x="300" y="112" text-anchor="middle">返り波に手がかり</text>
+          <!-- 波形比較 -->
+          <text class="strong" x="110" y="152" text-anchor="middle" fill="#2f5a9e">|0⟩のときの返り波</text>
+          <path d="M 40 176 q 11 -16 22 0 q 11 16 22 0 q 11 -16 22 0 q 11 16 22 0 q 11 -16 22 0 q 11 16 22 0" stroke="#2f5a9e" stroke-width="2.2" fill="none"/>
+          <text class="strong" x="110" y="206" text-anchor="middle" fill="#b5504a">|1⟩のときの返り波</text>
+          <path d="M 51 228 q 11 -16 22 0 q 11 16 22 0 q 11 -16 22 0 q 11 16 22 0 q 11 -16 22 0 q 5.5 8 11 8" stroke="#b5504a" stroke-width="2.2" fill="none"/>
+          <line x1="62" y1="164" x2="62" y2="234" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+          <text class="accent" x="286" y="178" text-anchor="middle">量子ビットの状態で</text>
+          <text class="accent" x="286" y="194" text-anchor="middle">波の山の位置（位相）が</text>
+          <text class="accent" x="286" y="210" text-anchor="middle">わずかにずれる</text>
+        </svg>
+        <div class="diagram-caption">量子ビット（約5GHz）と共振器（約7GHz）はわざと2GHzずらして作ってあり、リズムが合わないためエネルギーの乗り移りは起きない。起きるのは<strong>押し合いによる音程のずれ</strong>だけ。光子数個ぶんの弱い電波を笛に当てると、量子ビットが |0⟩ か |1⟩ かで返り波の<strong>山の位置（位相）</strong>がわずかに違う。エネルギーを奪わないので状態は壊れず（量子非破壊測定）、疑わしければ読み直せる。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">納得です。では実務の話をさせてください。「弱い電波を笛に通す」の<strong>弱い</strong>とは、どのくらいですか。<br>前のステージの論理だと、10mKの聖域に強い電波を撃ち込むわけにはいかないはずです。でも弱すぎたら、今度は音程の変化なんて読み取れない気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">実機で笛に入れる電波は、<strong>光子にして数個〜数十個ぶん</strong>だ。電力でいうと10⁻¹⁷ワット級――1ワットの1兆分の1の、さらに10万分の1。人類が日常で扱う中で最も微かな信号の部類だよ。<br>強くしたい誘惑は当然ある。声が大きいほど読み取りは楽だからね。だが強く当てすぎると、押し合いが乱暴になって<strong>量子ビット自身を蹴飛ばしてしまう</strong>。せっかくの非破壊測定が、測定のせいで誤りを作る本末転倒になる。だから「蹴飛ばさない上限」ぎりぎりの弱さで聞くしかない。<br>すると問題はこうなる。この光子数個の小声を、室温の電子機器が数字に変換できる強さまで、<strong>100万倍以上に増幅</strong>しながら4段の温度の階段を駆け上がらせなければならない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">増幅……嫌な予感がします。前のステージの論理を逆向きに使うと――増幅器も金属でできた機械です。中の電子は熱で震えていて、<strong>騒音を放っている</strong>はずです。<br>小声を増幅器に入れたら、信号だけでなく、<strong>増幅器自身の騒音も一緒に乗って大きくなってしまう</strong>気がします。それでは何のための増幅か分かりません。この心配は外れていますか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その心配は当たっている。しかも事態は、きみの想像よりさらに厳しい。増幅の鎖には鉄則があってね――<strong>最初の1段がすべてを決める</strong>んだ。<br>2段目以降の騒音は、すでに大きく育った信号に足されるから相対的に無害だ。だが1段目の騒音は、まだ小声のままの信号に直接かぶさり、以後は信号と一緒に増幅されて<strong>永遠についてくる</strong>。声と騒音の比率は、1段目を出た瞬間に確定してしまい、後からどれだけ増幅しても取り返しがつかない。<br>そして手持ちの装備を調べると、絶望的な数字が出る。世界最良クラスの半導体増幅器（4Kに置ける特殊なトランジスタ）でも、足してしまう騒音は温度に換算して<strong>数Kぶん</strong>。10mKの世界からやってくる光子数個の声には、桁違いに大きい。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">条件を並べると、答えの形は絞られてきます。1段目の増幅器は、①10mKプレートに置けて、②自分の騒音がほぼゼロでないといけない。<br>でも、最良の半導体でも数Kぶんの騒音を出すんですよね。②を満たす増幅器なんて、この世に存在するんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">実は、存在するんだ。鍵は<strong>超伝導</strong>だよ。騒音の源は熱で震える電子だったね。ならば、電子たちが1つの波にまとまって「個別に震える」こと自体が禁止されている超伝導体で増幅器を作れば、騒音の源をそもそも持たない部品になる。しかも材料は、きみのよく知るあの部品――ジョセフソン接合だ。名を<strong>ジョセフソン・パラメトリック増幅器</strong>という。<br>原理はブランコの<strong>立ちこぎ</strong>だよ。ブランコに乗って、揺れのリズムに合わせてしゃがんだり立ったりすると、外から押されなくても揺れがぐんぐん育つ――自分の脚のエネルギーが揺れに注ぎ込まれるからだ。同じように、ジョセフソン接合の「電流で性質が変わる」非線形を使って、回路の性質を<strong>強い別の波（ポンプ波）でリズミカルに揺さぶる</strong>と、そこに入ってきた小声の信号が、ポンプ波からエネルギーを分けてもらって育つ。<br>熱騒音の源を持たないおかげで、足す雑音は<strong>量子力学が原理的に命じる最低限</strong>――不確定性原理のせいで、どんな増幅器もごくわずかな雑音を足すことだけは避けられないのだが――その下限すれすれまで抑えられる。<strong>量子限界増幅器</strong>と呼ばれるゆえんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">騒音の源そのものを持たない部品を作る、ですか。……その増幅器を先頭に置くとして、後ろにはまだ何段も要るんですよね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そうだ。鎖の全体像を並べよう。<strong>10mK：パラメトリック増幅器で約100倍</strong>（ここで声と騒音の比が確定）→ <strong>4K：半導体増幅器で1000倍以上</strong>（もう声が大きいので数Kの騒音は誤差）→ <strong>室温：さらに増幅して数字化</strong>。<br>それから、地味だが欠かせない部品がある。増幅器は自分の出す騒音を<strong>入口側にも</strong>まき散らす。それが配線を逆流して量子ビットに届いたら台無しだから、間に<strong>一方通行の弁</strong>（サーキュレータという、電波を一方向にしか通さない部品）を挟んで逆流を封じる。<br>数字も添えておこう。読み出し1回にかかる時間は数百ナノ秒、正しく読める確率は<strong>99%程度</strong>。1量子ビットゲートの99.9%より一桁悪い。<strong>読み出しは、いまも実機のいちばんの誤り所</strong>なんだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 250" width="100%" role="img" aria-label="増幅の鎖の図。10mKの量子限界増幅器、4Kの半導体増幅器、室温の増幅器の3段で光子数個の信号を100万倍以上に持ち上げる。最初の1段が足す騒音が信号と一緒に育つため、声と騒音の比は1段目で確定する。逆流防止の一方通行弁も挟む">
+          <text class="strong" x="186" y="18" text-anchor="middle">増幅の鎖 ― 最初の1段がすべてを決める</text>
+          <!-- 鎖 -->
+          <line x1="30" y1="120" x2="342" y2="120" stroke="var(--ink)" stroke-width="2"/>
+          <!-- 弁 -->
+          <circle cx="76" cy="120" r="14" fill="var(--paper2)" stroke="#2f7a6b" stroke-width="2"/>
+          <path d="M 70 120 L 82 120 M 77 115 L 83 120 L 77 125" stroke="#2f7a6b" stroke-width="2" fill="none"/>
+          <text class="label" x="76" y="150" text-anchor="middle">一方通行の弁</text>
+          <text class="label" x="76" y="164" text-anchor="middle">（逆流防止）</text>
+          <!-- 増幅器 -->
+          <path d="M 128 102 L 128 138 L 160 120 Z" fill="#e8f1f1" stroke="#2f8a8f" stroke-width="2"/>
+          <text class="strong" x="144" y="92" text-anchor="middle" fill="#2f8a8f">10mK</text>
+          <text class="label" x="144" y="152" text-anchor="middle">量子限界増幅器</text>
+          <text class="label" x="144" y="166" text-anchor="middle">（超伝導・×100）</text>
+          <text class="accent" x="144" y="182" text-anchor="middle">ここで声/騒音比が確定</text>
+          <path d="M 216 102 L 216 138 L 248 120 Z" fill="#f7f3e2" stroke="#8a6a24" stroke-width="2"/>
+          <text class="strong" x="232" y="92" text-anchor="middle" fill="#8a6a24">4K</text>
+          <text class="label" x="232" y="152" text-anchor="middle">半導体増幅器</text>
+          <text class="label" x="232" y="166" text-anchor="middle">（×1000以上）</text>
+          <path d="M 296 102 L 296 138 L 328 120 Z" fill="#fdefed" stroke="#b5504a" stroke-width="2"/>
+          <text class="strong" x="312" y="92" text-anchor="middle" fill="#b5504a">室温</text>
+          <text class="label" x="312" y="152" text-anchor="middle">増幅して数字化</text>
+          <text class="label" x="34" y="104" text-anchor="start">笛からの小声</text>
+          <text class="label" x="34" y="90" text-anchor="start">光子数個（10⁻¹⁷W級）</text>
+          <text class="label" x="186" y="216" text-anchor="middle">2段目以降の騒音は「もう大きくなった声」に足されるので無害。</text>
+          <text class="label" x="186" y="232" text-anchor="middle">1段目の騒音だけは小声に直接かぶさり、以後ずっと信号と一緒に増幅される。</text>
+        </svg>
+        <div class="diagram-caption">読み出し信号の帰り道。<strong>10mKの量子限界増幅器</strong>（ジョセフソン接合の非線形を使った「立ちこぎ」式。足す雑音は量子力学が命じる下限すれすれ）→ <strong>4Kの半導体増幅器</strong> → <strong>室温</strong>で数字化。1段目の騒音は小声のままの信号にかぶさって永遠についてくるため、声と騒音の比は1段目で確定する。増幅器自身の騒音が量子ビットへ逆流しないよう、<strong>一方通行の弁</strong>（サーキュレータ）を挟む。読み出し1回は数百ナノ秒・成功率99%程度で、ゲート（99.9%）より誤りやすい。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">全体をまとめます。<br>読み出しの旅は――光子数個の弱い電波を笛に通す（<strong>蹴飛ばさない弱さ</strong>）→ 量子ビットとの押し合いで音程がずれ、<strong>返ってきた波に手がかりが刻まれる</strong> → 一方通行の弁を通り → 10mKの<strong>量子限界増幅器</strong>で声と騒音の比を確定させ → 4K、室温と増幅されて数字になる。<br>デコヒーレンスの旅の言葉で言えば、手がかりが増幅されて記録に変わった時点で、状態は読めた方に確定。測定装置とは「手がかりの小窓」を、<strong>壊さず・騒がせず・聞き取れるように</strong>作り込んだ工学だったんですね。<br>これで①区別できる2状態、②重ね合わせの維持、③操作、④読み出し――<strong>4条件すべて、部品として実現できました</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">おめでとう、量子ビット<strong>1個</strong>の完全体だ。<br>だが計算機には、量子ビットどうしの会話――CNOTのような2量子ビットゲート――が要る。1個の完成と2個の連携は、まったく別の難しさだよ。次のステージでは量子ビットをつなぎ、あわせて「超伝導以外の作り方」たち――イオン・原子・光・シリコン――と設計図くらべをしよう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【壊さずに読み出す ― 今日の積み上げ】</span>
+        <span class="step">・直接測る＝エネルギーを吸い取る破壊検査（一発勝負）。<strong>分散読み出し</strong>＝隣の共振器（笛・約7GHz）との<span class="nw">押し合いによる音程のずれ</span>だけを読む。2GHzずらしてあるのでエネルギー交換なし → 壊れず読み直せる（<strong>量子非破壊測定</strong>）</span>
+        <span class="step">・プローブは<strong>光子数個</strong>（10⁻¹⁷W級）。強すぎると量子ビットを蹴飛ばして測定自体が誤りを作る</span>
+        <span class="step">・小声を100万倍以上に増幅する鎖では<strong>最初の1段がすべてを決める</strong>（1段目の騒音は信号と一緒に育って永遠についてくる）。最良の半導体増幅器でも騒音は数Kぶん → 足りない</span>
+        <span class="step">・解＝<strong>ジョセフソン・パラメトリック増幅器</strong>（10mK・超伝導）：ブランコの立ちこぎと同じ原理でポンプ波からエネルギーをもらう。足す雑音は不確定性原理が命じる下限すれすれ（<strong>量子限界増幅器</strong>）</span>
+        <span class="step">・鎖：10mK（×100）→ 4K（×1000以上）→ 室温（数字化）。増幅器の騒音の逆流は<strong>一方通行の弁</strong>（サーキュレータ）で封じる</span>
+        <span class="step">・読み出し1回＝数百ナノ秒・成功率<strong>99%程度</strong>＝実機最大の誤り所。これで<strong>4条件すべて達成</strong>、量子ビット1個の完全体</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 量子ビットに直接聞かず、わざわざ隣の共振器（笛）の音程を読む理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">共振器のほうが量子ビットより大きくて扱いやすいから</button>
+          <button class="choice-btn">直接聞くとエネルギーを吸い取って状態を壊す一発勝負になる。笛との押し合いはエネルギー交換なしの音程のずれだけなので、壊さず読めて読み直しもきくから</button>
+          <button class="choice-btn">量子ビットは電波を反射しない性質があるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 量子ビット（5GHz）と笛（7GHz）はわざとリズムをずらしてあり、エネルギーの乗り移りが起きない。読めるのは押し合いによる音程のずれだけだが、それで十分に0/1が区別でき、状態のエネルギーを壊さない（量子非破壊測定）。検出器は完璧ではないので「読み直せる」ことの価値は大きい。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 増幅の鎖の最初の1段を、わざわざ10mKに置いた超伝導の増幅器にする理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">10mKに置くとどんな増幅器でも騒音がゼロになるから</button>
+          <button class="choice-btn">超伝導の増幅器は増幅率が半導体よりはるかに大きいから</button>
+          <button class="choice-btn">1段目が足す騒音は小声のままの信号にかぶさり、以後ずっと信号と一緒に増幅されるので、声と騒音の比が1段目で確定する。光子数個の声には量子限界すれすれの静かさが必要だから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 2段目以降の騒音は育った信号に足されるので相対的に無害だが、1段目の騒音は取り返しがつかない。熱で震える電子（騒音源）がいない超伝導製のパラメトリック増幅器なら、足す雑音を不確定性原理が命じる下限近くまで抑えられる。増幅率そのものは約100倍と控えめで、大増幅は後段の半導体に任せる。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 読み出しの電波（プローブ）を光子数個ぶんに抑える理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">強く当てると押し合いが乱暴になって量子ビットを蹴飛ばし、測定自体が誤りを作ってしまうから</button>
+          <button class="choice-btn">強い電波を作る装置が高価だから</button>
+          <button class="choice-btn">光子が多いと共振器に入りきらないから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 声が大きいほど読み取りは楽になるが、プローブが強すぎると量子ビットの状態そのものを乱してしまい、非破壊のはずの測定が誤りの源になる。「蹴飛ばさない上限」ぎりぎりの弱さで聞くしかなく、だからこそ後段に量子限界の増幅の鎖が必要になる。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage5.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QH.initStagePage(6);</script>
+</body>
+</html>

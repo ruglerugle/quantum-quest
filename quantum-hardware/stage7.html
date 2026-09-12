@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12303c">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE7 2量子ビットゲートと方式くらべ ― 量子コンピュータはどう作るのか</title>
+<meta name="description" content="量子ビットどうしをどうつなぐか。連成振り子の橋、常時接続の弊害と「蛇口方式・鍵方式」の解決、CNOTの実力値まで。さらにイオントラップ・中性原子・光・シリコンスピンの各方式が4条件をどう満たすかを設計図くらべし、自然物陣営と人工物陣営のトレードオフを整理する。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage7.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはどう作るのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE7 2量子ビットゲートと方式くらべ ― 量子コンピュータはどう作るのか">
+<meta property="og:description" content="量子ビットをつなぐ橋の工学と、イオン・原子・光・シリコンとの設計図くらべ。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/stage7.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qh-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qh-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qh-svg .accent{fill:#2f8a8f;font-size:11px;font-weight:900}
+  .cmp-wrap{overflow-x:auto;margin:16px 0}
+  .cmp{border-collapse:collapse;width:100%;min-width:640px;font-size:12.5px;line-height:1.55;background:var(--paper2)}
+  .cmp th,.cmp td{border:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:top;font-weight:700}
+  .cmp th{background:#e8f1f1;color:#1c2f2b;font-weight:900;white-space:nowrap}
+  .cmp td:first-child{background:#f3efe2;font-weight:900;white-space:nowrap}
+  .cmp .good{color:#2f7a6b}
+  .cmp .bad{color:#b5504a}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🧊</a> <span>量子コンピュータはどう作るのか</span></div>
+      <div class="brand-sub">STAGE 7 ― 2量子ビットゲートと方式くらべ ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 7</span><span class="chapter-title">2量子ビットゲートと方式くらべ</span>
+        <div class="chapter-sub">つなぐ・他の作り方</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">量子ビットどうしを会話させる「橋」を架け、常時接続の弊害とその解決を理解しよう。後半は設計図くらべ――イオン・中性原子・光・シリコンの各方式が4条件をどう満たすかを、自然物陣営と人工物陣営のトレードオフとして整理できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">量子ビット1個の完全体はできた。次は2個の<strong>会話</strong>――CNOTのような、片方の状態に応じてもう片方の矢印を回すゲート――だ。<br>物理の要求から考えよう。会話させるとは、片方の揺れがもう片方に<strong>影響を及ぼせる</strong>ようにすることだ。理科室の振り子で言えば、2つの振り子を細い糸やばねでつなぐと、片方を揺らすだけで、もう片方がだんだん揺れ出す。<br>電気の振り子2つなら、どうつなぐのがいちばん素直だと思う？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">電気の揺れを伝えるのだから、電気の通り道の橋……。といっても、導線で直結したら2つが1つの回路になってしまいます。つながずに影響だけ伝える部品……あ、<strong>コンデンサ</strong>がそうでしたね。板と板は向かい合うだけで、直接つながってはいない。小さなコンデンサを橋にすれば、片方の電気の揺れが向かいの板を押したり引いたりして、ほどよく弱く伝わりそうな気がします。これで合っていますか？<br>……それと、もし合っているなら、作る前から心配がひとつあります。この橋、<strong>常時開通</strong>です。計算していない間も、2つは互いを揺さぶり続けることになります。この旅でさんざん確認した原則――「合図したときだけ応答する」――に真っ向から反していませんか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">合っているよ。実機の橋は、まさにその小さなコンデンサだ。そして心配のほうも的中している。設計図を1枚も無駄にしない読みだね。<br>橋を架けっぱなしにすると、隣の量子ビットが |0⟩ か |1⟩ かで自分のリズムが少しずれる。切れない迷惑電話のようなもので、ゲートをかけていない間じゅう矢印の向きが狂い続ける。<br>実機の解決は2つの流儀がある。<br><strong>蛇口方式</strong>：2つの量子ビットの間に<strong>第3の回路（結合器）</strong>を挟む。この回路の設定を外から電流で変えると、橋の「通り具合」が開いたり閉じたりする。ふだんは蛇口を締め切り、ゲートの瞬間だけ開く。グーグルなどの流儀だ。<br><strong>鍵方式</strong>：橋は細いまま常時つないでおく。そのかわり、片方の量子ビットに<strong>相手の周波数のマイクロ波</strong>を当てたときだけ、橋越しに相手が共鳴して揺さぶられる仕掛けを使う。合図（鍵）がなければ実質的に閉じているのと同じ。IBMなどの流儀だ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qh-svg" viewBox="0 0 372 220" width="100%" role="img" aria-label="量子ビットをつなぐ橋の図。2つのトランズモンの間に結合器（蛇口）を挟み、ふだんは閉じておいてゲートの瞬間だけ開く。開いたときだけ片方の揺れが相手へ伝わる">
+          <text class="strong" x="186" y="18" text-anchor="middle">量子ビットの橋 ― ふだんは閉じ、合図で開く</text>
+          <!-- qubit1 -->
+          <rect x="36" y="70" width="90" height="60" rx="9" fill="#e8f1f1" stroke="#2f8a8f" stroke-width="2"/>
+          <text class="label" x="81" y="96" text-anchor="middle">量子ビット1</text>
+          <text class="label" x="81" y="112" text-anchor="middle">（トランズモン）</text>
+          <!-- coupler -->
+          <rect x="146" y="76" width="80" height="48" rx="9" fill="#f7f3e2" stroke="#8a6a24" stroke-width="2"/>
+          <text class="label" x="186" y="96" text-anchor="middle">結合器</text>
+          <text class="label" x="186" y="112" text-anchor="middle">（蛇口）</text>
+          <!-- qubit2 -->
+          <rect x="246" y="70" width="90" height="60" rx="9" fill="#e8f1f1" stroke="#2f8a8f" stroke-width="2"/>
+          <text class="label" x="291" y="96" text-anchor="middle">量子ビット2</text>
+          <text class="label" x="291" y="112" text-anchor="middle">（トランズモン）</text>
+          <!-- connections -->
+          <line x1="126" y1="100" x2="146" y2="100" stroke="var(--ink)" stroke-width="2"/>
+          <line x1="226" y1="100" x2="246" y2="100" stroke="var(--ink)" stroke-width="2"/>
+          <!-- control -->
+          <path d="M 186 40 L 186 76" stroke="#b5504a" stroke-width="2.2" fill="none"/>
+          <path d="M 181 68 L 186 76 L 191 68" stroke="#b5504a" stroke-width="2.2" fill="none"/>
+          <text class="label" x="186" y="34" text-anchor="middle">外からの電流で開閉</text>
+          <!-- states -->
+          <text class="accent" x="100" y="164" text-anchor="middle">閉：互いに影響しない</text>
+          <text class="accent" x="272" y="164" text-anchor="middle" fill="#b5504a">開：揺れが伝わる＝ゲート</text>
+          <text class="label" x="186" y="190" text-anchor="middle">常時開通の橋は「切れない迷惑電話」――隣の状態で自分のリズムが狂い続ける。</text>
+        </svg>
+        <div class="diagram-caption">2量子ビットゲートの橋（蛇口方式）。2つのトランズモンを小さなコンデンサでつなぐだけだと橋が常時開通になり、計算していない間も互いのリズムを揺さぶり続けてしまう。そこで間に<strong>結合器（第3の回路）</strong>を挟み、外からの電流で橋の通り具合を開閉する。ゲートの瞬間だけ開けば、片方の揺れが相手に伝わってCNOTの材料になる。橋を細く常時つないだまま「相手の周波数のマイクロ波を当てたときだけ効く」共鳴を使う<strong>鍵方式</strong>もある。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">どちらも結局、「ふだんは閉じ、合図で開く」――ステージ1の中心的ジレンマの解決と同じ形をしていますね。量子ハードウェアは、どの部品も同じ1つの綱引きを別の顔で解いている気がしてきました。<br>それで、この2量子ビットゲートの<strong>成績</strong>はどのくらいですか。1量子ビットゲートは99.9%でした。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">2量子ビットゲートは1量子ビットよりはっきり難しい。2つの回路と橋、すべての誤差が乗り込んでくるからね。現在の実力は成功率<strong>99〜99.7%程度</strong>、時間は数十〜数百ナノ秒。読み出し（99%）と並んで、<strong>実機の誤りの主因</strong>だ。「1000回に数回しくじる手術を、1つの計算で何千回も繰り返す」ことの意味は、最終ステージで直視しよう。<br>ともあれ、これで超伝導方式の設計図が全部そろった。①ブランコ化した振り子の下2段、②冷却と遮蔽と鈍感化、③減衰器の階段を降りるマイクロ波パルス、④笛と増幅の鎖、そして量子ビット間の開閉できる橋。<br>後半戦は、約束していた<strong>設計図くらべ</strong>だ。同じ4条件を、まったく別の材料で満たしている陣営を見にいく。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">超伝導以外の作り方ですね。そもそも、どんな材料が候補になるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まず<strong>イオントラップ方式</strong>。原子から電子を1個はぎ取ると、原子は電気を帯びる（イオン）。電気を帯びていれば電場で押せるから、真空の容器の中に電場の籠を作って、イオンを<strong>宙吊り</strong>にできる。何にも触れない、究極の密閉だ。<br>条件①は、原子が生まれつき持つとびとびのエネルギーの段から2段選ぶ。人工原子ならぬ<strong>本物の原子</strong>だから、個体差というものが存在しない――1匹目も100万匹目も、宇宙の果ての1匹も完全に同一だ。操作③はレーザー光のパルス。<br>そして読み出し④が面白いんだ。レーザーを当てると、<strong>片方の状態のときだけ強く光る</strong>ように仕組める。カメラで写せば、光る＝0、光らない＝1が、文字どおり<strong>目で見える</strong>。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">美しい設計図ですが、1つ欠けています。<strong>2量子ビットゲートの橋</strong>はどこですか？ 宙に浮いたイオンたちの間には、コンデンサの橋どころか、何もありません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">実は、最初から架かっているんだ。イオンはみんなプラスの電気を帯びていて、<strong>互いに反発し合いながら</strong>同じ籠に閉じ込められている。つまり全員が「電気の反発」という見えないばねでつながった1本の鎖だ。1匹をつつくと、<strong>列全体がいっせいに揺れる</strong>。<br>そこでレーザーを使って、1匹目の量子状態を「列の共同の揺れ」に翻訳し、その揺れ越しに2匹目へ渡す。この橋の面白いところは、列の<strong>どの2匹の間でも直接</strong>会話できることだ。超伝導チップの量子ビットが基本的に「お隣さん」としか話せないのと対照的だね。<br>コヒーレンス時間（重ね合わせの寿命）も桁違いで、<strong>分単位</strong>に達する。弱点は速さと数だ。ゲートはマイクロ秒〜ミリ秒と超伝導の千倍ほど遅く、1つの籠で整然と操れるのは数十匹まで。籠を増やしてつなぐ研究が進んでいる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">同じ4条件でも、満たし方がまるで違うんですね。ほかの陣営はどうなんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">残る3方式は駆け足で紹介しよう。<br><strong>中性原子方式</strong>：電気を帯びない原子を<strong>光ピンセット</strong>――強く絞ったレーザー光の焦点に小さな粒をつまむ技術――で1個ずつ捕まえ、碁盤の目に並べる。数百〜数千個並べられて、配置の組み替えすら自由。ゲートは、原子の電子を一時的にうんと外側の軌道へ持ち上げて<strong>原子を一時的に巨大化</strong>させ、隣の原子と強く押し合わせることで作る。ここ数年で急成長した方式だ。<br><strong>光方式</strong>：光子そのものを量子ビットにする。最大の特長は<strong>常温で動く</strong>こと。光子はもともと熱の環境とほとんど関わらないから、条件②がほぼタダで手に入る。ただし、その同じ性質の裏返しで<strong>光子どうしも関わらない</strong>。2量子ビットゲート（条件③の後半）が原理的に難しく、確率的にしか成功しない。これをどう乗り越えるかが、この方式の主戦場だ。<br><strong>シリコンスピン方式</strong>：電子が生まれつき持つ小さな磁石の性質（スピン）の上向き・下向きを2状態に使い、半導体チップの中に電子を1個ずつ閉じ込める。素子の大きさはナノメートル級で、なにより<strong>トランジスタ工場の製造技術がそのまま使える</strong>のが切り札。量子ビット数はまだ少ないが、産業の巨人が本気を出せる土俵だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ステージ1の対決の構図で整理できそうです。<br><strong>自然物陣営</strong>（イオン・中性原子）：条件①と②が生まれつき優秀――全個体が完全に同一で、寿命が長い。そのかわり操作③が遅く、数を増やす工事が難しい。<br><strong>人工物陣営</strong>（超伝導・シリコン）：設計と工場の力で③が速く、増産の道筋も見えやすい。そのかわり個体差と短い寿命に苦しみ続ける。<br>光は別枠で、②タダ・③の後半が難関。<br>――それで、結局<strong>どれが勝つ</strong>んですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">誠実な答えはひとつしかない――<strong>まだ誰にも分からない</strong>。<br>数百量子ビット級の実機に到達しているのは超伝導・イオン・中性原子だが、どの方式にも本質的な壁と切り札が両方残っている。世界の大企業や研究機関が、それぞれ違う方式に本気の投資をしているのが現状で、これは「答えが出ていない」ことの何よりの証拠だよ。コンピュータの歴史でも、最初に栄えた真空管が後発のトランジスタに置き換えられた。同じ交代劇がこの世界で起きても、まったく不思議はない。<br>だからこの旅で持ち帰ってほしいのは「どれが勝つか」の予想ではなくて、<strong>4条件で設計図を読む力</strong>だ。どの方式の新発表が出ても、「2状態は何か・重ね合わせをどう守るか・どう操作するか・どう読むか」と問えば、ニュースの中身を自分の頭で評価できる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">分かりました。最後にひとつ、ずっと引っかかっている問いがあります。<br>4条件は全部そろいました。量子ビットは数百個並んでいて、ゲートも読み出しも動く。それなのに、<strong>なぜ世の中にはまだ「役に立つ量子コンピュータ」がないんでしょうか</strong>。何が足りないんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それこそが最終ステージの問いだ。答えを先取りすると、敵は2つ――<strong>1000回に数回の誤り</strong>と、<strong>配線の洪水</strong>。この2つが、数百量子ビットと「役に立つ100万量子ビット」の間に、途方もない谷を作っている。次で最後の旅だ。</div>
+        </div>
+      </div>
+
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <tr><th>方式</th><th>2状態の出どころ（①）</th><th>守り方（②）</th><th>操作（③）</th><th>読み出し（④）</th><th>持ち味と弱点</th></tr>
+          <tr>
+            <td>超伝導<br>（この旅の主役）</td>
+            <td>ブランコ化した電気振り子の下2段（人工原子）</td>
+            <td>10mKの冷却＋減衰器の階段＋鈍感化設計</td>
+            <td>マイクロ波パルス（数十ナノ秒）</td>
+            <td>隣の笛＋増幅の鎖</td>
+            <td><span class="good">ゲートが速い・設計自由・増産の道筋</span>／<span class="bad">個体差・寿命100マイクロ秒級・要極低温</span></td>
+          </tr>
+          <tr>
+            <td>イオン<br>トラップ</td>
+            <td>本物の原子の2段（全個体が完全に同一）</td>
+            <td>真空中に電場で宙吊り（究極の密閉）</td>
+            <td>レーザーパルス。列の共同の揺れが橋（どの2匹とも会話可）</td>
+            <td>光る／光らないをカメラで見る</td>
+            <td><span class="good">寿命が分単位・ゲートの質が高い</span>／<span class="bad">遅い（千倍）・1籠数十匹まで</span></td>
+          </tr>
+          <tr>
+            <td>中性原子</td>
+            <td>本物の原子の2段</td>
+            <td>光ピンセットで真空中に保持</td>
+            <td>レーザー。原子を一時的に巨大化させ隣と押し合わせる</td>
+            <td>蛍光をカメラで見る</td>
+            <td><span class="good">数百〜数千個・配置組み替え自由</span>／<span class="bad">ゲートの質はまだ発展途上</span></td>
+          </tr>
+          <tr>
+            <td>光（光子）</td>
+            <td>光子の性質（例：振動の向き）</td>
+            <td>熱環境とほぼ無縁＝<span class="good">常温で動く</span></td>
+            <td>光学素子。ただし光子同士が関わらず<span class="bad">2量子ビットゲートが確率的</span></td>
+            <td>光検出器</td>
+            <td><span class="good">冷蔵庫不要・通信と相性抜群</span>／<span class="bad">ゲート成功が確率頼み</span></td>
+          </tr>
+          <tr>
+            <td>シリコン<br>スピン</td>
+            <td>電子のスピン（小さな磁石）の上下</td>
+            <td>半導体中に電子1個を閉じ込め（約1Kでも動く見込み）</td>
+            <td>マイクロ波・電気制御</td>
+            <td>電荷への変換で読む</td>
+            <td><span class="good">トランジスタ工場の技術を流用可・素子がナノ級</span>／<span class="bad">量子ビット数がまだ少ない</span></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【つなぐ・他の作り方 ― 今日の積み上げ】</span>
+        <span class="step">・量子ビットの橋＝<strong>小さなコンデンサ</strong>（連成振り子の電気版）。ただし常時開通は「切れない迷惑電話」＝隣の状態で自分のリズムが狂い続ける</span>
+        <span class="step">・解決は2流儀：<strong>蛇口方式</strong>（間に結合器を挟み電流で開閉）／<strong>鍵方式</strong>（相手の周波数のパルスを当てたときだけ共鳴で効く）。どちらも「ふだんは閉じ、合図で開く」</span>
+        <span class="step">・2量子ビットゲートの実力：成功率<strong>99〜99.7%</strong>・数十〜数百ナノ秒。読み出しと並ぶ<span class="nw">実機の誤りの主因</span></span>
+        <span class="step">・<strong>イオントラップ</strong>：電場の籠に宙吊りの本物の原子。読み出しは光る/光らない。橋は列の共同の揺れ（全結合）。寿命分単位だが遅く、1籠数十匹</span>
+        <span class="step">・<strong>中性原子</strong>＝光ピンセットで数百〜数千個／<strong>光</strong>＝常温で動くが2量子ビットゲートが確率的／<strong>シリコンスピン</strong>＝トランジスタ工場の技術を流用</span>
+        <span class="step">・構図：<strong>自然物陣営</strong>（均一・長寿命だが遅く増やしにくい）vs<strong>人工物陣営</strong>（速く増やしやすいが個体差と短寿命）。勝者は<strong>まだ誰にも分からない</strong>――持ち帰るべきは「4条件で設計図を読む力」</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 量子ビット2つをコンデンサの橋でつなぎっぱなしにすると何が問題か？</p>
+        <div class="choice-list">
+          <button class="choice-btn">橋を電流が流れすぎて回路が焼き切れる</button>
+          <button class="choice-btn">2つの量子ビットが1つに融合してしまう</button>
+          <button class="choice-btn">計算していない間も、隣の量子ビットの状態しだいで自分のリズムがずれ続け、矢印の向きが狂っていく</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 常時開通の橋は「切れない迷惑電話」。ゲートをかけたい瞬間以外は互いに影響してほしくないのに、押し合いが続いてリズムが乱れる。だから結合器で橋を開閉する蛇口方式や、相手の周波数の合図があるときだけ効く鍵方式で、「ふだんは閉じ、合図で開く」を実現する。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 宙に浮いたイオンたちの間には配線がないのに、2量子ビットゲートが組める理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">イオンはプラス同士の反発でつながった1本の鎖であり、1匹をつつくと列全体が揺れる。この共同の揺れを橋にして状態を伝えるから</button>
+          <button class="choice-btn">レーザー光が2匹のイオンを同時に貫いて直接つなぐから</button>
+          <button class="choice-btn">真空中では量子ビット同士が自然にもつれるから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 同じ籠の中のイオンは電気の反発という見えないばねで全員つながっている。レーザーで1匹目の量子状態を列の共同の揺れに翻訳し、揺れ越しに2匹目へ渡す。この橋は列のどの2匹の間にも架かるので、「お隣さんとしか話せない」超伝導チップより自由な会話ができる。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 光子方式が常温で動ける理由と、その代償は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">光子は冷やすと消えてしまうから常温を選んでいる。代償は装置が大型になること</button>
+          <button class="choice-btn">光子は熱の環境とほとんど関わらないので重ね合わせが守られる（②がタダ）。だが同じ理由で光子同士も関わらないため、2量子ビットゲートが確率的にしか成功しない</button>
+          <button class="choice-btn">光子は温度という概念を持たないから。代償は読み出しができないこと</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 「環境と関わらない」ことは条件②にとって最高の贈り物だが、条件③にとっては最悪の呪いでもある。関わらない者同士に会話（CNOT）をさせるのは原理的に難しく、光方式は確率的なゲートをどう補うかが主戦場になっている。1つの性質が贈り物と呪いの両面を持つ――この旅で繰り返し見た構図だ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage6.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QH.initStagePage(7);</script>
+</body>
+</html>

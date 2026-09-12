@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16224e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE7 ショアの因数分解 ― 量子コンピュータはなぜ速いのか</title>
+<meta name="description" content="インターネットの暗号は「大きな数の素因数分解は遅い」ことを頼りにしている。ショアのアルゴリズムは因数分解を「余りのくり返しの周期を探す問題」に変え、干渉で周期を一気に読み取る。15＝3×5を実際に手で解きながら、指数加速の正体と、耐量子暗号への備えまで見届ける。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage7.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="量子コンピュータはなぜ速いのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE7 ショアの因数分解 ― 量子コンピュータはなぜ速いのか">
+<meta property="og:description" content="因数分解を「周期探し」に変え、干渉で周期を読む。15＝3×5を手で解きながらショアのアルゴリズムを理解する。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage7.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .qc-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .qc-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .qc-svg .accent{fill:#7a6a2f;font-size:11px;font-weight:900}
+  .anim-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .anim-ctrl .btn{padding:.4rem .95rem;font-size:13px;font-weight:900}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+  .gate-log{margin-top:8px;font-size:12.5px;font-weight:800;color:var(--ink);min-height:1.5em;word-break:break-all}
+  .gate-log .g{display:inline-block;background:#f2eeda;border:1px solid #cfc290;border-radius:5px;padding:0 6px;margin:0 2px 3px 0}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">💠</a> <span>量子コンピュータはなぜ速いのか</span></div>
+      <div class="brand-sub">STAGE 7 ― ショアの因数分解 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 7</span><span class="chapter-title">ショアの因数分解</span>
+        <div class="chapter-sub">暗号を破る周期発見</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">因数分解が「余りのくり返しの周期を探す問題」に化けることを、15＝3×5 で自分の手で確かめよう。そして周期を干渉で読み取る仕組み――なぜグローバーと違って指数加速になるのか――を説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日は、量子コンピュータがいちばん世界を騒がせた理由に踏み込もう。まず問題から。<strong>2つの素数を掛け算する</strong>のと、<strong>掛け算の答えから元の2つの素数を当てる</strong>のと、どちらが大変かな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">当てる方が圧倒的に大変です。61×53＝3233 は筆算ですぐですが、「3233を素因数分解せよ」と言われたら、2、3、5、7……と割り切れる数を探して回ることになります。<br>桁が増えたら手に負えません。100桁の数だと、割る候補が天文学的な数になります。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その「片道は簡単、逆は困難」という性質の上に、いまのインターネットの安全が乗っている。<strong>RSA暗号</strong>という仕組みだ。ざっくり言えば、2つの大きな素数を掛けた数を公開して鍵にする。暗号を解くには元の2つの素数が要るけれど、それは掛け算の答えからは求められない――そういう賭けだね。<br>いま使われている鍵は<strong>2048ビット</strong>、10進数でおよそ617桁だ。世界中のコンピュータを総動員しても、素因数分解には宇宙の年齢を何度も超える時間がかかると見積もられている。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">それを量子コンピュータが破る、という話ですね。<br>でも、前のステージで学んだグローバーの方法だと、割る数を総当たりで探しても2次加速しかしません。617桁の数の候補を√にしても、まだ手に負えないはずです。まったく別の作戦があるということですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まったく別の作戦だ。1994年、ピーター・ショアが見つけたその作戦の第一歩は、意外にも<strong>量子力学とは無関係</strong>なんだ。数学者たちが昔から知っていた事実で、こういうもの。<br><strong>「素因数分解は、あるくり返しの周期を求める問題に、書き換えることができる」</strong></div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">周期……ですか。素因数分解のどこにくり返しが出てくるんでしょう。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">手を動かすのがいちばんだ。因数分解したい数を <strong>15</strong> にしよう。答えは知っているけれど、手順を確かめるためだ。<br>まず、15と共通の約数を持たない数を適当に選ぶ。<strong>7</strong> にしよう。そして、7を1回、2回、3回……と掛けていって、そのたびに<strong>15で割った余り</strong>を書き出してごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">やってみます。<br>7を1回 → 7、15で割った余りは<strong>7</strong>。<br>7を2回 → 49、15で割ると3余り4なので<strong>4</strong>。<br>7を3回 → 343、15で割ると22余り13なので<strong>13</strong>。<br>7を4回 → 2401、15で割ると160余り1なので<strong>1</strong>。<br>7を5回 → 余りが1のところに7を掛けるので、また<strong>7</strong>。<br>……あ、<strong>戻ってきました</strong>。7, 4, 13, 1, 7, 4, 13, 1, … と、<strong>4個ごとにくり返します</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが<strong>周期</strong>だ。ここでは4だね。余りは有限個しかないから、掛け続ければ必ずどこかで同じ値に戻ってきて、その先はずっとくり返しになる。<br>そして、ここからが数学の魔法だよ。<strong>周期が偶数のとき</strong>、その半分の回数――今回なら2回――掛けたところを見る。7を2回掛けた余りは4だったね。この<strong>4に1を足した数と、1を引いた数</strong>を作る。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">4＋1＝5 と、4−1＝3 です。<br>……<strong>3と5</strong>。15＝3×5。<strong>出てしまいました！</strong> なぜですか？</div>
+        </div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">種明かしをしよう。周期が4だったということは、<strong>7を4回掛けた余りが1</strong>ということだね。つまり「7を4回掛けた数 − 1」は15でちょうど割り切れる。<br>ここで、中学校で習う因数分解を使う。7を4回掛けた数を、7を2回掛けた数の2乗と見れば、<br><strong>（7を2回掛けた数）² − 1 ＝（7を2回掛けた数 − 1）×（7を2回掛けた数 ＋ 1）</strong><br>この左辺が15で割り切れるのだから、右辺も15で割り切れる。ところが右辺は2つの数の掛け算だ。15＝3×5 の3と5が、この2つの数に<strong>分かれて入っている</strong>可能性が高い。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">分かりました。実際に確かめます。7を2回掛けた数は49。49−1＝48、49＋1＝50。<br>48と15の最大公約数は<strong>3</strong>。50と15の最大公約数は<strong>5</strong>。ちゃんと出ます！<br>（余りの4を使っても同じで、4−1＝3、4＋1＝5。余りを取っても15との最大公約数は変わらないからですね。）<br>最大公約数を求めるのは、ユークリッドの互除法を使えば大きな数でも一瞬です。<strong>周期さえ分かれば、そこから先は簡単</strong>ということですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。手順をまとめよう。<br>①因数分解したい数 N と共通の約数を持たない数 a を、適当に選ぶ<br>②a を1回、2回、3回…と掛けた余りの列の<strong>周期 r</strong> を求める<br>③r が偶数なら、a を r の半分だけ掛けた余りの、<strong>±1 と N の最大公約数</strong>を取る<br>これで N の因数が出る。運が悪いと（r が奇数だったり、うまくいかない場合が）あるが、a を選び直せばよくて、たいてい数回で成功する。<br>――さて、この手順の中で、ふつうのコンピュータにとって絶望的に重いのはどこかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">②の<strong>周期を求めるところ</strong>です。15なら4回掛けただけで戻ってきましたが、Nが617桁もあったら、周期がとんでもなく長くなりますよね。余りは N 通りくらいあるので、周期も最大でそのくらい。順に掛けていって「1に戻る」のを待つのでは、宇宙の年齢でも終わりません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこが唯一の関門で、そこだけを量子コンピュータが担当する。<strong>ショアのアルゴリズムとは、正確には「周期を高速に見つける方法」</strong>なんだ。前後の手順はふつうのコンピュータの仕事だよ。<br>では、量子コンピュータはどうやって周期を見つけるのか。第一歩は、もう見慣れた形だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">1個目の量子ビットの束に H を全部当てて、「何回掛けるか」の候補 0、1、2、3、… をぜんぶ重ね合わせる。そして2個目の束に、その回数だけ掛けた余りを書き込む。もつれができて、<strong>「回数」と「余り」の対応表が丸ごと表に載る</strong>――ここまでは、いつもの形ですね。<br>でも、ここで測っても意味がないはずです。回数と余りの組が1つ出てくるだけで、周期は分かりません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。だから最後にひと工夫が要る。ここでも答えは同じだ――<strong>干渉</strong>だよ。<br>周期を読み取る干渉のさせ方を、身近なものでたとえよう。<strong>ブランコを押すとき</strong>のことを考えてごらん。ブランコにはそれ自身の揺れる速さがある。それに<strong>ぴったり合ったタイミング</strong>で押し続ければ、押した力が積み重なってどんどん大きく揺れる。合っていないタイミングで押すと、押す力どうしが打ち消し合って、大きくならない。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">積み重なるか、打ち消し合うか……<strong>強め合いと打ち消し合い</strong>そのものですね。<br>ということは、こういうことですか。表には「4回ごとにくり返す」という模様が入っている。そこに、いろんな速さで回る矢印を掛けて全部足してみる。<strong>くり返しの周期に合った速さのときだけ、矢印がそろって強め合い、それ以外の速さでは打ち消し合ってゼロになる。</strong>だから測れば、合った速さのところが出てくる。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">自分で組み立てたね。その操作には名前があって、<strong>量子フーリエ変換</strong>という。「くり返し模様を、その周期の情報に変える装置」だ。アダマールを何本もの量子ビットにまたがって仕掛けたようなもので、<strong>大量の回転を一気にやってのける</strong>。<br>ここが決定的なところだよ。ふつうのコンピュータで同じことをすると、候補の数だけ計算が要る。量子コンピュータでは、量子ビットの本数の2乗くらいの手間で済んでしまう。<strong>候補の個数ではなく、桁数の2乗</strong>だ。この差が、指数の壁を越えさせる。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="period-svg" class="qc-svg" viewBox="0 0 372 176" width="100%" role="img" aria-label="15で割った余りの列を示す図。選んだ数を1回、2回、3回と掛けていったときの余りが並び、同じ値に戻るまでの長さが周期として示される">
+          <text class="strong" x="186" y="16" text-anchor="middle">余りのくり返しと、その周期</text>
+          <g id="period-body"></g>
+        </svg>
+        <div class="anim-ctrl">
+          <span class="ctrl-label">15と共通の約数を持たない数</span>
+          <button type="button" class="btn" id="p-2">2</button>
+          <button type="button" class="btn" id="p-4">4</button>
+          <button type="button" class="btn" id="p-7">7</button>
+          <button type="button" class="btn" id="p-11">11</button>
+          <button type="button" class="btn" id="p-13">13</button>
+          <button type="button" class="btn" id="p-14">14</button>
+        </div>
+        <div class="readout" id="p-readout"></div>
+        <div class="diagram-caption">選んだ数を1回、2回…と掛けて15で割った余りを並べたもの。必ずどこかで1に戻り、そこから同じ列がくり返す。<strong>1に戻るまでの長さが周期</strong>。周期が偶数なら、その半分の位置の余りに ±1 して15との最大公約数を取ると、3と5が出てくる（数の選び方によっては周期が奇数だったり、うまく分かれないことがある――そのときは別の数を選び直す）。因数分解の難しさは、まるごと「この周期を見つけること」に移し替えられている。</div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="qft-svg" class="qc-svg" viewBox="0 0 372 226" width="100%" role="img" aria-label="量子フーリエ変換の共鳴を示す図。周期4のくり返し模様に、いろいろな速さの回転矢印を掛けて足し合わせると、周期に合った速さのときだけ矢印がそろって強め合い、それ以外では打ち消し合ってほぼゼロになる">
+          <text class="strong" x="186" y="16" text-anchor="middle">周期に合った速さでだけ、矢印がそろう</text>
+          <g id="qft-body"></g>
+        </svg>
+        <div class="anim-ctrl">
+          <button type="button" class="btn" id="q-play">⏸ 一時停止</button>
+          <span class="ctrl-label">試す回転の速さ</span>
+          <input type="range" id="q-slider" min="0" max="15" step="1" value="0" aria-label="試す回転の速さを変える" style="flex:1;max-width:220px;min-width:130px;accent-color:#7a6a2f">
+        </div>
+        <div class="readout">
+          <span>試している速さ <b id="q-k">0</b></span>
+          <span>足し合わせた矢印の長さ <b id="q-len">1.00</b></span>
+          <span>この速さが出る確率 <b id="q-p">25%</b></span>
+        </div>
+        <div class="diagram-caption">左は「4回ごとにくり返す」模様の入った表から取り出した矢印たち。それぞれに、試している速さで回る矢印を掛けて（＝向きをずらして）、右の作業台ですべて足し合わせる。<strong>速さが周期と噛み合うとき（この例では0、4、8、12）だけ、矢印がそろって長い合計になる</strong>。それ以外の速さでは矢印が円をぐるりと囲むように散らばり、足すとほぼゼロ――打ち消し合いだ。測定すると、この「そろう速さ」のどれかが高い確率で出てくる。そこから周期4が逆算できる。</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">グローバーとの違いがはっきりしました。グローバーは<strong>構造のない問題</strong>を相手にしていたから、当たりの矢印を少しずつしか育てられなくて、2次加速が限界だった。<br>ショアは違う。相手の問題に<strong>「くり返し」という構造</strong>がもともとあって、干渉はその構造と共鳴するように仕掛けてある。だから一気に決まるんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それがこの旅を通じての、いちばん大事な教訓だよ。<strong>量子コンピュータが指数的に速くなるのは、問題の中に隠れた構造があって、その構造と共鳴する干渉を設計できたときだけ</strong>。どんな問題にも効く万能薬ではない。<br>いま、そういう指数加速が知られている問題は、実はそれほど多くない。因数分解や離散対数といった数論の問題、そして――こちらが本命かもしれないが――<strong>分子や材料の量子的なふるまいのシミュレーション</strong>だ。量子の世界を量子で真似るのだから、相性がいいのは当然だね。新しい薬や、より良い電池・触媒の設計に効くと期待されている。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">現実の話も聞かせてください。ショアのアルゴリズムは1994年に発表されたんですよね。もう30年以上たっています。<strong>いまのRSA暗号は、もう破られているんですか。</strong></div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">まだ破られていない。実機でショアのアルゴリズムが本当に実行できたのは、15や21といった<strong>おもちゃのような数</strong>までだ。距離はまだ遠い。<br>2048ビットのRSAを破るには、誤りのない<strong>論理量子ビットが数千個</strong>必要だと見積もられている。ところが、いまの実機にあるのは<strong>誤りだらけの物理量子ビットが数百から千個ほど</strong>。しかも、論理量子ビット1個を作るのに、物理量子ビットが千個から数千個要る。掛け合わせると、必要な物理量子ビットは<strong>百万個規模</strong>だ。<br>なぜそんなに要るのか――その答えが、この旅の最後のステージになる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">まだ先だと聞いて安心しました。……いえ、待ってください。<strong>安心してはいけない気がします</strong>。いま暗号化されて送られている通信を、誰かが解読できないまま保存しておいて、量子コンピュータができてから解読することができますよね。何十年も秘密にしておきたい情報は、<strong>いま盗まれた時点でもう危ない</strong>のでは。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">よく気づいたね。その脅威には名前がついていて、「<strong>いま集めて、あとで解読する</strong>」と呼ばれている。だから世界は、量子コンピュータの完成を待たずに動いている。<br>解決策は、量子コンピュータでも速く解けないと考えられている別の数学問題に、暗号を乗せ替えることだ。これを<strong>耐量子計算機暗号</strong>という。アメリカの標準化機関NISTが公募と審査を重ねて、<strong>2024年に最初の標準規格</strong>を正式に発表した。格子（たくさんの点が規則正しく並んだ構造）にまつわる問題などが土台になっている。乗せ替えはもう始まっているんだ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【ショアのアルゴリズム ― 因数分解を周期探しに変える】</span>
+        <span class="step">・RSA暗号は「掛け算は簡単、素因数分解は困難」に安全性を預けている。鍵は2048ビット（約617桁）</span>
+        <span class="step">・書き換え：N と共通の約数を持たない a を選び、a を1回、2回…掛けた<strong>余りの列の周期 r</strong> を求める。<br class="wbr">r が偶数なら「a を r の半分だけ掛けた余り ±1」と N の<strong>最大公約数</strong>が N の因数</span>
+        <span class="step">・例（N＝15, a＝7）：余りは 7, 4, 13, 1, … で周期 r＝4。<br class="wbr">4−1＝3、4＋1＝5 → <strong>15＝3×5</strong></span>
+        <span class="step">・重い部分は<strong>周期を求めるところだけ</strong>。ここを量子コンピュータが担当し、前後はふつうのコンピュータが処理する</span>
+        <span class="step">・周期の読み取り＝<strong>量子フーリエ変換</strong>：くり返し模様に色々な速さの回転を掛けて足すと、<span class="nw">周期と噛み合う速さでだけ強め合う</span>（ブランコの共鳴と同じ）</span>
+        <span class="step">・<strong>指数加速になる理由</strong>：問題にもともと「くり返し」という構造があり、その構造と共鳴する干渉を設計できたから。構造のないグローバー型は2次加速が限界</span>
+        <span class="step">・現状：実機で解けたのは15や21程度。2048ビットRSAには<strong>論理量子ビット数千個</strong>（＝物理量子ビット百万個規模）が必要で、まだ遠い。<br class="wbr">ただし「いま集めて、あとで解読する」脅威があるため、<strong>耐量子計算機暗号</strong>への移行が進行中（NISTが2024年に最初の標準を発表）</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. ショアのアルゴリズムで、量子コンピュータが担当している部分は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">割り切れる数を片端から総当たりで試すところ</button>
+          <button class="choice-btn">余りの列がくり返す「周期」を見つけるところ</button>
+          <button class="choice-btn">最大公約数を求めるところ</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 因数分解を周期探しに書き換える部分も、周期から因数を取り出す最大公約数の計算も、ふつうのコンピュータで一瞬でできる。手に負えないのは周期探しだけで、そこだけを干渉で一気に片づける。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. ショアが指数加速を実現できて、グローバーが2次加速どまりなのはなぜ？</p>
+        <div class="choice-list">
+          <button class="choice-btn">因数分解の問題には「くり返し」という構造があり、その構造と共鳴する干渉を設計できるから。構造のない探索ではそれができない</button>
+          <button class="choice-btn">ショアの方が新しいアルゴリズムで、技術が進歩したから</button>
+          <button class="choice-btn">ショアはもつれを使い、グローバーは使わないから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 量子コンピュータの速さは、いつも「いらない候補を打ち消し、欲しい候補を強め合わせる設計」から来る。その設計が強力に効くのは、問題の中に利用できる構造があるとき。万能の加速装置ではない、というのがこの旅の一貫した結論だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 「いま集めて、あとで解読する」という脅威への現実的な対策は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">RSAの鍵の長さを2倍にする</button>
+          <button class="choice-btn">量子コンピュータが完成してから対応を始める</button>
+          <button class="choice-btn">量子コンピュータでも速く解けないと考えられている別の数学問題に暗号を乗せ替える（耐量子計算機暗号）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 鍵長を2倍にする対策が効くのはグローバー型の2次加速に対してだけで、ショアの指数加速には歯が立たない（鍵を長くしても同じように破られる）。だから問題そのものを取り替える必要がある。NISTは2024年に最初の耐量子計算機暗号の標準を発表し、移行はすでに始まっている。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage6.html">← 前のステージ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>QC.initStagePage(7);</script>
+
+<script>
+(function(){
+  // 図1: 15で割った余りの列と周期
+  var g = document.getElementById('period-body');
+  if (!g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CA = '#7a6a2f', CB = '#2f7a6b';
+  function el(name, attrs) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    g.appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var N = 15, cells = [], labels = [], marks = [], COUNT = 9;
+  var X0 = 30, W = 36, Y = 62;
+  for (var i = 0; i < COUNT; i++) {
+    cells.push(el('rect', {x: X0 + i * W, y: Y, width: W - 4, height: 30, rx: 5, fill: 'var(--paper2)', stroke: 'var(--line)'}));
+    labels.push(txt(X0 + i * W + (W - 4) / 2, Y + 20, 'strong', ''));
+    txt(X0 + i * W + (W - 4) / 2, Y - 8, 'label', (i + 1) + '回');
+  }
+  var periodBar = el('line', {stroke: CB, 'stroke-width': 2.5, opacity: 0});
+  var periodTxt = txt(0, 0, 'accent', '');
+  periodTxt.style.fill = CB;
+  var concl = txt(186, 152, 'strong', '');
+  var ro = document.getElementById('p-readout');
+
+  function gcd(a, b) { while (b) { var t = a % b; a = b; b = t; } return a; }
+
+  function show(a) {
+    var v = 1, seq = [], r = 0;
+    for (var i = 0; i < COUNT; i++) {
+      v = (v * a) % N;
+      seq.push(v);
+      if (v === 1 && r === 0) r = i + 1;
+    }
+    for (var j = 0; j < COUNT; j++) {
+      labels[j].textContent = String(seq[j]);
+      var inFirst = r > 0 && j < r;
+      cells[j].setAttribute('fill', inFirst ? '#f2eeda' : 'var(--paper2)');
+      cells[j].setAttribute('stroke', inFirst ? CA : 'var(--line)');
+      labels[j].style.fill = (seq[j] === 1) ? CB : 'var(--ink)';
+    }
+    if (r > 0) {
+      periodBar.setAttribute('opacity', 1);
+      periodBar.setAttribute('x1', X0); periodBar.setAttribute('y1', Y + 42);
+      periodBar.setAttribute('x2', X0 + r * W - 4); periodBar.setAttribute('y2', Y + 42);
+      periodTxt.setAttribute('x', X0 + (r * W - 4) / 2);
+      periodTxt.setAttribute('y', Y + 58);
+      periodTxt.textContent = '周期 r ＝ ' + r;
+    }
+    var msg = '', line = '';
+    if (r % 2 === 0) {
+      var half = 1;
+      for (var k = 0; k < r / 2; k++) half = (half * a) % N;
+      var f1 = gcd(half - 1, N), f2 = gcd(half + 1, N);
+      line = 'a＝' + a + '：周期 r＝' + r + '／ r の半分だけ掛けた余り＝' + half
+        + '　→　' + (half - 1) + ' と15の最大公約数＝' + f1 + '、' + (half + 1) + ' と15の最大公約数＝' + f2;
+      if (f1 > 1 && f1 < N && f2 > 1 && f2 < N) {
+        msg = '成功：15 ＝ ' + f1 + ' × ' + f2;
+        concl.style.fill = CB;
+      } else {
+        msg = 'この a では因数が出ない（1か15になってしまう）→ 別の a を選び直す';
+        concl.style.fill = '#b5504a';
+      }
+    } else {
+      line = 'a＝' + a + '：周期 r＝' + r + '（奇数）';
+      msg = '周期が奇数なのでこの方法は使えない → 別の a を選び直す';
+      concl.style.fill = '#b5504a';
+    }
+    concl.textContent = msg;
+    if (ro) ro.innerHTML = '<span>' + line + '</span>';
+  }
+  [2, 4, 7, 11, 13, 14].forEach(function (a) {
+    var b = document.getElementById('p-' + a);
+    if (b) b.addEventListener('click', function () { show(a); });
+  });
+  show(7);
+})();
+</script>
+
+<script>
+(function(){
+  // 図2: 量子フーリエ変換の共鳴。周期4の列に速さkの回転を掛けて足す
+  var svg = document.getElementById('qft-svg');
+  var g = document.getElementById('qft-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var CA = '#7a6a2f', CB = '#2f7a6b';
+  var M = 16, PERIOD = 4, TERMS = M / PERIOD; // 周期4の項は 0,4,8,12 の4本
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+  var defs = el('defs', {});
+  [['q-a', CA], ['q-s', '#1c2622']].forEach(function (p) {
+    var m = el('marker', {id: p[0], viewBox: '0 0 8 8', refX: 7, refY: 4, markerWidth: 5, markerHeight: 5, markerUnits: 'userSpaceOnUse', orient: 'auto'}, defs);
+    el('path', {d: 'M0 0 L8 4 L0 8 z', fill: p[1]}, m);
+  });
+
+  // 左: 4本の矢印を小円に並べる
+  txt(90, 40, 'label', '試す速さの回転を掛ける');
+  var small = [], SR = 18;
+  for (var i = 0; i < TERMS; i++) {
+    var cx = 34 + i * 44, cy = 84;
+    el('circle', {cx: cx, cy: cy, r: SR, fill: 'var(--paper2)', stroke: 'var(--line)'});
+    txt(cx, cy + SR + 13, 'label', (i * PERIOD) + '回目');
+    small.push({cx: cx, cy: cy, arr: el('line', {stroke: CA, 'stroke-width': 2.4, 'marker-end': 'url(#q-a)'})});
+  }
+  // 右: 合計の作業台
+  var SX = 290, SY = 118, BR = 46;
+  txt(SX, 40, 'label', '全部を足した合計');
+  el('circle', {cx: SX, cy: SY, r: BR, fill: 'var(--paper2)', stroke: 'var(--line)'});
+  el('circle', {cx: SX, cy: SY, r: 2.5, fill: 'var(--line)'});
+  var chain = [];
+  for (var j = 0; j < TERMS; j++) chain.push(el('line', {stroke: CA, 'stroke-width': 1.8, opacity: .75}));
+  var sumArr = el('line', {stroke: '#1c2622', 'stroke-width': 3.2, 'marker-end': 'url(#q-s)'});
+  // 下: 速さごとの確率
+  var BX = 24, BW = 20, BY = 208, BH = 34;
+  txt(186, 156, 'label', '速さごとの、測定で出る確率');
+  var pbars = [], plabels = [];
+  for (var k = 0; k < M; k++) {
+    var bx = BX + k * BW;
+    el('rect', {x: bx, y: BY - BH, width: BW - 3, height: BH, fill: 'none', stroke: 'var(--line)'});
+    pbars.push(el('rect', {x: bx + 1, width: BW - 5, fill: CB, opacity: .85}));
+    plabels.push(txt(bx + (BW - 3) / 2, BY + 12, 'label', String(k)));
+  }
+  var cur = 0;
+  var kEl = document.getElementById('q-k'), lenEl = document.getElementById('q-len'), pEl = document.getElementById('q-p');
+  var slider = document.getElementById('q-slider');
+
+  function sumFor(k) {
+    var sx = 0, sy = 0;
+    for (var i = 0; i < TERMS; i++) {
+      var ang = 2 * Math.PI * k * (i * PERIOD) / M;
+      sx += Math.cos(ang); sy += Math.sin(ang);
+    }
+    return {x: sx, y: sy, len: Math.sqrt(sx * sx + sy * sy)};
+  }
+  function draw(k) {
+    cur = k;
+    var px = SX, py = SY, L = 11;
+    for (var i = 0; i < TERMS; i++) {
+      var ang = 2 * Math.PI * k * (i * PERIOD) / M;
+      var dx = Math.cos(ang), dy = -Math.sin(ang);
+      var s = small[i];
+      s.arr.setAttribute('x1', s.cx); s.arr.setAttribute('y1', s.cy);
+      s.arr.setAttribute('x2', s.cx + dx * (SR - 4)); s.arr.setAttribute('y2', s.cy + dy * (SR - 4));
+      chain[i].setAttribute('x1', px); chain[i].setAttribute('y1', py);
+      px += dx * L; py += dy * L;
+      chain[i].setAttribute('x2', px); chain[i].setAttribute('y2', py);
+    }
+    sumArr.setAttribute('x1', SX); sumArr.setAttribute('y1', SY);
+    sumArr.setAttribute('x2', px); sumArr.setAttribute('y2', py);
+    var s2 = sumFor(k);
+    sumArr.setAttribute('opacity', s2.len < 0.05 ? 0 : 1);
+    for (var kk = 0; kk < M; kk++) {
+      var p = sumFor(kk).len / TERMS;
+      p = p * p;
+      pbars[kk].setAttribute('y', BY - BH * p);
+      pbars[kk].setAttribute('height', Math.max(BH * p, 0.6));
+      plabels[kk].style.fill = (kk === k) ? CA : 'var(--muted)';
+      plabels[kk].style.fontWeight = (kk === k) ? '900' : '700';
+    }
+    if (kEl) kEl.textContent = String(k);
+    if (lenEl) lenEl.textContent = (s2.len / TERMS).toFixed(2);
+    if (pEl) pEl.textContent = Math.round(Math.pow(s2.len / TERMS, 2) * 100) + '%';
+    if (slider && parseInt(slider.value, 10) !== k) slider.value = k;
+  }
+
+  var auto = true, running = false, raf = null, t = 0;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) auto = false;
+  if (slider) slider.addEventListener('input', function () {
+    auto = false; setBtn();
+    draw(parseInt(slider.value, 10));
+  });
+  var playBtn = document.getElementById('q-play');
+  function setBtn() { if (playBtn) playBtn.textContent = auto ? '⏸ 一時停止' : '▶ 自動再生'; }
+  if (playBtn) playBtn.addEventListener('click', function () { auto = !auto; setBtn(); });
+  setBtn();
+  function loop() {
+    if (!running) return;
+    if (auto) {
+      t += 0.02;
+      var k = Math.floor(t) % M;
+      if (k !== cur) draw(k);
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  draw(0);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+</body>
+</html>

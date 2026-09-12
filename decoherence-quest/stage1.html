@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#143a3e">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE1 干渉の足し算ルール ― 消える干渉縞</title>
+<meta name="description" content="二重スリットの干渉縞はどこから来るのか。量子力学の確率計算の心臓部「区別がつかない道筋は、矢印（振幅）を足してから2乗する」を導入し、縞の明暗を自分の手で組み立てる。デコヒーレンスを学ぶ旅の第一歩。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage1.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="消える干渉縞">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE1 干渉の足し算ルール ― 消える干渉縞">
+<meta property="og:description" content="旅の唯一の武器「区別がつかない道筋は、矢印を足してから2乗」を手に入れ、二重スリットの縞を組み立てる。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/stage1.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/decoherence-quest/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .dq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .dq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .dq-svg .accent{fill:#2f7a6b;font-size:11px;font-weight:900}
+  .anim-ctrl{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .anim-ctrl input[type=range]{flex:1;max-width:280px;min-width:140px;accent-color:#2f7a6b}
+  .anim-ctrl .btn{padding:.35rem .9rem;font-size:12px}
+  .anim-ctrl .ctrl-label{font-size:11px;color:var(--muted);font-weight:700}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌫️</a> <span>消える干渉縞</span></div>
+      <div class="brand-sub">STAGE 1 ― 干渉の足し算ルール ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 1</span><span class="chapter-title">干渉の足し算ルール</span>
+        <div class="chapter-sub">矢印を足してから2乗</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">旅の唯一の武器「区別がつかない道筋は、矢印（振幅）を足してから2乗する」を手に入れよう。二重スリットの縞の明るい場所と暗い場所が、矢印の足し算からどう生まれるかを自分で組み立てられれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日から新しい旅を始めよう。テーマは、量子力学でいちばん有名な謎――<strong>「観測すると、二重スリットの干渉縞が消えるのはなぜか」</strong>だ。この謎に、きみは<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:#2f7a6b;text-decoration:underline">量子力学の旅</a>で一度出会っているね。まず、二重スリットの実験がどんなものだったか、きみの言葉で整理してもらえるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">はい。板に細い切れ込み（スリット）を2本開けて、電子や光子を1個ずつ発射する実験です。スクリーンには1発ごとに点が1個つくだけなのに、何千発も撃って点を集めると、明るい帯と暗い帯が交互に並ぶ<strong>縞</strong>が浮かび上がりました。粒は1個ずつしか飛んでいないのに、2本のスリットを同時に通った波のように振る舞う。そして――どちらのスリットを通ったかを調べながら撃つと、縞は消えて、山をふたつ重ねただけの<strong>のっぺり</strong>した分布になる。「なぜ調べただけで消えるのか」は、あのときは謎のままでした。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その謎を、この旅では最後まで解き切る。そのために、まず道具をひとつ渡そう。量子力学では、「こういう道筋をたどってこの結果に至る」という筋書きのひとつひとつに、<strong>矢印</strong>が割り当てられる。矢印は<strong>長さ</strong>と<strong>向き</strong>を持っていて、ある結果が起きる<strong>確率は、矢印の長さの2乗</strong>で決まるんだ。長さが0.5なら確率は0.25、という具合だね。この矢印のことを、物理学者は<strong>振幅</strong>と呼ぶよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「長さと向きを持つ矢印」……複素数と同じですね。複素数は平面の上の矢印として描けて、掛け算すると回転する、と学びました。振幅の正体は複素数ですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り、教科書ではまさに複素数で書かれる。正式な名前は<strong>確率振幅</strong>というが、この旅は「矢印」のままで最後まで歩き切れるよ。大事なのは向きの意味だ。矢印の向きは<strong>位相</strong>と呼ばれていて、粒子が進むにつれてくるくる回転する。<strong>波長1つ分の距離を進むごとに、ちょうど1回転</strong>だ。だから、長い道のりを通ってきた矢印と短い道のりを通ってきた矢印では、届いたときの向きがずれる。この「向きのずれ」が、これから先ずっと主役になる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">確認ですが、その「向き」は、粒子が空間のどちらへ飛んでいるかとは別物ですよね。複素数の平面の中での角度……いわば、粒子が持ち歩いている「回転ダイヤルの読み」のようなもの、と理解しました。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい言い方だ、その理解で正確だよ。では、旅の唯一の武器を渡そう。ある結果――たとえば「スクリーンの点xに粒子が当たる」――に至る道筋が2つ以上あるとき、確率はどう計算するか。ルールはこうだ。まず前半。<strong>その道筋たちが、宇宙のどこを探しても区別がつかないなら、矢印を足し合わせてから、合計の矢印の長さを2乗する。</strong></div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="interf-svg" class="dq-svg" viewBox="0 0 372 230" width="100%" role="img" aria-label="二重スリット実験のアニメーション。左の光源から2本のスリットへ道筋が伸び、スクリーン上の各点で2本の矢印が合成される。合成矢印の長さの2乗をなぞると、スクリーンに沿って干渉縞の明暗カーブが描かれる">
+          <text class="strong" x="186" y="16" text-anchor="middle">2本の矢印の向きが、場所ごとの明るさを決める</text>
+          <defs>
+            <marker id="ah-l" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2f7a6b"></path></marker>
+            <marker id="ah-r" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#b98a2e"></path></marker>
+            <marker id="ah-s" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5.5" markerHeight="5.5" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--ink)"></path></marker>
+          </defs>
+          <g id="interf-body"></g>
+        </svg>
+        <div class="readout">
+          <span style="color:#2f7a6b">左経由→ <b id="ro-l">1.00</b></span>
+          <span style="color:#b98a2e">右経由→ <b id="ro-r">1.00</b></span>
+          <span>合計→ <b id="ro-s">2.00</b></span>
+          <span>明るさの比＝(合計→)² <b id="ro-s2">4.00</b></span>
+          <span>位相差 <b id="ro-ph">0°</b></span>
+        </div>
+        <div class="anim-ctrl">
+          <button type="button" class="btn" id="interf-play">⏸ 一時停止</button>
+          <span class="ctrl-label">走査位置</span>
+          <input type="range" id="interf-slider" min="40" max="210" step="0.5" value="40" aria-label="スクリーン上の走査位置を手動で動かす">
+        </div>
+        <div class="diagram-caption">スクリーン上の黒丸の点に、左スリット経由（青緑）と右スリット経由（オレンジ）の2本の矢印が、道のりに応じて回転しながら届く。<strong>右の円が「矢印の足し算」の作業台</strong>：2本を隣り合う2辺とする平行四辺形（点線）の対角線が「合計」（黒い矢印）。<strong>合計の長さの2乗が、その点の明るさ</strong>（×1＝スクリーン中央にスリット1本だけのときの明るさ。端では矢印が短くなるので数値も下がる）。2本の向きの開きが<strong>位相差</strong>：0°なら合計は長く伸びて強め合い、180°なら打ち消し合ってほぼ0。走査点を上下に動かすと、明るさのカーブ＝干渉縞が右側に浮かび上がる</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そして後半。<strong>どの道筋だったかの手がかりがどこかに残っているなら、それぞれの長さを2乗してから、確率どうしを足す。</strong>これだけだ。この旅で使う道具は、最後までこの1つしかない。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="square-svg" class="dq-svg" viewBox="0 0 372 230" width="100%" role="img" aria-label="ルールの後半のアニメーション。同じ二重スリット装置で、左経由と右経由の矢印を足し合わせずに、それぞれ単独で長さを2乗する。左経由は×1、右経由も×1で、確率を足すとどの点でも×2。位相差は使われず、スクリーンには縞のないなだらかな分布が描かれる">
+          <text class="strong" x="186" y="16" text-anchor="middle">手がかりが残るなら、それぞれ2乗してから足す</text>
+          <g id="square-body"></g>
+        </svg>
+        <div class="readout">
+          <span style="color:#2f7a6b">左経由→ <b id="sq-l">1.00</b></span>
+          <span style="color:#b98a2e">右経由→ <b id="sq-r">1.00</b></span>
+          <span style="color:#2f7a6b">(左経由→)² <b id="sq-l2">1.00</b></span>
+          <span style="color:#b98a2e">(右経由→)² <b id="sq-r2">1.00</b></span>
+          <span>明るさの比＝2乗の和 <b id="sq-sum">2.00</b></span>
+          <span>位相差 <b id="sq-ph">0°</b></span>
+        </div>
+        <div class="anim-ctrl">
+          <button type="button" class="btn" id="square-play">⏸ 一時停止</button>
+          <span class="ctrl-label">走査位置</span>
+          <input type="range" id="square-slider" min="40" max="210" step="0.5" value="40" aria-label="スクリーン上の走査位置を手動で動かす">
+        </div>
+        <div class="diagram-caption">上の図と同じ装置・同じ2本の矢印。ただし手がかりが残るときは足し合わせが禁止され、<strong>左経由の矢印を単独で2乗、右経由も単独で2乗して、確率どうしを足す</strong>（1＝スクリーン中央に「1本だけ」のときの明るさ。端では矢印が短くなるので数値も下がる）。明るさは常に左右それぞれの2乗の和で、矢印の向き（位相差）はどこにも使われない。強め合いも打ち消し合いも起きないので、スクリーンには縞のない、なだらかな分布が積もる――計算の手順が変わっただけで、縞は消える</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">さっそく試します。スクリーンの真ん中の点なら、左スリットからの道のりと右スリットからの道のりが同じ長さです。2本の矢印は同じだけ回転して、<strong>同じ向き</strong>で届く。どちらを通ったかの手がかりはどこにもないので、足してから2乗。長さ1の矢印が2本、同じ向きなら合計は長さ2、2乗して4。……あれ？ スリットが1本だけなら1の2乗で1ですから、2本開けたのに明るさが2倍ではなく<strong>4倍</strong>になるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">なるんだ。それが干渉の<strong>強め合い</strong>だよ。では、真ん中から少しずれた点はどうかな。左からの道のりと右からの道のりに、ちょうど<strong>波長の半分</strong>だけ差がつく場所を考えてごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">半波長の差は半回転のずれ。2本の矢印は<strong>正反対の向き</strong>で届きます。足すと打ち消し合って長さ0、2乗しても0。粒子が1個も当たらない、真っ暗な帯です。……分かりました。スクリーン上の場所ごとに道のりの差が少しずつ変わるから、強め合う場所と打ち消す場所が交互に並ぶ。<strong>それが縞の正体</strong>ですね。明るい帯は4倍、暗い帯は0、ならせば平均2倍だから、撃った粒の総数ともつじつまが合います。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ここで1つ、正直に付け加えておきたいことがある。位相差がひと回りしてそろう場所――明るい帯――は、真ん中のほかにも何度も現れる。いまの計算のままだと、どの明るい帯も同じ「4倍」の明るさになりそうだね。でも実際の縞は、<strong>端へ行くほど暗くなる</strong>。矛盾ではないんだ。まだ話していなかった材料は、<strong>矢印の長さは場所によって違う</strong>ということ。波は広がりながら進むから、スリットの正面から離れた点には、薄まって届く。スリットを1本だけ開けたときの分布が「真ん中が高く、端へ行くほど低い山」になるのは、そのためだ。足し算ルールは何も変わらない。ただ、端の点で足し合わされる2本の矢印は、そもそも短い。だから「明るい帯は4倍」の正確な意味は、<strong>「同じ場所に、スリットを1本だけ開けたときと比べて4倍」</strong>。短い矢印どうしの強め合いは、長い矢印どうしの強め合いより暗い、というわけだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">なるほど、縞の全体は<strong>二階建て</strong>なんですね。一階は「スリット1本の山」という骨組み。これは矢印の<strong>長さ</strong>が場所ごとに違うことから来る。二階はその上に刻まれる<strong>0倍〜4倍の縞模様</strong>で、こちらは矢印の<strong>向き</strong>（位相差）から来る。この2つを掛け合わせたものが、実際にスクリーンに現れる模様。</div>
+        </div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。仕上げに、ルールのもう半分――<strong>「手がかりが残るなら、2乗してから足す」</strong>だとどうなるかも確かめておこう。左経由の確率と右経由の確率をそれぞれ計算してから足すだけなら、矢印の向きは出番がない。向きが出番を失えば、打ち消し合いはどこの点でも起きない。</div>
+        </div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">つまり、左スリットだけ開けたときの山と、右スリットだけ開けたときの山を、そのまま重ねた分布。縞のない、のっぺりです。……ということは、です。縞が出るか、のっぺりになるかは、<strong>「区別がつくかどうか」だけ</strong>で切り替わる。観測すると縞が消えるのは、観測が粒子を乱して縞を壊すからではなくて、観測によって「どちらを通ったかの手がかり」がどこかに残り、<strong>ルールの後半が発動するから</strong>――ということですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが、この旅の中心予想だよ。次のステージでは、スリットのそばに本物の検出器を置いて、その予想をごまかしなしに検証する。「手がかりが残る」とは正確には何なのか――それを書き切るのが次の仕事だ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【旅の唯一の武器 ― 干渉の足し算ルール】</span>
+        <span class="step">・結果に至る道筋のひとつひとつに矢印（振幅）がつく。矢印は長さと向き（位相）を持ち、向きは波長1つ分進むごとに1回転する</span>
+        <span class="step">・道筋の<span class="nw">区別がつかない</span>とき → <strong>矢印を足してから、合計の長さを2乗</strong>（＝干渉が起きる。強め合い・打ち消し合い）</span>
+        <span class="step">・どの道筋かの<span class="nw">手がかりが残る</span>とき → <strong>それぞれの長さを2乗してから、確率を足す</strong>（＝干渉が消える）</span>
+        <span class="step">・二重スリット：道のりの差が0なら同じ向きで明るさ4倍、半波長なら正反対で明るさ0。この繰り返しが縞になる</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. スクリーンのある点に、左経由と右経由の矢印がちょうど正反対の向きで届いた（道筋の区別はつかない）。この点の明るさは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">矢印2本分だから、1本のときの2倍になる</button>
+          <button class="choice-btn">向きは関係ないので、1本のときと同じになる</button>
+          <button class="choice-btn">足すと長さ0になり、明るさは0（真っ暗）になる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 区別がつかないときは、2乗する前に矢印そのものを足す。正反対の矢印は足すと長さ0、2乗しても0。粒子が1個も届かない暗い帯は、こうして生まれる。「確率を足してから」では決して0にならないことに注意。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. もし自然が「それぞれ2乗してから足す」で計算していたら、二重スリットの分布はどうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">打ち消し合いが起きないので、縞のない、のっぺりした分布になる</button>
+          <button class="choice-btn">もっと細かい縞になる</button>
+          <button class="choice-btn">全体が真っ暗になる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 2乗した値（確率）は必ず0以上なので、足し算で打ち消しは起きない。左だけの山と右だけの山を重ねた、なだらかな分布になる。実験で縞が見えるという事実が、「自然は矢印を足してから2乗している」証拠だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 矢印（振幅）の長さの2乗が表しているものは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">粒子の速さ</button>
+          <button class="choice-btn">その結果が起きる確率</button>
+          <button class="choice-btn">粒子の大きさ</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 長さ1なら確率1、長さ0.5なら確率0.25。矢印の「向き」は単独では確率に現れないが、複数の矢印を足すときに強め合いと打ち消し合いを生む。この向きの働きこそが、量子力学を確率のゲームと分けている。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>DQ.initStagePage(1);</script>
+
+<script>
+(function(){
+  // 図1: 二重スリット干渉アニメ。スクリーン上の点を走査しながら矢印合成と明るさカーブを描く
+  var svg = document.getElementById('interf-svg');
+  var g = document.getElementById('interf-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var SRC = {x: 26, y: 125}, SL = {x: 96, y: 100}, SR = {x: 96, y: 150};
+  var SCX = 220, TOP = 40, BOT = 210, LAM = 11;
+  var C1 = '#2f7a6b', C2 = '#b98a2e';
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+
+  // 装置の静的部分
+  el('circle', {cx: SRC.x, cy: SRC.y, r: 5, fill: C2});
+  txt(SRC.x, SRC.y + 20, 'label', '光源');
+  // スリット板
+  el('line', {x1: SL.x, y1: 34, x2: SL.x, y2: SL.y - 8, stroke: 'var(--ink)', 'stroke-width': 4});
+  el('line', {x1: SL.x, y1: SL.y + 8, x2: SL.x, y2: SR.y - 8, stroke: 'var(--ink)', 'stroke-width': 4});
+  el('line', {x1: SL.x, y1: SR.y + 8, x2: SL.x, y2: 216, stroke: 'var(--ink)', 'stroke-width': 4});
+  txt(SL.x, 30, 'label', 'スリット');
+  txt(SL.x - 12, SL.y + 4, 'label', '左', 'end');
+  txt(SL.x - 12, SR.y + 4, 'label', '右', 'end');
+  // スクリーン
+  el('line', {x1: SCX, y1: TOP, x2: SCX, y2: BOT, stroke: 'var(--ink)', 'stroke-width': 3});
+  txt(SCX, 34, 'label', 'スクリーン');
+  txt(300, 34, 'label', '明るさ');
+
+  // 経路線（動的）
+  var path1 = el('line', {stroke: C1, 'stroke-width': 1.5, 'stroke-dasharray': '4 3'});
+  var path2 = el('line', {stroke: C2, 'stroke-width': 1.5, 'stroke-dasharray': '4 3'});
+  el('line', {x1: SRC.x, y1: SRC.y, x2: SL.x, y2: SL.y, stroke: C1, 'stroke-width': 1, opacity: .5});
+  el('line', {x1: SRC.x, y1: SRC.y, x2: SL.x, y2: SR.y, stroke: C2, 'stroke-width': 1, opacity: .5});
+
+  // 明るさカーブ（走査済みの軌跡）
+  var curve = el('path', {fill: 'none', stroke: '#8a6a24', 'stroke-width': 2});
+  // 走査点
+  var dot = el('circle', {r: 4, fill: 'var(--ink)'});
+  var lensDot = el('circle', {r: 3, fill: '#8a6a24'});
+
+  // 矢印インセット（右端）: 2本の矢印を先端どうしでつないで足し、合計の黒い矢印を作る
+  var insetX = 334, insetY = 103;
+  txt(insetX, 52, 'strong', '矢印の合成');
+  var subTitle = txt(insetX, 68, 'label', '長さ²＝明るさ');
+  subTitle.style.fontSize = '10px';
+  subTitle.style.fontWeight = '900';
+  el('circle', {cx: insetX, cy: insetY, r: 28, fill: 'var(--paper2)', stroke: 'var(--line)'});
+  // 平行四辺形の補助線（点線）→ その上に矢印2本と合計を描く
+  var gd1 = el('line', {stroke: C2, 'stroke-width': 1.2, 'stroke-dasharray': '3 3', opacity: .55});
+  var gd2 = el('line', {stroke: C1, 'stroke-width': 1.2, 'stroke-dasharray': '3 3', opacity: .55});
+  var ar1 = el('line', {stroke: C1, 'stroke-width': 2.5, 'marker-end': 'url(#ah-l)'});
+  var ar2 = el('line', {stroke: C2, 'stroke-width': 2.5, 'marker-end': 'url(#ah-r)'});
+  var arS = el('line', {stroke: 'var(--ink)', 'stroke-width': 3, 'marker-end': 'url(#ah-s)'});
+  // 数値はSVG外の読み出しバーに表示
+  var roL = document.getElementById('ro-l'), roR = document.getElementById('ro-r'),
+      roS = document.getElementById('ro-s'), roS2 = document.getElementById('ro-s2'),
+      roPh = document.getElementById('ro-ph');
+
+  function dist(a, b) { return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)); }
+
+  function intensityAt(y) {
+    var p = {x: SCX, y: y};
+    var d1 = dist(SL, p), d2 = dist(SR, p);
+    var ph1 = 2 * Math.PI * d1 / LAM, ph2 = 2 * Math.PI * d2 / LAM;
+    var sx = Math.cos(ph1) + Math.cos(ph2), sy = Math.sin(ph1) + Math.sin(ph2);
+    // 包絡（単スリットの広がり）: 中央から離れると弱まる
+    var env = Math.exp(-Math.pow((y - 125) / 70, 2));
+    return {I: (sx * sx + sy * sy) / 4 * env, ph1: ph1, ph2: ph2, env: env};
+  }
+
+  function drawCurve(uptoY) {
+    var d = '';
+    for (var y = TOP; y <= uptoY; y += 1.5) {
+      var r = intensityAt(y);
+      var x = SCX + 6 + r.I * 70;
+      d += (d === '' ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+    }
+    curve.setAttribute('d', d);
+  }
+
+  function drawAt(y, full) {
+    var r = intensityAt(y);
+    path1.setAttribute('x1', SL.x); path1.setAttribute('y1', SL.y);
+    path1.setAttribute('x2', SCX); path1.setAttribute('y2', y);
+    path2.setAttribute('x1', SL.x); path2.setAttribute('y1', SR.y);
+    path2.setAttribute('x2', SCX); path2.setAttribute('y2', y);
+    dot.setAttribute('cx', SCX); dot.setAttribute('cy', y);
+    lensDot.setAttribute('cx', SCX + 6 + r.I * 70); lensDot.setAttribute('cy', y);
+    var L = 13 * Math.sqrt(r.env); // 矢印の長さは場所で変わる（波が広がって薄まる）
+    var v1 = {x: Math.cos(r.ph1) * L, y: -Math.sin(r.ph1) * L};
+    var v2 = {x: Math.cos(r.ph2) * L, y: -Math.sin(r.ph2) * L};
+    // 2本とも中心から出発させ、平行四辺形の対角線が合計（黒）
+    ar1.setAttribute('x1', insetX); ar1.setAttribute('y1', insetY);
+    ar1.setAttribute('x2', insetX + v1.x); ar1.setAttribute('y2', insetY + v1.y);
+    ar2.setAttribute('x1', insetX); ar2.setAttribute('y1', insetY);
+    ar2.setAttribute('x2', insetX + v2.x); ar2.setAttribute('y2', insetY + v2.y);
+    gd1.setAttribute('x1', insetX + v1.x); gd1.setAttribute('y1', insetY + v1.y);
+    gd1.setAttribute('x2', insetX + v1.x + v2.x); gd1.setAttribute('y2', insetY + v1.y + v2.y);
+    gd2.setAttribute('x1', insetX + v2.x); gd2.setAttribute('y1', insetY + v2.y);
+    gd2.setAttribute('x2', insetX + v1.x + v2.x); gd2.setAttribute('y2', insetY + v1.y + v2.y);
+    arS.setAttribute('x1', insetX); arS.setAttribute('y1', insetY);
+    arS.setAttribute('x2', insetX + v1.x + v2.x); arS.setAttribute('y2', insetY + v1.y + v2.y);
+    // 合計の長さ→明るさ倍率（スリット1本＝矢印1本のときを×1として、×0〜×4）
+    var sumLen = Math.sqrt((v1.x + v2.x) * (v1.x + v2.x) + (v1.y + v2.y) * (v1.y + v2.y));
+    arS.setAttribute('opacity', sumLen < 3 ? 0 : 1);
+    var mult = (sumLen / 13) * (sumLen / 13); // ×1＝スクリーン中央にスリット1本だけのときの明るさ
+    var alen = Math.sqrt(r.env);
+    if (roL) roL.textContent = alen.toFixed(2);
+    if (roR) roR.textContent = alen.toFixed(2);
+    if (roS) roS.textContent = (sumLen / 13).toFixed(2);
+    if (roS2) roS2.textContent = mult.toFixed(2);
+    var dphi = ((r.ph1 - r.ph2) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+    if (dphi > Math.PI) dphi = 2 * Math.PI - dphi;
+    if (roPh) roPh.textContent = Math.round(dphi * 180 / Math.PI) + '°';
+    drawCurve(full ? BOT : y);
+  }
+
+  // スライダーで手動操作、ボタンで自動再生と切り替え
+  var slider = document.getElementById('interf-slider');
+  var playBtn = document.getElementById('interf-play');
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var auto = !reduced;
+  var t = 0, running = false, raf = null;
+  function setBtn() { if (playBtn) playBtn.textContent = auto ? '⏸ 一時停止' : '▶ 自動再生'; }
+  if (slider) {
+    slider.addEventListener('input', function () {
+      auto = false; setBtn();
+      drawAt(parseFloat(slider.value), true);
+    });
+  }
+  if (playBtn) {
+    playBtn.addEventListener('click', function () {
+      auto = !auto; setBtn();
+      if (auto && slider) t = parseFloat(slider.value) - TOP;
+      else if (slider) drawAt(parseFloat(slider.value), true);
+    });
+  }
+  setBtn();
+  function loop() {
+    if (!running) return;
+    if (auto) {
+      t += 0.55;
+      var y = TOP + (t % (BOT - TOP));
+      if (slider) slider.value = y;
+      drawAt(y, false);
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  if (!auto) { if (slider) slider.value = 125; drawAt(125, true); }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+<script>
+(function(){
+  // 図1b: 「それぞれ2乗してから足す」のアニメ。装置・矢印は図1と同じで、計算手順だけが違う
+  var svg = document.getElementById('square-svg');
+  var g = document.getElementById('square-body');
+  if (!svg || !g) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var SRC = {x: 26, y: 125}, SL = {x: 96, y: 100}, SR = {x: 96, y: 150};
+  var SCX = 220, TOP = 40, BOT = 210, LAM = 11;
+  var C1 = '#2f7a6b', C2 = '#b98a2e';
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || g).appendChild(e);
+    return e;
+  }
+  function txt(x, y, cls, content, anchor) {
+    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'middle'});
+    t.textContent = content;
+    return t;
+  }
+
+  // 装置（図1と同一）
+  el('circle', {cx: SRC.x, cy: SRC.y, r: 5, fill: C2});
+  txt(SRC.x, SRC.y + 20, 'label', '光源');
+  el('line', {x1: SL.x, y1: 34, x2: SL.x, y2: SL.y - 8, stroke: 'var(--ink)', 'stroke-width': 4});
+  el('line', {x1: SL.x, y1: SL.y + 8, x2: SL.x, y2: SR.y - 8, stroke: 'var(--ink)', 'stroke-width': 4});
+  el('line', {x1: SL.x, y1: SR.y + 8, x2: SL.x, y2: 216, stroke: 'var(--ink)', 'stroke-width': 4});
+  txt(SL.x, 30, 'label', 'スリット');
+  txt(SL.x - 12, SL.y + 4, 'label', '左', 'end');
+  txt(SL.x - 12, SR.y + 4, 'label', '右', 'end');
+  el('line', {x1: SCX, y1: TOP, x2: SCX, y2: BOT, stroke: 'var(--ink)', 'stroke-width': 3});
+  txt(SCX, 34, 'label', 'スクリーン');
+  txt(300, 34, 'label', '明るさ');
+
+  var path1 = el('line', {stroke: C1, 'stroke-width': 1.5, 'stroke-dasharray': '4 3'});
+  var path2 = el('line', {stroke: C2, 'stroke-width': 1.5, 'stroke-dasharray': '4 3'});
+  el('line', {x1: SRC.x, y1: SRC.y, x2: SL.x, y2: SL.y, stroke: C1, 'stroke-width': 1, opacity: .5});
+  el('line', {x1: SRC.x, y1: SRC.y, x2: SL.x, y2: SR.y, stroke: C2, 'stroke-width': 1, opacity: .5});
+  var curve = el('path', {fill: 'none', stroke: '#8a6a24', 'stroke-width': 2});
+  var dot = el('circle', {r: 4, fill: 'var(--ink)'});
+  var lensDot = el('circle', {r: 3, fill: '#8a6a24'});
+
+  // 右カラム: 2本の矢印を別々の小円に入れ、それぞれ単独で2乗する
+  var insetX = 334, L = 12;
+  var c1y = 76, c2y = 130;
+  el('circle', {cx: insetX, cy: c1y, r: 15, fill: 'var(--paper2)', stroke: 'var(--line)'});
+  el('circle', {cx: insetX, cy: c2y, r: 15, fill: 'var(--paper2)', stroke: 'var(--line)'});
+  var ar1 = el('line', {stroke: C1, 'stroke-width': 2.5, 'marker-end': 'url(#ah-l)'});
+  var ar2 = el('line', {stroke: C2, 'stroke-width': 2.5, 'marker-end': 'url(#ah-r)'});
+  var lb1 = txt(insetX, c1y + 28, 'label', '左経由');
+  lb1.style.fill = C1; lb1.style.fontWeight = '900';
+  var lb2 = txt(insetX, c2y + 28, 'label', '右経由');
+  lb2.style.fill = C2; lb2.style.fontWeight = '900';
+  txt(insetX, 185, 'label', '確率を足す');
+  var noteTxt = txt(insetX, 200, 'label', '位相差と無関係');
+  // 数値はSVG外の読み出しバーへ
+  var sqL = document.getElementById('sq-l'), sqR = document.getElementById('sq-r'),
+      sqL2 = document.getElementById('sq-l2'), sqR2 = document.getElementById('sq-r2'),
+      sqSum = document.getElementById('sq-sum'), sqPh = document.getElementById('sq-ph');
+
+  function dist(a, b) { return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)); }
+
+  function intensityAt(y) {
+    var p = {x: SCX, y: y};
+    var ph1 = 2 * Math.PI * dist(SL, p) / LAM, ph2 = 2 * Math.PI * dist(SR, p) / LAM;
+    var env = Math.exp(-Math.pow((y - 125) / 70, 2));
+    // それぞれ2乗してから足す: |a1|²+|a2|² = 1+1 = 2 → 図1と同じ規格化（÷4）でI=0.5
+    return {I: 0.5 * env, ph1: ph1, ph2: ph2, env: env};
+  }
+
+  function drawCurve(uptoY) {
+    var d = '';
+    for (var y = TOP; y <= uptoY; y += 1.5) {
+      var r = intensityAt(y);
+      var x = SCX + 6 + r.I * 70;
+      d += (d === '' ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+    }
+    curve.setAttribute('d', d);
+  }
+
+  function drawAt(y, full) {
+    var r = intensityAt(y);
+    path1.setAttribute('x1', SL.x); path1.setAttribute('y1', SL.y);
+    path1.setAttribute('x2', SCX); path1.setAttribute('y2', y);
+    path2.setAttribute('x1', SL.x); path2.setAttribute('y1', SR.y);
+    path2.setAttribute('x2', SCX); path2.setAttribute('y2', y);
+    dot.setAttribute('cx', SCX); dot.setAttribute('cy', y);
+    lensDot.setAttribute('cx', SCX + 6 + r.I * 70); lensDot.setAttribute('cy', y);
+    var Ls = L * Math.sqrt(r.env); // 矢印の長さは場所で変わる（波が広がって薄まる）
+    ar1.setAttribute('x1', insetX); ar1.setAttribute('y1', c1y);
+    ar1.setAttribute('x2', insetX + Math.cos(r.ph1) * Ls); ar1.setAttribute('y2', c1y - Math.sin(r.ph1) * Ls);
+    ar2.setAttribute('x1', insetX); ar2.setAttribute('y1', c2y);
+    ar2.setAttribute('x2', insetX + Math.cos(r.ph2) * Ls); ar2.setAttribute('y2', c2y - Math.sin(r.ph2) * Ls);
+    var alen2 = Math.sqrt(r.env);
+    if (sqL) sqL.textContent = alen2.toFixed(2);
+    if (sqR) sqR.textContent = alen2.toFixed(2);
+    if (sqL2) sqL2.textContent = r.env.toFixed(2);
+    if (sqR2) sqR2.textContent = r.env.toFixed(2);
+    if (sqSum) sqSum.textContent = (2 * r.env).toFixed(2);
+    if (sqPh) {
+      var dp = ((r.ph1 - r.ph2) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+      if (dp > Math.PI) dp = 2 * Math.PI - dp;
+      sqPh.textContent = Math.round(dp * 180 / Math.PI) + '°';
+    }
+    drawCurve(full ? BOT : y);
+  }
+
+  // スライダーで手動操作、ボタンで自動再生と切り替え
+  var slider = document.getElementById('square-slider');
+  var playBtn = document.getElementById('square-play');
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var auto = !reduced;
+  var t = 0, running = false, raf = null;
+  function setBtn() { if (playBtn) playBtn.textContent = auto ? '⏸ 一時停止' : '▶ 自動再生'; }
+  if (slider) {
+    slider.addEventListener('input', function () {
+      auto = false; setBtn();
+      drawAt(parseFloat(slider.value), true);
+    });
+  }
+  if (playBtn) {
+    playBtn.addEventListener('click', function () {
+      auto = !auto; setBtn();
+      if (auto && slider) t = parseFloat(slider.value) - TOP;
+      else if (slider) drawAt(parseFloat(slider.value), true);
+    });
+  }
+  setBtn();
+  function loop() {
+    if (!running) return;
+    if (auto) {
+      t += 0.55;
+      var y = TOP + (t % (BOT - TOP));
+      if (slider) slider.value = y;
+      drawAt(y, false);
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  if (!auto) { if (slider) slider.value = 125; drawAt(125, true); }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+</body>
+</html>

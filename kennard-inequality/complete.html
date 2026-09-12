@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2947">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>全ステージクリア ― 不確定性原理を証明する</title>
+<meta name="description" content="不確定性原理を証明する、全7ステージクリアおめでとう。ここまでの証明の旅を振り返ろう。">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/complete.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="不確定性原理を証明する">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="全ステージクリア ― 不確定性原理を証明する">
+<meta property="og:description" content="全7ステージクリアおめでとう。証明の旅を振り返ろう。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/complete.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar" aria-label="サイト情報">
+    <span class="brand-badge" aria-hidden="true">📐</span>
+    <span class="brand-copy">
+      <strong>不確定性原理を証明する</strong>
+      <small>KENNARD QUEST</small>
+    </span>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <h1><span class="line">証明完了。Δx·Δp ≥ ℏ/2 ∎</span></h1>
+      <p>「ばらつきって、正確には何？」という素朴な問いから出発して、標準偏差、積分、微分、部分積分、そして判別式。1927年にケナードが世界に示した定理を、きみは最初の定義から最後の1行まで、自分の手でたどり切った。ここまでの旅を振り返ってみよう。</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="board" aria-labelledby="recap-heading">
+      <div class="board-head">
+        <div><h2 id="recap-heading">ここまでの旅を振り返ろう</h2></div>
+      </div>
+
+      <div class="recap-list">
+        <div class="recap-item">
+          <span class="recap-num">1</span>
+          <div class="recap-body"><span class="recap-title">1927年の宿題。</span> <span class="recap-desc">曖昧だった「ばらつき」を、ガウスの誤差論から借りた標準偏差で定義し直し、証明すべき定理を一つの式にした。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">2</span>
+          <div class="recap-body"><span class="recap-title">確率の波と積分。</span> <span class="recap-desc">積分は「細かく切って足すだけ」。|ψ|² から ⟨x⟩ と (Δx)²＝∫x²|ψ|²dx を組み立てた。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">3</span>
+          <div class="recap-body"><span class="recap-title">運動量をつかまえる。</span> <span class="recap-desc">波の細かさ＝運動量。傾きを読む微分が検出器になり、−iℏ d/dx が運動量を取り出した。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">4</span>
+          <div class="recap-body"><span class="recap-title">部分積分の魔法。</span> <span class="recap-desc">「押し付けると符号反転」。規格化が −1 に化ける補題1と、Δp＝傾きの総量という補題2を仕込んだ。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">5</span>
+          <div class="recap-body"><span class="recap-title">魔法の関数 I(λ)。</span> <span class="recap-desc">「2乗和は0以上」の狩りの型とゴールからの逆算で、証明の心臓を自分で発見した。波の形は式から消えた。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">6</span>
+          <div class="recap-body"><span class="recap-title">判別式でフィニッシュ。</span> <span class="recap-desc">中学数学の判別式が D ≤ 0 を突きつけ、Δx·Δp ≥ ℏ/2 が完成。位置が完全確定した状態は存在しないことまで判明した。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">7</span>
+          <div class="recap-body"><span class="recap-title">等号の波と歴史。</span> <span class="recap-desc">下限を達成するのはガウス波束だけ。ケナード、ワイルとパウリ、ロバートソン、そして76年後の小澤へ――証明は今も生きている。</span></div>
+        </div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">一番心に残ったのは、証明の道具がぜんぶ「借り物」だったことです。星のための標準偏差、面積のための積分、19世紀の部分積分、学校で習う判別式……。新発明はひとつもないのに、組み合わせたら宇宙の限界が証明できてしまった。発見って、ゼロから作ることじゃないんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それこそが、このクエストで一番伝えたかったことだよ。天才のひらめきに見えるものの正体は、良い道具を選んで、良い順番で並べること。きみは今日、その並べ方を自分の手で再現した。次に教科書で「天下り」の式に出会ったら、思い出してほしい――その式にも必ず、発見の物語があるんだ。お疲れさま！</div>
+        </div>
+      </div>
+
+      <div class="board-head" style="margin-top:26px">
+        <div><h2 id="next-heading">次の旅へ</h2></div>
+        <p>証明の旅は、まだ続けられる</p>
+      </div>
+      <div class="quest-grid">
+        <a class="quest-card" href="https://quantum-mechanics.habatakijuku.com/bell-inequality/" style="--accent:#5b3fa6;--accent-bg:#efe9f9">
+          <div class="q-top"><span class="q-num">★</span><span class="q-suit" aria-hidden="true">✦</span></div>
+          <div class="q-meta"><span class="q-tag">次の旅</span><span class="q-time">全7ステージ</span></div>
+          <div class="q-title">ベルの不等式を破る</div>
+          <p class="q-desc">不確定性の次は「量子もつれ」。アインシュタインの異議に自然そのものが答えを出した、もうひとつの不等式の物語をたどろう。</p>
+          <span class="q-cta">旅に出る →</span>
+        </a>
+        <a class="quest-card" href="https://quantum-mechanics.habatakijuku.com/" style="--accent:#2f8a8f;--accent-bg:#e6f5f5">
+          <div class="q-top"><span class="q-num">🗺</span><span class="q-suit" aria-hidden="true">✧</span></div>
+          <div class="q-meta"><span class="q-tag">シリーズマップ</span></div>
+          <div class="q-title">クエストの地図を見る</div>
+          <p class="q-desc">量子力学・複素数からアルゴリズムまで、シリーズ全体の学習クエストを一望できる地図。次の目的地を選ぼう。</p>
+          <span class="q-cta">地図を開く →</span>
+        </a>
+      </div>
+
+      <div class="complete-actions">
+        <a class="btn btn-primary" id="btn-share" href="#" target="_blank" rel="noopener">𝕏 クリアをシェアする</a>
+        <a class="btn" href="index.html">トップに戻る →</a>
+        <button class="btn" id="btn-reset-all">🔄 進捗をリセットして最初から</button>
+      </div>
+    </section>
+
+    <div id="book-recommend"></div>
+  </main>
+
+  <footer>
+    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;© <span id="year"></span> ruglerugle</p>
+    <div class="footer-suits" aria-hidden="true"><span>✦</span><span>☾</span><span>✧</span><span>★</span></div>
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById("btn-share").href =
+    "https://twitter.com/intent/tweet?text=" +
+    encodeURIComponent("不確定性原理 Δx·Δp ≥ ℏ/2 の証明を、最初の定義から最後の1行まで自分の手でたどりました！📐") +
+    "&url=" + encodeURIComponent("https://quantum-mechanics.habatakijuku.com/kennard-inequality/");
+</script>
+<script src="js/progress.js"></script>
+<script>KQ.initCompletePage();</script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c2947">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE2 確率の波と積分 ― 不確定性原理を証明する</title>
+<meta name="description" content="|ψ|² は確率の濃さ。積分の正体は「細かく切って足すだけ」の素朴な足し算だ。ボルンの確率解釈と積分を道具に、平均 ⟨x⟩ とばらつき Δx を波動関数から計算する式を組み立てる。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage2.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="不確定性原理を証明する">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE2 確率の波と積分 ― 不確定性原理を証明する">
+<meta property="og:description" content="積分の正体は「細かく切って足すだけ」。⟨x⟩ と Δx を波動関数から計算する式を組み立てる。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage2.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/kennard-inequality/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .kq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .kq-svg .base{stroke:var(--line);stroke-width:1}
+  .kq-svg .bar{fill:rgba(217,164,65,.35);stroke:var(--gold-dark);stroke-width:.8}
+  .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .kq-svg .paxis{stroke:var(--muted);stroke-width:1.5}
+  .kq-svg .pah{fill:var(--muted)}
+  /* 実験室図の座標軸オーバーレイ */
+  .axes-svg .axw{stroke:#fff;stroke-opacity:.8;stroke-width:8;fill:none;stroke-linecap:round}
+  .axes-svg .axx{stroke:#c9473c;stroke-width:3.5;fill:none;stroke-linecap:round}
+  .axes-svg .axy{stroke:#2f8a4f;stroke-width:3.5;fill:none;stroke-linecap:round}
+  .axes-svg .axz{stroke:#3e6fc4;stroke-width:3.5;fill:none;stroke-linecap:round}
+  .axes-svg .ahx{fill:#c9473c}
+  .axes-svg .ahy{fill:#2f8a4f}
+  .axes-svg .ahz{fill:#3e6fc4}
+  .axes-svg text{font-weight:900;paint-order:stroke;stroke:#fff;stroke-width:6px}
+  .axes-svg .axnum{font-size:30px}
+  .axes-svg .axlet{font-size:48px;font-style:italic;font-family:Georgia,'Times New Roman',serif}
+  .axes-svg .tx{fill:#c9473c}
+  .axes-svg .ty{fill:#2f8a4f}
+  .axes-svg .tz{fill:#3e6fc4}
+  .axes-svg .tink{fill:#241d12;font-size:32px}
+  .axes-svg .edash{stroke:#241d12;stroke-width:2.5;stroke-dasharray:7 7;fill:none}
+  .axes-svg .axw2{stroke:#fff;stroke-opacity:.65;stroke-width:4.5;fill:none;stroke-linecap:round}
+  .axes-svg .edash2{stroke:#241d12;stroke-width:1.6;stroke-dasharray:5 6;fill:none;opacity:.85}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">📐</a> <span>不確定性原理を証明する</span></div>
+      <div class="brand-sub">STAGE 2 ― 確率の波と積分 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 2</span><span class="chapter-title">確率の波と積分</span>
+        <div class="chapter-sub">平均と Δx を式で書く</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">積分を「細かく切って足す」道具として手に入れ、波動関数 ψ から平均 ⟨x⟩ とばらつき Δx を計算する式を書けるようになろう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">Δx を波動関数 ψ から計算するには、まず ψ と確率の関係をおさらいしておこう。ψ(x) は場所 x ごとに値を持つ関数で、値は複素数だ。そして物理的な意味を持つのは、その<strong>絶対値の2乗 |ψ(x)|²</strong> ――これが「その場所で電子が見つかりやすさの濃さ」、つまり<strong>確率密度</strong>を表す。山が高い場所ほど見つかりやすい。これがボルンの確率解釈だったね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">その前に、x の実態がいまいちつかめません。x は「電子がいる場所」のことですか？ でもそれだと、電子の位置は決まっていないという話と矛盾する気がします。そもそも、どこから測った位置なんでしょう。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">とても大事な質問だよ。2つに分けて答えよう。まず x は、<strong>実験室に固定したものさしの目盛り</strong>だ。原点（x＝0）をどこに置くかは人間の勝手で、装置の端でもテーブルの角でもいい。次に、ψ(x) と書いたときの x は「電子がいる場所」では<strong>ない</strong>。数直線上のあらゆる点を走る変数で、「x＝3 のあたりで見つかる確率の濃さは？」「x＝5 では？」と、<strong>すべての場所に質問した答えの一覧表</strong>が関数 ψ(x) なんだ。電子は測る前には特定の x を持っていない。測定して初めて、ものさしのどれか1つの目盛りが結果として出る。その結果の統計が、これから作る ⟨x⟩ や Δx だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">整理すると、空間に <strong>x軸</strong>――向きを決めた数直線――を1本敷いて、その目盛りを読んだ値が x。つまり「原点からの距離」に向きの情報を符号で足した、<strong>符号付きの距離</strong>ですね。原点から右に3なら x＝＋3、左に3なら x＝−3。……あっ、だから積分の範囲が「−∞ から ＋∞」なんですね。x軸はマイナス側にも無限に伸びていますから。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい整理だね。ついでに白状しておくと、現実の空間は3次元だから、本当は x軸・y軸・z軸の3本を敷いて、位置は (x, y, z) の3つの目盛りで表す。このクエストでは話を簡単にするため、電子が<strong>一本の直線上だけを動く1次元の世界</strong>で証明するよ。心配はいらなくて、3次元でも同じ証明を軸ごとに3回繰り返すだけで、不確定性原理は<strong>軸ごとに独立に</strong>成り立つんだ。Δx とペアを組むのは同じ x軸方向の運動量 Δpₓ だけで、x軸方向を絞っても y軸方向の運動量には何の制限もかからない。ペアになるのは同じ軸同士だけ、というわけだね。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg axes-svg" viewBox="0 0 1200 675" width="100%" role="img" aria-label="研究室の絵に、実験室に固定したx軸・y軸・z軸の3本のものさしを重ねた図。黒板の前には模式化した原子の3Dホログラムが浮かび、中心の輝点が原子核、まわりの点々が電子雲。ねこ博士の指示棒の先に印が付き、そこが「位置 (x, y, z) における、電子が見つかる確率密度」を尋ねる場所として示されている。印の点からは、床に下ろした垂線を経由してx軸・y軸へ、またy軸に平行に進んでからx軸に平行にz軸へ至る2段の点線で、座標の読み取り方が示されている">
+          <image href="images/labo.webp" x="0" y="0" width="1200" height="675"></image>
+          <!-- x軸（左右） -->
+          <line class="axw" x1="80" y1="575" x2="1128" y2="575"></line>
+          <line class="axx" x1="80" y1="575" x2="1128" y2="575"></line>
+          <polygon class="ahx" points="1160,575 1126,562 1126,588"></polygon>
+          <line class="axw" x1="100" y1="562" x2="100" y2="588"></line><line class="axx" x1="100" y1="562" x2="100" y2="588"></line>
+          <line class="axw" x1="360" y1="562" x2="360" y2="588"></line><line class="axx" x1="360" y1="562" x2="360" y2="588"></line>
+          <line class="axw" x1="490" y1="562" x2="490" y2="588"></line><line class="axx" x1="490" y1="562" x2="490" y2="588"></line>
+          <line class="axw" x1="620" y1="562" x2="620" y2="588"></line><line class="axx" x1="620" y1="562" x2="620" y2="588"></line>
+          <line class="axw" x1="750" y1="562" x2="750" y2="588"></line><line class="axx" x1="750" y1="562" x2="750" y2="588"></line>
+          <line class="axw" x1="880" y1="562" x2="880" y2="588"></line><line class="axx" x1="880" y1="562" x2="880" y2="588"></line>
+          <line class="axw" x1="1010" y1="562" x2="1010" y2="588"></line><line class="axx" x1="1010" y1="562" x2="1010" y2="588"></line>
+          <text class="axnum tx" x="100" y="622" text-anchor="middle">−1</text>
+          <text class="axnum tx" x="360" y="622" text-anchor="middle">1</text>
+          <text class="axnum tx" x="490" y="622" text-anchor="middle">2</text>
+          <text class="axnum tx" x="620" y="622" text-anchor="middle">3</text>
+          <text class="axnum tx" x="750" y="622" text-anchor="middle">4</text>
+          <text class="axnum tx" x="880" y="622" text-anchor="middle">5</text>
+          <text class="axnum tx" x="1010" y="622" text-anchor="middle">6</text>
+          <text class="axlet tx" x="1130" y="632">x</text>
+          <!-- z軸（上下） -->
+          <line class="axw" x1="230" y1="640" x2="230" y2="112"></line>
+          <line class="axz" x1="230" y1="640" x2="230" y2="112"></line>
+          <polygon class="ahz" points="230,80 217,114 243,114"></polygon>
+          <line class="axw" x1="217" y1="445" x2="243" y2="445"></line><line class="axz" x1="217" y1="445" x2="243" y2="445"></line>
+          <line class="axw" x1="217" y1="315" x2="243" y2="315"></line><line class="axz" x1="217" y1="315" x2="243" y2="315"></line>
+          <line class="axw" x1="217" y1="185" x2="243" y2="185"></line><line class="axz" x1="217" y1="185" x2="243" y2="185"></line>
+          <text class="axnum tz" x="202" y="455" text-anchor="end">1</text>
+          <text class="axnum tz" x="202" y="325" text-anchor="end">2</text>
+          <text class="axnum tz" x="202" y="195" text-anchor="end">3</text>
+          <text class="axlet tz" x="258" y="108">z</text>
+          <!-- y軸（奥行き・約30度）。遠近法で目盛りは奥ほど詰まる（95→78→64→52px）。黒板の手前（テーブル奥）で切る -->
+          <line class="axw" x1="230" y1="575" x2="517" y2="410"></line>
+          <line class="axy" x1="230" y1="575" x2="517" y2="410"></line>
+          <polygon class="ahy" points="539,398 520,422 509,402"></polygon>
+          <line class="axw" x1="307" y1="517" x2="319" y2="538"></line><line class="axy" x1="307" y1="517" x2="319" y2="538"></line>
+          <line class="axw" x1="375" y1="478" x2="387" y2="499"></line><line class="axy" x1="375" y1="478" x2="387" y2="499"></line>
+          <line class="axw" x1="430" y1="446" x2="442" y2="467"></line><line class="axy" x1="430" y1="446" x2="442" y2="467"></line>
+          <line class="axw" x1="475" y1="420" x2="487" y2="441"></line><line class="axy" x1="475" y1="420" x2="487" y2="441"></line>
+          <text class="axnum ty" x="299" y="512" text-anchor="end">1</text>
+          <text class="axnum ty" x="367" y="473" text-anchor="end">2</text>
+          <text class="axnum ty" x="422" y="441" text-anchor="end">3</text>
+          <text class="axnum ty" x="467" y="415" text-anchor="end">4</text>
+          <text class="axlet ty" x="524" y="382">y</text>
+          <!-- 原点ラベル -->
+          <text class="axnum tink" x="230" y="660" text-anchor="middle">0（原点）</text>
+          <!-- 原子核（ホログラム中心の輝点） -->
+          <line class="axw" x1="648" y1="272" x2="632" y2="250"></line>
+          <line class="edash" x1="648" y1="272" x2="632" y2="250"></line>
+          <text class="tink" x="658" y="292">原子核</text>
+          <!-- 博士の指示棒の先 P=(560,248)：そこで電子が見つかる確率密度を尋ねる -->
+          <!-- 奥行きの取り方は z=2 を選択（a≈1.64, b≈1.03, c=2）。
+               床の足Q=(560,508)、x軸上A=(443,575)、y軸上B=(347,508)、
+               z読みは P→P1=(443,315)（y軸に平行）→C=(230,315)（x軸に平行） -->
+          <line class="axw" x1="560" y1="262" x2="560" y2="508"></line>
+          <line class="edash" x1="560" y1="262" x2="560" y2="508"></line>
+          <line class="axw" x1="560" y1="508" x2="443" y2="575"></line>
+          <line class="edash" x1="560" y1="508" x2="443" y2="575"></line>
+          <line class="axw" x1="560" y1="508" x2="347" y2="508"></line>
+          <line class="edash" x1="560" y1="508" x2="347" y2="508"></line>
+          <line class="axw" x1="549" y1="255" x2="443" y2="315"></line>
+          <line class="edash" x1="549" y1="255" x2="443" y2="315"></line>
+          <line class="axw" x1="443" y1="315" x2="230" y2="315"></line>
+          <line class="edash" x1="443" y1="315" x2="230" y2="315"></line>
+          <!-- 補助破線（読み取りの直方体の残りの辺）：
+               C→R=(347,248)（y軸に平行）、R→P（x軸に平行）、A→P1（z軸に平行） -->
+          <line class="axw2" x1="236" y1="312" x2="347" y2="248"></line>
+          <line class="edash2" x1="236" y1="312" x2="347" y2="248"></line>
+          <line class="axw2" x1="347" y1="248" x2="546" y2="248"></line>
+          <line class="edash2" x1="347" y1="248" x2="546" y2="248"></line>
+          <line class="axw2" x1="443" y1="568" x2="443" y2="321"></line>
+          <line class="edash2" x1="443" y1="568" x2="443" y2="321"></line>
+          <line class="axw2" x1="347" y1="501" x2="347" y2="253"></line>
+          <line class="edash2" x1="347" y1="501" x2="347" y2="253"></line>
+          <circle cx="347" cy="248" r="4" fill="#241d12" stroke="#fff" stroke-width="2"></circle>
+          <circle cx="560" cy="508" r="5" fill="#241d12" stroke="#fff" stroke-width="2.5"></circle>
+          <circle cx="443" cy="315" r="5" fill="#241d12" stroke="#fff" stroke-width="2.5"></circle>
+          <circle cx="443" cy="575" r="6" fill="#c9473c" stroke="#fff" stroke-width="2.5"></circle>
+          <circle cx="347" cy="508" r="6" fill="#2f8a4f" stroke="#fff" stroke-width="2.5"></circle>
+          <circle cx="230" cy="315" r="6" fill="#3e6fc4" stroke="#fff" stroke-width="2.5"></circle>
+          <circle cx="560" cy="248" r="22" fill="none" stroke="#fff" stroke-width="5" opacity="0.55"></circle>
+          <circle cx="560" cy="248" r="13" fill="none" stroke="#fff" stroke-width="7"></circle>
+          <circle cx="560" cy="248" r="13" fill="none" stroke="#241d12" stroke-width="3"></circle>
+          <text class="tink" x="590" y="182">位置 (x, y, z) における、</text>
+          <text class="tink" x="590" y="222">電子が見つかる確率密度</text>
+        </svg>
+        <div class="diagram-caption">実験室に固定した3本のものさし（x軸・y軸・z軸）。黒板の前に浮かぶのは模式化した原子の3Dホログラムで、中心の輝点が原子核、まわりに漂う点々が電子雲（点が密な場所ほど電子が見つかりやすい）。原点をどこに置くか、どちらをプラスの向きにするかは人間の勝手だが、いったん決めれば、空間のどの点も3つの目盛り (x, y, z) で指定できて、点ごとに「そこで電子が見つかる確率密度」が決まっている――その濃淡の全体像が電子雲だ</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">つまり x は電子の住所ではなく「質問する場所」で、ψ はその質問全部への回答集なんですね。原点が人間の勝手なら、あとで基準点を選び直しても物理は変わらないはず……それは覚えておきます。では、復習させてください。<a href="https://complex-number.habatakijuku.com/" target="_blank" rel="noopener" style="color:var(--gold-dark);text-decoration:underline">複素数の教室</a>で習ったとおり、複素数 z＝a＋bi の絶対値の2乗は |z|²＝a²＋b² で、これは必ず0以上の実数になるんでしたよね。だから確率――0以上の実数――の役が務まる。複素数のままでは「確率が 3＋2i」なんて意味不明ですから、絶対値を取って実数にするのは理にかなっています。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いいおさらいだね。ついでに記号を1つ導入しておこう。z＝a＋bi の虚数部分の符号を反転した z*＝a−bi を<strong>複素共役（きょうやく）</strong>と呼ぶ。掛け算してみると z·z*＝(a＋bi)(a−bi)＝a²＋b²、つまり <strong>|z|²＝z·z*</strong> だ。後でこの書き換えが大活躍する。……ところでこの「2乗する」という規則、どう発見されたか知っているかな。1926年、ボルンは電子の衝突を計算した論文で「確率は ψ に比例する」と<strong>書いてしまった</strong>。そして印刷直前に気づいて、<strong>脚注</strong>に「より正確な考察によれば、確率は ψ の2乗に比例する」と書き足したんだ。量子力学の心臓部が、脚注で生まれた瞬間だよ。この仕事でボルンは後にノーベル賞を受けている。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">脚注で！ 教科書だと最初から堂々と書いてあるのに、発見の現場はそんなに際どいものなんですね。……それで、確率の「濃さ」が |ψ(x)|² だとして、そこから平均やばらつきをどう計算するんですか？ 前のステージの例では測定値が5個だけでしたけど、位置 x は連続的で、値が無限にありますよ。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そこで新しい道具、<strong>積分</strong>の出番だ。名前は仰々しいけれど、発想は素朴そのもの。「曲線の下の面積を知りたければ、<strong>細い短冊に切って、長方形として足せばいい</strong>」――これだけなんだ。切り方を細かくするほど答えは正確になり、無限に細かくした極限が積分。記号 ∫ は「インテグラル」と読んで、形は Sum（和）の頭文字 S を縦に引き伸ばしたものだよ。∫ f(x) dx は「幅 dx の短冊の面積 f(x)×dx を、すべて足し合わせる」と読む。発想自体は2000年以上前のアルキメデスまでさかのぼる。ニュートンとライプニッツが17世紀に道具として完成させた。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 320 192" width="100%" role="img" aria-label="横軸が位置x、縦軸が確率密度のグラフ。なめらかな山なりの曲線の下に細い短冊が並んでいて、短冊の面積を足し合わせるとその区間で電子が見つかる確率になることを示している">
+          <text class="strong" x="170" y="15" text-anchor="middle">細い短冊に切って、足す</text>
+          <line class="paxis" x1="40" y1="150" x2="303" y2="150"></line>
+          <polygon class="pah" points="311,150 300,146 300,154"></polygon>
+          <line class="paxis" x1="40" y1="150" x2="40" y2="38"></line>
+          <polygon class="pah" points="40,30 36,41 44,41"></polygon>
+          <text class="strong" x="46" y="34">確率密度 |ψ(x)|²</text>
+          <text class="label" x="300" y="168" text-anchor="end">位置 x</text>
+          <rect class="bar" x="120" y="105.8" width="16" height="44.2"></rect>
+          <rect class="bar" x="136" y="79.2" width="16" height="70.8"></rect>
+          <rect class="bar" x="152" y="59.0" width="16" height="91.0"></rect>
+          <rect class="bar" x="168" y="56.5" width="16" height="93.5"></rect>
+          <rect class="bar" x="184" y="73.0" width="16" height="77.0"></rect>
+          <polyline class="wave" points="40,149.9 42,149.9 44,149.9 46,149.9 48,149.9 50,149.8 52,149.8 54,149.7 56,149.7 58,149.6 60,149.5 62,149.4 64,149.3 66,149.1 68,149.0 70,148.8 72,148.5 74,148.3 76,147.9 78,147.6 80,147.2 82,146.7 84,146.2 86,145.6 88,144.9 90,144.1 92,143.2 94,142.3 96,141.2 98,140.0 100,138.7 102,137.2 104,135.7 106,133.9 108,132.1 110,130.1 112,127.9 114,125.6 116,123.2 118,120.6 120,117.9 122,115.1 124,112.1 126,109.0 128,105.8 130,102.6 132,99.2 134,95.9 136,92.5 138,89.1 140,85.7 142,82.4 144,79.2 146,76.0 148,73.0 150,70.1 152,67.5 154,65.0 156,62.7 158,60.8 160,59.0 162,57.6 164,56.5 166,55.7 168,55.2 170,55.0 172,55.2 174,55.7 176,56.5 178,57.6 180,59.0 182,60.8 184,62.7 186,65.0 188,67.5 190,70.1 192,73.0 194,76.0 196,79.2 198,82.4 200,85.7 202,89.1 204,92.5 206,95.9 208,99.2 210,102.6 212,105.8 214,109.0 216,112.1 218,115.1 220,117.9 222,120.6 224,123.2 226,125.6 228,127.9 230,130.1 232,132.1 234,133.9 236,135.7 238,137.2 240,138.7 242,140.0 244,141.2 246,142.3 248,143.2 250,144.1 252,144.9 254,145.6 256,146.2 258,146.7 260,147.2 262,147.6 264,147.9 266,148.3 268,148.5 270,148.8 272,149.0 274,149.1 276,149.3 278,149.4 280,149.5 282,149.6 284,149.7 286,149.7 288,149.8 290,149.8 292,149.9 294,149.9 296,149.9 298,149.9 300,149.9 302,150.0 304,150.0"></polyline>
+          <text class="label" x="110" y="185">短冊の面積を全部足す ＝ 積分 ∫</text>
+        </svg>
+        <div class="diagram-caption">横軸が位置 <strong>x</strong>、縦軸が<strong>確率密度 |ψ(x)|²</strong>。ある区間で電子が見つかる確率は、その区間の<strong>曲線の下の面積</strong>にあたる。面積は「幅 dx の短冊 |ψ(x)|²·dx」を足し合わせたもので、短冊を無限に細くしたものが積分 ∫|ψ(x)|² dx</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">この道具で、まず一番大事な式が書ける。電子は測れば<strong>必ずどこかで</strong>見つかる。つまり、数直線全体（−∞ から ＋∞ まで）で面積を足し合わせると、全確率の1にならなければいけない。これを<strong>規格化条件</strong>と呼ぶよ。以後このクエストでは、∫ と書いたら全部「−∞ から ＋∞ までの積分」の意味だと約束しておこう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">規格化条件： <br class="wbr">∫ |ψ(x)|² dx ＝ 1　（電子は必ずどこかにいる）</span>
+        <span class="step">複素共役： <br class="wbr">z＝a＋bi に対して z*＝a−bi。 |z|² ＝ z·z* ＝ a²＋b²</span>
+        <span class="step">約束： <br class="wbr">∫ はすべて −∞ から ＋∞ までの積分。遠方では ψ → 0（電子は無限の彼方にはいない）</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">次は平均だ。その前に、飛び飛びの場合の平均を思い出そう。サイコロを1回振ったときの出目の平均は、どう計算するかな？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">それぞれの目が確率 1/6 で出るので、「値 × その値が出る確率」を全部足します。1×1/6 ＋ 2×1/6 ＋ … ＋ 6×1/6 ＝ 3.5 です。……あ、待ってください、いまの計算とさっきの積分、形がそっくりです。「値 × 確率」を足す。連続の場合は、値 x に、そこで見つかる確率 |ψ(x)|²dx を掛けて、積分すればいい。つまり平均は ∫ x |ψ(x)|² dx ですね！</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。自力で式を組み立てたね。物理では平均を山括弧で ⟨x⟩ と書く。そして前のステージの標準偏差のレシピ――ずれを2乗して、平均して、平方根――も、同じ置き換えでそのまま連続版になる。「平均からのずれの2乗」(x−⟨x⟩)² に、確率の重み |ψ|² を掛けて積分すればいい。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">位置の平均： <br class="wbr">⟨x⟩ ＝ ∫ x |ψ(x)|² dx　（「値×確率」の足し合わせ）</span>
+        <span class="step">位置の分散： <br class="wbr">(Δx)² ＝ ∫ (x−⟨x⟩)² |ψ(x)|² dx　（ずれの2乗の平均）</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ここで、証明を見通しよくするための下ごしらえをひとつ。式に ⟨x⟩ が入ったままだと計算がごちゃごちゃするから、<strong>座標の原点を、平均の位置に取り直そう</strong>。ものさしの目盛りをずらすだけだから、山の形も、ばらつきの幅 Δx も、何ひとつ変わらない。でも新しい座標では ⟨x⟩＝0 になって、式がすっきりする。運動量も同じで、平均 ⟨p⟩ がゼロでないなら、電子の集団と<strong>並走する立場</strong>から見ればいい。平均の流れは消えて ⟨p⟩＝0、ばらつき Δp はそのまま残る。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">証明したいのは Δx と Δp の不等式で、その2つがどちらも変わらないなら、平均を0にした状態で証明すれば十分ということですね。基準点の取り方は人間の勝手で、ばらつきは物理の事実、と。それなら遠慮なく使わせてもらいましょう。式はこうなりますね。(Δx)² ＝ ∫ x² |ψ|² dx。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それでいいよ。⟨x⟩＝0 なら「ずれ」は x そのものだからね。これで Δx は片付いた。残るは Δp――ところが、こちらは一筋縄ではいかない。|ψ|² のグラフから読めるのは<strong>位置</strong>の確率だけで、運動量はどこにも見当たらないんだ。運動量は、波のもっと奥深くに隠れている。次のステージで、それを引きずり出す道具を作ろう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【下ごしらえ完了】 <br class="wbr">原点と立場を選び直して ⟨x⟩＝0, ⟨p⟩＝0 としてよい。このとき：</span>
+        <span class="step">(Δx)² ＝ ∫ x² |ψ(x)|² dx</span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. |ψ(x)|² dx が表すものは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">位置を測ったとき、x の近くの幅 dx の区間で電子が見つかる確率</button>
+          <button class="choice-btn">その場所にある電子の個数</button>
+          <button class="choice-btn">波の高さそのもの</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ |ψ(x)|² は確率の「濃さ」（確率密度）で、区間の幅 dx を掛けるとその区間で見つかる確率になる。ボルンがこの解釈にたどり着いたのは論文の脚注だった。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 規格化条件 ∫|ψ|² dx ＝ 1 の物理的な意味は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">波の高さの最大値が1であること</button>
+          <button class="choice-btn">電子がちょうど1秒間だけ存在すること</button>
+          <button class="choice-btn">位置を測れば、電子は必ずどこかで見つかること（全確率が1）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 数直線全体で確率を足し合わせると1。この「当たり前」の条件が、後のステージで証明の急所に −1 という数を送り込むことになる。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 座標の原点を平均 ⟨x⟩ の位置にずらすと、Δx はどうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">0になる</button>
+          <button class="choice-btn">変わらない（ばらつきの幅は基準点の取り方によらない）</button>
+          <button class="choice-btn">ずらした距離のぶんだけ小さくなる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ものさしの目盛りをずらしても山の形と幅は変わらない。だから ⟨x⟩＝0 の場合だけ証明すれば、すべての場合を証明したことになる。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="index.html">← トップへ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>KQ.initStagePage(2);</script>
+</body>
+</html>

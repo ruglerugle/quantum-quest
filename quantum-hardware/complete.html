@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12303c">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>全ステージクリア ― 量子コンピュータはどう作るのか</title>
+<meta name="description" content="量子コンピュータはどう作るのか、全8ステージクリアおめでとう。ここまでの旅を振り返ろう。">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/complete.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="量子コンピュータはどう作るのか">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="全ステージクリア ― 量子コンピュータはどう作るのか">
+<meta property="og:description" content="全8ステージクリアおめでとう。旅を振り返ろう。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/complete.html">
+<meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-hardware/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar" aria-label="サイト情報">
+    <span class="brand-badge" aria-hidden="true">🧊</span>
+    <span class="brand-copy">
+      <strong>量子コンピュータはどう作るのか</strong>
+      <small>QUANTUM HARDWARE QUEST</small>
+    </span>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <h1><span class="line">設計図、読破 ∎</span></h1>
+      <p>宇宙より冷たい金色のシャンデリアの底で、何兆個の電子がたった1つの波として、人間が設計した合図に合わせて踊っている――きみはもう、その機械を部品の「なぜ」から語れる。コインの裏表から出発して、超伝導、ジョセフソン接合、希釈冷凍機、減衰器の階段、量子限界増幅器、そして100万量子ビットへの谷まで。すべてを貫いていたのは、<span class="nowrap">「閉じろ」と「触らせろ」の綱引き</span>を部品ごとに解き続ける、たった1つの設計思想だった。</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="board" aria-labelledby="recap-heading">
+      <div class="board-head">
+        <div><h2 id="recap-heading">ここまでの旅を振り返ろう</h2></div>
+        <p>全8ステージ、おつかれさま</p>
+      </div>
+
+      <div class="recap-list">
+        <div class="recap-item">
+          <div class="recap-num">1</div>
+          <div class="recap-body">
+            <div class="recap-title">量子ビットの設計図</div>
+            <div class="recap-desc">条件は4つ――①区別できる2状態、②重ね合わせの維持（手がかりを漏らさない）、③外からの操作、④正確な読み出し。②と③は正反対の要求で、「合図したときだけ応答する」鍵穴つきの箱を探す旅が始まった。コインは②で全滅。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">2</div>
+          <div class="recap-body">
+            <div class="recap-title">超伝導と電気の振り子</div>
+            <div class="recap-desc">コンデンサ＋コイル＝電気の振り子（5GHz）。抵抗の正体は震える原子への衝突で、熱と手がかりが漏れる。超伝導は電子ペアが全体で1つの波になる相転移で、抵抗が本物のゼロに。閉じ込められた1つの波に階段が現れた――が、等時性のせいで等間隔。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">3</div>
+          <div class="recap-body">
+            <div class="recap-title">ジョセフソン接合とトランズモン</div>
+            <div class="recap-desc">原子数個分の酸化膜を波がしみ出して通る（トンネル効果）。か細い吊り橋は正比例を壊し、ばね振り子をブランコに変えて下2段を切り出した。1999年の世界初の量子ビットは電荷雑音で寿命1ナノ秒。大コンデンサで鈍感にしたトランズモンが10万倍に延ばした。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">4</div>
+          <div class="recap-body">
+            <div class="recap-title">宇宙より冷たい冷蔵庫</div>
+            <div class="recap-desc">常温の熱の小突きは段差の1000倍。強い一撃まで枯らすには10〜20mK（宇宙空間の100倍冷たい）が要る。圧縮・膨張で4K、蒸発冷却で1K、最後はヘリウム3が液体の中へ「蒸発」する希釈冷凍機。初期化は冷蔵庫のおまけでタダ。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">5</div>
+          <div class="recap-body">
+            <div class="recap-title">矢印を回す配線</div>
+            <div class="recap-desc">パルスは室温の任意波形発生器で設計（面積＝回転角、位相＝回転軸）。短すぎるパルスは周波数が広がり第3の段に漏れる。ケーブルは熱の橋かつ騒音の導管――減衰器の階段で騒音ごと100万分の1にし、合図は最初から100万倍強く送って勝負を決めた。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">6</div>
+          <div class="recap-body">
+            <div class="recap-title">壊さずに読み出す</div>
+            <div class="recap-desc">直接測れば壊れる一発勝負。隣の笛（7GHz）との押し合いによる音程のずれだけを光子数個で聞く量子非破壊測定。声と騒音の比は最初の増幅器で確定するから、10mKに超伝導の量子限界増幅器を置き、一方通行の弁で逆流を封じた。4条件コンプリート。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">7</div>
+          <div class="recap-body">
+            <div class="recap-title">2量子ビットゲートと方式くらべ</div>
+            <div class="recap-desc">量子ビットの橋も「ふだん閉じ、合図で開く」（蛇口方式と鍵方式）。イオンは宙吊りの本物の原子で列の揺れが橋、中性原子は光ピンセット、光は常温だがゲートが確率的、シリコンは工場の技術を流用。自然物と人工物のトレードオフ、勝者は未定。</div>
+          </div>
+        </div>
+        <div class="recap-item">
+          <div class="recap-num">8</div>
+          <div class="recap-body">
+            <div class="recap-title">100万量子ビットへの壁</div>
+            <div class="recap-desc">誤り0.3%は1000ゲートで計算を壊す。1論理＝物理約1000個、実用は物理数百万個で、現在との差は数千倍。2024年に「増やせば良くなる」閾値の良い側へ。残る敵は配線の洪水――多重化・極低温CMOS・モジュール化が突破口。谷はすべて工学の谷だ。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【旅の結論 ― 量子コンピュータはどう作るのか】</span>
+        <span class="step">・ハードウェア設計の核心は、②「手がかりを漏らすな」と③「外から操作させろ」の<strong>綱引き</strong>。すべての部品が「ふだんは閉じ、合図したときだけ開く」の変奏で、この1つのジレンマを解いている</span>
+        <span class="step">・超伝導方式＝<strong>何兆個の電子を1つの波にして、ブランコ化した階段の下2段を使う人工原子</strong>。冷却・遮蔽・減衰・鈍感化で守り、共鳴パルスで回し、笛の音程と量子限界増幅で読む</span>
+        <span class="step">・性能の現在地：寿命100マイクロ秒級、1量子ビットゲート99.9%、2量子ビット99〜99.7%、読み出し99%。<span class="nw">誤り訂正は「増やせば良くなる」時代の入口</span>（2024年）</span>
+        <span class="step">・「役に立つ」までの谷＝<strong>数千倍の物理量子ビット＋配線の洪水</strong>。ただし行く手に物理法則の禁止札はなく、すべて工学の宿題</span>
+        <span class="step">・どの方式のニュースも<strong>4条件</strong>――2状態は何か・どう守るか・どう操作するか・どう読むか――で読めば、自分の頭で評価できる</span>
+      </div>
+
+      <div class="recap-item" style="display:block;text-align:center;margin-top:20px">
+        <div class="recap-title">シリーズの旅は、ここで一区切り</div>
+        <div class="recap-desc" style="margin:6px auto 14px;max-width:520px">量子力学の入口からここまでの全クエストの地図は、シリーズマップから。回路とゲートを自分の手で組んでみたくなったら、発展編の量子回路クエストへ。</div>
+        <div class="complete-actions" style="margin-top:0">
+          <a class="btn btn-primary" href="https://quantum-mechanics.habatakijuku.com/">🗺 シリーズマップへ →</a>
+          <a class="btn" href="https://ruglerugle.github.io/quantum-circuit/">🔧 発展編：量子回路クエスト</a>
+        </div>
+      </div>
+
+      <div class="complete-actions">
+        <a class="btn btn-primary" href="index.html">トップに戻る →</a>
+        <button class="btn" id="btn-reset-all">🔄 最初からやり直す</button>
+      </div>
+    </section>
+
+    <div id="book-recommend"></div>
+  </main>
+
+  <footer>
+    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;© <span id="year"></span> ruglerugle</p>
+    <div class="footer-suits" aria-hidden="true"><span>🧊</span><span>⚡</span><span>📡</span><span>⚛</span></div>
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<script src="js/progress.js"></script>
+<script>QH.initCompletePage();</script>
+</body>
+</html>
