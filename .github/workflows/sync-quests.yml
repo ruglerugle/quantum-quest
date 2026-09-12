@@ -11,6 +11,11 @@ on:
 permissions:
   contents: write
 
+# 複数リポの同時pushで並走してもpush競合しないよう直列化する
+concurrency:
+  group: sync-quests
+  cancel-in-progress: false
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -42,4 +47,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet && echo "変更なし" || { git commit -m "chore: 各章リポジトリから自動同期"; git push; }
+          git diff --cached --quiet && echo "変更なし" || {
+            git commit -m "chore: 各章リポジトリから自動同期"
+            git pull --rebase origin main
+            git push
+          }
