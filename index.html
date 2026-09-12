@@ -202,16 +202,6 @@
   .flag{position:absolute;left:4%;top:15%;transform:translate(-50%,-100%);font-size:26px;filter:drop-shadow(0 3px 3px rgba(120,90,40,.5))}
   .flag .label{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;color:var(--gold-dark);letter-spacing:.12em;font-weight:800;margin-top:2px}
 
-  .map-chara{
-    position:absolute;width:56px;height:auto;pointer-events:none;z-index:3;
-    filter:drop-shadow(0 4px 6px rgba(120,90,40,.45));
-  }
-  @media (prefers-reduced-motion: no-preference){
-    .map-chara{animation:hop 2.6s ease-in-out infinite}
-    @keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-    .map-chara.rb{animation-delay:1.3s}
-  }
-
   .node{
     position:absolute;transform:translate(-50%,-50%);
     display:flex;flex-direction:column;align-items:center;gap:6px;
@@ -337,7 +327,7 @@
     .trail-glow:not(.mobile-only), .trail:not(.mobile-only){display:none}
     .mobile-only{display:block}
 
-    .deco, .compass, .map-chara{display:none}
+    .deco, .compass{display:none}
 
     /* 角が窮屈なため旗はチップに統合（🚩ここから！） */
     .flag{display:none}
@@ -428,9 +418,6 @@
       <span class="deco" style="left:95%;top:80%" aria-hidden="true">🏭</span>
 
       <div class="flag" aria-hidden="true">🚩<span class="label">START</span></div>
-
-      <img class="map-chara" src="images/cat.webp" alt="" aria-hidden="true" width="56" height="72" style="left:2.5%;top:33%">
-      <img class="map-chara rb" src="images/rabbit.webp" alt="" aria-hidden="true" width="52" height="67" style="left:55%;top:12%">
 
       <svg class="compass" viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="46" fill="rgba(255,253,246,.75)" stroke="var(--gold-dark)" stroke-width="3"/>
