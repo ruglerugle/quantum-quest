@@ -46,8 +46,11 @@
     --ts:#b6bde0;
     --tm:#767fa6;
     --gold:#b9a5ff;
+    --cyan:#6ee7ff;
+    --amber:#f3c96a;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   html,body{margin:0;padding:0}
   body{
     background:
@@ -59,6 +62,7 @@
     font-family:"Hiragino Sans","Yu Gothic",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     min-height:100vh;
     line-height:1.7;
+    overflow-x:hidden;
   }
   .stars{
     position:fixed;inset:0;pointer-events:none;z-index:0;
@@ -73,28 +77,93 @@
     background-size:480px 240px;
     opacity:.55;
   }
-  .wrap{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:48px 20px 40px}
 
-  header{text-align:center;margin-bottom:34px}
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;z-index:1;
+    min-height:92svh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    padding:56px 20px 72px;
+    overflow:hidden;
+  }
+  #slit-canvas{
+    position:absolute;inset:0;width:100%;height:100%;
+    display:block;
+  }
+  .hero-veil{
+    position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(60% 55% at 50% 46%, rgba(7,8,24,.32), transparent 70%),
+      linear-gradient(180deg, rgba(7,8,24,.25), transparent 30%, transparent 70%, var(--bg0) 100%);
+  }
+  .hero-copy{position:relative;max-width:820px}
   .eyebrow{
-    display:inline-block;font-size:12px;letter-spacing:.2em;color:var(--gold);
-    border:1px solid rgba(185,165,255,.35);border-radius:999px;padding:4px 14px;margin-bottom:16px;
+    display:inline-block;font-size:12px;letter-spacing:.22em;color:var(--gold);
+    border:1px solid rgba(185,165,255,.38);border-radius:999px;padding:5px 16px;margin-bottom:20px;
+    background:rgba(12,13,34,.5);backdrop-filter:blur(2px);
   }
   h1{
-    font-size:clamp(26px,4.2vw,40px);margin:0 0 12px;font-weight:800;letter-spacing:.03em;
-    background:linear-gradient(90deg,#fff,#c9d4f5 55%,var(--gold));
+    font-size:clamp(40px,7.2vw,76px);margin:0 0 10px;font-weight:900;letter-spacing:.06em;
+    background:linear-gradient(100deg,#fff 20%,#c9d4f5 45%,var(--gold) 75%,var(--cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 60px rgba(140,120,255,.35);
+    line-height:1.2;
+  }
+  .hero-copy .tag{
+    color:var(--ts);font-size:clamp(14px,2vw,17px);max-width:640px;margin:0 auto 8px;
+    text-shadow:0 1px 8px rgba(7,8,24,.9);
+  }
+  .hero-copy .tag strong{color:#fff}
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+  .stat{
+    font-size:12.5px;font-weight:700;color:var(--ts);letter-spacing:.05em;
+    border:1px solid rgba(154,167,255,.3);border-radius:999px;padding:5px 14px;
+    background:rgba(12,13,34,.55);backdrop-filter:blur(2px);
+  }
+  .stat b{color:var(--cyan);font-size:14px}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .cta{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:15px;font-weight:800;text-decoration:none;letter-spacing:.03em;
+    border-radius:12px;padding:13px 26px;
+    transition:transform .16s ease, box-shadow .16s ease, filter .16s ease;
+  }
+  .cta.primary{
+    color:#0b0d24;background:linear-gradient(120deg,var(--amber),#ffde9e);
+    box-shadow:0 0 24px -4px rgba(243,201,106,.55), 0 8px 20px -8px rgba(0,0,0,.7);
+  }
+  .cta.primary:hover{transform:translateY(-2px);box-shadow:0 0 34px -2px rgba(243,201,106,.75), 0 12px 24px -8px rgba(0,0,0,.7)}
+  .cta.ghost{
+    color:var(--tp);border:1.5px solid rgba(154,167,255,.45);background:rgba(12,13,34,.55);backdrop-filter:blur(2px);
+  }
+  .cta.ghost:hover{transform:translateY(-2px);border-color:rgba(185,165,255,.8);box-shadow:0 0 22px -6px var(--gold)}
+  .hero-note{position:relative;margin-top:22px;font-size:12px;color:var(--tm);letter-spacing:.04em}
+  .scroll-cue{
+    position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+    color:var(--tm);font-size:20px;opacity:.8;
+    animation:cue 2.2s ease-in-out infinite;
+  }
+  @keyframes cue{0%,100%{transform:translate(-50%,0);opacity:.5}50%{transform:translate(-50%,8px);opacity:1}}
+
+  .wrap{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:8px 20px 40px}
+
+  .section-head{text-align:center;margin:30px 0 26px}
+  .section-head h2{
+    font-size:clamp(22px,3.2vw,30px);margin:0 0 8px;font-weight:800;letter-spacing:.05em;
+    background:linear-gradient(90deg,#fff,#c9d4f5 60%,var(--gold));
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  header p{color:var(--ts);max-width:600px;margin:0 auto;font-size:14.5px}
+  .section-head p{color:var(--ts);max-width:600px;margin:0 auto;font-size:14px}
 
-  /* ===== Map ===== */
+  /* ============ Map ============ */
   .map-frame{
     position:relative;
     border:1px solid rgba(154,167,255,.35);
     border-radius:20px;
     padding:10px;
     background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-    box-shadow:0 0 0 1px rgba(0,0,0,.4) inset, 0 30px 60px -30px rgba(0,0,0,.7);
+    box-shadow:0 0 0 1px rgba(0,0,0,.4) inset, 0 0 60px -20px rgba(140,120,255,.25), 0 30px 60px -30px rgba(0,0,0,.7);
   }
   .map{
     position:relative;
@@ -126,8 +195,12 @@
 
   .deco{position:absolute;font-size:20px;opacity:.55;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5));user-select:none;pointer-events:none}
 
-  .trail-glow{fill:none;stroke:var(--gold);stroke-width:.9;opacity:.25;filter:blur(2px)}
-  .trail{fill:none;stroke:var(--gold);stroke-width:.55;stroke-linecap:round;stroke-dasharray:2.2 2.6;opacity:.85}
+  .trail-glow{fill:none;stroke:var(--gold);stroke-width:1.1;opacity:.3;filter:blur(2px)}
+  .trail{fill:none;stroke:var(--gold);stroke-width:.55;stroke-linecap:round;stroke-dasharray:2.2 2.6;opacity:.9}
+  @media (prefers-reduced-motion: no-preference){
+    .trail{animation:flow 1.6s linear infinite}
+    @keyframes flow{to{stroke-dashoffset:-4.8}}
+  }
   .mobile-only{display:none}
 
   .flag{position:absolute;left:4%;top:14%;transform:translate(-50%,-100%);font-size:26px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.6))}
@@ -151,7 +224,11 @@
   .node .badge::after{
     content:"";position:absolute;inset:-8px;border-radius:50%;
     border:1px dashed color-mix(in srgb, var(--accent) 55%, transparent);
-    opacity:0;transition:opacity .18s ease, transform .5s ease;
+    opacity:.35;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .node .badge::after{animation:orbit 14s linear infinite}
+    @keyframes orbit{to{transform:rotate(360deg)}}
   }
   .node .num{
     position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;
@@ -164,15 +241,21 @@
     border-radius:8px;padding:3px 9px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;
     letter-spacing:.02em;
   }
-  .node:hover .badge, .node:focus-visible .badge{
+  .node:hover .badge, .node:focus-visible .badge, .node.active .badge{
     transform:translateY(-4px) scale(1.06);
-    box-shadow:0 0 0 4px rgba(7,8,24,.55), 0 0 26px 2px var(--accent), 0 10px 16px -6px rgba(0,0,0,.7);
+    box-shadow:0 0 0 4px rgba(7,8,24,.55), 0 0 30px 3px var(--accent), 0 10px 16px -6px rgba(0,0,0,.7);
   }
-  .node:hover .badge::after, .node:focus-visible .badge::after{opacity:1;transform:rotate(25deg)}
+  .node:hover .badge::after, .node:focus-visible .badge::after, .node.active .badge::after{opacity:1}
   .node:focus-visible{outline:none}
-  .node.active .badge{
-    transform:translateY(-4px) scale(1.06);
-    box-shadow:0 0 0 4px rgba(7,8,24,.55), 0 0 26px 2px var(--accent), 0 10px 16px -6px rgba(0,0,0,.7);
+  .node .start-tip{
+    position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+    font-size:10px;font-weight:800;color:#0b0d24;background:var(--amber);
+    border-radius:999px;padding:2px 9px;white-space:nowrap;letter-spacing:.06em;
+    box-shadow:0 0 12px -2px rgba(243,201,106,.8);
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .node .start-tip{animation:bob 2s ease-in-out infinite}
+    @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-4px)}}
   }
 
   /* Node position presets */
@@ -186,12 +269,13 @@
 
   .compass{position:absolute;top:14px;right:16px;width:44px;height:44px;opacity:.75}
 
-  /* ===== Quest log panel ===== */
+  /* ============ Quest log panel ============ */
   .questlog{
     margin-top:18px;
     background:var(--panel);border:1px solid var(--panel-b);border-radius:14px;
     padding:18px 20px;display:flex;gap:16px;align-items:flex-start;
     min-height:88px;
+    backdrop-filter:blur(3px);
   }
   .questlog .qi{
     flex:0 0 auto;width:48px;height:48px;border-radius:12px;
@@ -214,25 +298,30 @@
   .questlog .go:hover{filter:brightness(1.08)}
   .questlog .hint{color:var(--tm);font-size:13px;margin:auto}
 
-  /* ===== Side quests ===== */
-  .side{margin-top:34px}
+  /* ============ Side quests ============ */
+  .side{margin-top:44px}
   .side h2{font-size:16px;margin:0 0 4px;color:var(--tp);letter-spacing:.04em}
   .side .lead{margin:0 0 14px;font-size:13px;color:var(--tm)}
   .side-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
   .side-card{
     display:block;text-decoration:none;color:inherit;
     background:var(--panel);border:1px solid var(--panel-b);border-radius:12px;
-    padding:14px 16px;transition:transform .15s ease, border-color .15s ease;
+    padding:14px 16px;transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+    backdrop-filter:blur(3px);
   }
-  .side-card:hover{transform:translateY(-2px);border-color:rgba(185,165,255,.55)}
+  .side-card:hover{transform:translateY(-3px);border-color:rgba(185,165,255,.55);box-shadow:0 0 22px -8px var(--gold)}
   .side-card .sc-sub{font-size:10.5px;letter-spacing:.12em;color:var(--gold);font-weight:700;margin-bottom:4px}
   .side-card .sc-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
   .side-card .sc-desc{font-size:12px;color:var(--ts);line-height:1.6}
 
-  footer{margin-top:40px;text-align:center;color:var(--tm);font-size:12.5px}
+  footer{margin-top:48px;text-align:center;color:var(--tm);font-size:12.5px;position:relative;z-index:1;padding-bottom:28px}
 
-  /* ===== モバイル: 地図の見た目は保ったまま、右端で折り返すスネーク型配置にする ===== */
+  /* ============ モバイル ============ */
   @media (max-width:640px){
+    .hero{min-height:88svh;padding:48px 16px 64px}
+    .h-br{display:none}
+    .cta{padding:12px 20px;font-size:14px}
+
     .map{ aspect-ratio:4/5.1; }
 
     .trail-glow:not(.mobile-only), .trail:not(.mobile-only){display:none}
@@ -255,40 +344,49 @@
     .node .label{font-size:9px;padding:2px 5px;white-space:normal;text-align:center;line-height:1.25;width:max-content;max-width:104px}
     .node.n1 .label{position:relative;left:14px}
     .node.n4 .label{position:relative;left:-14px}
+    .node .start-tip{top:-26px}
 
     .questlog{flex-direction:column}
-  }
-
-  @media (prefers-color-scheme: light){
-    body{
-      background:
-        radial-gradient(1200px 600px at 15% -10%, rgba(110,90,255,.06), transparent 60%),
-        radial-gradient(900px 500px at 90% 10%, rgba(80,180,255,.06), transparent 60%),
-        linear-gradient(180deg,#f7f8fc,#eef1f9 40%,#f7f8fc);
-      color:#1b2233;
-    }
-    :root{--ts:#4c5670;--tm:#8590a8;--panel:rgba(255,255,255,.75);--panel-b:rgba(20,30,60,.12)}
-    .stars{opacity:.2;filter:invert(1)}
-    h1{background:linear-gradient(90deg,#1b2233,#4a3a8a 60%,#6b4fd8);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .questlog h3{color:#1b2233}
-    .node .label{color:#1b2233;background:rgba(255,255,255,.85)}
-    .side h2{color:#1b2233}
-    .side-card .sc-title{color:#1b2233}
   }
 </style>
 </head>
 <body>
 <div class="stars"></div>
-<div class="wrap">
 
-  <header>
+<!-- ============ HERO: 二重スリット・ライブ実験 ============ -->
+<header class="hero" id="top">
+  <canvas id="slit-canvas" aria-hidden="true"></canvas>
+  <div class="hero-veil" aria-hidden="true"></div>
+  <div class="hero-copy">
     <span class="eyebrow">FREE BROWSER LEARNING GAMES</span>
     <h1>量子クエスト集</h1>
-    <p>二重スリットの謎から量子コンピュータの実機まで ― 量子の世界を7つのクエストで旅する。番号順に進めば、論理の飛躍なく最前線までたどり着けます。</p>
-  </header>
+    <p class="tag">背後で起きているのは、本物の<strong>二重スリット実験</strong>。<br class="h-br">
+      光子は1発ずつ飛んでいるのに、スクリーンには縞が積もっていく――<br class="h-br">
+      この謎から、量子コンピュータの実機まで。<strong>7つのクエスト</strong>で旅をしよう。</p>
+    <div class="stats" aria-label="シリーズの規模">
+      <span class="stat"><b>7</b> クエスト</span>
+      <span class="stat"><b>51</b> ステージ</span>
+      <span class="stat">無料・登録不要</span>
+      <span class="stat">中学数学からOK</span>
+    </div>
+    <div class="cta-row">
+      <a class="cta primary" href="https://quantum-mechanics.habatakijuku.com/general/">🚩 最初のクエストへ出発</a>
+      <a class="cta ghost" href="#map">🗺️ 地図から選ぶ</a>
+    </div>
+    <p class="hero-note">番号順に進めば、論理の飛躍なく最前線までたどり着けます。</p>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">▾</div>
+</header>
+
+<div class="wrap">
+
+  <div class="section-head" id="map">
+    <h2>量子の世界 ― 旅の地図</h2>
+    <p>7つの領域をつなぐ光の巡礼路。気になるクエストに触れると、旅の詳細が現れます。</p>
+  </div>
 
   <div class="map-frame">
-    <div class="map" id="map">
+    <div class="map">
 
       <div class="grid-lines"></div>
 
@@ -328,6 +426,7 @@
          data-accent="#5ec8ff" data-icon="🌊" data-sub="QUANTUM BASICS" data-title="二重スリットから読み解く量子力学"
          data-desc="電子はなぜ縞模様を描くのか。二重スリット実験の謎から出発し、光子・物質波・波動関数・不確定性原理・シュレディンガー方程式の読み方まで、量子力学の土台をそろえる。すべての旅はここから。"
          data-tags="二重スリット,波動関数,不確定性原理" data-num="1" data-stages="全7ステージ" data-level="入門" data-prereq="前提なし">
+        <span class="start-tip">ここから！</span>
         <div class="badge" style="--accent:#5ec8ff">🌊<span class="num">1</span></div>
         <div class="label">量子力学クエスト</div>
       </a>
@@ -423,6 +522,7 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  /* ============ クエストログ ============ */
   var log = document.getElementById('questlog');
   var nodes = document.querySelectorAll('.node');
 
@@ -442,17 +542,282 @@
   }
 
   nodes.forEach(function(n){
-    n.addEventListener('mouseenter', function(){
-      nodes.forEach(function(x){x.classList.remove('active')});
-      n.classList.add('active');
-      renderLog(n);
-    });
-    n.addEventListener('focus', function(){
-      nodes.forEach(function(x){x.classList.remove('active')});
-      n.classList.add('active');
-      renderLog(n);
+    ['mouseenter','focus'].forEach(function(ev){
+      n.addEventListener(ev, function(){
+        nodes.forEach(function(x){x.classList.remove('active')});
+        n.classList.add('active');
+        renderLog(n);
+      });
     });
   });
+
+  /* ============ ヒーロー: 二重スリット・ライブ実験 ============ */
+  (function(){
+    var canvas = document.getElementById('slit-canvas');
+    var ctx = canvas.getContext('2d');
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var W, H, dpr, geo, accum, actx;
+    var particles = [];
+    var flashes = [];
+    var ringPhase = 0;
+    var running = false, inView = true, rafId = null;
+    var frame = 0;
+
+    // 干渉分布のサンプリング用CDF
+    var CDF_N = 512, cdf = new Float32Array(CDF_N), cdfSpan = 0;
+
+    function buildGeometry(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var rect = canvas.getBoundingClientRect();
+      W = Math.max(1, Math.round(rect.width * dpr));
+      H = Math.max(1, Math.round(rect.height * dpr));
+      canvas.width = W; canvas.height = H;
+
+      var cy = H * 0.5;
+      geo = {
+        cy: cy,
+        emitX: W * 0.045,
+        barX: W * 0.34,
+        scrX: W * 0.945,
+        slitGap: H * 0.085,          // スリット中心の片側オフセット
+        slitH: H * 0.026,            // スリット半高
+        fringeP: H / 9,              // 縞の周期
+        envS: H * 0.30               // 包絡線の広がり
+      };
+
+      // I(u) = cos^2(πu/period) * exp(-(u/env)^2) のCDF
+      cdfSpan = H * 0.46;
+      var sum = 0;
+      for (var i = 0; i < CDF_N; i++){
+        var u = (i / (CDF_N - 1) * 2 - 1) * cdfSpan;
+        var I = Math.pow(Math.cos(Math.PI * u / geo.fringeP), 2) * Math.exp(-(u*u)/(geo.envS*geo.envS));
+        sum += I; cdf[i] = sum;
+      }
+      for (i = 0; i < CDF_N; i++) cdf[i] /= sum;
+
+      // 着弾の蓄積レイヤー
+      accum = document.createElement('canvas');
+      accum.width = W; accum.height = H;
+      actx = accum.getContext('2d');
+
+      particles.length = 0; flashes.length = 0;
+    }
+
+    function sampleLandingY(){
+      var r = Math.random(), lo = 0, hi = CDF_N - 1;
+      while (lo < hi){ var mid = (lo + hi) >> 1; if (cdf[mid] < r) lo = mid + 1; else hi = mid; }
+      return geo.cy + (lo / (CDF_N - 1) * 2 - 1) * cdfSpan;
+    }
+
+    function spawn(){
+      var slit = Math.random() < 0.5 ? -1 : 1;
+      var aimed = Math.random() < 0.86;
+      var y0 = geo.cy + (Math.random() - 0.5) * H * 0.16;
+      var slitY = geo.cy + slit * geo.slitGap + (Math.random() - 0.5) * geo.slitH * 1.4;
+      var targetY = aimed ? slitY : geo.cy + (Math.random() - 0.5) * H * 0.5;
+      var vx = (2.4 + Math.random() * 1.4) * (W / 1400);
+      particles.push({
+        x: geo.emitX, y: y0, vx: vx,
+        vy: (targetY - y0) / ((geo.barX - geo.emitX) / vx),
+        past: false, landY: 0, px: geo.emitX, py: y0,
+        hue: Math.random() < 0.18 ? 'gold' : 'cyan'
+      });
+    }
+
+    function drawHit(x, y, strong){
+      var r = (strong ? 3.2 : 2.4) * dpr / Math.max(dpr,1) * (dpr > 1 ? dpr*0.7 : 1);
+      var g = actx.createRadialGradient(x, y, 0, x, y, r * 3);
+      g.addColorStop(0, 'rgba(230,220,255,.85)');
+      g.addColorStop(0.35, 'rgba(185,165,255,.35)');
+      g.addColorStop(1, 'rgba(185,165,255,0)');
+      actx.globalCompositeOperation = 'lighter';
+      actx.fillStyle = g;
+      actx.beginPath(); actx.arc(x, y, r * 3, 0, 6.2832); actx.fill();
+    }
+
+    function prefill(n){
+      for (var i = 0; i < n; i++){
+        drawHit(geo.scrX + (Math.random() - 0.5) * 5 * dpr, sampleLandingY(), false);
+      }
+    }
+
+    function drawStatic(){
+      ctx.clearRect(0, 0, W, H);
+      drawApparatus(1);
+      ctx.drawImage(accum, 0, 0);
+    }
+
+    function drawApparatus(alpha){
+      var g = geo;
+      ctx.save();
+      ctx.globalAlpha = alpha;
+
+      // 光源
+      var eg = ctx.createRadialGradient(g.emitX, g.cy, 0, g.emitX, g.cy, 26 * dpr);
+      eg.addColorStop(0, 'rgba(255,255,255,.9)');
+      eg.addColorStop(0.3, 'rgba(110,231,255,.5)');
+      eg.addColorStop(1, 'rgba(110,231,255,0)');
+      ctx.fillStyle = eg;
+      ctx.beginPath(); ctx.arc(g.emitX, g.cy, 26 * dpr, 0, 6.2832); ctx.fill();
+
+      // バリア（2本のスリット）
+      var bw = 3.5 * dpr;
+      ctx.fillStyle = 'rgba(120,130,190,.34)';
+      var s1t = g.cy - g.slitGap - g.slitH, s1b = g.cy - g.slitGap + g.slitH;
+      var s2t = g.cy + g.slitGap - g.slitH, s2b = g.cy + g.slitGap + g.slitH;
+      ctx.fillRect(g.barX - bw/2, 0, bw, s1t);
+      ctx.fillRect(g.barX - bw/2, s1b, bw, s2t - s1b);
+      ctx.fillRect(g.barX - bw/2, s2b, bw, H - s2b);
+      // スリットの縁を光らせる
+      ctx.fillStyle = 'rgba(185,165,255,.85)';
+      [[s1t],[s1b],[s2t],[s2b]].forEach(function(yy){
+        ctx.fillRect(g.barX - bw/2 - 1*dpr, yy[0] - 1*dpr, bw + 2*dpr, 2*dpr);
+      });
+
+      // スクリーン
+      var sg = ctx.createLinearGradient(g.scrX - 8*dpr, 0, g.scrX + 6*dpr, 0);
+      sg.addColorStop(0, 'rgba(154,167,255,0)');
+      sg.addColorStop(0.7, 'rgba(154,167,255,.16)');
+      sg.addColorStop(1, 'rgba(154,167,255,.32)');
+      ctx.fillStyle = sg;
+      ctx.fillRect(g.scrX - 8*dpr, 0, 14*dpr, H);
+
+      ctx.restore();
+    }
+
+    function drawRings(){
+      var g = geo, maxR = (g.scrX - g.barX) * 1.05;
+      ctx.save();
+      ctx.lineWidth = 1 * dpr;
+      for (var s = -1; s <= 1; s += 2){
+        var sy = g.cy + s * g.slitGap;
+        for (var k = 0; k < 5; k++){
+          var r = ((ringPhase + k * g.fringeP * 1.9) % maxR);
+          var a = 0.10 * (1 - r / maxR);
+          if (a <= 0.004) continue;
+          ctx.strokeStyle = 'rgba(140,150,255,' + a.toFixed(3) + ')';
+          ctx.beginPath();
+          ctx.arc(g.barX, sy, r, -1.15, 1.15);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+
+    function step(){
+      var g = geo;
+      frame++;
+      ringPhase += 0.9 * dpr;
+
+      var want = W < 700 * dpr ? 46 : 80;
+      while (particles.length < want) spawn();
+
+      ctx.clearRect(0, 0, W, H);
+      drawRings();
+      drawApparatus(1);
+      ctx.drawImage(accum, 0, 0);
+
+      // 蓄積をゆっくり減衰させ、縞が「生きている」状態を保つ
+      if (frame % 240 === 0){
+        actx.globalCompositeOperation = 'destination-out';
+        actx.fillStyle = 'rgba(0,0,0,.05)';
+        actx.fillRect(0, 0, W, H);
+      }
+
+      ctx.save();
+      for (var i = particles.length - 1; i >= 0; i--){
+        var p = particles[i];
+        p.px = p.x; p.py = p.y;
+        p.x += p.vx; p.y += p.vy;
+
+        if (!p.past && p.x >= g.barX){
+          var d1 = Math.abs(p.y - (g.cy - g.slitGap));
+          var d2 = Math.abs(p.y - (g.cy + g.slitGap));
+          if (Math.min(d1, d2) <= g.slitH){
+            p.past = true;
+            p.landY = sampleLandingY();
+            p.vy = (p.landY - p.y) / ((g.scrX - p.x) / p.vx);
+          } else {
+            flashes.push({x: g.barX, y: p.y, life: 14});
+            particles.splice(i, 1);
+            continue;
+          }
+        }
+
+        if (p.x >= g.scrX){
+          drawHit(g.scrX + (Math.random() - 0.5) * 4 * dpr, p.landY, true);
+          particles.splice(i, 1);
+          continue;
+        }
+
+        // 描画: 尾 + 本体
+        var col = p.hue === 'gold' ? '243,201,106' : '110,231,255';
+        ctx.strokeStyle = 'rgba(' + col + ',.4)';
+        ctx.lineWidth = 1.4 * dpr;
+        ctx.beginPath();
+        ctx.moveTo(p.x - p.vx * 4.5, p.y - p.vy * 4.5);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(255,255,255,.95)';
+        ctx.beginPath(); ctx.arc(p.x, p.y, 1.5 * dpr, 0, 6.2832); ctx.fill();
+      }
+
+      // バリアに吸収された光子の小さな閃光
+      for (i = flashes.length - 1; i >= 0; i--){
+        var f = flashes[i];
+        f.life--;
+        if (f.life <= 0){ flashes.splice(i, 1); continue; }
+        var fa = f.life / 14;
+        ctx.fillStyle = 'rgba(255,180,120,' + (fa * 0.55).toFixed(3) + ')';
+        ctx.beginPath(); ctx.arc(f.x, f.y, (3 + (1 - fa) * 5) * dpr * 0.7, 0, 6.2832); ctx.fill();
+      }
+      ctx.restore();
+
+      if (running) rafId = requestAnimationFrame(step);
+    }
+
+    function start(){
+      if (running || reduced || !inView || document.hidden) return;
+      running = true;
+      rafId = requestAnimationFrame(step);
+    }
+    function stop(){
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+
+    buildGeometry();
+    if (reduced){
+      prefill(1600);
+      drawStatic();
+    } else {
+      prefill(180); // 最初から縞のきざしを見せる
+      start();
+    }
+
+    var io = new IntersectionObserver(function(entries){
+      inView = entries[0].isIntersecting;
+      if (inView) start(); else stop();
+    }, {threshold: 0.05});
+    io.observe(canvas);
+
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) stop(); else start();
+    });
+
+    var resizeT;
+    window.addEventListener('resize', function(){
+      clearTimeout(resizeT);
+      resizeT = setTimeout(function(){
+        stop();
+        buildGeometry();
+        if (reduced){ prefill(1600); drawStatic(); }
+        else { prefill(180); start(); }
+      }, 200);
+    });
+  })();
 </script>
 
 <!-- Google Analytics -->
