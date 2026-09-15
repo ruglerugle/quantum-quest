@@ -57,6 +57,19 @@
   .kq-svg .klineB{stroke:#2f6fa6;stroke-width:2.5;fill:none;stroke-linecap:round}
   .kq-svg .ktA{fill:var(--gold-dark);font-size:11px;font-weight:900}
   .kq-svg .ktB{fill:#2f6fa6;font-size:11px;font-weight:900}
+  .cv-wrap{width:100%}
+  #chirp3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
+    max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
+  .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
+  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+  @media (max-width:560px){
+    .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
+    .sim-ctrl label{grid-column:1 / -1;white-space:normal}
+  }
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -482,28 +495,14 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="kq-svg" viewBox="0 0 340 252" width="100%" role="img" aria-label="上は右へ行くほど波長が短くなる波、下はその角度Sのグラフ。角度のグラフの傾きが場所ごとに変わり、傾きがゆるい場所は波長が長くkが小さい、傾きが急な場所は波長が短くkが大きいことを、2本の接線で示している">
-          <text class="strong" x="170" y="14" text-anchor="middle">S の傾きが、その場所の k</text>
-          <text class="label" x="40" y="32">波（右へ行くほど細かくなる）</text>
-          <polyline class="wave" points="40.0,44.0 41.5,44.3 43.0,45.1 44.5,46.5 46.0,48.4 47.5,50.8 49.0,53.7 50.5,57.0 52.0,60.7 53.5,64.5 55.0,68.5 56.5,72.6 58.0,76.5 59.5,80.3 61.0,83.7 62.5,86.6 64.0,89.0 65.5,90.8 67.0,91.8 68.5,92.0 70.0,91.4 71.5,89.9 73.0,87.7 74.5,84.7 76.0,81.0 77.5,76.9 79.0,72.3 80.5,67.6 82.0,62.8 83.5,58.1 85.0,53.9 86.5,50.2 88.0,47.3 89.5,45.2 91.0,44.1 92.5,44.1 94.0,45.3 95.5,47.5 97.0,50.7 98.5,54.8 100.0,59.6 101.5,64.8 103.0,70.2 104.5,75.6 106.0,80.6 107.5,85.0 109.0,88.5 110.5,90.8 112.0,91.9 113.5,91.7 115.0,90.0 116.5,87.0 118.0,82.9 119.5,77.8 121.0,72.1 122.5,66.1 124.0,60.1 125.5,54.7 127.0,50.0 128.5,46.6 130.0,44.5 131.5,44.0 133.0,45.2 134.5,48.1 136.0,52.3 137.5,57.8 139.0,64.0 140.5,70.5 142.0,76.9 143.5,82.7 145.0,87.4 146.5,90.5 148.0,91.9 149.5,91.4 151.0,89.0 152.5,84.8 154.0,79.2 155.5,72.6 157.0,65.5 158.5,58.7 160.0,52.6 161.5,47.8 163.0,44.9 164.5,44.0 166.0,45.4 167.5,48.9 169.0,54.2 170.5,60.9 172.0,68.3 173.5,75.7 175.0,82.4 176.5,87.7 178.0,91.0 179.5,92.0 181.0,90.5 182.5,86.5 184.0,80.6 185.5,73.3 187.0,65.4 188.5,57.7 190.0,51.2 191.5,46.4 193.0,44.2 194.5,44.6 196.0,47.8 197.5,53.3 199.0,60.7 200.5,68.9 202.0,77.1 203.5,84.2 205.0,89.4 206.5,91.8 208.0,91.3 209.5,87.8 211.0,81.7 212.5,73.8 214.0,65.1 215.5,56.7 217.0,49.8 218.5,45.4 220.0,44.0 221.5,46.0 223.0,51.0 224.5,58.5 226.0,67.4 227.5,76.4 229.0,84.2 230.5,89.7 232.0,92.0 233.5,90.7 235.0,85.9 236.5,78.5 238.0,69.3 239.5,59.9 241.0,51.8 242.5,46.2 244.0,44.0 245.5,45.7 247.0,51.1 248.5,59.2 250.0,68.9 251.5,78.4 253.0,86.2 254.5,91.0 256.0,91.8 257.5,88.5 259.0,81.6 260.5,72.3 262.0,62.2 263.5,53.0 265.0,46.6 266.5,44.0 268.0,45.9 269.5,51.8 271.0,60.8 272.5,71.2 274.0,81.1 275.5,88.4 277.0,91.9 278.5,90.6 280.0,85.0 281.5,75.9 283.0,65.2 284.5,55.1 286.0,47.5 287.5,44.1 289.0,45.6 290.5,51.8 292.0,61.5 293.5,72.5 295.0,82.6 296.5,89.6 298.0,92.0 299.5,89.1 301.0,81.6 302.5,71.0 304.0,59.7"></polyline>
-          <line class="ktick" x1="85" y1="44" x2="85" y2="200"></line>
-          <line class="ktick" x1="265" y1="44" x2="265" y2="200"></line>
-          <text class="label" x="40" y="112">角度 S(x)</text>
-          <line class="kaxis" x1="40" y1="200" x2="312" y2="200"></line>
-          <polygon class="mhead" points="320,200 309,196 309,204"></polygon>
-          <line class="kaxis" x1="40" y1="200" x2="40" y2="90"></line>
-          <polygon class="mhead" points="40,83 36,94 44,94"></polygon>
-          <polyline class="plocal" points="40.0,200.0 41.5,199.7 43.0,199.4 44.5,199.1 46.0,198.8 47.5,198.5 49.0,198.2 50.5,197.8 52.0,197.5 53.5,197.2 55.0,196.8 56.5,196.5 58.0,196.2 59.5,195.8 61.0,195.5 62.5,195.1 64.0,194.8 65.5,194.4 67.0,194.1 68.5,193.7 70.0,193.3 71.5,192.9 73.0,192.6 74.5,192.2 76.0,191.8 77.5,191.4 79.0,191.0 80.5,190.6 82.0,190.2 83.5,189.8 85.0,189.4 86.5,189.0 88.0,188.6 89.5,188.2 91.0,187.8 92.5,187.3 94.0,186.9 95.5,186.5 97.0,186.0 98.5,185.6 100.0,185.2 101.5,184.7 103.0,184.3 104.5,183.8 106.0,183.4 107.5,182.9 109.0,182.4 110.5,182.0 112.0,181.5 113.5,181.0 115.0,180.5 116.5,180.0 118.0,179.6 119.5,179.1 121.0,178.6 122.5,178.1 124.0,177.6 125.5,177.1 127.0,176.6 128.5,176.0 130.0,175.5 131.5,175.0 133.0,174.5 134.5,173.9 136.0,173.4 137.5,172.9 139.0,172.3 140.5,171.8 142.0,171.3 143.5,170.7 145.0,170.1 146.5,169.6 148.0,169.0 149.5,168.5 151.0,167.9 152.5,167.3 154.0,166.7 155.5,166.2 157.0,165.6 158.5,165.0 160.0,164.4 161.5,163.8 163.0,163.2 164.5,162.6 166.0,162.0 167.5,161.4 169.0,160.8 170.5,160.2 172.0,159.5 173.5,158.9 175.0,158.3 176.5,157.7 178.0,157.0 179.5,156.4 181.0,155.7 182.5,155.1 184.0,154.4 185.5,153.8 187.0,153.1 188.5,152.5 190.0,151.8 191.5,151.1 193.0,150.5 194.5,149.8 196.0,149.1 197.5,148.4 199.0,147.7 200.5,147.0 202.0,146.4 203.5,145.7 205.0,145.0 206.5,144.2 208.0,143.5 209.5,142.8 211.0,142.1 212.5,141.4 214.0,140.7 215.5,139.9 217.0,139.2 218.5,138.5 220.0,137.7 221.5,137.0 223.0,136.2 224.5,135.5 226.0,134.7 227.5,134.0 229.0,133.2 230.5,132.5 232.0,131.7 233.5,130.9 235.0,130.1 236.5,129.4 238.0,128.6 239.5,127.8 241.0,127.0 242.5,126.2 244.0,125.4 245.5,124.6 247.0,123.8 248.5,123.0 250.0,122.2 251.5,121.4 253.0,120.5 254.5,119.7 256.0,118.9 257.5,118.1 259.0,117.2 260.5,116.4 262.0,115.5 263.5,114.7 265.0,113.8 266.5,113.0 268.0,112.1 269.5,111.3 271.0,110.4 272.5,109.5 274.0,108.7 275.5,107.8 277.0,106.9 278.5,106.0 280.0,105.1 281.5,104.2 283.0,103.4 284.5,102.5 286.0,101.6 287.5,100.6 289.0,99.7 290.5,98.8 292.0,97.9 293.5,97.0 295.0,96.1 296.5,95.1 298.0,94.2 299.5,93.3 301.0,92.3 302.5,91.4 304.0,90.4"></polyline>
-          <polyline class="klineA" points="53.0,198.1 117.0,180.7"></polyline>
-          <polyline class="klineA" points="233.0,132.0 297.0,95.7"></polyline>
-          <circle cx="85" cy="189.4" r="3.5" fill="var(--gold-dark)"></circle>
-          <circle cx="265" cy="113.8" r="3.5" fill="var(--gold-dark)"></circle>
-          <text class="ktA" x="122" y="195">k 小</text>
-          <text class="ktA" x="300" y="86" text-anchor="end">k 大</text>
-          <text class="label" x="310" y="216" text-anchor="end">位置 x</text>
-          <text class="strong" x="170" y="240" text-anchor="middle">S′(x) ＝ その点の傾き ＝ その場所の k</text>
-        </svg>
-        <div class="diagram-caption">平面波なら角度は S＝kx で、このグラフは<strong>まっすぐな直線</strong>になり、傾き（＝k）はどこでも同じだった。ところが一般の波では S は<strong>曲がった線</strong>になり、傾きが場所ごとに変わる。その点での傾き <strong>S′(x)</strong> が「<strong>その場所での k</strong>」で、<strong>傾きがゆるい場所は波長が長く（k 小）、急な場所は波長が短い（k 大）</strong>。ℏ を掛ければ、そのまま「その場所での運動量」だ</div>
+        <div class="cv-wrap"><canvas id="chirp3d" role="img" aria-label="上段は複素数の波 e^(iS(x)) を回る針の列で描いた3D図で、右へ行くほど針の巻きが細かく波長が短い。下段は角度 S(x) のグラフで、曲がった線になり、2点の接線の傾きが左はゆるく（k 小）右は急（k 大）。スライダーで曲がり具合を 0（平面波：S は直線で巻きは一定）から変えられる。ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="ch-c">S の曲がり具合（波長の変わり方）</label>
+          <input type="range" id="ch-c" min="0" max="1" step="0.01" value="0.7" aria-label="角度 S の曲がり具合">
+          <span class="val" id="ch-cv">0.70</span>
+        </div>
+        <div class="readout"><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">上段は波 ψ＝e<sup>iS(x)</sup> の針の列（高さ＝実部、手前＝虚部）、下段はその角度 S(x) のグラフ。スライダーを 0 にすると平面波で、角度は S＝kx、グラフは<strong>まっすぐな直線</strong>になり、傾き（＝k）はどこでも同じ＝針の巻きもどこでも同じ。ところが一般の波では S は<strong>曲がった線</strong>になり、傾きが場所ごとに変わる。その点での傾き <strong>S′(x)</strong> が「<strong>その場所での k</strong>」で、<strong>傾きがゆるい場所は波長が長く（k 小）、急な場所は波長が短い（k 大）</strong>。ℏ を掛ければ、そのまま「その場所での運動量」だ</div>
       </div>
 
       <div class="dialogue-scene">
@@ -634,6 +633,105 @@
     if (wl) wl.setAttribute("d", makePath(55, 22, 150, 15, 305));
     if (ws) ws.setAttribute("d", makePath(150, 22, 34, 15, 305));
   })();
+</script>
+<script>
+/* S の傾きが、その場所の k：上段は ψ＝e^(iS(x)) の針の列（高さ＝実部、手前＝虚部）。右へ行くほど巻きが細かい。
+   下段は角度 S(x) のグラフ。傾き S′(x) がその場所の k。スライダーで S の曲がり具合（波長の変わり方）を変えられる */
+(function(){
+  var cv = document.getElementById('chirp3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sl = document.getElementById('ch-c'), slv = document.getElementById('ch-cv');
+  var XS = 24, N = 72, HZ = 2.0, DIM = 1.8, HS = 5.5, KC = 2 * Math.PI * 3 / XS, UA = 0.2, UB = 0.8;
+  var yaw = 0.34, pitch = -0.5, W = 0, H = 0, sc = 1;
+  var C = { gold: '#c9a24a', goldD: '#a6742a', env: 'rgba(201,162,74,.7)', red: '#b5504a', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', tick: 'rgba(138,122,92,.6)' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  /* k は左端 k1 から右端 k2 へ一定の割合で増える → S(x)＝k1 x ＋ (k2−k1) x²/(2XW) */
+  function ks(c) { return { k1: KC * (1 - 0.8 * c), k2: KC * (1 + 0.8 * c) }; }
+  function S(u, k) { var x = u * XS; return k.k1 * x + (k.k2 - k.k1) * x * x / (2 * XS); }
+  function Sp(u, k) { return k.k1 + (k.k2 - k.k1) * u; }
+
+  function draw() {
+    var c = +sl.value, k = ks(c), i, u, pts, nar = W < 520, SMAX = S(1, ks(1)) * 1.02;
+    ctx.clearRect(0, 0, W, H);
+    var ax = W * 0.5, ay1 = H * 0.27, ay2 = H * 0.87;
+    /* 上段：針の列 */
+    function P(uu, re, im) { var p = rot((uu - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay1 + p[1]]; }
+    poly([P(-0.04, 0, 0), P(1.04, 0, 0)], C.muted, 1);
+    for (i = 0; i <= N; i++) {
+      u = i / N; var s = S(u, k), b = P(u, 0, 0), tp = P(u, Math.cos(s), Math.sin(s));
+      ctx.strokeStyle = C.gold; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = C.goldD; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.7, 0, 7); ctx.fill();
+    }
+    pts = []; for (i = 0; i <= 240; i++) { u = i / 240; var s2 = S(u, k); pts.push(P(u, Math.cos(s2), Math.sin(s2))); } poly(pts, C.env, 1.4);
+    poly([P(UA, -1.4, 0), P(UA, 1.4, 0)], C.tick, 1, [3, 3]); poly([P(UB, -1.4, 0), P(UB, 1.4, 0)], C.tick, 1, [3, 3]);
+    var o = P(-0.04, 0, 0), aY = P(-0.04, 1.3, 0), aZ = P(-0.04, 0, 1.3), aX = P(1.04, 0, 0);
+    poly([o, aY], C.muted, 1.2); poly([o, aZ], C.muted, 1.2);
+    text(aY[0] - 5, aY[1], '実部', C.muted, SUB, 'right'); text(aZ[0] - 4, aZ[1] + 9, '虚部', C.muted, SUB); text(aX[0] + 6, aX[1] + 2, 'x', C.muted, SUB, 'left');
+    /* 下段：角度 S(x) のグラフ（x・高さ の平面） */
+    function Q(uu, y) { var p = rot((uu - 0.5) * XS, HS * y, 0); return [ax + p[0], ay2 + p[1]]; }
+    var o2 = Q(0, 0), aX2 = Q(1.06, 0), aY2 = Q(0, 1.12);
+    poly([o2, aX2], C.muted, 1.2); poly([o2, aY2], C.muted, 1.2);
+    text(aX2[0] + 6, aX2[1] + 2, 'x', C.muted, SUB, 'left'); text(aY2[0] - 5, aY2[1], '角度 S', C.muted, SUB, 'right');
+    pts = []; for (i = 0; i <= 100; i++) { u = i / 100; pts.push(Q(u, S(u, k) / SMAX)); } poly(pts, C.blue, 2);
+    /* 接線 */
+    function tangent(ua, label, color, side) {
+      var s0 = S(ua, k) / SMAX, sl0 = Sp(ua, k) * XS / SMAX, du = 0.12;
+      poly([Q(ua - du, s0 - sl0 * du), Q(ua + du, s0 + sl0 * du)], color, 2.4);
+      var pt = Q(ua, s0); ctx.fillStyle = C.goldD; ctx.beginPath(); ctx.arc(pt[0], pt[1], 3.5, 0, 7); ctx.fill();
+      poly([Q(ua, 0), Q(ua, s0)], C.tick, 1, [3, 3]);
+      var lp = Q(ua + (side > 0 ? 0.14 : -0.14), s0 + sl0 * 0.14 * side + 0.05);
+      text(lp[0], lp[1] - 10, label, color, '900 11.5px "GreekNu",system-ui,sans-serif', side > 0 ? 'left' : 'right');
+    }
+    var kA = Sp(UA, k), kB = Sp(UB, k), same = c < 0.02;
+    tangent(UA, same ? 'k' : 'k 小', C.red, 1);
+    tangent(UB, same ? 'k（同じ）' : 'k 大', C.red, -1);
+    text(ax, H * 0.045, nar ? 'S の傾きが、その場所の k' : 'S の傾きが、その場所の k（上：波 e^(iS(x))、下：角度 S(x) のグラフ）', C.ink, TITLE);
+    text(ax, H * 0.5, same ? (nar ? '平面波：巻きはどこも同じ' : '平面波 S＝kx：らせんの巻きはどこも同じ（波長が一定）')
+                             : (nar ? '右へ行くほど巻きが細かい（波長が短い）' : '右へ行くほど針の巻きが細かい ＝ 波長が短い ＝ k が大きい'), C.goldD, SUB);
+    text(ax, H * 0.965, same ? (nar ? 'S は直線。傾き k はどこでも同じ' : 'S は直線。傾き S′(x)＝k はどこでも同じ')
+                             : (nar ? 'S は曲線。傾き S′(x)＝その場所の k' : 'S は曲がった線。その点の傾き S′(x) ＝ その場所の k（ゆるい所は波長が長く、急な所は短い）'), C.blue, SUB);
+    slv.textContent = same ? '0（平面波）' : c.toFixed(2);
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.98, 420)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 33;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  sl.addEventListener('input', invalidate);
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+})();
 </script>
 <script>KQ.initStagePage(3);</script>
 </body>

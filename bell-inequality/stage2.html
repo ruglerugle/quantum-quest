@@ -43,14 +43,24 @@
   .bq-svg .resOK{fill:var(--ok);font-size:17px;font-weight:900}
   .bq-svg .resNG{fill:var(--ng);font-size:17px;font-weight:900}
   .bq-svg .arrowhead2{fill:var(--muted)}
-  .bq-svg .polwave{fill:none;stroke:#48688f;stroke-width:2}
-  .bq-svg .polvec{stroke:#9fb9de;stroke-width:1.4}
-  .bq-svg .crosssec{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
-  .bq-svg .polaxis{stroke:#b5504a;stroke-width:2;stroke-dasharray:5 4}
-  .bq-svg .poldot{fill:#48688f}
   .sim-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px}
   .sim-controls .btn{font-size:12.5px;padding:.45rem .9rem}
   .sim-controls .btn[aria-pressed="true"]{background:linear-gradient(#7d9fce,#48688f);border-color:#35507a;color:#fff}
+  .cv-wrap{width:100%}
+  #pol3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
+    max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
+  .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-ctrl input[type=range]{width:100%;accent-color:#48688f}
+  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+  @media (max-width:560px){
+    .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
+    .sim-ctrl label{grid-column:1 / -1;white-space:normal}
+  }
+  .sim-play{padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -104,25 +114,20 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="bq-svg" id="pol-svg" viewBox="0 0 340 170" width="100%" role="img" aria-label="右へ進む光の波のアニメーション。進行方向と直角な向きに電場が振動しており、ボタンで振動の向きを縦・横・斜め45°に切り替えられる。右側には光を正面から見たときの振動の向きが両矢印で示される">
-          <text class="strong" x="14" y="18">偏光 ＝ 波の「揺れる向き」（進む方向とは直角）</text>
-          <line class="axis" x1="16" y1="90" x2="222" y2="90"></line>
-          <polygon class="arrowhead2" points="230,90 220,86 220,94"></polygon>
-          <text class="label" x="180" y="108">進む方向 →</text>
-          <g id="pol-vecs"></g>
-          <path class="polwave" id="pol-tips"></path>
-          <text class="label" x="285" y="34" text-anchor="middle">正面から見ると</text>
-          <circle class="crosssec" cx="285" cy="88" r="36"></circle>
-          <line class="polaxis" id="pol-cross-axis" x1="285" y1="52" x2="285" y2="124"></line>
-          <circle class="poldot" id="pol-cross-dot" cx="285" cy="88" r="5"></circle>
-          <text class="lbA" id="pol-mode-label" x="285" y="146" text-anchor="middle">振動の向き：縦</text>
-        </svg>
-        <div class="sim-controls">
-          <button class="btn" data-polmode="0" aria-pressed="true">縦揺れ</button>
-          <button class="btn" data-polmode="90" aria-pressed="false">横揺れ</button>
-          <button class="btn" data-polmode="45" aria-pressed="false">斜め45°</button>
+        <div class="cv-wrap"><canvas id="pol3d" role="img" aria-label="右へ進む光の波の3Dアニメーション。各地点の電場を、進行方向と直角な向きの針で描く。スライダーやボタンで振動の向きを縦・横・斜め45°など自由に変えられる。右上には光を正面から見たときの振動の向きが点線と動く点で示される。ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="pol-ang">振動の向き（縦から測った角度）</label>
+          <input type="range" id="pol-ang" min="0" max="180" step="1" value="0" aria-label="振動の向きの角度">
+          <span class="val" id="pol-angv">0°（縦）</span>
         </div>
-        <div class="diagram-caption">右へ進む光の波。細い線の1本1本が、その場所での電場の振動（揺れ）を表す。揺れの向きは<strong>進む方向と直角</strong>で、縦・横・斜め45°など自由な向きがありえる――この向きが<strong>偏光</strong>。ボタンで切り替えて、右の「正面から見た図」（光がこちらへ向かってくるところを想像した図）と見比べてみよう。横揺れは画面の手前↔奥の揺れなので、横から見ると浅く、正面から見るとはっきり分かる</div>
+        <div class="sim-controls">
+          <button class="btn" type="button" data-polmode="0" aria-pressed="true">縦揺れ</button>
+          <button class="btn" type="button" data-polmode="90" aria-pressed="false">横揺れ</button>
+          <button class="btn" type="button" data-polmode="45" aria-pressed="false">斜め45°</button>
+          <button class="sim-play" id="pol-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        </div>
+        <div class="readout"><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">右へ進む光の波。針の1本1本が、その場所での電場の振動（揺れ）を表す。揺れの向きは<strong>進む方向と直角</strong>で、縦・横・斜め45°など自由な向きがありえる――この向きが<strong>偏光</strong>。スライダーやボタンで向きを変え、右上の「正面から見た図」（光がこちらへ向かってくるところを想像した図）と見比べてみよう。横揺れは手前↔奥の揺れなので、視点を回して真横から見ると平らに見えるが、正面から見るとはっきり分かる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -291,89 +296,122 @@
 <script>BQ.initStagePage(2);</script>
 
 <script>
+/* 偏光：右へ進む光の波。各地点の電場の矢印（進む方向と直角）を針の列で描く。
+   振動の向きは縦（上下）・横（手前↔奥）・斜めなど、スライダーで自由に回せる。右上の小さな円は「正面から見た図」 */
 (function(){
-  var svg = document.getElementById('pol-svg');
-  if (!svg) return;
-  var vecsG = document.getElementById('pol-vecs'), tips = document.getElementById('pol-tips'),
-      crossAxis = document.getElementById('pol-cross-axis'), crossDot = document.getElementById('pol-cross-dot'),
-      modeLabel = document.getElementById('pol-mode-label');
-  var ns = 'http://www.w3.org/2000/svg';
-  var X0 = 20, X1 = 214, AXY = 90, A = 30, LAM = 72, CCX = 285, CCY = 88, CR = 32;
-  var mode = 0; // 振動の向き（度）: 0=縦, 90=横（奥行き）, 45=斜め
-  var MODE_NAMES = { 0: '縦', 90: '横', 45: '斜め45°' };
-
-  // 横から見た図での、振動1単位ぶんの画面上のずれ。
-  // 縦揺れは画面の上方向、横揺れ（奥行き）は手前＝左下方向に浅く投影して立体感を出す
-  function unit(m) {
-    var r = m * Math.PI / 180;
-    return { x: Math.sin(r) * -0.42, y: Math.cos(r) * -1 + Math.sin(r) * 0.26 };
+  var cv = document.getElementById('pol3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sl = document.getElementById('pol-ang'), slv = document.getElementById('pol-angv');
+  var btn = document.getElementById('pol-play');
+  var XS = 26, N = 40, AMP = 3.0, K = 2 * Math.PI * 3 / XS, OM = 2.2;
+  var yaw = 0.36, pitch = -0.42, t = 0, W = 0, H = 0, sc = 1;
+  var C = { hand: '#6f8fc0', tip: '#48688f', env: '#48688f', axis: '#8a7a5c', muted: '#8a7a5c', ink: '#241d12', pol: '#b5504a', ring: '#ddd0ad', paper: '#fffdf6' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
   }
-  // 正面から見た図では、奥行き方向がそのまま画面の横方向になる
-  function crossUnit(m) {
-    var r = m * Math.PI / 180;
-    return { x: Math.sin(r), y: -Math.cos(r) };
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
   }
-
-  var lines = [];
-  for (var x = X0; x <= X1; x += 12) {
-    var l = document.createElementNS(ns, 'line');
-    l.setAttribute('class', 'polvec');
-    vecsG.appendChild(l);
-    lines.push({ el: l, x: x });
+  function modeName(a) {
+    if (a % 180 === 0) return '縦';
+    if (a % 180 === 90) return '横';
+    if (a % 90 === 45) return '斜め45°';
+    return a + '°';
   }
-
-  function draw(t) {
-    var u = unit(mode);
-    var d = '', first = true;
-    for (var x = X0; x <= X1; x += 4) {
-      var s = A * Math.sin(2 * Math.PI * (x - t) / LAM);
-      d += (first ? 'M' : 'L') + (x + s * u.x).toFixed(1) + ' ' + (AXY + s * u.y).toFixed(1);
-      first = false;
+  function draw() {
+    var a = +sl.value, r = a * Math.PI / 180, uy = Math.cos(r), uz = Math.sin(r), i, u, pts, nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    var ax = W * (nar ? 0.5 : 0.46), ay = H * 0.58;
+    /* 進む方向＝x（右）。電場は Y（縦）と Z（手前↔奥）の面内で、角度 a の向きに振動 */
+    function P(uu, s) { var p = rot((uu - 0.5) * XS, AMP * s * uy, -AMP * s * uz); return [ax + p[0], ay + p[1]]; }
+    var o = P(-0.06, 0), aX = P(1.1, 0);
+    poly([o, aX], C.axis, 1.3);
+    /* 矢じり */
+    var ah = P(1.1, 0), ah2 = P(1.04, 0); var dx = ah[0] - ah2[0], dy = ah[1] - ah2[1], L = Math.hypot(dx, dy) || 1; dx /= L; dy /= L;
+    ctx.fillStyle = C.axis; ctx.beginPath(); ctx.moveTo(ah[0], ah[1]); ctx.lineTo(ah[0] - 9 * dx - 4 * dy, ah[1] - 9 * dy + 4 * dx); ctx.lineTo(ah[0] - 9 * dx + 4 * dy, ah[1] - 9 * dy - 4 * dx); ctx.closePath(); ctx.fill();
+    text(aX[0] + 6, aX[1] + 12, '進む方向', C.muted, SUB, 'left');
+    /* 振動の向きを示す両矢印（左端） */
+    var q1 = P(-0.02, 1.15), q2 = P(-0.02, -1.15); poly([q1, q2], C.pol, 1.4, [4, 3]);
+    /* 針の列 */
+    for (i = 0; i <= N; i++) {
+      u = i / N; var s = Math.sin(K * u * XS - OM * t), b = P(u, 0), tp = P(u, s);
+      ctx.strokeStyle = C.hand; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = C.tip; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.8, 0, 7); ctx.fill();
     }
-    tips.setAttribute('d', d);
-    lines.forEach(function (o) {
-      var s = A * Math.sin(2 * Math.PI * (o.x - t) / LAM);
-      o.el.setAttribute('x1', o.x); o.el.setAttribute('y1', AXY);
-      o.el.setAttribute('x2', (o.x + s * u.x).toFixed(1)); o.el.setAttribute('y2', (AXY + s * u.y).toFixed(1));
-    });
-    var cu = crossUnit(mode);
-    crossAxis.setAttribute('x1', (CCX - cu.x * CR).toFixed(1)); crossAxis.setAttribute('y1', (CCY - cu.y * CR).toFixed(1));
-    crossAxis.setAttribute('x2', (CCX + cu.x * CR).toFixed(1)); crossAxis.setAttribute('y2', (CCY + cu.y * CR).toFixed(1));
-    var s0 = Math.sin(2 * Math.PI * (X0 - t) / LAM) * (CR - 6);
-    crossDot.setAttribute('cx', (CCX + s0 * cu.x).toFixed(1)); crossDot.setAttribute('cy', (CCY + s0 * cu.y).toFixed(1));
-    modeLabel.textContent = '振動の向き：' + MODE_NAMES[mode];
+    pts = []; for (i = 0; i <= 160; i++) { u = i / 160; pts.push(P(u, Math.sin(K * u * XS - OM * t))); } poly(pts, C.env, 1.6);
+    /* 縦・横の目印の軸（左端） */
+    var oy = P(-0.06, 0), vy = [oy[0] + rot(0, 1.4 * AMP, 0)[0], oy[1] + rot(0, 1.4 * AMP, 0)[1]], vz = [oy[0] + rot(0, 0, -1.4 * AMP)[0], oy[1] + rot(0, 0, -1.4 * AMP)[1]];
+    poly([oy, vy], C.muted, 1); poly([oy, vz], C.muted, 1);
+    text(vy[0] - 5, vy[1], '縦', C.muted, SUB, 'right'); text(vz[0] - (nar ? 8 : 4), vz[1] + 9, '横（手前）', C.muted, SUB, nar ? 'left' : 'center');
+    /* 正面から見た図（右上の小さな円） */
+    var cx = W * 0.86, cy = H * 0.3, R = Math.min(W * 0.1, 40);
+    ctx.fillStyle = C.paper; ctx.strokeStyle = C.ring; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.fill(); ctx.stroke();
+    /* 正面（光がこちらへ来る）から見ると：縦＝画面の縦、横（手前↔奥）＝画面の横 */
+    poly([[cx - uz * R, cy + uy * R], [cx + uz * R, cy - uy * R]], C.pol, 2, [5, 4]);
+    var s0 = Math.sin(-OM * t) * (R - 6);
+    ctx.fillStyle = C.tip; ctx.beginPath(); ctx.arc(cx + uz * s0, cy - uy * s0, 4.5, 0, 7); ctx.fill();
+    text(cx, cy - R - 10, '正面から見ると', C.muted, SUB);
+    text(cx, cy + R + 11, '振動の向き：' + modeName(a), C.pol, SUB);
+    text(W * 0.5, H * 0.05, nar ? '偏光 ＝ 波の「揺れる向き」（進む方向と直角）' : '偏光 ＝ 波の「揺れる向き」（進む方向とは直角）。針＝その場所の電場', C.ink, TITLE);
+    text(W * 0.5, H * 0.955, nar ? '赤い点線＝揺れの向き。縦・横・斜め、どの向きもありえる' : '赤い点線が揺れの向き。縦・横・斜め45°など、進む方向と直角ならどの向きもありえる', C.pol, SUB);
+    slv.textContent = a + '°（' + modeName(a) + '）';
   }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.72, 320)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 40;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
 
-  var t = 18;
-  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  document.querySelectorAll('[data-polmode]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      mode = parseInt(btn.getAttribute('data-polmode'), 10);
-      document.querySelectorAll('[data-polmode]').forEach(function (b) {
-        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
-      });
-      draw(t);
-    });
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    t += dt * 1.1; draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+  sl.addEventListener('input', function(){ syncButtons(); invalidate(); });
+  function syncButtons() {
+    var a = +sl.value;
+    document.querySelectorAll('[data-polmode]').forEach(function (b) { b.setAttribute('aria-pressed', +b.getAttribute('data-polmode') === a ? 'true' : 'false'); });
+  }
+  document.querySelectorAll('[data-polmode]').forEach(function (b) {
+    b.addEventListener('click', function () { sl.value = b.getAttribute('data-polmode'); syncButtons(); invalidate(); });
   });
 
-  draw(t);
-  if (reduced) return;
-
-  var running = false, raf = null;
-  function loop() {
-    if (!running) return;
-    t += 0.9;
-    if (t > 1000 * LAM) t -= 1000 * LAM;
-    draw(t);
-    raf = requestAnimationFrame(loop);
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
   }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(es){
-      if (es[0].isIntersecting && !running) { running = true; loop(); }
-      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
-    }, {threshold: 0.15}).observe(svg);
-  } else { running = true; loop(); }
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
+  } else { play(); }
 })();
 </script>
 
