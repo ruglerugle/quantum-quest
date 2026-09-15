@@ -28,12 +28,23 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
-  .unc-svg .wave{fill:none;stroke:var(--gold);stroke-width:1.2}
-  .unc-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
-  .unc-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
-  .unc-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .sister-link{align-self:flex-end;font-size:12px;font-weight:700;color:var(--muted);background:var(--paper2);border:1px dashed var(--line);border-radius:8px;padding:7px 12px;margin:6px 0}
   .sister-link a{color:var(--gold-dark);font-weight:800}
+  .cv-wrap{width:100%}
+  #packet3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
+    max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
+  .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
+  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+  @media (max-width:560px){
+    .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
+    .sim-ctrl label{grid-column:1 / -1;white-space:normal}
+  }
+  .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -129,15 +140,15 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="unc-svg" id="beat-svg" viewBox="0 0 320 215" width="100%" role="img" aria-label="波長のすこし違う2本の波が違う速さで進み、山が追い越し合いながら、重ね合わせの波が場所ごとに強め合ったり打ち消し合ったりして、かたまりが生まれては流れていくアニメーション">
-          <text class="strong" x="15" y="16">波A（波長がすこし短い）</text>
-          <path class="wave" id="beat-a" d=""></path>
-          <text class="strong" x="15" y="72">波B（波長がすこし長い）</text>
-          <path class="wave" id="beat-b" d=""></path>
-          <text class="strong" x="15" y="140">A＋B（重ね合わせ）</text>
-          <path class="wave" id="beat-s" d=""></path>
-        </svg>
-        <div class="diagram-caption">波長の短い波Aのほうが、すこし速く進む（物質波の性質）。2本の山は追い越し合いながらずれていき、A＋Bでは、山がそろった場所が大きく振れ、山と谷がぶつかった場所が消える――「かたまり」が生まれては流れていく</div>
+        <div class="cv-wrap"><canvas id="packet3d" role="img" aria-label="上段：足し合わせる平面波（波長が少しずつ違う複素数の波＝らせん）を1本ずつ並べたもの。下段：それらをぜんぶ足した結果を、回る針の列で描いた3Dアニメーション。1本なら強さはどこも同じで位置が分からない。2本なら強め合う場所と打ち消し合う場所ができてかたまりが生まれては流れる（うなり）。本数を増やすほど波は1か所に集まって波束になる。ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="pk-n">足す平面波の本数</label>
+          <input type="range" id="pk-n" min="1" max="9" step="1" value="2" aria-label="足し合わせる平面波の本数">
+          <span class="val" id="pk-nv">2 本</span>
+        </div>
+        <button class="sim-play" id="pk-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="readout"><span class="sub" id="pk-msg">2本（うなり）：強め合う場所と打ち消し合う場所ができて、かたまりが生まれては流れていく</span></div>
+        <div class="diagram-caption">上段は足し合わせる平面波（波長＝運動量が少しずつ違う複素数の波なので、らせんの巻きが少しずつ違う）、下段はそれを<strong>ぜんぶ足した結果</strong>。針が ψ の値、薄いチューブが波の強さ |ψ|、足元の赤が見つかる確率 |ψ|²。<strong>1本</strong>なら、らせんが流れるだけでチューブの太さはどこも同じ――波長（＝運動量）は確定しているが位置は完全に不明。<strong>2本</strong>にすると、波長の短いほうが少し速く進む（物質波の性質）ので2本の山は追い越し合いながらずれていき、山がそろった場所が大きく振れ、山と谷がぶつかった場所が消える――「かたまり」が生まれては流れていく（うなり）。本数を増やすほど山がそろう場所は1か所だけになり、<strong>波束</strong>ができる。位置を決めるほど、混ぜた波長（＝運動量）の範囲は広い――両方を同時に確定した波は描けない。🖱️ ドラッグ（スマホは指でなぞる）で視点を回せる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -155,23 +166,6 @@
           </div>
           <div class="dialog-bubble">そのとおりの仕組みだよ。いまの現象は「<strong>うなり</strong>」と呼ばれている。高さのわずかに違う2つの音を同時に鳴らすと、音が大きくなったり小さくなったり、うわんうわんと聞こえる――楽器のチューニングでおなじみの、あれと同じものだよ。さて、2本ではまだ、かたまりが繰り返し現れてしまう。でも混ぜる波長の種類を10本、100本と増やしていくとどうなるか。<strong>すべての波の山がそろう場所はただ1か所</strong>になり、そこから離れるほど、ばらばらの波長の波たちは足並みを崩して互いに打ち消し合う。残るのは1か所の盛り上がりだけ――これが<strong>波束</strong>だ。しかも盛り上がりを狭くしたいほど、混ぜる波長の範囲を広げる必要があるんだ。</div>
         </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="unc-svg" viewBox="0 0 320 230" width="100%" role="img" aria-label="上：波長の決まった正弦波が、同じ形のままどこまでも流れ続ける。位置の目印はどこにもない。下：位置の決まった波束は多くの波長の重ね合わせでできている">
-          <line class="base" x1="15" y1="55" x2="305" y2="55"></line>
-          <g>
-            <path class="wave" d="M-65 44.4 L-63 48.2 L-61 52.7 L-59 57.3 L-57 61.8 L-55 65.6 L-53 68.4 L-51 69.8 L-49 69.8 L-47 68.4 L-45 65.6 L-43 61.8 L-41 57.3 L-39 52.7 L-37 48.2 L-35 44.4 L-33 41.6 L-31 40.2 L-29 40.2 L-27 41.6 L-25 44.4 L-23 48.2 L-21 52.7 L-19 57.3 L-17 61.8 L-15 65.6 L-13 68.4 L-11 69.8 L-9 69.8 L-7 68.4 L-5 65.6 L-3 61.8 L-1 57.3 L1 52.7 L3 48.2 L5 44.4 L7 41.6 L9 40.2 L11 40.2 L13 41.6 L15 44.4 L17 48.2 L19 52.7 L21 57.3 L23 61.8 L25 65.6 L27 68.4 L29 69.8 L31 69.8 L33 68.4 L35 65.6 L37 61.8 L39 57.3 L41 52.7 L43 48.2 L45 44.4 L47 41.6 L49 40.2 L51 40.2 L53 41.6 L55 44.4 L57 48.2 L59 52.7 L61 57.3 L63 61.8 L65 65.6 L67 68.4 L69 69.8 L71 69.8 L73 68.4 L75 65.6 L77 61.8 L79 57.3 L81 52.7 L83 48.2 L85 44.4 L87 41.6 L89 40.2 L91 40.2 L93 41.6 L95 44.4 L97 48.2 L99 52.7 L101 57.3 L103 61.8 L105 65.6 L107 68.4 L109 69.8 L111 69.8 L113 68.4 L115 65.6 L117 61.8 L119 57.3 L121 52.7 L123 48.2 L125 44.4 L127 41.6 L129 40.2 L131 40.2 L133 41.6 L135 44.4 L137 48.2 L139 52.7 L141 57.3 L143 61.8 L145 65.6 L147 68.4 L149 69.8 L151 69.8 L153 68.4 L155 65.6 L157 61.8 L159 57.3 L161 52.7 L163 48.2 L165 44.4 L167 41.6 L169 40.2 L171 40.2 L173 41.6 L175 44.4 L177 48.2 L179 52.7 L181 57.3 L183 61.8 L185 65.6 L187 68.4 L189 69.8 L191 69.8 L193 68.4 L195 65.6 L197 61.8 L199 57.3 L201 52.7 L203 48.2 L205 44.4 L207 41.6 L209 40.2 L211 40.2 L213 41.6 L215 44.4 L217 48.2 L219 52.7 L221 57.3 L223 61.8 L225 65.6 L227 68.4 L229 69.8 L231 69.8 L233 68.4 L235 65.6 L237 61.8 L239 57.3 L241 52.7 L243 48.2 L245 44.4 L247 41.6 L249 40.2 L251 40.2 L253 41.6 L255 44.4 L257 48.2 L259 52.7 L261 57.3 L263 61.8 L265 65.6 L267 68.4 L269 69.8 L271 69.8 L273 68.4 L275 65.6 L277 61.8 L279 57.3 L281 52.7 L283 48.2 L285 44.4 L287 41.6 L289 40.2 L291 40.2 L293 41.6 L295 44.4 L297 48.2 L299 52.7 L301 57.3 L303 61.8 L305 65.6"></path>
-            <animateTransform attributeName="transform" type="translate" values="0 0;40 0" dur="1.3s" repeatCount="indefinite"></animateTransform>
-          </g>
-          <text class="strong" x="20" y="18">波長ピッタリ（p が確定）</text>
-          <text class="label" x="20" y="32">→ 同じ形のまま流れ続ける波。位置 x は完全に不明</text>
-          <line class="base" x1="15" y1="165" x2="305" y2="165"></line>
-          <path class="wave" d="M15 165 L110 165 q5 -6 10 0 q5 14 10 0 q5 -34 10 0 q5 34 10 0 q5 -14 10 0 q5 6 10 0 L305 165"></path>
-          <text class="strong" x="20" y="122">位置ほぼ確定（波束）</text>
-          <text class="label" x="20" y="136">→ 多くの波長の重ね合わせ。p は不明に</text>
-        </svg>
-        <div class="diagram-caption">波長（＝運動量）を決めれば位置がぼやけ、位置を決めれば波長（＝運動量）がぼやける。両方を同時に確定した波は描けない</div>
       </div>
 
       <div class="dialogue-scene">
@@ -327,55 +321,159 @@
 
 <script src="js/progress.js"></script>
 <script>
-  // アニメーションを避けたい設定のユーザーには静止画で表示する
-  var REDUCED_MOTION = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (REDUCED_MOTION) {
-    document.querySelectorAll(".unc-svg animate, .unc-svg animateTransform").forEach(function (a) { a.remove(); });
+/* 平面波を足していくと波が1か所に集まる（うなり→波束）。1枚の canvas に上下2段。
+   上段：足し合わせる平面波（波長が少しずつ違う複素数の波＝らせん）を1本ずつ並べる。
+   下段：ぜんぶ足した結果を針の列で描く（高さ＝実部、手前＝虚部）。チューブ＝強さ |ψ|、足元の赤＝|ψ|²。ℏ＝m＝1 */
+(function(){
+  var cv = document.getElementById('packet3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sl = document.getElementById('pk-n'), slv = document.getElementById('pk-nv');
+  var btn = document.getElementById('pk-play'), msg = document.getElementById('pk-msg');
+  var K0 = 2.5, DK = 0.4, XW = 2 * (2 * Math.PI / DK), TMAX = 4.2;   /* 波数の中心・間隔。和は 2π/DK ごとに繰り返す（表示は2周期ぶん） */
+  var XS = 24, N = 64, HZ = 2.6, DIM = 2.3;
+  var yaw = 0.34, pitch = -0.55, t = 0, W = 0, H = 0, sc = 1;
+  var C = { gold: '#a6742a', goldFaint: 'rgba(166,116,42,.7)', blue: '#2f6fa6', envB: 'rgba(47,111,166,.6)', tube: 'rgba(47,111,166,.2)',
+            red: '#c8433f', dens: 'rgba(200,67,63,.9)', densFill: 'rgba(200,67,63,.16)', muted: '#8a7a5c', ink: '#241d12' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+
+  /* 足し合わせる平面波の一覧（波数 k を中心 K0 のまわりに等間隔で並べ、端ほど弱くする） */
+  function comps() {
+    var n = +sl.value, a = [], i, c = (n - 1) / 2, sg = Math.max(n / 3, 0.8), sum = 0;
+    for (i = 0; i < n; i++) {
+      var w = Math.exp(-(i - c) * (i - c) / (2 * sg * sg)), k = K0 + (i - c) * DK;
+      a.push({ w: w, k: k, om: k * k / 2 }); sum += w;
+    }
+    for (i = 0; i < n; i++) a[i].w /= sum;
+    return a;
   }
+  function psi(cs, x) {
+    var re = 0, im = 0;
+    for (var i = 0; i < cs.length; i++) { var ph = cs[i].k * x - cs[i].om * t; re += cs[i].w * Math.cos(ph); im += cs[i].w * Math.sin(ph); }
+    return [re, im];
+  }
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function fillPoly(pts, color) {
+    ctx.fillStyle = color; ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.closePath(); ctx.fill();
+  }
+  function X(u) { return (u - 0.5) * XW; }   /* 0..1 → x */
 
-  // うなりのアニメーション：速さの違う2本の波を毎フレーム足し算して描く
-  (function () {
-    var pa = document.getElementById("beat-a");
-    var pb = document.getElementById("beat-b");
-    var ps = document.getElementById("beat-s");
-    if (!pa || !pb || !ps) return;
-    var K1 = 2 * Math.PI / 18, K2 = 2 * Math.PI / 22;  // 波長18pxと22px
-    var V1 = 28, V2 = 24;                              // 波長の短いAのほうが速い
-
-    function makePath(yc, amp, fn) {
-      var d = "M15 " + (yc - amp * fn(15)).toFixed(1);
-      for (var x = 17; x <= 305; x += 2) {
-        d += " L" + x + " " + (yc - amp * fn(x)).toFixed(1);
-      }
-      return d;
+  function draw() {
+    var cs = comps(), n = cs.length, i, j, u, pts, nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    var ax = W * 0.5, top = H * 0.075, area = H * 0.37, sh = area / n;
+    /* 上段：平面波を1本ずつ（薄いらせん） */
+    var amp = Math.min(sh / sc * 0.3, 0.6);
+    for (i = 0; i < n; i++) {
+      var ay = top + (i + 0.5) * sh, a = amp * Math.min(cs[i].w * n, 1.4);   /* 重みに比例（平均を1として） */
+      (function(ayy, aa, comp){
+        function P(uu, re, im) { var p = rot((uu - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ayy + p[1]]; }
+        poly([P(-0.02, 0, 0), P(1.02, 0, 0)], 'rgba(138,122,92,.5)', 0.8);
+        pts = [];
+        for (j = 0; j <= 160; j++) { u = j / 160; var ph = comp.k * X(u) - comp.om * t; pts.push(P(u, aa * Math.cos(ph), aa * Math.sin(ph))); }
+        poly(pts, C.goldFaint, 1.2);
+      })(ay, a, cs[i]);
+      if (i > 0) text(W * 0.06, ay - sh / 2, '＋', C.muted, SUB);
     }
-
-    function draw(t) {
-      var f1 = function (x) { return Math.sin(K1 * (x - V1 * t)); };
-      var f2 = function (x) { return Math.sin(K2 * (x - V2 * t)); };
-      pa.setAttribute("d", makePath(40, 9, f1));
-      pb.setAttribute("d", makePath(95, 9, f2));
-      ps.setAttribute("d", makePath(172, 7, function (x) { return f1(x) + f2(x); }));
+    text(ax, H * 0.035, n === 1 ? (nar ? '平面波 1本（波長がきっちり1つ）' : '足す波：平面波 1本（波長がきっちり1つ）')
+                               : (nar ? '平面波 ' + n + ' 本（波長が少しずつ違う）' : '足す波：平面波 ' + n + ' 本（波長＝運動量が少しずつ違う）'), C.gold, TITLE);
+    text(ax, H * 0.485, '＝', C.ink, '900 15px system-ui,sans-serif');
+    /* 下段：足した結果 */
+    var ay2 = H * 0.74;
+    function P2(uu, re, im) { var p = rot((uu - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay2 + p[1]]; }
+    /* チューブ（半径＝|ψ|） */
+    for (i = 0; i <= 24; i++) {
+      u = i / 24; var v = psi(cs, X(u)), r = Math.sqrt(v[0] * v[0] + v[1] * v[1]); pts = [];
+      for (j = 0; j <= 20; j++) { var an = 2 * Math.PI * j / 20; pts.push(P2(u, r * Math.cos(an), r * Math.sin(an))); }
+      poly(pts, C.tube, 0.9);
     }
-
-    if (REDUCED_MOTION) { draw(0); return; }
-
-    var running = true;
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (entries) {
-        running = entries[0].isIntersecting;
-      }).observe(document.getElementById("beat-svg"));
+    for (j = 0; j < 6; j++) {
+      var an2 = 2 * Math.PI * j / 6; pts = [];
+      for (i = 0; i <= 100; i++) { u = i / 100; var v2 = psi(cs, X(u)), r2 = Math.sqrt(v2[0] * v2[0] + v2[1] * v2[1]); pts.push(P2(u, r2 * Math.cos(an2), r2 * Math.sin(an2))); }
+      poly(pts, C.tube, 0.9);
     }
-    var last = 0;
-    function loop(ms) {
-      if (running && ms - last > 33) {  // 約30fps
-        last = ms;
-        draw(ms / 1000);
-      }
-      requestAnimationFrame(loop);
+    poly([P2(-0.06, 0, 0), P2(1.06, 0, 0)], C.muted, 1);
+    /* |ψ|² を足元に赤で */
+    pts = []; for (i = 0; i <= 140; i++) { u = i / 140; var v3 = psi(cs, X(u)); pts.push(P2(u, -1.5 + 0.7 * (v3[0] * v3[0] + v3[1] * v3[1]), 0)); }
+    fillPoly(pts.concat([P2(1, -1.5, 0), P2(0, -1.5, 0)]), C.densFill);
+    poly(pts, C.dens, 1.6, [4, 3]);
+    poly([P2(0, -1.5, 0), P2(1, -1.5, 0)], 'rgba(200,67,63,.4)', 1);
+    /* 針の列 */
+    for (i = 0; i <= N; i++) {
+      u = i / N; var v4 = psi(cs, X(u)), b = P2(u, 0, 0), tp = P2(u, v4[0], v4[1]);
+      ctx.strokeStyle = C.blue; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = C.blue; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.8, 0, 7); ctx.fill();
     }
-    requestAnimationFrame(loop);
-  })();
+    pts = []; for (i = 0; i <= 160; i++) { u = i / 160; var v5 = psi(cs, X(u)); pts.push(P2(u, v5[0], v5[1])); }
+    poly(pts, C.envB, 1.5);
+    var o = P2(-0.06, 0, 0), aY = P2(-0.06, 1.25, 0), aZ = P2(-0.06, 0, 1.25), aX = P2(1.06, 0, 0), aD = P2(1.04, -1.5, 0);
+    poly([o, aY], C.muted, 1.3); poly([o, aZ], C.muted, 1.3);
+    text(aY[0] - 5, aY[1], '実部', C.muted, SUB, 'right'); text(aZ[0] - 4, aZ[1] + 9, '虚部', C.muted, SUB); text(aX[0] + 8, aX[1] + 2, 'x', C.muted, SUB, 'left');
+    text(aD[0] + 8, aD[1], '|ψ|²', C.red, SUB, 'left');
+    text(ax, H * 0.535, nar ? '足した結果（針＝ψ、チューブ＝強さ |ψ|、赤＝|ψ|²）' : '足した結果：針＝ψ の値、薄いチューブ＝強さ |ψ|、赤＝見つかる確率 |ψ|²', C.blue, TITLE);
+    slv.textContent = n + ' 本';
+    msg.textContent = n === 1
+      ? '1本だけ：らせんが流れるだけで、強さ（チューブの太さ）はどこも同じ。位置 x はまったく分からない'
+      : (n === 2
+        ? '2本（うなり）：強め合う場所と打ち消し合う場所ができて、かたまりが生まれては流れていく'
+        : n + '本：山がそろう場所が1か所だけになり、波が1か所に集まる（波束）。混ぜる波長の範囲を広げるほど山は狭くなる');
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.08, 470)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 34;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    t += dt * 0.8; if (t > TMAX) t = 0;
+    draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+  sl.addEventListener('input', function(){ t = 0; invalidate(); });
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
+  } else { play(); }
+})();
 </script>
 <script>QQ.initStagePage(5);</script>
 </body>
