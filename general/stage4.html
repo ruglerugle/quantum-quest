@@ -43,16 +43,6 @@
   .cpx-svg .label{fill:var(--muted);font-size:10.5px;font-weight:700}
   .cpx-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .cpx-svg .sep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
-  .rot-svg .wave{fill:none;stroke:var(--gold);stroke-width:1.3}
-  .rot-svg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
-  .rot-svg .orbit{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 4}
-  .rot-svg .vec{stroke:var(--gold-dark);stroke-width:1.5;fill:none}
-  .rot-svg .vhead{fill:var(--gold-dark)}
-  .rot-svg .alert{fill:#c8433f;font-size:11.5px;font-weight:900}
-  .rot-svg .alert-dim{fill:var(--muted);font-size:11.5px;font-weight:900;opacity:.55}
-  .rot-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
-  .rot-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
-  .rot-svg .sep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
   .imul-svg .axis{stroke:var(--line);stroke-width:1.2}
   .imul-svg .orbit{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 4}
   .imul-svg .vec{stroke:var(--gold-dark);stroke-width:1.8;fill:none}
@@ -70,6 +60,12 @@
   .cloud-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .sister-link{align-self:flex-end;font-size:12px;font-weight:700;color:var(--muted);background:var(--paper2);border:1px dashed var(--line);border-radius:8px;padding:7px 12px}
   .sister-link a{color:var(--gold-dark);font-weight:800}
+  .cv-wrap{width:100%}
+  #realcpx{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -285,83 +281,10 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="rot-svg" viewBox="0 0 320 265" width="100%" role="img" aria-label="上：実数の波で運動量を決めると、見つかる確率が場所によって縞々になり、確率ゼロの場所が等間隔に並んでしまう。下：複素数の波は各地点の矢印が同じ長さのまま回るので、確率はどの場所でも同じになり、位置は特定できないという正しい姿になる">
-          <text class="strong" x="10" y="16">実数の波で運動量（波長）を1つに決めると…</text>
-          <line class="base" x1="15" y1="52" x2="305" y2="52"></line>
-          <path class="wave" d="M15 52.0 L17 54.9 L19 57.7 L21 60.2 L23 62.4 L25 64.1 L27 65.3 L29 65.9 L31 65.9 L33 65.3 L35 64.1 L37 62.4 L39 60.2 L41 57.7 L43 54.9 L45 52.0 L47 49.1 L49 46.3 L51 43.8 L53 41.6 L55 39.9 L57 38.7 L59 38.1 L61 38.1 L63 38.7 L65 39.9 L67 41.6 L69 43.8 L71 46.3 L73 49.1 L75 52.0 L77 54.9 L79 57.7 L81 60.2 L83 62.4 L85 64.1 L87 65.3 L89 65.9 L91 65.9 L93 65.3 L95 64.1 L97 62.4 L99 60.2 L101 57.7 L103 54.9 L105 52.0 L107 49.1 L109 46.3 L111 43.8 L113 41.6 L115 39.9 L117 38.7 L119 38.1 L121 38.1 L123 38.7 L125 39.9 L127 41.6 L129 43.8 L131 46.3 L133 49.1 L135 52.0 L137 54.9 L139 57.7 L141 60.2 L143 62.4 L145 64.1 L147 65.3 L149 65.9 L151 65.9 L153 65.3 L155 64.1 L157 62.4 L159 60.2 L161 57.7 L163 54.9 L165 52.0 L167 49.1 L169 46.3 L171 43.8 L173 41.6 L175 39.9 L177 38.7 L179 38.1 L181 38.1 L183 38.7 L185 39.9 L187 41.6 L189 43.8 L191 46.3 L193 49.1 L195 52.0 L197 54.9 L199 57.7 L201 60.2 L203 62.4 L205 64.1 L207 65.3 L209 65.9 L211 65.9 L213 65.3 L215 64.1 L217 62.4 L219 60.2 L221 57.7 L223 54.9 L225 52.0 L227 49.1 L229 46.3 L231 43.8 L233 41.6 L235 39.9 L237 38.7 L239 38.1 L241 38.1 L243 38.7 L245 39.9 L247 41.6 L249 43.8 L251 46.3 L253 49.1 L255 52.0 L257 54.9 L259 57.7 L261 60.2 L263 62.4 L265 64.1 L267 65.3 L269 65.9 L271 65.9 L273 65.3 L275 64.1 L277 62.4 L279 60.2 L281 57.7 L283 54.9 L285 52.0 L287 49.1 L289 46.3 L291 43.8 L293 41.6 L295 39.9 L297 38.7 L299 38.1 L301 38.1 L303 38.7 L305 39.9"></path>
-          <line class="base" x1="15" y1="122" x2="305" y2="122"></line>
-          <path class="wave" d="M15 122.0 L17 120.9 L19 117.7 L21 113.0 L23 107.6 L25 102.5 L27 98.5 L29 96.3 L31 96.3 L33 98.5 L35 102.5 L37 107.6 L39 113.0 L41 117.7 L43 120.9 L45 122.0 L47 120.9 L49 117.7 L51 113.0 L53 107.6 L55 102.5 L57 98.5 L59 96.3 L61 96.3 L63 98.5 L65 102.5 L67 107.6 L69 113.0 L71 117.7 L73 120.9 L75 122.0 L77 120.9 L79 117.7 L81 113.0 L83 107.6 L85 102.5 L87 98.5 L89 96.3 L91 96.3 L93 98.5 L95 102.5 L97 107.6 L99 113.0 L101 117.7 L103 120.9 L105 122.0 L107 120.9 L109 117.7 L111 113.0 L113 107.6 L115 102.5 L117 98.5 L119 96.3 L121 96.3 L123 98.5 L125 102.5 L127 107.6 L129 113.0 L131 117.7 L133 120.9 L135 122.0 L137 120.9 L139 117.7 L141 113.0 L143 107.6 L145 102.5 L147 98.5 L149 96.3 L151 96.3 L153 98.5 L155 102.5 L157 107.6 L159 113.0 L161 117.7 L163 120.9 L165 122.0 L167 120.9 L169 117.7 L171 113.0 L173 107.6 L175 102.5 L177 98.5 L179 96.3 L181 96.3 L183 98.5 L185 102.5 L187 107.6 L189 113.0 L191 117.7 L193 120.9 L195 122.0 L197 120.9 L199 117.7 L201 113.0 L203 107.6 L205 102.5 L207 98.5 L209 96.3 L211 96.3 L213 98.5 L215 102.5 L217 107.6 L219 113.0 L221 117.7 L223 120.9 L225 122.0 L227 120.9 L229 117.7 L231 113.0 L233 107.6 L235 102.5 L237 98.5 L239 96.3 L241 96.3 L243 98.5 L245 102.5 L247 107.6 L249 113.0 L251 117.7 L253 120.9 L255 122.0 L257 120.9 L259 117.7 L261 113.0 L263 107.6 L265 102.5 L267 98.5 L269 96.3 L271 96.3 L273 98.5 L275 102.5 L277 107.6 L279 113.0 L281 117.7 L283 120.9 L285 122.0 L287 120.9 L289 117.7 L291 113.0 L293 107.6 L295 102.5 L297 98.5 L299 96.3 L301 96.3 L303 98.5 L305 102.5"></path>
-          <text class="label" x="10" y="86">↓ |ψ|²（見つかる確率）を描くと……</text>
-          <text class="alert" x="160" y="140" text-anchor="middle">確率が場所によって縞々に!?（濃い・薄い・ゼロまで）</text>
-          <line class="sep" x1="10" y1="152" x2="310" y2="152"></line>
-          <text class="strong" x="10" y="170">複素数の波（回る矢印の列）なら…</text>
-          <g transform="translate(25,196) rotate(0)">
-            <g>
-              <line class="vec" x1="0" y1="0" x2="0" y2="-16"></line>
-              <path class="vhead" d="M0 -21 l-4.5 8 9 0 z"></path>
-              <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="2s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <g transform="translate(57,196) rotate(-40)">
-            <g>
-              <line class="vec" x1="0" y1="0" x2="0" y2="-16"></line>
-              <path class="vhead" d="M0 -21 l-4.5 8 9 0 z"></path>
-              <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="2s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <g transform="translate(89,196) rotate(-80)">
-            <g>
-              <line class="vec" x1="0" y1="0" x2="0" y2="-16"></line>
-              <path class="vhead" d="M0 -21 l-4.5 8 9 0 z"></path>
-              <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="2s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <g transform="translate(121,196) rotate(-120)">
-            <g>
-              <line class="vec" x1="0" y1="0" x2="0" y2="-16"></line>
-              <path class="vhead" d="M0 -21 l-4.5 8 9 0 z"></path>
-              <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="2s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <g transform="translate(153,196) rotate(-160)">
-            <g>
-              <line class="vec" x1="0" y1="0" x2="0" y2="-16"></line>
-              <path class="vhead" d="M0 -21 l-4.5 8 9 0 z"></path>
-              <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="2s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <g transform="translate(185,196) rotate(-200)">
-            <g>
-              <line class="vec" x1="0" y1="0" x2="0" y2="-16"></line>
-              <path class="vhead" d="M0 -21 l-4.5 8 9 0 z"></path>
-              <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="2s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <g transform="translate(217,196) rotate(-240)">
-            <g>
-              <line class="vec" x1="0" y1="0" x2="0" y2="-16"></line>
-              <path class="vhead" d="M0 -21 l-4.5 8 9 0 z"></path>
-              <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="2s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <g transform="translate(249,196) rotate(-280)">
-            <g>
-              <line class="vec" x1="0" y1="0" x2="0" y2="-16"></line>
-              <path class="vhead" d="M0 -21 l-4.5 8 9 0 z"></path>
-              <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="2s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <g transform="translate(281,196) rotate(-320)">
-            <g>
-              <line class="vec" x1="0" y1="0" x2="0" y2="-16"></line>
-              <path class="vhead" d="M0 -21 l-4.5 8 9 0 z"></path>
-              <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="2s" repeatCount="indefinite"></animateTransform>
-            </g>
-          </g>
-          <line class="vec" x1="15" y1="232" x2="305" y2="232"></line>
-          <text class="label" x="160" y="252" text-anchor="middle">|ψ|² はどこでも同じ高さ ＝ どの場所も対等（位置は特定できない）</text>
-        </svg>
-        <div class="diagram-caption">上：実数の波では |ψ|² が場所によって縞々になる（濃い場所・薄い場所・ゼロの場所まで）。何もない空間なのに場所に差がつくのがおかしい。下：複素数の波は、各地点の矢印が同じ長さのまま（回る角度だけが場所ごとに進みながら）回転するので、|ψ|² はどこでも同じ――「位置がまったく特定できない」という正しい姿になる</div>
+        <div class="cv-wrap"><canvas id="realcpx" role="img" aria-label="2段の針の列の3Dアニメーション。上段は実数の波で、針が1枚の板の中で上下するだけなので |ψ|²（見つかる確率）が場所によって縞々になり、確率ゼロの場所が等間隔に並んでしまう。下段は複素数の波で、各地点の針が同じ長さのまま回る（らせん）ので |ψ|² はどの場所でも同じになり、位置は特定できないという正しい姿になる。ドラッグで視点を回せる"></canvas></div>
+        <button class="sim-play" id="rc-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="readout"><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">上：<strong>実数の波</strong>。各地点の針は実部の板の中で上下するだけなので、針の長さ（＝波の高さ）が場所ごとに違い、|ψ|²（赤）が場所によって縞々になる（濃い場所・薄い場所・ゼロの場所まで）。何もない空間なのに場所に差がつくのがおかしい。下：<strong>複素数の波</strong>。各地点の針が同じ長さのまま（回る角度だけが場所ごとに進みながら）回転する――針の先が通る跡は太さ一定のチューブになる。だから |ψ|² はどこでも同じ――「位置がまったく特定できない」という正しい姿になる。時間を進めると、上は波が横に流れ、下はらせんがねじれながら流れるが、どちらも |ψ|² の形は変わらない</div>
       </div>
 
       <div class="dialogue-scene">
@@ -619,6 +542,138 @@
     document.querySelectorAll(".rot-svg animate, .rot-svg animateTransform, .imul-svg animate, .imul-svg animateTransform, .cloud-svg animate, .cloud-svg animateMotion").forEach(function (a) { a.remove(); });
     document.querySelectorAll(".cloud-svg .cdot").forEach(function (c) { c.setAttribute("opacity", "0.85"); });
   }
+</script>
+<script>
+/* 実数の波 vs 複素数の波（運動量＝波長を1つに決めた場合）：
+   上段：実数の波 A cos(kx−ωt)。針は1つの平面（実部）の中で上下するだけ → |ψ|² は場所によって縞々（ゼロの場所が等間隔）。
+   下段：複素数の波 A e^{i(kx−ωt)}。針は同じ長さのまま回る（らせん） → |ψ|² はどこでも同じ。
+   各段の下に |ψ|² の曲面（横 x・奥 t）を薄く重ねず、段の右奥に平らな帯として描く。1枚の canvas に2段。 */
+(function(){
+  var cv = document.getElementById('realcpx');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var btn = document.getElementById('rc-play');
+  var XS = 24, N = 40, HZ = 3.2, DIM = 2.8, K = 2 * Math.PI * 3, OM = 2.2;
+  var yaw = 0.34, pitch = -0.55, t = 0, W = 0, H = 0, sc = 1;
+  var C = { gold: '#a6742a', blue: '#2f6fa6', red: '#c8433f', muted: '#8a7a5c', ink: '#241d12',
+            tube: 'rgba(47,111,166,.22)', envG: 'rgba(166,116,42,.6)', envB: 'rgba(47,111,166,.6)',
+            plane: 'rgba(166,116,42,.16)', dens: 'rgba(200,67,63,.9)', densFill: 'rgba(200,67,63,.16)' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function fillPoly(pts, color) {
+    ctx.fillStyle = color; ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.closePath(); ctx.fill();
+  }
+
+  /* 1段：vec(x)＝[実部, 虚部] の針の列。高さ＝実部、手前＝虚部。dens(x)＝|ψ|² を赤い点線で足元に描く */
+  function row(ax, ay, vec, dens, color, envColor, real) {
+    var i, j, x, pts, env = [];
+    function P(xx, re, im) { var p = rot((xx - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay + p[1]]; }
+    if (real) {
+      /* 針が動ける範囲＝実部の平面（薄い板） */
+      fillPoly([P(0, -1.1, 0), P(1, -1.1, 0), P(1, 1.1, 0), P(0, 1.1, 0)], C.plane);
+    } else {
+      /* 針の先が通る跡＝太さ一定のチューブ */
+      for (i = 0; i <= 12; i++) {
+        x = i / 12; pts = [];
+        for (j = 0; j <= 24; j++) { var a = 2 * Math.PI * j / 24; pts.push(P(x, Math.cos(a), Math.sin(a))); }
+        poly(pts, C.tube, 0.9);
+      }
+      for (j = 0; j < 8; j++) {
+        var a2 = 2 * Math.PI * j / 8; pts = [];
+        for (i = 0; i <= 40; i++) { x = i / 40; pts.push(P(x, Math.cos(a2), Math.sin(a2))); }
+        poly(pts, C.tube, 0.9);
+      }
+    }
+    poly([P(-0.06, 0, 0), P(1.06, 0, 0)], C.muted, 1);
+    /* |ψ|²：足元に赤で（高さ＝確率） */
+    pts = []; for (i = 0; i <= 120; i++) { x = i / 120; pts.push(P(x, -1.55 + 0.55 * dens(x), 0)); }
+    var base = [P(1, -1.55, 0), P(0, -1.55, 0)];
+    fillPoly(pts.concat(base), C.densFill);
+    poly(pts, C.dens, 1.6, [4, 3]);
+    poly([P(0, -1.55, 0), P(1, -1.55, 0)], 'rgba(200,67,63,.4)', 1);
+    for (i = 0; i <= N; i++) {
+      x = i / N; var v = vec(x), b = P(x, 0, 0), tp = P(x, v[0], v[1]);
+      ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.9, 0, 7); ctx.fill();
+    }
+    for (i = 0; i <= 100; i++) { x = i / 100; var v2 = vec(x); env.push(P(x, v2[0], v2[1])); }
+    poly(env, envColor, 1.5);
+    var o = P(-0.06, 0, 0), aY = P(-0.06, 1.3, 0), aZ = P(-0.06, 0, 1.3), aX = P(1.06, 0, 0), aD = P(1.04, -1.55, 0);
+    poly([o, aY], C.muted, 1.3); poly([o, aZ], C.muted, 1.3);
+    text(aY[0] - 5, aY[1], '実部', C.muted, SUB, 'right'); text(aZ[0] - 4, aZ[1] + 9, '虚部', C.muted, SUB); text(aX[0] + 8, aX[1] + 2, 'x', C.muted, SUB, 'left');
+    text(aD[0] + 8, aD[1], '|ψ|²', C.red, SUB, 'left');
+  }
+
+  function draw() {
+    var nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    var ax = W * 0.5, ay1 = H * 0.25, ay2 = H * 0.73;
+    var real = function(x){ return [Math.cos(K * x - OM * t), 0]; };
+    var realD = function(x){ var c = Math.cos(K * x - OM * t); return c * c; };
+    var cpx = function(x){ var a = K * x - OM * t; return [Math.cos(a), Math.sin(a)]; };
+    var cpxD = function(){ return 1; };
+    row(ax, ay1, real, realD, C.gold, C.envG, true);
+    row(ax, ay2, cpx, cpxD, C.blue, C.envB, false);
+    text(ax, H * 0.04, nar ? '実数の波 cos(kx−ωt)：針は1枚の板の中で上下' : '実数の波 A cos(kx−ωt)：針は実部の板の中で上下するだけ', C.gold, TITLE);
+    text(ax, H * 0.465, nar ? '|ψ|² が縞々に。ゼロの場所が等間隔に並ぶ' : '|ψ|²（赤）が場所によって縞々に。確率ゼロの場所が等間隔に並んでしまう', C.red, SUB);
+    text(ax, H * 0.52, nar ? '複素数の波 e^(i(kx−ωt))：針は同じ長さで回る' : '複素数の波 A e^(i(kx−ωt))：各地点の針が同じ長さのまま回る（らせん）', C.blue, TITLE);
+    text(ax, H * 0.97, nar ? '|ψ|² はどこでも同じ＝位置は特定できない' : '|ψ|²（赤）はどこでも同じ高さ ＝ どの場所も対等（位置は特定できない）', C.red, SUB);
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 34;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    t += dt * 0.8; draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
+  } else { play(); }
+})();
 </script>
 <script>QQ.initStagePage(4);</script>
 </body>
