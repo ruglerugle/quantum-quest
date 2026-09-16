@@ -58,7 +58,7 @@
   .kq-svg .ktA{fill:var(--gold-dark);font-size:11px;font-weight:900}
   .kq-svg .ktB{fill:#2f6fa6;font-size:11px;font-weight:900}
   .cv-wrap{width:100%}
-  #chirp3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #chirp3d,#psiphi3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -244,6 +244,23 @@
           </div>
           <div class="dialog-bubble">あるよ。ふつう <strong>φ(p)</strong>（ファイ）と書いて、<strong>|φ(p)|² が運動量の確率の濃さ</strong>を表す。ψ(x) と完全に対をなす相棒だ。ただし ψ に p を代入したものではなくて、まったく別の関数でね。ψ(x) が「どの場所にどれだけいるか」を、φ(p) が「どの波長をどれだけ混ぜたか」を語っている。<strong>同じ状態を、場所の言葉で書くか、波長の言葉で書くかの違い</strong>なんだ。そしてここが大事なところ。<strong>Δx が |ψ(x)|² の広がりだったように、Δp の本当の意味は「|φ(p)|² の広がり」</strong>なんだ。2つは完全に対等で、証明したい Δx·Δp ≥ ℏ/2 は「<strong>ψ と φ の両方を同時に細くはできない</strong>」と言い換えられる。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="psiphi3d" role="img" aria-label="同じ状態を場所の言葉と波長の言葉で描いた3D図。上段はガウス波束 ψ(x) の針の列で、足元に |ψ(x)|² の山とその幅 Δx。下段はその運動量版 |φ(p)|² の山とその幅 Δp。スライダーで Δx を細くすると Δp が太り、積 Δx·Δp は常に ℏ/2。中心の運動量 p₀ を変えると針の巻きと φ の山の位置だけが動き、|ψ|² は変わらない。ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="pp-dx">ψ の山の幅 Δx</label>
+          <input type="range" id="pp-dx" min="0.4" max="2.5" step="0.01" value="1" aria-label="位置の広がり Δx">
+          <span class="val" id="pp-dxv">1.00</span>
+          <label for="pp-p0">混ぜる波の中心の運動量 p₀</label>
+          <input type="range" id="pp-p0" min="-2" max="2" step="0.01" value="1" aria-label="中心の運動量 p₀">
+          <span class="val" id="pp-p0v">＋1.00</span>
+        </div>
+        <div class="readout"><span id="pp-out">Δx ＝ 1.00、Δp ＝ 0.50、Δx·Δp ＝ 0.500 ＝ ℏ/2（ℏ＝1 の単位。ガウス波束は等号ぴったり）</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">上段は<strong>場所の言葉</strong> ψ(x)。針の列（高さ＝実部、手前＝虚部）で、足元の赤い山が |ψ(x)|²、その幅が <strong>Δx</strong>。下段は同じ状態を<strong>波長の言葉</strong>で書いた φ(p)。|φ(p)|² は「運動量 p の平面波をどれだけ混ぜたか」の山で、その幅が <strong>Δp</strong>。Δx を細くすると、細い山を作るのに多くの波長が要るので Δp が太り、積 Δx·Δp はいつも ℏ/2（ガウス波束は等号ぴったり）――<strong>両方を同時に細くはできない</strong>。p₀ を動かすと針の巻き（波長）が変わって φ の山が横へ動くが、|ψ(x)|² の山はまったく変わらない。φ(p) が「ψ に p を代入したもの」ではなく、別の関数だということが見て取れる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -714,6 +731,124 @@
   var queued = false;
   function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
   sl.addEventListener('input', invalidate);
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+})();
+</script>
+<script>
+/* ψ(x) と φ(p)：同じ状態を「場所の言葉」と「波長の言葉」で書く。
+   上段：ガウス波束 ψ(x)＝A e^(−x²/4Δx²) e^(ip₀x) の針の列（高さ＝実部、手前＝虚部）と、足元に |ψ(x)|²（幅 Δx）。
+   下段：その φ(p) の |φ(p)|²（中心 p₀、幅 Δp＝ℏ/2Δx）。ℏ＝1 */
+(function(){
+  var cv = document.getElementById('psiphi3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sdx = document.getElementById('pp-dx'), sdxv = document.getElementById('pp-dxv');
+  var sp0 = document.getElementById('pp-p0'), sp0v = document.getElementById('pp-p0v');
+  var out = document.getElementById('pp-out');
+  var XW = 16, PW = 8, XS = 24, N = 64, HZ = 2.6, DIM = 2.3, HP = 3.4;
+  var yaw = 0.34, pitch = -0.52, W = 0, H = 0, sc = 1;
+  var C = { gold: '#c9a24a', goldD: '#a6742a', env: 'rgba(201,162,74,.7)', red: '#b5504a', dens: 'rgba(181,80,74,.9)', densFill: 'rgba(181,80,74,.16)',
+            blue: '#2f6fa6', blueFill: 'rgba(47,111,166,.16)', muted: '#8a7a5c', ink: '#241d12', tick: 'rgba(138,122,92,.6)' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function fillPoly(pts, color) {
+    ctx.fillStyle = color; ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.closePath(); ctx.fill();
+  }
+  /* ψ(x)：大きさ e^(−x²/4Δx²)、向き p₀x */
+  function psi(x, dx, p0) { var a = Math.exp(-x * x / (4 * dx * dx)); return [a * Math.cos(p0 * x), a * Math.sin(p0 * x)]; }
+  function dens(x, dx) { return Math.exp(-x * x / (2 * dx * dx)); }
+  function phi2(p, dx, p0) { var dp = 1 / (2 * dx); var u = (p - p0) / dp; return Math.exp(-u * u / 2); }   /* |φ(p)|²（高さは1に正規化） */
+
+  function draw() {
+    var dx = +sdx.value, p0 = +sp0.value, dp = 1 / (2 * dx), i, u, pts, nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    var ax = W * 0.5, ay1 = H * 0.27, ay2 = H * 0.83;
+    /* ---- 上段：ψ(x) の針の列 ---- */
+    function P(uu, re, im) { var p = rot((uu - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay1 + p[1]]; }
+    function X(uu) { return (uu - 0.5) * XW; }
+    poly([P(-0.04, 0, 0), P(1.04, 0, 0)], C.muted, 1);
+    /* |ψ|²：足元に赤 */
+    pts = []; for (i = 0; i <= 140; i++) { u = i / 140; pts.push(P(u, -1.5 + 0.9 * dens(X(u), dx), 0)); }
+    fillPoly(pts.concat([P(1, -1.5, 0), P(0, -1.5, 0)]), C.densFill);
+    poly(pts, C.dens, 1.6, [4, 3]);
+    poly([P(0, -1.5, 0), P(1, -1.5, 0)], 'rgba(181,80,74,.4)', 1);
+    /* Δx のブレース（山の幅 ±Δx） */
+    var ua = 0.5 - dx / XW, ub = 0.5 + dx / XW, hb = -1.5 + 0.9 * Math.exp(-0.5);
+    poly([P(ua, hb, 0), P(ua, hb - 0.25, 0), P(ub, hb - 0.25, 0), P(ub, hb, 0)], C.red, 1.2);
+    var bl = P(0.5, hb - 0.25, 0); text(bl[0], bl[1] + 11, 'Δx ＝ ' + dx.toFixed(2), C.red, SUB);
+    /* 針 */
+    for (i = 0; i <= N; i++) {
+      u = i / N; var v = psi(X(u), dx, p0), b = P(u, 0, 0), tp = P(u, v[0], v[1]);
+      ctx.strokeStyle = C.gold; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = C.goldD; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.7, 0, 7); ctx.fill();
+    }
+    pts = []; for (i = 0; i <= 240; i++) { u = i / 240; var v2 = psi(X(u), dx, p0); pts.push(P(u, v2[0], v2[1])); } poly(pts, C.env, 1.4);
+    var o = P(-0.04, 0, 0), aY = P(-0.04, 1.25, 0), aZ = P(-0.04, 0, 1.25), aX = P(1.04, 0, 0), aD = P(1.03, -1.5, 0);
+    poly([o, aY], C.muted, 1.2); poly([o, aZ], C.muted, 1.2);
+    text(aY[0] + (nar ? 5 : -5), aY[1], '実部', C.muted, SUB, nar ? 'left' : 'right'); text(aZ[0] + (nar ? 4 : -4), aZ[1] + 9, '虚部', C.muted, SUB, nar ? 'left' : 'center'); text(aX[0] + 6, aX[1] + 2, 'x', C.muted, SUB, 'left');
+    text(aD[0] + 6, aD[1], '|ψ(x)|²', C.red, SUB, 'left');
+    /* ---- 下段：|φ(p)|² のグラフ（p・高さ の平面） ---- */
+    function Q(uu, y) { var p = rot((uu - 0.5) * XS, HP * y, 0); return [ax + p[0], ay2 + p[1]]; }
+    function Pp(uu) { return (uu - 0.5) * PW; }
+    var o2 = Q(0, 0), aX2 = Q(1.06, 0), aY2 = Q(0, 1.15);
+    poly([o2, aX2], C.muted, 1.2); poly([o2, aY2], C.muted, 1.2);
+    text(aX2[0] + 6, aX2[1] + 2, 'p', C.muted, SUB, 'left'); text(aY2[0] + (nar ? 5 : -5), aY2[1], '|φ(p)|²', C.blue, SUB, nar ? 'left' : 'right');
+    /* p＝0 の目盛り */
+    poly([Q(0.5, 0), Q(0.5, -0.06)], C.muted, 1); var z = Q(0.5, -0.06); text(z[0], z[1] + 9, '0', C.muted, SUB);
+    pts = []; for (i = 0; i <= 160; i++) { u = i / 160; pts.push(Q(u, phi2(Pp(u), dx, p0))); }
+    fillPoly(pts.concat([Q(1, 0), Q(0, 0)]), C.blueFill);
+    poly(pts, C.blue, 2);
+    /* Δp のブレース */
+    var va = 0.5 + (p0 - dp) / PW, vb = 0.5 + (p0 + dp) / PW, hp = Math.exp(-0.5);
+    poly([Q(va, hp), Q(va, hp + 0.22), Q(vb, hp + 0.22), Q(vb, hp)], C.blue, 1.2);
+    var bl2 = Q((va + vb) / 2, hp + 0.22); text(bl2[0], bl2[1] - 10, 'Δp ＝ ' + dp.toFixed(2), C.blue, SUB);
+    poly([Q(0.5 + p0 / PW, 0), Q(0.5 + p0 / PW, 1)], C.tick, 1, [3, 3]);
+    var pl = Q(0.5 + p0 / PW, 0); text(pl[0], pl[1] + 12, 'p₀', C.muted, SUB);
+    /* 見出し */
+    text(ax, H * 0.045, nar ? 'ψ(x)：場所の言葉（針の列。足元の赤 ＝ |ψ(x)|²）' : 'ψ(x)：同じ状態を「場所の言葉」で書く（針の列。足元の赤が |ψ(x)|²、その幅が Δx）', C.goldD, TITLE);
+    text(ax, H * 0.53, nar ? 'φ(p)：波長の言葉（|φ(p)|² ＝ どの p をどれだけ混ぜたか）' : 'φ(p)：同じ状態を「波長の言葉」で書く（|φ(p)|² ＝ どの運動量 p の波をどれだけ混ぜたか、その幅が Δp）', C.blue, TITLE);
+    text(ax, H * 0.975, nar ? 'ψ を細くすると φ が太る。同時には細くできない' : 'ψ の山を細くすると φ の山が太り、φ を細くすると ψ が太る――両方を同時に細くはできない', C.ink, SUB);
+    sdxv.textContent = dx.toFixed(2); sp0v.textContent = (p0 >= 0 ? '＋' : '−') + Math.abs(p0).toFixed(2);
+    out.textContent = 'Δx ＝ ' + dx.toFixed(2) + '、Δp ＝ ' + dp.toFixed(2) + '、Δx·Δp ＝ ' + (dx * dp).toFixed(3) + ' ＝ ℏ/2（ℏ＝1 の単位。ガウス波束は等号ぴったり）';
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.0, 430)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 33;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  sdx.addEventListener('input', invalidate); sp0.addEventListener('input', invalidate);
 
   var dragging = false, lx = 0, ly = 0;
   function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
