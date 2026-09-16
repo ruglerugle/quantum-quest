@@ -28,12 +28,13 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
-  .kq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .kq-svg .wave{fill:none;stroke:var(--gold);stroke-width:1.5}
   .kq-svg .base{stroke:var(--line);stroke-width:1}
-  .kq-svg .bar{fill:rgba(217,164,65,.35);stroke:var(--gold-dark);stroke-width:.8}
+  .kq-svg .bar{fill:rgba(217,164,65,.35);stroke:var(--gold-dark);stroke-width:.6}
+  .kq-svg .guide{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
   .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
-  .kq-svg .paxis{stroke:var(--muted);stroke-width:1.5}
+  .kq-svg .paxis{stroke:var(--muted);stroke-width:1.2}
   .kq-svg .pah{fill:var(--muted)}
   /* 実験室図の座標軸オーバーレイ */
   .axes-svg .axw{stroke:#fff;stroke-opacity:.8;stroke-width:8;fill:none;stroke-linecap:round}
@@ -53,6 +54,16 @@
   .axes-svg .edash{stroke:#241d12;stroke-width:2.5;stroke-dasharray:7 7;fill:none}
   .axes-svg .axw2{stroke:#fff;stroke-opacity:.65;stroke-width:4.5;fill:none;stroke-linecap:round}
   .axes-svg .edash2{stroke:#241d12;stroke-width:1.6;stroke-dasharray:5 6;fill:none;opacity:.85}
+  .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
+    max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
+  .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
+  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+  @media (max-width:560px){
+    .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
+    .sim-ctrl label{grid-column:1 / -1;white-space:normal}
+  }
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -257,22 +268,28 @@
 
       <div class="diagram-box">
         <svg class="kq-svg" viewBox="0 0 320 192" width="100%" role="img" aria-label="横軸が位置x、縦軸が確率密度のグラフ。なめらかな山なりの曲線の下に細い短冊が並んでいて、短冊の面積を足し合わせるとその区間で電子が見つかる確率になることを示している">
-          <text class="strong" x="170" y="15" text-anchor="middle">細い短冊に切って、足す</text>
+          <text class="strong" x="170" y="15" text-anchor="middle">細い短冊に切って、足す（区間 a〜b で見つかる確率）</text>
           <line class="paxis" x1="40" y1="150" x2="303" y2="150"></line>
           <polygon class="pah" points="311,150 300,146 300,154"></polygon>
           <line class="paxis" x1="40" y1="150" x2="40" y2="38"></line>
           <polygon class="pah" points="40,30 36,41 44,41"></polygon>
           <text class="strong" x="46" y="34">確率密度 |ψ(x)|²</text>
           <text class="label" x="300" y="168" text-anchor="end">位置 x</text>
-          <rect class="bar" x="120" y="105.8" width="16" height="44.2"></rect>
-          <rect class="bar" x="136" y="79.2" width="16" height="70.8"></rect>
-          <rect class="bar" x="152" y="59.0" width="16" height="91.0"></rect>
-          <rect class="bar" x="168" y="56.5" width="16" height="93.5"></rect>
-          <rect class="bar" x="184" y="73.0" width="16" height="77.0"></rect>
+          <g id="pdf-strips"></g>
+          <line class="guide" x1="120" y1="150" x2="120" y2="52"></line>
+          <line class="guide" x1="200" y1="150" x2="200" y2="52"></line>
+          <text class="label" x="120" y="164" text-anchor="middle">a</text>
+          <text class="label" x="200" y="164" text-anchor="middle">b</text>
           <polyline class="wave" points="40,149.9 42,149.9 44,149.9 46,149.9 48,149.9 50,149.8 52,149.8 54,149.7 56,149.7 58,149.6 60,149.5 62,149.4 64,149.3 66,149.1 68,149.0 70,148.8 72,148.5 74,148.3 76,147.9 78,147.6 80,147.2 82,146.7 84,146.2 86,145.6 88,144.9 90,144.1 92,143.2 94,142.3 96,141.2 98,140.0 100,138.7 102,137.2 104,135.7 106,133.9 108,132.1 110,130.1 112,127.9 114,125.6 116,123.2 118,120.6 120,117.9 122,115.1 124,112.1 126,109.0 128,105.8 130,102.6 132,99.2 134,95.9 136,92.5 138,89.1 140,85.7 142,82.4 144,79.2 146,76.0 148,73.0 150,70.1 152,67.5 154,65.0 156,62.7 158,60.8 160,59.0 162,57.6 164,56.5 166,55.7 168,55.2 170,55.0 172,55.2 174,55.7 176,56.5 178,57.6 180,59.0 182,60.8 184,62.7 186,65.0 188,67.5 190,70.1 192,73.0 194,76.0 196,79.2 198,82.4 200,85.7 202,89.1 204,92.5 206,95.9 208,99.2 210,102.6 212,105.8 214,109.0 216,112.1 218,115.1 220,117.9 222,120.6 224,123.2 226,125.6 228,127.9 230,130.1 232,132.1 234,133.9 236,135.7 238,137.2 240,138.7 242,140.0 244,141.2 246,142.3 248,143.2 250,144.1 252,144.9 254,145.6 256,146.2 258,146.7 260,147.2 262,147.6 264,147.9 266,148.3 268,148.5 270,148.8 272,149.0 274,149.1 276,149.3 278,149.4 280,149.5 282,149.6 284,149.7 286,149.7 288,149.8 290,149.8 292,149.9 294,149.9 296,149.9 298,149.9 300,149.9 302,150.0 304,150.0"></polyline>
-          <text class="label" x="110" y="185">短冊の面積を全部足す ＝ 積分 ∫</text>
+          <text class="label" id="pdf-note" x="170" y="185" text-anchor="middle">短冊の面積を全部足す ＝ 積分 ∫</text>
         </svg>
-        <div class="diagram-caption">横軸が位置 <strong>x</strong>、縦軸が<strong>確率密度 |ψ(x)|²</strong>。ある区間で電子が見つかる確率は、その区間の<strong>曲線の下の面積</strong>にあたる。面積は「幅 dx の短冊 |ψ(x)|²·dx」を足し合わせたもので、短冊を無限に細くしたものが積分 ∫|ψ(x)|² dx</div>
+        <div class="sim-ctrl">
+          <label for="pdf-dx">短冊の幅 dx</label>
+          <input type="range" id="pdf-dx" min="1" max="20" step="0.5" value="8" aria-label="短冊の幅">
+          <span class="val" id="pdf-dxv">8.0</span>
+        </div>
+        <div class="readout"><span id="pdf-sum">短冊 10 本の合計 ≈ 0.742</span><span id="pdf-int">積分の値 ∫ₐᵇ|ψ|²dx ＝ 0.741</span></div>
+        <div class="diagram-caption">横軸が位置 <strong>x</strong>、縦軸が<strong>確率密度 |ψ(x)|²</strong>。区間 a〜b で電子が見つかる確率は、その区間の<strong>曲線の下の面積</strong>にあたる。面積は「幅 dx の短冊 |ψ(x)|²·dx」を足し合わせたもの。スライダーで短冊を細くしていくと、本数が増えて合計が積分の値 ∫|ψ(x)|² dx に近づく――短冊を無限に細くしたものが積分</div>
       </div>
 
       <div class="dialogue-scene">
@@ -391,6 +408,34 @@
 </div>
 
 <script src="js/progress.js"></script>
+<script>
+  /* 細い短冊に切って足す：区間 a〜b（x＝120〜200）を幅 dx の短冊で敷き詰め、合計が積分の値に近づく様子 */
+  (function () {
+    var g = document.getElementById('pdf-strips'), sl = document.getElementById('pdf-dx'), slv = document.getElementById('pdf-dxv');
+    var sumEl = document.getElementById('pdf-sum'), intEl = document.getElementById('pdf-int');
+    if (!g || !sl) return;
+    var X0 = 120, X1 = 200, BASE = 150, AMP = 95, MU = 170, SG = 48, ns = 'http://www.w3.org/2000/svg';
+    function f(x) { var u = (x - MU) / SG; return AMP * Math.exp(-u * u); }            /* 曲線の高さ（px） */
+    var TOTAL = AMP * SG * Math.sqrt(Math.PI);                                         /* 曲線全体の下の面積（確率1に相当） */
+    function erf(z) { var t = 1 / (1 + 0.3275911 * Math.abs(z)), y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-z * z); return z < 0 ? -y : y; }
+    var EXACT = 0.5 * (erf((X1 - MU) / SG) - erf((X0 - MU) / SG));                     /* 区間の積分 ÷ 全体 */
+    function draw() {
+      var dx = +sl.value, n = Math.round((X1 - X0) / dx), w = (X1 - X0) / n, sum = 0, i;
+      while (g.firstChild) g.removeChild(g.firstChild);
+      for (i = 0; i < n; i++) {
+        var x = X0 + i * w, hgt = f(x + w / 2), r = document.createElementNS(ns, 'rect');   /* 高さは短冊の真ん中で測る */
+        r.setAttribute('class', 'bar'); r.setAttribute('x', x.toFixed(2)); r.setAttribute('y', (BASE - hgt).toFixed(2));
+        r.setAttribute('width', w.toFixed(2)); r.setAttribute('height', hgt.toFixed(2));
+        g.appendChild(r); sum += hgt * w;
+      }
+      slv.textContent = w.toFixed(1);
+      sumEl.textContent = '短冊 ' + n + ' 本の合計 ≈ ' + (sum / TOTAL).toFixed(3);
+      intEl.textContent = '積分の値 ∫ₐᵇ|ψ|²dx ＝ ' + EXACT.toFixed(3);
+    }
+    sl.addEventListener('input', draw);
+    draw();
+  })();
+</script>
 <script>KQ.initStagePage(2);</script>
 </body>
 </html>
