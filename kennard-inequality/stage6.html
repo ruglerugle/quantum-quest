@@ -192,9 +192,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 「すべての λ で I(λ) ≥ 0」から、判別式 D について言えることは？</p>
         <div class="choice-list">
-          <button class="choice-btn">D ≥ 0（解が必ず存在する）</button>
-          <button class="choice-btn">D ≤ 0（D が正だと横軸と2点で交わり、その間で I(λ) が負になって矛盾するから）</button>
-          <button class="choice-btn">D ＝ 1（判別式は常に1になる）</button>
+          <button class="choice-btn">D ≥ 0（横軸と交わる点、つまり I(λ)＝0 になる λ が必ず存在するから）</button>
+          <button class="choice-btn">D ≤ 0（D が正だと横軸と2点で交わり、その間で I(λ) が負になるから）</button>
+          <button class="choice-btn">D ＝ 1（判別式は λ² の係数と定数項の積の4倍で、常に1になるから）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 下に凸の放物線が横軸を突き抜けると、交点の間で必ず負になる。「2乗の積分」は負になれないので、D ≤ 0 しか許されない。</div>
       </div>
@@ -202,8 +202,8 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. D ＝ 1 − 4(Δx)²(Δp)²/ℏ² ≤ 0 を整理すると？</p>
         <div class="choice-list">
-          <button class="choice-btn">Δx·Δp ≤ ℏ/2（ばらつきの積には上限がある）</button>
-          <button class="choice-btn">Δx＋Δp ≥ ℏ/2（ばらつきの和に下限がある）</button>
+          <button class="choice-btn">Δx·Δp ≤ ℏ/2（ばらつきの積には上限があり、それを超えられない）</button>
+          <button class="choice-btn">Δx＋Δp ≥ ℏ/2（ばらつきの和には下限があり、それより小さくできない）</button>
           <button class="choice-btn">(Δx)²(Δp)² ≥ ℏ²/4、平方根をとって Δx·Δp ≥ ℏ/2</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 移項と平方根だけで、ケナードの定理 Δx·Δp ≥ ℏ/2 が完成する。1927年の物理学の最深部にとどめを刺したのは、中学校で習う解の公式から生まれる判別式だった。</div>
@@ -212,9 +212,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. Δx＝0（λ² の係数がゼロ）の場合はどうなる？</p>
         <div class="choice-list">
-          <button class="choice-btn">I(λ) が一次関数になり、λ を大きくすると必ず負になって矛盾。つまり Δx＝0 の波動関数はそもそも存在しない</button>
-          <button class="choice-btn">判別式が使えないので、その場合だけ定理は成り立たない</button>
-          <button class="choice-btn">Δp も0になって、つじつまが合う</button>
+          <button class="choice-btn">I(λ) が一次関数になり、λ を大きくすると必ず負になる矛盾。Δx＝0 の波は存在しない</button>
+          <button class="choice-btn">判別式が使えないので、その場合だけ定理は成り立たず、Δx·Δp はいくらでも小さくできてしまう</button>
+          <button class="choice-btn">Δp も同時に0になって積は 0＝0 で、不等式は別の形でつじつまが合う</button>
         </div>
         <div class="quiz-explain" hidden>正解！ I(λ)＝−λ＋(Δp)²/ℏ² は λ が大きいと必ず負になり、「すべての λ で0以上」に矛盾する。位置が完全に確定した状態は量子力学に存在しない――証明の穴を塞ぐと、おまけの定理まで手に入った。</div>
       </div>

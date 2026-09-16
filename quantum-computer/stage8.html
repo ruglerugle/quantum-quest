@@ -355,9 +355,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 量子コンピュータにとってデコヒーレンスが致命的なのはなぜ？</p>
         <div class="choice-list">
-          <button class="choice-btn">量子ビットが熱で壊れて、二度と使えなくなるから</button>
-          <button class="choice-btn">量子ビットの数が減ってしまい、計算できる問題が小さくなるから</button>
-          <button class="choice-btn">環境に手がかりが残ると道筋の区別がついてしまい、速さの源だった打ち消し合いが起きなくなるから</button>
+          <button class="choice-btn">量子ビットが熱で物理的に壊れて、冷やし直しても二度と重ね合わせを作れなくなるから</button>
+          <button class="choice-btn">量子ビットの数が減ってしまい、計算できる問題の大きさがどんどん小さくなっていくから</button>
+          <button class="choice-btn">環境に手がかりが残ると道筋の区別がつき、速さの源だった打ち消し合いが起きなくなるから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 量子コンピュータの速さは、いらない候補の矢印を打ち消す干渉から来ていた。手がかりが漏れれば「それぞれ2乗してから足す」に切り替わり、干渉が消える。計算の中身そのものが失われるので、部品が壊れるより深刻だ。</div>
       </div>
@@ -365,9 +365,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. シンドローム測定が「守りたい情報を壊さずに誤りを見つけられる」のはなぜ？</p>
         <div class="choice-list">
-          <button class="choice-btn">各量子ビットの値ではなく「隣どうしが同じか違うか」だけを測るから。元の模様ではどちらの行でも隣どうしは同じなので、この答えは中身について何も語らない</button>
-          <button class="choice-btn">測定してもすぐ元に戻せる特別な測定装置を使うから</button>
-          <button class="choice-btn">誤りが起きた瞬間に自動で警報が鳴る仕組みがあるから</button>
+          <button class="choice-btn">「隣どうしが同じか違うか」だけを測るから。元の模様ではどの行でも隣は同じなので、この答えは中身を語らない</button>
+          <button class="choice-btn">測定してもすぐ元に戻せる特別な測定装置を使い、読んだ直後に矢印を測定前の向きにそっくり書き戻しているから</button>
+          <button class="choice-btn">誤りが起きた瞬間に自動で警報が鳴る仕組みが組み込まれていて、量子ビット自体にはただの一度も触れないから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ ドイチュのアルゴリズムで「f(0) でも f(1) でもなく、2つが同じか違うかだけを読んだ」のとまったく同じ発想だ。全体についての性質だけを取り出せば、個々の中身は覗かずに済む。この一手で、量子誤り訂正は可能になった。</div>
       </div>
@@ -375,9 +375,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. 閾値定理が言っていることは？</p>
         <div class="choice-list">
-          <button class="choice-btn">量子ビットを増やせば増やすほど、必ず誤りは減っていく</button>
-          <button class="choice-btn">部品1個あたりの誤り率がしきい値より小さければ、規模を大きくするほど論理量子ビットの誤り率をいくらでも小さくできる。しきい値より悪ければ、いくら並べても減らない</button>
-          <button class="choice-btn">誤り訂正をしても、訂正作業で増える誤りのせいで結局は追いつかれてしまう</button>
+          <button class="choice-btn">量子ビットを増やせば増やすほど、部品の誤り率がどうであれ必ず論理量子ビットの誤りは減っていき、上限もない</button>
+          <button class="choice-btn">部品の誤り率がしきい値より小さければ、規模を大きくするほど論理誤りをいくらでも下げられる。悪ければ並べても減らない</button>
+          <button class="choice-btn">誤り訂正をしても、訂正作業そのもので増える誤りのせいで結局は追いつかれ、規模を大きくするほどかえって悪化する</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 訂正作業そのものが生む誤りまで数えたうえでの定理で、量子コンピュータが原理的に可能だと分かった決定的な結果だ。表面符号のしきい値は約1%。いまの実機はちょうどその一線をまたごうとしている段階にある。</div>
       </div>

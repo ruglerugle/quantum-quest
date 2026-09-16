@@ -250,9 +250,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 量子ビットに直接聞かず、わざわざ隣の共振器（笛）の音程を読む理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">共振器のほうが量子ビットより大きくて扱いやすいから</button>
-          <button class="choice-btn">直接聞くとエネルギーを吸い取って状態を壊す一発勝負になる。笛との押し合いはエネルギー交換なしの音程のずれだけなので、壊さず読めて読み直しもきくから</button>
-          <button class="choice-btn">量子ビットは電波を反射しない性質があるから</button>
+          <button class="choice-btn">共振器のほうが量子ビットより物理的に大きくて配線しやすく、電波を当てて返事を受け取る操作もはるかに扱いやすいから</button>
+          <button class="choice-btn">直接聞くと状態を壊す一発勝負。笛との押し合いはエネルギー交換のない音程のずれだけなので、壊さず読み直せるから</button>
+          <button class="choice-btn">量子ビットは電波を反射しない性質があり、直接電波を当てても返事が何も返ってこないので読めないから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 量子ビット（5GHz）と笛（7GHz）はわざとリズムをずらしてあり、エネルギーの乗り移りが起きない。読めるのは押し合いによる音程のずれだけだが、それで十分に0/1が区別でき、状態のエネルギーを壊さない（量子非破壊測定）。検出器は完璧ではないので「読み直せる」ことの価値は大きい。</div>
       </div>
@@ -260,9 +260,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. 増幅の鎖の最初の1段を、わざわざ10mKに置いた超伝導の増幅器にする理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">10mKに置くとどんな増幅器でも騒音がゼロになるから</button>
-          <button class="choice-btn">超伝導の増幅器は増幅率が半導体よりはるかに大きいから</button>
-          <button class="choice-btn">1段目が足す騒音は小声のままの信号にかぶさり、以後ずっと信号と一緒に増幅されるので、声と騒音の比が1段目で確定する。光子数個の声には量子限界すれすれの静かさが必要だから</button>
+          <button class="choice-btn">10mKに置くとどんな増幅器でも熱の騒音がほぼゼロになり、信号だけをきれいに増やせるようになってくれるから</button>
+          <button class="choice-btn">超伝導の増幅器は増幅率が半導体よりはるかに大きく、1段だけで必要な強さまで一気に増やせるから</button>
+          <button class="choice-btn">1段目が足す騒音は小声の信号にかぶさって以後一緒に増幅されるので、声と騒音の比が1段目で確定するから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 2段目以降の騒音は育った信号に足されるので相対的に無害だが、1段目の騒音は取り返しがつかない。熱で震える電子（騒音源）がいない超伝導製のパラメトリック増幅器なら、足す雑音を不確定性原理が命じる下限近くまで抑えられる。増幅率そのものは約100倍と控えめで、大増幅は後段の半導体に任せる。</div>
       </div>
@@ -271,8 +271,8 @@
         <p class="quiz-q">Q3. 読み出しの電波（プローブ）を光子数個ぶんに抑える理由は？</p>
         <div class="choice-list">
           <button class="choice-btn">強く当てると押し合いが乱暴になって量子ビットを蹴飛ばし、測定自体が誤りを作ってしまうから</button>
-          <button class="choice-btn">強い電波を作る装置が高価だから</button>
-          <button class="choice-btn">光子が多いと共振器に入りきらないから</button>
+          <button class="choice-btn">強い電波を作る装置は高価で大型になり、冷蔵庫の中に収めることがどうしてもできないから</button>
+          <button class="choice-btn">光子が多いと共振器に入りきらずにあふれ、余った光子が隣の量子ビットにまで流れ込んで乱すから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 声が大きいほど読み取りは楽になるが、プローブが強すぎると量子ビットの状態そのものを乱してしまい、非破壊のはずの測定が誤りの源になる。「蹴飛ばさない上限」ぎりぎりの弱さで聞くしかなく、だからこそ後段に量子限界の増幅の鎖が必要になる。</div>
       </div>

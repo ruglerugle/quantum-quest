@@ -579,9 +579,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 平面波 e<sup>ikx</sup> に演算 −iℏ d/dx を施すと、何が起きる？</p>
         <div class="choice-list">
-          <button class="choice-btn">波が打ち消されて0になる</button>
-          <button class="choice-btn">波の形はそのまま、運動量の値 p＝ℏk が係数として前に出てくる</button>
-          <button class="choice-btn">波長が半分の波に変わる</button>
+          <button class="choice-btn">波が微分で打ち消されて0になり、運動量の値は読み取れなくなる</button>
+          <button class="choice-btn">波の形はそのまま、運動量の値 p＝ℏk が係数として前に出る</button>
+          <button class="choice-btn">波長が半分の波に変わり、運動量がちょうど2倍の状態になる</button>
         </div>
         <div class="quiz-explain" hidden>正解！ d/dx e<sup>ikx</sup>＝ik e<sup>ikx</sup> に −iℏ を掛けると ℏk e<sup>ikx</sup>＝p e<sup>ikx</sup>。波に「運動量は？」と質問して答えを書いてもらう操作――これが運動量演算子だ。</div>
       </div>
@@ -590,8 +590,8 @@
         <p class="quiz-q">Q2. 波長が短い波ほど、運動量は？</p>
         <div class="choice-list">
           <button class="choice-btn">大きい（p＝h/λ なので波長と運動量は反比例）</button>
-          <button class="choice-btn">小さい</button>
-          <button class="choice-btn">波長と運動量は無関係</button>
+          <button class="choice-btn">小さい（波長が短い＝波のエネルギーが小さい）</button>
+          <button class="choice-btn">波長と運動量は無関係（運動量は速さだけで決まる）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ ド・ブロイの関係 p＝h/λ。波長が短い＝波形が細かい＝傾きが急、が高い運動量に対応する。</div>
       </div>
@@ -599,9 +599,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. 「微分」が運動量の検出器になる理由として正しいのは？</p>
         <div class="choice-list">
-          <button class="choice-btn">微分すると波の面積が求まるから</button>
-          <button class="choice-btn">微分すると波の高さの最大値が分かるから</button>
-          <button class="choice-btn">運動量は波の細かさ（波長）に対応し、微分は波形の傾き＝細かさを読み取る道具だから</button>
+          <button class="choice-btn">微分すると波の面積が求まり、面積の大きさがそのまま運動量になるから</button>
+          <button class="choice-btn">微分すると波の高さの最大値が分かり、高さが大きい波ほど運動量が大きいから</button>
+          <button class="choice-btn">運動量は波の細かさ（波長）に対応し、微分は傾き＝細かさを読み取る道具だから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 波長の短い波ほど傾きが急。傾きを読む微分は、波に刻まれた「細かさ＝運動量」の情報を取り出せる。この直感は次のステージの補題「(Δp)²＝ℏ²∫|ψ′|²dx」で完璧な形になる。</div>
       </div>

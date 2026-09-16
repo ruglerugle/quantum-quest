@@ -250,9 +250,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. H が |1⟩ に当たったときだけマイナスが現れるのはなぜ？</p>
         <div class="choice-list">
-          <button class="choice-btn">H が入力を調べて、1のときだけ向きを反転する仕組みになっているから</button>
-          <button class="choice-btn">|1⟩ は |0⟩ よりエネルギーが高く、その分が向きに現れるから</button>
-          <button class="choice-btn">H は常に「新しい |1⟩ の矢印＝(a−b)×0.71」という差の式を当てており、|1⟩（a=0, b=1）を入れると引き算の項だけが残るから</button>
+          <button class="choice-btn">H が入力を調べて、1のときだけ向きを反転する仕組みになっているから（ゲート内部で条件分岐している）</button>
+          <button class="choice-btn">|1⟩ は |0⟩ よりエネルギーが高く、その分のエネルギーが矢印の向きの反転として現れるから</button>
+          <button class="choice-btn">H はいつも「新 |1⟩＝(a−b)×0.71」を当てており、|1⟩（a=0, b=1）では引き算の項だけ残るから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ H は入力を見て場合分けなどしていない。「和 (a＋b)×0.71 と差 (a−b)×0.71 を作る」という同じ式をどんな入力にも当てるだけで、マイナスは差の式が最初から持っている引き算だ。</div>
       </div>
@@ -262,7 +262,7 @@
         <div class="choice-list">
           <button class="choice-btn">|1⟩ にたどり着く2本の道筋の矢印が正反対を向いていて、足すとゼロになるから</button>
           <button class="choice-btn">H は確率を50%対50%にするゲートなので、2回当てれば平均されて0に落ち着くから</button>
-          <button class="choice-btn">量子ビットは放っておくと |0⟩ に戻る性質があるから</button>
+          <button class="choice-btn">量子ビットは放っておくと |0⟩ に戻る性質があり、2回目の H はそれを待つだけだから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ |0⟩ 行には同じ向きの矢印が2本届いて強め合い（0.5＋0.5＝1）、|1⟩ 行には正反対の矢印が2本届いて打ち消し合う（0.5と、正反対の0.5で0）。確率だけを足す世界では、この「ゼロにする」技は絶対に使えない。</div>
       </div>
@@ -272,7 +272,7 @@
         <div class="choice-list">
           <button class="choice-btn">測定しない場合と同じく、100%で0が出る</button>
           <button class="choice-btn">50%で0、50%で1になる</button>
-          <button class="choice-btn">100%で1が出る</button>
+          <button class="choice-btn">100%で1が出る（測定で矢印が反転するから）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 測定すると手がかりが残り、2本の道筋は区別がついてしまうので干渉できない。0が出ても1が出ても、そこに H を当てれば五分五分。覗いた瞬間に打ち消し合いが失われる――これが、量子計算の途中を覗いてはいけない理由だ。</div>
       </div>

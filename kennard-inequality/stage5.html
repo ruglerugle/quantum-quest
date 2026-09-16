@@ -240,8 +240,8 @@
         <p class="quiz-q">Q1. I(λ)＝∫|λxψ＋ψ′|²dx が、どんな λ でも必ず0以上になる理由は？</p>
         <div class="choice-list">
           <button class="choice-btn">中身が絶対値の2乗で、0以上の量を足し集めた積分だから</button>
-          <button class="choice-btn">λ が正の数に限られているから</button>
-          <button class="choice-btn">実験で確かめられているから</button>
+          <button class="choice-btn">λ が正の数に限られていて、負になる λ は最初から考えないから</button>
+          <button class="choice-btn">実験で確かめられていて、負になった例がないから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 「2乗は0以上」――STAGE1でばらつきを定義したときと同じ、いちばん素朴な事実が証明全体を支えている。(a−b)² ≥ 0 から a²＋b² ≥ 2ab を出した狩りの型の、積分版だ。</div>
       </div>
@@ -249,9 +249,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. 2乗する中身として「xψ と ψ′ の混合」を選ぶ理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">xψ と ψ′ だけが実数の関数だから</button>
-          <button class="choice-btn">この2つは足すと必ず0になるから</button>
-          <button class="choice-btn">ゴールの (Δx)² と (Δp)²/ℏ² が、それぞれ xψ と ψ′ の「2乗の積分」だから（ゴールからの逆算）</button>
+          <button class="choice-btn">xψ と ψ′ だけが必ず実数の関数になり、絶対値の2乗を取っても複素数が出てこないから</button>
+          <button class="choice-btn">この2つは足すと必ず0になり、2乗の中身が消えて計算がいちばん簡単になるから</button>
+          <button class="choice-btn">ゴールの (Δx)² と (Δp)²/ℏ² が、xψ と ψ′ それぞれの「2乗の積分」だから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 展開すれば |xψ|² と |ψ′|² の項が現れて、狙い通り (Δx)² と (Δp)² が式に登場する。さらにガウス波束では ψ′ が xψ の定数倍（ψ′＝−2a·xψ）になるので、この混合は「最良の波からのズレ」という意味まで持っている。</div>
       </div>
@@ -259,9 +259,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. 展開後の式 (Δx)²λ² − λ ＋ (Δp)²/ℏ² に現れる「−λ」の係数 −1 の出どころは？</p>
         <div class="choice-list">
-          <button class="choice-btn">λ の定義から自動的に出てくる</button>
-          <button class="choice-btn">クロス項の ∫x(|ψ|²)′dx に補題1（部分積分＋規格化条件）を使った結果</button>
-          <button class="choice-btn">ガウス波束の場合だけに成り立つ近似</button>
+          <button class="choice-btn">λ の定義から自動的に出てくる（λ は −1 を係数に持つように最初から選んだ）</button>
+          <button class="choice-btn">クロス項 ∫x(|ψ|²)′dx に補題1（部分積分＋規格化条件）を使った結果</button>
+          <button class="choice-btn">ガウス波束の場合だけに成り立つ近似で、一般の波形では別の値になる</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 「電子は必ずどこかにいる」という規格化条件が、部分積分を経由して −1 という数に化け、λ の1次の係数として証明の急所に座る。どんな波形でも同じ −1 になるのがポイントだ。</div>
       </div>

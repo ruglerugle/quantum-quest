@@ -268,9 +268,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 「量子コンピュータは全部の答えを同時に計算するから速い」という説明の、決定的に抜けている部分は？</p>
         <div class="choice-list">
-          <button class="choice-btn">同時に計算するには量子ビットがまだ足りない、という技術的な事情</button>
-          <button class="choice-btn">同時に計算するとエネルギーを大量に消費する、という事情</button>
-          <button class="choice-btn">読み出せる答えは1つだけなので、いらない候補の矢印を打ち消して欲しい候補を残す「干渉の設計」がないと速くならない、という点</button>
+          <button class="choice-btn">同時に計算するには量子ビットの数がまだまったく足りない、という技術的な事情が抜けている点</button>
+          <button class="choice-btn">同時に計算するとエネルギーを大量に消費して冷蔵庫が冷やしきれない、という事情が抜けている点</button>
+          <button class="choice-btn">読み出せる答えは1つだけなので、いらない候補を打ち消して欲しい候補を残す「干渉の設計」が要る点</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 重ね合わせて計算するところまでは誰でも書けるが、それだけでは測定でランダムに1つ出るだけ。ドイチュのアルゴリズムで決定的だったのは最後のアダマール――そこで、いらない側の矢印が必ずゼロになるよう設計されていた。</div>
       </div>
@@ -278,9 +278,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. 答えを書き込む2個目の量子ビットを |−⟩ にしておくと何が起きる？（位相キックバック）</p>
         <div class="choice-list">
-          <button class="choice-btn">2個目に f(x) の値が数字として書き込まれ、それを読めば答えが分かる</button>
+          <button class="choice-btn">2個目に f(x) の値が数字として書き込まれ、それを読めば答えが直接分かるようになる</button>
           <button class="choice-btn">2個目の状態は |−⟩ のまま変わらず、f(x)＝1 の行の矢印だけが正反対の向きになる</button>
-          <button class="choice-btn">2個目がもつれて、1個目の測定結果が完全にランダムになる</button>
+          <button class="choice-btn">2個目が1個目ともつれて、1個目の測定結果が完全にランダムになって何も分からなくなる</button>
         </div>
         <div class="quiz-explain" hidden>正解！ |−⟩ をひっくり返すと、矢印が2本ともまとめて反転した |−⟩ になる――状態の形は同じで、向きだけが変わる。だから答えは2個目には残らず、1個目の表の「向き」として跳ね返る。これがあとで干渉の材料になる。</div>
       </div>
@@ -288,9 +288,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. ドイチュのアルゴリズムの測定で「1」が出た。分かることは？</p>
         <div class="choice-list">
-          <button class="choice-btn">箱はバランスタイプ（f(0) と f(1) が違う）。ただし f(0) と f(1) それぞれの値は分からない</button>
-          <button class="choice-btn">f(1)＝1 である</button>
-          <button class="choice-btn">f(0)＝1 かつ f(1)＝1 である</button>
+          <button class="choice-btn">箱はバランスタイプ（f(0)≠f(1)）。ただし f(0)、f(1) それぞれの値は分からない</button>
+          <button class="choice-btn">f(1)＝1 である（測定で出た値がそのまま f(1) の値として書き込まれているから）</button>
+          <button class="choice-btn">f(0)＝1 かつ f(1)＝1 である（両方の入力を同時に計算した結果を読み出したから）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 得られたのは f(0) でも f(1) でもなく、「2つが同じか違うか」という全体についての1個の性質だけ。個々の値は干渉で消えている。読み出し口が1つしかない量子コンピュータで得をするには、こういう「まとめて1個」の問いを設計するしかない。</div>
       </div>

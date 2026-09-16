@@ -324,9 +324,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. ショアが指数加速を実現できて、グローバーが2次加速どまりなのはなぜ？</p>
         <div class="choice-list">
-          <button class="choice-btn">因数分解の問題には「くり返し」という構造があり、その構造と共鳴する干渉を設計できるから。構造のない探索ではそれができない</button>
-          <button class="choice-btn">ショアの方が新しいアルゴリズムで、技術が進歩したから</button>
-          <button class="choice-btn">ショアはもつれを使い、グローバーは使わないから</button>
+          <button class="choice-btn">因数分解には「くり返し」の構造があり、それと共鳴する干渉を設計できる。構造のない探索ではできない</button>
+          <button class="choice-btn">ショアの方が後に作られた新しいアルゴリズムで、そのぶん量子ビットを多数使う技術が進歩していたから</button>
+          <button class="choice-btn">ショアは多数の量子ビットをもつれさせて使い、グローバーはもつれをまったく使わずに探索するから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 量子コンピュータの速さは、いつも「いらない候補を打ち消し、欲しい候補を強め合わせる設計」から来る。その設計が強力に効くのは、問題の中に利用できる構造があるとき。万能の加速装置ではない、というのがこの旅の一貫した結論だ。</div>
       </div>
@@ -334,9 +334,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. 「いま集めて、あとで解読する」という脅威への現実的な対策は？</p>
         <div class="choice-list">
-          <button class="choice-btn">RSAの鍵の長さを2倍にする</button>
-          <button class="choice-btn">量子コンピュータが完成してから対応を始める</button>
-          <button class="choice-btn">量子コンピュータでも速く解けないと考えられている別の数学問題に暗号を乗せ替える（耐量子計算機暗号）</button>
+          <button class="choice-btn">RSAの鍵の長さを2倍にして、量子コンピュータでも解読に2倍の時間がかかるようにしておく</button>
+          <button class="choice-btn">量子コンピュータが実際に完成してから、そのとき最良の暗号に切り替える準備を始めれば間に合う</button>
+          <button class="choice-btn">量子コンピュータでも速く解けないと考えられる別の数学問題に暗号を乗せ替える（耐量子計算機暗号）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 鍵長を2倍にする対策が効くのはグローバー型の2次加速に対してだけで、ショアの指数加速には歯が立たない（鍵を長くしても同じように破られる）。だから問題そのものを取り替える必要がある。NISTは2024年に最初の耐量子計算機暗号の標準を発表し、移行はすでに始まっている。</div>
       </div>

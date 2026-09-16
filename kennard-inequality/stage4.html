@@ -198,9 +198,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 部分積分を使うと、∫f′g dx はどう書き換えられる？（ψ が絡む場合）</p>
         <div class="choice-list">
-          <button class="choice-btn">∫fg′dx（微分が移るだけで符号はそのまま）</button>
-          <button class="choice-btn">∫f′g′dx（両方に微分が付く）</button>
-          <button class="choice-btn">−∫fg′dx（微分が相手に移り、符号が反転する。境界項は遠方で消える）</button>
+          <button class="choice-btn">∫fg′dx（微分が相手に移るだけで、符号はそのまま変わらない。境界項も残る）</button>
+          <button class="choice-btn">∫f′g′dx（微分が両方に付く形になり、境界項は遠方で消える）</button>
+          <button class="choice-btn">−∫fg′dx（微分が相手に移って符号が反転する。境界項は遠方で消える）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 積の微分公式の逆再生で ∫f′g dx＝[fg]−∫fg′dx。波動関数は遠方でゼロだから境界項が消え、「押し付けると符号反転」だけが残る。</div>
       </div>
@@ -208,9 +208,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. 境界項 [fg] が消えるのはなぜ？</p>
         <div class="choice-list">
-          <button class="choice-btn">積分の定義でそう決められているから</button>
-          <button class="choice-btn">物理的な波動関数は遠方でゼロに近づくから（電子は無限の彼方にはいない）</button>
-          <button class="choice-btn">f と g がいつも等しいから</button>
+          <button class="choice-btn">積分の定義でそう決められていて、端の値は最初から数えに入れないから</button>
+          <button class="choice-btn">波動関数は遠方でゼロに近づくから（電子は無限の彼方にはいない）</button>
+          <button class="choice-btn">f と g がいつも等しく、[fg] は端どうしで打ち消し合うから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ [fg] は「両端での値の差」。電子がどこか有限の範囲に局在している以上、±∞ での値はゼロ。物理の事実が数学の計算を軽くしてくれる場面だ。</div>
       </div>
@@ -219,8 +219,8 @@
         <p class="quiz-q">Q3. 補題2「(Δp)²＝ℏ²∫|ψ′|²dx」が語っていることは？</p>
         <div class="choice-list">
           <button class="choice-btn">運動量のばらつきは、波形の傾きの2乗を足し集めた総量である</button>
-          <button class="choice-btn">運動量のばらつきは、波の高さの最大値で決まる</button>
-          <button class="choice-btn">運動量のばらつきは、波の面積で決まる</button>
+          <button class="choice-btn">運動量のばらつきは、波の高さの最大値の2乗に比例して決まる</button>
+          <button class="choice-btn">運動量のばらつきは、波の面積の2乗を足し集めた総量である</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 傾きの急な波形ほど Δp が大きい。「波の細かさ＝運動量」という直感が、部分積分によって正確な等式になった。</div>
       </div>

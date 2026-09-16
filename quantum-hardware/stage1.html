@@ -204,8 +204,8 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. コインの裏表が量子ビットとして使えない、いちばんの理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">裏と表という2つの状態を持っていないから</button>
-          <button class="choice-btn">重すぎて、ひっくり返す操作に時間がかかるから</button>
+          <button class="choice-btn">裏と表という2つの状態しか持っておらず、その中間の重ね合わせを作る余地がまったくないから</button>
+          <button class="choice-btn">重すぎて、ひっくり返す操作に時間がかかり、計算が実用的な速さにならないから</button>
           <button class="choice-btn">空気の分子や光が絶えずぶつかって手がかりを持ち去り、重ね合わせが一瞬で壊れるから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ コインは条件①（2状態）は満たしている。失格の理由は条件②。大きな物体には環境の粒子が絶え間なくぶつかり、「今どっち向きか」の手がかりを持ち去り続けるため、裏と表の重ね合わせは干渉できる時間を一瞬も確保できない。</div>
@@ -214,9 +214,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. 条件②（重ね合わせの維持）と条件③（外からの操作）の間にある「緊張関係」とは？</p>
         <div class="choice-list">
-          <button class="choice-btn">②は外界から完全に切り離せと要求し、③は外から触らせろと要求する。正反対の要求を両立させる必要がある</button>
-          <button class="choice-btn">②を満たす材料は高価で、③を満たす装置は安価なので、予算配分が難しい</button>
-          <button class="choice-btn">②は低温を要求し、③は高温を要求する</button>
+          <button class="choice-btn">②は外界から完全に切り離せと要求し、③は外から触らせろと要求する。正反対の要求の両立が必要</button>
+          <button class="choice-btn">②を満たす材料は高価で③を満たす装置は安価なので、限られた予算の配分をどちらに寄せるかが難しい</button>
+          <button class="choice-btn">②は絶対零度近くの低温を要求し、③は操作の合図を通すために高温を要求するので両立しない</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 密閉すれば操作できず、扉を開ければ手がかりが漏れる。だから「ふだんは外界に応答せず、特定の合図を送ったときだけ応答する」という鍵穴つきの箱のような性質を持つ物を探すことになる。これが量子ハードウェア設計の中心的ジレンマだ。</div>
       </div>
@@ -224,9 +224,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. 4条件のほかに「初期化」（最初に確実に |0⟩ にそろえること）が必要な理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">|1⟩ から始めると量子ビットが壊れてしまうから</button>
-          <button class="choice-btn">計算は決まった出発点から始めないと、同じゲート列をかけても出てくる答えの意味が定まらないから</button>
-          <button class="choice-btn">|0⟩ のほうが |1⟩ よりも読み出しやすいから</button>
+          <button class="choice-btn">|1⟩ から始めると量子ビットが余分なエネルギーを持ち、最初のゲートで壊れてしまうから</button>
+          <button class="choice-btn">計算は決まった出発点から始めないと、同じゲート列をかけても答えの意味が定まらないから</button>
+          <button class="choice-btn">|0⟩ のほうが |1⟩ よりも読み出しやすく、最後の測定の誤りが少なくて済むから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ ゲート列（プログラム）は「この出発点から始めればこの答えが出る」という設計になっている。出発点がバラバラでは答えの意味が定まらない。なお超伝導方式では、初期化はある部品のおまけとしてほぼタダで手に入る――種明かしはステージ4で。</div>
       </div>

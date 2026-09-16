@@ -276,9 +276,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 物理量子ビットの精度をいくら磨いても、誤り訂正なしでは実用計算に届かない理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">誤り0.3%でも1000ゲートで無傷の確率は約5%まで落ちる。実用アルゴリズムは何十億ゲートの積み重ねなので、誤りが必ず何百万回も起きてしまうから</button>
-          <button class="choice-btn">物理量子ビットは1000個以上並べると互いに干渉して動かなくなるから</button>
-          <button class="choice-btn">ゲートの速度が遅すぎて、実用計算が終わる前に宇宙が終わるから</button>
+          <button class="choice-btn">誤り0.3%でも1000ゲートで無傷の確率は約5%。実用計算は何十億ゲートなので、誤りが必ず何百万回も起きるから</button>
+          <button class="choice-btn">物理量子ビットは1000個以上並べると互いに干渉して動かなくなり、それ以上の規模の計算機がそもそも物理的に作れないから</button>
+          <button class="choice-btn">ゲートの速度が遅すぎて、何十億ゲートの実用計算が終わる前に量子ビットの寿命が尽きてしまい、答えが出ないから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 誤りはゲートの回数だけ積み重なる。0.997を1000回掛けると約0.05、つまり1000ゲートですでに95%の確率でどこかが壊れる。何十億ゲートの実用計算では、素の物理量子ビットの精度改善だけでは桁が何個も足りず、多数の物理量子ビットで論理量子ビットを守る誤り訂正が必須になる。</div>
       </div>
@@ -286,9 +286,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. 2024年のWillowチップの実験が「転換点」と呼ばれる理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">世界で初めて量子ビットを100個以上並べたから</button>
-          <button class="choice-btn">誤り訂正なしで実用計算に成功したから</button>
-          <button class="choice-btn">守りの陣地を広げるほど論理量子ビットの誤りが減ることを実証し、「増やせば良くなる」閾値の良い側に立ったことを示したから</button>
+          <button class="choice-btn">世界で初めて量子ビットを100個以上1つのチップに並べ、全部を同時に動かすことに成功したから</button>
+          <button class="choice-btn">誤り訂正をまったく使わずに実用規模の計算に成功し、誤り訂正が不要であることを世界で初めて示したから</button>
+          <button class="choice-btn">守りの陣地を広げるほど論理量子ビットの誤りが減ることを実証し、閾値の良い側に立ったことを示したから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 物理誤り率が閾値より悪ければ、誤り訂正は広げるほど逆効果になる。Willowは陣地を一回り広げるごとに論理誤りがおよそ半分になることを示し、論理量子ビットの寿命が最良の物理量子ビットを超えた。「物理量子ビットを増やせば計算が確実になる」時代の入口に立った実証だ。ただし論理誤り率はまだ実用要求の1000倍上にある。</div>
       </div>
@@ -296,9 +296,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. 「配線の洪水」問題への突破口として研究されている方向は？</p>
         <div class="choice-list">
-          <button class="choice-btn">ケーブルを細くして100万本を無理やり詰め込む</button>
-          <button class="choice-btn">1本の線を多数の量子ビットで共有する多重化、合図を作る制御チップを4Kに引っ越させる極低温CMOS、冷蔵庫同士を光でつなぐモジュール化</button>
-          <button class="choice-btn">冷蔵庫を100万台並べて、1台に量子ビットを1個ずつ入れる</button>
+          <button class="choice-btn">ケーブルを1本ずつ細くして、100万本を無理やり冷蔵庫の中に詰め込む配線技術を開発し、冷蔵庫も大型化する方向</button>
+          <button class="choice-btn">1本の線を多数の量子ビットで共有する多重化、制御チップを4Kに置く極低温CMOS、冷蔵庫同士を光でつなぐモジュール化</button>
+          <button class="choice-btn">冷蔵庫を100万台並べて、1台に量子ビットを1個ずつ入れ、配線を冷蔵庫の外で束ねてまとめる方式に全面的に切り替える方向</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 1本1本が熱の橋である以上、本数そのものを減らすしかない。読み出しの多重化はすでに実用（1本で10個程度）。制御チップの引っ越し先が10mKでなく4Kなのは、あちらには冷やす力がワット級あるから。モジュール化の鍵はマイクロ波の量子状態を光に翻訳する変換器で、世界中で開発が進む。</div>
       </div>

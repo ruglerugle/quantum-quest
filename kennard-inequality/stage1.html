@@ -245,9 +245,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 「平均からのずれ」をそのまま平均してもばらつきの指標にならないのはなぜ？</p>
         <div class="choice-list">
-          <button class="choice-btn">ずれの計算には高度な数学が必要だから</button>
+          <button class="choice-btn">ずれの計算には平方根や積分などの高度な数学が必要で、中学生には扱えないから</button>
           <button class="choice-btn">プラスのずれとマイナスのずれが打ち消し合って、必ず0になってしまうから</button>
-          <button class="choice-btn">ずれが整数にならないことがあるから</button>
+          <button class="choice-btn">ずれが整数にならないことがあり、平均を取ると端数が出て意味がぼやけるから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ どんなにばらついた測定値でも、平均からのずれを全部足すと必ず0になる。だから2乗して符号を消してから平均する。これが分散、その平方根が標準偏差だ。</div>
       </div>
@@ -256,8 +256,8 @@
         <p class="quiz-q">Q2. ケナードによる Δx の定義は？</p>
         <div class="choice-list">
           <button class="choice-btn">まったく同じ状態をたくさん用意して位置を測定した、結果の標準偏差</button>
-          <button class="choice-btn">1回の測定でどうしても生じてしまう誤差の大きさ</button>
-          <button class="choice-btn">測定器の目盛りの細かさの限界</button>
+          <button class="choice-btn">1回の測定でどうしても生じてしまう誤差の大きさ（測定器の針のブレ）</button>
+          <button class="choice-btn">測定器の目盛りの細かさの限界で決まる、読み取れる最小の幅</button>
         </div>
         <div class="quiz-explain" hidden>正解！ Δx は測定器の性能でも1回の誤差でもなく、「測る前の状態そのものが持つばらつき」を標準偏差で測ったもの。状態 ψ を決めれば Δx はただ一つに決まる。</div>
       </div>
@@ -265,9 +265,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. ハイゼンベルクの1927年の議論と、ケナードの定理の違いは？</p>
         <div class="choice-list">
-          <button class="choice-btn">ハイゼンベルクの方が数学的に厳密だった</button>
-          <button class="choice-btn">ケナードは実験を繰り返して不等式を確かめた</button>
-          <button class="choice-btn">ハイゼンベルクは思考実験による桁の見積もり、ケナードは曖昧さのない定義のもとで数学的に証明した</button>
+          <button class="choice-btn">ハイゼンベルクの方が数学的に厳密で、ケナードはその結果を実験で追試して確かめただけだった</button>
+          <button class="choice-btn">ケナードは実験を何度も繰り返して不等式を確かめ、ハイゼンベルクはそれを理論で説明した</button>
+          <button class="choice-btn">ハイゼンベルクは思考実験による桁の見積もり、ケナードは曖昧さのない定義で数学的に証明した</button>
         </div>
         <div class="quiz-explain" hidden>正解！ ハイゼンベルクの Δ は「だいたいの幅」のままで、主張も「およそ h より小さくできない」という見積もりだった。ケナードは標準偏差で定義を固定し、どんな状態でも成り立つ定理 Δx·Δp ≥ ℏ/2 として証明したんだ。</div>
       </div>

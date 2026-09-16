@@ -370,9 +370,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. |ψ(x)|² dx が表すものは？</p>
         <div class="choice-list">
-          <button class="choice-btn">位置を測ったとき、x の近くの幅 dx の区間で電子が見つかる確率</button>
-          <button class="choice-btn">その場所にある電子の個数</button>
-          <button class="choice-btn">波の高さそのもの</button>
+          <button class="choice-btn">位置を測ったとき、x 近くの幅 dx の区間で電子が見つかる確率</button>
+          <button class="choice-btn">その場所にある電子の個数（幅 dx の区間に入っている電子の数）</button>
+          <button class="choice-btn">波の高さそのもの（幅 dx の区間での ψ の値を実数にしたもの）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ |ψ(x)|² は確率の「濃さ」（確率密度）で、区間の幅 dx を掛けるとその区間で見つかる確率になる。ボルンがこの解釈にたどり着いたのは論文の脚注だった。</div>
       </div>
@@ -380,8 +380,8 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. 規格化条件 ∫|ψ|² dx ＝ 1 の物理的な意味は？</p>
         <div class="choice-list">
-          <button class="choice-btn">波の高さの最大値が1であること</button>
-          <button class="choice-btn">電子がちょうど1秒間だけ存在すること</button>
+          <button class="choice-btn">波の高さ |ψ| の最大値がちょうど1であること（振幅の上限）</button>
+          <button class="choice-btn">電子がちょうど1秒間だけ存在すること（時間の単位）</button>
           <button class="choice-btn">位置を測れば、電子は必ずどこかで見つかること（全確率が1）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 数直線全体で確率を足し合わせると1。この「当たり前」の条件が、後のステージで証明の急所に −1 という数を送り込むことになる。</div>
@@ -390,9 +390,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. 座標の原点を平均 ⟨x⟩ の位置にずらすと、Δx はどうなる？</p>
         <div class="choice-list">
-          <button class="choice-btn">0になる</button>
+          <button class="choice-btn">0になる（平均からのずれを平均すれば0になるから）</button>
           <button class="choice-btn">変わらない（ばらつきの幅は基準点の取り方によらない）</button>
-          <button class="choice-btn">ずらした距離のぶんだけ小さくなる</button>
+          <button class="choice-btn">ずらした距離 ⟨x⟩ のぶんだけ小さくなり、ずらし方で値が変わる</button>
         </div>
         <div class="quiz-explain" hidden>正解！ ものさしの目盛りをずらしても山の形と幅は変わらない。だから ⟨x⟩＝0 の場合だけ証明すれば、すべての場合を証明したことになる。</div>
       </div>

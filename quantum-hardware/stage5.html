@@ -254,9 +254,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. パルスを強くすれば回転角（面積）を保ったままゲートを速くできるのに、実機が20〜50ナノ秒より速くしない理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">短いパルスは周波数の幅が広がり、200〜300MHzしか離れていない |1⟩→|2⟩ の段差にも引っかかって、第3の段への漏れ（リーク）が起きるから</button>
-          <button class="choice-btn">任意波形発生器がそれより短いパルスを作れないから</button>
-          <button class="choice-btn">速く回すと量子ビットが熱を持ってしまうから</button>
+          <button class="choice-btn">短いパルスは周波数の幅が広がり、近くの |1⟩→|2⟩ の段差にも引っかかって第3の段へ漏れる（リーク）から</button>
+          <button class="choice-btn">任意波形発生器の性能がそれより短いパルスを作れず、装置側の限界でゲートの速さが完全に頭打ちになっているから</button>
+          <button class="choice-btn">速く回すと量子ビットが熱を持ってしまい、冷蔵庫の冷却が追いつかずに超伝導そのものが壊れてしまうから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 時間の短い波は周波数がひとつに定まらず幅を持つ（不確定性原理）。トランズモンの段差の不揃いは5%ほどしかないので、パルスの周波数の広がりをそれより狭く保つ必要がある。これがゲート速度の実質的な下限を決め、パルスの角を釣り鐘型に丸める理由でもある。</div>
       </div>
@@ -264,9 +264,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. ケーブルが「騒音の導管」になる、とはどういうことか？</p>
         <div class="choice-list">
-          <button class="choice-btn">ケーブルが振動して、その振動が量子ビットを揺らすこと</button>
-          <button class="choice-btn">300Kの機器やケーブルの金属の中で熱で震える電子がマイクロ波の雑音を放ち、それが段差と同じ5GHz帯を含んだまま量子ビットまで届いてしまうこと</button>
-          <button class="choice-btn">ケーブルの中を冷たい空気が逆流すること</button>
+          <button class="choice-btn">ケーブルが機械的に振動して、その振動が冷蔵庫の中まで伝わって量子ビットを絶えず揺らし続けてしまうこと</button>
+          <button class="choice-btn">300Kの機器やケーブルの中で熱で震える電子が放つマイクロ波の雑音が、5GHz帯のまま量子ビットに届くこと</button>
+          <button class="choice-btn">ケーブルの中を室温の空気が冷蔵庫の中へ逆流して、量子ビットのまわりの温度をじわじわ上げてしまい続けてしまうこと</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 震える電荷は電波を放つ。300Kの世界の金属はすべて、量子ビットの段差の帯域を含むマイクロ波雑音を絶えず「放送」している。ケーブルはその放送を10mKの聖域の耳元まで直通で届けてしまう。段差と同じ周波数の雑音は量子ビットを勝手に蹴り上げる力そのものなので、放置すれば冷蔵庫の意味がなくなる。</div>
       </div>
@@ -274,9 +274,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. 減衰器の階段（計100万分の1）を通しても「合図」が死なずに済む理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">減衰器が合図の周波数だけを避けて騒音を弱めるから</button>
-          <button class="choice-btn">合図は量子の性質を持っていて、減衰器を素通りできるから</button>
-          <button class="choice-btn">騒音の強さは発生源の温度で決まり増やせないが、合図は室温側で最初から100万倍強く送り出せる。同じ割合で弱まれば、ちょうどいい合図と10mK並みの騒音が残るから</button>
+          <button class="choice-btn">減衰器が合図の周波数だけを避けて騒音の周波数だけを選んで弱める、精密な周波数フィルターとして働いているから</button>
+          <button class="choice-btn">合図は量子の性質を持っていて減衰器を素通りできるが、騒音は古典的な波なので減衰器でだけ弱められるから</button>
+          <button class="choice-btn">騒音は発生源の温度で決まり増やせないが、合図は室温側で100万倍強く送れる。同じ割合で弱まればちょうどよい</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 減衰器は合図も騒音も同じ割合で弱める（選り分けはできない）。勝負を決めるのはスタート地点の強さの差だ。狙って作る合図は好きなだけ強くできるが、熱の震えから勝手に湧く騒音は温度で上限が決まっている。十分に薄めてやれば、300Kの騒音は届かなくなり、残るのは最下段の減衰器自身がもつ10mK並みの静けさだけになる。</div>
       </div>

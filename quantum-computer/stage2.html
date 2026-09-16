@@ -188,9 +188,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 量子ゲートが必ず「可逆」（元に戻せる）なのはなぜ？</p>
         <div class="choice-list">
-          <button class="choice-btn">技術的にまだ未熟で、情報を捨てる回路が作れないから</button>
-          <button class="choice-btn">量子ビットの数が少ないので、情報を捨てるともったいないから</button>
-          <button class="choice-btn">矢印の長さの2乗の合計を1に保つ操作（ユニタリ）だけが許され、それは伸び縮みのない回転にあたるから</button>
+          <button class="choice-btn">技術的にまだ未熟で、情報を捨てる回路を作ると量子ビットがその場で壊れてしまうから</button>
+          <button class="choice-btn">量子ビットの数が少ないので、途中の情報を捨てると計算が最初からやり直せなくなるから</button>
+          <button class="choice-btn">長さの2乗の合計を1に保つ操作（ユニタリ）だけが許され、それは伸び縮みのない回転だから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 確率の合計は常に1でなければならないので、ゲートは表全体を伸び縮みさせずに回す操作に限られる。回したものは逆に回せば戻る。だからふつうのANDのように「情報が消えて元に戻せない」ゲートは、量子ゲートとしては存在できない。</div>
       </div>
@@ -200,7 +200,7 @@
         <div class="choice-list">
           <button class="choice-btn">「|0⟩ をどこへ送るか」と「|1⟩ をどこへ送るか」の2列の対応表</button>
           <button class="choice-btn">考えられるすべての入力（無限にある重ね合わせ）に対する出力の一覧</button>
-          <button class="choice-btn">ゲートを当てたときに0が出る確率と1が出る確率</button>
+          <button class="choice-btn">ゲートを当てたときに0が出る確率と1が出る確率の2つの数（合計1になる）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 一般の入力（a, b）への出力は「a×（|0⟩の行き先）＋b×（|1⟩の行き先）」と掛けて足すだけで求まるので、2列（＝行列）を決めれば無限にある入力すべてへの動作が決まる。確率だけでは向き（位相）の情報が抜け落ちる。</div>
       </div>
@@ -210,7 +210,7 @@
         <div class="choice-list">
           <button class="choice-btn">（−a, −b）――両方の矢印が正反対になる</button>
           <button class="choice-btn">（a, −b）――|1⟩ の矢印だけ正反対になる</button>
-          <button class="choice-btn">（b, a）――2つの矢印が入れ替わる</button>
+          <button class="choice-btn">（b, a）――2つの矢印がそっくり入れ替わる</button>
         </div>
         <div class="quiz-explain" hidden>正解！ Z の2列は「|0⟩ の行き先＝|0⟩」「|1⟩ の行き先＝正反対の |1⟩」。掛けて足すと a×|0⟩＋b×（−|1⟩）＝（a, −b）。長さは変わらないので読み出しの確率は1ミリも動かないが、状態は確かに変わっている（|+⟩ が |−⟩ になる）。</div>
       </div>
