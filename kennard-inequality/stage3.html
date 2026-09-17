@@ -59,7 +59,7 @@
   .kq-svg .ktB{fill:#2f6fa6;font-size:11px;font-weight:900}
   .cv-wrap{width:100%}
   #chirp3d,#psiphi3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
-  #nuk3d{display:block;width:100%;height:auto;touch-action:pan-y}
+  #nuk3d,#shift3d{display:block;width:100%;height:auto;touch-action:pan-y}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -281,6 +281,20 @@
           </div>
           <div class="dialog-bubble">一点を例にとって追ってみよう。φ の中身は「波長 λ の波を、係数 φ(p) の分だけ混ぜる」という配合表で、p＝h/λ だったね。量子力学の教室で見たとおり、波長 λ の複素数の波は<strong>場所が進むごとに角度が進む針の列</strong>で、1 m 進むごとに 2π/λ ラジアン回る。そこで、混ぜる成分のうち<strong>「1 m ごとに 2 ラジアン回る波」</strong>（λ＝π m の成分）だけを見よう。針は x＝0 で角度 0、x＝1 で 2、x＝2 で 4、と進む。さて、波束を右へ 1 m ずらすというのは、混ぜているすべての成分を右へ 1 m ずらすことだ。この成分を右へ 1 m ずらすと、x＝1 で角度 0、x＝2 で 2 になる――つまり<strong>元の針の列を、そっくり −2 ラジアン回したもの</strong>と同じだ。波そのものは取り替えず、この成分の<strong>係数 φ(p) が −2 ラジアン回った</strong>だけ、と言ってもいい。同じことを「1 m ごとに 4 ラジアン回る成分」でやれば −4 ラジアン、6 ラジアンの成分なら −6 ラジアン。細かい波ほど、1 m ずらすのに大きく巻き戻す必要があるからだ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="shift3d" role="img" aria-label="4パネルの図。左列は波束を作る成分の波を針の列で描いたもので、上が1 mごとに2ラジアン回る成分、下が4ラジアン回る成分。薄い金色が元の波、青が右へ x₀ ずらした後の波で、ずらした後は x＝x₀ で角度が0になる。右列はそれぞれの成分の係数 φ(p) の針で、ずらした後は −2×x₀、−4×x₀ ラジアンだけ回っている。スライダーでずらす距離 x₀ を変えられる。ドラッグで左列の視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="sh-x0">波束を右へずらす距離 x₀</label>
+          <input type="range" id="sh-x0" min="0" max="2" step="0.05" value="1" aria-label="ずらす距離 x₀">
+          <span class="val" id="sh-x0v">1.00 m</span>
+        </div>
+        <div class="readout"><span id="sh-out">右へ 1.00 m ずらす → 2 ラジアン/m の成分の係数は −2.00 ラジアン、4 ラジアン/m の成分は −4.00 ラジアン回る（回る角度 ＝ −(1 m あたりの回転角)×x₀ で、細かい波ほど大きい）</span></div>
+        <div class="diagram-caption"><strong>左列</strong>：波束を作っている成分の波を1本ずつ取り出したもの（上：1 m ごとに 2 ラジアン回る波、下：4 ラジアン回る細かい波）。薄い金色が元の波で、x＝0 で角度 0。青が波束ごと右へ x₀ ずらした後の波で、角度 0 の場所が x＝x₀ に移っている。これは<strong>元の針の列をそっくり −(1 m あたりの回転角)×x₀ だけ回したもの</strong>と同じ形。<strong>右列</strong>：だから配合表の側では、波を取り替えずに、その成分の<strong>係数 φ(p) の針を同じ角度だけ回す</strong>ことになる。2 ラジアン/m の成分は −2×x₀、4 ラジアン/m の成分は −4×x₀――細かい波（p が大きい成分）ほど大きく回る。この「p に比例した回転」が、p を横軸に並べた φ の針の<strong>ねじれ</strong>の正体</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
@@ -1081,6 +1095,121 @@
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
   } else { play(); }
+})();
+</script>
+<script>
+/* 波束を右へ x₀ ずらすと、各成分の係数が −(1 m あたりの回転角)×x₀ だけ回る。1枚の canvas に 2×2：
+   左列：成分の波（針の列。上：1 m ごとに 2 ラジアン、下：4 ラジアン）。薄い金＝元、青＝右へ x₀ ずらした後。
+   右列：その成分の係数 φ(p) の針。ずらした後は −a·x₀ ラジアン回る。 */
+(function(){
+  var cv = document.getElementById('shift3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sl = document.getElementById('sh-x0'), slv = document.getElementById('sh-x0v'), out = document.getElementById('sh-out');
+  var XM = 4, XS = 22, N = 40, HZ = 2.2, DIM = 2.0, R = 4.2;
+  var yaw = 0.34, pitch = -0.5, W = 0, H = 0, sc = 1;
+  var C = { gold: 'rgba(166,116,42,.35)', goldS: 'rgba(166,116,42,.8)', blue: '#2f6fa6', blueH: '#6f8fc0', red: '#b5504a', muted: '#8a7a5c', ink: '#241d12', ring: 'rgba(138,122,92,.5)', tick: 'rgba(138,122,92,.6)' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function arrow(a, b, color, wd) { poly([a, b], color, wd || 1.6); var dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1; dx /= L; dy /= L; ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(b[0] - 8 * dx - 4 * dy, b[1] - 8 * dy + 4 * dx); ctx.lineTo(b[0] - 8 * dx + 4 * dy, b[1] - 8 * dy - 4 * dx); ctx.closePath(); ctx.fill(); }
+
+  /* 左列：1 m ごとに a ラジアン回る成分の針の列。元（薄い金）と、右へ x0 ずらした後（青） */
+  function wavePanel(ax, ay, a, x0, nar) {
+    var i, u, pts;
+    function P(x, re, im) { var p = rot((x / XM - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay + p[1]]; }
+    poly([P(-0.2, 0, 0), P(XM + 0.3, 0, 0)], C.muted, 1);
+    for (i = 0; i <= 3; i++) { poly([P(i, -1.1, 0), P(i, 1.1, 0)], C.tick, 1, [3, 3]); var tl = P(i, -1.5, 0); text(tl[0], tl[1] + 6, 'x＝' + i, C.muted, SUB); }
+    /* 元の波（薄く） */
+    pts = []; for (i = 0; i <= 160; i++) { u = XM * i / 160; pts.push(P(u, Math.cos(a * u), Math.sin(a * u))); } poly(pts, C.gold, 1.2);
+    /* ずらした波（針つき） */
+    for (i = 0; i <= N; i++) {
+      u = XM * i / N; var th = a * (u - x0), b = P(u, 0, 0), tp = P(u, Math.cos(th), Math.sin(th));
+      ctx.strokeStyle = C.blueH; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = C.blue; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.6, 0, 7); ctx.fill();
+    }
+    pts = []; for (i = 0; i <= 160; i++) { u = XM * i / 160; var th2 = a * (u - x0); pts.push(P(u, Math.cos(th2), Math.sin(th2))); } poly(pts, C.blue, 1.6);
+    /* 節目の針を強調：ずらした後、x＝x0 で角度 0 */
+    var b0 = P(x0, 0, 0), t0 = P(x0, 1, 0); arrow(b0, t0, C.red, 2);
+    text(t0[0], t0[1] - 9, nar ? '角度 0' : 'x＝x₀ で角度 0', C.red, SUB);
+    var o = P(-0.2, 0, 0), aY = P(-0.2, 1.2, 0), aZ = P(-0.2, 0, 1.2);
+    poly([o, aY], C.muted, 1.1); poly([o, aZ], C.muted, 1.1);
+    text(aY[0], aY[1] - 8, '実部', C.muted, SUB); text(aZ[0] - 4, aZ[1] + 4, '虚部', C.muted, SUB, 'right');
+  }
+  /* 右列：この成分の係数 φ(p) の針。元（薄い金、角度 0）と、ずらした後（青、角度 −a·x0） */
+  function coefPanel(ax, ay, a, x0, nar) {
+    var i, pts = [];
+    function Q(X, Y) { return [ax + sc * X, ay - sc * Y]; }
+    for (i = 0; i <= 72; i++) { var t = 2 * Math.PI * i / 72; pts.push(Q(R * Math.cos(t), R * Math.sin(t))); } poly(pts, C.ring, 1.2);
+    poly([Q(-R * 1.1, 0), Q(R * 1.1, 0)], C.ring, 1, [3, 3]);
+    arrow(Q(0, 0), Q(R * 0.92, 0), C.goldS, 1.6);
+    var ang = -a * x0, done = 0;
+    /* 回った角度の弧（時計回り、1周を超えた分は重ねて濃く） */
+    while (done < -ang - 1e-9) {
+      var seg = Math.min(2 * Math.PI, -ang - done), n = Math.max(10, Math.round(seg * 12)); pts = [];
+      for (i = 0; i <= n; i++) { var t2 = -(seg * i / n); pts.push(Q(R * 0.6 * Math.cos(t2), R * 0.6 * Math.sin(t2))); }
+      poly(pts, 'rgba(181,80,74,.45)', 3); done += seg;
+    }
+    arrow(Q(0, 0), Q(R * 0.92 * Math.cos(ang), R * 0.92 * Math.sin(ang)), C.blue, 2.2);
+    var angS = ang.toFixed(2).replace('-', '−'), lb = Q(0, -R - 2.2); text(lb[0], lb[1], nar ? '係数が ' + angS + ' ラジアン回る' : '係数 φ(p) が −' + a + '×' + x0.toFixed(2) + '＝' + angS + ' ラジアン回る', C.blue, SUB);
+    var l0 = Q(R * 1.15, 0.6); text(l0[0] + 3, l0[1], '0', C.muted, SUB, 'left');
+  }
+
+  function draw() {
+    var x0 = +sl.value, nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    var ax1 = W * (nar ? 0.3 : 0.27), ay1 = H * 0.29, ax2 = W * 0.76, ay2 = H * 0.27, ay3 = H * 0.78, ay4 = H * 0.76;
+    wavePanel(ax1, ay1, 2, x0, nar);
+    wavePanel(ax1, ay3, 4, x0, nar);
+    coefPanel(ax2, ay2, 2, x0, nar);
+    coefPanel(ax2, ay4, 4, x0, nar);
+    text(ax1, H * 0.045, nar ? '1 m ごとに 2 ラジアン回る成分' : '成分①：1 m ごとに 2 ラジアン回る波（薄い金＝元、青＝右へ x₀ ずらした後）', C.ink, TITLE);
+    text(ax2, H * 0.045, nar ? 'その成分の係数 φ(p)' : 'その成分の係数 φ(p) の針（金＝元、青＝ずらした後）', C.ink, TITLE);
+    text(ax1, H * 0.535, nar ? '1 m ごとに 4 ラジアン回る成分' : '成分②：1 m ごとに 4 ラジアン回る波（細かい波）', C.ink, TITLE);
+    text(ax2, H * 0.535, nar ? 'その成分の係数 φ(p)' : 'その成分の係数 φ(p) の針：回る角度は2倍', C.ink, TITLE);
+    text(ax1, H * 0.49, nar ? '指でなぞると回せます' : '🖱️ ドラッグ（スマホは指でなぞる）で左の2つを回せます', C.muted, SUB);
+    slv.textContent = x0.toFixed(2) + ' m';
+    out.textContent = '右へ ' + x0.toFixed(2) + ' m ずらす → 2 ラジアン/m の成分の係数は ' + (-2 * x0).toFixed(2).replace('-', '−') + ' ラジアン、4 ラジアン/m の成分は ' + (-4 * x0).toFixed(2).replace('-', '−') + ' ラジアン回る（回る角度 ＝ −(1 m あたりの回転角)×x₀ で、細かい波ほど大きい）';
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 58;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  sl.addEventListener('input', invalidate);
+
+  /* 回せるのは左列の3D図だけ */
+  var dragging = false, lx = 0, ly = 0;
+  function inLeft(e) { var p = e.touches ? e.touches[0] : e, r = cv.getBoundingClientRect(); return (p.clientX - r.left) < r.width * 0.52; }
+  function down(e) { if (!inLeft(e)) return; dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('mousemove', function(e){ cv.style.cursor = inLeft(e) ? 'move' : 'default'; });
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
 })();
 </script>
 <script>KQ.initStagePage(3);</script>
