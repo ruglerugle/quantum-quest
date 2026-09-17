@@ -114,7 +114,21 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そう。ここで角の正方形に注目してほしい。Δf·Δg は「<strong>微小×微小</strong>」だ。たとえば Δf も Δg も 0.01 なら、2つの帯はそれぞれ 0.01×g、f×0.01 の桁なのに、角は 0.01×0.01＝0.0001――帯の100分の1しかない。Δ をさらに小さくしていけば、角は帯に比べていくらでも小さくなる。だから極限では角は消えて、残るのは Δf·g ＋ f·Δg の2つの帯だけ。これを進んだ幅で割ったものが、積の微分公式 <strong>(fg)′＝f′g＋fg′</strong> だ。部分積分は、この公式の「逆再生」にすぎない。まず移項して f′g ＝ (fg)′ − fg′。この両辺を −∞ から ＋∞ まで積分する。右辺第1項の「(fg)′ の積分」は、傾きを足し集めたものだから、単純に<strong>両端での値の差</strong> [fg] になる（山道の傾きを全部足せば、ゴールとスタートの標高差になる、というのと同じ理屈だよ）。</div>
+          <div class="dialog-bubble">そう。ここで角の正方形に注目してほしい。Δf·Δg は「<strong>微小×微小</strong>」だ。たとえば Δf も Δg も 0.01 なら、2つの帯はそれぞれ 0.01×g、f×0.01 の桁なのに、角は 0.01×0.01＝0.0001――帯の100分の1しかない。だから極限では角は消えて、残るのは Δf·g ＋ f·Δg の2つの帯だけになる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">角が消えるのは分かりました。でも帯にも Δ がついていて、Δ を小さくすれば帯だって同じようにゼロに向かいますよね。角だけが消えて帯が残る、という区別はどこから来るんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい引っかかりだ。そのとおりで、<strong>そのままでは帯も角もどちらもゼロに向かう</strong>。違いが出るのは「傾き」を出すときだよ。前のステージで、微分は「増えた量 ÷ 進んだ幅 Δx」だったね。そこで Δf と Δg を Δx で書き直す。f の増分は「傾き × 進んだ幅」だから Δf ≈ f′·Δx、同じく Δg ≈ g′·Δx。すると2つの帯は Δf·g ＋ f·Δg ≈ (f′g ＋ fg′)·Δx で、<strong>Δx が1個</strong>。角は Δf·Δg ≈ f′g′·(Δx)² で、<strong>Δx が2個</strong>。面積の増え方を Δx で割ると、帯のほうは Δx が打ち消されて f′g ＋ fg′ という<strong>有限の値</strong>が残るのに、角のほうは f′g′·Δx と <strong>Δx が1個残る</strong>。だから Δx をゼロに近づけると、角の項だけが消える。数字で言えば、Δx＝0.01 のとき帯は割ったあとで f′g＋fg′ のまま、角は 0.01×f′g′。Δx＝0.001 なら角は 0.001×f′g′。帯は変わらず、角だけがどこまでも小さくなる。これが積の微分公式 <strong>(fg)′＝f′g＋fg′</strong> だ。部分積分は、この公式の「逆再生」にすぎない。まず移項して f′g ＝ (fg)′ − fg′。この両辺を −∞ から ＋∞ まで積分する。右辺第1項の「(fg)′ の積分」は、傾きを足し集めたものだから、単純に<strong>両端での値の差</strong> [fg] になる（山道の傾きを全部足せば、ゴールとスタートの標高差になる、というのと同じ理屈だよ）。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
