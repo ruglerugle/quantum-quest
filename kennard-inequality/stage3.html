@@ -58,7 +58,7 @@
   .kq-svg .ktA{fill:var(--gold-dark);font-size:11px;font-weight:900}
   .kq-svg .ktB{fill:#2f6fa6;font-size:11px;font-weight:900}
   .cv-wrap{width:100%}
-  #chirp3d,#psiphi3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #chirp3d,#psiphi3d,#nuk3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -68,6 +68,8 @@
     .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
     .sim-ctrl label{grid-column:1 / -1;white-space:normal}
   }
+  .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
   .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
   .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
@@ -382,6 +384,24 @@
           </div>
           <div class="dialog-bubble">大事な区別だよ。<strong>振動数 ν は「時間」の細かさ</strong>――ある一点に立って波を眺めたとき、1秒のあいだに何回、山が通り過ぎるか。いっぽう<strong>波数 k は「空間」の細かさ</strong>――ある瞬間の波を写真に撮ったとき、距離を1進むあいだに角度がいくつ進むか。<strong>同じ波を、時間で切るか、場所で切るか</strong>の違いなんだ。単位も違っていて、ν は「1秒あたり」、k は「1メートルあたり」だよ。……もっとも、どんな長さで測るかは人間の決めごとでね。分野によっては「1センチあたり」で数えることもある。物理ではメートルと秒を標準にしておく、と約束しておこう。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="nuk3d" role="img" aria-label="横が場所 x（メートル）、奥が時刻 t（秒）、高さが波の高さの曲面の3Dアニメーション。赤い線はある一点に立って波を眺めたときの上下で、1秒の物差しの中に山が ν 回入る（時間の細かさ）。青い線はある瞬間の写真で、1メートルの物差しを進むあいだに角度が k ラジアン進む（空間の細かさ）。スライダーで波長 λ と振動数 ν を別々に変えられる。ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="nk-lam">波長 λ（空間の細かさ。k＝2π/λ）</label>
+          <input type="range" id="nk-lam" min="0.6" max="3" step="0.01" value="1.5" aria-label="波長 λ">
+          <span class="val" id="nk-lamv">1.50 m</span>
+          <label for="nk-nu">振動数 ν（時間の細かさ）</label>
+          <input type="range" id="nk-nu" min="0.3" max="1.5" step="0.01" value="0.75" aria-label="振動数 ν">
+          <span class="val" id="nk-nuv">0.75 /秒</span>
+        </div>
+        <button class="sim-play" id="nk-play" type="button" aria-pressed="true">⏸ 時間を止める（写真に撮る）</button>
+        <div class="readout"><span id="nk-out">k ＝ 2π/λ ＝ 4.19 ラジアン/m（1 m に波が 0.67 個）、ν ＝ 0.75 /秒（ω ＝ 2πν ＝ 4.71 ラジアン/秒）</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">同じ1つの波を、横が場所 x（メートル）、奥が時刻 t（秒）、高さが波の高さの曲面として描いたもの。<strong>赤い線</strong>は「ある一点に立って波を眺める」＝時間で切った断面で、赤い物差し「1秒」のあいだに山が通り過ぎる回数が<strong>振動数 ν</strong>（単位は1秒あたり）。<strong>青い線</strong>は「ある瞬間の写真」＝場所で切った断面で、青い物差し「1 m」を進むあいだに角度が進む量が<strong>波数 k</strong>（単位は1 m あたり。波が 1/λ 個入るので、角度では 2π/λ 進む）。2本のスライダーは独立で、λ を変えても赤い断面の上下の回数は変わらず、ν を変えても青い断面の山の間隔は変わらない――時間の細かさと空間の細かさは別の量だということが分かる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
@@ -878,6 +898,110 @@
   window.addEventListener('resize', resize);
   resize();
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+})();
+</script>
+<script>
+/* 振動数 ν（時間の細かさ）と波数 k（空間の細かさ）：横 x［m］・奥 t［s］・高さ 波の高さ の曲面 sin(kx−ωt)。
+   赤：ある一点に立って波を眺める（t 方向の断面）→ 1秒に ν 回。青：ある瞬間の写真（x 方向の断面）→ 1 m 進むと角度が k 進む */
+(function(){
+  var cv = document.getElementById('nuk3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sl = document.getElementById('nk-lam'), slv = document.getElementById('nk-lamv');
+  var sn = document.getElementById('nk-nu'), snv = document.getElementById('nk-nuv');
+  var btn = document.getElementById('nk-play'), out = document.getElementById('nk-out');
+  var XM = 6, TS = 4, XS = 24, TD = 14, HZ = 2.0;   /* 横 0〜6 m、奥 0〜4 s */
+  var yaw = 0.42, pitch = -0.52, t = 0, W = 0, H = 0, sc = 1;
+  var C = { mesh: 'rgba(166,116,42,.30)', red: '#b5504a', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', gold: '#a6742a' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function draw() {
+    var lam = +sl.value, nu = +sn.value, K = 2 * Math.PI / lam, OM = 2 * Math.PI * nu, i, j, pts, nar = W < 520;
+    function psi(x, tt) { return Math.sin(K * x - OM * tt); }
+    ctx.clearRect(0, 0, W, H);
+    var ax = W * 0.5, ay = H * 0.56;
+    /* x［m］→ 横、t［s］→ 奥 */
+    function P(x, tt, y) { var p = rot((x / XM - 0.5) * XS, HZ * y, (tt / TS - 0.5) * TD); return [ax + p[0], ay + p[1]]; }
+    var tNow = t % TS, x0 = XM * 0.5;
+    for (i = 0; i <= 10; i++) { var tt = TS * i / 10; pts = []; for (j = 0; j <= 72; j++) { var x = XM * j / 72; pts.push(P(x, tt, psi(x, tt))); } poly(pts, C.mesh, 0.9); }
+    for (i = 0; i <= 8; i++) { var x2 = XM * i / 8; pts = []; for (j = 0; j <= 48; j++) { var t2 = TS * j / 48; pts.push(P(x2, t2, psi(x2, t2))); } poly(pts, C.mesh, 0.9); }
+    poly([P(0, 0, 0), P(XM, 0, 0), P(XM, TS, 0), P(0, TS, 0), P(0, 0, 0)], 'rgba(138,122,92,.35)', 1);
+    /* 青：いまの写真（x 方向の断面） */
+    pts = []; for (j = 0; j <= 120; j++) { var x3 = XM * j / 120; pts.push(P(x3, tNow, psi(x3, tNow))); } poly(pts, C.blue, 2.2);
+    /* 赤：一点に立って眺める（t 方向の断面） */
+    pts = []; for (j = 0; j <= 120; j++) { var t3 = TS * j / 120; pts.push(P(x0, t3, psi(x0, t3))); } poly(pts, C.red, 2.2);
+    var b = P(x0, tNow, 0), tp = P(x0, tNow, psi(x0, tNow));
+    poly([b, tp], C.red, 1.6); ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(tp[0], tp[1], 4, 0, 7); ctx.fill();
+    /* 「1 m」の物差し（青の断面に沿って、いまの時刻に） */
+    var m0 = 0.5, A1 = P(m0, tNow, 1.45), A2 = P(m0 + 1, tNow, 1.45), A1b = P(m0, tNow, 1.15), A2b = P(m0 + 1, tNow, 1.15);
+    poly([A1b, A1, A2, A2b], C.blue, 1.3);
+    text((A1[0] + A2[0]) / 2, (A1[1] + A2[1]) / 2 - 10, '1 m', C.blue, SUB);
+    /* 「1 秒」の物差し（赤の断面に沿って） */
+    var s0 = 2.3, B1 = P(x0, s0, 1.45), B2 = P(x0, s0 + 1, 1.45), B1b = P(x0, s0, 1.15), B2b = P(x0, s0 + 1, 1.15);
+    poly([B1b, B1, B2, B2b], C.red, 1.3);
+    text((B1[0] + B2[0]) / 2, (B1[1] + B2[1]) / 2 - 10, '1 秒', C.red, SUB);
+    /* 軸 */
+    var o = P(-0.1, 0, 0), aX = P(XM + 0.4, 0, 0), aT = P(-0.1, TS + 0.4, 0), aY = P(-0.1, 0, 1.6);
+    poly([o, aX], C.muted, 1.3); poly([o, aT], C.muted, 1.3); poly([o, aY], C.muted, 1.3);
+    text(aX[0] + 8, aX[1] + 2, 'x［m］', C.muted, SUB, 'left'); text(aT[0] - 4, aT[1] - 8, 't［秒］', C.muted, SUB); text(aY[0] - 5, aY[1], '波の高さ', C.muted, SUB, 'right');
+    text(ax, H * 0.04, nar ? 'ν は時間の細かさ、k は空間の細かさ' : '同じ1つの波 ― 横が場所 x［m］、奥が時刻 t［秒］。ν は時間の細かさ、k は空間の細かさ', C.ink, TITLE);
+    text(ax, H * 0.905, nar ? '赤：一点に立って眺める → 1秒に ν 回（1秒あたり）' : '赤：ある一点に立って波を眺める → 1秒のあいだに山が ν 回通り過ぎる（単位は「1秒あたり」）', C.red, SUB);
+    text(ax, H * 0.965, nar ? '青：写真に撮る → 1 m 進むと角度が k 進む（1 m あたり）' : '青：ある瞬間の写真 → 距離を 1 m 進むと角度が k ラジアン進む（単位は「1 m あたり」）', C.blue, SUB);
+    slv.textContent = lam.toFixed(2) + ' m'; snv.textContent = nu.toFixed(2) + ' /秒';
+    out.textContent = 'k ＝ 2π/λ ＝ ' + K.toFixed(2) + ' ラジアン/m（1 m に波が ' + (1 / lam).toFixed(2) + ' 個）、ν ＝ ' + nu.toFixed(2) + ' /秒（ω ＝ 2πν ＝ ' + OM.toFixed(2) + ' ラジアン/秒）';
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.86, 380)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 40;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  sl.addEventListener('input', invalidate); sn.addEventListener('input', invalidate);
+
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    t += dt * 0.6; draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める（写真に撮る）'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
+  } else { play(); }
 })();
 </script>
 <script>KQ.initStagePage(3);</script>
