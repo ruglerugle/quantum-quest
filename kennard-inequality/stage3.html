@@ -387,7 +387,7 @@
       </div>
 
       <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="nuk3d" role="img" aria-label="横が場所 x（メートル）、奥が時刻 t（秒）、高さが波の高さの曲面の3Dアニメーション。赤い線はある一点に立って波を眺めたときの上下で、1秒の物差しの中に山が ν 回入る（時間の細かさ）。青い線はある瞬間の写真で、1メートルの物差しを進むあいだに角度が k ラジアン進む（空間の細かさ）。スライダーで波長 λ と振動数 ν を別々に変えられる。ドラッグで視点を回せる"></canvas></div>
+        <div class="cv-wrap"><canvas id="nuk3d" role="img" aria-label="4パネルの3Dアニメーション。左上は横が場所 x（メートル）、奥が時刻 t（秒）、高さが波の高さの曲面で、赤（一点に立って眺める断面）と青（ある瞬間の写真）の線が入っている。右上は赤の断面を時間軸で描いたもので、1秒の物差しの中に山が ν 回入る（時間の細かさ）。左下は青の断面を場所の軸で描いたもので、1メートルの物差しの中に波が 1/λ 個入り、角度では k＝2π/λ 進む（空間の細かさ）。右下は角度で数える円で、1 m 進むと k ラジアン、1秒たつと ω＝2πν ラジアン進む。スライダーで波長 λ と振動数 ν を別々に変えられる。ドラッグで視点を回せる"></canvas></div>
         <div class="sim-ctrl">
           <label for="nk-lam">波長 λ（空間の細かさ。k＝2π/λ）</label>
           <input type="range" id="nk-lam" min="0.6" max="3" step="0.01" value="1.5" aria-label="波長 λ">
@@ -398,7 +398,7 @@
         </div>
         <button class="sim-play" id="nk-play" type="button" aria-pressed="true">⏸ 時間を止める（写真に撮る）</button>
         <div class="readout"><span id="nk-out">k ＝ 2π/λ ＝ 4.19 ラジアン/m（1 m に波が 0.67 個）、ν ＝ 0.75 /秒（ω ＝ 2πν ＝ 4.71 ラジアン/秒）</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
-        <div class="diagram-caption">同じ1つの波を、横が場所 x（メートル）、奥が時刻 t（秒）、高さが波の高さの曲面として描いたもの。<strong>赤い線</strong>は「ある一点に立って波を眺める」＝時間で切った断面で、赤い物差し「1秒」のあいだに山が通り過ぎる回数が<strong>振動数 ν</strong>（単位は1秒あたり）。<strong>青い線</strong>は「ある瞬間の写真」＝場所で切った断面で、青い物差し「1 m」を進むあいだに角度が進む量が<strong>波数 k</strong>（単位は1 m あたり。波が 1/λ 個入るので、角度では 2π/λ 進む）。2本のスライダーは独立で、λ を変えても赤い断面の上下の回数は変わらず、ν を変えても青い断面の山の間隔は変わらない――時間の細かさと空間の細かさは別の量だということが分かる</div>
+        <div class="diagram-caption"><strong>左上</strong>：同じ1つの波を、横が場所 x（メートル）、奥が時刻 t（秒）、高さが波の高さの曲面として描いたもの。<strong>右上（時間で切る）</strong>：赤い線は「ある一点に立って波を眺める」断面で、物差し「1秒」のあいだに山が通り過ぎる回数が<strong>振動数 ν</strong>（単位は1秒あたり）。<strong>左下（場所で切る）</strong>：青い線は「ある瞬間の写真」で、物差し「1 m」の中に波が 1/λ 個入る。角度で数えれば 1 m 進むごとに <strong>k＝2π/λ</strong> ラジアン進む（単位は1 m あたり）。<strong>右下（角度で数える）</strong>：位相 kx−ωt の進み方を円で見たもので、青の弧が「1 m 進んだぶんの角度 k」、赤の弧が「1秒たったぶんの角度 ω＝2πν」。2本のスライダーは独立で、λ を変えても右上の山の回数は変わらず、ν を変えても左下の山の間隔は変わらない――時間の細かさと空間の細かさは別の量だということが分かる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -901,8 +901,11 @@
 })();
 </script>
 <script>
-/* 振動数 ν（時間の細かさ）と波数 k（空間の細かさ）：横 x［m］・奥 t［s］・高さ 波の高さ の曲面 sin(kx−ωt)。
-   赤：ある一点に立って波を眺める（t 方向の断面）→ 1秒に ν 回。青：ある瞬間の写真（x 方向の断面）→ 1 m 進むと角度が k 進む */
+/* 振動数 ν（時間の細かさ）と波数 k（空間の細かさ）。1枚の canvas に 2×2：
+   左上：横 x［m］・奥 t［秒］・高さ の曲面と、赤（一点に立って眺める断面）・青（ある瞬間の写真）。
+   右上：赤の断面を t 軸で描く。「1 秒」の物差しに山が ν 回。
+   左下：青の断面を x 軸で描く。「1 m」の物差しで角度が k 進む（波が 1/λ 個）。
+   右下：角度で数える円。1 m 進むと k ラジアン（青）、1 秒たつと ω＝2πν ラジアン（赤）。 */
 (function(){
   var cv = document.getElementById('nuk3d');
   if (!cv) return;
@@ -910,9 +913,9 @@
   var sl = document.getElementById('nk-lam'), slv = document.getElementById('nk-lamv');
   var sn = document.getElementById('nk-nu'), snv = document.getElementById('nk-nuv');
   var btn = document.getElementById('nk-play'), out = document.getElementById('nk-out');
-  var XM = 6, TS = 4, XS = 24, TD = 14, HZ = 2.0;   /* 横 0〜6 m、奥 0〜4 s */
-  var yaw = 0.42, pitch = -0.52, t = 0, W = 0, H = 0, sc = 1;
-  var C = { mesh: 'rgba(166,116,42,.30)', red: '#b5504a', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', gold: '#a6742a' };
+  var XM = 6, TS = 4, XS = 22, TD = 13, HZ = 2.2, HG = 2.6, R = 5.0;   /* 横 0〜6 m、奥 0〜4 秒 */
+  var yaw = 0.36, pitch = -0.52, t = 0, W = 0, H = 0, sc = 1;
+  var C = { mesh: 'rgba(166,116,42,.30)', red: '#b5504a', redF: 'rgba(181,80,74,.18)', blue: '#2f6fa6', blueF: 'rgba(47,111,166,.18)', muted: '#8a7a5c', ink: '#241d12', gold: '#a6742a', ring: 'rgba(138,122,92,.5)' };
   var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
   function rot(X, Y, Z) {
     var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
@@ -925,46 +928,82 @@
     for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
     ctx.stroke(); ctx.setLineDash([]);
   }
+  function arrow(a, b, color) { poly([a, b], color, 1.3); var dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1; dx /= L; dy /= L; ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(b[0] - 7 * dx - 3.5 * dy, b[1] - 7 * dy + 3.5 * dx); ctx.lineTo(b[0] - 7 * dx + 3.5 * dy, b[1] - 7 * dy - 3.5 * dx); ctx.closePath(); ctx.fill(); }
+
   function draw() {
     var lam = +sl.value, nu = +sn.value, K = 2 * Math.PI / lam, OM = 2 * Math.PI * nu, i, j, pts, nar = W < 520;
     function psi(x, tt) { return Math.sin(K * x - OM * tt); }
     ctx.clearRect(0, 0, W, H);
-    var ax = W * 0.5, ay = H * 0.56;
-    /* x［m］→ 横、t［s］→ 奥 */
-    function P(x, tt, y) { var p = rot((x / XM - 0.5) * XS, HZ * y, (tt / TS - 0.5) * TD); return [ax + p[0], ay + p[1]]; }
+    var ax1 = W * 0.26, ay1 = H * 0.29, ax2 = W * 0.75, ay2 = H * 0.29, ax3 = W * 0.26, ay3 = H * 0.8, ax4 = W * 0.75, ay4 = H * 0.79;
     var tNow = t % TS, x0 = XM * 0.5;
-    for (i = 0; i <= 10; i++) { var tt = TS * i / 10; pts = []; for (j = 0; j <= 72; j++) { var x = XM * j / 72; pts.push(P(x, tt, psi(x, tt))); } poly(pts, C.mesh, 0.9); }
-    for (i = 0; i <= 8; i++) { var x2 = XM * i / 8; pts = []; for (j = 0; j <= 48; j++) { var t2 = TS * j / 48; pts.push(P(x2, t2, psi(x2, t2))); } poly(pts, C.mesh, 0.9); }
+
+    /* ---- 左上：曲面 ---- */
+    function P(x, tt, y) { var p = rot((x / XM - 0.5) * XS, HZ * y, (tt / TS - 0.5) * TD); return [ax1 + p[0], ay1 + p[1]]; }
+    for (i = 0; i <= 8; i++) { var tt = TS * i / 8; pts = []; for (j = 0; j <= 72; j++) { var x = XM * j / 72; pts.push(P(x, tt, psi(x, tt))); } poly(pts, C.mesh, 0.9); }
+    for (i = 0; i <= 6; i++) { var x2 = XM * i / 6; pts = []; for (j = 0; j <= 48; j++) { var t2 = TS * j / 48; pts.push(P(x2, t2, psi(x2, t2))); } poly(pts, C.mesh, 0.9); }
     poly([P(0, 0, 0), P(XM, 0, 0), P(XM, TS, 0), P(0, TS, 0), P(0, 0, 0)], 'rgba(138,122,92,.35)', 1);
-    /* 青：いまの写真（x 方向の断面） */
-    pts = []; for (j = 0; j <= 120; j++) { var x3 = XM * j / 120; pts.push(P(x3, tNow, psi(x3, tNow))); } poly(pts, C.blue, 2.2);
-    /* 赤：一点に立って眺める（t 方向の断面） */
-    pts = []; for (j = 0; j <= 120; j++) { var t3 = TS * j / 120; pts.push(P(x0, t3, psi(x0, t3))); } poly(pts, C.red, 2.2);
+    pts = []; for (j = 0; j <= 120; j++) { var x3 = XM * j / 120; pts.push(P(x3, tNow, psi(x3, tNow))); } poly(pts, C.blue, 2);
+    pts = []; for (j = 0; j <= 120; j++) { var t3 = TS * j / 120; pts.push(P(x0, t3, psi(x0, t3))); } poly(pts, C.red, 2);
     var b = P(x0, tNow, 0), tp = P(x0, tNow, psi(x0, tNow));
-    poly([b, tp], C.red, 1.6); ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(tp[0], tp[1], 4, 0, 7); ctx.fill();
-    /* 「1 m」の物差し（青の断面に沿って、いまの時刻に） */
-    var m0 = 0.5, A1 = P(m0, tNow, 1.45), A2 = P(m0 + 1, tNow, 1.45), A1b = P(m0, tNow, 1.15), A2b = P(m0 + 1, tNow, 1.15);
-    poly([A1b, A1, A2, A2b], C.blue, 1.3);
-    text((A1[0] + A2[0]) / 2, (A1[1] + A2[1]) / 2 - 10, '1 m', C.blue, SUB);
-    /* 「1 秒」の物差し（赤の断面に沿って） */
-    var s0 = 2.3, B1 = P(x0, s0, 1.45), B2 = P(x0, s0 + 1, 1.45), B1b = P(x0, s0, 1.15), B2b = P(x0, s0 + 1, 1.15);
-    poly([B1b, B1, B2, B2b], C.red, 1.3);
-    text((B1[0] + B2[0]) / 2, (B1[1] + B2[1]) / 2 - 10, '1 秒', C.red, SUB);
-    /* 軸 */
-    var o = P(-0.1, 0, 0), aX = P(XM + 0.4, 0, 0), aT = P(-0.1, TS + 0.4, 0), aY = P(-0.1, 0, 1.6);
-    poly([o, aX], C.muted, 1.3); poly([o, aT], C.muted, 1.3); poly([o, aY], C.muted, 1.3);
-    text(aX[0] + 8, aX[1] + 2, 'x［m］', C.muted, SUB, 'left'); text(aT[0] - 4, aT[1] - 8, 't［秒］', C.muted, SUB); text(aY[0] - 5, aY[1], '波の高さ', C.muted, SUB, 'right');
-    text(ax, H * 0.04, nar ? 'ν は時間の細かさ、k は空間の細かさ' : '同じ1つの波 ― 横が場所 x［m］、奥が時刻 t［秒］。ν は時間の細かさ、k は空間の細かさ', C.ink, TITLE);
-    text(ax, H * 0.905, nar ? '赤：一点に立って眺める → 1秒に ν 回（1秒あたり）' : '赤：ある一点に立って波を眺める → 1秒のあいだに山が ν 回通り過ぎる（単位は「1秒あたり」）', C.red, SUB);
-    text(ax, H * 0.965, nar ? '青：写真に撮る → 1 m 進むと角度が k 進む（1 m あたり）' : '青：ある瞬間の写真 → 距離を 1 m 進むと角度が k ラジアン進む（単位は「1 m あたり」）', C.blue, SUB);
+    poly([b, tp], C.red, 1.4); ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(tp[0], tp[1], 3.5, 0, 7); ctx.fill();
+    var o = P(-0.1, 0, 0), aX = P(XM + 0.5, 0, 0), aT = P(-0.1, TS + 0.5, 0), aY = P(-0.1, 0, 1.5);
+    poly([o, aX], C.muted, 1.2); poly([o, aT], C.muted, 1.2); poly([o, aY], C.muted, 1.2);
+    text(aX[0] + 6, aX[1] + 2, 'x［m］', C.muted, SUB, 'left'); text(aT[0] - 4, aT[1] - 8, 't［秒］', C.muted, SUB); text(aY[0], aY[1] - 8, '高さ', C.muted, SUB);
+
+    /* ---- 右上：時間で切る（高さ vs t、x₀ に立って眺める） ---- */
+    function Qt(tt, y) { var p = rot((tt / TS - 0.5) * XS, HG * y, 0); return [ax2 + p[0], ay2 + p[1]]; }
+    poly([Qt(-0.1, 0), Qt(TS + 0.4, 0)], C.muted, 1.2); poly([Qt(-0.1, 0), Qt(-0.1, 1.3)], C.muted, 1.2);
+    var q = Qt(TS + 0.4, 0); text(q[0], q[1] + 12, 't［秒］', C.muted, SUB);
+    pts = []; for (j = 0; j <= 160; j++) { var t4 = TS * j / 160; pts.push(Qt(t4, psi(x0, t4))); } poly(pts, C.red, 2);
+    var tq = Qt(tNow, psi(x0, tNow)); poly([Qt(tNow, 0), tq], C.red, 1.2); ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(tq[0], tq[1], 3.5, 0, 7); ctx.fill();
+    var s0 = 1.0, B1 = Qt(s0, 1.35), B2 = Qt(s0 + 1, 1.35);
+    poly([Qt(s0, 1.1), B1, B2, Qt(s0 + 1, 1.1)], C.red, 1.3);
+    ctx.fillStyle = C.redF; ctx.beginPath(); var r1 = Qt(s0, -1.15), r2 = Qt(s0 + 1, -1.15), r3 = Qt(s0 + 1, 1.15), r4 = Qt(s0, 1.15); ctx.moveTo(r1[0], r1[1]); ctx.lineTo(r2[0], r2[1]); ctx.lineTo(r3[0], r3[1]); ctx.lineTo(r4[0], r4[1]); ctx.closePath(); ctx.fill();
+    text((B1[0] + B2[0]) / 2, (B1[1] + B2[1]) / 2 - 10, '1 秒 → 山が ' + nu.toFixed(2) + ' 回', C.red, SUB);
+
+    /* ---- 左下：場所で切る（高さ vs x、いまの写真） ---- */
+    function Qx(x, y) { var p = rot((x / XM - 0.5) * XS, HG * y, 0); return [ax3 + p[0], ay3 + p[1]]; }
+    poly([Qx(-0.1, 0), Qx(XM + 0.4, 0)], C.muted, 1.2); poly([Qx(-0.1, 0), Qx(-0.1, 1.3)], C.muted, 1.2);
+    var q2 = Qx(XM + 0.4, 0); text(q2[0] + 6, q2[1] + 2, 'x［m］', C.muted, SUB, 'left');
+    pts = []; for (j = 0; j <= 200; j++) { var x4 = XM * j / 200; pts.push(Qx(x4, psi(x4, tNow))); } poly(pts, C.blue, 2);
+    var m0 = 1.5, A1 = Qx(m0, 1.35), A2 = Qx(m0 + 1, 1.35);
+    poly([Qx(m0, 1.1), A1, A2, Qx(m0 + 1, 1.1)], C.blue, 1.3);
+    ctx.fillStyle = C.blueF; ctx.beginPath(); var u1 = Qx(m0, -1.15), u2 = Qx(m0 + 1, -1.15), u3 = Qx(m0 + 1, 1.15), u4 = Qx(m0, 1.15); ctx.moveTo(u1[0], u1[1]); ctx.lineTo(u2[0], u2[1]); ctx.lineTo(u3[0], u3[1]); ctx.lineTo(u4[0], u4[1]); ctx.closePath(); ctx.fill();
+    text((A1[0] + A2[0]) / 2, (A1[1] + A2[1]) / 2 - 10, '1 m → 波が ' + (1 / lam).toFixed(2) + ' 個', C.blue, SUB);
+
+    /* ---- 右下：角度で数える円（1 m で k、1 秒で ω） ---- */
+    function Qc(X, Y) { var p = rot(X, Y, 0); return [ax4 + p[0], ay4 + p[1]]; }
+    pts = []; for (i = 0; i <= 72; i++) { var a = 2 * Math.PI * i / 72; pts.push(Qc(R * Math.cos(a), R * Math.sin(a))); } poly(pts, C.ring, 1.2);
+    var cc = Qc(0, 0); poly([Qc(-R * 1.15, 0), Qc(R * 1.15, 0)], C.ring, 1, [3, 3]);
+    /* 青：1 m 進んだぶんの角度 k（内側の弧）、赤：1 秒たったぶんの角度 ω（外側の弧）。どちらも 2π を超えたら周回 */
+    function arc(ang, rr, color, lab, inside) {
+      var n = Math.max(8, Math.round(ang * 12)); pts = [];
+      for (i = 0; i <= n; i++) { var a2 = ang * i / n; pts.push(Qc(rr * Math.cos(a2), rr * Math.sin(a2))); }
+      poly(pts, color, 2.4);
+      var hd = Qc(rr * Math.cos(ang), rr * Math.sin(ang)); arrow(Qc(rr * Math.cos(ang - 0.15), rr * Math.sin(ang - 0.15)), hd, color);
+      var lr = inside ? rr - 1.7 : rr + 1.6, lp = Qc(lr * Math.cos(ang / 2), lr * Math.sin(ang / 2)); text(lp[0], lp[1], lab, color, SUB);
+    }
+    arc(Math.min(K, 2 * Math.PI * 0.98), R * 0.72, C.blue, 'k＝' + K.toFixed(2), true);
+    arc(Math.min(OM, 2 * Math.PI * 0.98), R * 1.0, C.red, 'ω＝' + OM.toFixed(2), false);
+    var lp0 = Qc(R * 1.2, 0.5); text(lp0[0] + 4, lp0[1], '0', C.muted, SUB, 'left');
+    var wrapK = K > 2 * Math.PI * 0.98, wrapW = OM > 2 * Math.PI * 0.98;
+
+    /* ---- 見出し ---- */
+    text(ax1, H * 0.045, nar ? '同じ1つの波（横 x、奥 t）' : '同じ1つの波 ― 横が場所 x、奥が時刻 t、高さが波の高さ', C.ink, TITLE);
+    text(ax2, H * 0.045, nar ? '時間で切る：一点に立って眺める' : '時間で切る：ある一点（x₀）に立って波を眺める', C.red, TITLE);
+    text(ax1, H * 0.555, nar ? '場所で切る：写真に撮る' : '場所で切る：ある瞬間の波を写真に撮る', C.blue, TITLE);
+    text(ax4, H * 0.555, nar ? '角度で数える' : '角度で数える：位相 kx − ωt の進み方', C.ink, TITLE);
+    text(ax2, H * 0.49, nar ? '1秒に ν 回 ＝ 振動数 ν' : '1秒のあいだに山が ν 回 ＝ 振動数 ν（単位は「1秒あたり」）', C.red, SUB);
+    text(ax3, H * 0.975, nar ? '1 m あたり 1/λ 個、角度では k＝2π/λ' : '1 m 進むと波が 1/λ 個、角度では k＝2π/λ ラジアン（単位は「1 m あたり」）', C.blue, SUB);
+    text(ax4, H * 0.975, nar ? (wrapK || wrapW ? '1 m で k、1 秒で ω＝2πν（1周＝2π）' : '1 m で k、1 秒で ω＝2πν 進む') : (wrapK || wrapW ? '青：1 m で k ラジアン、赤：1 秒で ω＝2πν ラジアン（1周 2π を超えた分は巻き戻し）' : '青：1 m 進むと k ラジアン、赤：1 秒たつと ω＝2πν ラジアン進む'), C.ink, SUB);
     slv.textContent = lam.toFixed(2) + ' m'; snv.textContent = nu.toFixed(2) + ' /秒';
     out.textContent = 'k ＝ 2π/λ ＝ ' + K.toFixed(2) + ' ラジアン/m（1 m に波が ' + (1 / lam).toFixed(2) + ' 個）、ν ＝ ' + nu.toFixed(2) + ' /秒（ω ＝ 2πν ＝ ' + OM.toFixed(2) + ' ラジアン/秒）';
   }
   function resize() {
-    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.86, 380)), d = window.devicePixelRatio || 1;
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
     cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
     ctx.setTransform(d, 0, 0, d, 0, 0);
-    W = w; H = h; sc = w / 40;
+    W = w; H = h; sc = w / 58;
     draw();
   }
   var queued = false;
