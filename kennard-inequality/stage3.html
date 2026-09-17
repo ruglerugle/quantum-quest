@@ -58,7 +58,8 @@
   .kq-svg .ktA{fill:var(--gold-dark);font-size:11px;font-weight:900}
   .kq-svg .ktB{fill:#2f6fa6;font-size:11px;font-weight:900}
   .cv-wrap{width:100%}
-  #chirp3d,#psiphi3d,#nuk3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #chirp3d,#psiphi3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #nuk3d{display:block;width:100%;height:auto;touch-action:pan-y}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -397,7 +398,7 @@
           <span class="val" id="nk-nuv">0.75 /秒</span>
         </div>
         <button class="sim-play" id="nk-play" type="button" aria-pressed="true">⏸ 時間を止める（写真に撮る）</button>
-        <div class="readout"><span id="nk-out">k ＝ 2π/λ ＝ 4.19 ラジアン/m（1 m に波が 0.67 個）、ν ＝ 0.75 /秒（ω ＝ 2πν ＝ 4.71 ラジアン/秒）</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="readout"><span id="nk-out">k ＝ 2π/λ ＝ 4.19 ラジアン/m（1 m に波が 0.67 個）、ν ＝ 0.75 /秒（ω ＝ 2πν ＝ 4.71 ラジアン/秒）</span></div>
         <div class="diagram-caption"><strong>左上</strong>：同じ1つの波を、横が場所 x（メートル）、奥が時刻 t（秒）、高さが波の高さの曲面として描いたもの。<strong>右上（時間で切る）</strong>：赤い線は「ある一点に立って波を眺める」断面で、物差し「1秒」のあいだに山が通り過ぎる回数が<strong>振動数 ν</strong>（単位は1秒あたり）。<strong>左下（場所で切る）</strong>：青い線は「ある瞬間の写真」で、物差し「1 m」の中に波が 1/λ 個入る。角度で数えれば 1 m 進むごとに <strong>k＝2π/λ</strong> ラジアン進む（単位は1 m あたり）。<strong>右下（角度で数える）</strong>：位相 kx−ωt の進み方を円で見たもので、青の弧が「1 m 進んだぶんの角度 k」、赤の弧が「1秒たったぶんの角度 ω＝2πν」。2本のスライダーは独立で、λ を変えても右上の山の回数は変わらず、ν を変えても左下の山の間隔は変わらない――時間の細かさと空間の細かさは別の量だということが分かる</div>
       </div>
 
@@ -1000,6 +1001,7 @@
     text(ax2, H * 0.045, nar ? '時間で切る：一点に立って眺める' : '時間で切る：ある一点（x₀）に立って波を眺める', C.red, TITLE);
     text(ax1, H * 0.555, nar ? '場所で切る：写真に撮る' : '場所で切る：ある瞬間の波を写真に撮る', C.blue, TITLE);
     text(ax4, H * 0.555, nar ? '角度で数える' : '角度で数える：位相 kx − ωt の進み方', C.ink, TITLE);
+    text(ax1, H * 0.49, nar ? '🖱️ ドラッグで視点を回せます' : '🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます', C.muted, SUB);
     text(ax2, H * 0.49, nar ? '1秒に ν 回 ＝ 振動数 ν' : '1秒のあいだに山が ν 回 ＝ 振動数 ν（単位は「1秒あたり」）', C.red, SUB);
     text(ax3, H * 0.975, nar ? '1 m あたり 1/λ 個、角度では k＝2π/λ' : '1 m 進むと波が 1/λ 個、角度では k＝2π/λ ラジアン（単位は「1 m あたり」）', C.blue, SUB);
     text(ax4, H * 0.975, nar ? (wrapK || wrapW ? '2π を超えて2周目に入った分は色が濃い' : '1 m で k、1 秒で ω＝2πν 進む') : (wrapK || wrapW ? '青：1 m で k ラジアン、赤：1 秒で ω＝2πν ラジアン（1周 2π を超えて2周目に入った分は色が濃い）' : '青：1 m 進むと k ラジアン、赤：1 秒たつと ω＝2πν ラジアン進む'), C.ink, SUB);
@@ -1027,8 +1029,10 @@
   function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
   btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
 
+  /* 回せるのは左上の3D図だけ。その領域の外ではドラッグを始めない（スマホのスクロールも邪魔しない） */
   var dragging = false, lx = 0, ly = 0;
-  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function inPanel1(e) { var p = e.touches ? e.touches[0] : e, r = cv.getBoundingClientRect(); var x = p.clientX - r.left, y = p.clientY - r.top; return x < r.width * 0.52 && y < r.height * 0.52; }
+  function down(e) { if (!inPanel1(e)) return; dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
   function move(e) {
     if (!dragging) return;
     var p = e.touches ? e.touches[0] : e;
@@ -1039,6 +1043,7 @@
   }
   function up() { dragging = false; }
   cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('mousemove', function(e){ cv.style.cursor = inPanel1(e) ? 'move' : 'default'; });
   cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
   window.addEventListener('resize', resize);
   resize();
