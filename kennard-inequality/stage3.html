@@ -1000,7 +1000,7 @@
     text(ax4, H * 0.555, nar ? '角度で数える' : '角度で数える：位相 kx − ωt の進み方', C.ink, TITLE);
     text(ax2, H * 0.49, nar ? '1秒に ν 回 ＝ 振動数 ν' : '1秒のあいだに山が ν 回 ＝ 振動数 ν（単位は「1秒あたり」）', C.red, SUB);
     text(ax3, H * 0.975, nar ? '1 m あたり 1/λ 個、角度では k＝2π/λ' : '1 m 進むと波が 1/λ 個、角度では k＝2π/λ ラジアン（単位は「1 m あたり」）', C.blue, SUB);
-    text(ax4, H * 0.975, nar ? (wrapK || wrapW ? '1 m で k、1 秒で ω＝2πν（1周＝2π を超えて2周目へ）' : '1 m で k、1 秒で ω＝2πν 進む') : (wrapK || wrapW ? '青：1 m で k ラジアン、赤：1 秒で ω＝2πν ラジアン（1周 2π を超えた分はらせんで2周目へ）' : '青：1 m 進むと k ラジアン、赤：1 秒たつと ω＝2πν ラジアン進む'), C.ink, SUB);
+    text(ax4, H * 0.975, nar ? (wrapK || wrapW ? '2π を超えたら、らせんで2周目へ' : '1 m で k、1 秒で ω＝2πν 進む') : (wrapK || wrapW ? '青：1 m で k ラジアン、赤：1 秒で ω＝2πν ラジアン（1周 2π を超えた分はらせんで2周目へ）' : '青：1 m 進むと k ラジアン、赤：1 秒たつと ω＝2πν ラジアン進む'), C.ink, SUB);
     slv.textContent = lam.toFixed(2) + ' m'; snv.textContent = nu.toFixed(2) + ' /秒';
     out.textContent = 'k ＝ 2π/λ ＝ ' + K.toFixed(2) + ' ラジアン/m（1 m に波が ' + (1 / lam).toFixed(2) + ' 個）、ν ＝ ' + nu.toFixed(2) + ' /秒（ω ＝ 2πν ＝ ' + OM.toFixed(2) + ' ラジアン/秒）';
   }
