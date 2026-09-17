@@ -387,7 +387,7 @@
       </div>
 
       <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="nuk3d" role="img" aria-label="4パネルの3Dアニメーション。左上は横が場所 x（メートル）、奥が時刻 t（秒）、高さが波の高さの曲面で、赤（一点に立って眺める断面）と青（ある瞬間の写真）の線が入っている。右上は赤の断面を時間軸で描いたもので、1秒の物差しの中に山が ν 回入る（時間の細かさ）。左下は青の断面を場所の軸で描いたもので、1メートルの物差しの中に波が 1/λ 個入り、角度では k＝2π/λ 進む（空間の細かさ）。右下は角度で数える円で、1 m 進むと k ラジアン、1秒たつと ω＝2πν ラジアン進む。スライダーで波長 λ と振動数 ν を別々に変えられる。ドラッグで視点を回せる"></canvas></div>
+        <div class="cv-wrap"><canvas id="nuk3d" role="img" aria-label="4パネルのアニメーション（左上だけが回せる3D図で、残りは平面のグラフ）。左上は横が場所 x（メートル）、奥が時刻 t（秒）、高さが波の高さの曲面で、赤（一点に立って眺める断面）と青（ある瞬間の写真）の線が入っている。右上は赤の断面を時間軸で描いたもので、1秒の物差しの中に山が ν 回入る（時間の細かさ）。左下は青の断面を場所の軸で描いたもので、1メートルの物差しの中に波が 1/λ 個入り、角度では k＝2π/λ 進む（空間の細かさ）。右下は角度で数える円で、1 m 進むと k ラジアン、1秒たつと ω＝2πν ラジアン進む。スライダーで波長 λ と振動数 ν を別々に変えられる。ドラッグで左上の視点を回せる"></canvas></div>
         <div class="sim-ctrl">
           <label for="nk-lam">波長 λ（空間の細かさ。k＝2π/λ）</label>
           <input type="range" id="nk-lam" min="0.6" max="3" step="0.01" value="1.5" aria-label="波長 λ">
@@ -951,9 +951,10 @@
     text(aX[0] + 6, aX[1] + 2, 'x［m］', C.muted, SUB, 'left'); text(aT[0] - 4, aT[1] - 8, 't［秒］', C.muted, SUB); text(aY[0], aY[1] - 8, '高さ', C.muted, SUB);
 
     /* ---- 右上：時間で切る（高さ vs t、x₀ に立って眺める） ---- */
-    function Qt(tt, y) { var p = rot((tt / TS - 0.5) * XS, HG * y, 0); return [ax2 + p[0], ay2 + p[1]]; }
+    /* 右上・左下・右下は平面のグラフなので視点の回転は掛けず、そのまま描く */
+    function Qt(tt, y) { return [ax2 + sc * (tt / TS - 0.5) * XS, ay2 - sc * HG * y]; }
     poly([Qt(-0.1, 0), Qt(TS + 0.4, 0)], C.muted, 1.2); poly([Qt(-0.1, 0), Qt(-0.1, 1.3)], C.muted, 1.2);
-    var q = Qt(TS + 0.4, 0); text(q[0], q[1] + 12, 't［秒］', C.muted, SUB);
+    var q = Qt(TS + 0.4, 0); text(q[0] + (nar ? 0 : 6), q[1] + (nar ? 12 : 2), 't［秒］', C.muted, SUB, nar ? 'right' : 'left');
     pts = []; for (j = 0; j <= 160; j++) { var t4 = TS * j / 160; pts.push(Qt(t4, psi(x0, t4))); } poly(pts, C.red, 2);
     var tq = Qt(tNow, psi(x0, tNow)); poly([Qt(tNow, 0), tq], C.red, 1.2); ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(tq[0], tq[1], 3.5, 0, 7); ctx.fill();
     var s0 = 1.0, B1 = Qt(s0, 1.35), B2 = Qt(s0 + 1, 1.35);
@@ -962,7 +963,7 @@
     text((B1[0] + B2[0]) / 2, (B1[1] + B2[1]) / 2 - 10, '1 秒 → 山が ' + nu.toFixed(2) + ' 回', C.red, SUB);
 
     /* ---- 左下：場所で切る（高さ vs x、いまの写真） ---- */
-    function Qx(x, y) { var p = rot((x / XM - 0.5) * XS, HG * y, 0); return [ax3 + p[0], ay3 + p[1]]; }
+    function Qx(x, y) { return [ax3 + sc * (x / XM - 0.5) * XS, ay3 - sc * HG * y]; }
     poly([Qx(-0.1, 0), Qx(XM + 0.4, 0)], C.muted, 1.2); poly([Qx(-0.1, 0), Qx(-0.1, 1.3)], C.muted, 1.2);
     var q2 = Qx(XM + 0.4, 0); text(q2[0] + 6, q2[1] + 2, 'x［m］', C.muted, SUB, 'left');
     pts = []; for (j = 0; j <= 200; j++) { var x4 = XM * j / 200; pts.push(Qx(x4, psi(x4, tNow))); } poly(pts, C.blue, 2);
@@ -972,7 +973,7 @@
     text((A1[0] + A2[0]) / 2, (A1[1] + A2[1]) / 2 - 10, '1 m → 波が ' + (1 / lam).toFixed(2) + ' 個', C.blue, SUB);
 
     /* ---- 右下：角度で数える円（1 m で k、1 秒で ω） ---- */
-    function Qc(X, Y) { var p = rot(X, Y, 0); return [ax4 + p[0], ay4 + p[1]]; }
+    function Qc(X, Y) { return [ax4 + sc * X, ay4 - sc * Y]; }
     pts = []; for (i = 0; i <= 72; i++) { var a = 2 * Math.PI * i / 72; pts.push(Qc(R * Math.cos(a), R * Math.sin(a))); } poly(pts, C.ring, 1.2);
     var cc = Qc(0, 0); poly([Qc(-R * 1.15, 0), Qc(R * 1.15, 0)], C.ring, 1, [3, 3]);
     /* 青：1 m 進んだぶんの角度 k（内側の弧）、赤：1 秒たったぶんの角度 ω（外側の弧）。どちらも 2π を超えたら周回 */
