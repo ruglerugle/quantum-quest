@@ -284,14 +284,14 @@
       </div>
 
       <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="shift3d" role="img" aria-label="4パネルの図。左列は波束を作る成分の波を針の列で描いたもので、上が1 mごとに2ラジアン回る成分、下が4ラジアン回る成分。薄い金色が元の波、青が右へ x₀ ずらした後の波で、ずらした後は x＝x₀ で角度が0になる。右列はそれぞれの成分の係数 φ(p) の針で、ずらした後は −2×x₀、−4×x₀ ラジアンだけ回っている。スライダーでずらす距離 x₀ を変えられる。ドラッグで左列の視点を回せる"></canvas></div>
+        <div class="cv-wrap"><canvas id="shift3d" role="img" aria-label="4パネルの図。左列は波束を作る成分の波を針の列で描いたもので、上が1 mごとに2ラジアン回る成分、下が4ラジアン回る成分。薄い金色が元の波、青が右へ x₀ ずらした後の波で、ずらした後は x＝x₀ で角度が0になる。右列はそれぞれの成分の係数 φ(p) の針で、ずらした後は −2×x₀、−4×x₀ ラジアンだけ回っている。下段は全部の成分を足した波束で、薄い金色が元、青がすべての係数を回した後。係数を回しただけで波束は形を変えずに右へ x₀ 動き、足元の |ψ|² の山も一緒に動く。スライダーでずらす距離 x₀ を変えられる。ドラッグで左列と下段の視点を回せる"></canvas></div>
         <div class="sim-ctrl">
           <label for="sh-x0">波束を右へずらす距離 x₀</label>
           <input type="range" id="sh-x0" min="0" max="2" step="0.05" value="1" aria-label="ずらす距離 x₀">
           <span class="val" id="sh-x0v">1.00 m</span>
         </div>
         <div class="readout"><span id="sh-out">右へ 1.00 m ずらす → 2 ラジアン/m の成分の係数は −2.00 ラジアン、4 ラジアン/m の成分は −4.00 ラジアン回る（回る角度 ＝ −(1 m あたりの回転角)×x₀ で、細かい波ほど大きい）</span></div>
-        <div class="diagram-caption"><strong>左列</strong>：波束を作っている成分の波を1本ずつ取り出したもの（上：1 m ごとに 2 ラジアン回る波、下：4 ラジアン回る細かい波）。薄い金色が元の波で、x＝0 で角度 0。青が波束ごと右へ x₀ ずらした後の波で、角度 0 の場所が x＝x₀ に移っている。これは<strong>元の針の列をそっくり −(1 m あたりの回転角)×x₀ だけ回したもの</strong>と同じ形。<strong>右列</strong>：だから配合表の側では、波を取り替えずに、その成分の<strong>係数 φ(p) の針を同じ角度だけ回す</strong>ことになる。2 ラジアン/m の成分は −2×x₀、4 ラジアン/m の成分は −4×x₀――細かい波（p が大きい成分）ほど大きく回る。この「p に比例した回転」が、p を横軸に並べた φ の針の<strong>ねじれ</strong>の正体</div>
+        <div class="diagram-caption"><strong>左列</strong>：波束を作っている成分の波を1本ずつ取り出したもの（上：1 m ごとに 2 ラジアン回る波、下：4 ラジアン回る細かい波）。薄い金色が元の波で、x＝0 で角度 0。青が波束ごと右へ x₀ ずらした後の波で、角度 0 の場所が x＝x₀ に移っている。これは<strong>元の針の列をそっくり −(1 m あたりの回転角)×x₀ だけ回したもの</strong>と同じ形。<strong>右列</strong>：だから配合表の側では、波を取り替えずに、その成分の<strong>係数 φ(p) の針を同じ角度だけ回す</strong>ことになる。2 ラジアン/m の成分は −2×x₀、4 ラジアン/m の成分は −4×x₀――細かい波（p が大きい成分）ほど大きく回る。この「p に比例した回転」が、p を横軸に並べた φ の針の<strong>ねじれ</strong>の正体。<strong>下段</strong>：その配合表で全部の成分を足し合わせた波束。どの成分も係数を回しただけなのに、足すと<strong>波束は形を変えずに右へ x₀ 動く</strong>（足元の |ψ|² の山も一緒に動く）。混ぜる量は何ひとつ変えていないので |φ|² は元のまま――「ψ をずらす」と「φ をねじる」が同じことだと分かる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -1145,6 +1145,32 @@
     poly([o, aY], C.muted, 1.1); poly([o, aZ], C.muted, 1.1);
     text(aY[0], aY[1] - 8, '実部', C.muted, SUB); text(aZ[0] - 4, aZ[1] + 4, '虚部', C.muted, SUB, 'right');
   }
+  /* 3段目：全部の成分を足した波束（ガウス波束、中心の回転角 a₀＝3 ラジアン/m）。薄い金＝元、青＝右へ x0 ずらした後。足元に |ψ|² */
+  function packetPanel(ax, ay, x0, nar) {
+    var i, u, pts, SIG = 0.45, A0 = 3, CX = 1.2, XW = 44;
+    function P(x, re, im) { var p = rot((x / XM - 0.5) * XW, 3.0 * re, -2.6 * im); return [ax + p[0], ay + p[1]]; }
+    function amp(x, s) { var d = x - CX - s; return Math.exp(-d * d / (4 * SIG * SIG)); }
+    poly([P(-0.2, 0, 0), P(XM + 0.3, 0, 0)], C.muted, 1);
+    for (i = 0; i <= 3; i++) { poly([P(i, -0.12, 0), P(i, 0.12, 0)], C.muted, 1.2); }
+    var t0l = P(0, 0.2, 0); text(t0l[0], t0l[1] - 8, 'x＝0', C.muted, SUB);
+    /* |ψ|²（足元）：元は薄い金、ずらした後は赤 */
+    pts = []; for (i = 0; i <= 160; i++) { u = XM * i / 160; var a1 = amp(u, 0); pts.push(P(u, -1.5 + 0.9 * a1 * a1, 0)); } poly(pts, C.gold, 1.4, [4, 3]);
+    pts = []; for (i = 0; i <= 160; i++) { u = XM * i / 160; var a2 = amp(u, x0); pts.push(P(u, -1.5 + 0.9 * a2 * a2, 0)); } poly(pts, 'rgba(181,80,74,.9)', 1.6, [4, 3]);
+    poly([P(0, -1.5, 0), P(XM, -1.5, 0)], 'rgba(181,80,74,.4)', 1);
+    /* 元の波束（薄い金の線） */
+    pts = []; for (i = 0; i <= 200; i++) { u = XM * i / 200; var a3 = amp(u, 0); pts.push(P(u, a3 * Math.cos(A0 * u), a3 * Math.sin(A0 * u))); } poly(pts, C.gold, 1.3);
+    /* ずらした後の波束（青の針） */
+    for (i = 0; i <= 72; i++) {
+      u = XM * i / 72; var a4 = amp(u, x0), th = A0 * (u - x0), b = P(u, 0, 0), tp = P(u, a4 * Math.cos(th), a4 * Math.sin(th));
+      ctx.strokeStyle = C.blueH; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = C.blue; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.6, 0, 7); ctx.fill();
+    }
+    pts = []; for (i = 0; i <= 200; i++) { u = XM * i / 200; var a5 = amp(u, x0), th2 = A0 * (u - x0); pts.push(P(u, a5 * Math.cos(th2), a5 * Math.sin(th2))); } poly(pts, C.blue, 1.6);
+    var mk = P(CX + x0, 1.35, 0); text(mk[0], mk[1] - 8, nar ? '右へ ' + x0.toFixed(2) + ' m' : '山の中心が右へ ' + x0.toFixed(2) + ' m 動いた', C.red, SUB);
+    var o = P(-0.2, 0, 0), aY = P(-0.2, 1.2, 0), aZ = P(-0.2, 0, 1.2), aD = P(XM + 0.25, -1.5, 0);
+    poly([o, aY], C.muted, 1.1); poly([o, aZ], C.muted, 1.1);
+    text(aY[0], aY[1] - 8, '実部', C.muted, SUB); text(aZ[0] - 4, aZ[1] + 4, '虚部', C.muted, SUB, 'right'); text(aD[0] + 4, aD[1], '|ψ|²', C.red, SUB, 'left');
+  }
   /* 右列：この成分の係数 φ(p) の針。元（薄い金、角度 0）と、ずらした後（青、角度 −a·x0） */
   function coefPanel(ax, ay, a, x0, nar) {
     var i, pts = [];
@@ -1167,21 +1193,24 @@
   function draw() {
     var x0 = +sl.value, nar = W < 520;
     ctx.clearRect(0, 0, W, H);
-    var ax1 = W * (nar ? 0.3 : 0.27), ay1 = H * 0.29, ax2 = W * 0.76, ay2 = H * 0.27, ay3 = H * 0.78, ay4 = H * 0.76;
+    var ax1 = W * (nar ? 0.3 : 0.27), ay1 = H * 0.2, ax2 = W * 0.76, ay2 = H * 0.19, ay3 = H * 0.52, ay4 = H * 0.51, ax5 = W * 0.5, ay5 = H * 0.855;
     wavePanel(ax1, ay1, 2, x0, nar);
     wavePanel(ax1, ay3, 4, x0, nar);
     coefPanel(ax2, ay2, 2, x0, nar);
     coefPanel(ax2, ay4, 4, x0, nar);
-    text(ax1, H * 0.045, nar ? '1 m ごとに 2 ラジアン回る成分' : '成分①：1 m ごとに 2 ラジアン回る波（薄い金＝元、青＝右へ x₀ ずらした後）', C.ink, TITLE);
-    text(ax2, H * 0.045, nar ? 'その成分の係数 φ(p)' : 'その成分の係数 φ(p) の針（金＝元、青＝ずらした後）', C.ink, TITLE);
-    text(ax1, H * 0.535, nar ? '1 m ごとに 4 ラジアン回る成分' : '成分②：1 m ごとに 4 ラジアン回る波（細かい波）', C.ink, TITLE);
-    text(ax2, H * 0.535, nar ? 'その成分の係数 φ(p)' : 'その成分の係数 φ(p) の針：回る角度は2倍', C.ink, TITLE);
-    text(ax1, H * 0.49, nar ? '指でなぞると回せます' : '🖱️ ドラッグ（スマホは指でなぞる）で左の2つを回せます', C.muted, SUB);
+    packetPanel(ax5, ay5, x0, nar);
+    text(ax1, H * 0.032, nar ? '1 m ごとに 2 ラジアン回る成分' : '成分①：1 m ごとに 2 ラジアン回る波（薄い金＝元、青＝右へ x₀ ずらした後）', C.ink, TITLE);
+    text(ax2, H * 0.032, nar ? 'その成分の係数 φ(p)' : 'その成分の係数 φ(p) の針（金＝元、青＝ずらした後）', C.ink, TITLE);
+    text(ax1, H * 0.365, nar ? '1 m ごとに 4 ラジアン回る成分' : '成分②：1 m ごとに 4 ラジアン回る波（細かい波）', C.ink, TITLE);
+    text(ax2, H * 0.365, nar ? 'その成分の係数 φ(p)' : 'その成分の係数 φ(p) の針：回る角度は2倍', C.ink, TITLE);
+    text(ax1, H * 0.335, nar ? '指でなぞると回せます' : '🖱️ ドラッグ（スマホは指でなぞる）で左と下の図を回せます', C.muted, SUB);
+    text(ax5, H * 0.665, nar ? '全部の成分を足した波束（薄い金＝元、青＝ずらした後）' : '全部の成分を足した波束（薄い金＝元、青＝すべての係数を回した後）', C.ink, TITLE);
+    text(ax5, H * 0.975, nar ? '係数を回しただけで、波束ごと右へ x₀ 動く' : 'どの成分も係数を −(回転角)×x₀ だけ回した。それだけで、足した波束は形を変えずに右へ x₀ 動く', C.ink, SUB);
     slv.textContent = x0.toFixed(2) + ' m';
     out.textContent = '右へ ' + x0.toFixed(2) + ' m ずらす → 2 ラジアン/m の成分の係数は ' + (-2 * x0).toFixed(2).replace('-', '−') + ' ラジアン、4 ラジアン/m の成分は ' + (-4 * x0).toFixed(2).replace('-', '−') + ' ラジアン回る（回る角度 ＝ −(1 m あたりの回転角)×x₀ で、細かい波ほど大きい）';
   }
   function resize() {
-    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.45, 620)), d = window.devicePixelRatio || 1;
     cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
     ctx.setTransform(d, 0, 0, d, 0, 0);
     W = w; H = h; sc = w / 58;
@@ -1191,9 +1220,9 @@
   function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
   sl.addEventListener('input', invalidate);
 
-  /* 回せるのは左列の3D図だけ */
+  /* 回せるのは3D図（左列と下段）だけ。右列の係数の円の上ではドラッグを始めない */
   var dragging = false, lx = 0, ly = 0;
-  function inLeft(e) { var p = e.touches ? e.touches[0] : e, r = cv.getBoundingClientRect(); return (p.clientX - r.left) < r.width * 0.52; }
+  function inLeft(e) { var p = e.touches ? e.touches[0] : e, r = cv.getBoundingClientRect(); var x = p.clientX - r.left, y = p.clientY - r.top; return !(x >= r.width * 0.52 && y < r.height * 0.62); }
   function down(e) { if (!inLeft(e)) return; dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
   function move(e) {
     if (!dragging) return;
