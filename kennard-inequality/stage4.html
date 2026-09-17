@@ -34,6 +34,19 @@
   .kq-svg .boxd3{fill:rgba(138,122,92,.25);stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
   .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .cv-wrap{width:100%}
+  #parts2d{display:block;width:100%;height:auto}
+  .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
+    max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
+  .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
+  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+  @media (max-width:560px){
+    .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
+    .sim-ctrl label{grid-column:1 / -1;white-space:normal}
+  }
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -130,6 +143,23 @@
           </div>
           <div class="dialog-bubble">いい引っかかりだ。そのとおりで、<strong>そのままでは帯も角もどちらもゼロに向かう</strong>。違いが出るのは「傾き」を出すときだよ。前のステージで、微分は「増えた量 ÷ 進んだ幅 Δx」だったね。そこで Δf と Δg を Δx で書き直す。f の増分は「傾き × 進んだ幅」だから Δf ≈ f′·Δx、同じく Δg ≈ g′·Δx。すると2つの帯は Δf·g ＋ f·Δg ≈ (f′g ＋ fg′)·Δx で、<strong>Δx が1個</strong>。角は Δf·Δg ≈ f′g′·(Δx)² で、<strong>Δx が2個</strong>。面積の増え方を Δx で割ると、帯のほうは Δx が打ち消されて f′g ＋ fg′ という<strong>有限の値</strong>が残るのに、角のほうは f′g′·Δx と <strong>Δx が1個残る</strong>。だから Δx をゼロに近づけると、角の項だけが消える。数字で言えば、Δx＝0.01 のとき帯は割ったあとで f′g＋fg′ のまま、角は 0.01×f′g′。Δx＝0.001 なら角は 0.001×f′g′。帯は変わらず、角だけがどこまでも小さくなる。これが積の微分公式 <strong>(fg)′＝f′g＋fg′</strong> だ。部分積分は、この公式の「逆再生」にすぎない。まず移項して f′g ＝ (fg)′ − fg′。この両辺を −∞ から ＋∞ まで積分する。右辺第1項の「(fg)′ の積分」は、傾きを足し集めたものだから、単純に<strong>両端での値の差</strong> [fg] になる（山道の傾きを全部足せば、ゴールとスタートの標高差になる、というのと同じ理屈だよ）。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="parts2d" role="img" aria-label="4パネルの図。左上：縦 f・横 g の長方形が Δx 進んで Δf＝f′Δx、Δg＝g′Δx だけ育ち、右の帯 f·Δg と上の帯 Δf·g（青）と角 Δf·Δg（赤）が足される。右上：面積の増え方を Δx で割った棒グラフで、帯の棒は f′g＋fg′ で一定、角の棒は f′g′·Δx で Δx を小さくすると消える。左下：山道の標高 h＝fg のグラフで、スタート a とゴール b の標高差 [fg]。右下：傾き (fg)′ のグラフで、a〜b の面積が標高差にちょうど等しい。スライダーで Δx とゴール b を変えられる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="pt-dx">進む幅 Δx</label>
+          <input type="range" id="pt-dx" min="0.005" max="0.6" step="0.005" value="0.4" aria-label="進む幅 Δx">
+          <span class="val" id="pt-dxv">0.400</span>
+          <label for="pt-b">山道のゴール b</label>
+          <input type="range" id="pt-b" min="0.6" max="3" step="0.01" value="2.4" aria-label="山道のゴール b">
+          <span class="val" id="pt-bv">2.40</span>
+        </div>
+        <div class="readout"><span id="pt-out">Δx＝0.400：帯 ÷ Δx ＝ f′g＋fg′ ＝ 6.50（一定）、角 ÷ Δx ＝ f′g′·Δx ＝ 0.600（Δx→0 で消える）</span></div>
+        <div class="diagram-caption"><strong>上の段（積の微分公式）</strong>：縦 f、横 g の長方形（例として f＝3、g＝2、傾き f′＝1、g′＝1.5）が Δx 進むと、縦が Δf＝f′Δx、横が Δg＝g′Δx だけ育つ。増えた面積は青い帯2本 Δf·g＋f·Δg と赤い角 Δf·Δg。そのままでは Δx を小さくするとどれもゼロに向かうが、傾きを出すために<strong>Δx で割る</strong>と（右上の棒）、帯は Δx が打ち消されて f′g＋fg′ で一定、角は f′g′·Δx と Δx が1個残る。スライダーで Δx を小さくしていくと、帯の棒は動かず角の棒だけが消えていく――これが (fg)′＝f′g＋fg′。<strong>下の段（傾きの足し集め）</strong>：h＝fg を山道の標高とすると、その傾き (fg)′ を a から b まで足し集めたもの（右下の色のついた面積）は、ゴールとスタートの標高差 [fg]（左下の赤い縦線）にちょうど等しい。ゴール b を動かしても、面積と標高差はつねに一致する。波動関数が絡む場合は、遠方でどちらの標高も 0 なので、この差 [fg] はまるごと消える</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -250,6 +280,108 @@
 </div>
 
 <script src="js/progress.js"></script>
+<script>
+/* 積の微分公式と「傾きの足し集め＝両端の差」。1枚の canvas に 2×2（すべて平面の図）：
+   左上：縦 f・横 g の長方形が Δx 進んで Δf＝f′Δx、Δg＝g′Δx だけ育つ。帯2本（青）と角（赤）。
+   右上：面積の増え方を Δx で割った値。帯は f′g＋fg′ で一定、角は f′g′·Δx で Δx とともに消える。
+   左下：山道 h(x)＝f·g の標高。区間 a〜b の両端の標高差 [fg]。
+   右下：傾き h′(x) のグラフ。a〜b の面積（傾きを足し集めたもの）＝両端の標高差。 */
+(function(){
+  var cv = document.getElementById('parts2d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sdx = document.getElementById('pt-dx'), sdxv = document.getElementById('pt-dxv');
+  var sb = document.getElementById('pt-b'), sbv = document.getElementById('pt-bv');
+  var out = document.getElementById('pt-out');
+  var F = 3, G = 2, FP = 1, GP = 1.5;                    /* f、g の値と傾き（例） */
+  var W = 0, H = 0;
+  var C = { ink: '#241d12', muted: '#8a7a5c', blue: '#2f6fa6', blueF: 'rgba(47,111,166,.28)', red: '#b5504a', redF: 'rgba(181,80,74,.35)', gold: '#a6742a', goldF: 'rgba(217,164,65,.28)', line: '#ddd0ad', paper: '#fffdf6' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function rect(x, y, w, hh, fill, stroke) { ctx.fillStyle = fill; ctx.fillRect(x, y, w, hh); if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = 1; ctx.strokeRect(x, y, w, hh); } }
+  function arrowH(x1, x2, y, color) { poly([[x1, y], [x2, y]], color, 1.2); ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(x2, y); ctx.lineTo(x2 - 6, y - 3); ctx.lineTo(x2 - 6, y + 3); ctx.closePath(); ctx.fill(); }
+  /* 山道の標高 h(x)＝f·g と、その傾き h′(x)（0〜3 の区間） */
+  function road(x) { return 0.3 + 0.3 * (1 - Math.cos(2 * Math.PI * x / 3)) + 0.05 * x; }
+  function slope(x) { return 0.3 * (2 * Math.PI / 3) * Math.sin(2 * Math.PI * x / 3) + 0.05; }
+
+  function draw() {
+    var dx = +sdx.value, b = +sb.value, a = 0.3, nar = W < 520, i, pts;
+    ctx.clearRect(0, 0, W, H);
+    var df = FP * dx, dg = GP * dx;
+    /* ---- 左上：長方形 ---- */
+    var L = W * 0.06, T = H * 0.12, U = Math.min(W * 0.36, H * 0.34) / 3.6;   /* 1 単位あたりの px（縦 f＋Δf が 3.6 まで） */
+    var gx = L + 18, fy = T + U * 3.6;                                           /* 原点（左下） */
+    var x0 = gx, y0 = fy;
+    rect(x0, y0 - U * F, U * G, U * F, 'rgba(217,164,65,.18)', C.gold);          /* 元の f×g */
+    rect(x0 + U * G, y0 - U * F, U * dg, U * F, C.blueF, C.blue);               /* 右の帯 f·Δg */
+    rect(x0, y0 - U * (F + df), U * G, U * df, C.blueF, C.blue);                /* 上の帯 Δf·g */
+    rect(x0 + U * G, y0 - U * (F + df), U * dg, U * df, C.redF, C.red);         /* 角 Δf·Δg */
+    text(x0 + U * G / 2, y0 - U * F / 2, 'f × g', C.gold, TITLE);
+    text(x0 - 8, y0 - U * F / 2, 'f', C.muted, SUB, 'right'); text(x0 + U * G / 2, y0 + 10, 'g', C.muted, SUB);
+    text(x0 - 8, y0 - U * (F + df / 2), 'Δf', C.blue, SUB, 'right'); text(x0 + U * (G + dg / 2), y0 + 10, 'Δg', C.blue, SUB);
+    if (U * dg > 22) text(x0 + U * (G + dg / 2), y0 - U * F / 2, nar ? 'f·Δg' : '帯 f·Δg', C.blue, SUB);
+    if (U * df > 12) text(x0 + U * G / 2, y0 - U * (F + df / 2), nar ? 'Δf·g' : '帯 Δf·g', C.blue, SUB);
+    var cxp = x0 + U * (G + dg / 2), cyp = y0 - U * (F + df / 2);
+    text(cxp + 14, cyp - 14, nar ? '角' : '角 Δf·Δg', C.red, SUB, 'left'); poly([[cxp + 12, cyp - 10], [cxp + 2, cyp - 2]], C.red, 1);
+    text(L + W * 0.2, H * 0.045, nar ? 'Δx 進むと f×g はどう育つか' : '長方形 f×g が Δx 進むと：Δf＝f′Δx、Δg＝g′Δx だけ育つ', C.ink, TITLE);
+    /* ---- 右上：Δx で割った値の棒 ---- */
+    var bx = W * 0.56, by = H * 0.43, bw = W * 0.4, bh = H * 0.27;
+    var vStrip = FP * G + F * GP, vCorner = FP * GP * dx, vmax = 8;
+    poly([[bx, by], [bx + bw, by]], C.muted, 1.2);
+    var barw = bw * 0.28, b1 = bx + bw * 0.12, b2 = bx + bw * 0.6;
+    rect(b1, by - bh * vStrip / vmax, barw, bh * vStrip / vmax, C.blueF, C.blue);
+    rect(b2, by - Math.max(1, bh * vCorner / vmax), barw, Math.max(1, bh * vCorner / vmax), C.redF, C.red);
+    text(b1 + barw / 2, by + 10, nar ? '帯 ÷ Δx' : '帯2本 ÷ Δx', C.blue, SUB); text(b2 + barw / 2, by + 10, nar ? '角 ÷ Δx' : '角 ÷ Δx', C.red, SUB);
+    text(b1 + barw / 2, by - bh * vStrip / vmax - 9, (nar ? 'f′g＋fg′＝' : 'f′g＋fg′ ＝ ') + vStrip.toFixed(2), C.blue, SUB);
+    text(b2 + barw / 2, by - Math.max(1, bh * vCorner / vmax) - 9, (nar ? 'f′g′Δx＝' : 'f′g′·Δx ＝ ') + vCorner.toFixed(3), C.red, SUB);
+    text(bx + bw / 2, H * 0.045, nar ? '面積の増え方 ÷ Δx' : '面積の増え方を Δx で割ると', C.ink, TITLE);
+    text(bx + bw / 2, H * 0.095, nar ? '帯は一定、角は消える' : '帯は Δx が消えて一定、角は Δx が1個残って一緒に消える', C.muted, SUB);
+    /* ---- 左下：山道 h(x)＝fg ---- */
+    var rx = W * 0.08, ry = H * 0.94, rw = W * 0.38, rh = H * 0.3;
+    function RX(x) { return rx + rw * x / 3; } function RY(hh) { return ry - rh * hh / 1.1; }
+    poly([[rx, ry], [rx + rw, ry]], C.muted, 1.2); poly([[rx, ry], [rx, ry - rh]], C.muted, 1.2);
+    pts = []; for (i = 0; i <= 120; i++) { var xx = 3 * i / 120; pts.push([RX(xx), RY(road(xx))]); } poly(pts, C.gold, 2);
+    poly([[RX(a), ry], [RX(a), RY(road(a))]], C.muted, 1, [3, 3]); poly([[RX(b), ry], [RX(b), RY(road(b))]], C.muted, 1, [3, 3]);
+    poly([[RX(a) - 6, RY(road(a))], [RX(b) + 6, RY(road(a))]], C.red, 1, [3, 3]);
+    poly([[RX(b) + 10, RY(road(a))], [RX(b) + 10, RY(road(b))]], C.red, 2);
+    text(RX(a), ry + 10, 'a', C.muted, SUB); text(RX(b), ry + 10, 'b', C.muted, SUB);
+    ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(RX(a), RY(road(a)), 3.5, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(RX(b), RY(road(b)), 3.5, 0, 7); ctx.fill();
+    var diff = road(b) - road(a);
+    text(RX(b) + 14, (RY(road(a)) + RY(road(b))) / 2, nar ? '[fg]' : '標高差 [fg]', C.red, SUB, 'left');
+    text(rx + rw / 2, H * 0.55, nar ? '山道の標高 fg' : '山道の標高 h＝fg：スタート a からゴール b まで', C.ink, TITLE);
+    /* ---- 右下：傾き h′(x) の面積 ---- */
+    var sx = W * 0.56, sy = H * 0.8, sw = W * 0.4, sh = H * 0.13;
+    function SX(x) { return sx + sw * x / 3; } function SY(v) { return sy - sh * v / 0.7; }
+    poly([[sx, sy], [sx + sw, sy]], C.muted, 1.2);
+    ctx.fillStyle = C.goldF; ctx.beginPath(); ctx.moveTo(SX(a), sy);
+    for (i = 0; i <= 120; i++) { var xs = a + (b - a) * i / 120; ctx.lineTo(SX(xs), SY(slope(xs))); }
+    ctx.lineTo(SX(b), sy); ctx.closePath(); ctx.fill();
+    pts = []; for (i = 0; i <= 120; i++) { var xs2 = 3 * i / 120; pts.push([SX(xs2), SY(slope(xs2))]); } poly(pts, C.gold, 1.8);
+    text(SX(a), sy + 10, 'a', C.muted, SUB); text(SX(b), sy + 10, 'b', C.muted, SUB);
+    text(sx + sw / 2, H * 0.55, nar ? '傾き (fg)′ の面積' : '傾き (fg)′ のグラフ：a〜b の面積 ＝ 傾きを足し集めたもの', C.ink, TITLE);
+    text(sx + sw / 2, H * 0.94, nar ? '面積 ＝ ' + diff.toFixed(2) + ' ＝ 標高差' : '色のついた面積 ＝ ' + diff.toFixed(2) + ' ＝ ゴールとスタートの標高差 [fg]', C.red, SUB);
+    sdxv.textContent = dx.toFixed(3); sbv.textContent = b.toFixed(2);
+    out.textContent = 'Δx＝' + dx.toFixed(3) + '：帯 ÷ Δx ＝ f′g＋fg′ ＝ ' + vStrip.toFixed(2) + '（一定）、角 ÷ Δx ＝ f′g′·Δx ＝ ' + vCorner.toFixed(3) + '（Δx→0 で消える）　／　∫ₐᵇ(fg)′dx ＝ [fg] ＝ ' + road(b).toFixed(2) + ' − ' + road(a).toFixed(2) + ' ＝ ' + diff.toFixed(2);
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.98, 430)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  sdx.addEventListener('input', invalidate); sb.addEventListener('input', invalidate);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+})();
+</script>
 <script>KQ.initStagePage(4);</script>
 </body>
 </html>
