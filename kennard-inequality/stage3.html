@@ -976,21 +976,23 @@
     function Qc(X, Y) { return [ax4 + sc * X, ay4 - sc * Y]; }
     pts = []; for (i = 0; i <= 72; i++) { var a = 2 * Math.PI * i / 72; pts.push(Qc(R * Math.cos(a), R * Math.sin(a))); } poly(pts, C.ring, 1.2);
     var cc = Qc(0, 0); poly([Qc(-R * 1.15, 0), Qc(R * 1.15, 0)], C.ring, 1, [3, 3]);
-    /* 青：1 m 進んだぶんの角度 k（内側）、赤：1 秒たったぶんの角度 ω（外側）。1周 2π を超えたら、らせん状に外へ膨らみながら2周目へ */
-    function spiral(ang, rr0, grow, color) {
-      var n = Math.max(12, Math.round(ang * 14)); pts = [];
-      function rad(a) { return rr0 + grow * a / (2 * Math.PI); }
-      for (i = 0; i <= n; i++) { var a2 = ang * i / n; pts.push(Qc(rad(a2) * Math.cos(a2), rad(a2) * Math.sin(a2))); }
-      poly(pts, color, 2.4);
-      var ra = rad(ang), hd = Qc(ra * Math.cos(ang), ra * Math.sin(ang));
-      arrow(Qc(ra * Math.cos(ang - 0.12), ra * Math.sin(ang - 0.12)), hd, color);
-      /* 1周の目印（2π の位置に小さな刻み） */
-      if (ang > 2 * Math.PI) { var r2 = rad(2 * Math.PI); poly([Qc(r2 - 0.35, 0), Qc(r2 + 0.35, 0)], color, 1.5); }
+    /* 青：1 m 進んだぶんの角度 k（内側）、赤：1 秒たったぶんの角度 ω（外側）。
+       半透明の弧を1周ごとに重ね描きするので、1周 2π を超えて2周目に入った部分は色が濃くなる */
+    function laps(ang, rr, color, colorA) {
+      var done = 0;
+      while (done < ang - 1e-9) {
+        var seg = Math.min(2 * Math.PI, ang - done), n = Math.max(12, Math.round(seg * 14)); pts = [];
+        for (i = 0; i <= n; i++) { var a2 = seg * i / n; pts.push(Qc(rr * Math.cos(a2), rr * Math.sin(a2))); }
+        poly(pts, colorA, 3.2); done += seg;
+      }
+      var end = ang % (2 * Math.PI), hd = Qc(rr * Math.cos(end), rr * Math.sin(end));
+      arrow(Qc(rr * Math.cos(end - 0.12), rr * Math.sin(end - 0.12)), hd, color);
     }
-    spiral(K, R * 0.55, 0.9, C.blue);
-    spiral(OM, R * 1.0, 0.9, C.red);
+    laps(K, R * 0.7, C.blue, 'rgba(47,111,166,.45)');
+    laps(OM, R * 1.0, C.red, 'rgba(181,80,74,.45)');
+    var lp0 = Qc(R * 1.15, -0.6); text(lp0[0] + 4, lp0[1], '0', C.muted, SUB, 'left');
+    var wrapK = K > 2 * Math.PI, wrapW = OM > 2 * Math.PI;
     var lk = Qc(0, -R - 2.4), lw = Qc(0, R + 2.6); text(lk[0], lk[1], 'k＝' + K.toFixed(2) + '（1 m で）', C.blue, SUB); text(lw[0], lw[1], 'ω＝' + OM.toFixed(2) + '（1 秒で）', C.red, SUB);
-    var lp0 = Qc(R * 1.25, -0.6); text(lp0[0] + 4, lp0[1], '0', C.muted, SUB, 'left');
     var wrapK = K > 2 * Math.PI, wrapW = OM > 2 * Math.PI;
 
     /* ---- 見出し ---- */
@@ -1000,7 +1002,7 @@
     text(ax4, H * 0.555, nar ? '角度で数える' : '角度で数える：位相 kx − ωt の進み方', C.ink, TITLE);
     text(ax2, H * 0.49, nar ? '1秒に ν 回 ＝ 振動数 ν' : '1秒のあいだに山が ν 回 ＝ 振動数 ν（単位は「1秒あたり」）', C.red, SUB);
     text(ax3, H * 0.975, nar ? '1 m あたり 1/λ 個、角度では k＝2π/λ' : '1 m 進むと波が 1/λ 個、角度では k＝2π/λ ラジアン（単位は「1 m あたり」）', C.blue, SUB);
-    text(ax4, H * 0.975, nar ? (wrapK || wrapW ? '2π を超えたら、らせんで2周目へ' : '1 m で k、1 秒で ω＝2πν 進む') : (wrapK || wrapW ? '青：1 m で k ラジアン、赤：1 秒で ω＝2πν ラジアン（1周 2π を超えた分はらせんで2周目へ）' : '青：1 m 進むと k ラジアン、赤：1 秒たつと ω＝2πν ラジアン進む'), C.ink, SUB);
+    text(ax4, H * 0.975, nar ? (wrapK || wrapW ? '2π を超えて2周目に入った分は色が濃い' : '1 m で k、1 秒で ω＝2πν 進む') : (wrapK || wrapW ? '青：1 m で k ラジアン、赤：1 秒で ω＝2πν ラジアン（1周 2π を超えて2周目に入った分は色が濃い）' : '青：1 m 進むと k ラジアン、赤：1 秒たつと ω＝2πν ラジアン進む'), C.ink, SUB);
     slv.textContent = lam.toFixed(2) + ' m'; snv.textContent = nu.toFixed(2) + ' /秒';
     out.textContent = 'k ＝ 2π/λ ＝ ' + K.toFixed(2) + ' ラジアン/m（1 m に波が ' + (1 / lam).toFixed(2) + ' 個）、ν ＝ ' + nu.toFixed(2) + ' /秒（ω ＝ 2πν ＝ ' + OM.toFixed(2) + ' ラジアン/秒）';
   }
