@@ -169,11 +169,11 @@
           <input type="range" id="pt-dx" min="0.005" max="0.6" step="0.005" value="0.4" aria-label="進む幅 Δx">
           <span class="val" id="pt-dxv">0.400</span>
           <label for="pt-b">山道のゴール b</label>
-          <input type="range" id="pt-b" min="0.6" max="3" step="0.01" value="2.4" aria-label="山道のゴール b">
-          <span class="val" id="pt-bv">2.40</span>
+          <input type="range" id="pt-b" min="0.6" max="1.6" step="0.01" value="1.2" aria-label="山道のゴール b">
+          <span class="val" id="pt-bv">1.20</span>
         </div>
-        <div class="readout"><span id="pt-out">Δx＝0.400：帯 ÷ Δx ＝ f′g＋fg′ ＝ 6.50（一定）、角 ÷ Δx ＝ f′g′·Δx ＝ 0.600（Δx→0 で消える）</span></div>
-        <div class="diagram-caption">ここでの x は f と g の<strong>入力</strong>（この旅では位置）で、f と g はどちらも x の関数 f(x)、g(x)。長方形の縦横は「x をひとつ決めたときの f と g の値」なので、長方形の図に x の軸は描かれていない。x を Δx だけ進めると、縦と横が同時に少しずつ変わる。<strong>上の段（積の微分公式）</strong>：縦 f、横 g の長方形（例として f＝3、g＝2、傾き f′＝1、g′＝1.5）で、x が Δx 進むと、縦が Δf＝f′Δx、横が Δg＝g′Δx だけ育つ。増えた面積は青い帯2本 Δf·g＋f·Δg と赤い角 Δf·Δg。そのままでは Δx を小さくするとどれもゼロに向かうが、傾きを出すために<strong>Δx で割る</strong>と（右上の棒）、帯は Δx が打ち消されて f′g＋fg′ で一定、角は f′g′·Δx と Δx が1個残る。スライダーで Δx を小さくしていくと、帯の棒は動かず角の棒だけが消えていく――これが (fg)′＝f′g＋fg′。<strong>下の段（傾きの足し集め）</strong>：h＝fg を山道の標高とすると、その傾き (fg)′ を a から b まで足し集めたもの（右下の色のついた面積）は、ゴールとスタートの標高差 [fg]（左下の赤い縦線）にちょうど等しい。ゴール b を動かしても、面積と標高差はつねに一致する。波動関数が絡む場合は、遠方でどちらの標高も 0 なので、この差 [fg] はまるごと消える</div>
+        <div class="readout"><span id="pt-out">Δx＝0.400：帯 ÷ Δx ＝ f′g＋fg′ ＝ 3.00（一定）、角 ÷ Δx ＝ f′g′·Δx ＝ 0.800（Δx→0 で消える）</span></div>
+        <div class="diagram-caption">ここでの x は f と g の<strong>入力</strong>（この旅では位置）で、f と g はどちらも x の関数 f(x)、g(x)。長方形の縦横は「x をひとつ決めたときの f と g の値」なので、長方形の図に x の軸は描かれていない。x を Δx だけ進めると、縦と横が同時に少しずつ変わる。<strong>上の段（積の微分公式）</strong>：縦 f、横 g の長方形（上の図と同じ f(x)＝x²、g(x)＝x を x＝1 で見たもの。f＝1、g＝1、傾き f′＝2、g′＝1）で、x が Δx 進むと、縦が Δf＝f′Δx、横が Δg＝g′Δx だけ育つ。増えた面積は青い帯2本 Δf·g＋f·Δg と赤い角 Δf·Δg。そのままでは Δx を小さくするとどれもゼロに向かうが、傾きを出すために<strong>Δx で割る</strong>と（右上の棒）、帯は Δx が打ち消されて f′g＋fg′ で一定、角は f′g′·Δx と Δx が1個残る。スライダーで Δx を小さくしていくと、帯の棒は動かず角の棒だけが消えていく――これが (fg)′＝f′g＋fg′。<strong>下の段（傾きの足し集め）</strong>：同じ f(x)＝x²、g(x)＝x の積 h＝fg＝x³ を山道の標高とすると（x が増えるほど登り続ける道）、その傾き (fg)′ を a から b まで足し集めたもの（右下の色のついた面積）は、ゴールとスタートの標高差 [fg]（左下の赤い縦線）にちょうど等しい。ゴール b を動かしても、面積と標高差はつねに一致する。波動関数が絡む場合は、遠方でどちらの標高も 0 なので、この差 [fg] はまるごと消える</div>
       </div>
 
       <div class="dialogue-scene">
@@ -310,7 +310,7 @@
   var sdx = document.getElementById('pt-dx'), sdxv = document.getElementById('pt-dxv');
   var sb = document.getElementById('pt-b'), sbv = document.getElementById('pt-bv');
   var out = document.getElementById('pt-out');
-  var F = 3, G = 2, FP = 1, GP = 1.5;                    /* f、g の値と傾き（例） */
+  var X0 = 1, F = X0 * X0, G = X0, FP = 2 * X0, GP = 1;   /* 上の図と同じ f(x)＝x²、g(x)＝x を x＝1 で見た値と傾き */
   var W = 0, H = 0;
   var C = { ink: '#241d12', muted: '#8a7a5c', blue: '#2f6fa6', blueF: 'rgba(47,111,166,.28)', red: '#b5504a', redF: 'rgba(181,80,74,.35)', gold: '#a6742a', goldF: 'rgba(217,164,65,.28)', line: '#ddd0ad', paper: '#fffdf6' };
   var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
@@ -323,16 +323,16 @@
   function rect(x, y, w, hh, fill, stroke) { ctx.fillStyle = fill; ctx.fillRect(x, y, w, hh); if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = 1; ctx.strokeRect(x, y, w, hh); } }
   function arrowH(x1, x2, y, color) { poly([[x1, y], [x2, y]], color, 1.2); ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(x2, y); ctx.lineTo(x2 - 6, y - 3); ctx.lineTo(x2 - 6, y + 3); ctx.closePath(); ctx.fill(); }
   /* 山道の標高 h(x)＝f·g と、その傾き h′(x)（0〜3 の区間） */
-  function road(x) { return 0.3 + 0.3 * (1 - Math.cos(2 * Math.PI * x / 3)) + 0.05 * x; }
-  function slope(x) { return 0.3 * (2 * Math.PI / 3) * Math.sin(2 * Math.PI * x / 3) + 0.05; }
+  function road(x) { return x * x * x; }                  /* h＝f·g＝x²·x＝x³ */
+  function slope(x) { return 3 * x * x; }                 /* h′＝(fg)′＝3x² */
 
   function draw() {
-    var dx = +sdx.value, b = +sb.value, a = 0.3, nar = W < 520, i, pts;
+    var dx = +sdx.value, b = +sb.value, a = 0.4, nar = W < 520, i, pts;
     ctx.clearRect(0, 0, W, H);
     var df = FP * dx, dg = GP * dx;
     /* ---- 左上：長方形 ---- */
-    var L = W * 0.06, T = H * 0.12, U = Math.min(W * 0.36, H * 0.34) / 3.6;   /* 1 単位あたりの px（縦 f＋Δf が 3.6 まで） */
-    var gx = L + 18, fy = T + U * 3.6;                                           /* 原点（左下） */
+    var L = W * 0.06, T = H * 0.12, U = Math.min(W * 0.36, H * 0.34) / 2.3;   /* 1 単位あたりの px（縦 f＋Δf が 2.2 まで） */
+    var gx = L + 18, fy = T + U * 2.3;                                           /* 原点（左下） */
     var x0 = gx, y0 = fy;
     rect(x0, y0 - U * F, U * G, U * F, 'rgba(217,164,65,.18)', C.gold);          /* 元の f×g */
     rect(x0 + U * G, y0 - U * F, U * dg, U * F, C.blueF, C.blue);               /* 右の帯 f·Δg */
@@ -348,7 +348,7 @@
     text(L + W * 0.2, H * 0.045, nar ? 'x が Δx 進むと f(x)×g(x) は' : 'x が Δx 進むと、長方形 f(x)×g(x) は Δf＝f′Δx、Δg＝g′Δx だけ育つ', C.ink, TITLE);
     /* ---- 右上：Δx で割った値の棒 ---- */
     var bx = W * 0.56, by = H * 0.43, bw = W * 0.4, bh = H * 0.27;
-    var vStrip = FP * G + F * GP, vCorner = FP * GP * dx, vmax = 8;
+    var vStrip = FP * G + F * GP, vCorner = FP * GP * dx, vmax = 3.6;
     poly([[bx, by], [bx + bw, by]], C.muted, 1.2);
     var barw = bw * 0.28, b1 = bx + bw * 0.12, b2 = bx + bw * 0.6;
     rect(b1, by - bh * vStrip / vmax, barw, bh * vStrip / vmax, C.blueF, C.blue);
@@ -360,9 +360,9 @@
     text(bx + bw / 2, H * 0.095, nar ? '帯は一定、角は消える' : '帯は Δx が消えて一定、角は Δx が1個残って一緒に消える', C.muted, SUB);
     /* ---- 左下：山道 h(x)＝fg ---- */
     var rx = W * 0.08, ry = H * 0.94, rw = W * 0.38, rh = H * 0.3;
-    function RX(x) { return rx + rw * x / 3; } function RY(hh) { return ry - rh * hh / 1.1; }
+    function RX(x) { return rx + rw * x / 1.6; } function RY(hh) { return ry - rh * hh / 4.3; }
     poly([[rx, ry], [rx + rw, ry]], C.muted, 1.2); poly([[rx, ry], [rx, ry - rh]], C.muted, 1.2);
-    pts = []; for (i = 0; i <= 120; i++) { var xx = 3 * i / 120; pts.push([RX(xx), RY(road(xx))]); } poly(pts, C.gold, 2);
+    pts = []; for (i = 0; i <= 120; i++) { var xx = 1.6 * i / 120; pts.push([RX(xx), RY(road(xx))]); } poly(pts, C.gold, 2);
     poly([[RX(a), ry], [RX(a), RY(road(a))]], C.muted, 1, [3, 3]); poly([[RX(b), ry], [RX(b), RY(road(b))]], C.muted, 1, [3, 3]);
     poly([[RX(a) - 6, RY(road(a))], [RX(b) + 6, RY(road(a))]], C.red, 1, [3, 3]);
     poly([[RX(b) + 10, RY(road(a))], [RX(b) + 10, RY(road(b))]], C.red, 2);
@@ -370,18 +370,18 @@
     ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(RX(a), RY(road(a)), 3.5, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(RX(b), RY(road(b)), 3.5, 0, 7); ctx.fill();
     var diff = road(b) - road(a);
     text(RX(b) + 14, (RY(road(a)) + RY(road(b))) / 2, nar ? '[fg]' : '標高差 [fg]', C.red, SUB, 'left');
-    text(rx + rw / 2, H * 0.55, nar ? '山道の標高 fg' : '山道の標高 h＝fg：スタート a からゴール b まで', C.ink, TITLE);
+    text(rx + rw / 2, H * 0.55, nar ? '山道の標高 fg＝x³' : '山道の標高 h＝fg＝x³：スタート a からゴール b まで', C.ink, TITLE);
     /* ---- 右下：傾き h′(x) の面積 ---- */
-    var sx = W * 0.56, sy = H * 0.8, sw = W * 0.4, sh = H * 0.13;
-    function SX(x) { return sx + sw * x / 3; } function SY(v) { return sy - sh * v / 0.7; }
+    var sx = W * 0.56, sy = H * 0.9, sw = W * 0.4, sh = H * 0.28;
+    function SX(x) { return sx + sw * x / 1.6; } function SY(v) { return sy - sh * v / 8; }
     poly([[sx, sy], [sx + sw, sy]], C.muted, 1.2);
     ctx.fillStyle = C.goldF; ctx.beginPath(); ctx.moveTo(SX(a), sy);
     for (i = 0; i <= 120; i++) { var xs = a + (b - a) * i / 120; ctx.lineTo(SX(xs), SY(slope(xs))); }
     ctx.lineTo(SX(b), sy); ctx.closePath(); ctx.fill();
-    pts = []; for (i = 0; i <= 120; i++) { var xs2 = 3 * i / 120; pts.push([SX(xs2), SY(slope(xs2))]); } poly(pts, C.gold, 1.8);
+    pts = []; for (i = 0; i <= 120; i++) { var xs2 = 1.6 * i / 120; pts.push([SX(xs2), SY(slope(xs2))]); } poly(pts, C.gold, 1.8);
     text(SX(a), sy + 10, 'a', C.muted, SUB); text(SX(b), sy + 10, 'b', C.muted, SUB);
-    text(sx + sw / 2, H * 0.55, nar ? '傾き (fg)′ の面積' : '傾き (fg)′ のグラフ：a〜b の面積 ＝ 傾きを足し集めたもの', C.ink, TITLE);
-    text(sx + sw / 2, H * 0.94, nar ? '面積 ＝ ' + diff.toFixed(2) + ' ＝ 標高差' : '色のついた面積 ＝ ' + diff.toFixed(2) + ' ＝ ゴールとスタートの標高差 [fg]', C.red, SUB);
+    text(sx + sw / 2, H * 0.55, nar ? '傾き (fg)′＝3x² の面積' : '傾き (fg)′＝3x² のグラフ：a〜b の面積 ＝ 傾きを足し集めたもの', C.ink, TITLE);
+    text(sx + sw / 2, H * 0.975, nar ? '面積 ＝ ' + diff.toFixed(2) + ' ＝ 標高差' : '色のついた面積 ＝ ' + diff.toFixed(2) + ' ＝ ゴールとスタートの標高差 [fg]', C.red, SUB);
     sdxv.textContent = dx.toFixed(3); sbv.textContent = b.toFixed(2);
     out.textContent = 'Δx＝' + dx.toFixed(3) + '：帯 ÷ Δx ＝ f′g＋fg′ ＝ ' + vStrip.toFixed(2) + '（一定）、角 ÷ Δx ＝ f′g′·Δx ＝ ' + vCorner.toFixed(3) + '（Δx→0 で消える）　／　∫ₐᵇ(fg)′dx ＝ [fg] ＝ ' + road(b).toFixed(2) + ' − ' + road(a).toFixed(2) + ' ＝ ' + diff.toFixed(2);
   }
