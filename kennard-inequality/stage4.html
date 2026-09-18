@@ -35,7 +35,7 @@
   .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .cv-wrap{width:100%}
-  #parts2d{display:block;width:100%;height:auto}
+  #parts2d,#fg2d{display:block;width:100%;height:auto}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -97,6 +97,23 @@
           </div>
           <div class="dialog-bubble">今日の道具は、19世紀の解析学者たちが毎日のように振るった職人芸「部分積分」だ。出発点は、2つの関数の<strong>積を微分する規則</strong>。設定をはっきりさせておこう。f と g は、どちらも同じ入力 x で値が決まる関数――たとえば f(x)＝x²、g(x)＝x のようなものだ。x をひとつ決めれば f も g も値が決まり、掛け算 f×g も1つの値に決まる。x を変えれば f も g も動くから、積 f×g も動く。知りたいのは、その積が x とともに<strong>どれだけの速さで変わるか</strong>、つまり積の傾き (fg)′ だ。いい考え方があるよ。ある x での f の値を縦、g の値を横にした<strong>長方形</strong>を思い浮かべてごらん。面積が f×g だね。ここで x をほんの少し Δx だけ進める。すると f の値が Δf、g の値が Δg だけ変わって、長方形の縦と横が同時に少し伸びる。さて、面積はどれだけ増えるかな。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="fg2d" role="img" aria-label="2パネルの図。左は横軸 x のグラフに f(x)＝x² と g(x)＝x の2本の曲線を描き、いまの x と Δx だけ先の x での f と g の値、その差 Δf と Δg を示す。右は、その x での f を縦、g を横にした長方形で、x が Δx 進んだときに増える面積を青（帯2本）と赤（角）で示す。スライダーで x と Δx を変えられる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="fg-x">入力 x</label>
+          <input type="range" id="fg-x" min="0.3" max="1.5" step="0.01" value="1" aria-label="入力 x">
+          <span class="val" id="fg-xv">1.00</span>
+          <label for="fg-dx">進む幅 Δx</label>
+          <input type="range" id="fg-dx" min="0.05" max="0.4" step="0.01" value="0.3" aria-label="進む幅 Δx">
+          <span class="val" id="fg-dxv">0.30</span>
+        </div>
+        <div class="readout"><span id="fg-out">x＝1.00：f＝1.00、g＝1.00、面積 f×g＝1.00　→　x＋Δx＝1.30：Δf＝0.69、Δg＝0.30、増えた面積＝1.197</span></div>
+        <div class="diagram-caption"><strong>左</strong>：f と g は、どちらも同じ入力 x で値が決まる関数（例として f(x)＝x²、g(x)＝x）。x をひとつ決めると（黒い点線）、f の値と g の値が1つずつ決まる。x を Δx だけ進めると（青い点線）、f は Δf、g は Δg だけ変わる。<strong>右</strong>：その x での f を縦、g を横にした長方形で、面積が積 f×g。x が Δx 進むと縦と横が同時に伸び、増えた面積が青い帯2本と赤い角になる。x のスライダーを動かすと長方形そのものの大きさが変わり、Δx を動かすと帯と角の太さが変わる――x は長方形の軸ではなく、縦と横を同時に動かす「つまみ」だということが分かる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
@@ -377,6 +394,80 @@
   var queued = false;
   function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
   sdx.addEventListener('input', invalidate); sb.addEventListener('input', invalidate);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+})();
+</script>
+<script>
+/* f と g はどちらも x の関数。左：f(x)＝x² と g(x)＝x のグラフに、いまの x と Δx 先の x。右：縦 f(x)・横 g(x) の長方形と、x が Δx 進んだときの育ち方 */
+(function(){
+  var cv = document.getElementById('fg2d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sx = document.getElementById('fg-x'), sxv = document.getElementById('fg-xv');
+  var sd = document.getElementById('fg-dx'), sdv = document.getElementById('fg-dxv');
+  var out = document.getElementById('fg-out');
+  var W = 0, H = 0;
+  var C = { ink: '#241d12', muted: '#8a7a5c', blue: '#2f6fa6', blueF: 'rgba(47,111,166,.28)', red: '#b5504a', redF: 'rgba(181,80,74,.35)', gold: '#a6742a', goldF: 'rgba(217,164,65,.18)', green: '#3f7d4e', line: '#ddd0ad' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function fF(x) { return x * x; } function gF(x) { return x; }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function rect(x, y, w, hh, fill, stroke) { ctx.fillStyle = fill; ctx.fillRect(x, y, w, hh); if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = 1; ctx.strokeRect(x, y, w, hh); } }
+
+  function draw() {
+    var x = +sx.value, dx = +sd.value, nar = W < 520, i, pts;
+    var f = fF(x), g = gF(x), f2 = fF(x + dx), g2 = gF(x + dx), df = f2 - f, dg = g2 - g;
+    ctx.clearRect(0, 0, W, H);
+    /* ---- 左：f(x) と g(x) のグラフ（横軸 x） ---- */
+    var L = W * 0.09, R = W * 0.47, T = H * 0.16, B = H * 0.8, XMAX = 2, YMAX = 4;
+    function GX(xx) { return L + (R - L) * xx / XMAX; } function GY(y) { return B - (B - T) * y / YMAX; }
+    poly([[L, B], [R + 6, B]], C.muted, 1.2); poly([[L, B], [L, T - 6]], C.muted, 1.2);
+    text(R + 8, B + 2, 'x', C.muted, SUB, 'left');
+    pts = []; for (i = 0; i <= 80; i++) { var xx = XMAX * i / 80; pts.push([GX(xx), GY(fF(xx))]); } poly(pts, C.gold, 2);
+    pts = []; for (i = 0; i <= 80; i++) { var xx2 = XMAX * i / 80; pts.push([GX(xx2), GY(gF(xx2))]); } poly(pts, C.green, 2);
+    text(GX(1.85), GY(fF(1.85)) - 10, 'f(x)＝x²', C.gold, SUB, 'right'); text(GX(0.62), GY(gF(0.62)) + 11, 'g(x)＝x', C.green, SUB, 'left');
+    /* いまの x と Δx 先 */
+    poly([[GX(x), B], [GX(x), GY(f)]], C.muted, 1, [3, 3]); poly([[GX(x + dx), B], [GX(x + dx), GY(f2)]], C.blue, 1, [3, 3]);
+    rect(GX(x), T, GX(x + dx) - GX(x), B - T, 'rgba(47,111,166,.08)');
+    text(GX(x) - (nar ? 3 : 0), B + 10, 'x', C.ink, SUB, nar ? 'right' : 'center'); text(GX(x + dx) + (nar ? 3 : 0), B + 10, 'x＋Δx', C.blue, SUB, nar ? 'left' : 'center');
+    /* f、g の値と増分 */
+    ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(GX(x), GY(f), 3.5, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(GX(x + dx), GY(f2), 3.5, 0, 7); ctx.fill();
+    ctx.fillStyle = C.green; ctx.beginPath(); ctx.arc(GX(x), GY(g), 3.5, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(GX(x + dx), GY(g2), 3.5, 0, 7); ctx.fill();
+    poly([[GX(x + dx) + 4, GY(f)], [GX(x + dx) + 4, GY(f2)]], C.gold, 2); text(GX(x + dx) + 8, (GY(f) + GY(f2)) / 2, 'Δf', C.gold, SUB, 'left');
+    poly([[GX(x + dx) + 4, GY(g)], [GX(x + dx) + 4, GY(g2)]], C.green, 2); text(GX(x + dx) + 8, (GY(g) + GY(g2)) / 2, 'Δg', C.green, SUB, 'left');
+    text(GX(x) - 6, GY(f), 'f', C.gold, SUB, 'right'); text(GX(x) - 6, GY(g), 'g', C.green, SUB, 'right');
+    text((L + R) / 2, H * 0.06, nar ? 'f と g は同じ x の関数' : 'f と g は、どちらも同じ入力 x で決まる関数', C.ink, TITLE);
+    text((L + R) / 2, H * 0.92, nar ? 'x を進めると f も g も変わる' : 'x を Δx 進めると、f の値は Δf、g の値は Δg だけ変わる', C.muted, SUB);
+    /* ---- 右：縦 f(x)・横 g(x) の長方形 ---- */
+    var U = Math.min((W * 0.36) / 2.3, (H * 0.62) / 4.3);   /* 1 単位あたりの px */
+    var ox = W * 0.58, oy = H * 0.8;                         /* 長方形の左下 */
+    rect(ox, oy - U * f, U * g, U * f, C.goldF, C.gold);
+    rect(ox + U * g, oy - U * f, U * dg, U * f, C.blueF, C.blue);
+    rect(ox, oy - U * f2, U * g, U * df, C.blueF, C.blue);
+    rect(ox + U * g, oy - U * f2, U * dg, U * df, C.redF, C.red);
+    text(ox + U * g / 2, oy - U * f / 2, 'f × g', C.gold, TITLE);
+    text(ox - 8, oy - U * f / 2, 'f(x)', C.gold, SUB, 'right'); text(ox + U * g / 2, oy + 10, 'g(x)', C.green, SUB);
+    text(ox - 8, oy - U * (f + df / 2), 'Δf', C.blue, SUB, 'right'); text(ox + U * (g + dg / 2), oy + 10, 'Δg', C.blue, SUB);
+    text(ox + U * g / 2 + U * (g + dg) / 2, H * 0.06, nar ? '縦 f(x)・横 g(x) の長方形' : 'その x での f を縦、g を横にした長方形', C.ink, TITLE);
+    text(ox + U * (g + dg) / 2, H * 0.92, nar ? '増えた面積（青と赤）' : '青と赤 ＝ x が Δx 進んだときに増えた面積', C.muted, SUB);
+    sxv.textContent = x.toFixed(2); sdv.textContent = dx.toFixed(2);
+    out.textContent = 'x＝' + x.toFixed(2) + '：f＝' + f.toFixed(2) + '、g＝' + g.toFixed(2) + '、面積 f×g＝' + (f * g).toFixed(2) + '　→　x＋Δx＝' + (x + dx).toFixed(2) + '：Δf＝' + df.toFixed(2) + '、Δg＝' + dg.toFixed(2) + '、増えた面積＝' + (f2 * g2 - f * g).toFixed(3);
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.72, 300)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  sx.addEventListener('input', invalidate); sd.addEventListener('input', invalidate);
   window.addEventListener('resize', resize);
   resize();
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
