@@ -186,21 +186,21 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そう。そして実はハイゼンベルクは1927年の論文で、このガウス波束について Δx·Δp を計算して、ちょうど ℏ/2 になることを確かめていた。もし ℏ/2 が本当の下限なら、ガウス波束は「これ以上縮められない<strong>最良の波</strong>」ということになる。ではガウス型 ψ＝A·e<sup>−ax²</sup> を微分してみてごらん。定数 A はそのまま前に残る。</div>
+          <div class="dialog-bubble">そう。そして実はハイゼンベルクは1927年の論文で、このガウス波束について Δx·Δp を計算して、ちょうど ℏ/2 になることを確かめていた。もし ℏ/2 が本当の下限なら、ガウス波束は「これ以上縮められない<strong>最良の波</strong>」ということになる。ではガウス型 ψ＝A·e<sup>−ax²</sup> を微分してみよう。定数 A はそのまま前に残る。肩の −ax² を微分すると −2ax（x² の傾きは 2x だからね）。これが前に降りてきて、ψ′＝−2ax·A·e<sup>−ax²</sup>。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">e<sup>ikx</sup> のときは、微分すると ik が前に出るのでしたよね。でも今回の肩は −ax² で、x の値によって変わります。定数の ik と同じように扱っていいとは思えません。何を前に出せばいいんですか？</div>
+          <div class="dialog-bubble">待ってください。e<sup>ikx</sup> のときは「微分すると ik が前に出る」と習いました。あれは肩の ikx から係数の ik を取り出しただけに見えましたけど、いまの計算では肩 −ax² を<strong>微分したもの</strong>を前に出しています。「肩を微分したものが前に降りる」というのは初めてです。なぜそうなるんですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いいところに引っかかったね。平面波で ik が前に出たのは、肩 ikx の傾きが ik で一定だったからだ。肩が −ax² のように曲がった式でも通用する、もう一段広い規則を組み立てよう。ψ＝e<sup>f(x)</sup> と書いて、x を少しだけ Δx 進める。まず肩 f は、STAGE4 でやったとおり「傾き × 進んだ幅」で <strong>Δf ≈ f′(x)·Δx</strong> だけ変わる。次に、肩が Δf 変わると e<sup>f</sup> はどうなるか。肩の足し算は掛け算だから e<sup>f＋Δf</sup>＝e<sup>f</sup>·e<sup>Δf</sup>。そして e は「傾きが自分の高さのちょうど1倍」の数だったね。e<sup>u</sup> は u＝0 で高さ 1、傾きも 1。だから u が小さな Δf だけ進めば <strong>e<sup>Δf</sup> ≈ 1＋Δf</strong>。合わせると、ψ の増分は Δψ ＝ e<sup>f</sup>(e<sup>Δf</sup>−1) ≈ e<sup>f</sup>·Δf ＝ e<sup>f</sup>·f′(x)·Δx。Δx で割れば <strong>ψ′＝f′(x)·e<sup>f(x)</sup></strong>――「肩を微分したものが前に降りてきて、e の部分はそのまま残る」。ψ の傾きは「肩の傾き × 自分の高さ」というわけだ。平面波は f′＝ik の特別な場合だったんだね。では今回の肩 −ax² で、やってみてごらん。</div>
+          <div class="dialog-bubble">いいところに引っかかったね。さらっと使ってしまったが、ここは確かめておく価値がある。実は平面波のときも、前に出ていた ik は「肩 ikx を微分したもの」だったんだ。肩の傾きが一定だったから、係数を取り出しただけに見えていた。肩が −ax² のように曲がった式でも通用する規則として、組み立て直そう。ψ＝e<sup>f(x)</sup> と書いて、x を少しだけ Δx 進める。まず肩 f は、STAGE4 でやったとおり「傾き × 進んだ幅」で <strong>Δf ≈ f′(x)·Δx</strong> だけ変わる。次に、肩が Δf 変わると e<sup>f</sup> はどうなるか。肩の足し算は掛け算だから e<sup>f＋Δf</sup>＝e<sup>f</sup>·e<sup>Δf</sup>。そして e は「傾きが自分の高さのちょうど1倍」の数だったね。e<sup>u</sup> は u＝0 で高さ 1、傾きも 1。だから u が小さな Δf だけ進めば <strong>e<sup>Δf</sup> ≈ 1＋Δf</strong>。合わせると、ψ の増分は Δψ ＝ e<sup>f</sup>(e<sup>Δf</sup>−1) ≈ e<sup>f</sup>·Δf ＝ e<sup>f</sup>·f′(x)·Δx。Δx で割れば <strong>ψ′＝f′(x)·e<sup>f(x)</sup></strong>――「肩を微分したものが前に降りてきて、e の部分はそのまま残る」。ψ の傾きは「肩の傾き × 自分の高さ」というわけだ。平面波は f′＝ik の特別な場合だったんだね。だからガウス型では、肩 −ax² の微分 −2ax が前に降りる。</div>
         </div>
       </div>
 
@@ -228,7 +228,7 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">肩 −ax² の微分ですね。x が Δx 進むと x² は (x＋Δx)²−x² ＝ 2x·Δx＋(Δx)² だけ増えて、Δx をうんと小さくすれば (Δx)² の項は消えるので、x² の傾きは 2x。だから肩の微分は −2ax。これが前に降りてきて、ψ′ ＝ −2ax·A·e<sup>−ax²</sup> ＝ <strong>−2a×(xψ)</strong>。……！ 驚きました。ガウス波束では、ψ′ と xψ は<strong>定数倍しか違わない、実質同じ関数</strong>なんですね。ということは λ＝2a と選べば λxψ＋ψ′ はぴったり0、つまり I(λ)＝0。魔法の関数は、<strong>「最良の波からのズレ」を測る物差し</strong>だったんだ。最良の波ならズレはゼロ、それ以外の波では必ずプラス……。ぐちゃぐちゃどころか、この2つは混ぜるために生まれてきたような組み合わせです。</div>
+          <div class="dialog-bubble">納得しました。それなら ψ′ ＝ −2ax·A·e<sup>−ax²</sup> ＝ <strong>−2a×(xψ)</strong>。……！ 驚きました。ガウス波束では、ψ′ と xψ は<strong>定数倍しか違わない、実質同じ関数</strong>なんですね。ということは λ＝2a と選べば λxψ＋ψ′ はぴったり0、つまり I(λ)＝0。魔法の関数は、<strong>「最良の波からのズレ」を測る物差し</strong>だったんだ。最良の波ならズレはゼロ、それ以外の波では必ずプラス……。ぐちゃぐちゃどころか、この2つは混ぜるために生まれてきたような組み合わせです。</div>
         </div>
       </div>
 
