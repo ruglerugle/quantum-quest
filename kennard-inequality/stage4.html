@@ -226,9 +226,9 @@
         </div>
       </div>
 
-      <div class="formula-box">
+      <div class="formula-box" id="fb-parts">
         <span class="step">部分積分（押し付けの術）： <br class="wbr">∫ f′g dx ＝ [fg] − ∫ fg′ dx ＝ −∫ fg′ dx　（ψ が絡めば境界項 [fg]＝0。相手が x のように遠方で大きくなる場合は、Δx が有限＝裾が十分速く細ることも効いている）</span>
-        <span class="step">【補題1】 <br class="wbr">∫ x (|ψ|²)′ dx ＝ −∫ |ψ|² dx ＝ <strong>−1</strong>　（どんな波形でも！ 規格化が −1 に化ける）</span>
+        <span class="step" id="fb-lemma1">【補題1】 <br class="wbr">∫ x (|ψ|²)′ dx ＝ −∫ |ψ|² dx ＝ <strong>−1</strong>　（どんな波形でも！ 規格化が −1 に化ける）</span>
       </div>
 
       <div class="dialogue-scene">
@@ -301,8 +301,8 @@
       </div>
 
       <div class="formula-box">
-        <span class="step">【補題2】 <br class="wbr">(Δp)² ＝ ℏ² ∫ |ψ′(x)|² dx　（運動量のばらつき＝波形の傾きの2乗の総量）</span>
-        <span class="step">【道具箱】 <br class="wbr">①∫|ψ|²dx＝1　②(Δx)²＝<span class="nw">∫x²|ψ|²dx</span>　③補題1： ∫x(|ψ|²)′dx＝−1　④補題2</span>
+        <span class="step" id="fb-lemma2">【補題2】 <br class="wbr">(Δp)² ＝ ℏ² ∫ |ψ′(x)|² dx　（運動量のばらつき＝波形の傾きの2乗の総量）</span>
+        <span class="step">【道具箱】 <br class="wbr">①<a href="stage2.html#fb-norm" title="STAGE2 で導いた規格化条件へ">∫|ψ|²dx＝1</a>　②<a href="stage2.html#fb-dx" title="STAGE2 で導いた位置のばらつきの式へ">(Δx)²＝<span class="nw">∫x²|ψ|²dx</span></a>　③<a href="#fb-lemma1" title="このステージの補題1へ">補題1： ∫x(|ψ|²)′dx＝−1</a>　④<a href="#fb-lemma2" title="このステージの補題2へ">補題2</a></span>
       </div>
 
       <h2 class="quiz-head">確認クイズ</h2>
