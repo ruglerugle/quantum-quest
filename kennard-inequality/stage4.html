@@ -114,19 +114,6 @@
         <div class="diagram-caption"><strong>左</strong>：f と g は、どちらも同じ入力 x で値が決まる関数（例として f(x)＝x²、g(x)＝x）。x をひとつ決めると（黒い点線）、f の値と g の値が1つずつ決まる。x を Δx だけ進めると（青い点線）、f は Δf、g は Δg だけ変わる。<strong>右</strong>：その x での f を縦、g を横にした長方形で、面積が積 f×g。x が Δx 進むと縦と横が同時に伸び、増えた面積が青い帯2本と赤い角になる。x のスライダーを動かすと長方形そのものの大きさが変わり、Δx を動かすと帯と角の太さが変わる――x は長方形の軸ではなく、縦と横を同時に動かす「つまみ」だということが分かる</div>
       </div>
 
-      <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="fg3d" role="img" aria-label="横が x、高さが f、手前が g の3次元グラフ。増えたり減ったりする一般の関数 f(x)、g(x) について、点 (x, f(x), g(x)) の軌跡を曲線で描き、x の位置に縦 f(x)・横 g(x) の長方形（面積 f×g）を立てる。x＋Δx の位置の長方形と比べると、増えた帯2本と角が見える。下段には長方形の面積 fg を x の関数として描いたグラフと、その傾き (fg)′＝f′g＋fg′ のグラフがあり、Δx で測った坂の傾きが Δx を小さくすると (fg)′ に重なることが分かる。スライダーで x と Δx を変えられ、ドラッグで上の3D図の視点を回せる"></canvas></div>
-        <div class="sim-ctrl">
-          <label for="f3-x">入力 x</label>
-          <input type="range" id="f3-x" min="0.3" max="5" step="0.01" value="2" aria-label="入力 x">
-          <span class="val" id="f3-xv">2.00</span>
-          <label for="f3-dx">進む幅 Δx</label>
-          <input type="range" id="f3-dx" min="0.1" max="1" step="0.01" value="0.6" aria-label="進む幅 Δx">
-          <span class="val" id="f3-dxv">0.60</span>
-        </div>
-        <div class="readout"><span id="f3-out"></span></div>
-        <div class="diagram-caption">上の図は f(x)＝x²、g(x)＝x という簡単な例だったが、積の微分公式はどんな f、g でも成り立つ。この図は<strong>増えたり減ったりする一般の関数</strong>の例で、横が x、高さが f、手前が g の空間に、点 (x, f(x), g(x)) の軌跡を1本の曲線として描いたもの（壁に落ちた点線の影が、それぞれ f(x) と g(x) のグラフ）。x をひとつ決めると曲線上の1点が決まり、その位置に<strong>縦 f(x)・横 g(x) の長方形</strong>を立てられる――面積が積 f×g。x を Δx 進めると長方形は隣の位置に移り、縦横が変わる（青）。増えたぶんが帯2本と角で、f や g が減る場所では帯が負になる（薄い青）が、「面積の変化 ＝ Δf·g ＋ f·Δg ＋ Δf·Δg」はどこでも同じ形で成り立つ。角 Δf·Δg だけが Δx² の桁で、割ると消える――ここも簡単な例と変わらない。<strong>下の段</strong>：左は長方形の面積 fg を x の関数として描いたもので、金の点から青の点へ登る赤い坂が「Δx で増えた面積」。右はその傾き (fg)′＝f′g＋fg′ のグラフ（0 より上なら面積が増える場所、下なら減る場所）。赤い輪は「増えた面積 ÷ Δx」で測った坂の傾きで、Δx を小さくしていくと (fg)′ の値（金の点）にぴったり重なる――これが「角が消えて帯だけが残る」ことの、グラフでの姿</div>
-      </div>
 
       <div class="dialogue-scene">
         <div class="dialog-row right">
@@ -189,6 +176,20 @@
         </div>
         <div class="readout"><span id="pt-out">Δx＝0.400：帯 ÷ Δx ＝ f′g＋fg′ ＝ 3.00（一定）、角 ÷ Δx ＝ f′g′·Δx ＝ 0.800（Δx→0 で消える）</span></div>
         <div class="diagram-caption">ここでの x は f と g の<strong>入力</strong>（この旅では位置）で、f と g はどちらも x の関数 f(x)、g(x)。長方形の縦横は「x をひとつ決めたときの f と g の値」なので、長方形の図に x の軸は描かれていない。x を Δx だけ進めると、縦と横が同時に少しずつ変わる。<strong>上の段（積の微分公式）</strong>：縦 f、横 g の長方形（上の図と同じ f(x)＝x²、g(x)＝x を x＝1 で見たもの。f＝1、g＝1、傾き f′＝2、g′＝1）で、x が Δx 進むと、縦が Δf＝f′Δx、横が Δg＝g′Δx だけ育つ。増えた面積は青い帯2本 Δf·g＋f·Δg と赤い角 Δf·Δg。そのままでは Δx を小さくするとどれもゼロに向かうが、傾きを出すために<strong>Δx で割る</strong>と（右上の棒）、帯は Δx が打ち消されて f′g＋fg′ で一定、角は f′g′·Δx と Δx が1個残る。スライダーで Δx を小さくしていくと、帯の棒は動かず角の棒だけが消えていく――これが (fg)′＝f′g＋fg′。<strong>下の段（傾きの足し集め）</strong>：同じ f(x)＝x²、g(x)＝x の積 h＝fg＝x³ を山道の標高とすると（x が増えるほど登り続ける道）、その傾き (fg)′ を a から b まで足し集めたもの（右下の色のついた面積）は、ゴールとスタートの標高差 [fg]（左下の赤い縦線）にちょうど等しい。ゴール b を動かしても、面積と標高差はつねに一致する。波動関数が絡む場合は、遠方でどちらの標高も 0 なので、この差 [fg] はまるごと消える</div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="fg3d" role="img" aria-label="横が x、高さが f、手前が g の3次元グラフ。増えたり減ったりする一般の関数 f(x)、g(x) について、点 (x, f(x), g(x)) の軌跡を曲線で描き、x の位置に縦 f(x)・横 g(x) の長方形（面積 f×g）を立てる。x＋Δx の位置の長方形と比べると、増えた帯2本と角が見える。下段には長方形の面積 fg を x の関数として描いたグラフと、その傾き (fg)′＝f′g＋fg′ のグラフがあり、Δx で測った坂の傾きが Δx を小さくすると (fg)′ に重なることが分かる。スライダーで x と Δx を変えられ、ドラッグで上の3D図の視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="f3-x">入力 x</label>
+          <input type="range" id="f3-x" min="0.3" max="5" step="0.01" value="2" aria-label="入力 x">
+          <span class="val" id="f3-xv">2.00</span>
+          <label for="f3-dx">進む幅 Δx</label>
+          <input type="range" id="f3-dx" min="0.1" max="1" step="0.01" value="0.6" aria-label="進む幅 Δx">
+          <span class="val" id="f3-dxv">0.60</span>
+        </div>
+        <div class="readout"><span id="f3-out"></span></div>
+        <div class="diagram-caption">ここまでの図は f(x)＝x²、g(x)＝x という簡単な例だったが、積の微分公式も「傾きの足し集め＝両端の差」も、どんな f、g でも成り立つ。この図は<strong>増えたり減ったりする一般の関数</strong>の例で、横が x、高さが f、手前が g の空間に、点 (x, f(x), g(x)) の軌跡を1本の曲線として描いたもの（壁に落ちた点線の影が、それぞれ f(x) と g(x) のグラフ）。x をひとつ決めると曲線上の1点が決まり、その位置に<strong>縦 f(x)・横 g(x) の長方形</strong>を立てられる――面積が積 f×g。x を Δx 進めると長方形は隣の位置に移り、縦横が変わる（青）。増えたぶんが帯2本と角で、f や g が減る場所では帯が負になる（薄い青）が、「面積の変化 ＝ Δf·g ＋ f·Δg ＋ Δf·Δg」はどこでも同じ形で成り立つ。角 Δf·Δg だけが Δx² の桁で、割ると消える――ここも簡単な例と変わらない。<strong>下の段</strong>：左は長方形の面積 fg を x の関数として描いたもので、金の点から青の点へ登る赤い坂が「Δx で増えた面積」。右はその傾き (fg)′＝f′g＋fg′ のグラフ（0 より上なら面積が増える場所、下なら減る場所）。赤い輪は「増えた面積 ÷ Δx」で測った坂の傾きで、Δx を小さくしていくと (fg)′ の値（金の点）にぴったり重なる――これが「角が消えて帯だけが残る」ことの、グラフでの姿</div>
       </div>
 
       <div class="dialogue-scene">
