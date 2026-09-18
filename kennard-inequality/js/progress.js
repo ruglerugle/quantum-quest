@@ -268,6 +268,12 @@
           window.location.href = next ? next.file : "complete.html";
         });
       }
+
+      // 道具箱などからの「#fb-…」リンクで開いたとき、サイドバー描画で位置がずれても式ボックスへ確実に移動する
+      if (window.location.hash) {
+        var target = document.getElementById(window.location.hash.slice(1));
+        if (target) window.setTimeout(function () { target.scrollIntoView({ block: "start" }); }, 80);
+      }
     });
   }
 
