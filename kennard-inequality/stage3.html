@@ -58,8 +58,6 @@
   .kq-svg .ktA{fill:var(--gold-dark);font-size:11px;font-weight:900}
   .kq-svg .ktB{fill:#2f6fa6;font-size:11px;font-weight:900}
   .cv-wrap{width:100%}
-  /* 幅に比例して拡大する一方で高さは頭打ちなので、PC の広い画面では幅を抑えて中央に置く */
-  #chirp3d,#psiphi3d,#nuk3d,#shift3d{max-width:600px;margin:0 auto}
   #chirp3d,#psiphi3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   #nuk3d,#shift3d{display:block;width:100%;height:auto;touch-action:pan-y}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
@@ -910,10 +908,10 @@
     out.textContent = 'Δx ＝ ' + dx.toFixed(2) + '、Δp ＝ ' + dp.toFixed(2) + '、Δx·Δp ＝ ' + (dx * dp).toFixed(3) + ' ＝ ℏ/2（ℏ＝1 の単位。ガウス波束は等号ぴったり）';
   }
   function resize() {
-    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 800)), d = window.devicePixelRatio || 1;
     cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
     ctx.setTransform(d, 0, 0, d, 0, 0);
-    W = w; H = h; sc = Math.min(w / 33, h / 27);
+    W = w; H = h; sc = Math.min(w / 33, h / 29);
     draw();
   }
   var queued = false;
@@ -969,7 +967,7 @@
   function arrow(a, b, color) { poly([a, b], color, 1.3); var dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1; dx /= L; dy /= L; ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(b[0] - 7 * dx - 3.5 * dy, b[1] - 7 * dy + 3.5 * dx); ctx.lineTo(b[0] - 7 * dx + 3.5 * dy, b[1] - 7 * dy - 3.5 * dx); ctx.closePath(); ctx.fill(); }
 
   function draw() {
-    var lam = +sl.value, nu = +sn.value, K = 2 * Math.PI / lam, OM = 2 * Math.PI * nu, i, j, pts, nar = W < 700;
+    var lam = +sl.value, nu = +sn.value, K = 2 * Math.PI / lam, OM = 2 * Math.PI * nu, i, j, pts, nar = W < 1000;
     function psi(x, tt) { return Math.sin(K * x - OM * tt); }
     ctx.clearRect(0, 0, W, H);
     var ax1 = W * 0.26, ay1 = H * 0.29, ax2 = W * 0.75, ay2 = H * 0.29, ax3 = W * 0.26, ay3 = H * 0.8, ax4 = W * 0.75, ay4 = H * 0.79;
@@ -1046,10 +1044,10 @@
     out.textContent = 'k ＝ 2π/λ ＝ ' + K.toFixed(2) + ' ラジアン/m（1 m に波が ' + (1 / lam).toFixed(2) + ' 個）、ν ＝ ' + nu.toFixed(2) + ' /秒（ω ＝ 2πν ＝ ' + OM.toFixed(2) + ' ラジアン/秒）';
   }
   function resize() {
-    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 800)), d = window.devicePixelRatio || 1;
     cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
     ctx.setTransform(d, 0, 0, d, 0, 0);
-    W = w; H = h; sc = Math.min(w / 58, h / 46);
+    W = w; H = h; sc = Math.min(w / 58, h / 51);
     draw();
   }
   var queued = false;
@@ -1207,10 +1205,10 @@
     out.textContent = '右へ ' + x0.toFixed(2) + ' m ずらす → 2 ラジアン/m の成分の係数は ' + (-2 * x0).toFixed(2).replace('-', '−') + ' ラジアン、4 ラジアン/m の成分は ' + (-4 * x0).toFixed(2).replace('-', '−') + ' ラジアン回る（回る角度 ＝ −(1 m あたりの回転角)×x₀ で、細かい波ほど大きい）';
   }
   function resize() {
-    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.45, 620)), d = window.devicePixelRatio || 1;
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.45, 900)), d = window.devicePixelRatio || 1;
     cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
     ctx.setTransform(d, 0, 0, d, 0, 0);
-    W = w; H = h; sc = w / 58;
+    W = w; H = h; sc = Math.min(w / 58, h / 72);
     draw();
   }
   var queued = false;
