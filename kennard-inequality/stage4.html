@@ -36,7 +36,7 @@
   .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .cv-wrap{width:100%}
   #parts2d,#fg2d{display:block;width:100%;height:auto}
-  #fg3d{display:block;width:100%;height:auto;touch-action:pan-y}
+  #fg3d,#conj3d{display:block;width:100%;height:auto;touch-action:pan-y}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -244,7 +244,38 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">−ℏ²∫ψ*(ψ′)′dx で、微分を ψ* に押し付けて符号反転。−ℏ² × (−1) × ∫(ψ*)′ψ′dx ＝ ＋ℏ²∫(ψ*)′ψ′dx。……ここで (ψ*)′ は「共役してから微分」ですけど、微分してから共役しても同じことなので (ψ′)* と書けます。すると中身は (ψ′)*×ψ′ ＝ |ψ′|²。複素数 z に対する z*z＝|z|² の関係ですね。つまり <strong>(Δp)² ＝ ℏ²∫|ψ′|²dx</strong>。</div>
+          <div class="dialog-bubble">−ℏ²∫ψ*(ψ′)′dx で、微分を ψ* に押し付けて符号反転。−ℏ² × (−1) × ∫(ψ*)′ψ′dx ＝ ＋ℏ²∫(ψ*)′ψ′dx。……ここで (ψ*)′ は「共役してから微分」です。これを「微分してから共役」した (ψ′)* に置き換えたくなりますけど、順番を入れ替えていいんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いいよ、入れ替えられる。理由は絵で分かる。共役とは虚部の符号を反転すること――複素数の平面で言えば、矢印を<strong>実軸で折り返した鏡像</strong>にすることだ。いっぽう微分は、隣り合う x と x＋Δx の2本の矢印の<strong>差</strong>を Δx で割ったもの。2本の矢印を先に鏡に映してから差を取っても、先に差を取ってからその差を鏡に映しても、出てくる矢印は同じだ――鏡像は足し算や引き算をそのまま保つからね。だから (ψ*)′ ＝ (ψ′)*。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="conj3d" role="img" aria-label="左は ψ と ψ* の針の列（ψ* は虚部の符号を反転した鏡像）で、x と x＋Δx の2本の針を赤で強調し、その差を緑で示す。右は複素数の平面で、ψ(x) と ψ(x＋Δx) の矢印とその差 Δψ、鏡に映した ψ* 側の矢印とその差 Δ(ψ*) を描き、Δ(ψ*) が Δψ の鏡像になっている。スライダーで x と Δx を変えられ、ドラッグで左の視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="cj-x">場所 x</label>
+          <input type="range" id="cj-x" min="-2" max="2" step="0.01" value="0.4" aria-label="場所 x">
+          <span class="val" id="cj-xv">＋0.40</span>
+          <label for="cj-dx">進む幅 Δx</label>
+          <input type="range" id="cj-dx" min="0.1" max="1" step="0.01" value="0.5" aria-label="進む幅 Δx">
+          <span class="val" id="cj-dxv">0.50</span>
+        </div>
+        <div class="readout"><span id="cj-out"></span></div>
+        <div class="diagram-caption"><strong>左</strong>：ψ（金）と、その共役 ψ*（青）の針の列。共役は虚部の符号を反転することなので、ψ* の針は ψ の針を実部の面で折り返した鏡像。赤い2本が x と x＋Δx の針で、緑がその差――これを Δx で割ったものが微分 ψ′（または (ψ*)′）。<strong>右</strong>：同じ2本の針を複素数の平面に重ねて描いたもの。ψ 側の差 Δψ（緑の実線）と、鏡像側の差 Δ(ψ*)（緑の点線）は、たがいに鏡像になっている。「先に鏡に映してから差を取る」＝「先に差を取ってから鏡に映す」だから、Δx で割っても <strong>(ψ*)′ ＝ (ψ′)*</strong>。x や Δx をどう動かしても、この関係は崩れない</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">では (ψ*)′ を (ψ′)* と書き直します。すると中身は (ψ′)*×ψ′ ＝ |ψ′|²。複素数 z に対する z*z＝|z|² の関係ですね。つまり <strong>(Δp)² ＝ ℏ²∫|ψ′|²dx</strong>。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -626,6 +657,127 @@
   function up() { dragging = false; }
   cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
   cv.addEventListener('mousemove', function(e){ cv.style.cursor = inTop(e) ? 'move' : 'default'; });
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+})();
+</script>
+<script>
+/* 「微分してから共役」＝「共役してから微分」。
+   左：ψ（金）と ψ*（青、虚部を反転＝実部の面で折り返した鏡像）の針の列。x と x＋Δx の2本を強調。
+   右：複素数の平面。ψ(x)、ψ(x＋Δx) の矢印とその差 Δψ（緑）。鏡に映した ψ* 側でも差を取ると、Δψ の鏡像とぴったり一致。 */
+(function(){
+  var cv = document.getElementById('conj3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sx = document.getElementById('cj-x'), sxv = document.getElementById('cj-xv');
+  var sd = document.getElementById('cj-dx'), sdv = document.getElementById('cj-dxv');
+  var out = document.getElementById('cj-out');
+  var XR = 3, XS = 22, N = 48, HZ = 2.4, DIM = 2.2, K = 2.0, SIG = 1.3;
+  var yaw = 0.36, pitch = -0.5, W = 0, H = 0, sc = 1;
+  var C = { ink: '#241d12', muted: '#8a7a5c', gold: '#a6742a', goldH: '#c9a24a', blue: '#2f6fa6', blueH: '#6f8fc0', green: '#3f7d4e', red: '#b5504a', tick: 'rgba(138,122,92,.6)', ring: 'rgba(138,122,92,.45)' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function psi(x) { var a = Math.exp(-x * x / (2 * SIG * SIG)); return [a * Math.cos(K * x), a * Math.sin(K * x)]; }
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function arrow(a, b, color, wd, dash) { poly([a, b], color, wd || 1.6, dash); var dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1; dx /= L; dy /= L; ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(b[0] - 8 * dx - 4 * dy, b[1] - 8 * dy + 4 * dx); ctx.lineTo(b[0] - 8 * dx + 4 * dy, b[1] - 8 * dy - 4 * dx); ctx.closePath(); ctx.fill(); }
+
+  /* 左：針の列（sign＝＋1 で ψ、−1 で ψ*） */
+  function hands(ax, ay, sign, color, colorH, x0, dx) {
+    var i, u, pts;
+    function P(xx, re, im) { var p = rot((xx / (2 * XR)) * XS, HZ * re, -DIM * im); return [ax + p[0], ay + p[1]]; }
+    poly([P(-XR - 0.3, 0, 0), P(XR + 0.3, 0, 0)], C.muted, 1);
+    for (i = 0; i <= N; i++) {
+      u = -XR + 2 * XR * i / N; var v = psi(u), b = P(u, 0, 0), tp = P(u, v[0], sign * v[1]);
+      ctx.strokeStyle = colorH; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.5, 0, 7); ctx.fill();
+    }
+    pts = []; for (i = 0; i <= 200; i++) { u = -XR + 2 * XR * i / 200; var v2 = psi(u); pts.push(P(u, v2[0], sign * v2[1])); } poly(pts, color, 1.4);
+    /* 強調する2本 */
+    var v0 = psi(x0), v1 = psi(x0 + dx);
+    arrow(P(x0, 0, 0), P(x0, v0[0], sign * v0[1]), C.red, 2.2); arrow(P(x0 + dx, 0, 0), P(x0 + dx, v1[0], sign * v1[1]), C.red, 2.2);
+    poly([P(x0, v0[0], sign * v0[1]), P(x0 + dx, v1[0], sign * v1[1])], C.green, 2.4);
+    var o = P(-XR - 0.3, 0, 0), aY = P(-XR - 0.3, 1.3, 0), aZ = P(-XR - 0.3, 0, 1.3);
+    poly([o, aY], C.muted, 1.1); poly([o, aZ], C.muted, 1.1);
+    text(aY[0], aY[1] - 8, '実部', C.muted, SUB); text(aZ[0] + 4, aZ[1] + 9, '虚部', C.muted, SUB, 'left');
+    var lx = P(x0, 0, 0); text(lx[0], lx[1] + 11, 'x', C.red, SUB);
+  }
+  /* 右：複素数の平面（横 実部、縦 虚部） */
+  function plane(cx, cy, R, x0, dx, nar) {
+    var v0 = psi(x0), v1 = psi(x0 + dx), d = [v1[0] - v0[0], v1[1] - v0[1]];
+    function Q(re, im) { return [cx + R * re, cy - R * im]; }
+    poly([Q(-1.15, 0), Q(1.15, 0)], C.muted, 1.2); poly([Q(0, -1.15), Q(0, 1.15)], C.muted, 1.2);
+    text(Q(1.15, 0)[0], cy + 12, '実部', C.muted, SUB, 'right'); text(cx + 4, Q(0, 1.15)[1] - 2, '虚部', C.muted, SUB, 'left');
+    /* ψ 側 */
+    arrow(Q(0, 0), Q(v0[0], v0[1]), C.gold, 2); arrow(Q(0, 0), Q(v1[0], v1[1]), C.goldH, 1.4);
+    arrow(Q(v0[0], v0[1]), Q(v1[0], v1[1]), C.green, 2.4);
+    /* ψ* 側（鏡像） */
+    arrow(Q(0, 0), Q(v0[0], -v0[1]), C.blue, 2); arrow(Q(0, 0), Q(v1[0], -v1[1]), C.blueH, 1.4);
+    arrow(Q(v0[0], -v0[1]), Q(v1[0], -v1[1]), C.green, 2.4, [5, 3]);
+    /* ラベル */
+    /* 差の矢印のラベルは、差の向きに直角で原点から遠ざかる側にずらす */
+    var mx = (v0[0] + v1[0]) / 2, my = (v0[1] + v1[1]) / 2, L = Math.hypot(d[0], d[1]) || 1, nx = -d[1] / L, ny = d[0] / L;
+    if (nx * mx + ny * my < 0) { nx = -nx; ny = -ny; }
+    var m1 = Q(mx + 0.16 * nx, my + 0.16 * ny), m2 = Q(mx + 0.16 * nx, -(my + 0.16 * ny));
+    text(m1[0], m1[1], 'Δψ', C.green, SUB); text(m2[0], m2[1], 'Δ(ψ*)', C.green, SUB);
+    /* 矢印の先のラベルは、先端の少し外側に */
+    var t0 = Q(v0[0] * 1.2, v0[1] * 1.2 + 0.08), t0c = Q(v0[0] * 1.2, -(v0[1] * 1.2 + 0.08));
+    text(t0[0], t0[1], 'ψ(x)', C.gold, SUB); text(t0c[0], t0c[1], 'ψ*(x)', C.blue, SUB);
+    return d;
+  }
+
+  function draw() {
+    var x0 = +sx.value, dx = +sd.value, nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    var ax = W * 0.27, ay1 = H * 0.27, ay2 = H * 0.7;
+    hands(ax, ay1, 1, C.gold, C.goldH, x0, dx);
+    hands(ax, ay2, -1, C.blue, C.blueH, x0, dx);
+    var d = plane(W * 0.76, H * 0.5, Math.min(W * 0.17, H * 0.32), x0, dx, nar);
+    text(ax, H * 0.05, nar ? 'ψ の針の列（赤＝x と x＋Δx）' : 'ψ の針の列（赤い2本＝x と x＋Δx、緑＝その差 Δψ）', C.gold, TITLE);
+    text(ax, H * 0.48, nar ? 'ψ* の針の列（虚部を反転）' : 'ψ* の針の列：虚部の符号を反転 ＝ 実部の面で折り返した鏡像', C.blue, TITLE);
+    text(W * 0.76, H * 0.05, nar ? '複素数の平面で見る' : '複素数の平面で見る：差の矢印は、鏡に映しても差の矢印', C.ink, TITLE);
+    text(ax, H * 0.93, nar ? '指でなぞると回せます（左）' : '🖱️ ドラッグ（スマホは指でなぞる）で左の2つを回せます', C.muted, SUB);
+    text(W * 0.76, H * 0.93, nar ? 'Δ(ψ*) ＝ Δψ の鏡像' : 'Δ(ψ*)（点線）は Δψ（実線）の鏡像。Δx で割れば (ψ*)′＝(ψ′)*', C.green, SUB);
+    sxv.textContent = (x0 >= 0 ? '＋' : '−') + Math.abs(x0).toFixed(2); sdv.textContent = dx.toFixed(2);
+    var f2 = function(v){ return (v >= 0 ? '＋' : '−') + Math.abs(v).toFixed(3); };
+    out.textContent = 'Δψ ＝ ' + f2(d[0]) + ' ' + (d[1] >= 0 ? '＋' : '−') + ' ' + Math.abs(d[1]).toFixed(3) + 'i、Δ(ψ*) ＝ ' + f2(d[0]) + ' ' + (d[1] >= 0 ? '−' : '＋') + ' ' + Math.abs(d[1]).toFixed(3) + 'i ＝ (Δψ)*　→　Δx で割っても同じ：(ψ*)′ ＝ (ψ′)*';
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.9, 400)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 52;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  sx.addEventListener('input', invalidate); sd.addEventListener('input', invalidate);
+
+  /* 回せるのは左の針の列だけ */
+  var dragging = false, lx = 0, ly = 0;
+  function inLeft(e) { var p = e.touches ? e.touches[0] : e, r = cv.getBoundingClientRect(); return (p.clientX - r.left) < r.width * 0.54; }
+  function down(e) { if (!inLeft(e)) return; dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('mousemove', function(e){ cv.style.cursor = inLeft(e) ? 'move' : 'default'; });
   cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
   window.addEventListener('resize', resize);
   resize();
