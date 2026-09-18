@@ -850,7 +850,7 @@
   function phi2(p, dx, p0) { var dp = 1 / (2 * dx); var u = (p - p0) / dp; return Math.exp(-u * u / 2); }   /* |φ(p)|²（高さは1に正規化） */
 
   function draw() {
-    var dx = +sdx.value, p0 = +sp0.value, x0 = +sx0.value, dp = 1 / (2 * dx), i, u, pts, nar = W < 520;
+    var dx = +sdx.value, p0 = +sp0.value, x0 = +sx0.value, dp = 1 / (2 * dx), i, u, pts, nar = W < 700;
     ctx.clearRect(0, 0, W, H);
     var ax = W * 0.5, ay1 = H * 0.27, ay2 = H * 0.75;
     /* ---- 上段：ψ(x) の針の列 ---- */
@@ -877,7 +877,7 @@
     var o = P(-0.04, 0, 0), aY = P(-0.04, 1.25, 0), aZ = P(-0.04, 0, 1.25), aX = P(1.04, 0, 0), aD = P(1.03, -1.5, 0);
     poly([o, aY], C.muted, 1.2); poly([o, aZ], C.muted, 1.2);
     text(aY[0] + (nar ? 5 : -5), aY[1], '実部', C.muted, SUB, nar ? 'left' : 'right'); text(aZ[0] + (nar ? 4 : -4), aZ[1] + 9, '虚部', C.muted, SUB, nar ? 'left' : 'center'); text(aX[0] + 6, aX[1] + 2, 'x', C.muted, SUB, 'left');
-    text(aD[0] + 6, aD[1], '|ψ(x)|²', C.red, SUB, 'left');
+    text(aD[0] + 4, aD[1] - 9, '|ψ(x)|²', C.red, SUB, 'left');
     /* ---- 下段：φ(p) の針の列（高さ＝実部、手前＝虚部）と、足元に |φ(p)|² ---- */
     function Q(uu, re, im) { var p = rot((uu - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay2 + p[1]]; }
     function Pp(uu) { return (uu - 0.5) * PW; }
@@ -899,7 +899,7 @@
     var o2 = Q(-0.04, 0, 0), aY2 = Q(-0.04, 1.25, 0), aZ2 = Q(-0.04, 0, 1.25), aX2 = Q(1.04, 0, 0), aD2 = Q(1.03, -1.5, 0);
     poly([o2, aY2], C.muted, 1.2); poly([o2, aZ2], C.muted, 1.2);
     text(aY2[0] + (nar ? 5 : -5), aY2[1], '実部', C.muted, SUB, nar ? 'left' : 'right'); text(aZ2[0] + (nar ? 4 : -4), aZ2[1] + 9, '虚部', C.muted, SUB, nar ? 'left' : 'center'); text(aX2[0] + 6, aX2[1] + 2, 'p', C.muted, SUB, 'left');
-    text(aD2[0] + 6, aD2[1], '|φ(p)|²', C.blue, SUB, 'left');
+    text(aD2[0] + 4, aD2[1] - 9, '|φ(p)|²', C.blue, SUB, 'left');
     /* 見出し */
     text(ax, H * 0.045, nar ? 'ψ(x)：場所の言葉（針の列。足元の赤 ＝ |ψ(x)|²）' : 'ψ(x)：同じ状態を「場所の言葉」で書く（針の列。足元の赤が |ψ(x)|²、その幅が Δx）', C.goldD, TITLE);
     text(ax, H * 0.5, nar ? 'φ(p)：波長の言葉（こちらも複素数の針。足元の青 ＝ |φ(p)|²）' : 'φ(p)：同じ状態を「波長の言葉」で書く（こちらも複素数の針の列。足元の青が |φ(p)|²、その幅が Δp）', C.blue, TITLE);
@@ -911,7 +911,7 @@
     var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
     cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
     ctx.setTransform(d, 0, 0, d, 0, 0);
-    W = w; H = h; sc = w / 33;
+    W = w; H = h; sc = Math.min(w / 33, h / 27);
     draw();
   }
   var queued = false;
@@ -1121,7 +1121,7 @@
     var i, u, pts;
     function P(x, re, im) { var p = rot((x / XM - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay + p[1]]; }
     poly([P(-0.2, 0, 0), P(XM + 0.3, 0, 0)], C.muted, 1);
-    for (i = 0; i <= 3; i++) { poly([P(i, -1.1, 0), P(i, 1.1, 0)], C.tick, 1, [3, 3]); var tl = P(i, -1.5, 0); text(tl[0], tl[1] + 6, 'x＝' + i, C.muted, SUB); }
+    for (i = 0; i <= 3; i++) { poly([P(i, -1.1, 0), P(i, 1.1, 0)], C.tick, 1, [3, 3]); var tl = P(i, -1.9, 0); text(tl[0], tl[1] + 8, 'x＝' + i, C.muted, SUB); }
     /* 元の波（薄く） */
     pts = []; for (i = 0; i <= 160; i++) { u = XM * i / 160; pts.push(P(u, Math.cos(a * u), Math.sin(a * u))); } poly(pts, C.gold, 1.2);
     /* ずらした波（針つき） */
@@ -1133,7 +1133,7 @@
     pts = []; for (i = 0; i <= 160; i++) { u = XM * i / 160; var th2 = a * (u - x0); pts.push(P(u, Math.cos(th2), Math.sin(th2))); } poly(pts, C.blue, 1.6);
     /* 節目の針を強調：ずらした後、x＝x0 で角度 0 */
     var b0 = P(x0, 0, 0), t0 = P(x0, 1, 0); arrow(b0, t0, C.red, 2);
-    text(t0[0], t0[1] - 9, nar ? '角度 0' : 'x＝x₀ で角度 0', C.red, SUB);
+    text(t0[0], t0[1] - 15, nar ? '角度 0' : 'x＝x₀ で角度 0', C.red, SUB);
     var o = P(-0.2, 0, 0), aY = P(-0.2, 1.2, 0), aZ = P(-0.2, 0, 1.2);
     poly([o, aY], C.muted, 1.1); poly([o, aZ], C.muted, 1.1);
     text(aY[0], aY[1] - 8, '実部', C.muted, SUB); text(aZ[0] - 4, aZ[1] + 4, '虚部', C.muted, SUB, 'right');
@@ -1146,7 +1146,7 @@
     function dens(x, s) { var v = val(x, s); return v[0] * v[0] + v[1] * v[1]; }
     poly([P(-0.2, 0, 0), P(XM + 0.3, 0, 0)], C.muted, 1);
     for (i = 0; i <= 3; i++) { poly([P(i, -0.12, 0), P(i, 0.12, 0)], C.muted, 1.2); }
-    var t0l = P(0, 0.2, 0); text(t0l[0], t0l[1] - 8, 'x＝0', C.muted, SUB);
+    var t0l = P(0, -1.5, 0); text(t0l[0], t0l[1] + 10, 'x＝0', C.muted, SUB);
     /* |ψ|²（足元）：元は薄い金、回した後は赤 */
     pts = []; for (i = 0; i <= 200; i++) { u = XM * i / 200; pts.push(P(u, -1.5 + 0.9 * dens(u, 0), 0)); } poly(pts, C.gold, 1.4, [4, 3]);
     pts = []; for (i = 0; i <= 200; i++) { u = XM * i / 200; pts.push(P(u, -1.5 + 0.9 * dens(u, x0), 0)); } poly(pts, 'rgba(181,80,74,.9)', 1.6, [4, 3]);
@@ -1161,7 +1161,7 @@
     }
     pts = []; for (i = 0; i <= 240; i++) { u = XM * i / 240; var v1 = val(u, x0); pts.push(P(u, v1[0], v1[1])); } poly(pts, C.blue, 1.6);
     /* x＝0 にあった山（両成分の針がそろう場所）が x＝x₀ へ */
-    var mk = P(x0, 1.35, 0); text(mk[0], mk[1] - 8, nar ? '山が右へ ' + x0.toFixed(2) + ' m' : '針のそろう山が右へ ' + x0.toFixed(2) + ' m 動いた', C.red, SUB);
+    var mk = P(x0, 1.35, 0); text(mk[0], mk[1] - 14, nar ? '山が右へ ' + x0.toFixed(2) + ' m' : '針のそろう山が右へ ' + x0.toFixed(2) + ' m 動いた', C.red, SUB);
     var o = P(-0.2, 0, 0), aY = P(-0.2, 1.2, 0), aZ = P(-0.2, 0, 1.2), aD = P(XM + 0.25, -1.5, 0);
     poly([o, aY], C.muted, 1.1); poly([o, aZ], C.muted, 1.1);
     text(aY[0], aY[1] - 8, '実部', C.muted, SUB); text(aZ[0] - 4, aZ[1] + 4, '虚部', C.muted, SUB, 'right'); text(aD[0] + 4, aD[1], '|ψ|²', C.red, SUB, 'left');
@@ -1186,9 +1186,9 @@
   }
 
   function draw() {
-    var x0 = +sl.value, nar = W < 520;
+    var x0 = +sl.value, nar = W < 700;
     ctx.clearRect(0, 0, W, H);
-    var ax1 = W * (nar ? 0.3 : 0.27), ay1 = H * 0.2, ax2 = W * 0.76, ay2 = H * 0.19, ay3 = H * 0.52, ay4 = H * 0.51, ax5 = W * 0.5, ay5 = H * 0.855;
+    var ax1 = W * (nar ? 0.3 : 0.27), ay1 = H * 0.2, ax2 = W * 0.76, ay2 = H * 0.19, ay3 = H * 0.53, ay4 = H * 0.52, ax5 = W * 0.5, ay5 = H * 0.855;
     wavePanel(ax1, ay1, 2, x0, nar);
     wavePanel(ax1, ay3, 4, x0, nar);
     coefPanel(ax2, ay2, 2, x0, nar);
@@ -1196,9 +1196,9 @@
     sumPanel(ax5, ay5, x0, nar);
     text(ax1, H * 0.032, nar ? '1 m ごとに 2 ラジアン回る成分' : '成分①：1 m ごとに 2 ラジアン回る波（薄い金＝元、青＝右へ x₀ ずらした後）', C.ink, TITLE);
     text(ax2, H * 0.032, nar ? 'その成分の係数 φ(p)' : 'その成分の係数 φ(p) の針（金＝元、青＝ずらした後）', C.ink, TITLE);
-    text(ax1, H * 0.365, nar ? '1 m ごとに 4 ラジアン回る成分' : '成分②：1 m ごとに 4 ラジアン回る波（細かい波）', C.ink, TITLE);
-    text(ax2, H * 0.365, nar ? 'その成分の係数 φ(p)' : 'その成分の係数 φ(p) の針：回る角度は2倍', C.ink, TITLE);
-    text(ax1, H * 0.335, nar ? '指でなぞると回せます' : '🖱️ ドラッグ（スマホは指でなぞる）で左と下の図を回せます', C.muted, SUB);
+    text(ax1, H * 0.375, nar ? '1 m ごとに 4 ラジアン回る成分' : '成分②：1 m ごとに 4 ラジアン回る波（細かい波）', C.ink, TITLE);
+    text(ax2, H * 0.375, nar ? 'その成分の係数 φ(p)' : 'その成分の係数 φ(p) の針：回る角度は2倍', C.ink, TITLE);
+    text(ax1, H * 0.325, nar ? '指でなぞると回せます' : '🖱️ ドラッグ（スマホは指でなぞる）で左と下の図を回せます', C.muted, SUB);
     text(ax5, H * 0.665, nar ? '上の2つの成分を足した波（薄い金＝元、青＝回した後）' : '上の2つの成分を足した波（薄い金＝元、青＝2つの係数を回した後）', C.ink, TITLE);
     text(ax5, H * 0.975, nar ? '係数を回しただけで、足した波も右へ x₀ 動く' : '係数をそれぞれ −2x₀、−4x₀ 回しただけで、足した波は形を変えずに右へ x₀ 動く', C.ink, SUB);
     slv.textContent = x0.toFixed(2) + ' m';
