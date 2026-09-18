@@ -35,7 +35,7 @@
   .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .cv-wrap{width:100%}
-  #gauss2d{display:block;width:100%;height:auto}
+  #gauss2d,#chain2d{display:block;width:100%;height:auto}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -186,8 +186,29 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そう。そして実はハイゼンベルクは1927年の論文で、このガウス波束について Δx·Δp を計算して、ちょうど ℏ/2 になることを確かめていた。もし ℏ/2 が本当の下限なら、ガウス波束は「これ以上縮められない<strong>最良の波</strong>」ということになる。ではガウス型 ψ＝A·e<sup>−ax²</sup> を微分してみてごらん。定数 A はそのまま前に残る。使う規則は1つだけだ。「e の肩に乗った式」を微分すると、<strong>肩の式を微分したものが前に降りてきて、e の部分はそのまま残る</strong>――運動量の演算子を組んだとき、e<sup>ikx</sup> を微分すると ik が前に出て ik·e<sup>ikx</sup> になったのと同じ規則だよ。今回の肩は −ax²。x² の傾きは 2x だから（x が Δx 進むと x² は (x＋Δx)²−x² ≈ 2x·Δx だけ増える）、肩の微分は −2ax。これが前に降りてくるから――</div>
+          <div class="dialog-bubble">そう。そして実はハイゼンベルクは1927年の論文で、このガウス波束について Δx·Δp を計算して、ちょうど ℏ/2 になることを確かめていた。もし ℏ/2 が本当の下限なら、ガウス波束は「これ以上縮められない<strong>最良の波</strong>」ということになる。ではガウス型 ψ＝A·e<sup>−ax²</sup> を微分してみよう。定数 A はそのまま前に残る。問題は、e の肩に x² が乗っていることだ。平面波 e<sup>ikx</sup> のときは「微分すると ik が前に出る」で済んだけれど、あれは肩 ikx の傾きが ik で一定だったからでね。肩が −ax² のように曲がった式でも通用する、もう一段広い規則を組み立てておこう。ψ＝e<sup>f(x)</sup> と書いて、x を少しだけ Δx 進める。まず肩 f は、STAGE4 でやったとおり「傾き × 進んだ幅」で <strong>Δf ≈ f′(x)·Δx</strong> だけ変わる。次に、肩が Δf 変わると e<sup>f</sup> はどうなるか。肩の足し算は掛け算だから e<sup>f＋Δf</sup>＝e<sup>f</sup>·e<sup>Δf</sup>。そして e は「傾きが自分の高さのちょうど1倍」の数だったね。e<sup>u</sup> は u＝0 で高さ 1、傾きも 1。だから u が小さな Δf だけ進めば <strong>e<sup>Δf</sup> ≈ 1＋Δf</strong>。合わせると、ψ の増分は Δψ ＝ e<sup>f</sup>(e<sup>Δf</sup>−1) ≈ e<sup>f</sup>·Δf ＝ e<sup>f</sup>·f′(x)·Δx。Δx で割れば <strong>ψ′＝f′(x)·e<sup>f(x)</sup></strong>――「肩を微分したものが前に降りてきて、e の部分はそのまま残る」。ψ の傾きは「肩の傾き × 自分の高さ」というわけだ。平面波は f′＝ik の特別な場合だったんだね。さて今回の肩は −ax²。x² の傾きは 2x だから（x が Δx 進むと x² は (x＋Δx)²−x² ≈ 2x·Δx だけ増える）、肩の微分は −2ax。これが前に降りてくるから――</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="chain2d" role="img" aria-label="上段は肩 f(x)＝−ax² のグラフ、下段は ψ＝e^(f(x)) のグラフ。スライダーで選んだ点 x に、それぞれ接線と、幅 Δx で進んだときの増分 Δf・Δψ を描く。Δf は肩の傾き × Δx、Δψ は ψ の高さ × Δf になっていて、ψ の傾きが肩の傾き × 自分の高さに等しいことが読み取れる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="ch-x">調べる場所 x</label>
+          <input type="range" id="ch-x" min="-1.4" max="1.4" step="0.01" value="0.6" aria-label="調べる場所 x">
+          <span class="val" id="ch-xv">＋0.60</span>
+        </div>
+        <div class="readout"><span id="ch-out"></span></div>
+        <div class="diagram-caption">上：肩 f(x)＝−ax²（a＝1）。x を Δx 進めると肩は Δf ≈ f′(x)·Δx（傾き × 幅）だけ変わる。下：ψ＝e<sup>f(x)</sup>。肩が Δf 変わると ψ は e<sup>Δf</sup> ≈ 1＋Δf 倍、つまり ψ·Δf だけ増える。2つを合わせれば Δψ ≈ ψ·f′(x)·Δx で、<strong>ψ の傾き ＝ 肩の傾き f′(x) × 自分の高さ ψ</strong>。読み出しでは、この掛け算の値と、曲線から直接測った傾きが一致することを確かめられる。平面波 e<sup>ikx</sup> は肩の傾きが ik で一定という特別な場合</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【e の肩に式が乗っているときの微分】 <br class="wbr">ψ＝e<sup>f(x)</sup> のとき　ψ′＝f′(x)·e<sup>f(x)</sup>　（肩の微分が前に降り、e はそのまま）</span>
+        <span class="step">①&nbsp;肩の増分： <br class="wbr">Δf ≈ f′(x)·Δx　（傾き × 幅）</span>
+        <span class="step">②&nbsp;e の増分： <br class="wbr">e<sup>f＋Δf</sup> − e<sup>f</sup> ＝ e<sup>f</sup>(e<sup>Δf</sup> − 1) ≈ e<sup>f</sup>·Δf　（e<sup>Δf</sup> ≈ 1＋Δf：e は傾きが高さの1倍）</span>
+        <span class="step">③&nbsp;Δx で割る： <br class="wbr">ψ′ ＝ Δψ/Δx ＝ f′(x)·e<sup>f(x)</sup>　／　平面波 f＝ikx なら f′＝ik、ガウス型 f＝−ax² なら f′＝−2ax</span>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -394,6 +415,75 @@
   var queued = false;
   function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
   sa.addEventListener('input', invalidate);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+})();
+</script>
+<script>
+/* 肩 f(x)＝−ax² と ψ＝e^f の2段。点 x での接線と、幅 Δx の増分 Δf・Δψ を描き、ψ′＝f′·ψ を読み出す */
+(function(){
+  var cv = document.getElementById('chain2d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sx0 = document.getElementById('ch-x'), sxv = document.getElementById('ch-xv'), out = document.getElementById('ch-out');
+  var A = 1, XR = 2, DX = 0.5, W = 0, H = 0;
+  var C = { gold: '#a6742a', goldF: 'rgba(166,116,42,.12)', blue: '#2f6fa6', red: '#b5504a', green: '#3f7d4e', muted: '#8a7a5c', ink: '#241d12', tick: 'rgba(138,122,92,.6)' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function fx(x) { return -A * x * x; }
+  function fp(x) { return -2 * A * x; }
+  function psi(x) { return Math.exp(fx(x)); }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function dot(p, color) { ctx.fillStyle = color; ctx.beginPath(); ctx.arc(p[0], p[1], 3.5, 0, 7); ctx.fill(); }
+  /* 1つのパネル：曲線 g、点 x0 での接線（傾き s）、幅 DX の増分の三角形 */
+  function panel(oy, sy, g, s, x0, color, lblRise, nar, labelAbove) {
+    var ox = W * 0.5, sx = (W * 0.42) / XR, i, pts;
+    function P(x, y) { return [ox + sx * x, oy - sy * y]; }
+    poly([P(-XR - 0.15, 0), P(XR + 0.15, 0)], C.muted, 1.2);
+    for (i = -2; i <= 2; i++) { if (i) { poly([P(i, 0), [P(i, 0)[0], P(i, 0)[1] + 4]], C.muted, 1); } }
+    text(P(XR + 0.15, 0)[0] + 4, oy + 1, 'x', C.muted, SUB, 'left');
+    pts = []; for (i = 0; i <= 200; i++) { var u = -XR + 2 * XR * i / 200; pts.push(P(u, g(u))); } poly(pts, color, 2.2);
+    /* 接線 */
+    var y0 = g(x0), L = 0.45;
+    poly([P(x0 - L, y0 - s * L), P(x0 + L, y0 + s * L)], C.red, 1.6);
+    /* 増分の三角形（幅 DX、高さ s·DX） */
+    var a0 = P(x0, y0), a1 = P(x0 + DX, y0), a2 = P(x0 + DX, y0 + s * DX);
+    poly([a0, a1, a2], C.green, 1.4, [4, 3]);
+    text((a0[0] + a1[0]) / 2, a0[1] + (s >= 0 ? 10 : -10), 'Δx', C.green, SUB);
+    text(a1[0] + 5, (a1[1] + a2[1]) / 2, lblRise, C.green, SUB, 'left');
+    dot(a0, C.red);
+    poly([P(x0, 0), a0], C.tick, 1, [3, 3]);
+    text(a0[0], oy + (labelAbove ? -9 : 11), 'x', C.red, SUB);
+    return P;
+  }
+  function draw() {
+    var x0 = +sx0.value, nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    /* 上段：肩 f＝−x²（0 〜 −4） */
+    var P1 = panel(H * 0.16, (H * 0.24) / 4, fx, fp(x0), x0, C.blue, 'Δf', nar, true);
+    /* 下段：ψ＝e^f（0 〜 1） */
+    var P2 = panel(H * 0.9, H * 0.34, psi, fp(x0) * psi(x0), x0, C.gold, 'Δψ', nar);
+    text(W * 0.5, H * 0.045, nar ? '肩 f(x)＝−ax²：傾き f′(x)＝−2ax' : '上：肩 f(x)＝−ax²（a＝1）。赤い接線の傾きが f′(x)＝−2ax', C.blue, TITLE);
+    text(W * 0.5, H * 0.5, nar ? 'ψ＝e^f：傾き ＝ 肩の傾き × 自分の高さ' : '下：ψ＝e^(f(x))。傾き ＝ 肩の傾き f′(x) × 自分の高さ ψ', C.gold, TITLE);
+    var fpv = fp(x0), pv = psi(x0), meas = (psi(x0 + 0.001) - psi(x0 - 0.001)) / 0.002;
+    function s2(v) { return (v >= 0 ? '＋' : '−') + Math.abs(v).toFixed(2); }
+    sxv.textContent = s2(x0);
+    out.textContent = 'x ＝ ' + s2(x0) + '：肩の傾き f′ ＝ −2ax ＝ ' + s2(fpv) + '、高さ ψ ＝ e^f ＝ ' + pv.toFixed(2) + ' → ψ の傾き ＝ f′ × ψ ＝ ' + s2(fpv * pv) + '（曲線から直接測った傾きも ' + s2(meas) + '）';
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.9, 440)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  sx0.addEventListener('input', invalidate);
   window.addEventListener('resize', resize);
   resize();
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
