@@ -257,14 +257,15 @@
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">やってみます。½m(v＋Δv)² を展開すると、½mv² ＋ mvΔv ＋ ½m(Δv)²。ここから元の ½mv² を引けば、増えた分 ΔE ＝ mvΔv ＋ ½m(Δv)² です。Δv をうんと小さくすれば、2つ目の項はさらに小さくなって無視できるから……ΔE ÷ Δv ＝ mv。あっ、<strong>グラフの傾きが、ちょうど運動量</strong>になっています！</div>
+          <div class="dialog-bubble">やってみます。½m(v＋Δv)² を展開すると、½mv² ＋ mvΔv ＋ ½m(Δv)²。ここから元の ½mv² を引けば、増えた分 ΔE ＝ mvΔv ＋ ½m(Δv)² です。傾きは ΔE ÷ Δv だから、Δv で割って……ΔE ÷ Δv ＝ mv ＋ ½mΔv。1つ目の項は mv とすっきりしましたが、2つ目の項には Δv が残っています。これはどう扱えばいいんですか？</div>
         </div>
       </div>
 
       <div class="formula-box">
         <span class="step">速さを v から v＋Δv にすると： ΔE ＝ ½m(v＋Δv)² − ½mv² ＝ mvΔv ＋ ½m(Δv)²</span>
-        <span class="step">Δv がとても小さいとき、(Δv)² の項はさらに小さいので無視できる → ΔE ≒ mv × Δv</span>
-        <span class="step">グラフの傾き ＝ ΔE ÷ Δv ≒ mv ＝ <strong>運動量 p</strong></span>
+        <span class="step">Δv で割る： ΔE ÷ Δv ＝ mv ＋ ½mΔv</span>
+        <span class="step">Δv をうんと小さくすると、Δv の残っている ½mΔv → 0、Δv を含まない mv はそのまま残る</span>
+        <span class="step">グラフの傾き ＝ mv ＝ <strong>運動量 p</strong></span>
       </div>
 
       <div class="dialogue-scene">
@@ -273,7 +274,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その通り。<strong>エネルギーの坂の傾きが、運動量</strong>なんだ。つまり運動量には「エネルギーの増えやすさ」という顔もある。速いほど坂が急だから、同じ Δv でもエネルギーがたくさん増える――エネルギーが2乗で効く理由も、この絵で腑に落ちるね。ちなみに、いまきみがやった「うんと小さい変化で傾きを調べる」という操作には名前がついていて、「<strong>微分</strong>」と呼ぶ。数学の強力な道具だから、出会う日を楽しみにしておくといいよ。</div>
+          <div class="dialog-bubble">そこが要点だ。傾きは「Δv をうんと小さくしたときの ΔE ÷ Δv」だったね。割ったあとに Δv が残っている ½mΔv は、Δv を小さくするといくらでも小さくなる――Δv＝0.001 なら ½m×0.001、Δv＝0.000001 なら ½m×0.000001 と、どこまでも 0 に近づく。いっぽう mv には Δv が入っていないから、Δv をいくら小さくしてもそのまま残る。だから傾きは mv。<strong>エネルギーの坂の傾きが、運動量</strong>なんだ。つまり運動量には「エネルギーの増えやすさ」という顔もある。速いほど坂が急だから、同じ Δv でもエネルギーがたくさん増える――エネルギーが2乗で効く理由も、この絵で腑に落ちるね。ちなみに、いまきみがやった「うんと小さい変化で傾きを調べる」という操作には名前がついていて、「<strong>微分</strong>」と呼ぶ。数学の強力な道具だから、出会う日を楽しみにしておくといいよ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
