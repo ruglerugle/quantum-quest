@@ -179,7 +179,7 @@
       </div>
 
       <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="fg3d" role="img" aria-label="横が x、高さが f、手前が g の3次元グラフ。増えたり減ったりする一般の関数 f(x)、g(x) について、点 (x, f(x), g(x)) の軌跡を曲線で描き、x の位置に縦 f(x)・横 g(x) の長方形（面積 f×g）を立てる。x＋Δx の位置の長方形と比べると、増えた帯2本と角が見える。下段には長方形の面積 fg を x の関数として描いたグラフと、その傾き (fg)′＝f′g＋fg′ のグラフがあり、Δx で測った坂の傾きが Δx を小さくすると (fg)′ に重なることが分かる。スライダーで x と Δx を変えられ、ドラッグで上の3D図の視点を回せる"></canvas></div>
+        <div class="cv-wrap"><canvas id="fg3d" role="img" aria-label="横が x、高さが f、手前が g の3次元グラフ。増えたり減ったりする一般の関数 f(x)、g(x) について、点 (x, f(x), g(x)) の軌跡を曲線で描き、x の位置に縦 f(x)・横 g(x) の長方形（面積 f×g）を立てる。x＋Δx の位置の長方形と比べると、増えた帯2本と角が見える。下段には長方形の面積 fg を x の関数として描いたグラフと、その傾き (fg)′＝f′g＋fg′ のグラフがあり、Δx で測った坂の傾きが Δx を小さくすると (fg)′ に重なることが分かる。さらに区間 a〜b をとり、(fg)′ の a〜b の面積（0 より上は＋、下は−）が fg(b)−fg(a)＝[fg] に等しいことも示す。3D図には a と b の位置の長方形の輪郭も描かれ、[fg] が b の面積から a の面積を引いたものだと分かる。スライダーで x、Δx、b を変えられ、ドラッグで上の3D図の視点を回せる"></canvas></div>
         <div class="sim-ctrl">
           <label for="f3-x">入力 x</label>
           <input type="range" id="f3-x" min="0.3" max="5" step="0.01" value="2" aria-label="入力 x">
@@ -187,9 +187,12 @@
           <label for="f3-dx">進む幅 Δx</label>
           <input type="range" id="f3-dx" min="0.1" max="1" step="0.01" value="0.6" aria-label="進む幅 Δx">
           <span class="val" id="f3-dxv">0.60</span>
+          <label for="f3-b">積分する区間の右端 b（左端 a＝0.5）</label>
+          <input type="range" id="f3-b" min="1" max="6" step="0.01" value="4.5" aria-label="積分する区間の右端 b">
+          <span class="val" id="f3-bv">4.50</span>
         </div>
         <div class="readout"><span id="f3-out"></span></div>
-        <div class="diagram-caption">ここまでの図は f(x)＝x²、g(x)＝x という簡単な例だったが、積の微分公式も「傾きの足し集め＝両端の差」も、どんな f、g でも成り立つ。この図は<strong>増えたり減ったりする一般の関数</strong>の例で、横が x、高さが f、手前が g の空間に、点 (x, f(x), g(x)) の軌跡を1本の曲線として描いたもの（壁に落ちた点線の影が、それぞれ f(x) と g(x) のグラフ）。x をひとつ決めると曲線上の1点が決まり、その位置に<strong>縦 f(x)・横 g(x) の長方形</strong>を立てられる――面積が積 f×g。x を Δx 進めると長方形は隣の位置に移り、縦横が変わる（青）。増えたぶんが帯2本と角で、f や g が減る場所では帯が負になる（薄い青）が、「面積の変化 ＝ Δf·g ＋ f·Δg ＋ Δf·Δg」はどこでも同じ形で成り立つ。角 Δf·Δg だけが Δx² の桁で、割ると消える――ここも簡単な例と変わらない。<strong>下の段</strong>：左は長方形の面積 fg を x の関数として描いたもので、金の点から青の点へ登る赤い坂が「Δx で増えた面積」。右はその傾き (fg)′＝f′g＋fg′ のグラフ（0 より上なら面積が増える場所、下なら減る場所）。赤い輪は「増えた面積 ÷ Δx」で測った坂の傾きで、Δx を小さくしていくと (fg)′ の値（金の点）にぴったり重なる――これが「角が消えて帯だけが残る」ことの、グラフでの姿</div>
+        <div class="diagram-caption">ここまでの図は f(x)＝x²、g(x)＝x という簡単な例だったが、積の微分公式も「傾きの足し集め＝両端の差」も、どんな f、g でも成り立つ。この図は<strong>増えたり減ったりする一般の関数</strong>の例で、横が x、高さが f、手前が g の空間に、点 (x, f(x), g(x)) の軌跡を1本の曲線として描いたもの（壁に落ちた点線の影が、それぞれ f(x) と g(x) のグラフ）。x をひとつ決めると曲線上の1点が決まり、その位置に<strong>縦 f(x)・横 g(x) の長方形</strong>を立てられる――面積が積 f×g。x を Δx 進めると長方形は隣の位置に移り、縦横が変わる（青）。増えたぶんが帯2本と角で、f や g が減る場所では帯が負になる（薄い青）が、「面積の変化 ＝ Δf·g ＋ f·Δg ＋ Δf·Δg」はどこでも同じ形で成り立つ。角 Δf·Δg だけが Δx² の桁で、割ると消える――ここも簡単な例と変わらない。<strong>下の段</strong>：左は長方形の面積 fg を x の関数として描いたもので、金の点から青の点へ登る赤い坂が「Δx で増えた面積」。右はその傾き (fg)′＝f′g＋fg′ のグラフ（0 より上なら面積が増える場所、下なら減る場所）。赤い輪は「増えた面積 ÷ Δx」で測った坂の傾きで、Δx を小さくしていくと (fg)′ の値（金の点）にぴったり重なる――これが「角が消えて帯だけが残る」ことの、グラフでの姿。さらに<strong>区間 a〜b の積分</strong>：右のグラフで (fg)′ を a から b まで足し集める（0 より上の金の面積を＋、下の青の面積を−として合計する）と、左のグラフのゴール b とスタート a の標高差 fg(b)−fg(a)、すなわち <strong>[fg]</strong> にぴったり一致する。3D図で言えば、b の位置の長方形の面積から a の位置の長方形の面積を引いたもの。b を動かしても等式はつねに成り立ち、途中で下り（青）があれば、その分だけ [fg] は小さくなる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -498,6 +501,7 @@
   var ctx = cv.getContext('2d');
   var sx = document.getElementById('f3-x'), sxv = document.getElementById('f3-xv');
   var sd = document.getElementById('f3-dx'), sdv = document.getElementById('f3-dxv');
+  var sb = document.getElementById('f3-b'), sbv = document.getElementById('f3-bv');
   var out = document.getElementById('f3-out');
   var XM = 6, XS = 26, SF = 4.2, SG = 4.2;                 /* x：0〜6 を 24 単位に、f・g：1 あたり 3.2 単位 */
   var yaw = 0.95, pitch = -0.4, W = 0, H = 0, sc = 1;
@@ -523,7 +527,7 @@
   function fillPoly(pts, color) { ctx.fillStyle = color; ctx.beginPath(); for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); } ctx.closePath(); ctx.fill(); }
 
   function draw() {
-    var x = +sx.value, dx = +sd.value, nar = W < 520, i, pts;
+    var x = +sx.value, dx = +sd.value, ia = 0.5, ib = +sb.value, nar = W < 520, i, pts;
     var f = fF(x), g = gF(x), f2 = fF(x + dx), g2 = gF(x + dx), df = f2 - f, dg = g2 - g;
     ctx.clearRect(0, 0, W, H);
     var ax = W * 0.5, ay = H * 0.4;
@@ -550,6 +554,10 @@
     if (dg >= 0) fillPoly([P(xb, 0, g), P(xb, fm, g), P(xb, fm, g2), P(xb, 0, g2)], C.blueF); else fillPoly([P(xb, 0, g2), P(xb, fm, g2), P(xb, fm, g), P(xb, 0, g)], 'rgba(47,111,166,.12)');
     fillPoly([P(xb, fm, gm), P(xb, Math.max(f, f2), gm), P(xb, Math.max(f, f2), Math.max(g, g2)), P(xb, fm, Math.max(g, g2))], C.redF);
     poly([P(xb, 0, 0), P(xb, f2, 0), P(xb, f2, g2), P(xb, 0, g2), P(xb, 0, 0)], C.blue, 1.6);
+    /* 積分区間の両端 a、b の位置の長方形（輪郭だけ）：[fg]＝b の面積 − a の面積 */
+    poly([P(ia, 0, 0), P(ia, fF(ia), 0), P(ia, fF(ia), gF(ia)), P(ia, 0, gF(ia)), P(ia, 0, 0)], C.red, 1.2, [4, 3]);
+    poly([P(ib, 0, 0), P(ib, fF(ib), 0), P(ib, fF(ib), gF(ib)), P(ib, 0, gF(ib)), P(ib, 0, 0)], C.red, 1.6);
+    var la = P(ia, 0, 0), lb = P(ib, 0, 0); text(la[0], la[1] + 11, 'a', C.red, SUB); text(lb[0], lb[1] + 11, 'b', C.red, SUB);
     /* 曲線上の点と、x の目盛り */
     var q1 = P(x, f, g), q2 = P(xb, f2, g2);
     ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(q1[0], q1[1], 4, 0, 7); ctx.fill();
@@ -567,22 +575,31 @@
     poly([[AX(x), gb], [AX(x), AY(hF(x))]], C.gold, 1, [3, 3]); poly([[AX(xb), gb], [AX(xb), AY(hF(xb))]], C.blue, 1, [3, 3]);
     poly([[AX(x), AY(hF(x))], [AX(xb), AY(hF(xb))]], C.red, 1.6);
     ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(AX(x), AY(hF(x)), 3.5, 0, 7); ctx.fill(); ctx.fillStyle = C.blue; ctx.beginPath(); ctx.arc(AX(xb), AY(hF(xb)), 3.5, 0, 7); ctx.fill();
+    poly([[AX(ia), gb], [AX(ia), AY(hF(ia))]], C.red, 1, [4, 3]); poly([[AX(ib), gb], [AX(ib), AY(hF(ib))]], C.red, 1, [4, 3]);
+    poly([[AX(ia), AY(hF(ia))], [AX(ib) + 8, AY(hF(ia))]], C.red, 1, [3, 3]);
+    poly([[AX(ib) + 8, AY(hF(ia))], [AX(ib) + 8, AY(hF(ib))]], C.red, 2.4);
+    ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(AX(ia), AY(hF(ia)), 3, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(AX(ib), AY(hF(ib)), 3, 0, 7); ctx.fill();
+    text(AX(ib) + 12, (AY(hF(ia)) + AY(hF(ib))) / 2, '[fg]', C.red, SUB, 'left');
+    text(AX(ia), gb + 10, 'a', C.red, SUB); text(AX(ib), gb + 10, 'b', C.red, SUB);
     text(AX(x), gb + 10, 'x', C.gold, SUB); text(gr + 8, gb + 2, 'x', C.muted, SUB, 'left');
-    text((gl + gr) / 2, H * 0.655, nar ? '面積 fg のグラフ' : '長方形の面積 fg を x の関数として描く（赤＝Δx で登る坂）', C.ink, TITLE);
+    text((gl + gr) / 2, H * 0.655, nar ? '面積 fg のグラフと [fg]' : '長方形の面積 fg を x の関数として描く。a〜b の標高差が [fg]', C.ink, TITLE);
     var pl = W * 0.56, pr = W * 0.94, pmid = (gt + gb) / 2;
     function BX(xx) { return pl + (pr - pl) * xx / XM; } function BY(v) { return pmid - (gb - gt) * v / 5.2; }
     poly([[pl, pmid], [pr + 4, pmid]], C.muted, 1.2); poly([[pl, gb], [pl, gt - 4]], C.muted, 1.2);
-    ctx.fillStyle = 'rgba(217,164,65,.22)'; ctx.beginPath(); ctx.moveTo(BX(0), pmid); for (i = 0; i <= 160; i++) { var ub = XM * i / 160; ctx.lineTo(BX(ub), BY(hP(ub))); } ctx.lineTo(BX(XM), pmid); ctx.closePath(); ctx.fill();
+    for (i = 0; i < 160; i++) { var u0 = ia + (ib - ia) * i / 160, u1 = ia + (ib - ia) * (i + 1) / 160, v0 = hP(u0), v1 = hP(u1); ctx.fillStyle = (v0 + v1 >= 0) ? 'rgba(217,164,65,.35)' : 'rgba(47,111,166,.3)'; ctx.beginPath(); ctx.moveTo(BX(u0), pmid); ctx.lineTo(BX(u0), BY(v0)); ctx.lineTo(BX(u1), BY(v1)); ctx.lineTo(BX(u1), pmid); ctx.closePath(); ctx.fill(); }
+    poly([[BX(ia), gb], [BX(ia), gt]], C.red, 1, [4, 3]); poly([[BX(ib), gb], [BX(ib), gt]], C.red, 1, [4, 3]);
+    text(BX(ia), gb + 10, 'a', C.red, SUB); text(BX(ib), gb + 10, 'b', C.red, SUB);
     pts = []; for (i = 0; i <= 160; i++) { var uc = XM * i / 160; pts.push([BX(uc), BY(hP(uc))]); } poly(pts, C.gold, 2);
     var sec = (hF(xb) - hF(x)) / dx;
     poly([[BX(x), pmid], [BX(x), BY(hP(x))]], C.gold, 1, [3, 3]);
     ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(BX(x), BY(hP(x)), 3.5, 0, 7); ctx.fill();
     ctx.strokeStyle = C.red; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(BX(x), BY(sec), 4.5, 0, 7); ctx.stroke();
     text(BX(x), gb + 10, 'x', C.gold, SUB); text(pr + 8, pmid + 2, 'x', C.muted, SUB, 'left'); text(pl + 4, gt - 2, '0 より上＝登り', C.muted, SUB, 'left'); text(pl + 4, gb - 2, '0 より下＝下り', C.muted, SUB, 'left');
-    text((pl + pr) / 2, H * 0.655, nar ? '傾き (fg)′＝f′g＋fg′' : '傾き (fg)′＝f′g＋fg′ のグラフ（赤い輪＝Δx で測った坂の傾き）', C.ink, TITLE);
-    text(ax, H * 0.98, nar ? 'Δx を小さくすると、赤い輪は (fg)′ の点に重なる' : 'Δx を小さくしていくと、Δx で測った坂の傾き（赤い輪）は (fg)′ の値（金の点）にぴったり重なる', C.muted, SUB);
-    sxv.textContent = x.toFixed(2); sdv.textContent = dx.toFixed(2);
-    out.textContent = 'x＝' + x.toFixed(2) + '：f＝' + f.toFixed(2) + '、g＝' + g.toFixed(2) + '、f×g＝' + (f * g).toFixed(2) + '　→　x＋Δx：Δf＝' + (df >= 0 ? '＋' : '−') + Math.abs(df).toFixed(2) + '、Δg＝' + (dg >= 0 ? '＋' : '−') + Math.abs(dg).toFixed(2) + '、面積の変化＝' + (f2 * g2 - f * g >= 0 ? '＋' : '−') + Math.abs(f2 * g2 - f * g).toFixed(3) + '（Δf·g＋f·Δg＋Δf·Δg）　／　変化 ÷ Δx ＝ ' + ((f2 * g2 - f * g) / dx).toFixed(3).replace('-', '−') + '、(fg)′＝f′g＋fg′ ＝ ' + hP(x).toFixed(3).replace('-', '−');
+    text((pl + pr) / 2, H * 0.655, nar ? '傾き (fg)′ の a〜b の面積' : '傾き (fg)′＝f′g＋fg′ のグラフ。a〜b の面積（上は＋、下は−）＝ [fg]', C.ink, TITLE);
+    var integ = hF(ib) - hF(ia);
+    text(ax, H * 0.98, nar ? '∫ₐᵇ(fg)′dx ＝ ' + integ.toFixed(2).replace('-', '−') + ' ＝ fg(b) − fg(a) ＝ [fg]' : '∫ₐᵇ(fg)′dx（金の面積 − 青の面積）＝ ' + integ.toFixed(2).replace('-', '−') + ' ＝ fg(b) − fg(a) ＝ [fg]。赤い輪は Δx で測った坂の傾きで、Δx→0 で金の点に重なる', C.red, SUB);
+    sxv.textContent = x.toFixed(2); sdv.textContent = dx.toFixed(2); sbv.textContent = ib.toFixed(2);
+    out.textContent = 'x＝' + x.toFixed(2) + '：f＝' + f.toFixed(2) + '、g＝' + g.toFixed(2) + '、f×g＝' + (f * g).toFixed(2) + '　→　x＋Δx：Δf＝' + (df >= 0 ? '＋' : '−') + Math.abs(df).toFixed(2) + '、Δg＝' + (dg >= 0 ? '＋' : '−') + Math.abs(dg).toFixed(2) + '、面積の変化＝' + (f2 * g2 - f * g >= 0 ? '＋' : '−') + Math.abs(f2 * g2 - f * g).toFixed(3) + '（Δf·g＋f·Δg＋Δf·Δg）　／　変化 ÷ Δx ＝ ' + ((f2 * g2 - f * g) / dx).toFixed(3).replace('-', '−') + '、(fg)′＝f′g＋fg′ ＝ ' + hP(x).toFixed(3).replace('-', '−') + '　／　[fg] ＝ fg(b) − fg(a) ＝ ' + hF(ib).toFixed(2) + ' − ' + hF(ia).toFixed(2) + ' ＝ ' + (hF(ib) - hF(ia)).toFixed(2).replace('-', '−') + '（＝(fg)′ の a〜b の面積）';
   }
   function resize() {
     var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.3, 600)), d = window.devicePixelRatio || 1;
@@ -593,7 +610,7 @@
   }
   var queued = false;
   function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
-  sx.addEventListener('input', invalidate); sd.addEventListener('input', invalidate);
+  sx.addEventListener('input', invalidate); sd.addEventListener('input', invalidate); sb.addEventListener('input', invalidate);
 
   var dragging = false, lx = 0, ly = 0;
   function inTop(e) { var p = e.touches ? e.touches[0] : e, r = cv.getBoundingClientRect(); return (p.clientY - r.top) < r.height * 0.62; }
