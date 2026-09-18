@@ -865,8 +865,8 @@
     /* Δx のブレース（山の幅 ±Δx） */
     var ua = 0.5 + (x0 - dx) / XW, ub = 0.5 + (x0 + dx) / XW, hb = -1.5 + 0.9 * Math.exp(-0.5);
     poly([P(ua, hb, 0), P(ua, hb - 0.25, 0), P(ub, hb - 0.25, 0), P(ub, hb, 0)], C.red, 1.2);
-    var bl = P((ua + ub) / 2, hb - 0.25, 0); text(bl[0], bl[1] + 11, 'Δx ＝ ' + dx.toFixed(2), C.red, SUB);
-    poly([P(0.5 + x0 / XW, -1.5, 0), P(0.5 + x0 / XW, -1.5 + 0.9, 0)], C.tick, 1, [3, 3]); var xl = P(0.5 + x0 / XW, -1.5 + 0.9, 0); text(xl[0], xl[1] - 9, 'x₀', C.muted, SUB);
+    var bl = P((ua + ub) / 2, -1.5, 0); text(bl[0], bl[1] + 14, 'Δx ＝ ' + dx.toFixed(2), C.red, SUB);
+    poly([P(0.5 + x0 / XW, -1.5, 0), P(0.5 + x0 / XW, -1.5 + 0.9, 0)], C.tick, 1, [3, 3]); var xl = P(0.5 + x0 / XW, 1, 0); text(xl[0], xl[1] - 9, 'x₀', C.muted, SUB);
     /* 針 */
     for (i = 0; i <= N; i++) {
       u = i / N; var v = psi(X(u), dx, p0, x0), b = P(u, 0, 0), tp = P(u, v[0], v[1]);
@@ -888,8 +888,8 @@
     poly([Q(0, -1.5, 0), Q(1, -1.5, 0)], 'rgba(47,111,166,.4)', 1);
     var va = 0.5 + (p0 - dp) / PW, vb = 0.5 + (p0 + dp) / PW, hb2 = -1.5 + 0.9 * Math.exp(-0.5);
     poly([Q(va, hb2, 0), Q(va, hb2 - 0.25, 0), Q(vb, hb2 - 0.25, 0), Q(vb, hb2, 0)], C.blue, 1.2);
-    var bl2 = Q((va + vb) / 2, hb2 - 0.25, 0); text(bl2[0], bl2[1] + 11, 'Δp ＝ ' + dp.toFixed(2), C.blue, SUB);
-    poly([Q(0.5 + p0 / PW, -1.5, 0), Q(0.5 + p0 / PW, -1.5 + 0.9, 0)], C.tick, 1, [3, 3]); var pl = Q(0.5 + p0 / PW, -1.5 + 0.9, 0); text(pl[0], pl[1] - 9, 'p₀', C.muted, SUB);
+    var bl2 = Q((va + vb) / 2, -1.5, 0); text(bl2[0], bl2[1] + 14, 'Δp ＝ ' + dp.toFixed(2), C.blue, SUB);
+    poly([Q(0.5 + p0 / PW, -1.5, 0), Q(0.5 + p0 / PW, -1.5 + 0.9, 0)], C.tick, 1, [3, 3]); var pl = Q(0.5 + p0 / PW, 1, 0); text(pl[0], pl[1] - 9, 'p₀', C.muted, SUB);
     for (i = 0; i <= N; i++) {
       u = i / N; var w = phi(Pp(u), dx, p0, x0), b2 = Q(u, 0, 0), tp2 = Q(u, w[0], w[1]);
       ctx.strokeStyle = '#6f8fc0'; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(b2[0], b2[1]); ctx.lineTo(tp2[0], tp2[1]); ctx.stroke();
