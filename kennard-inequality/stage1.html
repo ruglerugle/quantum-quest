@@ -34,6 +34,16 @@
   .kq-svg .arrowhead{fill:var(--muted)}
   .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .kq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .kq-svg .mean{stroke:#2f6fa6;stroke-width:1.6;stroke-dasharray:5 4}
+  .kq-svg .dev{stroke:#b5504a;stroke-width:2.4}
+  .kq-svg .pt{fill:var(--gold-dark);stroke:#fff;stroke-width:1.5}
+  .kq-svg .sq{fill:rgba(181,80,74,.18);stroke:#b5504a;stroke-width:1.4}
+  .kq-svg .red{fill:#b5504a;font-size:11px;font-weight:900}
+  .kq-svg .blue{fill:#2f6fa6;font-size:11px;font-weight:900}
+  .kq-svg .bell{fill:none;stroke:var(--gold-dark);stroke-width:2.4}
+  .kq-svg .shade{fill:rgba(166,116,42,.16)}
+  .kq-svg .sig{stroke:#b5504a;stroke-width:1.6}
 </style>
 </head>
 <body>
@@ -154,6 +164,78 @@
           </div>
           <div class="dialog-bubble">そのとおり。ガウスたちが2乗を選んだのも、まさにその理由だよ。では実際に計算してみよう。ずれの2乗は 4, 0, 0, 1, 1。この平均 (4+0+0+1+1)÷5＝1.2 を<strong>分散</strong>と呼ぶ。ただし2乗したせいで単位が「点²」みたいになってしまうから、最後に平方根をとって単位を元に戻す。√1.2 ≈ 1.1。これが<strong>標準偏差</strong>――「ばらつきの幅」の世界標準の定義だ。ここで2乗について確かめたことを、二つ書き留めておこう。<strong>2乗した量は、どんな実数でも0以上</strong>。そして<strong>2乗は展開できる</strong>。この二つが、後のステージで証明そのものを動かすことになるよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 340 352" width="100%" role="img" aria-label="5回の測定値 3,5,5,6,6 を点で並べ、平均 5 の水平な破線からの上下のずれを赤い縦線で示した図。下段では各ずれを一辺とする正方形を描き、その面積 4,0,0,1,1 の平均 1.2 が分散、平方根 1.1 が標準偏差であることを示す">
+          <text class="strong" x="30" y="16">5回の測定値と、平均からのずれ</text>
+          <line class="base" x1="30" y1="145" x2="325" y2="145"></line>
+          <text class="label" x="24" y="149" text-anchor="end">3</text>
+          <line class="base" x1="30" y1="115" x2="325" y2="115"></line>
+          <text class="label" x="24" y="119" text-anchor="end">4</text>
+          <line class="base" x1="30" y1="85" x2="325" y2="85"></line>
+          <text class="label" x="24" y="89" text-anchor="end">5</text>
+          <line class="base" x1="30" y1="55" x2="325" y2="55"></line>
+          <text class="label" x="24" y="59" text-anchor="end">6</text>
+          <line class="axis" x1="30" y1="55" x2="30" y2="190"></line>
+          <line class="axis" x1="30" y1="190" x2="325" y2="190"></line>
+          <line class="mean" x1="30" y1="85" x2="325" y2="85"></line>
+          <text class="blue" x="34" y="79" text-anchor="start">平均 5</text>
+          <line class="dev" x1="55" y1="85" x2="55" y2="145"></line>
+          <circle class="pt" cx="55" cy="145" r="5"></circle>
+          <text class="label" x="55" y="204" text-anchor="middle">1回目</text>
+          <text class="red" x="63" y="119" text-anchor="start">−2</text>
+          <circle class="pt" cx="115" cy="85" r="5"></circle>
+          <text class="label" x="115" y="204" text-anchor="middle">2回目</text>
+          <text class="red" x="123" y="76" text-anchor="start">0</text>
+          <circle class="pt" cx="175" cy="85" r="5"></circle>
+          <text class="label" x="175" y="204" text-anchor="middle">3回目</text>
+          <text class="red" x="183" y="76" text-anchor="start">0</text>
+          <line class="dev" x1="235" y1="85" x2="235" y2="55"></line>
+          <circle class="pt" cx="235" cy="55" r="5"></circle>
+          <text class="label" x="235" y="204" text-anchor="middle">4回目</text>
+          <text class="red" x="243" y="74" text-anchor="start">＋1</text>
+          <line class="dev" x1="295" y1="85" x2="295" y2="55"></line>
+          <circle class="pt" cx="295" cy="55" r="5"></circle>
+          <text class="label" x="295" y="204" text-anchor="middle">5回目</text>
+          <text class="red" x="303" y="74" text-anchor="start">＋1</text>
+          <text class="strong" x="30" y="228">ずれの2乗 ＝ 一辺が「ずれ」の正方形の面積</text>
+          <rect class="sq" x="33" y="254" width="44" height="44"></rect>
+          <text class="red" x="55" y="312" text-anchor="middle">4</text>
+          <text class="red" x="115" y="312" text-anchor="middle">0</text>
+          <text class="red" x="175" y="312" text-anchor="middle">0</text>
+          <rect class="sq" x="224" y="276" width="22" height="22"></rect>
+          <text class="red" x="235" y="312" text-anchor="middle">1</text>
+          <rect class="sq" x="284" y="276" width="22" height="22"></rect>
+          <text class="red" x="295" y="312" text-anchor="middle">1</text>
+          <line class="base" x1="30" y1="298" x2="325" y2="298"></line>
+          <text class="strong" x="170" y="328" text-anchor="middle">面積の平均 (4＋0＋0＋1＋1)÷5 ＝ 1.2 ＝ 分散</text>
+          <text class="strong" x="170" y="345" text-anchor="middle">√1.2 ≈ 1.1 ＝ 標準偏差（単位を元に戻す）</text>
+        </svg>
+        <div class="diagram-caption">上：測定値（金の点）と平均（青の破線）。赤い縦線が「平均からのずれ」で、上に −2, 0, 0, ＋1, ＋1。そのまま足すと 0 になって打ち消し合う。下：ずれを一辺とする正方形を描くと、面積が「ずれの2乗」――正方形の面積は向きによらず 0 以上なので、打ち消しは起きない。面積の平均が分散、その平方根が標準偏差（ずれの「代表的な長さ」に戻したもの）</div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="kq-svg" viewBox="0 0 340 200" width="100%" role="img" aria-label="釣鐘型の正規分布の曲線。中央に平均の縦線、そこから左右に標準偏差 σ の幅を示す矢印があり、平均±σ の範囲が塗られている。この範囲に測定値の約 68% が入る">
+          <text class="strong" x="170" y="16" text-anchor="middle">誤差の釣鐘（正規分布）：同じ星を何度も測ったときの散らばり</text>
+          <path class="shade" d="M128 88.6 L130 84.9 L132 81.3 L134 77.7 L136 74.2 L138 70.7 L140 67.4 L142 64.1 L144 61.0 L146 58.0 L148 55.2 L150 52.5 L152 50.1 L154 47.8 L156 45.8 L158 44.0 L160 42.5 L162 41.3 L164 40.3 L166 39.6 L168 39.1 L170 39.0 L172 39.1 L174 39.6 L176 40.3 L178 41.3 L180 42.5 L182 44.0 L184 45.8 L186 47.8 L188 50.1 L190 52.5 L192 55.2 L194 58.0 L196 61.0 L198 64.1 L200 67.4 L202 70.7 L204 74.2 L206 77.7 L208 81.3 L210 84.9 L212 88.6 L212 165 L128 165 Z"></path>
+          <line class="axis" x1="20" y1="165" x2="325" y2="165"></line>
+          <path class="bell" d="M20 164.8 L22 164.7 L24 164.7 L26 164.6 L28 164.6 L30 164.5 L32 164.4 L34 164.3 L36 164.2 L38 164.1 L40 164.0 L42 163.8 L44 163.6 L46 163.4 L48 163.1 L50 162.9 L52 162.6 L54 162.2 L56 161.8 L58 161.4 L60 160.9 L62 160.4 L64 159.8 L66 159.1 L68 158.4 L70 157.6 L72 156.7 L74 155.8 L76 154.7 L78 153.6 L80 152.3 L82 151.0 L84 149.5 L86 147.9 L88 146.3 L90 144.5 L92 142.5 L94 140.5 L96 138.3 L98 136.0 L100 133.6 L102 131.0 L104 128.3 L106 125.5 L108 122.6 L110 119.6 L112 116.4 L114 113.2 L116 109.9 L118 106.5 L120 103.0 L122 99.4 L124 95.8 L126 92.2 L128 88.6 L130 84.9 L132 81.3 L134 77.7 L136 74.2 L138 70.7 L140 67.4 L142 64.1 L144 61.0 L146 58.0 L148 55.2 L150 52.5 L152 50.1 L154 47.8 L156 45.8 L158 44.0 L160 42.5 L162 41.3 L164 40.3 L166 39.6 L168 39.1 L170 39.0 L172 39.1 L174 39.6 L176 40.3 L178 41.3 L180 42.5 L182 44.0 L184 45.8 L186 47.8 L188 50.1 L190 52.5 L192 55.2 L194 58.0 L196 61.0 L198 64.1 L200 67.4 L202 70.7 L204 74.2 L206 77.7 L208 81.3 L210 84.9 L212 88.6 L214 92.2 L216 95.8 L218 99.4 L220 103.0 L222 106.5 L224 109.9 L226 113.2 L228 116.4 L230 119.6 L232 122.6 L234 125.5 L236 128.3 L238 131.0 L240 133.6 L242 136.0 L244 138.3 L246 140.5 L248 142.5 L250 144.5 L252 146.3 L254 147.9 L256 149.5 L258 151.0 L260 152.3 L262 153.6 L264 154.7 L266 155.8 L268 156.7 L270 157.6 L272 158.4 L274 159.1 L276 159.8 L278 160.4 L280 160.9 L282 161.4 L284 161.8 L286 162.2 L288 162.6 L290 162.9 L292 163.1 L294 163.4 L296 163.6 L298 163.8 L300 164.0 L302 164.1 L304 164.2 L306 164.3 L308 164.4 L310 164.5 L312 164.6 L314 164.6 L316 164.7 L318 164.7 L320 164.8"></path>
+          <line class="mean" x1="170" y1="32" x2="170" y2="165"></line>
+          <line class="base" x1="128" y1="88.6" x2="128" y2="165"></line>
+          <line class="base" x1="212" y1="88.6" x2="212" y2="165"></line>
+          <line class="sig" x1="170" y1="112" x2="212" y2="112"></line>
+          <line class="sig" x1="170" y1="112" x2="128" y2="112"></line>
+          <text class="red" x="191" y="106" text-anchor="middle">σ</text>
+          <text class="red" x="149" y="106" text-anchor="middle">σ</text>
+          <text class="blue" x="170" y="179" text-anchor="middle">平均</text>
+          <text class="label" x="128" y="179" text-anchor="middle">平均−σ</text>
+          <text class="label" x="212" y="179" text-anchor="middle">平均＋σ</text>
+          <text class="label" x="170" y="195" text-anchor="middle">平均 ± σ（標準偏差）の範囲に、測定値の約 68% が入る</text>
+          <text class="label" x="40" y="60">測った回数</text>
+          <text class="label" x="325" y="159" text-anchor="end">測定値</text>
+        </svg>
+        <div class="diagram-caption">たくさん測ると、測定値は平均のまわりに<strong>釣鐘型</strong>に散らばる――真ん中がいちばん多く、左右対称で、離れるほど急速に減る。ガウスが誤差論で導いたこの形を<strong>正規分布</strong>（ガウス分布）と呼ぶ。標準偏差 σ はこの釣鐘の「幅」で、平均 ± σ の範囲に全体の約 68% が入る。同じ釣鐘が、STAGE5 で「ガウス波束」として波の形になって戻ってくる</div>
       </div>
 
       <div class="formula-box">
