@@ -76,9 +76,11 @@
       }
       var icon = isCleared ? "✅" : unlocked ? "🔓" : "🔒";
       var label = "STAGE" + stage.n;
+      // 調整用のつまみ λ は波長の λ と書体を分ける（aria-label には素の文字列を渡す）
+      var titleHtml = stage.title.split("λ").join('<span class="lam">λ</span>');
       item.innerHTML =
         '<span class="side-icon">' + icon + '</span>' +
-        '<span class="side-text"><div class="side-main">' + label + " " + stage.title + '</div>' +
+        '<span class="side-text"><div class="side-main">' + label + " " + titleHtml + '</div>' +
         '<div class="side-sub">' + stage.sub + "</div></span>";
       list.appendChild(item);
     });

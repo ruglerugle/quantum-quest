@@ -53,7 +53,7 @@
   <header class="game-header">
     <div class="brand">
       <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">📐</a> <span>不確定性原理を証明する</span></div>
-      <div class="brand-sub">STAGE 5 ― 魔法の関数 I(λ) ―</div>
+      <div class="brand-sub">STAGE 5 ― 魔法の関数 I(<span class="lam">λ</span>) ―</div>
     </div>
     <div class="head-progress-wrap">
       <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
@@ -78,13 +78,13 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 5</span><h1 class="chapter-title">魔法の関数 I(λ)</h1>
+        <span class="chapter-badge">STAGE 5</span><h1 class="chapter-title">魔法の関数 I(<span class="lam">λ</span>)</h1>
         <div class="chapter-sub">証明はこうして発見される</div>
       </div>
 
       <div class="mission-box">
         <div class="mission-label">🎯 ミッション</div>
-        <div class="mission-text">「2乗和は0以上」という狩りの型と「ゴールからの逆算」を使って、証明の心臓 I(λ)＝∫|λxψ＋ψ′|²dx を自分で発見し、展開して (Δx)²λ²−λ＋(Δp)²/ℏ² ≥ 0 まで磨き上げよう。</div>
+        <div class="mission-text">「2乗和は0以上」という狩りの型と「ゴールからの逆算」を使って、証明の心臓 I(<span class="lam">λ</span>)＝∫|<span class="lam">λ</span>xψ＋ψ′|²dx を自分で発見し、展開して (Δx)²<span class="lam">λ</span>²−<span class="lam">λ</span>＋(Δp)²/ℏ² ≥ 0 まで磨き上げよう。</div>
         <span class="mission-status" id="mission-status">未達成</span>
       </div>
 
@@ -94,7 +94,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いよいよ山場だよ。教科書だと、ここで天から降ってきたように「I(λ)＝∫|λxψ＋ψ′|²dx を考える」と書いてあって、読者は面食らうことになる。でも今日は順番を変えて、<strong>この式をどうやったら自分で思いつけるのか</strong>、発見の論理をたどろう。まずは準備運動だ。数学の質問：どんな実数 a, b についても a²＋b² ≥ 2ab が成り立つ。これを証明できるかな。手がかりは、STAGE1 で書き留めた「2乗した量は、どんな実数でも0以上」だよ。</div>
+          <div class="dialog-bubble">いよいよ山場だよ。教科書だと、ここで天から降ってきたように「I(<span class="lam">λ</span>)＝∫|<span class="lam">λ</span>xψ＋ψ′|²dx を考える」と書いてあって、読者は面食らうことになる。でも今日は順番を変えて、<strong>この式をどうやったら自分で思いつけるのか</strong>、発見の論理をたどろう。まずは準備運動だ。数学の質問：どんな実数 a, b についても a²＋b² ≥ 2ab が成り立つ。これを証明できるかな。手がかりは、STAGE1 で書き留めた「2乗した量は、どんな実数でも0以上」だよ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -136,12 +136,12 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">それが答えの9割だよ。仕上げにプロの工夫を1つ足そう。混ぜるとき、配合比を固定せず、<strong>自由に調整できるつまみ λ（ラムダ）</strong>を付けておくんだ。波長にも同じ文字を使ったけれど、あれとは無関係の、ただの数だと思ってほしい。ここから先、λ はいつもこの「つまみ」を指す。λxψ＋ψ′ という混合物を作って、その2乗を積分する。これが魔法の関数 I(λ) だよ。どんな実数 λ を選んでも、中身は絶対値の2乗――0以上の量の足し合わせだから、<strong>I(λ) ≥ 0 は無条件で正しい</strong>。つまり、λ の数だけ<strong>無限個の不等式</strong>が一度に手に入る。後でいちばん強いものを選び抜けばいい。</div>
+          <div class="dialog-bubble">それが答えの9割だよ。仕上げにプロの工夫を1つ足そう。混ぜるとき、配合比を固定せず、<strong>自由に調整できるつまみ <span class="lam">λ</span>（ラムダ）</strong>を付けておくんだ。波長にも同じ文字を使ったけれど、あれとは無関係の、ただの数だと思ってほしい。ここから先、<span class="lam">λ</span> はいつもこの「つまみ」を指す。混同しないように、この旅では<strong>つまみの <span class="lam">λ</span> だけ書体を変えて</strong>おくよ。波長のほうは斜めに寝た λ、つまみのほうはまっすぐ立った <span class="lam">λ</span> だ。<span class="lam">λ</span>xψ＋ψ′ という混合物を作って、その2乗を積分する。これが魔法の関数 I(<span class="lam">λ</span>) だよ。どんな実数 <span class="lam">λ</span> を選んでも、中身は絶対値の2乗――0以上の量の足し合わせだから、<strong>I(<span class="lam">λ</span>) ≥ 0 は無条件で正しい</strong>。つまり、<span class="lam">λ</span> の数だけ<strong>無限個の不等式</strong>が一度に手に入る。後でいちばん強いものを選び抜けばいい。</div>
         </div>
       </div>
 
       <div class="formula-box">
-        <span class="step">【魔法の関数】 <br class="wbr">I(λ) ＝ ∫ |λxψ(x) ＋ ψ′(x)|² dx ≥ 0　（すべての実数 λ で成り立つ）</span>
+        <span class="step">【魔法の関数】 <br class="wbr">I(<span class="lam">λ</span>) ＝ ∫ |<span class="lam">λ</span>xψ(x) ＋ ψ′(x)|² dx ≥ 0　（すべての実数 <span class="lam">λ</span> で成り立つ）</span>
         <span class="step">仕込みの理由： <br class="wbr"><a href="stage2.html#fb-dx" title="STAGE2 で導いた位置のばらつきの式へ">(Δx)²＝∫|xψ|²dx</a>、 <a href="stage4.html#fb-lemma2" title="STAGE4 の補題2へ"><span class="nw">(Δp)²/ℏ²</span>＝∫<span class="nw">|ψ′|²</span>dx</a>　――ゴールの2人が「2乗の積分」で並んでいる</span>
       </div>
 
@@ -186,7 +186,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そう。そして実はハイゼンベルクは1927年の論文で、このガウス波束について Δx·Δp を計算して、ちょうど ℏ/2 になることを確かめていた。もし ℏ/2 が本当の下限なら、ガウス波束は「これ以上縮められない<strong>最良の波</strong>」ということになる。ここから、きみの疑問への答えが逆算できるんだ。ガウス波束で Δx·Δp＝ℏ/2 と<strong>等号</strong>が成り立つなら、それを導く途中の不等式 I(λ) ≥ 0 も、ガウス波束ではどこかの λ で等号 I(λ)＝0 になっていなければつじつまが合わない。途中に隙間があれば、最後にも隙間が残るからね。ところが I(λ) は 0 以上の量の足し合わせだから、0 になるには中身の λxψ＋ψ′ がどこでも 0、言い換えると <strong>ψ′ が xψ のちょうど定数倍</strong>でなければならない。きみが「全然違う種類」と言った2つの関数が、ガウス波束の上では定数倍の関係にある――そう<strong>予言</strong>できる。本当かどうか、微分して確かめよう。ガウス型 ψ＝A·e<sup>−ax²</sup> を微分する。定数 A はそのまま前に残る。肩の −ax² を微分すると −2ax（x² の傾きは 2x だからね）。これが前に降りてきて、ψ′＝−2ax·A·e<sup>−ax²</sup>。</div>
+          <div class="dialog-bubble">そう。そして実はハイゼンベルクは1927年の論文で、このガウス波束について Δx·Δp を計算して、ちょうど ℏ/2 になることを確かめていた。もし ℏ/2 が本当の下限なら、ガウス波束は「これ以上縮められない<strong>最良の波</strong>」ということになる。ここから、きみの疑問への答えが逆算できるんだ。ガウス波束で Δx·Δp＝ℏ/2 と<strong>等号</strong>が成り立つなら、それを導く途中の不等式 I(<span class="lam">λ</span>) ≥ 0 も、ガウス波束ではどこかの <span class="lam">λ</span> で等号 I(<span class="lam">λ</span>)＝0 になっていなければつじつまが合わない。途中に隙間があれば、最後にも隙間が残るからね。ところが I(<span class="lam">λ</span>) は 0 以上の量の足し合わせだから、0 になるには中身の <span class="lam">λ</span>xψ＋ψ′ がどこでも 0、言い換えると <strong>ψ′ が xψ のちょうど定数倍</strong>でなければならない。きみが「全然違う種類」と言った2つの関数が、ガウス波束の上では定数倍の関係にある――そう<strong>予言</strong>できる。本当かどうか、微分して確かめよう。ガウス型 ψ＝A·e<sup>−ax²</sup> を微分する。定数 A はそのまま前に残る。肩の −ax² を微分すると −2ax（x² の傾きは 2x だからね）。これが前に降りてきて、ψ′＝−2ax·A·e<sup>−ax²</sup>。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -228,7 +228,7 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">納得しました。それなら ψ′ ＝ −2ax·A·e<sup>−ax²</sup> ＝ <strong>−2a×(xψ)</strong>。……本当に定数倍になりました！ 全然別物に見えた xψ と ψ′ が、最良の波の上では<strong>ぴったり重なっている</strong>。予言どおりです。λ＝2a と選べば λxψ＋ψ′ はどこでも 0、つまり I(λ)＝0。魔法の関数は、<strong>「最良の波からのズレ」を測る物差し</strong>だったんだ。最良の波なら、λ をうまく選べばズレをゼロにできる。それ以外の波では、どんな λ を選んでもゼロにはならず必ずプラス……。マイナスになることは、絶対値の2乗の足し合わせですから、どの波でもどの λ でもありえません。だから「足し算で混ぜる」のが正解だったんですね。ぐちゃぐちゃどころか、この2つは混ぜるために生まれてきたような組み合わせです。……ただ、いまのはガウス波束という特別な波で試しただけです。どんな波でも成り立つ証明には、まだなっていませんよね？</div>
+          <div class="dialog-bubble">納得しました。それなら ψ′ ＝ −2ax·A·e<sup>−ax²</sup> ＝ <strong>−2a×(xψ)</strong>。……本当に定数倍になりました！ 全然別物に見えた xψ と ψ′ が、最良の波の上では<strong>ぴったり重なっている</strong>。予言どおりです。<span class="lam">λ</span>＝2a と選べば <span class="lam">λ</span>xψ＋ψ′ はどこでも 0、つまり I(<span class="lam">λ</span>)＝0。魔法の関数は、<strong>「最良の波からのズレ」を測る物差し</strong>だったんだ。最良の波なら、<span class="lam">λ</span> をうまく選べばズレをゼロにできる。それ以外の波では、どんな <span class="lam">λ</span> を選んでもゼロにはならず必ずプラス……。マイナスになることは、絶対値の2乗の足し合わせですから、どの波でもどの <span class="lam">λ</span> でもありえません。だから「足し算で混ぜる」のが正解だったんですね。ぐちゃぐちゃどころか、この2つは混ぜるために生まれてきたような組み合わせです。……ただ、いまのはガウス波束という特別な波で試しただけです。どんな波でも成り立つ証明には、まだなっていませんよね？</div>
         </div>
       </div>
 
@@ -242,10 +242,10 @@
           <path class="wave3" id="g-sum" d=""></path>
           <text class="strong" x="18" y="16">xψ（位置の担当）</text>
           <text class="strong" x="18" y="86">ψ′（運動量の担当）</text>
-          <text class="strong" x="18" y="153">λxψ ＋ ψ′（λ をうまく選ぶ）</text>
+          <text class="strong" x="18" y="153"><tspan class="lam">λ</tspan>xψ ＋ ψ′（<tspan class="lam">λ</tspan> をうまく選ぶ）</text>
           <text class="label" x="200" y="174">→ ぴったり0！</text>
         </svg>
-        <div class="diagram-caption">ガウス波束 ψ＝A·e<sup>−ax²</sup> では ψ′＝−2a·xψ。上の2本は上下が逆なだけの同じ形で、λ＝2a と選んで足すと完全に打ち消し合う。I(λ) は「最良の波（ガウス波束）からのズレ」を測っている</div>
+        <div class="diagram-caption">ガウス波束 ψ＝A·e<sup>−ax²</sup> では ψ′＝−2a·xψ。上の2本は上下が逆なだけの同じ形で、<span class="lam">λ</span>＝2a と選んで足すと完全に打ち消し合う。I(<span class="lam">λ</span>) は「最良の波（ガウス波束）からのズレ」を測っている</div>
       </div>
 
       <div class="dialogue-scene">
@@ -254,43 +254,43 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その通り。いまやったのは証明ではなく、道具の<strong>設計チェック</strong>だ。I(λ) ≥ 0 そのものは、どんな波でも無条件に成り立つ。だからそこから出てくる不等式は、どんな波にも通用する。ガウス波束で確かめたのは、この道具が「最良の波で等号になれるほど鋭い」ということ――つまり出てくる不等式が ℏ/2 まで届く見込みがある、ということだけだ。本当に届くかどうかは、これから展開して確かめる。しかもその展開には、ガウス波束の性質は一切使わない。ハイゼンベルクの計算という答えを先に知っていたから、混ぜるべき相手も、混ぜ方が足し算であることも、こちらから決められた――これが「ゴールからの逆算」の使い方だよ。では狩りの型の②、<strong>展開</strong>に進もう。複素数の2乗の展開公式は |A＋B|²＝(A＋B)(A*＋B*)＝|A|²＋AB*＋A*B＋|B|²。A＝λxψ、B＝ψ′ を入れる。λ も x も実数だから A*＝λxψ* となって、真ん中の2項は λx(ψψ′*＋ψ*ψ′) とまとまるよ。</div>
+          <div class="dialog-bubble">その通り。いまやったのは証明ではなく、道具の<strong>設計チェック</strong>だ。I(<span class="lam">λ</span>) ≥ 0 そのものは、どんな波でも無条件に成り立つ。だからそこから出てくる不等式は、どんな波にも通用する。ガウス波束で確かめたのは、この道具が「最良の波で等号になれるほど鋭い」ということ――つまり出てくる不等式が ℏ/2 まで届く見込みがある、ということだけだ。本当に届くかどうかは、これから展開して確かめる。しかもその展開には、ガウス波束の性質は一切使わない。ハイゼンベルクの計算という答えを先に知っていたから、混ぜるべき相手も、混ぜ方が足し算であることも、こちらから決められた――これが「ゴールからの逆算」の使い方だよ。では狩りの型の②、<strong>展開</strong>に進もう。複素数の2乗の展開公式は |A＋B|²＝(A＋B)(A*＋B*)＝|A|²＋AB*＋A*B＋|B|²。A＝<span class="lam">λ</span>xψ、B＝ψ′ を入れる。<span class="lam">λ</span> も x も実数だから A*＝<span class="lam">λ</span>xψ* となって、真ん中の2項は <span class="lam">λ</span>x(ψψ′*＋ψ*ψ′) とまとまるよ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">括弧の中の ψψ′*＋ψ*ψ′、これ、見覚えがあります。積の微分公式です！ |ψ|²＝ψψ* を微分すると (ψψ*)′＝ψ′ψ*＋ψ(ψ*)′。同じものです。つまり真ん中の項は <strong>λx(|ψ|²)′</strong>。……あっ、だから補題1だったんですね。∫x(|ψ|²)′dx が証明のどこで出てくるのか不思議でしたが、ここで登場するために仕込んであったんだ。</div>
+          <div class="dialog-bubble">括弧の中の ψψ′*＋ψ*ψ′、これ、見覚えがあります。積の微分公式です！ |ψ|²＝ψψ* を微分すると (ψψ*)′＝ψ′ψ*＋ψ(ψ*)′。同じものです。つまり真ん中の項は <strong><span class="lam">λ</span>x(|ψ|²)′</strong>。……あっ、だから補題1だったんですね。∫x(|ψ|²)′dx が証明のどこで出てくるのか不思議でしたが、ここで登場するために仕込んであったんだ。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">伏線回収だよ。それでは積分して、3つの項を道具箱の言葉に翻訳してごらん。λ² の項、λ の項、定数項の順でね。</div>
+          <div class="dialog-bubble">伏線回収だよ。それでは積分して、3つの項を道具箱の言葉に翻訳してごらん。<span class="lam">λ</span>² の項、<span class="lam">λ</span> の項、定数項の順でね。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">λ² の項は λ²∫x²|ψ|²dx ＝ <strong>(Δx)²λ²</strong>。λ の項は λ∫x(|ψ|²)′dx で、補題1からこの積分は −1、だから <strong>−λ</strong>。定数項は ∫|ψ′|²dx で、補題2から <strong>(Δp)²/ℏ²</strong>。全部そろって……I(λ) ＝ (Δx)²λ² − λ ＋ (Δp)²/ℏ²。これが、どんな λ でも0以上。</div>
+          <div class="dialog-bubble"><span class="lam">λ</span>² の項は <span class="lam">λ</span>²∫x²|ψ|²dx ＝ <strong>(Δx)²<span class="lam">λ</span>²</strong>。<span class="lam">λ</span> の項は <span class="lam">λ</span>∫x(|ψ|²)′dx で、補題1からこの積分は −1、だから <strong>−<span class="lam">λ</span></strong>。定数項は ∫|ψ′|²dx で、補題2から <strong>(Δp)²/ℏ²</strong>。全部そろって……I(<span class="lam">λ</span>) ＝ (Δx)²<span class="lam">λ</span>² − <span class="lam">λ</span> ＋ (Δp)²/ℏ²。これが、どんな <span class="lam">λ</span> でも0以上。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">立ち止まって、いま起きたことの凄みを味わってほしい。出発点には波動関数 ψ――無限にありうる、あらゆる波の形――がいた。ところが展開して道具箱で翻訳したら、<strong>ψ は式から完全に消えてしまった</strong>。残ったのは Δx と Δp という2つの数と、つまみ λ だけの、ただの二次関数だ。無限にある波の形を一網打尽にする仕掛けの正体はこれだよ。どんな ψ から出発しても、必ずこの同じ二次関数の形に流れ込む。</div>
+          <div class="dialog-bubble">立ち止まって、いま起きたことの凄みを味わってほしい。出発点には波動関数 ψ――無限にありうる、あらゆる波の形――がいた。ところが展開して道具箱で翻訳したら、<strong>ψ は式から完全に消えてしまった</strong>。残ったのは Δx と Δp という2つの数と、つまみ <span class="lam">λ</span> だけの、ただの二次関数だ。無限にある波の形を一網打尽にする仕掛けの正体はこれだよ。どんな ψ から出発しても、必ずこの同じ二次関数の形に流れ込む。</div>
         </div>
       </div>
 
       <div class="formula-box">
-        <span class="step">展開： <br class="wbr">|λxψ＋ψ′|² ＝ λ²x²|ψ|² ＋ λx(|ψ|²)′ ＋ <span class="nw">|ψ′|²</span>　（真ん中は積の微分公式で束ねた）</span>
+        <span class="step">展開： <br class="wbr">|<span class="lam">λ</span>xψ＋ψ′|² ＝ <span class="lam">λ</span>²x²|ψ|² ＋ <span class="lam">λ</span>x(|ψ|²)′ ＋ <span class="nw">|ψ′|²</span>　（真ん中は積の微分公式で束ねた）</span>
         <span class="step">積分して道具箱で翻訳：</span>
-        <span class="step">　<a href="stage2.html#fb-dx" title="STAGE2 で導いた位置のばらつきの式へ">λ²<span class="nw">∫x²|ψ|²dx</span> ＝ (Δx)²λ²</a>　／　<a href="stage4.html#fb-lemma1" title="STAGE4 の補題1へ">λ∫x(|ψ|²)′dx ＝ −λ（補題1）</a>　／　<a href="stage4.html#fb-lemma2" title="STAGE4 の補題2へ">∫<span class="nw">|ψ′|²</span>dx ＝ <span class="nw">(Δp)²/ℏ²</span>（補題2）</a></span>
-        <span class="step">【到達点】 <br class="wbr">I(λ) ＝ <strong>(Δx)²λ² − λ ＋ <span class="nw">(Δp)²/ℏ²</span> ≥ 0</strong>　（すべての実数 λ で）</span>
+        <span class="step">　<a href="stage2.html#fb-dx" title="STAGE2 で導いた位置のばらつきの式へ"><span class="lam">λ</span>²<span class="nw">∫x²|ψ|²dx</span> ＝ (Δx)²<span class="lam">λ</span>²</a>　／　<a href="stage4.html#fb-lemma1" title="STAGE4 の補題1へ"><span class="lam">λ</span>∫x(|ψ|²)′dx ＝ −<span class="lam">λ</span>（補題1）</a>　／　<a href="stage4.html#fb-lemma2" title="STAGE4 の補題2へ">∫<span class="nw">|ψ′|²</span>dx ＝ <span class="nw">(Δp)²/ℏ²</span>（補題2）</a></span>
+        <span class="step">【到達点】 <br class="wbr">I(<span class="lam">λ</span>) ＝ <strong>(Δx)²<span class="lam">λ</span>² − <span class="lam">λ</span> ＋ <span class="nw">(Δp)²/ℏ²</span> ≥ 0</strong>　（すべての実数 <span class="lam">λ</span> で）</span>
       </div>
 
       <div class="dialogue-scene">
@@ -299,7 +299,7 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">「どんな λ を入れても0以上になる二次関数」……。グラフで言えば、下に凸の放物線が、横軸より下に<strong>一度も潜らない</strong>ということですよね。放物線がそういう形になれる条件なら、学校で習った道具で書けそうな気がします。</div>
+          <div class="dialog-bubble">「どんな <span class="lam">λ</span> を入れても0以上になる二次関数」……。グラフで言えば、下に凸の放物線が、横軸より下に<strong>一度も潜らない</strong>ということですよね。放物線がそういう形になれる条件なら、学校で習った道具で書けそうな気がします。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -312,10 +312,10 @@
 
       <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q1. I(λ)＝∫|λxψ＋ψ′|²dx が、どんな λ でも必ず0以上になる理由は？</p>
+        <p class="quiz-q">Q1. I(<span class="lam">λ</span>)＝∫|<span class="lam">λ</span>xψ＋ψ′|²dx が、どんな <span class="lam">λ</span> でも必ず0以上になる理由は？</p>
         <div class="choice-list">
           <button class="choice-btn">中身が絶対値の2乗で、0以上の量を足し集めた積分だから</button>
-          <button class="choice-btn">λ が正の数に限られていて、負になる λ は最初から考えないから</button>
+          <button class="choice-btn"><span class="lam">λ</span> が正の数に限られていて、負になる <span class="lam">λ</span> は最初から考えないから</button>
           <button class="choice-btn">実験で確かめられていて、負になった例がないから</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 「2乗は0以上」――STAGE1でばらつきを定義したときと同じ、いちばん素朴な事実が証明全体を支えている。(a−b)² ≥ 0 から a²＋b² ≥ 2ab を出した狩りの型の、積分版だ。</div>
@@ -332,13 +332,13 @@
       </div>
 
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q3. 展開後の式 (Δx)²λ² − λ ＋ (Δp)²/ℏ² に現れる「−λ」の係数 −1 の出どころは？</p>
+        <p class="quiz-q">Q3. 展開後の式 (Δx)²<span class="lam">λ</span>² − <span class="lam">λ</span> ＋ (Δp)²/ℏ² に現れる「−<span class="lam">λ</span>」の係数 −1 の出どころは？</p>
         <div class="choice-list">
-          <button class="choice-btn">λ の定義から自動的に出てくる（λ は −1 を係数に持つように最初から選んだ）</button>
+          <button class="choice-btn"><span class="lam">λ</span> の定義から自動的に出てくる（<span class="lam">λ</span> は −1 を係数に持つように最初から選んだ）</button>
           <button class="choice-btn">クロス項 ∫x(|ψ|²)′dx に補題1（部分積分＋規格化条件）を使った結果</button>
           <button class="choice-btn">ガウス波束の場合だけに成り立つ近似で、一般の波形では別の値になる</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ 「電子は必ずどこかにいる」という規格化条件が、部分積分を経由して −1 という数に化け、λ の1次の係数として証明の急所に座る。どんな波形でも同じ −1 になるのがポイントだ。</div>
+        <div class="quiz-explain" hidden>正解！ 「電子は必ずどこかにいる」という規格化条件が、部分積分を経由して −1 という数に化け、<span class="lam">λ</span> の1次の係数として証明の急所に座る。どんな波形でも同じ −1 になるのがポイントだ。</div>
       </div>
 
       <div class="stage-nav">
