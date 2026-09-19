@@ -33,6 +33,9 @@
   .kq-svg .base{stroke:var(--line);stroke-width:1}
   .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .kq-svg .lbA{fill:#b5504a;font-size:11.5px;font-weight:900}
+  .kq-svg .lbB{fill:#2f6fa6;font-size:11.5px;font-weight:900}
+  .kq-svg .note{fill:var(--muted);font-size:10.5px;font-weight:700}
   .legend-row{display:flex;gap:18px;justify-content:center;font-size:12px;color:var(--muted);font-weight:700;margin-top:6px;flex-wrap:wrap}
   .legend-row .swA,.legend-row .swB{display:inline-block;width:20px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
   .legend-row .swA{background:#b5504a}
@@ -116,23 +119,33 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="kq-svg" id="seesaw-svg" viewBox="0 0 320 190" width="100%" role="img" aria-label="位置の分布と運動量の分布のシーソー。位置を絞った波束は運動量が広がり、位置を広げた波束は運動量が締まる">
-          <line class="base" x1="15" y1="150" x2="150" y2="150"></line>
-          <line class="base" x1="170" y1="150" x2="305" y2="150"></line>
+        <svg class="kq-svg" id="seesaw-svg" viewBox="0 0 340 318" width="100%" role="img" aria-label="2行2列の図。上段は位置を絞った波束Aで、左に位置の分布（細い山）、右に運動量の分布（広い山）。下段は位置を広げた波束Bで、左に位置の分布（広い山）、右に運動量の分布（細い山）。片方を絞ればもう片方が広がる">
+          <text class="strong" x="95" y="16" text-anchor="middle">位置の分布 |ψ(x)|²</text>
+          <text class="strong" x="260" y="16" text-anchor="middle">運動量の分布 |φ(p)|²</text>
+          <text class="lbA" x="8" y="38">波束A：位置を絞った</text>
+          <line class="base" x1="20" y1="150" x2="170" y2="150"></line>
+          <line class="base" x1="185" y1="150" x2="335" y2="150"></line>
           <path class="waveA" id="ss-xa" d=""></path>
-          <path class="waveB" id="ss-xb" d=""></path>
           <path class="waveA" id="ss-pa" d=""></path>
+          <text class="note" x="150" y="118" text-anchor="middle">Δx 小</text>
+          <text class="note" x="315" y="118" text-anchor="middle">Δp 大</text>
+          <text class="label" x="95" y="166" text-anchor="middle">x</text>
+          <text class="label" x="260" y="166" text-anchor="middle">p</text>
+          <text class="lbB" x="8" y="184">波束B：位置を広げた</text>
+          <line class="base" x1="20" y1="293" x2="170" y2="293"></line>
+          <line class="base" x1="185" y1="293" x2="335" y2="293"></line>
+          <path class="waveB" id="ss-xb" d=""></path>
           <path class="waveB" id="ss-pb" d=""></path>
-          <text class="strong" x="45" y="20">位置の分布</text>
-          <text class="strong" x="200" y="20">運動量の分布</text>
-          <text class="label" x="70" y="170">x</text>
-          <text class="label" x="228" y="170">p</text>
+          <text class="note" x="150" y="261" text-anchor="middle">Δx 大</text>
+          <text class="note" x="315" y="261" text-anchor="middle">Δp 小</text>
+          <text class="label" x="95" y="309" text-anchor="middle">x</text>
+          <text class="label" x="260" y="309" text-anchor="middle">p</text>
         </svg>
         <div class="legend-row">
           <span><span class="swA"></span>波束A：位置を絞った（Δx小 → Δp大）</span>
           <span><span class="swB"></span>波束B：位置を広げた（Δx大 → Δp小）</span>
         </div>
-        <div class="diagram-caption">2つのガウス波束の、位置の分布（左）と運動量の分布（右）。片方を絞れば、もう片方が必ず広がる――シーソーのような関係だ。それでもどちらの波束も積は同じで、Δx·Δp＝ℏ/2 から動かない</div>
+        <div class="diagram-caption">2つのガウス波束 A・B について、位置の分布（左列）と運動量の分布（右列）を並べたもの。上段の A は位置を絞った波束で、そのぶん運動量が広がる。下段の B は位置を広げた波束で、運動量が締まる。片方を絞れば、もう片方が必ず広がる――シーソーのような関係だ。それでもどちらの波束も積は同じで、Δx·Δp＝ℏ/2 から動かない</div>
       </div>
 
       <div class="dialogue-scene">
@@ -263,11 +276,12 @@
     // 右パネル（運動量）: A=幅1.6（広い）, B=幅0.55（鋭い）
     var pa = document.getElementById("ss-pa");
     var pb = document.getElementById("ss-pb");
-    var amp = 62;
-    if (xa) xa.setAttribute("d", makePath(82, 150, amp, 0.55, 17, 148));
-    if (xb) xb.setAttribute("d", makePath(82, 150, amp, 1.6, 17, 148));
-    if (pa) pa.setAttribute("d", makePath(237, 150, amp, 1.6, 172, 303));
-    if (pb) pb.setAttribute("d", makePath(237, 150, amp, 0.55, 172, 303));
+    var amp = 52;
+    /* 上段＝波束A（位置 細い／運動量 広い）、下段＝波束B（位置 広い／運動量 細い） */
+    if (xa) xa.setAttribute("d", makePath(95, 150, amp, 0.55, 20, 170));
+    if (pa) pa.setAttribute("d", makePath(260, 150, amp, 1.6, 185, 335));
+    if (xb) xb.setAttribute("d", makePath(95, 293, amp, 1.6, 20, 170));
+    if (pb) pb.setAttribute("d", makePath(260, 293, amp, 0.55, 185, 335));
   })();
 </script>
 <script>KQ.initStagePage(7);</script>
