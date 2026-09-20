@@ -60,7 +60,7 @@
   .cv-wrap{width:100%}
   #chirp3d,#psiphi3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   #nuk3d,#shift3d{display:block;width:100%;height:auto;touch-action:pan-y}
-  #chain2d,#prod2d{display:block;width:100%;height:auto}
+  #chain2d,#prod2d,#gear2d{display:block;width:100%;height:auto}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -592,6 +592,20 @@
         <span class="step">①&nbsp;肩の増分： <br class="wbr">Δf ≈ f′(x)·Δx　（傾き × 進んだ幅）</span>
         <span class="step">②&nbsp;e の増分： <br class="wbr">e<sup>f＋Δf</sup> − e<sup>f</sup> ＝ e<sup>f</sup>(e<sup>Δf</sup> − 1) ≈ e<sup>f</sup>·Δf　（e<sup>Δf</sup> ≈ 1＋Δf：u＝0 では高さ 1・傾き 1 なので、Δf 進むと高さは 1＋1×Δf。肩が 0 に近いときだけの近似で、肩の大きい部分は e<sup>f</sup> が引き受けている）</span>
         <span class="step">③&nbsp;Δx で割る： <br class="wbr">ψ′ ＝ Δψ/Δx ＝ f′(x)·e<sup>f(x)</sup>　／　平面波 f＝ikx なら f′＝ik、今回の f＝iS(x) なら f′＝iS′</span>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="gear2d" role="img" aria-label="3本の物差しを縦に並べた図。上から x、肩 f、ψ で、目盛りの間隔はすべて同じ。x を Δx 進めると、肩の物差しでは矢印が f′ 倍に伸びて Δf になり、ψ の物差しではさらに ψ 倍されて Δψ になる。段が直列なので通しの倍率は掛け算になり、ψ の傾きが 肩の傾き × 自分の高さ になることが矢印の長さで読み取れる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="gr-x">調べる場所 x</label>
+          <input type="range" id="gr-x" min="-1.4" max="1.4" step="0.01" value="-0.6" aria-label="調べる場所 x">
+          <span class="val" id="gr-xv">−0.60</span>
+          <label for="gr-dx">進む幅 Δx</label>
+          <input type="range" id="gr-dx" min="0.05" max="0.5" step="0.01" value="0.4" aria-label="進む幅 Δx">
+          <span class="val" id="gr-dxv">0.40</span>
+        </div>
+        <div class="readout"><span id="gr-out"></span></div>
+        <div class="diagram-caption">x → 肩 f → ψ という<strong>2段の変速</strong>として見た図（肩は f(x)＝−ax²、a＝1）。3本の物差しは<strong>すべて同じ目盛り</strong>（下のスケールバー）なので、矢印の長さをそのまま比べられる。①&nbsp;x を Δx 進める。②&nbsp;肩の物差しでは、矢印が<strong>f′ 倍</strong>に伸びて Δf ＝ f′·Δx になる。③&nbsp;ψ の物差しでは、さらに<strong>自分の高さ ψ 倍</strong>されて Δψ ＝ ψ·Δf になる。段が直列につながっているので、通しの倍率は<strong>掛け算</strong>――Δψ ＝ f′·ψ·Δx。Δx で割れば <strong>ψ′ ＝ f′·ψ</strong>、つまり「肩の傾き × 自分の高さ」だ。③ の段は「<strong>肩が Δf 増えると、ψ は Δf の割合だけ増える</strong>」とも読める（肩が 0.01 増えれば約 1% 増）。f′ がマイナスの場所では矢印が逆を向き、ψ は減る</div>
       </div>
 
       <div class="diagram-box">
@@ -1442,6 +1456,85 @@
   var queued = false;
   function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
   sd.addEventListener('input', invalidate);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+})();
+</script>
+<script>
+/* 肩の微分を「2段の変速」として見る図。x・肩 f・ψ の3本の物差しを同じ目盛りで並べ、
+   Δx →（×f′）→ Δf →（×ψ）→ Δψ と矢印が伸び縮みする様子を見せる。 */
+(function(){
+  var cv = document.getElementById('gear2d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sx0 = document.getElementById('gr-x'), sxv = document.getElementById('gr-xv');
+  var sd = document.getElementById('gr-dx'), sdv = document.getElementById('gr-dxv');
+  var out = document.getElementById('gr-out');
+  var A = 1, HALF = 1.6, W = 0, H = 0, S = 1;
+  var C = { ink: '#241d12', muted: '#8a7a5c', rule: 'rgba(138,122,92,.55)', x: '#b5504a', f: '#2f6fa6', p: '#a6742a', gear: '#3f7d4e' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function fx(x) { return -A * x * x; }
+  function fp(x) { return -2 * A * x; }
+  function text(x, y, s, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(s, x, y); }
+  function seg(a, b, color, wd, dash) { ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); ctx.setLineDash([]); }
+  function arrow(a, b, color, wd) {
+    seg(a, b, color, wd || 2.6);
+    var dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy);
+    if (L < 3) return; dx /= L; dy /= L;
+    ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(b[0], b[1]);
+    ctx.lineTo(b[0] - 8 * dx - 4 * dy, b[1] - 8 * dy + 4 * dx);
+    ctx.lineTo(b[0] - 8 * dx + 4 * dy, b[1] - 8 * dy - 4 * dx);
+    ctx.closePath(); ctx.fill();
+  }
+  /* 1本の物差し：中心が現在値。目盛りは 0.5 きざみで3本とも共通 */
+  function ruler(cx, y, d, name, val, color, nar) {
+    var i, half = S * HALF;
+    seg([cx - half, y], [cx + half, y], C.rule, 1.4);
+    for (i = -3; i <= 3; i++) { var t = cx + S * 0.5 * i; if (Math.abs(t - cx) <= half + 0.1) seg([t, y - 4], [t, y + 4], C.rule, 1); }
+    ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(cx, y, 3.6, 0, 7); ctx.fill();
+    arrow([cx, y], [cx + S * d, y], color, 2.8);
+    text(W * 0.02, y - 8, name, C.ink, SUB, 'left');
+    text(W * 0.02, y + 8, val, C.muted, SUB, 'left');
+    var mx = cx + S * d / 2, lbl = (d >= 0 ? '＋' : '−') + Math.abs(d).toFixed(2);
+    if (Math.abs(S * d) > 26) text(mx, y - 13, lbl, color, SUB);
+    else text(cx + S * d + (d >= 0 ? 8 : -8), y - 13, lbl, color, SUB, d >= 0 ? 'left' : 'right');
+  }
+  function draw() {
+    var x = +sx0.value, dx = +sd.value, nar = W < 560;
+    var fv = fx(x), fpv = fp(x), pv = Math.exp(fv), df = fpv * dx, dp = pv * df;
+    ctx.clearRect(0, 0, W, H);
+    var cx = W * 0.62, y1 = H * 0.27, y2 = H * 0.55, y3 = H * 0.83;
+    S = (W * 0.25) / HALF;
+    function s2(v) { return (v >= 0 ? '＋' : '−') + Math.abs(v).toFixed(2); }
+    ruler(cx, y1, dx, '① x', 'x ＝ ' + s2(x), C.x, nar);
+    ruler(cx, y2, df, '② 肩 f', 'f ＝ ' + s2(fv), C.f, nar);
+    ruler(cx, y3, dp, '③ ψ ＝ e^f', 'ψ ＝ ' + pv.toFixed(2), C.p, nar);
+    /* 段のあいだの倍率 */
+    var gx = W * 0.30;
+    arrow([gx, y1 + 8], [gx, y2 - 8], C.gear, 1.8);
+    text(gx + 6, (y1 + y2) / 2, (nar ? '×f′＝' : '× f′（肩の傾き）＝ ') + s2(fpv), C.gear, SUB, 'left');
+    arrow([gx, y2 + 8], [gx, y3 - 8], C.gear, 1.8);
+    text(gx + 6, (y2 + y3) / 2, (nar ? '×ψ＝' : '× ψ（自分の高さ）＝ ') + pv.toFixed(2), C.gear, SUB, 'left');
+    /* 見出しとスケールバー */
+    text(W * 0.5, H * 0.06, nar ? '2段の変速：Δx →（×f′）→ Δf →（×ψ）→ Δψ' : '肩の微分は2段の変速　Δx →（× f′）→ Δf →（× ψ）→ Δψ', C.ink, TITLE);
+    var by = H * 0.955, bx = cx - S * HALF;
+    seg([bx, by], [bx + S * 0.5, by], C.muted, 2);
+    seg([bx, by - 4], [bx, by + 4], C.muted, 1.4); seg([bx + S * 0.5, by - 4], [bx + S * 0.5, by + 4], C.muted, 1.4);
+    text(bx + S * 0.5 + 6, by, nar ? '0.5（3本とも同じ）' : '0.5（3本とも同じ目盛り）', C.muted, SUB, 'left');
+    text(W * 0.02, by, nar ? 'Δψ＝f′×ψ×Δx' : 'まとめ： Δψ ＝ f′ × ψ × Δx　→　ψ′ ＝ f′·ψ', C.ink, SUB, 'left');
+    sxv.textContent = s2(x); sdv.textContent = dx.toFixed(2);
+    out.textContent = 'Δx ＝ ' + dx.toFixed(2) + ' →（× f′＝' + s2(fpv) + '）→ Δf ＝ ' + s2(df) + ' →（× ψ＝' + pv.toFixed(2) + '）→ Δψ ＝ ' + s2(dp) + '　／　Δx で割って ψ′ ＝ f′×ψ ＝ ' + s2(fpv * pv);
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, hh = Math.round(Math.min(Math.max(w * 0.70, 285), 350)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(hh * d); cv.style.height = hh + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = hh; draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  sx0.addEventListener('input', invalidate); sd.addEventListener('input', invalidate);
   window.addEventListener('resize', resize);
   resize();
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
