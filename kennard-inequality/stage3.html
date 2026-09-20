@@ -582,7 +582,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">ふたつ目の<strong>肩の微分</strong>にいこう。実は平面波のときも、前に出ていた ik は「肩 ikx を<strong>微分したもの</strong>」だったんだ。肩の傾きが ik で一定だったから、係数をそのまま取り出しただけに見えていた。肩が S(x) のように曲がった式でも通用する規則として、組み立て直そう。ψ＝e<sup>f(x)</sup> と書いて、x を少しだけ Δx 進める。微分は「増えた量 ÷ 進んだ幅」だったから、裏返せば増えた量は「傾き × 進んだ幅」。まず肩 f が <strong>Δf ≈ f′(x)·Δx</strong> だけ変わる。次に、肩が Δf 変わると e<sup>f</sup> はどうなるか。肩の足し算は掛け算だから e<sup>f＋Δf</sup>＝e<sup>f</sup>·e<sup>Δf</sup>。そして e は、複素数の教室で<strong>傾きが自分の高さのちょうど1倍になる数</strong>として作ったね。e<sup>u</sup> は u＝0 で高さが 1、傾きも 1。だから u が小さな Δf だけ進めば <strong>e<sup>Δf</sup> ≈ 1＋Δf</strong>。合わせると、ψ の増分は Δψ ＝ e<sup>f</sup>(e<sup>Δf</sup>−1) ≈ e<sup>f</sup>·Δf ＝ e<sup>f</sup>·f′(x)·Δx。Δx で割れば <strong>ψ′＝f′(x)·e<sup>f(x)</sup></strong>――「肩を微分したものが前に降りてきて、e の部分はそのまま残る」。ψ の傾きは「肩の傾き × 自分の高さ」というわけだ。平面波は f′＝ik の特別な場合だったんだね。今回の肩は iS(x) だから、微分すると <strong>iS′</strong> が前に降りる。</div>
+          <div class="dialog-bubble">ふたつ目の<strong>肩の微分</strong>にいこう。実は平面波のときも、前に出ていた ik は「肩 ikx を<strong>微分したもの</strong>」だったんだ。肩の傾きが ik で一定だったから、係数をそのまま取り出しただけに見えていた。肩が S(x) のように曲がった式でも通用する規則として、組み立て直そう。ψ＝e<sup>f(x)</sup> と書いて、x を少しだけ Δx 進める。微分は「増えた量 ÷ 進んだ幅」だったから、裏返せば増えた量は「傾き × 進んだ幅」。まず肩 f が <strong>Δf ≈ f′(x)·Δx</strong> だけ変わる。次に、肩が Δf 変わると e<sup>f</sup> はどうなるか。肩の足し算は掛け算だから e<sup>f＋Δf</sup>＝e<sup>f</sup>·e<sup>Δf</sup>。そして e は、複素数の教室で<strong>傾きが自分の高さのちょうど1倍になる数</strong>として作ったね。つまり e<sup>u</sup> のグラフは、どの点でも傾きが自分の高さと同じだ。とくに出発点 u＝0 では、高さが e<sup>0</sup>＝1 だから、傾きも 1 になる。そこから u を、ほんの少しだけ Δf 進めてみよう。さっきと同じ「増えた量 ＝ 傾き × 進んだ幅」を使えば、増えるのは 1×Δf ＝ Δf。出発点の高さが 1 だったから、進んだ先の高さは 1 ＋ Δf。つまり <strong>e<sup>Δf</sup> ≈ 1＋Δf</strong> というわけだ。合わせると、ψ の増分は Δψ ＝ e<sup>f</sup>(e<sup>Δf</sup>−1) ≈ e<sup>f</sup>·Δf ＝ e<sup>f</sup>·f′(x)·Δx。Δx で割れば <strong>ψ′＝f′(x)·e<sup>f(x)</sup></strong>――「肩を微分したものが前に降りてきて、e の部分はそのまま残る」。ψ の傾きは「肩の傾き × 自分の高さ」というわけだ。平面波は f′＝ik の特別な場合だったんだね。今回の肩は iS(x) だから、微分すると <strong>iS′</strong> が前に降りる。</div>
         </div>
       </div>
 
@@ -590,7 +590,7 @@
         <span class="step">【積の微分】 <br class="wbr">(f·g)′ ＝ f′g ＋ fg′　（増えるのは帯2本ぶん。角は Δx で割ると消える――くわしくは次のステージで）</span>
         <span class="step">【e の肩に式が乗っているときの微分】 <br class="wbr">ψ＝e<sup>f(x)</sup> のとき　ψ′＝f′(x)·e<sup>f(x)</sup>　（肩の微分が前に降り、e はそのまま）</span>
         <span class="step">①&nbsp;肩の増分： <br class="wbr">Δf ≈ f′(x)·Δx　（傾き × 進んだ幅）</span>
-        <span class="step">②&nbsp;e の増分： <br class="wbr">e<sup>f＋Δf</sup> − e<sup>f</sup> ＝ e<sup>f</sup>(e<sup>Δf</sup> − 1) ≈ e<sup>f</sup>·Δf　（e<sup>Δf</sup> ≈ 1＋Δf：e は傾きが自分の高さの1倍）</span>
+        <span class="step">②&nbsp;e の増分： <br class="wbr">e<sup>f＋Δf</sup> − e<sup>f</sup> ＝ e<sup>f</sup>(e<sup>Δf</sup> − 1) ≈ e<sup>f</sup>·Δf　（e<sup>Δf</sup> ≈ 1＋Δf：u＝0 では高さ 1・傾き 1 なので、Δf 進むと高さは 1＋1×Δf）</span>
         <span class="step">③&nbsp;Δx で割る： <br class="wbr">ψ′ ＝ Δψ/Δx ＝ f′(x)·e<sup>f(x)</sup>　／　平面波 f＝ikx なら f′＝ik、今回の f＝iS(x) なら f′＝iS′</span>
       </div>
 
