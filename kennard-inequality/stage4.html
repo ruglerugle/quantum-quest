@@ -96,7 +96,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">今日の道具は、19世紀の解析学者たちが毎日のように振るった職人芸「部分積分」だ。出発点は、前のステージで使った<strong>積を微分する規則</strong>。あのときは「増えるのは帯2本ぶん」と急いで通り過ぎて、角の扱いを宿題にしておいたね。今日はそこから始めよう。設定をはっきりさせておこう。f と g は、どちらも同じ入力 x で値が決まる関数――たとえば f(x)＝x²、g(x)＝x のようなものだ。x をひとつ決めれば f も g も値が決まり、掛け算 f×g も1つの値に決まる。x を変えれば f も g も動くから、積 f×g も動く。知りたいのは、その積が x とともに<strong>どれだけの速さで変わるか</strong>、つまり積の傾き (fg)′ だ。いい考え方があるよ。ある x での f の値を縦、g の値を横にした<strong>長方形</strong>を思い浮かべてごらん。面積が f×g だね。ここで x をほんの少し Δx だけ進める。すると f の値が Δf、g の値が Δg だけ変わって、長方形の縦と横が同時に少し伸びる。さて、面積はどれだけ増えるかな。</div>
+          <div class="dialog-bubble">今日の道具は、19世紀の解析学者たちが毎日のように振るった職人芸「部分積分」だ。出発点は、前のステージで組み立てた<strong>積を微分する規則</strong> (fg)′ ＝ f′g ＋ fg′ だ。今日はこれを<strong>逆向き</strong>に使う。その前に、実際の関数の上で一度確かめておこう。設定をはっきりさせておこう。f と g は、どちらも同じ入力 x で値が決まる関数――たとえば f(x)＝x²、g(x)＝x のようなものだ。x をひとつ決めれば f も g も値が決まり、掛け算 f×g も1つの値に決まる。x を変えれば f も g も動くから、積 f×g も動く。知りたいのは、その積が x とともに<strong>どれだけの速さで変わるか</strong>、つまり積の傾き (fg)′ だ。前のステージでは縦 f・横 g の長方形が育つ絵で確かめたね。同じことを、今度は<strong>実際に動く関数</strong>の上で見ておこう。</div>
         </div>
       </div>
 
@@ -116,51 +116,12 @@
 
 
       <div class="dialogue-scene">
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">展開してみます。(f＋Δf)(g＋Δg) − fg ＝ <strong>Δf·g ＋ f·Δg ＋ Δf·Δg</strong>。図で言うと、右に足される細長い帯と、上に足される細長い帯と、角の小さな正方形ですね。</div>
-        </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="kq-svg" viewBox="0 0 320 190" width="100%" role="img" aria-label="縦f横gの長方形が少し成長すると、増えた面積は2本の帯と小さな角に分かれる。角は微小×微小で無視できる">
-          <rect class="boxf" x="60" y="55" width="130" height="90"></rect>
-          <rect class="boxd1" x="190" y="55" width="22" height="90"></rect>
-          <rect class="boxd2" x="60" y="33" width="130" height="22"></rect>
-          <rect class="boxd3" x="190" y="33" width="22" height="22"></rect>
-          <text class="strong" x="103" y="105">f × g</text>
-          <text class="label" x="222" y="105">Δf·g（横の帯）</text>
-          <text class="label" x="222" y="48">Δf·Δg → 無視</text>
-          <text class="label" x="63" y="24">f·Δg（上の帯）</text>
-          <text class="label" x="60" y="170">面積の増分 ≈ Δf·g ＋ f·Δg　→　(fg)′ ＝ f′g ＋ fg′</text>
-        </svg>
-        <div class="diagram-caption">積の微分公式の図解。長方形の面積 f×g の増え方は「帯2本ぶん」。微小×微小の角は極限で消える。これが (fg)′＝f′g＋fg′ の正体</div>
-      </div>
-
-      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そう。ここで角の正方形に注目してほしい。Δf·Δg は「<strong>微小×微小</strong>」だ。たとえば Δf も Δg も 0.01 なら、2つの帯はそれぞれ 0.01×g、f×0.01 の桁なのに、角は 0.01×0.01＝0.0001――帯の100分の1しかない。だから極限では角は消えて、残るのは Δf·g ＋ f·Δg の2つの帯だけになる。</div>
-        </div>
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">角が消えるのは分かりました。でも帯にも Δ がついていて、Δ を小さくすれば帯だって同じようにゼロに向かいますよね。角だけが消えて帯が残る、という区別はどこから来るんですか？</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">いい引っかかりだ。そのとおりで、<strong>そのままでは帯も角もどちらもゼロに向かう</strong>。違いが出るのは「傾き」を出すときだよ。前のステージで、微分は「増えた量 ÷ 進んだ幅 Δx」だったね。そこで Δf と Δg を Δx で書き直す。f の増分は「傾き × 進んだ幅」だから Δf ≈ f′·Δx、同じく Δg ≈ g′·Δx。すると2つの帯は Δf·g ＋ f·Δg ≈ (f′g ＋ fg′)·Δx で、<strong>Δx が1個</strong>。角は Δf·Δg ≈ f′g′·(Δx)² で、<strong>Δx が2個</strong>。面積の増え方を Δx で割ると、帯のほうは Δx が打ち消されて f′g ＋ fg′ という<strong>有限の値</strong>が残るのに、角のほうは f′g′·Δx と <strong>Δx が1個残る</strong>。だから Δx をゼロに近づけると、角の項だけが消える。数字で言えば、Δx＝0.01 のとき帯は割ったあとで f′g＋fg′ のまま、角は 0.01×f′g′。Δx＝0.001 なら角は 0.001×f′g′。帯は変わらず、角だけがどこまでも小さくなる。これが積の微分公式 <strong>(fg)′＝f′g＋fg′</strong> だ。部分積分は、この公式の「逆再生」にすぎない。まず移項して f′g ＝ (fg)′ − fg′。この両辺を −∞ から ＋∞ まで積分する。右辺第1項の「(fg)′ の積分」は、傾きを足し集めたものだから、単純に<strong>両端での値の差</strong>になる（山道の傾きを全部足せば、ゴールとスタートの標高差になる、というのと同じ理屈だよ）。この「両端での値の差」を角かっこで <strong>[fg]</strong> と書く。中身の fg を、右端 b で見た値から左端 a で見た値を引いたもの、つまり [fg] ＝ f(b)g(b) − f(a)g(a) という意味の記号で、教科書では [fg]ₐᵇ のように端の名前を添えて書くこともある。</div>
+          <div class="dialog-bubble">確かめられたね。では<strong>逆再生</strong>だ。まず移項して f′g ＝ (fg)′ − fg′。この両辺を −∞ から ＋∞ まで積分する。右辺第1項の「(fg)′ の積分」は、傾きを足し集めたものだから、単純に<strong>両端での値の差</strong>になる（山道の傾きを全部足せば、ゴールとスタートの標高差になる、というのと同じ理屈だよ）。この「両端での値の差」を角かっこで <strong>[fg]</strong> と書く。中身の fg を、右端 b で見た値から左端 a で見た値を引いたもの、つまり [fg] ＝ f(b)g(b) − f(a)g(a) という意味の記号で、教科書では [fg]ₐᵇ のように端の名前を添えて書くこともある。</div>
         </div>
       </div>
 
