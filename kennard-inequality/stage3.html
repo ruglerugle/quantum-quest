@@ -60,7 +60,7 @@
   .cv-wrap{width:100%}
   #chirp3d,#psiphi3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   #nuk3d,#shift3d{display:block;width:100%;height:auto;touch-action:pan-y}
-  #chain2d{display:block;width:100%;height:auto}
+  #chain2d,#prod2d{display:block;width:100%;height:auto}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -563,6 +563,20 @@
           </div>
           <div class="dialog-bubble">どちらもいい引っかかり方だ。順に組み立てよう。ひとつ目は<strong>積の微分</strong>だね。ψ は R と e<sup>iS</sup> の<strong>掛け算</strong>だ。縦が R、横が e<sup>iS</sup> の長方形を思い浮かべてごらん。面積が ψ にあたる。x を Δx 進めると、縦が ΔR、横が Δ(e<sup>iS</sup>) だけ伸びる。増える面積は、上に伸びた帯と右に伸びた帯の<strong>2本ぶん</strong>――ΔR·e<sup>iS</sup> ＋ R·Δ(e<sup>iS</sup>) だ。Δx で割れば <strong>(R·e<sup>iS</sup>)′ ＝ R′·e<sup>iS</sup> ＋ R·(e<sup>iS</sup>)′</strong>。2つの項に分かれたのは、伸びる帯が2本あるからだよ。……正直に言うと、角にも小さな長方形ができる。そこをどう始末するかが次のステージの入り口になるから、今日は結果だけ先に言っておこう。角は Δx で割ったあとも Δx が残るので、<strong>Δx を小さくすると消える</strong>。帯だけが残るんだ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="prod2d" role="img" aria-label="縦 f・横 g の長方形の図。x を Δx 進めると縦が Δf、横が Δg 伸び、増える面積は上の帯 Δf·g と右の帯 f·Δg（青）と、右上の角 Δf·Δg（赤）の3つに分かれる。スライダーで Δx を小さくすると、帯は比例して小さくなるのに対し、角はその2乗で小さくなり、帯に対する割合がどこまでも小さくなる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="pd-dx">進む幅 Δx</label>
+          <input type="range" id="pd-dx" min="0.05" max="0.5" step="0.01" value="0.5" aria-label="進む幅 Δx">
+          <span class="val" id="pd-dxv">0.50</span>
+        </div>
+        <div class="readout"><span id="pd-out"></span></div>
+        <div class="diagram-caption">縦が f、横が g の長方形の面積が、積 f·g。x を Δx 進めると縦が Δf、横が Δg 伸びて、増える面積は3つに分かれる――上の帯 <strong>Δf·g</strong>、右の帯 <strong>f·Δg</strong>（どちらも青）、そして右上の<strong>角</strong> Δf·Δg（赤）。<strong>2つの項に分かれるのは、伸びる帯が2本あるから</strong>だ。Δx を小さくしていくと、帯は Δx に比例して小さくなるのに対し、角は Δf と Δg の両方が小さくなるので <strong>Δx の2乗</strong>で小さくなる。だから帯に対する角の割合は、どこまでも小さくなっていく。※この絵は縦も横も実数のときのもの。ψ＝R·e<sup>iS</sup> のように横が複素数でも、(f＋Δf)(g＋Δg) を展開すれば同じ4つの項が出るので、結論は変わらない</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
@@ -1358,6 +1372,76 @@
   var queued = false;
   function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
   sx0.addEventListener('input', invalidate);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+})();
+</script>
+<script>
+/* 積の微分の図：縦 f・横 g の長方形が Δx 進んで育つ。増分＝帯2本（青）＋角（赤）。
+   Δx を小さくすると帯は比例して、角は2乗で小さくなる。 */
+(function(){
+  var cv = document.getElementById('prod2d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sd = document.getElementById('pd-dx'), sdv = document.getElementById('pd-dxv'), out = document.getElementById('pd-out');
+  var F = 1.2, G = 1.6, FP = 1.1, GP = 0.84, W = 0, H = 0;
+  var C = { gold: '#a6742a', goldF: 'rgba(166,116,42,.14)', blue: '#2f6fa6', blueF: 'rgba(47,111,166,.22)',
+            red: '#b5504a', redF: 'rgba(181,80,74,.30)', muted: '#8a7a5c', ink: '#241d12', tick: 'rgba(138,122,92,.55)' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  function text(x, y, s, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(s, x, y); }
+  function line(a, b, color, wd, dash) { ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); ctx.setLineDash([]); }
+  function box(p0, p1, fill, stroke, wd, dash) {
+    var x = Math.min(p0[0], p1[0]), y = Math.min(p0[1], p1[1]), w = Math.abs(p1[0] - p0[0]), hh = Math.abs(p1[1] - p0[1]);
+    if (fill) { ctx.fillStyle = fill; ctx.fillRect(x, y, w, hh); }
+    if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = wd || 1.2; ctx.setLineDash(dash || []); ctx.strokeRect(x, y, w, hh); ctx.setLineDash([]); }
+  }
+  function draw() {
+    var dx = +sd.value, df = FP * dx, dg = GP * dx, nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    var ox = W * 0.30, oy = H * 0.76;
+    var sx = (W * 0.56) / (G + GP * 0.5), sy = (H * 0.54) / (F + FP * 0.5);
+    function P(u, v) { return [ox + sx * u, oy - sy * v]; }
+    /* 面積 */
+    box(P(0, 0), P(G, F), C.goldF, C.gold, 1.6);
+    box(P(0, F), P(G, F + df), C.blueF, C.blue, 1.2);
+    box(P(G, 0), P(G + dg, F), C.blueF, C.blue, 1.2);
+    box(P(G, F), P(G + dg, F + df), C.redF, C.red, 1.2);
+    box(P(0, 0), P(G + dg, F + df), null, C.tick, 1.2, [5, 4]);
+    /* 寸法 */
+    var lx = ox - 14, ly = oy + 15;
+    line([lx, P(0, 0)[1]], [lx, P(0, F)[1]], C.gold, 1.4); text(lx - 7, P(0, F / 2)[1], 'f', C.gold, SUB, 'right');
+    line([lx, P(0, F)[1]], [lx, P(0, F + df)[1]], C.blue, 1.4); text(lx - 7, P(0, F + df / 2)[1], 'Δf', C.blue, SUB, 'right');
+    line([P(0, 0)[0], ly], [P(G, 0)[0], ly], C.gold, 1.4); text(P(G / 2, 0)[0], ly + 11, 'g', C.gold, SUB);
+    line([P(G, 0)[0], ly], [P(G + dg, 0)[0], ly], C.blue, 1.4); text(P(G + dg / 2, 0)[0], ly + 11, 'Δg', C.blue, SUB);
+    /* 面積のラベル */
+    text(P(G / 2, F / 2)[0], P(G / 2, F / 2)[1], nar ? 'f·g' : '元の面積 f·g', C.gold, SUB);
+    var bandH = sy * df, bandW = sx * dg;
+    if (bandH > 15) text(P(G / 2, F + df / 2)[0], P(G / 2, F + df / 2)[1], 'Δf·g', C.blue, SUB);
+    else { var q = P(G / 2, F + df); line([q[0], q[1]], [q[0], q[1] - 16], C.blue, 1); text(q[0], q[1] - 23, 'Δf·g', C.blue, SUB); }
+    if (bandW > 30) text(P(G + dg / 2, F / 2)[0], P(G + dg / 2, F / 2)[1], 'f·Δg', C.blue, SUB);
+    else { var r = P(G + dg, F / 2); line([r[0], r[1]], [r[0] + 16, r[1]], C.blue, 1); text(r[0] + 20, r[1], 'f·Δg', C.blue, SUB, 'left'); }
+    /* 角のラベルは、右に収まるなら右へ、入らなければ左へ逃がす */
+    var c = P(G + dg, F + df), cl = nar ? '角' : '角 Δf·Δg';
+    ctx.font = SUB; var clw = ctx.measureText(cl).width;
+    if (c[0] + 17 + clw + 4 <= W) { line([c[0], c[1]], [c[0] + 14, c[1] - 14], C.red, 1); text(c[0] + 17, c[1] - 18, cl, C.red, SUB, 'left'); }
+    else { line([c[0], c[1]], [c[0] - 14, c[1] - 14], C.red, 1); text(c[0] - 17, c[1] - 18, cl, C.red, SUB, 'right'); }
+    /* 見出し */
+    text(W * 0.5, H * 0.06, nar ? '積 f·g の増え方：帯2本ぶん ＋ 角' : '積 f·g の増え方 ＝ 上の帯 ＋ 右の帯 ＋ 角', C.ink, TITLE);
+    text(W * 0.5, H * 0.965, nar ? 'Δx を小さくすると角は2乗で小さくなる' : 'Δx を小さくすると、帯は Δx に比例して、角は Δx の2乗で小さくなる', C.muted, SUB);
+    var bands = df * G + F * dg, corner = df * dg;
+    sdv.textContent = dx.toFixed(2);
+    out.textContent = 'Δx ＝ ' + dx.toFixed(2) + '：帯2本 ＝ Δf·g ＋ f·Δg ＝ ' + bands.toFixed(3) + '、角 ＝ Δf·Δg ＝ ' + corner.toFixed(3) + '（帯の ' + (corner / bands * 100).toFixed(1) + '%）';
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, hh = Math.round(Math.min(w * 0.66, 340)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(hh * d); cv.style.height = hh + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = hh; draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  sd.addEventListener('input', invalidate);
   window.addEventListener('resize', resize);
   resize();
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
