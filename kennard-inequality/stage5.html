@@ -13,7 +13,7 @@
   gtag('config', 'G-9RTQCP2HXM');
 </script>
 <title>STAGE5 魔法の関数 I(λ) ― 不確定性原理を証明する</title>
-<meta name="description" content="証明の心臓部 I(λ)＝∫|λxψ＋ψ′|²dx はどうやって「思いつかれた」のか。2乗和≥0というコーシー以来の狩りの型と、ガウス波束からの逆算。数学の証明が発見される論理を体験する山場のステージ。">
+<meta name="description" content="証明の心臓部 I(λ)＝∫|λxψ＋ψ′|²dx はどうやって「思いつかれた」のか。2乗和≥0というコーシー以来の狩りの型と、ゴールからの逆算。数学の証明が発見される論理を体験する山場のステージ。">
 <link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/stage5">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="不確定性原理を証明する">
@@ -35,7 +35,6 @@
   .kq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .kq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .cv-wrap{width:100%}
-  #gauss2d{display:block;width:100%;height:auto}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -146,80 +145,12 @@
       </div>
 
       <div class="dialogue-scene">
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">ひとつ引っかかることがあります。なぜ「足し算」で混ぜるとうまくいくと信じられるんでしょう。xψ と ψ′ なんて、全然違う種類の関数に見えます。混ぜてもぐちゃぐちゃになるだけかもしれないのに。</div>
-        </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いい質問だね。ここに、発見の物語のいちばん美しい伏線が隠れているんだよ。その前に、役者を1人紹介しておこう。<strong>ガウス波束</strong>だ。量子力学の教室で、位置の決まった波は「いろいろな波長の波を混ぜて作る波束」だと見たね。波束の山の形はいろいろありうるが、その中で山が<strong>釣鐘型</strong>――真ん中がいちばん高く、左右対称で、裾に向かってなだらかに、しかし速やかに 0 へ落ちていく形――になっているものを、ガウス波束と呼ぶ。式で書くと <strong>ψ＝A·e<sup>−ax²</sup></strong>。肩の −ax² は真ん中 x＝0 で 0 だから e<sup>0</sup>＝1 で最大、真ん中から離れるほど大きなマイナスになって 0 へ落ちる。a は山の幅を決めるつまみで、a が大きいほど山は細い。前に付けた A は、規格化条件「|ψ|² の面積が 1」を満たすための定数だ。山を細くすれば、面積を 1 に保つために山は高くならなければいけないから、A は a で決まる（計算すると A＝(2a/π)<sup>1/4</sup>）。ただの定数倍だから、山の形には関係しない。「ガウス」の名は STAGE1 の誤差論から来ている。星の位置を何度も測ったときの誤差の散らばりが、まさにこの釣鐘の形になることをガウスが示したんだ。</div>
-        </div>
-      </div>
-
-      <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="gauss2d" role="img" aria-label="ガウス波束 ψ＝e^(−ax²) のグラフ。真ん中が最も高く左右対称で裾が速やかに0へ落ちる釣鐘型。足元には確率密度 |ψ|² の山とその幅 Δx。スライダーで a を変えると山の幅が変わり、Δx が細くなるほど Δp が太って、積 Δx·Δp は常に ℏ/2 になる"></canvas></div>
-        <div class="sim-ctrl">
-          <label for="ga-a">幅を決めるつまみ a</label>
-          <input type="range" id="ga-a" min="0.25" max="4" step="0.01" value="1" aria-label="幅を決めるつまみ a">
-          <span class="val" id="ga-av">1.00</span>
-        </div>
-        <div class="readout"><span id="ga-out"></span></div>
-        <div class="diagram-caption">ガウス波束 ψ＝A·e<sup>−ax²</sup>（金）と、その確率密度 |ψ|²＝A²e<sup>−2ax²</sup>（赤）。どちらも真ん中が最も高く、左右対称で、裾が速やかに 0 へ落ちる<strong>釣鐘型</strong>。A＝(2a/π)<sup>1/4</sup> は規格化のための定数で、赤い山の面積は a をどう変えても 1――だから山を細くするほど高くなる。a を大きくすると山は細くなり、位置の標準偏差 Δx＝1/(2√a) は小さくなる。いっぽう細い山を作るには多くの波長を混ぜる必要があるので、運動量の標準偏差 Δp＝ℏ√a は大きくなる。積 Δx·Δp は a をどう選んでも <strong>ℏ/2 ぴったり</strong>――ハイゼンベルクが1927年の論文で確かめたのは、この計算だった</div>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">STAGE1 の誤差の釣鐘が、今度は波の形として戻ってくるんですね。a を大きくすると山が細くなる――位置がよく決まった波束、ということですか。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">そう。そして実はハイゼンベルクは1927年の論文で、このガウス波束について Δx·Δp を計算して、ちょうど ℏ/2 になることを確かめていた。もし ℏ/2 が本当の下限なら、ガウス波束は「これ以上縮められない<strong>最良の波</strong>」ということになる。ここから、きみの疑問への答えが逆算できるんだ。ガウス波束で Δx·Δp＝ℏ/2 と<strong>等号</strong>が成り立つなら、それを導く途中の不等式 I(<span class="lam">λ</span>) ≥ 0 も、ガウス波束ではどこかの <span class="lam">λ</span> で等号 I(<span class="lam">λ</span>)＝0 になっていなければつじつまが合わない。途中に隙間があれば、最後にも隙間が残るからね。ところが I(<span class="lam">λ</span>) は 0 以上の量の足し合わせだから、0 になるには、どこか1か所でもプラスがあってはいけない。足すものが全部0以上なのだから、1か所でもプラスがあれば合計はプラスになってしまうからね。だから<strong>中身の |<span class="lam">λ</span>xψ＋ψ′|² が、どの x でも 0</strong>――つまり <strong><span class="lam">λ</span>xψ＋ψ′ がどこでも 0</strong> でなければならない。これを移項すると <strong>ψ′ ＝ −<span class="lam">λ</span>·(xψ)</strong>。つまり ψ′ は、xψ をただ <strong>−<span class="lam">λ</span> 倍</strong>しただけのもの――<strong>定数倍しか違わない</strong>ということだ。きみが「全然違う種類」と言った2つの関数が、ガウス波束の上では定数倍の関係にある――そう<strong>予言</strong>できる。本当かどうか、微分して確かめよう。ガウス型 ψ＝A·e<sup>−ax²</sup> を微分してごらん。定数 A はそのまま前に残るよ。</div>
-        </div>
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">STAGE3 でやった「肩を微分したものが前に降りる」ですね。肩 −ax² の微分は、x² の傾きが 2x だから −2ax。それなら ψ′ ＝ −2ax·A·e<sup>−ax²</sup> ＝ <strong>−2a×(xψ)</strong>。……本当に定数倍になりました！ 全然別物に見えた xψ と ψ′ が、最良の波の上では<strong>ぴったり重なっている</strong>。予言どおりです。<span class="lam">λ</span>＝2a と選べば <span class="lam">λ</span>xψ＋ψ′ はどこでも 0、つまり I(<span class="lam">λ</span>)＝0。魔法の関数は、<strong>「最良の波からのズレ」を測る物差し</strong>だったんだ。最良の波なら、<span class="lam">λ</span> をうまく選べばズレをゼロにできる。それ以外の波では、どんな <span class="lam">λ</span> を選んでもゼロにはならず必ずプラス……。マイナスになることは、絶対値の2乗の足し合わせですから、どの波でもどの <span class="lam">λ</span> でもありえません。だから「足し算で混ぜる」のが正解だったんですね。ぐちゃぐちゃどころか、この2つは混ぜるために生まれてきたような組み合わせです。……ただ、いまのはガウス波束という特別な波で試しただけです。どんな波でも成り立つ証明には、まだなっていませんよね？</div>
-        </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="kq-svg" id="gauss-svg" viewBox="0 0 320 210" width="100%" role="img" aria-label="ガウス波束では xψ の曲線と ψ′ の曲線が定数倍しか違わず、適切な λ で足すとぴったり打ち消し合って0になる">
-          <line class="base" x1="15" y1="45" x2="305" y2="45"></line>
-          <path class="wave2" id="g-xpsi" d=""></path>
-          <line class="base" x1="15" y1="115" x2="305" y2="115"></line>
-          <path class="wave" id="g-dpsi" d=""></path>
-          <line class="base" x1="15" y1="180" x2="305" y2="180"></line>
-          <path class="wave3" id="g-sum" d=""></path>
-          <text class="strong" x="18" y="16">xψ（位置の担当）</text>
-          <text class="strong" x="18" y="86">ψ′（運動量の担当）</text>
-          <text class="strong" x="18" y="153"><tspan class="lam">λ</tspan>xψ ＋ ψ′（<tspan class="lam">λ</tspan> をうまく選ぶ）</text>
-          <text class="label" x="200" y="174">→ ぴったり0！</text>
-        </svg>
-        <div class="diagram-caption">ガウス波束 ψ＝A·e<sup>−ax²</sup> では ψ′＝−2a·xψ。上の2本は上下が逆なだけの同じ形で、<span class="lam">λ</span>＝2a と選んで足すと完全に打ち消し合う。I(<span class="lam">λ</span>) は「最良の波（ガウス波束）からのズレ」を測っている</div>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">その通り。いまやったのは証明ではなく、道具の<strong>設計チェック</strong>だ。I(<span class="lam">λ</span>) ≥ 0 そのものは、どんな波でも無条件に成り立つ。だからそこから出てくる不等式は、どんな波にも通用する。ガウス波束で確かめたのは、この道具が「最良の波で等号になれるほど鋭い」ということ――つまり出てくる不等式が ℏ/2 まで届く見込みがある、ということだけだ。本当に届くかどうかは、これから展開して確かめる。しかもその展開には、ガウス波束の性質は一切使わない。ハイゼンベルクの計算という答えを先に知っていたから、混ぜるべき相手も、混ぜ方が足し算であることも、こちらから決められた――これが「ゴールからの逆算」の使い方だよ。では狩りの型の②、<strong>展開</strong>に進もう。複素数の2乗の展開公式は |A＋B|²＝(A＋B)(A*＋B*)＝|A|²＋AB*＋A*B＋|B|²。A＝<span class="lam">λ</span>xψ、B＝ψ′ を入れる。<span class="lam">λ</span> も x も実数だから A*＝<span class="lam">λ</span>xψ* となって、真ん中の2項は <span class="lam">λ</span>x(ψψ′*＋ψ*ψ′) とまとまるよ。</div>
+          <div class="dialog-bubble">では狩りの型の②、<strong>展開</strong>に進もう。複素数の2乗の展開公式は |A＋B|²＝(A＋B)(A*＋B*)＝|A|²＋AB*＋A*B＋|B|²。A＝<span class="lam">λ</span>xψ、B＝ψ′ を入れる。<span class="lam">λ</span> も x も実数だから A*＝<span class="lam">λ</span>xψ* となって、真ん中の2項は <span class="lam">λ</span>x(ψψ′*＋ψ*ψ′) とまとまるよ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -293,7 +224,7 @@
           <button class="choice-btn">この2つは足すと必ず0になり、2乗の中身が消えて計算がいちばん簡単になるから</button>
           <button class="choice-btn">ゴールの (Δx)² と (Δp)²/ℏ² が、xψ と ψ′ それぞれの「2乗の積分」だから</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ 展開すれば |xψ|² と |ψ′|² の項が現れて、狙い通り (Δx)² と (Δp)² が式に登場する。さらにガウス波束では ψ′ が xψ の定数倍（ψ′＝−2a·xψ）になるので、この混合は「最良の波からのズレ」という意味まで持っている。</div>
+        <div class="quiz-explain" hidden>正解！ 展開すれば |xψ|² と |ψ′|² の項が現れて、狙い通り (Δx)² と (Δp)² が式に登場する。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
@@ -301,7 +232,7 @@
         <div class="choice-list">
           <button class="choice-btn"><span class="lam">λ</span> の定義から自動的に出てくる（<span class="lam">λ</span> は −1 を係数に持つように最初から選んだ）</button>
           <button class="choice-btn">クロス項 ∫x(|ψ|²)′dx に補題1（部分積分＋規格化条件）を使った結果</button>
-          <button class="choice-btn">ガウス波束の場合だけに成り立つ近似で、一般の波形では別の値になる</button>
+          <button class="choice-btn">特別な形の波にだけ成り立つ近似で、一般の波形では別の値になる</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 「電子は必ずどこかにいる」という規格化条件が、部分積分を経由して −1 という数に化け、<span class="lam">λ</span> の1次の係数として証明の急所に座る。どんな波形でも同じ −1 になるのがポイントだ。</div>
       </div>
@@ -317,88 +248,6 @@
 </div>
 
 <script src="js/progress.js"></script>
-<script>
-  // ガウス波束の xψ・ψ′・打ち消しの図（静止画）
-  (function () {
-    function makePath(yc, amp, fn, x0, x1) {
-      var d = "M" + x0 + " " + (yc - amp * fn((x0 - 160) / 40)).toFixed(1);
-      for (var x = x0 + 2; x <= x1; x += 2) {
-        d += " L" + x + " " + (yc - amp * fn((x - 160) / 40)).toFixed(1);
-      }
-      return d;
-    }
-    var g = function (u) { return Math.exp(-u * u); };       // ψ = e^(-u²)（a=1）
-    var xpsi = function (u) { return u * g(u); };            // xψ
-    var dpsi = function (u) { return -2 * u * g(u); };       // ψ′ = -2xψ
-    var sum  = function (u) { return 2 * xpsi(u) + dpsi(u); };// λ=2 で 0
-    var p1 = document.getElementById("g-xpsi");
-    var p2 = document.getElementById("g-dpsi");
-    var p3 = document.getElementById("g-sum");
-    if (p1) p1.setAttribute("d", makePath(45, 38, xpsi, 15, 305));
-    if (p2) p2.setAttribute("d", makePath(115, 19, dpsi, 15, 305));
-    if (p3) p3.setAttribute("d", makePath(180, 38, sum, 15, 305));
-  })();
-</script>
-<script>
-/* ガウス波束 ψ＝e^(−ax²) と |ψ|²＝e^(−2ax²)。スライダー a で幅を変える。Δx＝1/(2√a)、Δp＝ℏ√a、積は常に ℏ/2 */
-(function(){
-  var cv = document.getElementById('gauss2d');
-  if (!cv) return;
-  var ctx = cv.getContext('2d');
-  var sa = document.getElementById('ga-a'), sav = document.getElementById('ga-av'), out = document.getElementById('ga-out');
-  var XR = 3, W = 0, H = 0;
-  var C = { gold: '#a6742a', goldF: 'rgba(166,116,42,.10)', red: '#b5504a', redF: 'rgba(181,80,74,.16)', muted: '#8a7a5c', ink: '#241d12', tick: 'rgba(138,122,92,.6)' };
-  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
-  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
-  function poly(pts, color, wd, dash) {
-    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
-    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
-    ctx.stroke(); ctx.setLineDash([]);
-  }
-  function fillPoly(pts, color) { ctx.fillStyle = color; ctx.beginPath(); for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); } ctx.closePath(); ctx.fill(); }
-  function draw() {
-    var a = +sa.value, nar = W < 520, i, pts;
-    ctx.clearRect(0, 0, W, H);
-    var ox = W * 0.5, oy = H * 0.82, sx = (W * 0.44) / XR, sy = H * 0.66 / 1.7, A = Math.pow(2 * a / Math.PI, 0.25), A2 = A * A;
-    function P(x, y) { return [ox + sx * x, oy - sy * y]; }
-    /* 軸（高さ 1 の目盛り付き） */
-    poly([P(-XR - 0.2, 0), P(XR + 0.2, 0)], C.muted, 1.2); poly([P(0, 0), P(0, 1.75)], C.muted, 1.2);
-    poly([P(-0.06, 1), P(0.06, 1)], C.muted, 1.2); text(P(-0.08, 1)[0], P(0, 1)[1], '1', C.muted, SUB, 'right');
-    for (i = -3; i <= 3; i++) { if (i) { poly([P(i, 0), P(i, -0.03)], C.muted, 1); text(P(i, 0)[0], oy + 11, String(i), C.muted, SUB); } }
-    text(P(XR + 0.2, 0)[0] + 4, oy + 1, 'x', C.muted, SUB, 'left'); text(ox, oy + 11, '0', C.muted, SUB);
-    /* |ψ|²（赤、塗り） */
-    pts = []; for (i = 0; i <= 240; i++) { var u = -XR + 2 * XR * i / 240; pts.push(P(u, A2 * Math.exp(-2 * a * u * u))); }
-    fillPoly(pts.concat([P(XR, 0), P(-XR, 0)]), C.redF); poly(pts, C.red, 1.6, [5, 3]);
-    /* ψ（金） */
-    pts = []; for (i = 0; i <= 240; i++) { var u2 = -XR + 2 * XR * i / 240; pts.push(P(u2, A * Math.exp(-a * u2 * u2))); }
-    poly(pts, C.gold, 2.4);
-    /* Δx のブレース（|ψ|² の山の幅 ±Δx。高さは e^(−1/2)） */
-    var dx = 1 / (2 * Math.sqrt(a)), hb = A2 * Math.exp(-0.5);
-    poly([P(-dx, hb), P(-dx, hb - 0.07), P(dx, hb - 0.07), P(dx, hb)], C.red, 1.3);
-    poly([P(-dx, 0), P(-dx, hb)], C.tick, 1, [3, 3]); poly([P(dx, 0), P(dx, hb)], C.tick, 1, [3, 3]);
-    text(ox, P(0, hb - 0.07)[1] + 11, 'Δx ＝ ' + dx.toFixed(2), C.red, SUB);
-    /* ラベル */
-    /* 凡例は曲線と重ならない左上に固定 */
-    text(W * 0.03, H * 0.17, '金：ψ＝A e^(−ax²)', C.gold, SUB, 'left'); text(W * 0.03, H * 0.17 + 15, nar ? '赤（点線）：|ψ|²（面積 1）' : '赤（点線）：|ψ|²＝A² e^(−2ax²)（面積はいつも 1）', C.red, SUB, 'left');
-    text(ox, H * 0.06, nar ? 'ガウス波束：真ん中が高く、左右対称、裾は速やかに 0 へ' : 'ガウス波束 ψ＝e^(−ax²)：真ん中がいちばん高く、左右対称で、裾は速やかに 0 へ落ちる', C.ink, TITLE);
-    var dp = Math.sqrt(a);
-    sav.textContent = a.toFixed(2);
-    out.textContent = 'a ＝ ' + a.toFixed(2) + '（A ＝ ' + A.toFixed(2) + '） → Δx ＝ 1/(2√a) ＝ ' + dx.toFixed(3) + '、Δp ＝ ℏ√a ＝ ' + dp.toFixed(3) + ' ℏ、Δx·Δp ＝ ' + (dx * dp).toFixed(3) + ' ℏ ＝ ℏ/2（a をどう変えても等号ぴったり）';
-  }
-  function resize() {
-    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.62, 320)), d = window.devicePixelRatio || 1;
-    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
-    ctx.setTransform(d, 0, 0, d, 0, 0);
-    W = w; H = h; draw();
-  }
-  var queued = false;
-  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
-  sa.addEventListener('input', invalidate);
-  window.addEventListener('resize', resize);
-  resize();
-  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
-})();
-</script>
 <script>KQ.initStagePage(5);</script>
 </body>
 </html>
