@@ -561,7 +561,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">どちらもいい引っかかり方だ。順に組み立てよう。ひとつ目は<strong>積の微分</strong>だね。ψ は R と e<sup>iS</sup> の<strong>掛け算</strong>だから、まずは一般に「2つの関数 f と g の積」で考えよう。縦が f、横が g の長方形を思い浮かべてごらん。面積が f·g にあたる。x を Δx 進めると、縦が Δf、横が Δg だけ伸びる。増える面積は、上に伸びた帯と右に伸びた帯の<strong>2本ぶん</strong>――Δf·g ＋ f·Δg だ。Δx で割れば <strong>(f·g)′ ＝ f′g ＋ fg′</strong>。2つの項に分かれたのは、伸びる帯が2本あるからだよ。いまの場合は f＝R、g＝e<sup>iS</sup> だから、<strong>ψ′ ＝ R′·e<sup>iS</sup> ＋ R·(e<sup>iS</sup>)′</strong> というわけだ。……ただ、正直に言うと、いまの数え方には取りこぼしがある。縦と横が<strong>同時に</strong>伸びるから、右上にもうひとつ小さな長方形ができるんだ。式で確かめてごらん。</div>
+          <div class="dialog-bubble">どちらもいい引っかかり方だ。順に組み立てよう。ひとつ目は<strong>積の微分</strong>だね。ψ は R と e<sup>iS</sup> の<strong>掛け算</strong>だから、まずは一般に「2つの関数 f と g の積」で考えよう。縦が f、横が g の長方形を思い浮かべてごらん。面積が f·g にあたる。x を Δx 進めると、縦が Δf、横が Δg だけ伸びる。増えた面積は、育ったあとの長方形から元の長方形を引いたもの――<strong>(f＋Δf)(g＋Δg) − fg</strong> だね。展開してごらん。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -589,7 +589,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いい引っかかりだ。そのとおりで、<strong>そのままでは帯も角もどちらもゼロに向かう</strong>。違いが出るのは「傾き」を出すときだよ。微分は「増えた量 ÷ 進んだ幅 Δx」だったね。そこで Δf と Δg を Δx で書き直す。f の増分は「傾き × 進んだ幅」だから Δf ≈ f′·Δx、同じく Δg ≈ g′·Δx。すると2つの帯は Δf·g ＋ f·Δg ≈ (f′g ＋ fg′)·Δx で、<strong>Δx が1個</strong>。角は Δf·Δg ≈ f′g′·(Δx)² で、<strong>Δx が2個</strong>。面積の増え方を Δx で割ると、帯のほうは Δx が打ち消されて f′g ＋ fg′ という<strong>有限の値</strong>が残るのに、角のほうは f′g′·Δx と <strong>Δx が1個残る</strong>。だから Δx をゼロに近づけると、角の項だけが消える。数字で言えば、Δx＝0.01 のとき帯は割ったあとで f′g＋fg′ のまま、角は 0.01×f′g′。Δx＝0.001 なら角は 0.001×f′g′。帯は変わらず、角だけがどこまでも小さくなる。だから帯だけが残って、さっきの <strong>(f·g)′ ＝ f′g ＋ fg′</strong> が正しい形になる。</div>
+          <div class="dialog-bubble">いい引っかかりだ。そのとおりで、<strong>そのままでは帯も角もどちらもゼロに向かう</strong>。違いが出るのは「傾き」を出すときだよ。微分は「増えた量 ÷ 進んだ幅 Δx」だったね。そこで Δf と Δg を Δx で書き直す。f の増分は「傾き × 進んだ幅」だから Δf ≈ f′·Δx、同じく Δg ≈ g′·Δx。すると2つの帯は Δf·g ＋ f·Δg ≈ (f′g ＋ fg′)·Δx で、<strong>Δx が1個</strong>。角は Δf·Δg ≈ f′g′·(Δx)² で、<strong>Δx が2個</strong>。面積の増え方を Δx で割ると、帯のほうは Δx が打ち消されて f′g ＋ fg′ という<strong>有限の値</strong>が残るのに、角のほうは f′g′·Δx と <strong>Δx が1個残る</strong>。だから Δx をゼロに近づけると、角の項だけが消える。数字で言えば、Δx＝0.01 のとき帯は割ったあとで f′g＋fg′ のまま、角は 0.01×f′g′。Δx＝0.001 なら角は 0.001×f′g′。帯は変わらず、角だけがどこまでも小さくなる。つまり Δx で割ったあとに残るのは帯のぶんだけ。これが積の微分公式 <strong>(f·g)′ ＝ f′g ＋ fg′</strong> だ。2つの項に分かれたのは、伸びる帯が2本あるからだよ。いまの場合は f＝R、g＝e<sup>iS</sup> だから、<strong>ψ′ ＝ R′·e<sup>iS</sup> ＋ R·(e<sup>iS</sup>)′</strong> というわけだね。</div>
         </div>
       </div>
 
