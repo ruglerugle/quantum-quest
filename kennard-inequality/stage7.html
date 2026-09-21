@@ -138,7 +138,7 @@
           <path class="wave3" id="g-sum" d=""></path>
           <text class="strong" x="18" y="16">xψ（位置の担当）</text>
           <text class="strong" x="18" y="86">ψ′（運動量の担当）</text>
-          <text class="strong" x="18" y="153"><tspan class="lam">λ</tspan>xψ ＋ ψ′（<tspan class="lam">λ</tspan> をうまく選ぶ）</text>
+          <text class="strong" x="18" y="153"><tspan class="lam">λ</tspan>₀xψ ＋ ψ′（<tspan class="lam">λ</tspan>₀ ＝ 2a と選ぶ）</text>
           <text class="label" x="200" y="174">→ ぴったり0！</text>
         </svg>
         <div class="diagram-caption">ガウス波束では ψ′ が xψ の<strong>定数倍</strong>になる（A·e<sup>−ax²</sup> なら ψ′＝−2a·xψ）。上の2本は上下が逆なだけの同じ形で、<span class="lam">λ</span>₀ をうまく選んで足すと完全に打ち消し合い、<span class="lam">λ</span>₀xψ＋ψ′ がどこでも 0 になる。これが I(<span class="lam">λ</span>₀)＝0、つまり<strong>等号</strong>が成り立つ状態だ</div>
@@ -405,6 +405,28 @@
   resize();
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
 })();
+</script>
+<script>
+  // ガウス波束の xψ・ψ′・打ち消しの図（静止画）
+  (function () {
+    function makePath(yc, amp, fn, x0, x1) {
+      var d = "M" + x0 + " " + (yc - amp * fn((x0 - 160) / 40)).toFixed(1);
+      for (var x = x0 + 2; x <= x1; x += 2) {
+        d += " L" + x + " " + (yc - amp * fn((x - 160) / 40)).toFixed(1);
+      }
+      return d;
+    }
+    var g = function (u) { return Math.exp(-u * u); };       // ψ = e^(-u²)（a=1）
+    var xpsi = function (u) { return u * g(u); };            // xψ
+    var dpsi = function (u) { return -2 * u * g(u); };       // ψ′ = -2xψ
+    var sum  = function (u) { return 2 * xpsi(u) + dpsi(u); };// λ=2 で 0
+    var p1 = document.getElementById("g-xpsi");
+    var p2 = document.getElementById("g-dpsi");
+    var p3 = document.getElementById("g-sum");
+    if (p1) p1.setAttribute("d", makePath(45, 38, xpsi, 15, 305));
+    if (p2) p2.setAttribute("d", makePath(115, 19, dpsi, 15, 305));
+    if (p3) p3.setAttribute("d", makePath(180, 38, sum, 15, 305));
+  })();
 </script>
 <script>KQ.initStagePage(7);</script>
 </body>
