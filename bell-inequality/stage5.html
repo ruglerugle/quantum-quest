@@ -35,6 +35,10 @@
   .bq-svg .tdot{fill:#48688f}
   .bq-svg .tdot-star{fill:#b5504a}
   .bq-svg .year{fill:#b5504a;font-size:11px;font-weight:900}
+  .bq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .bq-svg .panel{fill:var(--paper2);stroke:var(--line);stroke-width:1.5}
+  .bq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
+  .bq-svg .arrowhead{fill:var(--muted)}
 </style>
 </head>
 <body>
@@ -134,6 +138,44 @@
           </div>
           <div class="dialog-bubble">そのとおりだよ。それが第三の抜け穴、<strong>自由選択の抜け穴</strong>だよ。実験家たちの返答が面白くてね。2017年には、角度の選択を<strong>数百光年離れた恒星の光の色</strong>に委ねる実験が行われた。共謀を疑うなら、数百年前に星を出発した光まで仕込みに参加していたことになる。より遠いクエーサーを使った版では、仕込みは<strong>数十億年前</strong>まで遡る。2018年には、世界中の約10万人が気まぐれにボタンを連打して設定を決める実験まで行われた。結果はすべて同じ――<strong>不等式は破れ続けた</strong>。ただし正直に言うと、この抜け穴だけは論理的には完全に塞げない。「宇宙の初期条件の時点で、星の光も光子源もきみの指の動きも、すべて調整済みだった」と主張する<strong>超決定論</strong>は、原理的に反証できないんだ。その代わり代償が重い。その調整がなぜ量子力学の統計をぴったり再現するのかの説明がないし、何より「実験のサンプルは信用できる」という<strong>科学の方法論そのもの</strong>が崩れてしまう。だから大多数の物理学者はこの道を選ばない。この最後の逃げ道の話は、最終ステージでもう一度出てくるよ。……ともかく、塞げる抜け穴はすべて塞がれた。この一連の検証に対して、2022年、ノーベル物理学賞が贈られた。受賞者は<strong>クラウザー、アスペ、ツァイリンガー</strong>の3人だ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="bq-svg" viewBox="0 0 340 262" width="100%" role="img" aria-label="3つの抜け穴と、それを塞いだ実験の対応表。局所性の抜け穴（測る角度が相手に前もって伝わる疑い）は1982年のアスペが光子の飛行中に設定を切り替えて塞いだ。検出の抜け穴（拾えた光子だけが偏ったサンプルである疑い）は2015年のデルフトがダイヤモンド中の電子をほぼ100%検出して塞いだ。自由選択の抜け穴（設定の選び方が仕込まれている疑い）は2017年から2018年に恒星の光や10万人のボタンで設定を選んで塞いだ">
+          <text class="strong" x="170" y="18" text-anchor="middle">3つの抜け穴と、それを塞いだ実験</text>
+          <rect class="panel" x="10" y="30" width="152" height="60" rx="8"></rect>
+          <text class="lbA" x="86" y="48" text-anchor="middle">① 局所性の抜け穴</text>
+          <text class="label-sm" x="86" y="66" text-anchor="middle">測る角度が相手側に</text>
+          <text class="label-sm" x="86" y="81" text-anchor="middle">前もって伝わっている？</text>
+          <line class="arrow" x1="166" y1="60" x2="182" y2="60"></line>
+          <polygon class="arrowhead" points="188,60 180,56 180,64"></polygon>
+          <rect class="panel" x="192" y="30" width="138" height="60" rx="8"></rect>
+          <text class="year" x="261" y="48" text-anchor="middle">アスペ 1982</text>
+          <text class="label-sm" x="261" y="66" text-anchor="middle">光子の飛行中に設定を</text>
+          <text class="label-sm" x="261" y="81" text-anchor="middle">数十ナノ秒で切り替え</text>
+          <rect class="panel" x="10" y="100" width="152" height="60" rx="8"></rect>
+          <text class="lbA" x="86" y="118" text-anchor="middle">② 検出の抜け穴</text>
+          <text class="label-sm" x="86" y="136" text-anchor="middle">拾えた光子だけが</text>
+          <text class="label-sm" x="86" y="151" text-anchor="middle">偏ったサンプル？</text>
+          <line class="arrow" x1="166" y1="130" x2="182" y2="130"></line>
+          <polygon class="arrowhead" points="188,130 180,126 180,134"></polygon>
+          <rect class="panel" x="192" y="100" width="138" height="60" rx="8"></rect>
+          <text class="year" x="261" y="118" text-anchor="middle">デルフト 2015</text>
+          <text class="label-sm" x="261" y="136" text-anchor="middle">ダイヤモンド中の電子で</text>
+          <text class="label-sm" x="261" y="151" text-anchor="middle">ほぼ100%検出・1.3km</text>
+          <rect class="panel" x="10" y="170" width="152" height="60" rx="8"></rect>
+          <text class="lbA" x="86" y="188" text-anchor="middle">③ 自由選択の抜け穴</text>
+          <text class="label-sm" x="86" y="206" text-anchor="middle">設定の選び方まで</text>
+          <text class="label-sm" x="86" y="221" text-anchor="middle">仕込まれている？</text>
+          <line class="arrow" x1="166" y1="200" x2="182" y2="200"></line>
+          <polygon class="arrowhead" points="188,200 180,196 180,204"></polygon>
+          <rect class="panel" x="192" y="170" width="138" height="60" rx="8"></rect>
+          <text class="year" x="261" y="188" text-anchor="middle">2017–2018</text>
+          <text class="label-sm" x="261" y="206" text-anchor="middle">数百光年先の恒星の光や</text>
+          <text class="label-sm" x="261" y="221" text-anchor="middle">10万人のボタンで選ぶ</text>
+          <text class="label" x="170" y="252" text-anchor="middle">塞げる抜け穴はすべて塞がれた → 2022年 ノーベル物理学賞</text>
+        </svg>
+        <div class="diagram-caption">懐疑派が指摘した<strong>3つの抜け穴</strong>と、それぞれを塞いだ実験。左が「不等式の破れは見かけだけでは？」という反論、右がその反論を物理的に不可能にした仕掛け。③だけは論理的には完全に塞げない（超決定論）が、科学の方法論そのものを捨てる代償がつく</div>
       </div>
 
       <div class="diagram-box">

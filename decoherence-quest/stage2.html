@@ -81,6 +81,17 @@
           </div>
           <div class="dialog-bubble">では、実験を改造しよう。左スリットのすぐそばに、小さな検出器を置く。粒子が左を通り抜けると、検出器の<strong>針</strong>が左に倒れる仕掛けだ。右スリットにも同じものを置いて、右を通れば針が右に倒れる。粒子の飛び方はほとんど乱さない、そっと記録するだけの上等な検出器だとしよう。実験結果は知っているね。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="detector-svg" class="dq-svg" viewBox="0 0 372 240" width="100%" role="img" aria-label="経路検出器つき二重スリットのアニメーション。粒子が左右どちらかのスリットを通るたびに検出器の針がその向きに倒れ、スクリーンには縞のない、山をふたつ重ねた分布の点が積もっていく">
+          <text class="strong" x="186" y="16" text-anchor="middle">針が倒れると、縞は積もらない</text>
+          <g id="detector-body"></g>
+        </svg>
+        <div class="diagram-caption">粒子が通るたびに針が左または右へ倒れ、「どちらを通ったか」の手がかりが残る。スクリーンに積もる点は、左経由の山と右経由の山を重ねただけの、のっぺりした分布。縞は一度も現れない</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -102,6 +113,38 @@
           </div>
           <div class="dialog-bubble">筋書き1の終わりは「粒子が点xにいて、<strong>左の針が倒れている</strong>世界」。筋書き2の終わりは「粒子が同じ点xにいて、<strong>右の針が倒れている</strong>世界」。粒子の側だけ見れば同じなのに、針の状態が違う。つまり2つの筋書きは、<strong>違う終わり方</strong>をしている――だから区別がつく。だから矢印を足してはいけない。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="dq-svg" viewBox="0 0 372 206" width="100%" role="img" aria-label="2つの筋書きの終わり方を2枚の写真として並べた図。筋書き1（左を通った）の写真では粒子がスクリーンの点xにあり針が左に倒れている。筋書き2（右を通った）の写真でも粒子は同じ点xにあるが、針は右に倒れている。粒子は同じでも針が違うので終わり方が違い、矢印は足せない">
+          <text class="strong" x="186" y="18" text-anchor="middle">2つの筋書きの「終わり方」を写真で比べる</text>
+          
+          <rect x="12" y="30" width="165" height="132" rx="8" fill="var(--paper2)" stroke="var(--ink)" stroke-width="2"></rect>
+          <text class="accent" x="94" y="48" text-anchor="middle">筋書き1：左を通った</text>
+          <line x1="144" y1="58" x2="144" y2="140" stroke="var(--ink)" stroke-width="3"></line>
+          <circle cx="144" cy="96" r="4" fill="var(--ng)"></circle>
+          <text class="label" x="152" y="100" text-anchor="start">点x</text>
+          <line x1="58" y1="96" x2="36.1" y2="70.0" stroke="#2f7a6b" stroke-width="3" stroke-linecap="round"></line>
+          <circle cx="58" cy="96" r="4" fill="var(--ink)"></circle>
+          <text class="label" x="58" y="128" text-anchor="middle">針</text>
+          <text class="label" x="94" y="154" text-anchor="middle">粒子：点x ／ 針：左に倒れ</text>
+          
+          <rect x="195" y="30" width="165" height="132" rx="8" fill="var(--paper2)" stroke="var(--ink)" stroke-width="2"></rect>
+          <text class="accent" x="277" y="48" text-anchor="middle">筋書き2：右を通った</text>
+          <line x1="327" y1="58" x2="327" y2="140" stroke="var(--ink)" stroke-width="3"></line>
+          <circle cx="327" cy="96" r="4" fill="var(--ng)"></circle>
+          <text class="label" x="335" y="100" text-anchor="start">点x</text>
+          <line x1="241" y1="96" x2="262.9" y2="70.0" stroke="#c97a2a" stroke-width="3" stroke-linecap="round"></line>
+          <circle cx="241" cy="96" r="4" fill="var(--ink)"></circle>
+          <text class="label" x="241" y="128" text-anchor="middle">針</text>
+          <text class="label" x="277" y="154" text-anchor="middle">粒子：点x ／ 針：右に倒れ</text>
+          <text class="accent" x="186" y="182" text-anchor="middle">針が違う ＝ 終わり方が違う → 矢印は足せない</text>
+          <text class="label" x="186" y="198" text-anchor="middle">（同じ1発の粒子の、同じ瞬間の2通りの写真）</text>
+        </svg>
+        <div class="diagram-caption">筋書きの「終わり方」の比較。粒子だけを見れば2枚とも同じ点xだが、<strong>針の状態が違う</strong>。1か所でも違えば別の終わり方なので、2つの筋書きの矢印は足せず、それぞれ2乗して確率を足すことになる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
@@ -165,6 +208,39 @@
           </div>
           <div class="dialog-bubble">そこも大事な区別だ。答えはこうだよ。<strong>道筋は、到達点を決めない</strong>。左を通った粒子はスクリーンのどの点にも当たりうるし、右を通った粒子も、やはりどの点にも当たりうる。だからルールの正しい使い方は、こうなる。まずスクリーンの点を1つ選ぶ――たとえば点x。そして<strong>「同じ点xで終わる筋書きだけ」を集めて</strong>、合流できるかを判定し、その点の明るさを計算する。「左を通って点xへ」と「右を通って点xへ」――比べるのは、いつでもこのペアだ。次に別の点を選んだら、今度はその点で終わる筋書きどうしを比べる。これをスクリーンの全部の点で繰り返してできあがる明るさの一覧表が、分布なんだ。つまり、縞があるかないかというのは<strong>各点で計算される確率の「値」が変わる</strong>という違いであって、筋書きの到達点がずれるという話ではないんだよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="dq-svg" viewBox="0 0 372 222" width="100%" role="img" aria-label="比べるのは同じ点で終わる筋書きどうし、という図。左の光源から2本のスリットを通り、スクリーン上の点xへ向かう2本の道筋（青緑・実線）と、別の点x′へ向かう2本の道筋（オレンジ・点線）が描かれている。点xの明るさは点xで終わる2本を比べて決め、点x′の明るさは点x′で終わる2本を比べて決める">
+          <text class="strong" x="186" y="18" text-anchor="middle">比べるのは「同じ点で終わる筋書き」どうし</text>
+          <circle cx="30" cy="112" r="5" fill="var(--ink)"></circle>
+          <text class="label" x="30" y="132" text-anchor="middle">光源</text>
+          <line x1="100" y1="30" x2="100" y2="82" stroke="var(--ink)" stroke-width="4"></line>
+          <line x1="100" y1="98" x2="100" y2="126" stroke="var(--ink)" stroke-width="4"></line>
+          <line x1="100" y1="142" x2="100" y2="196" stroke="var(--ink)" stroke-width="4"></line>
+          <text class="label" x="88" y="94" text-anchor="end">左</text><text class="label" x="88" y="138" text-anchor="end">右</text>
+          <line x1="35" y1="110" x2="100" y2="90" stroke="var(--line)" stroke-width="1.5"></line>
+          <line x1="35" y1="114" x2="100" y2="134" stroke="var(--line)" stroke-width="1.5"></line>
+          <line x1="330" y1="30" x2="330" y2="196" stroke="var(--ink)" stroke-width="3"></line>
+          <text class="label" x="330" y="208" text-anchor="middle">スクリーン</text>
+          <line x1="100" y1="90" x2="330" y2="70" stroke="#2f7a6b" stroke-width="2.2"></line>
+          <line x1="100" y1="134" x2="330" y2="70" stroke="#2f7a6b" stroke-width="2.2"></line>
+          <line x1="100" y1="90" x2="330" y2="160" stroke="#c97a2a" stroke-width="2.2" stroke-dasharray="5 4"></line>
+          <line x1="100" y1="134" x2="330" y2="160" stroke="#c97a2a" stroke-width="2.2" stroke-dasharray="5 4"></line>
+          <circle cx="330" cy="70" r="5" fill="#2f7a6b"></circle>
+          <circle cx="330" cy="160" r="5" fill="#c97a2a"></circle>
+          <text class="accent" x="340" y="74" text-anchor="start">点x</text>
+          <text class="accent" x="340" y="164" text-anchor="start">点x′</text>
+          <line x1="112" y1="40" x2="132" y2="40" stroke="#2f7a6b" stroke-width="2.2"></line>
+          <text class="label" x="138" y="44" text-anchor="start">点x で終わるペア → 点x の明るさ</text>
+          <line x1="112" y1="186" x2="132" y2="186" stroke="#c97a2a" stroke-width="2.2" stroke-dasharray="5 4"></line>
+          <text class="label" x="138" y="190" text-anchor="start">点x′ で終わるペア → 点x′ の明るさ</text>
+          <text class="label" x="186" y="216" text-anchor="middle">点ごとに計算した明るさを並べたものが、分布</text>
+        </svg>
+        <div class="diagram-caption">ルールの正しい使い方。道筋は到達点を決めないので、まずスクリーンの点を1つ選び、<strong>その点で終わる筋書きだけ</strong>（左経由と右経由の2本）を比べて明るさを計算する。これを全部の点で繰り返した明るさの一覧表が分布</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -193,6 +269,17 @@
           </div>
           <div class="dialog-bubble">実にいい質問だ。答えは「<strong>縞は連続的に薄くなる</strong>」。針が少ししか傾かないと、「左のときの針」と「右のときの針」の最終状態は、直交ではなく<strong>少しだけ違う</strong>状態になる。似た者どうしの状態は部分的に「同じ終わり方」とみなせるから、矢印も部分的に足せる。結果、縞の濃さは満点と0の中間になる。手がかりが完全なら縞は0、手がかりが皆無なら縞は満点。<strong>手がかりの完全さと縞の濃さは、正確にシーソーの関係</strong>にあるんだ。これも実験で細かく確認されているよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg id="contrast-svg" class="dq-svg" viewBox="0 0 372 220" width="100%" role="img" aria-label="手がかりの完全さと縞の濃さのシーソー関係のアニメーション。針の傾きの差が0度から90度まで連続的に変化し、それに応じてスクリーンの縞の濃さが満点から0まで連続的に変化する">
+          <text class="strong" x="186" y="16" text-anchor="middle">手がかりの完全さと縞の濃さはシーソー</text>
+          <g id="contrast-body"></g>
+        </svg>
+        <div class="diagram-caption">左：粒子が左を通ったときの針（青緑）と右を通ったときの針（オレンジ）。2本の開きが「手がかりの完全さ」。右：そのときスクリーンに現れる分布。針の状態が同じ（開き0°）なら縞は満点、直交（開き90°）なら縞は0。中間では薄い縞が残り、0か100かではなく連続的に変わる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -207,22 +294,6 @@
           </div>
           <div class="dialog-bubble">それこそが次のステージの主役、<strong>量子消しゴム</strong>だよ。先に答えだけ言っておくと――戻る。ただしその戻り方が、因果律を1ミリも破らない、実に見事な戻り方なんだ。楽しみにしておいで。</div>
         </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg id="detector-svg" class="dq-svg" viewBox="0 0 372 240" width="100%" role="img" aria-label="経路検出器つき二重スリットのアニメーション。粒子が左右どちらかのスリットを通るたびに検出器の針がその向きに倒れ、スクリーンには縞のない、山をふたつ重ねた分布の点が積もっていく">
-          <text class="strong" x="186" y="16" text-anchor="middle">針が倒れると、縞は積もらない</text>
-          <g id="detector-body"></g>
-        </svg>
-        <div class="diagram-caption">粒子が通るたびに針が左または右へ倒れ、「どちらを通ったか」の手がかりが残る。スクリーンに積もる点は、左経由の山と右経由の山を重ねただけの、のっぺりした分布。縞は一度も現れない</div>
-      </div>
-
-      <div class="diagram-box">
-        <svg id="contrast-svg" class="dq-svg" viewBox="0 0 372 220" width="100%" role="img" aria-label="手がかりの完全さと縞の濃さのシーソー関係のアニメーション。針の傾きの差が0度から90度まで連続的に変化し、それに応じてスクリーンの縞の濃さが満点から0まで連続的に変化する">
-          <text class="strong" x="186" y="16" text-anchor="middle">手がかりの完全さと縞の濃さはシーソー</text>
-          <g id="contrast-body"></g>
-        </svg>
-        <div class="diagram-caption">左：粒子が左を通ったときの針（青緑）と右を通ったときの針（オレンジ）。2本の開きが「手がかりの完全さ」。右：そのときスクリーンに現れる分布。針の状態が同じ（開き0°）なら縞は満点、直交（開き90°）なら縞は0。中間では薄い縞が残り、0か100かではなく連続的に変わる</div>
       </div>
 
       <div class="formula-box">

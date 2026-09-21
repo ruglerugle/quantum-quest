@@ -116,6 +116,21 @@
           </div>
           <div class="dialog-bubble">足し算ではなく<strong>掛け算</strong>です。0.99を繰り返し掛ける。100乗で約0.37倍、1000乗だと0.00004倍程度……。10¹⁸乗なんて、小数点の下に0が何十桁どころではない数になります。実質、<strong>完全にゼロ</strong>。毎秒どころか、ほんの一瞬のうちに縞は死にます。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="dq-svg" viewBox="0 0 372 196" width="100%" role="img" aria-label="縞の濃さが0.99を衝突の回数だけ掛けた値になることを示す棒グラフ。1回で0.99、10回で0.90、100回で0.37、1000回で0.00004、10の18乗回ではほぼ0">
+          <text class="strong" x="186" y="18" text-anchor="middle">縞の濃さ ＝ 0.99 を衝突の回数だけ掛ける</text>
+          <line x1="30" y1="150" x2="360" y2="150" stroke="var(--muted)" stroke-width="1"></line>
+          <line x1="30" y1="50" x2="30" y2="150" stroke="var(--muted)" stroke-width="1"></line>
+          <text class="label" x="26" y="54" text-anchor="end">1</text><text class="label" x="26" y="153" text-anchor="end">0</text>
+          <rect x="42" y="51.0" width="40" height="99.0" rx="3" fill="#2f7a6b"></rect><text class="label" x="62" y="45.0" text-anchor="middle">0.99</text><text class="label" x="62" y="166" text-anchor="middle">1回</text><rect x="108" y="60.0" width="40" height="90.0" rx="3" fill="#2f7a6b"></rect><text class="label" x="128" y="54.0" text-anchor="middle">0.90</text><text class="label" x="128" y="166" text-anchor="middle">10回</text><rect x="174" y="113.0" width="40" height="37.0" rx="3" fill="#2f7a6b"></rect><text class="label" x="194" y="107.0" text-anchor="middle">0.37</text><text class="label" x="194" y="166" text-anchor="middle">100回</text><rect x="240" y="148.8" width="40" height="1.2" rx="3" fill="var(--ng)"></rect><text class="label" x="260" y="142.8" text-anchor="middle">0.00004</text><text class="label" x="260" y="166" text-anchor="middle">1000回</text><rect x="306" y="148.8" width="40" height="1.2" rx="3" fill="var(--ng)"></rect><text class="label" x="326" y="142.8" text-anchor="middle">≈ 0</text><text class="label" x="326" y="166" text-anchor="middle">10¹⁸回</text>
+          <text class="label" x="186" y="186" text-anchor="middle">空気中の塵は毎秒 10¹⁸ 回ぶつかる → 一瞬で 0</text>
+        </svg>
+        <div class="diagram-caption">1回の衝突で縞の濃さが1%減るとしたときの、衝突の回数と縞の濃さ。足し算ではなく<strong>掛け算</strong>なので、100回で3分の1、1000回でほぼ0。空気中の塵が受ける毎秒10¹⁸回の衝突では、縞は一瞬で消える</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
@@ -162,6 +177,33 @@
           </div>
           <div class="dialog-bubble">いい質問だ。電子は小さすぎて、環境とほとんど衝突しないからだよ。デコヒーレンスの速さは、<strong>物体が大きいほど、環境が濃い（分子や光子が多い）ほど</strong>、桁違いに速くなる。だから実験家は真空にして、冷やして、小さい粒子を使う。実際、炭素原子60個でできたサッカーボール型の大きな分子（C60）でも、超高真空なら縞が出せた。そしてその仲間の、炭素原子70個のラグビーボール型の分子（C70）を<strong>熱してやる</strong>と、分子が自分から光を放ち始めて、縞は消えた。放った光が経路の手がかりを運び去ったからだ。2004年にウィーンで行われた実験で、消え方はデコヒーレンス理論の予言どおりだったよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="dq-svg" viewBox="0 0 372 212" width="100%" role="img" aria-label="大きさと環境の濃さでデコヒーレンスの速さが桁違いに変わることを示す3列の比較図。左：真空中の電子は小さく、環境とほとんど衝突しないので縞が出る。中：炭素原子60個や70個の大きな分子は超高真空なら縞が出るが、熱して光を放つと縞が消える。右：空気中の塵は毎秒10の18乗回の衝突を受け、一瞬で縞が消える">
+          <text class="strong" x="186" y="18" text-anchor="middle">大きさと環境の濃さで、消える速さは桁違い</text>
+          
+          <rect x="10" y="30" width="108" height="146" rx="10" fill="var(--paper2)" stroke="var(--line)" stroke-width="1.5"></rect><circle cx="64" cy="84" r="3" fill="#2f7a6b"></circle><circle cx="38" cy="66" r="2" fill="#c97a2a"></circle><circle cx="92" cy="100" r="2" fill="#c97a2a"></circle>
+          <text class="accent" x="64" y="48" text-anchor="middle">電子（真空中）</text>
+          <text class="label" x="64" y="122" text-anchor="middle">小さく、衝突は</text><text class="label" x="64" y="136" text-anchor="middle">ほとんど起きない</text>
+          <text x="64" y="166" text-anchor="middle" fill="var(--ok)" font-size="11" font-weight="900">縞が出る</text>
+          
+          <rect x="132" y="30" width="108" height="146" rx="10" fill="var(--paper2)" stroke="var(--line)" stroke-width="1.5"></rect><circle cx="186" cy="84" r="12" fill="none" stroke="#2f7a6b" stroke-width="2"></circle><circle cx="186" cy="84" r="5" fill="none" stroke="#2f7a6b" stroke-width="1.2"></circle><circle cx="160" cy="64" r="2" fill="#c97a2a"></circle><circle cx="212" cy="104" r="2" fill="#c97a2a"></circle>
+          <text class="accent" x="186" y="48" text-anchor="middle">C60・C70 分子</text>
+          <text class="label" x="186" y="122" text-anchor="middle">超高真空なら縞が出る</text><text class="label" x="186" y="136" text-anchor="middle">熱して光を放つと消える</text>
+          <text x="186" y="166" text-anchor="middle" fill="var(--ok)" font-size="11" font-weight="900">縞が出る</text>
+          
+          <rect x="254" y="30" width="108" height="146" rx="10" fill="var(--paper2)" stroke="var(--line)" stroke-width="1.5"></rect><circle cx="308" cy="84" r="16" fill="#cbb89a" stroke="#8a6b3e" stroke-width="1.5"></circle><circle cx="339.3" cy="97.2" r="2.2" fill="#c97a2a"></circle><line x1="339.3" y1="97.2" x2="337.4" y2="96.4" stroke="#c97a2a" stroke-width="1.4"></line><polygon points="331,93.7 338.8,93.2 336.1,99.6" fill="#c97a2a"></polygon><circle cx="325.6" cy="113.1" r="2.2" fill="#c97a2a"></circle><line x1="325.6" y1="113.1" x2="324.5" y2="111.4" stroke="#c97a2a" stroke-width="1.4"></line><polygon points="320.9,105.4 327.5,109.6 321.6,113.2" fill="#c97a2a"></polygon><circle cx="305.1" cy="117.9" r="2.2" fill="#c97a2a"></circle><line x1="305.1" y1="117.9" x2="305.3" y2="115.9" stroke="#c97a2a" stroke-width="1.4"></line><polygon points="305.9,108.9 308.8,116.2 301.8,115.6" fill="#c97a2a"></polygon><circle cx="285.7" cy="109.7" r="2.2" fill="#c97a2a"></circle><line x1="285.7" y1="109.7" x2="287.0" y2="108.2" stroke="#c97a2a" stroke-width="1.4"></line><polygon points="291.6,102.9 289.7,110.5 284.4,105.9" fill="#c97a2a"></polygon><circle cx="274.9" cy="91.7" r="2.2" fill="#c97a2a"></circle><line x1="274.9" y1="91.7" x2="276.8" y2="91.3" stroke="#c97a2a" stroke-width="1.4"></line><polygon points="283.6,89.7 277.6,94.7 276.0,87.9" fill="#c97a2a"></polygon><circle cx="276.7" cy="70.8" r="2.2" fill="#c97a2a"></circle><line x1="276.7" y1="70.8" x2="278.6" y2="71.6" stroke="#c97a2a" stroke-width="1.4"></line><polygon points="285,74.3 277.2,74.8 279.9,68.4" fill="#c97a2a"></polygon><circle cx="290.4" cy="54.9" r="2.2" fill="#c97a2a"></circle><line x1="290.4" y1="54.9" x2="291.5" y2="56.6" stroke="#c97a2a" stroke-width="1.4"></line><polygon points="295.1,62.6 288.5,58.4 294.4,54.8" fill="#c97a2a"></polygon><circle cx="310.9" cy="50.1" r="2.2" fill="#c97a2a"></circle><line x1="310.9" y1="50.1" x2="310.7" y2="52.1" stroke="#c97a2a" stroke-width="1.4"></line><polygon points="310.1,59.1 307.2,51.8 314.2,52.4" fill="#c97a2a"></polygon><circle cx="330.3" cy="58.3" r="2.2" fill="#c97a2a"></circle><line x1="330.3" y1="58.3" x2="329.0" y2="59.8" stroke="#c97a2a" stroke-width="1.4"></line><polygon points="324.4,65.1 326.3,57.5 331.6,62.1" fill="#c97a2a"></polygon><circle cx="341.1" cy="76.3" r="2.2" fill="#c97a2a"></circle><line x1="341.1" y1="76.3" x2="339.2" y2="76.7" stroke="#c97a2a" stroke-width="1.4"></line><polygon points="332.4,78.3 338.4,73.3 340.0,80.1" fill="#c97a2a"></polygon>
+          <text class="accent" x="308" y="48" text-anchor="middle">空気中の塵</text>
+          <text class="label" x="308" y="122" text-anchor="middle">毎秒 10¹⁸ 回の衝突</text>
+          <text x="308" y="166" text-anchor="middle" fill="var(--ng)" font-size="11" font-weight="900">縞が消える</text>
+          <text class="label" x="186" y="194" text-anchor="middle">大きいほど・環境が濃いほど速く消える</text>
+          <text class="label" x="186" y="208" text-anchor="middle">だから実験は、真空にして・冷やして・小さい粒子で</text>
+        </svg>
+        <div class="diagram-caption">デコヒーレンスの速さは<strong>物体が大きいほど、環境が濃いほど</strong>桁違いに速い。真空中の電子はほとんど衝突せず縞が出る。炭素原子60〜70個の大きな分子でも超高真空なら縞が出るが、熱して自分から光を放ち始めると、その光が手がかりを運び去って縞は消える（2004年ウィーン）</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
