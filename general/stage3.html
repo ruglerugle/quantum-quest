@@ -665,7 +665,7 @@
       </div>
 
       <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="bohr3d" role="img" aria-label="原子核のまわりの円軌道に電子の波を縦の針の列で描いた3Dアニメーション（2つ並び）。左は円周が波長のちょうど4倍の軌道で、波は一周して自分とぴったり重なり、何周重ねても針の列は残る。右は円周が波長の半端な倍率の軌道で、一周した波が出発点で自分自身とずれ、周回を重ねるほど打ち消し合って針が消えていく。スライダーで右の倍率と重ねる周回数を変えられ、ドラッグで視点を回せる"></canvas></div>
+        <div class="cv-wrap"><canvas id="bohr3d" role="img" aria-label="原子核のまわりの円軌道に電子の波を回る針の列（上下が実部、内外が虚部）で描いた3Dアニメーション（2つ並び）。左は円周が波長のちょうど4倍の軌道で、波は一周して自分とぴったり重なり、何周重ねても針の列は残る。右は円周が波長の半端な倍率の軌道で、一周した波が出発点で自分自身とずれ、周回を重ねるほど打ち消し合って針が消えていく。スライダーで右の倍率と重ねる周回数を変えられ、ドラッグで視点を回せる"></canvas></div>
         <div class="sim-ctrl">
           <label for="bo-n">右の図の 円周 ÷ 波長（半端な値）</label>
           <input type="range" id="bo-n" min="3.05" max="5.95" step="0.05" value="4.25" aria-label="右の図の円周が波長の何倍か">
@@ -676,7 +676,7 @@
         </div>
         <button class="sim-play" id="bo-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout"><span id="bo-msg">左：整数倍は何周重ねても残る ／ 右：半端な倍率は周回を重ねると打ち消し合う</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
-        <div class="diagram-caption">原子核のまわりの円軌道に乗った電子の波を、2つの軌道で比べる。薄い線が<strong>1周目だけ</strong>の波、針の列が<strong>周回を重ねた結果</strong>。<strong>左（円周＝波長×4）</strong>は、波が一周して出発点の自分とぴったり重なるので、何周重ねても針は消えず、定常波としてその場で振動し続ける。<strong>右（円周＝波長×4.25 など半端な倍率）</strong>は、一周してきた波がつなぎ目で自分自身とずれ（薄い線に段差ができる）、周回を重ねるうちに打ち消し合って針が消えていく――生き残れるのは、ぴったり閉じる軌道だけ</div>
+        <div class="diagram-caption">原子核のまわりの円軌道に乗った電子の波を、2つの軌道で比べる。針は電子の波の本体である<strong>回る針</strong>（上下が実部、内外が虚部）で、一周のあいだに n 回転する。薄い線が<strong>1周目だけ</strong>の針の先がたどる跡、針の列が<strong>周回を重ねた結果</strong>。<strong>左（円周＝波長×4）</strong>は、一周して戻った針が出発点の針とぴったり同じ向きになるので、何周重ねても針の長さは変わらず、この状態がそのまま残る。<strong>右（円周＝波長×4.25 など半端な倍率）</strong>は、一周してきた針がつなぎ目で出発点の針と向きがずれ（薄い線に段差ができる）、周回を重ねるうちに打ち消し合って針が短くなり消えていく――生き残れるのは、ぴったり閉じる軌道だけ。針の上下の波打ちだけを見ると sin 波の山と谷に見えるが、それは針の影（実部）で、針の長さは軌道のどこでも同じ。電子の波が回る針である理由は STAGE4 で</div>
       </div>
 
       <div class="dialogue-scene">
@@ -967,41 +967,47 @@
     for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
     ctx.stroke(); ctx.setLineDash([]);
   }
-  function lap1(n, th) { return Math.cos(n * th); }
-  /* m 周ぶん足し合わせた波（整数 n なら lap1 と同じ、半端なら打ち消し合う） */
-  function sumLaps(n, th, m) { var s = 0; for (var k = 0; k < m; k++) s += Math.cos(n * (th + 2 * Math.PI * k)); return s / m; }
-  function survive(n, m) { var d = Math.sin(Math.PI * n); if (Math.abs(d) < 1e-6) return 1; return Math.abs(Math.sin(Math.PI * n * m) / (m * d)); }
+  /* m 周ぶんの針を足し合わせたときの係数（複素数）。整数 n なら (1,0) のまま、半端なら短くなる */
+  function lapSum(n, m) { var re = 0, im = 0; for (var k = 0; k < m; k++) { re += Math.cos(2 * Math.PI * n * k); im += Math.sin(2 * Math.PI * n * k); } return [re / m, im / m]; }
+  function survive(n, m) { var v = lapSum(n, m); return Math.sqrt(v[0] * v[0] + v[1] * v[1]); }
 
-  function panel(ax, ay, n, m, osc, nar, tY, sY) {
+  function panel(ax, ay, n, m, nar, tY, sY) {
     var i, pts;
-    function P(th, y) { var p = rot(R * Math.cos(th), HZ * y, R * Math.sin(th)); return [ax + p[0], ay + p[1]]; }
-    pts = []; for (i = 0; i <= 90; i++) pts.push(P(2 * Math.PI * i / 90, 0)); poly(pts, C.orbit, 1.2, [3, 4]);
+    /* 針：根元は軌道上の点。先は 実部→上下、虚部→内外（半径の向き） */
+    function Q(th, re, im) { var c = Math.cos(th), sn = Math.sin(th), rr = R + HZ * im; var q = rot(rr * c, HZ * re, rr * sn); return [ax + q[0], ay + q[1]]; }
+    /* 角度 th の針（係数 S を掛けたもの）。針の向きは一周で n 回転し、時間でも回る */
+    function tip(th, S) { var ph = n * th - t, cr = Math.cos(ph), sr = Math.sin(ph); return [S[0] * cr - S[1] * sr, S[0] * sr + S[1] * cr]; }
+    pts = []; for (i = 0; i <= 90; i++) pts.push(Q(2 * Math.PI * i / 90, 0, 0)); poly(pts, C.orbit, 1.2, [3, 4]);
     ctx.fillStyle = C.nuc; ctx.strokeStyle = C.nucEdge; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(ax, ay, 4.5, 0, 7); ctx.fill(); ctx.stroke();
     text(ax, ay + 12, '原子核', C.muted, SUB);
-    pts = []; for (i = 0; i <= 180; i++) { var th = 2 * Math.PI * i / 180; pts.push(P(th, lap1(n, th) * osc)); } poly(pts, C.goldFaint, 1.1);
+    var S1 = [1, 0], S = lapSum(n, m);
+    /* 1周目だけの針の先がたどる線（薄い）：半端な n ではつなぎ目で段差 */
+    pts = []; for (i = 0; i <= 240; i++) { var th = 2 * Math.PI * i / 240, v1 = tip(th, S1); pts.push(Q(th, v1[0], v1[1])); } poly(pts, C.goldFaint, 1.1);
+    /* m 周重ねた針の列 */
     var env = [];
     for (i = 0; i < NH; i++) {
-      var th2 = 2 * Math.PI * i / NH, v = sumLaps(n, th2, m) * osc, b = P(th2, 0), tp = P(th2, v);
+      var th2 = 2 * Math.PI * i / NH, v = tip(th2, S), b = Q(th2, 0, 0), tp = Q(th2, v[0], v[1]);
       ctx.strokeStyle = C.gold; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
       ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.6, 0, 7); ctx.fill();
     }
-    for (i = 0; i <= 180; i++) { var th3 = 2 * Math.PI * i / 180; env.push(P(th3, sumLaps(n, th3, m) * osc)); } poly(env, C.env, 1.4);
-    var s0 = P(0, -1.4), s1 = P(0, 1.4); poly([s0, s1], 'rgba(200,67,63,.6)', 1, [3, 3]);
-    var sr = s1[0] > W * 0.72; text(s1[0] + (sr ? -4 : 4), s1[1] - 8, 'つなぎ目', C.red, SUB, sr ? 'right' : 'left');
+    for (i = 0; i <= 240; i++) { var th3 = 2 * Math.PI * i / 240, v3 = tip(th3, S); env.push(Q(th3, v3[0], v3[1])); } poly(env, C.env, 1.4);
+    var s0 = Q(0, -1.4, 0), s1 = Q(0, 1.4, 0); poly([s0, s1], 'rgba(200,67,63,.6)', 1, [3, 3]);
+    var sr2 = s1[0] > W * 0.72; text(s1[0] + (sr2 ? -4 : 4), s1[1] - 8, 'つなぎ目', C.red, SUB, sr2 ? 'right' : 'left');
     var integer = Math.abs(n - Math.round(n)) < 1e-6, sv = survive(n, m);
     text(ax, tY, '円周 ＝ 波長 × ' + n.toFixed(2) + (integer ? '（整数倍）' : '（半端）'), C.ink, TITLE);
-    text(ax, sY, integer ? (m + ' 周重ねても残る（100%）') : (m + ' 周重ねて 残り ' + Math.round(sv * 100) + '%'), integer ? C.ok : C.red, SUB);
+    text(ax, sY, integer ? (m + ' 周重ねても針の長さはそのまま（100%）') : (m + ' 周重ねて 針の長さは 残り ' + Math.round(sv * 100) + '%'), integer ? C.ok : C.red, SUB);
   }
   function draw() {
-    var n = +sln.value, m = +slm.value, nar = W < 520, osc = Math.cos(t);
+    var n = +sln.value, m = +slm.value, nar = W < 520;
     ctx.clearRect(0, 0, W, H);
     if (nar) {
-      panel(W * 0.5, H * 0.29, NINT, m, osc, nar, H * 0.075, H * 0.47);
-      panel(W * 0.5, H * 0.77, n, m, osc, nar, H * 0.555, H * 0.95);
+      text(W * 0.5, H * 0.025, '回る針：上下＝実部・内外＝虚部', C.muted, SUB);
+      panel(W * 0.5, H * 0.29, NINT, m, nar, H * 0.075, H * 0.47);
+      panel(W * 0.5, H * 0.77, n, m, nar, H * 0.555, H * 0.95);
     } else {
-      text(W * 0.5, H * 0.05, '円周が波長の整数倍なら残り、半端なら打ち消し合う', C.ink, TITLE);
-      panel(W * 0.27, H * 0.55, NINT, m, osc, nar, H * 0.14, H * 0.94);
-      panel(W * 0.73, H * 0.55, n, m, osc, nar, H * 0.14, H * 0.94);
+      text(W * 0.5, H * 0.05, '回る針（上下＝実部・内外＝虚部）で描いた電子の波：整数倍なら残り、半端なら消える', C.ink, TITLE);
+      panel(W * 0.27, H * 0.55, NINT, m, nar, H * 0.14, H * 0.94);
+      panel(W * 0.73, H * 0.55, n, m, nar, H * 0.14, H * 0.94);
     }
     slnv.textContent = '× ' + n.toFixed(2);
     slmv.textContent = m + ' 周';
@@ -1020,7 +1026,7 @@
   function frame(now) {
     if (!playing) return;
     var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
-    t += dt * 2.4; lapClock += dt;
+    t += dt * 1.6; lapClock += dt;
     if (lapClock > 1.1) { lapClock = 0; var m = +slm.value; slm.value = m >= +slm.max ? 1 : m + 1; }
     draw(); raf = requestAnimationFrame(frame);
   }
