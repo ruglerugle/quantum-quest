@@ -671,8 +671,8 @@
           <input type="range" id="bo-n" min="3.05" max="5.95" step="0.05" value="4.25" aria-label="右の図の円周が波長の何倍か">
           <span class="val" id="bo-nv">× 4.25</span>
           <label for="bo-m">重ねる周回数</label>
-          <input type="range" id="bo-m" min="1" max="8" step="1" value="1" aria-label="重ねる周回数">
-          <span class="val" id="bo-mv">1 周</span>
+          <input type="range" id="bo-m" min="1" max="8" step="0.01" value="1" aria-label="重ねる周回数">
+          <span class="val" id="bo-mv">1.0 周</span>
         </div>
         <button class="sim-play" id="bo-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout"><span id="bo-msg">左：整数倍は何周重ねても残る ／ 右：半端な倍率は周回を重ねると打ち消し合う</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
@@ -969,8 +969,9 @@
   }
   function lap1(n, th) { return Math.cos(n * th); }
   /* m 周ぶん足し合わせた波（整数 n なら lap1 と同じ、半端なら打ち消し合う） */
-  function sumLaps(n, th, m) { var s = 0; for (var k = 0; k < m; k++) s += Math.cos(n * (th + 2 * Math.PI * k)); return s / m; }
-  function survive(n, m) { var d = Math.sin(Math.PI * n); if (Math.abs(d) < 1e-6) return 1; return Math.abs(Math.sin(Math.PI * n * m) / (m * d)); }
+  /* m は連続値：最後の周は途中まで（端数ぶんだけ）足す。こうすると周回が進むとき針がなめらかに変わる */
+  function sumLaps(n, th, m) { var K = Math.floor(m), f = m - K, s = 0; for (var k = 0; k < K; k++) s += Math.cos(n * (th + 2 * Math.PI * k)); s += f * Math.cos(n * (th + 2 * Math.PI * K)); return s / m; }
+  function survive(n, m) { var K = Math.floor(m), f = m - K, re = 0, im = 0; for (var k = 0; k < K; k++) { re += Math.cos(2 * Math.PI * n * k); im += Math.sin(2 * Math.PI * n * k); } re += f * Math.cos(2 * Math.PI * n * K); im += f * Math.sin(2 * Math.PI * n * K); return Math.sqrt(re * re + im * im) / m; }
 
   function panel(ax, ay, n, m, osc, nar, tY, sY) {
     var i, pts;
@@ -990,7 +991,7 @@
     var sr = s1[0] > W * 0.72; text(s1[0] + (sr ? -4 : 4), s1[1] - 8, 'つなぎ目', C.red, SUB, sr ? 'right' : 'left');
     var integer = Math.abs(n - Math.round(n)) < 1e-6, sv = survive(n, m);
     text(ax, tY, '円周 ＝ 波長 × ' + n.toFixed(2) + (integer ? '（整数倍）' : '（半端）'), C.ink, TITLE);
-    text(ax, sY, integer ? (m + ' 周重ねても残る（100%）') : (m + ' 周重ねて 残り ' + Math.round(sv * 100) + '%'), integer ? C.ok : C.red, SUB);
+    text(ax, sY, integer ? (m.toFixed(1) + ' 周重ねても残る（100%）') : (m.toFixed(1) + ' 周重ねて 残り ' + Math.round(sv * 100) + '%'), integer ? C.ok : C.red, SUB);
   }
   function draw() {
     var n = +sln.value, m = +slm.value, nar = W < 520, osc = Math.cos(t);
@@ -1004,7 +1005,7 @@
       panel(W * 0.73, H * 0.55, n, m, osc, nar, H * 0.14, H * 0.94);
     }
     slnv.textContent = '× ' + n.toFixed(2);
-    slmv.textContent = m + ' 周';
+    slmv.textContent = m.toFixed(1) + ' 周';
   }
   function resize() {
     var w = cv.clientWidth || 320, nar = w < 520, h = Math.round(nar ? Math.min(w * 1.45, 560) : Math.min(w * 0.5, 360)), d = window.devicePixelRatio || 1;
@@ -1020,8 +1021,11 @@
   function frame(now) {
     if (!playing) return;
     var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
-    t += dt * 2.4; lapClock += dt;
-    if (lapClock > 1.1) { lapClock = 0; var m = +slm.value; slm.value = m >= +slm.max ? 1 : m + 1; }
+    t += dt * 2.4;
+    var m = +slm.value;
+    if (m >= +slm.max) { lapClock += dt; if (lapClock > 1.4) { m = 1; lapClock = 0; } }   /* 8周まで来たら少し止まって最初から */
+    else { m = Math.min(+slm.max, m + dt * 0.8); }
+    slm.value = m.toFixed(2);
     draw(); raf = requestAnimationFrame(frame);
   }
   function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
