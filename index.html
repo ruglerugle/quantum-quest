@@ -218,6 +218,7 @@
     letter-spacing:.02em;
     box-shadow:0 2px 6px -2px rgba(90,60,20,.35);
   }
+  .node.n7 .label{position:relative;left:-54px}   /* 右端で切れないよう左へ */
   .node:hover .badge, .node:focus-visible .badge, .node.active .badge{
     transform:translateY(-5px) scale(1.08);
     box-shadow:0 0 0 3px rgba(255,253,246,.9), 0 0 20px 0 color-mix(in srgb, var(--accent) 65%, transparent), 0 10px 18px -6px rgba(90,60,20,.5);
@@ -403,7 +404,7 @@
          data-tags="二重スリット,波動関数,不確定性原理" data-num="1" data-stages="全7ステージ" data-level="入門" data-prereq="前提なし">
         <span class="start-tip">ここから！</span>
         <div class="badge" style="--accent:#2f6fa6">🌊<span class="num">1</span></div>
-        <div class="label">量子力学クエスト</div>
+        <div class="label">第1章 量子力学概要</div>
       </a>
 
       <a class="node n2" href="https://quantum-mechanics.habatakijuku.com/bell-inequality/"
@@ -411,7 +412,7 @@
          data-desc="「月は見ていなくても存在するか」――アインシュタインの疑問に自然自身が答えを出すまで。もつれ・隠れた変数・ベルの不等式を個数の数え上げだけで導き、アスペの実験と2022年ノーベル賞へ。"
          data-tags="量子もつれ,隠れた変数,ノーベル賞" data-num="2" data-stages="全6ステージ" data-level="基礎" data-prereq="前提: ①">
         <div class="badge" style="--accent:#c8437a">🔔<span class="num">2</span></div>
-        <div class="label">ベルの不等式</div>
+        <div class="label">第2章 ベルの不等式の破れ</div>
       </a>
 
       <a class="node n3" href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/"
@@ -419,7 +420,7 @@
          data-desc="観測すると干渉縞が消えるのはなぜか。振幅の足し算ルールだけを武器に、経路検出器・量子消しゴム・デコヒーレンスを解き明かし、「月が消えない理由」から観測問題の最前線まで到達する。"
          data-tags="観測問題,デコヒーレンス,量子消しゴム" data-num="3" data-stages="全7ステージ" data-level="基礎" data-prereq="前提: ①②">
         <div class="badge" style="--accent:#2f8a8f">🌫️<span class="num">3</span></div>
-        <div class="label">消える干渉縞</div>
+        <div class="label">第3章 デコヒーレンスと量子消しゴム</div>
       </a>
 
       <a class="node n4" href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/"
@@ -427,7 +428,7 @@
          data-desc="①で出会った Δx·Δp ≥ ℏ/2 は、実は波の数学から導ける厳密な定理。位置 x・波数 k・積分・微分・部分積分と道具を発見しながら、1927年のケナードの証明を最後まで自分の手でたどる。数学の山場。"
          data-tags="証明,標準偏差,部分積分" data-num="4" data-stages="全7ステージ" data-level="発展" data-prereq="前提: ①">
         <div class="badge" style="--accent:#b98a2e">📏<span class="num">4</span></div>
-        <div class="label">ケナードの不等式</div>
+        <div class="label">第4章 不確定性原理の証明</div>
       </a>
 
       <a class="node n5" href="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/"
@@ -435,7 +436,7 @@
          data-desc="①で「読み方」を学んだ方程式は、どこから来たのか。波の式・複素数・E=hν・p=h/λ・微分と道具をそろえ、1926年の方程式を自分の手で組み立てる。井戸の解法とトンネル効果もここで。"
          data-tags="導出,複素数,微分" data-num="5" data-stages="全7ステージ" data-level="基礎" data-prereq="前提: ①④">
         <div class="badge" style="--accent:#7a4fb0">📜<span class="num">5</span></div>
-        <div class="label">シュレディンガー方程式</div>
+        <div class="label">第5章 シュレディンガー方程式の導出</div>
       </a>
 
       <a class="node n6" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/"
@@ -443,7 +444,7 @@
          data-desc="「全部の答えを同時に計算するから速い」は半分まちがい。量子ビット・ゲート・もつれから、グローバーの探索・ショアの因数分解・誤り訂正まで、速さの正体＝干渉の設計を自分の手で確かめる。"
          data-tags="量子ビット,グローバー,ショア" data-num="6" data-stages="全8ステージ" data-level="発展" data-prereq="前提: ①②③">
         <div class="badge" style="--accent:#2f8f65">💻<span class="num">6</span></div>
-        <div class="label">量子コンピュータ</div>
+        <div class="label">第6章 量子コンピューターの仕組み</div>
       </a>
 
       <a class="node n7" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/"
@@ -451,7 +452,7 @@
          data-desc="実機は宇宙空間の100倍冷たい場所で動いている。超伝導・ジョセフソン接合・希釈冷凍機・マイクロ波制御から100万量子ビットへの壁まで、⑥の原理を現実の物質で作る工学に踏み込む。旅の終着点。"
          data-tags="超伝導,希釈冷凍機,誤り訂正" data-num="7" data-stages="全8ステージ" data-level="発展" data-prereq="前提: ⑥">
         <div class="badge" style="--accent:#c8663f">❄️<span class="num">7</span></div>
-        <div class="label">量子ハードウェア</div>
+        <div class="label">第7章 量子コンピューターの仕組み(ハード)</div>
       </a>
 
     </div>
