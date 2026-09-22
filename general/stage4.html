@@ -51,17 +51,10 @@
   .imul-svg .flash{fill:#c8433f;font-size:15px;font-weight:900}
   .imul-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .imul-svg .strong{fill:var(--ink);font-size:12.5px;font-weight:900}
-  .cloud-svg .nucleus{fill:#c8433f;stroke:#8f2f2c;stroke-width:1.2}
-  .cloud-svg .orbit{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 4}
-  .cloud-svg .edot{fill:#2f6fa6;stroke:#1d4a73;stroke-width:1.2}
-  .cloud-svg .cdot{fill:#2f6fa6}
-  .cloud-svg .sep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
-  .cloud-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
-  .cloud-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .sister-link{align-self:flex-end;font-size:12px;font-weight:700;color:var(--muted);background:var(--paper2);border:1px dashed var(--line);border-radius:8px;padding:7px 12px}
   .sister-link a{color:var(--gold-dark);font-weight:800}
   .cv-wrap{width:100%}
-  #realcpx{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #realcpx,#cloud3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
   .sim-play:hover{background:#fff}
   .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
@@ -391,82 +384,9 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="cloud-svg" viewBox="0 0 320 210" width="100%" role="img" aria-label="左：昔の想像図では電子が原子核のまわりの軌道をぐるぐる回る。右：実際の姿では、観測のたびに1点ずつ見つかった位置がたまっていき、原子核のまわりに濃淡のある電子雲が浮かび上がる">
-          <text class="strong" x="10" y="18">昔の想像図</text>
-          <circle class="nucleus" cx="75" cy="115" r="6"></circle>
-          <circle class="orbit" cx="75" cy="115" r="42"></circle>
-          <g transform="translate(75,73)">
-            <circle class="edot" cx="0" cy="0" r="5">
-              <animateMotion dur="2.8s" repeatCount="indefinite" path="M0,0 a42,42 0 1,1 0,84 a42,42 0 1,1 0,-84"></animateMotion>
-            </circle>
-          </g>
-          <text class="label" x="75" y="184" text-anchor="middle">粒が軌道を回る……？</text>
-          <line class="sep" x1="160" y1="15" x2="160" y2="195"></line>
-          <text class="strong" x="175" y="18">実際の姿（|ψ|² の雲）</text>
-          <circle class="nucleus" cx="240" cy="115" r="6"></circle>
-          <circle class="cdot" cx="233.5" cy="125.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.368;0.383;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="258.1" cy="118.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.666;0.681;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="228.7" cy="134.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.189;0.204;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="274.6" cy="142.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.159;0.174;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="240.6" cy="84.2" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.219;0.234;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="225.0" cy="127.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.652;0.667;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="229.8" cy="116.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.562;0.577;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="238.3" cy="124.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.458;0.473;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="256.2" cy="110.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.174;0.189;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="269.1" cy="101.2" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.816;0.831;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="224.9" cy="135.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.055;0.070;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="198.4" cy="114.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.100;0.115;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="238.2" cy="90.3" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.517;0.532;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="249.1" cy="136.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.890;0.905;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="249.5" cy="113.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.532;0.547;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="246.3" cy="112.3" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.323;0.338;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="262.9" cy="112.7" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.607;0.622;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="257.8" cy="142.1" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.547;0.562;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="266.7" cy="104.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.144;0.159;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="222.6" cy="74.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.428;0.443;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="242.7" cy="94.1" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.487;0.502;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="223.2" cy="120.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.353;0.368;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="242.0" cy="101.1" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.681;0.696;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="279.7" cy="123.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.860;0.875;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="229.8" cy="105.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.711;0.726;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="270.6" cy="155.2" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.129;0.144;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="270.0" cy="109.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.741;0.756;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="266.8" cy="97.3" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.204;0.219;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="214.3" cy="81.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.264;0.279;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="221.9" cy="92.1" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.502;0.517;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="263.0" cy="154.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.786;0.801;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="240.0" cy="144.7" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.696;0.711;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="247.8" cy="139.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.875;0.890;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="241.1" cy="138.7" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.801;0.816;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="195.9" cy="132.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.831;0.846;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="222.8" cy="112.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.443;0.458;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="245.6" cy="127.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.771;0.786;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="224.7" cy="95.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.279;0.294;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="250.1" cy="115.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.920;0.935;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="246.1" cy="126.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.592;0.607;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="228.5" cy="113.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.308;0.323;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="260.5" cy="127.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.756;0.771;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="235.3" cy="125.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.622;0.637;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="220.8" cy="128.7" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.383;0.398;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="241.0" cy="76.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.473;0.488;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="231.8" cy="160.3" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.726;0.741;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="262.0" cy="131.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.398;0.413;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="231.4" cy="132.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.413;0.428;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="252.4" cy="117.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.845;0.860;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="230.4" cy="109.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.294;0.309;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="267.2" cy="113.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.338;0.353;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="211.3" cy="92.4" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.637;0.652;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="214.5" cy="124.0" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.577;0.592;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="232.9" cy="120.8" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.040;0.055;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="252.8" cy="121.7" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.249;0.264;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="241.6" cy="125.6" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.070;0.085;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="245.5" cy="98.5" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.115;0.130;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="267.4" cy="80.1" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.234;0.249;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="240.2" cy="133.2" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.905;0.920;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <circle class="cdot" cx="257.2" cy="124.9" r="2.2" opacity="0"><animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.085;0.100;1" dur="12s" repeatCount="indefinite"></animate></circle>
-          <text class="label" x="240" y="184" text-anchor="middle">観測1回ごとに1点、</text>
-          <text class="label" x="240" y="199" text-anchor="middle">たまると濃淡の「雲」に</text>
-        </svg>
+        <div class="cv-wrap"><canvas id="cloud3d" role="img" aria-label="左：昔の想像図。原子核のまわりの円軌道を電子の粒がぐるぐる回る3Dアニメーション。右：実際の姿。観測のたびに1点ずつ、見つかった位置が原子核のまわりの空間にたまっていき、|ψ|² の濃い中心付近ほど点が密な電子雲が浮かび上がる。ドラッグで視点を回せる"></canvas></div>
+        <button class="sim-play" id="cl-play" type="button" aria-pressed="true">⏸ 観測を止める</button>
+        <div class="readout"><span id="cl-msg">見つかった点：0 個</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
         <div class="diagram-caption">左：惑星のように軌道を回る、という古いイメージ。右：実際は決まった通り道は無く、観測のたびに |ψ|² の濃い場所ほど見つかりやすい。見つかった点を重ねると、原子核のまわりに「電子雲」が浮かび上がる</div>
       </div>
 
@@ -539,8 +459,7 @@
 <script>
   // アニメーションを避けたい設定のユーザーには静止画で表示する
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll(".rot-svg animate, .rot-svg animateTransform, .imul-svg animate, .imul-svg animateTransform, .cloud-svg animate, .cloud-svg animateMotion").forEach(function (a) { a.remove(); });
-    document.querySelectorAll(".cloud-svg .cdot").forEach(function (c) { c.setAttribute("opacity", "0.85"); });
+    document.querySelectorAll(".rot-svg animate, .rot-svg animateTransform, .imul-svg animate, .imul-svg animateTransform").forEach(function (a) { a.remove(); });
   }
 </script>
 <script>
@@ -676,5 +595,117 @@
 })();
 </script>
 <script>QQ.initStagePage(4);</script>
+<script>
+/* 電子雲：左は昔の想像図（円軌道を回る粒）、右は観測のたびに1点ずつたまる |ψ|² の雲（3D・回せる） */
+(function(){
+  var cv = document.getElementById('cloud3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var btn = document.getElementById('cl-play'), msg = document.getElementById('cl-msg');
+  var RO = 5.0, A0 = 1.45, NP = 260, RATE = 9;
+  var yaw = 0.35, pitch = -0.5, t = 0, W = 0, H = 0, sc = 1, shown = 0, acc = 0, hold = 0;
+  var C = { nuc: '#c8433f', nucEdge: '#8f2f2c', orbit: 'rgba(138,122,92,.55)', e: '#2f6fa6', eEdge: '#1d4a73', dot: '47,111,166', muted: '#8a7a5c', ink: '#241d12' };
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  /* 水素の 1s 状態の |ψ|²（中心ほど濃く、r² e^(−2r/a) の分布）から、見つかる点をあらかじめ抽選しておく */
+  var seed = 20240917;
+  function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+  var PTS = [];
+  while (PTS.length < NP) {
+    var r = rnd() * 5 * A0, pr = (r / A0) * (r / A0) * Math.exp(-2 * r / A0) / 0.3679;
+    if (rnd() > pr) continue;
+    var u = 2 * rnd() - 1, ph = 2 * Math.PI * rnd(), q = Math.sqrt(1 - u * u);
+    PTS.push([r * q * Math.cos(ph), r * u, r * q * Math.sin(ph)]);
+  }
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp), Y * sp + Z1 * cp];
+  }
+  function text(x, y, str, color, font, align, halo) { ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; if (halo) { ctx.strokeStyle = 'rgba(253,252,248,.9)'; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.strokeText(str, x, y); } ctx.fillStyle = color; ctx.fillText(str, x, y); }
+  function nucleus(ax, ay) { ctx.fillStyle = C.nuc; ctx.strokeStyle = C.nucEdge; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(ax, ay, 5, 0, 7); ctx.fill(); ctx.stroke(); }
+  function orbitPanel(ax, ay, tY, sY) {
+    var i, q;
+    ctx.strokeStyle = C.orbit; ctx.lineWidth = 1.2; ctx.setLineDash([3, 4]); ctx.beginPath();
+    for (i = 0; i <= 90; i++) { var th = 2 * Math.PI * i / 90; q = rot(RO * Math.cos(th), 0, RO * Math.sin(th)); if (i) ctx.lineTo(ax + q[0], ay + q[1]); else ctx.moveTo(ax + q[0], ay + q[1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+    var e = rot(RO * Math.cos(t), 0, RO * Math.sin(t));
+    if (e[2] < 0) { nucleus(ax, ay); }
+    ctx.fillStyle = C.e; ctx.strokeStyle = C.eEdge; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(ax + e[0], ay + e[1], 4.5, 0, 7); ctx.fill(); ctx.stroke();
+    if (e[2] >= 0) { nucleus(ax, ay); }
+    text(ax, ay + 14, '原子核', C.muted, SUB);
+    text(ax, tY, '昔の想像図', C.ink, TITLE);
+    text(ax, sY, '粒が軌道を回る……？', C.muted, SUB);
+  }
+  function cloudPanel(ax, ay, tY, sY, nar) {
+    var i, pr = [];
+    for (i = 0; i < shown; i++) { var q = rot(PTS[i][0], PTS[i][1], PTS[i][2]); pr.push(q); }
+    pr.sort(function(a, b){ return a[2] - b[2]; });
+    var back = true;
+    for (i = 0; i < pr.length; i++) {
+      var g = pr[i];
+      if (back && g[2] >= 0) { nucleus(ax, ay); back = false; }
+      var al = 0.45 + 0.45 * Math.max(0, Math.min(1, (g[2] + 4) / 8));
+      ctx.fillStyle = 'rgba(' + C.dot + ',' + al.toFixed(2) + ')'; ctx.beginPath(); ctx.arc(ax + g[0], ay + g[1], 2.1, 0, 7); ctx.fill();
+    }
+    if (back) nucleus(ax, ay);
+    text(ax, ay + 14, '原子核', C.muted, SUB, 'center', true);
+    text(ax, tY, '実際の姿（|ψ|² の雲）', C.ink, TITLE);
+    text(ax, sY, nar ? '観測1回ごとに1点、たまると「雲」に' : '観測1回ごとに1点、たまると濃淡の「雲」に', C.muted, SUB);
+  }
+  function draw() {
+    var nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    if (nar) {
+      orbitPanel(W * 0.5, H * 0.27, H * 0.06, H * 0.47);
+      cloudPanel(W * 0.5, H * 0.75, H * 0.545, H * 0.955, nar);
+    } else {
+      orbitPanel(W * 0.27, H * 0.53, H * 0.08, H * 0.94);
+      cloudPanel(W * 0.73, H * 0.53, H * 0.08, H * 0.94, nar);
+    }
+    msg.textContent = '見つかった点：' + shown + ' 個';
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, nar = w < 520, h = Math.round(nar ? Math.min(w * 1.35, 520) : Math.min(w * 0.46, 330)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = nar ? Math.min(w / 20, h / 30) : Math.min(w / 42, h / 15);
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    t += dt * 2.2;
+    if (shown >= NP) { hold += dt; if (hold > 2.2) { shown = 0; hold = 0; } }
+    else { acc += dt * RATE; while (acc >= 1 && shown < NP) { shown++; acc -= 1; } }
+    draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 観測を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 観測を続ける'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { shown = NP; userPaused = true; pause(); draw(); return; }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
+  } else { play(); }
+})();
+</script>
 </body>
 </html>
