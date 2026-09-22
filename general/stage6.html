@@ -360,10 +360,10 @@
       </div>
 
       <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="mix3d" role="img" aria-label="エネルギーが2種類混ざった状態の3Dアニメーション（4パネル）。左上：エネルギー E₁ の状態 ψ₁ の針の列（混ざり具合60%）がゆっくり回る。右上：エネルギー E₂ の状態 ψ₂ の針の列（40%）が3倍速く回る。どちらも針の長さは変わらない。左下：2つを足した針の列と |ψ|²。右下：横 x・奥 t・高さ |ψ|² の曲面で、山が左右に行ったり来たり揺れ続ける。ドラッグで視点を回せる"></canvas></div>
+        <div class="cv-wrap"><canvas id="mix3d" role="img" aria-label="エネルギーが2種類混ざった状態の3Dアニメーション（4パネル）。左上：エネルギー E₁ の状態 ψ₁ の針の列（混ざり具合60%）がゆっくり回る。右上：エネルギー E₂ の状態 ψ₂ の針の列（40%）が3倍速く回る。どちらも針の長さは変わらない。左下：各点で ψ₁ の針の先に ψ₂ の針を継ぎ足して描いた、2つを足した針の列と |ψ|²。右下：横 x・奥 t・高さ |ψ|² の曲面で、山が左右に行ったり来たり揺れ続ける。ドラッグで視点を回せる"></canvas></div>
         <button class="sim-play" id="mix-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout"><span>測ったら E₁ が出る確率 60%・E₂ が出る確率 40% ―― 時間がたっても変わらない（凍結）</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
-        <div class="diagram-caption">電子のエネルギーに E₁ と E₂ の2種類（電子が取り得る2つのエネルギーの値）が混ざった状態。上の2つは、それぞれの状態の針の列。ψ₁ の針はゆっくり、ψ₂ の針は速く回るが、どちらも<strong>針の長さ（薄いチューブの太さ）は時間がたっても変わらない</strong>――「測ったら E₁ が出るか E₂ が出るか」の混ざり具合は 60%：40% のまま凍結されている。これが量子力学でのエネルギー保存則。ところが2つを<strong>足した</strong>針の列（左下）では、回るペースが違う2組の針の向きがそろったりずれたりするので、|ψ|² の形は時間とともに<strong>山が左右に行ったり来たり</strong>動き続ける（右下の曲面）。この内訳が変わるのは、外から光を当てるなど、よそとエネルギーをやり取りしたときだけ</div>
+        <div class="diagram-caption">電子のエネルギーに E₁ と E₂ の2種類（電子が取り得る2つのエネルギーの値）が混ざった状態。上の2つは、それぞれの状態の針の列。ψ₁ の針はゆっくり、ψ₂ の針は速く回るが、どちらも<strong>針の長さ（薄いチューブの太さ）は時間がたっても変わらない</strong>――「測ったら E₁ が出るか E₂ が出るか」の混ざり具合は 60%：40% のまま凍結されている。これが量子力学でのエネルギー保存則。ところが2つを<strong>足した</strong>針の列（左下。各点で ψ₁ の針（金）の先に ψ₂ の針（青）を継ぎ足した先が、足した状態の針（赤））では、回るペースが違う2組の針の向きがそろったりずれたりするので、|ψ|² の形は時間とともに<strong>山が左右に行ったり来たり</strong>動き続ける（右下の曲面）。この内訳が変わるのは、外から光を当てるなど、よそとエネルギーをやり取りしたときだけ</div>
       </div>
 
       <div class="diagram-box">
@@ -917,7 +917,7 @@
     ctx.stroke(); ctx.setLineDash([]);
   }
   /* 針の列。tube に振幅関数を渡すと、針の先が通る跡（太さ一定）を薄く描く */
-  function comb(ax, ay, vec, color, envColor, withShadow, tube, tubeColor) {
+  function comb(ax, ay, vec, color, envColor, withShadow, tube, tubeColor, parts) {
     var i, j, u, env = [], sh = [], pts;
     function P(xx, re, im) { var p = rot((xx - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay + p[1]]; }
     if (tube) {
@@ -931,8 +931,17 @@
     if (withShadow) { for (i = 0; i <= 80; i++) { u = i / 80; var d = dens(u, t); sh.push(P(u, d * 0.75, 0)); } poly(sh, C.shadow, 1.6, [4, 3]); }
     for (i = 0; i <= N; i++) {
       u = i / N; var v = vec(u, t), b = P(u, 0, 0), tp = P(u, v[0], v[1]);
-      ctx.strokeStyle = color; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
-      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.7, 0, 7); ctx.fill();
+      if (parts) {
+        /* 成分の針を継ぎ足して描く：ψ₁ の針の先から ψ₂ の針を伸ばすと、その先が足した針の先 */
+        var base = b, acc = [0, 0];
+        for (j = 0; j < parts.length; j++) {
+          var pv = parts[j][0](u, t); acc = [acc[0] + pv[0], acc[1] + pv[1]]; var tq = P(u, acc[0], acc[1]);
+          ctx.strokeStyle = parts[j][1]; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(base[0], base[1]); ctx.lineTo(tq[0], tq[1]); ctx.stroke();
+          base = tq;
+        }
+      }
+      ctx.strokeStyle = color; ctx.lineWidth = parts ? 1.7 : 1.3; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(tp[0], tp[1], parts ? 2.1 : 1.7, 0, 7); ctx.fill();
     }
     for (i = 0; i <= 80; i++) { u = i / 80; var v2_ = vec(u, t); env.push(P(u, v2_[0], v2_[1])); }
     poly(env, envColor, 1.4);
@@ -955,7 +964,10 @@
     var ax1 = W * 0.26, ay1 = H * 0.27, ax2 = W * 0.75, ay2 = H * 0.27, ax3 = W * 0.26, ay3 = H * 0.76, ax4 = W * 0.75, ay4 = H * 0.78;
     comb(ax1, ay1, v1, C.gold, C.envG, false, function(u){ return A1 * p1(u); }, C.tubeG);
     comb(ax2, ay2, v2, C.blue, C.envB, false, function(u){ return A2 * p2(u); }, C.tubeB);
-    comb(ax3, ay3, vs, C.red, C.envR, true);
+    comb(ax3, ay3, vs, C.red, C.envR, true, null, null, [[v1, 'rgba(166,116,42,.85)'], [v2, 'rgba(47,111,166,.85)']]);
+    /* 上段2つの間の「＋」と、下段左への「＝」 */
+    text(W * 0.5, H * 0.27, '＋', C.ink, '900 18px system-ui,sans-serif');
+    text(ax3, H * 0.515, '＝', C.ink, '900 18px system-ui,sans-serif');
     sheet(ax4, ay4);
     /* 軸（左上に1組） */
     function P1(xx, re, im) { var p = rot((xx - 0.5) * XS, HZ * re, -DIM * im); return [ax1 + p[0], ay1 + p[1]]; }
@@ -965,10 +977,10 @@
     text(aY[0] + (nar ? 5 : -5), aY[1], '実部', C.muted, SUB, nar ? 'left' : 'right'); text(aZ[0] + (nar ? 4 : -4), aZ[1] + 9, '虚部', C.muted, SUB, nar ? 'left' : 'center'); text(aX[0] + 6, aX[1] + 2, 'x', C.muted, SUB, 'left');
     text(ax1, H * 0.045, nar ? 'E₁ の状態 ψ₁（60%）' : 'エネルギー E₁ の状態 ψ₁（混ざり具合 60%）', C.gold, TITLE);
     text(ax2, H * 0.045, nar ? 'E₂ の状態 ψ₂（40%）' : 'エネルギー E₂ の状態 ψ₂（混ざり具合 40%）', C.blue, TITLE);
-    text(ax1, H * 0.48, nar ? '針は E₁/ℏ のペースで回る' : '針は E₁/ℏ のペースで回る。長さ（チューブ）は変わらない', C.muted, SUB);
-    text(ax2, H * 0.48, nar ? '針は E₂/ℏ＝3E₁/ℏ で速く回る' : '針は E₂/ℏ＝3E₁/ℏ のペースで速く回る。長さは変わらない', C.muted, SUB);
-    text(ax3, H * 0.545, nar ? '足した ψ₁＋ψ₂' : '足した ψ₁＋ψ₂（点線＝|ψ|²）', C.red, TITLE);
-    text(ax4, H * 0.545, nar ? '|ψ|² の曲面（横 x・奥 t）' : '|ψ|² の曲面（横 x・奥 t）：山が左右に行ったり来たり', C.red, TITLE);
+    text(ax1, H * 0.465, nar ? '針は E₁/ℏ のペースで回る' : '針は E₁/ℏ のペースで回る。長さ（チューブ）は変わらない', C.muted, SUB);
+    text(ax2, H * 0.465, nar ? '針は E₂/ℏ＝3E₁/ℏ で速く回る' : '針は E₂/ℏ＝3E₁/ℏ のペースで速く回る。長さは変わらない', C.muted, SUB);
+    text(ax3, H * 0.56, nar ? 'ψ₁（金）＋ψ₂（青）＝ 赤' : '足した ψ₁＋ψ₂：金の針に青の針を継ぎ足した先が赤（点線＝|ψ|²）', C.red, TITLE);
+    text(ax4, H * 0.56, nar ? '|ψ|² の曲面（横 x・奥 t）' : '|ψ|² の曲面（横 x・奥 t）：山が左右に行ったり来たり', C.red, TITLE);
     text(ax3, H * 0.975, nar ? '2組の針の向きがそろったりずれたり' : '2組の針の向きがそろったりずれたりを繰り返す', C.muted, SUB);
     text(ax4, H * 0.975, nar ? '揺れの振動数 ν＝(E₂−E₁)/h' : '揺れの振動数 ν＝(E₂−E₁)/h。赤い線が「いま」', C.muted, SUB);
   }
