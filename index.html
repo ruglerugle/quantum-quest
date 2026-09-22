@@ -147,13 +147,13 @@
     border-radius:10px;
     overflow:hidden;
     background:
-      radial-gradient(220px 160px at 9% 22%, rgba(94,170,255,.16), transparent 70%),
-      radial-gradient(210px 160px at 22% 58%, rgba(143,123,255,.15), transparent 70%),
-      radial-gradient(220px 170px at 37% 28%, rgba(240,160,40,.16), transparent 70%),
-      radial-gradient(220px 180px at 51% 66%, rgba(255,100,150,.13), transparent 70%),
-      radial-gradient(220px 170px at 65% 35%, rgba(50,190,170,.16), transparent 70%),
-      radial-gradient(230px 180px at 79% 70%, rgba(90,190,90,.15), transparent 70%),
-      radial-gradient(220px 170px at 92% 34%, rgba(240,130,70,.16), transparent 70%),
+      radial-gradient(220px 160px at 9% 25%, rgba(94,170,255,.16), transparent 70%),
+      radial-gradient(220px 170px at 33% 21%, rgba(255,100,150,.13), transparent 70%),
+      radial-gradient(220px 170px at 57% 27%, rgba(50,190,170,.16), transparent 70%),
+      radial-gradient(220px 170px at 81% 22%, rgba(240,160,40,.16), transparent 70%),
+      radial-gradient(210px 160px at 86% 70%, rgba(143,123,255,.15), transparent 70%),
+      radial-gradient(230px 180px at 60% 74%, rgba(90,190,90,.15), transparent 70%),
+      radial-gradient(220px 170px at 33% 69%, rgba(240,130,70,.16), transparent 70%),
       repeating-radial-gradient(circle at 30% 40%, transparent 0 7px, rgba(138,106,52,.035) 7px 8px),
       linear-gradient(160deg,#f7f0da,#efe4c3 55%,#f4ecd4);
     box-shadow:inset 0 0 60px rgba(122,90,42,.35), inset 0 0 14px rgba(122,90,42,.25);
@@ -218,7 +218,6 @@
     letter-spacing:.02em;
     box-shadow:0 2px 6px -2px rgba(90,60,20,.35);
   }
-  .node.n7 .label{position:relative;left:-54px}   /* 右端で切れないよう左へ */
   .node:hover .badge, .node:focus-visible .badge, .node.active .badge{
     transform:translateY(-5px) scale(1.08);
     box-shadow:0 0 0 3px rgba(255,253,246,.9), 0 0 20px 0 color-mix(in srgb, var(--accent) 65%, transparent), 0 10px 18px -6px rgba(90,60,20,.5);
@@ -237,13 +236,13 @@
   }
 
   /* Node position presets */
-  .n1{left:9%;  top:22%}
-  .n2{left:22%; top:58%}
-  .n3{left:37%; top:28%}
-  .n4{left:51%; top:66%}
-  .n5{left:65%; top:35%}
-  .n6{left:79%; top:70%}
-  .n7{left:92%; top:34%}
+  .n1{left:9%;  top:25%}
+  .n2{left:33%; top:21%}
+  .n3{left:57%; top:27%}
+  .n4{left:81%; top:22%}
+  .n5{left:86%; top:70%}
+  .n6{left:60%; top:74%}
+  .n7{left:33%; top:69%}
 
   .compass{position:absolute;top:12px;right:14px;width:46px;height:46px;opacity:.9}
 
@@ -367,24 +366,24 @@
       <div class="grid-lines"></div>
 
       <svg class="terrain" viewBox="0 0 100 60" preserveAspectRatio="none">
-        <path class="trail-glow" d="M9,13.2 C13,20 16,26 22,34.8 C26,40.5 32,26 37,16.8 C41,10 45,28 51,39.6 C55,47 59,30 65,21 C69,15.5 73,32 79,42 C83,48 87,32 92,20.4"/>
-        <path class="trail" d="M9,13.2 C13,20 16,26 22,34.8 C26,40.5 32,26 37,16.8 C41,10 45,28 51,39.6 C55,47 59,30 65,21 C69,15.5 73,32 79,42 C83,48 87,32 92,20.4"/>
+        <path class="trail-glow" d="M9,15 C17,9 25,17 33,12.6 C41,8 49,21 57,16.2 C65,11 73,18 81,13.2 C91,7 97,32 86,42 C79,49 68,40 60,44.4 C52,49 42,36 33,41.4"/>
+        <path class="trail" d="M9,15 C17,9 25,17 33,12.6 C41,8 49,21 57,16.2 C65,11 73,18 81,13.2 C91,7 97,32 86,42 C79,49 68,40 60,44.4 C52,49 42,36 33,41.4"/>
         <path class="trail-glow mobile-only" d="M15,10.8 C25,6.9 40,10.9 50,9 C62,6.9 76,8.4 85,12 C92,14.9 92,22.4 86,28.8 C78,34.4 62,28.4 50,26.4 C38,24.4 20,22.4 14,29.4 C10,34.4 16,39.4 26,41.9 C36,44.4 46,41.9 50,45.6"/>
         <path class="trail mobile-only" d="M15,10.8 C25,6.9 40,10.9 50,9 C62,6.9 76,8.4 85,12 C92,14.9 92,22.4 86,28.8 C78,34.4 62,28.4 50,26.4 C38,24.4 20,22.4 14,29.4 C10,34.4 16,39.4 26,41.9 C36,44.4 46,41.9 50,45.6"/>
       </svg>
 
       <!-- decorative scenery -->
-      <span class="deco" style="left:5%;top:52%" aria-hidden="true">🔭</span>
-      <span class="deco" style="left:15%;top:20%" aria-hidden="true">🌊</span>
-      <span class="deco" style="left:28%;top:84%" aria-hidden="true">🌙</span>
-      <span class="deco" style="left:31%;top:52%" aria-hidden="true">🔔</span>
-      <span class="deco" style="left:44%;top:14%" aria-hidden="true">✨</span>
-      <span class="deco" style="left:45%;top:88%" aria-hidden="true">🛰️</span>
-      <span class="deco" style="left:58%;top:58%" aria-hidden="true">📏</span>
-      <span class="deco" style="left:71%;top:16%" aria-hidden="true">🪐</span>
-      <span class="deco" style="left:72%;top:90%" aria-hidden="true">🧲</span>
-      <span class="deco" style="left:86%;top:56%" aria-hidden="true">❄️</span>
-      <span class="deco" style="left:95%;top:80%" aria-hidden="true">🏭</span>
+      <span class="deco" style="left:6%;top:60%" aria-hidden="true">🔭</span>
+      <span class="deco" style="left:18%;top:12%" aria-hidden="true">🌊</span>
+      <span class="deco" style="left:8%;top:86%" aria-hidden="true">🌙</span>
+      <span class="deco" style="left:36%;top:40%" aria-hidden="true">🔔</span>
+      <span class="deco" style="left:46%;top:10%" aria-hidden="true">✨</span>
+      <span class="deco" style="left:48%;top:90%" aria-hidden="true">🛰️</span>
+      <span class="deco" style="left:76%;top:40%" aria-hidden="true">📏</span>
+      <span class="deco" style="left:70%;top:9%" aria-hidden="true">🪐</span>
+      <span class="deco" style="left:73%;top:90%" aria-hidden="true">🧲</span>
+      <span class="deco" style="left:22%;top:78%" aria-hidden="true">❄️</span>
+      <span class="deco" style="left:94%;top:90%" aria-hidden="true">🏭</span>
 
       <div class="flag" aria-hidden="true">🚩<span class="label">START</span></div>
 
