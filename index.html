@@ -518,6 +518,16 @@
   }
 
   nodes.forEach(function(n){
+    /* スマホ：1回目のタップが詳細表示（hover相当）に消費されて遷移しないため、タップ（指を動かさず離す）で即遷移する */
+    var tStart = null;
+    n.addEventListener('touchstart', function(e){ var t = e.touches[0]; tStart = [t.clientX, t.clientY]; }, { passive: true });
+    n.addEventListener('touchend', function(e){
+      if (!tStart) return;
+      var t = e.changedTouches[0], dx = Math.abs(t.clientX - tStart[0]), dy = Math.abs(t.clientY - tStart[1]);
+      tStart = null;
+      if (dx < 10 && dy < 10) { e.preventDefault(); window.location.href = n.getAttribute('href'); }
+    });
+    n.addEventListener('touchcancel', function(){ tStart = null; });
     ['mouseenter','focus'].forEach(function(ev){
       n.addEventListener(ev, function(){
         nodes.forEach(function(x){x.classList.remove('active')});
