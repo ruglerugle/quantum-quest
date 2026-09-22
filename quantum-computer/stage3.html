@@ -157,11 +157,32 @@
         </div>
       </div>
       <div class="diagram-box">
-        <svg id="path-svg" class="qc-svg" viewBox="0 0 372 370" width="100%" role="img" aria-label="アダマールゲートを2回当てたときの4本の道筋を1本ずつ数えた表。Hは0.71倍を配る装置で、マイナスがつくのは|1⟩に当てたときの|1⟩行だけ。4本の道筋の値はいずれも0.71かける0.71で0.5になり、|1⟩行へ向かう2本のうち1本だけが正反対の向きになるため、足すとゼロになる">
-          <text class="strong" x="186" y="16" text-anchor="middle">4本の道筋を、かけ算で1本ずつ数える</text>
-          <g id="path-body"></g>
+        <svg class="qc-svg" viewBox="0 0 372 372" width="100%" role="img" aria-label="アダマールゲートを2回当てる計算を行列の掛け算で書いた図。1回目：H の表 0.71×［1 1／1 −1］を入力 (1, 0) に当てると (0.71, 0.71)。2回目：同じ表を (0.71, 0.71) に当てると、上の行は 0.71×0.71＋0.71×0.71＝1、下の行は 0.71×0.71−0.71×0.71＝0。2回目に現れる4つの掛け算が4本の道筋で、下の行の2つ目の掛け算だけがマイナスになるので打ち消し合う">
+          <text class="strong" x="186" y="16" text-anchor="middle">H を2回：行列で書くと、4本の道筋は4つの掛け算</text>
+          <text class="accent" x="14" y="40" text-anchor="start">1回目：|0⟩ ＝ (1, 0) に当てる</text>
+          <text class="strong" x="48" y="83" text-anchor="end">0.71×</text><path d="M58 50 h-6 v52 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M104 50 h6 v52 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="68" y="70" text-anchor="middle" style="fill:#2f6fa6">1</text><text class="strong" x="94" y="70" text-anchor="middle" style="fill:#2f6fa6">1</text><text class="strong" x="68" y="94" text-anchor="middle" style="fill:#c8663f">1</text><text class="strong" x="94" y="94" text-anchor="middle" style="fill:#c8663f">−1</text><path d="M128 50 h-6 v52 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M150 50 h6 v52 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="139" y="70" text-anchor="middle">1</text><text class="strong" x="139" y="94" text-anchor="middle">0</text>
+          <text class="strong" x="172" y="83" text-anchor="middle">＝</text>
+          <path d="M192 50 h-6 v52 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M298 50 h6 v52 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="245" y="70" text-anchor="middle" style="font-size:11px">0.71×1 ＋ 0.71×0</text><text class="strong" x="245" y="94" text-anchor="middle" style="font-size:11px">0.71×1 ＋ (−0.71)×0</text>
+          <text class="strong" x="318" y="83" text-anchor="middle">＝</text>
+          <path d="M334 50 h-6 v52 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M356 50 h6 v52 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="345" y="70" text-anchor="middle">0.71</text><text class="strong" x="345" y="94" text-anchor="middle">0.71</text>
+          <text class="accent" x="14" y="142" text-anchor="start">2回目：出てきた (0.71, 0.71) に同じ表を当てる</text>
+          <text class="strong" x="48" y="185" text-anchor="end">0.71×</text><path d="M58 152 h-6 v52 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M104 152 h6 v52 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="68" y="172" text-anchor="middle" style="fill:#2f6fa6">1</text><text class="strong" x="94" y="172" text-anchor="middle" style="fill:#2f6fa6">1</text><text class="strong" x="68" y="196" text-anchor="middle" style="fill:#c8663f">1</text><text class="strong" x="94" y="196" text-anchor="middle" style="fill:#c8663f">−1</text><path d="M128 152 h-6 v52 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M150 152 h6 v52 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="139" y="172" text-anchor="middle">0.71</text><text class="strong" x="139" y="196" text-anchor="middle">0.71</text>
+          <text class="strong" x="172" y="185" text-anchor="middle">＝</text>
+          <path d="M192 152 h-6 v52 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M340 152 h6 v52 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/>
+          <text class="strong" x="200" y="172" text-anchor="start" style="fill:#2f6fa6">0.71×0.71</text><text class="strong" x="266" y="172" text-anchor="start">＋</text><text class="strong" x="282" y="172" text-anchor="start" style="fill:#2f6fa6">0.71×0.71</text>
+          <text class="strong" x="200" y="196" text-anchor="start" style="fill:#c8663f">0.71×0.71</text><text class="strong" x="266" y="196" text-anchor="start">−</text><text class="strong" x="282" y="196" text-anchor="start" style="fill:#c8433f">0.71×0.71</text>
+          <text class="label" x="222" y="158" text-anchor="middle">①</text><text class="label" x="304" y="158" text-anchor="middle">②</text>
+          <text class="label" x="222" y="214" text-anchor="middle">③</text><text class="label" x="304" y="214" text-anchor="middle" style="fill:#c8433f">④ マイナス</text>
+          <text class="label" x="186" y="238" text-anchor="middle">＝ (0.5＋0.5,　0.5−0.5) ＝ (1, 0)　→ ぴったり |0⟩ に戻る</text>
+          <line x1="14" y1="252" x2="358" y2="252" stroke="var(--line)" stroke-width="1"/>
+          <text class="accent" x="14" y="272" text-anchor="start">4つの掛け算 ＝ 4本の道筋</text>
+          <text class="label" x="14" y="292" text-anchor="start" style="fill:#2f6fa6">① 途中 |0⟩ を経由して |0⟩ へ　　② 途中 |1⟩ を経由して |0⟩ へ</text>
+          <text class="label" x="14" y="309" text-anchor="start" style="fill:#c8663f">③ 途中 |0⟩ を経由して |1⟩ へ　　④ 途中 |1⟩ を経由して |1⟩ へ</text>
+          <text class="label" x="14" y="329" text-anchor="start">左の数 × 途中の矢印（1回目の結果）を、行き先の行ごとに足す</text>
+          <text class="label" x="14" y="348" text-anchor="start" style="fill:#c8433f">④ だけ表の −1 を拾って正反対 → |1⟩ 行は 0.5−0.5＝0（打ち消し）</text>
+          <text class="label" x="14" y="364" text-anchor="start" style="fill:#2f6fa6">|0⟩ 行は 0.5＋0.5＝1（強め合い）</text>
         </svg>
-        <div class="diagram-caption">上段が H のルール。H は<strong>「入ってきた矢印の0.71倍を、それぞれの行に配る」倍率の装置</strong>で、<strong>マイナスがつくのは |1⟩ に当てたときの |1⟩ 行、この1か所だけ</strong>。<br>中段は、|0⟩ から H を2回通したときの4本の道筋。倍率は続けて通すと<strong>掛け算</strong>になるので（0.71倍のコピー機を2回通すのと同じ）、どの道筋も 0.71×0.71＝<strong>0.5</strong>。ただし4本目だけは、上段の「1か所のマイナス」を拾うので<strong>正反対の向き</strong>になる。右端の矢印がその向きだ。<br>下段は、行き先が同じものどうしの足し算。|0⟩ 行には同じ向きが2本届いて<strong>強め合って1.00</strong>、|1⟩ 行には正反対が2本届いて<strong>打ち消し合ってゼロ</strong>。マイナス1個の置き場所だけが、この結果を作っている。</div>
+        <div class="diagram-caption">H を2回当てる計算を、前のステージの<strong>行列の掛け算</strong>で書いたもの。H の表は 0.71×［1　1／1　−1］。<strong>1回目</strong>は (1, 0) に当てて (0.71, 0.71)。<strong>2回目</strong>は同じ表を (0.71, 0.71) に当てる。ここで現れる4つの掛け算が、そのまま<strong>4本の道筋</strong>（表のどの数 × 途中のどの矢印か）。どれも 0.71×0.71＝0.5 だが、④だけ表の −1 を拾って正反対の向きになるので、|1⟩ 行は 0.5−0.5＝0 で打ち消し合い、|0⟩ 行は 0.5＋0.5＝1 で強め合う。マイナス1個の置き場所だけが、この結果を作っている。</div>
       </div>
 
       <div class="dialogue-scene">
@@ -450,89 +471,5 @@
 })();
 </script>
 
-<script>
-(function(){
-  // 図: H×2 の4本の道筋を、倍率のかけ算として1本ずつ並べた表（静的）
-  var g = document.getElementById('path-body');
-  if (!g) return;
-  var ns = 'http://www.w3.org/2000/svg';
-  var C0 = '#2f5a9e', C1 = '#b5504a';
-
-  function el(name, attrs, parent) {
-    var e = document.createElementNS(ns, name);
-    for (var k in attrs) e.setAttribute(k, attrs[k]);
-    (parent || g).appendChild(e);
-    return e;
-  }
-  function txt(x, y, cls, content, anchor) {
-    var t = el('text', {x: x, y: y, 'class': cls, 'text-anchor': anchor || 'start'});
-    t.textContent = content;
-    return t;
-  }
-  var defs = el('defs', {});
-  [['p-ah0', C0], ['p-ah1', C1]].forEach(function (p) {
-    var m = el('marker', {id: p[0], viewBox: '0 0 8 8', refX: 7, refY: 4, markerWidth: 5, markerHeight: 5, markerUnits: 'userSpaceOnUse', orient: 'auto'}, defs);
-    el('path', {d: 'M0 0 L8 4 L0 8 z', fill: p[1]}, m);
-  });
-
-  // 上段: H のルール（マイナスは1か所だけ）
-  txt(14, 36, 'label', 'H のルール ― 0.71倍を配る。マイナスは1か所だけ');
-  [
-    {x: 14, head: '|0⟩ に H を当てる', a: '＋0.71', b: '＋0.71', note: 'どちらもそのままの向き', warn: false},
-    {x: 190, head: '|1⟩ に H を当てる', a: '＋0.71', b: '−0.71', note: '|1⟩ 行だけ正反対の向き', warn: true}
-  ].forEach(function (p) {
-    el('rect', {x: p.x, y: 44, width: 168, height: 90, rx: 6,
-      fill: p.warn ? '#fbe9e8' : 'var(--paper2)', stroke: p.warn ? '#e79a97' : 'var(--line)'});
-    txt(p.x + 10, 62, 'strong', p.head);
-    var l0 = txt(p.x + 10, 82, 'label', '|0⟩ 行へ ' + p.a);
-    l0.style.fill = C0; l0.style.fontWeight = '900';
-    var l1 = txt(p.x + 10, 100, 'label', '|1⟩ 行へ ' + p.b);
-    l1.style.fill = C1; l1.style.fontWeight = '900';
-    var nt = txt(p.x + 10, 118, 'label', p.note);
-    if (p.warn) { nt.style.fill = C1; nt.style.fontWeight = '900'; }
-  });
-
-  // 中段: 4本の道筋
-  txt(14, 152, 'label', '|0⟩ から H を2回 ― 道筋は4本');
-  var ROWS = [
-    {via: '|0⟩', mul: '0.71 × 0.71', res: '＝ ＋0.50', to: '|0⟩ 行へ', dest: 0, minus: false},
-    {via: '|1⟩', mul: '0.71 × 0.71', res: '＝ ＋0.50', to: '|0⟩ 行へ', dest: 0, minus: false},
-    {via: '|0⟩', mul: '0.71 × 0.71', res: '＝ ＋0.50', to: '|1⟩ 行へ', dest: 1, minus: false},
-    {via: '|1⟩', mul: '0.71 ×（−0.71）', res: '＝ −0.50', to: '|1⟩ 行へ', dest: 1, minus: true}
-  ];
-  ROWS.forEach(function (r, i) {
-    var y = 160 + i * 30, base = y + 17;
-    var col = r.dest === 0 ? C0 : C1;
-    el('rect', {x: 14, y: y, width: 344, height: 26, rx: 5,
-      fill: r.dest === 0 ? '#e9eff8' : '#fbe9e8', stroke: r.minus ? '#e79a97' : 'var(--line)',
-      'stroke-width': r.minus ? 1.6 : 1});
-    txt(24, base, 'label', '経由 ' + r.via);
-    txt(92, base, 'label', r.mul);
-    var rs = txt(190, base, 'label', r.res);
-    rs.style.fill = col; rs.style.fontWeight = '900';
-    var ts = txt(252, base, 'label', r.to);
-    ts.style.fill = col; ts.style.fontWeight = '900';
-    // 右端: 届いた矢印の向き（右＝そのまま、左＝正反対）
-    var x1 = r.minus ? 344 : 312, x2 = r.minus ? 312 : 344;
-    el('line', {x1: x1, y1: base - 4, x2: x2, y2: base - 4, stroke: col, 'stroke-width': 2.4,
-      'marker-end': 'url(#' + (r.dest === 0 ? 'p-ah0' : 'p-ah1') + ')'});
-  });
-
-  // 下段: 行き先ごとの合計
-  txt(14, 294, 'label', '行き先ごとに足す');
-  [
-    {x: 14, head: '|0⟩ 行：0.5 ＋ 0.5', sub: '＝ 1.00　強め合い', dest: 0},
-    {x: 190, head: '|1⟩ 行：0.5 と −0.5', sub: '＝ 0　打ち消し合い', dest: 1}
-  ].forEach(function (p) {
-    var col = p.dest === 0 ? C0 : C1;
-    el('rect', {x: p.x, y: 302, width: 168, height: 56, rx: 6,
-      fill: p.dest === 0 ? '#e9eff8' : '#fbe9e8', stroke: 'var(--line)'});
-    var h = txt(p.x + 10, 320, 'strong', p.head);
-    h.style.fill = col;
-    var s = txt(p.x + 10, 340, 'label', p.sub);
-    s.style.fill = col; s.style.fontWeight = '900';
-  });
-})();
-</script>
 </body>
 </html>
