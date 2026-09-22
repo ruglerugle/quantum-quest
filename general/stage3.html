@@ -524,7 +524,7 @@
         </div>
         <button class="sim-play" id="kk-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout"><span id="kk-msg">よじれの殻が光速で広がっている</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
-        <div class="diagram-caption">電気の力の<strong>場</strong>の線を3Dで描いたもの。等速でまっすぐ進むあいだ（t＜0）は線は粒から放射状にそろう。t＝0 で粒が上へ向きを変えると、内側の線は新しい位置から、外側の線はまだ「向きを変えなければいた位置」（点線の丸）から出たままで、つなぎ目の球面に<strong>よじれ</strong>（赤）ができる。場の変化は光の速さでしか伝わらないので、この殻は光速で外へ広がっていく。それが電磁波（光）。円運動は向きを変え続けるので、よじれを出し続ける</div>
+        <div class="diagram-caption">電気の力の<strong>場</strong>の線を3Dで描いたもの。等速でまっすぐ進むあいだ（t＜0）は線は粒から放射状にそろう。t＝0 で粒が上へ向きを変えると、内側の線は新しい位置から、外側の線はまだ「向きを変えなければいた位置」（点線の丸）から出たままで、つなぎ目の球面に<strong>よじれ</strong>（赤）ができる。濃い青で強調した1本を追うと、内側 → よじれ → 外側が<strong>同じ1本の線</strong>としてつながっているのが分かる。場の変化は光の速さでしか伝わらないので、この殻は光速で外へ広がっていく。それが電磁波（光）。円運動は向きを変え続けるので、よじれを出し続ける</div>
       </div>
 
       <div class="dialogue-scene">
@@ -1058,7 +1058,7 @@
   var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
   var C = { line: '47,111,166', kink: '200,67,63', q: '#e3b563', qEdge: '#a6742a', ink: '#241d12', muted: '#8a7a5c', red: '#c8433f' };
   /* 方向（球面上に均等に散らす） */
-  var DIRS = [];
+  var DIRS = [], HL = 1 / Math.sqrt(0.75 * 0.75 + 0.35 * 0.35 + 0.55 * 0.55), HU = [0.75 * HL, 0.35 * HL, 0.55 * HL];  /* 強調する1本の向き */
   for (var i = 0; i < N; i++) { var y = 1 - 2 * (i + 0.5) / N, r = Math.sqrt(1 - y * y), ph = i * 2.399963; DIRS.push([r * Math.cos(ph), y, r * Math.sin(ph)]); }
   function rot(X, Y, Z) {
     var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
@@ -1079,17 +1079,18 @@
     var P = t < 0 ? [V * t, 0, 0] : [0, V * t, 0];      /* いまの粒の位置（t<0 は右へ、t>0 は上へ） */
     var O = [V * Math.max(t, 0), 0, 0];                   /* 向きを変えなければいた位置 */
     var R = CL * Math.max(t, 0);                           /* よじれの殻の半径 ＝ 光速 × 経過時間 */
-    var segs = [];
-    for (i = 0; i < N; i++) {
-      var u = DIRS[i];
-      if (t <= 0) { segs.push({ a: P, b: add(P, u, LMAX), k: 0 }); continue; }
+    var segs = [], hs = [];
+    /* 1本の線 ＝ 内側（粒から方向 u）→ よじれ（殻の上）→ 外側（変えなければいた位置から同じ方向 u） */
+    function build(u, out) {
+      if (t <= 0) { out.push({ a: P, b: add(P, u, LMAX), k: 0 }); return; }
       var s1 = hit(P, u, R);
-      if (s1 < 0 || s1 > LMAX) { segs.push({ a: P, b: add(P, u, LMAX), k: 0 }); continue; }
+      if (s1 < 0 || s1 > LMAX) { out.push({ a: P, b: add(P, u, LMAX), k: 0 }); return; }
       var s2 = hit(O, u, R), A = add(P, u, s1), B = add(O, u, s2);
-      segs.push({ a: P, b: A, k: 0 });
-      segs.push({ a: A, b: B, k: 1 });
-      if (s2 < LMAX) segs.push({ a: B, b: add(O, u, LMAX), k: 0 });
+      out.push({ a: P, b: A, k: 0 }); out.push({ a: A, b: B, k: 1 });
+      if (s2 < LMAX) out.push({ a: B, b: add(O, u, LMAX), k: 0 });
     }
+    for (i = 0; i < N; i++) build(DIRS[i], segs);
+    build(HU, hs);
     /* 奥から手前へ描く（奥は薄く） */
     var pr = segs.map(function(sg){ var a = PR(sg.a), b = PR(sg.b); return { a: a, b: b, k: sg.k, z: (a[2] + b[2]) / 2 }; });
     pr.sort(function(x, y){ return x.z - y.z; });
@@ -1099,6 +1100,10 @@
       ctx.lineWidth = g.k ? 2.6 : 1.2; ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(g.a[0], g.a[1]); ctx.lineTo(g.b[0], g.b[1]); ctx.stroke();
     }
+    /* 強調する1本（濃い青）：内側 → よじれ → 外側 が同じ1本であることを示す */
+    for (i = 0; i < hs.length; i++) { var h2 = hs[i], a2 = PR(h2.a), b2 = PR(h2.b); ctx.strokeStyle = h2.k ? '#c8433f' : '#1d4a73'; ctx.lineWidth = h2.k ? 4.5 : 3; ctx.beginPath(); ctx.moveTo(a2[0], a2[1]); ctx.lineTo(b2[0], b2[1]); ctx.stroke(); }
+    var he = PR(add(t <= 0 ? P : O, HU, LMAX)), hx = Math.max(70, Math.min(W - 70, he[0]));
+    text(hx, he[1] - 11, nar ? '同じ1本の線' : '同じ1本の線（内側 → よじれ → 外側）', '#1d4a73', SUB);
     /* 殻の輪郭 */
     if (R > 0.05) { ctx.strokeStyle = 'rgba(200,67,63,.25)'; ctx.lineWidth = 1; ctx.setLineDash([3, 4]); ctx.beginPath(); ctx.arc(ax, ay, sc * R, 0, 7); ctx.stroke(); ctx.setLineDash([]); }
     /* 向きを変えなければいた位置（点線の丸） */
