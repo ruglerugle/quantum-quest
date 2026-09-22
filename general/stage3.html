@@ -665,15 +665,18 @@
       </div>
 
       <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="bohr3d" role="img" aria-label="原子核のまわりの円軌道に電子の波を縦の針の列で描いた3Dアニメーション。スライダーで円周が波長の何倍かを変えられる。整数倍なら波は一周してぴったり自分と重なり、定常波としてその場で振動し続ける。半端な倍率では一周した波が出発点で自分自身とずれ、何周も重なるうちに打ち消し合って消える。ドラッグで視点を回せる"></canvas></div>
+        <div class="cv-wrap"><canvas id="bohr3d" role="img" aria-label="原子核のまわりの円軌道に電子の波を縦の針の列で描いた3Dアニメーション（2つ並び）。左は円周が波長のちょうど4倍の軌道で、波は一周して自分とぴったり重なり、何周重ねても針の列は残る。右は円周が波長の半端な倍率の軌道で、一周した波が出発点で自分自身とずれ、周回を重ねるほど打ち消し合って針が消えていく。スライダーで右の倍率と重ねる周回数を変えられ、ドラッグで視点を回せる"></canvas></div>
         <div class="sim-ctrl">
-          <label for="bo-n">円周 ÷ 波長（円周が波長の何倍か）</label>
-          <input type="range" id="bo-n" min="3" max="6" step="0.05" value="4" aria-label="円周が波長の何倍か">
-          <span class="val" id="bo-nv">× 4.00</span>
+          <label for="bo-n">右の図の 円周 ÷ 波長（半端な値）</label>
+          <input type="range" id="bo-n" min="3.05" max="5.95" step="0.05" value="4.25" aria-label="右の図の円周が波長の何倍か">
+          <span class="val" id="bo-nv">× 4.25</span>
+          <label for="bo-m">重ねる周回数</label>
+          <input type="range" id="bo-m" min="1" max="8" step="1" value="1" aria-label="重ねる周回数">
+          <span class="val" id="bo-mv">1 周</span>
         </div>
         <button class="sim-play" id="bo-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
-        <div class="readout"><span id="bo-msg">生き残る軌道：円周が波長のちょうど整数倍</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
-        <div class="diagram-caption">原子核のまわりの円軌道に乗った電子の波。薄い線が<strong>1周目だけ</strong>の波、針の列が<strong>何周も重ねた結果</strong>。円周が波長のちょうど整数倍（×4、×5…）なら、波は一周して出発点の自分とぴったり重なり、定常波としてその場で振動し続ける。スライダーを半端な値（×4.5 など）にすると、一周してきた波がつなぎ目で自分自身とずれ（薄い線に段差ができる）、周回を重ねるうちに打ち消し合って針が消えていく――生き残れるのは、ぴったり閉じる軌道だけ</div>
+        <div class="readout"><span id="bo-msg">左：整数倍は何周重ねても残る ／ 右：半端な倍率は周回を重ねると打ち消し合う</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">原子核のまわりの円軌道に乗った電子の波を、2つの軌道で比べる。薄い線が<strong>1周目だけ</strong>の波、針の列が<strong>周回を重ねた結果</strong>。<strong>左（円周＝波長×4）</strong>は、波が一周して出発点の自分とぴったり重なるので、何周重ねても針は消えず、定常波としてその場で振動し続ける。<strong>右（円周＝波長×4.25 など半端な倍率）</strong>は、一周してきた波がつなぎ目で自分自身とずれ（薄い線に段差ができる）、周回を重ねるうちに打ち消し合って針が消えていく――生き残れるのは、ぴったり閉じる軌道だけ</div>
       </div>
 
       <div class="dialogue-scene">
@@ -940,18 +943,18 @@
 })();
 </script>
 <script>
-/* ボーアの軌道：原子核のまわりの円軌道（水平面）に、電子の波を縦向きの針の列で描く。
-   n＝円周÷波長。波は何周もして自分自身と重なるので、M 周ぶんを足し合わせた結果を描く。
-   n が整数ならぴったり重なって定常波として生き残り、半端なら打ち消し合って消える。 */
+/* ボーアの軌道：円周÷波長 が整数（左）と半端（右）の2つの軌道を並べ、周回を m 周重ねた結果を針の列で描く。
+   整数ならぴったり重なって定常波として残り、半端なら周回を重ねるほど打ち消し合って消える。 */
 (function(){
   var cv = document.getElementById('bohr3d');
   if (!cv) return;
   var ctx = cv.getContext('2d');
-  var sl = document.getElementById('bo-n'), slv = document.getElementById('bo-nv');
+  var sln = document.getElementById('bo-n'), slnv = document.getElementById('bo-nv');
+  var slm = document.getElementById('bo-m'), slmv = document.getElementById('bo-mv');
   var btn = document.getElementById('bo-play'), msg = document.getElementById('bo-msg');
-  var R = 9, NH = 96, HZ = 2.6, M = 8;
-  var yaw = 0.3, pitch = -0.62, t = 0, W = 0, H = 0, sc = 1;
-  var C = { gold: '#a6742a', goldFaint: 'rgba(166,116,42,.35)', env: 'rgba(166,116,42,.7)', orbit: 'rgba(138,122,92,.55)', nuc: '#c8433f', nucEdge: '#8f2f2c', muted: '#8a7a5c', ink: '#241d12', red: '#c8433f', blue: '#2f6fa6' };
+  var R = 9, NH = 96, HZ = 2.6, NINT = 4;
+  var yaw = 0.3, pitch = -0.62, t = 0, W = 0, H = 0, sc = 1, lapClock = 0;
+  var C = { gold: '#a6742a', goldFaint: 'rgba(166,116,42,.35)', env: 'rgba(166,116,42,.7)', orbit: 'rgba(138,122,92,.55)', nuc: '#c8433f', nucEdge: '#8f2f2c', muted: '#8a7a5c', ink: '#241d12', red: '#c8433f', ok: '#2f9e5c' };
   var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
   function rot(X, Y, Z) {
     var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
@@ -964,47 +967,50 @@
     for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
     ctx.stroke(); ctx.setLineDash([]);
   }
-  /* 1周目だけの波（角度 th での高さ、時間で振動） */
   function lap1(n, th) { return Math.cos(n * th); }
-  /* M 周ぶん足し合わせた波（整数 n なら lap1 と同じ、半端なら打ち消し合う） */
-  function sumLaps(n, th) { var s = 0; for (var m = 0; m < M; m++) s += Math.cos(n * (th + 2 * Math.PI * m)); return s / M; }
-  /* 生き残る割合（M 周の和の大きさ） */
-  function survive(n) { var d = Math.sin(Math.PI * n); if (Math.abs(d) < 1e-6) return 1; return Math.abs(Math.sin(Math.PI * n * M) / (M * d)); }
+  /* m 周ぶん足し合わせた波（整数 n なら lap1 と同じ、半端なら打ち消し合う） */
+  function sumLaps(n, th, m) { var s = 0; for (var k = 0; k < m; k++) s += Math.cos(n * (th + 2 * Math.PI * k)); return s / m; }
+  function survive(n, m) { var d = Math.sin(Math.PI * n); if (Math.abs(d) < 1e-6) return 1; return Math.abs(Math.sin(Math.PI * n * m) / (m * d)); }
 
-  function draw() {
-    var n = +sl.value, i, pts, nar = W < 520, osc = Math.cos(t);
-    ctx.clearRect(0, 0, W, H);
-    var ax = W * 0.5, ay = H * 0.55;
+  function panel(ax, ay, n, m, osc, nar, tY, sY) {
+    var i, pts;
     function P(th, y) { var p = rot(R * Math.cos(th), HZ * y, R * Math.sin(th)); return [ax + p[0], ay + p[1]]; }
-    /* 軌道（点線の円）と原子核 */
     pts = []; for (i = 0; i <= 90; i++) pts.push(P(2 * Math.PI * i / 90, 0)); poly(pts, C.orbit, 1.2, [3, 4]);
-    var nc = [ax, ay]; ctx.fillStyle = C.nuc; ctx.strokeStyle = C.nucEdge; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(nc[0], nc[1], 5, 0, 7); ctx.fill(); ctx.stroke();
-    text(nc[0], nc[1] + 13, '原子核', C.muted, SUB);
-    /* 1周目だけの波（薄い線）：半端な n では出発点に戻ったとき段差ができる */
+    ctx.fillStyle = C.nuc; ctx.strokeStyle = C.nucEdge; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(ax, ay, 4.5, 0, 7); ctx.fill(); ctx.stroke();
+    text(ax, ay + 12, '原子核', C.muted, SUB);
     pts = []; for (i = 0; i <= 180; i++) { var th = 2 * Math.PI * i / 180; pts.push(P(th, lap1(n, th) * osc)); } poly(pts, C.goldFaint, 1.1);
-    /* 何周も重ねた結果：縦の針の列 */
     var env = [];
     for (i = 0; i < NH; i++) {
-      var th2 = 2 * Math.PI * i / NH, v = sumLaps(n, th2) * osc, b = P(th2, 0), tp = P(th2, v);
-      ctx.strokeStyle = C.gold; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
-      ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.8, 0, 7); ctx.fill();
+      var th2 = 2 * Math.PI * i / NH, v = sumLaps(n, th2, m) * osc, b = P(th2, 0), tp = P(th2, v);
+      ctx.strokeStyle = C.gold; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.6, 0, 7); ctx.fill();
     }
-    for (i = 0; i <= 180; i++) { var th3 = 2 * Math.PI * i / 180; env.push(P(th3, sumLaps(n, th3) * osc)); } poly(env, C.env, 1.5);
-    /* つなぎ目（出発点）の印 */
+    for (i = 0; i <= 180; i++) { var th3 = 2 * Math.PI * i / 180; env.push(P(th3, sumLaps(n, th3, m) * osc)); } poly(env, C.env, 1.4);
     var s0 = P(0, -1.4), s1 = P(0, 1.4); poly([s0, s1], 'rgba(200,67,63,.6)', 1, [3, 3]);
-    text(s1[0] + 4, s1[1] - 8, 'つなぎ目（出発点）', C.red, SUB, 'left');
-    var sv = survive(n), integer = Math.abs(n - Math.round(n)) < 1e-6;
-    text(ax, H * 0.045, nar ? '円周 ＝ 波長 × ' + n.toFixed(2) : '円周 ＝ 波長 × ' + n.toFixed(2) + '（薄い線＝1周目だけ、針＝何周も重ねた結果）', C.ink, TITLE);
-    text(ax, H * 0.955, integer ? (nar ? 'ぴったり閉じて、その場で振動し続ける（安定）' : '整数倍：一周して自分とぴったり重なり、定常波としてその場で振動し続ける（安定）')
-                             : (nar ? 'つなぎ目でずれて打ち消し合う（残り ' + Math.round(sv * 100) + '%）' : '半端：一周した波が自分自身とずれて打ち消し合い、消えていく（残っている割合 ' + Math.round(sv * 100) + '%）'), integer ? C.blue : C.red, SUB);
-    slv.textContent = '× ' + n.toFixed(2);
-    msg.textContent = integer ? '生き残る軌道：円周が波長のちょうど整数倍' : '生き残れない：円周が波長の整数倍ではない';
+    var sr = s1[0] > W * 0.72; text(s1[0] + (sr ? -4 : 4), s1[1] - 8, 'つなぎ目', C.red, SUB, sr ? 'right' : 'left');
+    var integer = Math.abs(n - Math.round(n)) < 1e-6, sv = survive(n, m);
+    text(ax, tY, '円周 ＝ 波長 × ' + n.toFixed(2) + (integer ? '（整数倍）' : '（半端）'), C.ink, TITLE);
+    text(ax, sY, integer ? (m + ' 周重ねても残る（100%）') : (m + ' 周重ねて 残り ' + Math.round(sv * 100) + '%'), integer ? C.ok : C.red, SUB);
+  }
+  function draw() {
+    var n = +sln.value, m = +slm.value, nar = W < 520, osc = Math.cos(t);
+    ctx.clearRect(0, 0, W, H);
+    if (nar) {
+      panel(W * 0.5, H * 0.29, NINT, m, osc, nar, H * 0.075, H * 0.47);
+      panel(W * 0.5, H * 0.77, n, m, osc, nar, H * 0.555, H * 0.95);
+    } else {
+      text(W * 0.5, H * 0.05, '円周が波長の整数倍なら残り、半端なら打ち消し合う', C.ink, TITLE);
+      panel(W * 0.27, H * 0.55, NINT, m, osc, nar, H * 0.14, H * 0.94);
+      panel(W * 0.73, H * 0.55, n, m, osc, nar, H * 0.14, H * 0.94);
+    }
+    slnv.textContent = '× ' + n.toFixed(2);
+    slmv.textContent = m + ' 周';
   }
   function resize() {
-    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.8, 350)), d = window.devicePixelRatio || 1;
+    var w = cv.clientWidth || 320, nar = w < 520, h = Math.round(nar ? Math.min(w * 1.45, 560) : Math.min(w * 0.5, 360)), d = window.devicePixelRatio || 1;
     cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
     ctx.setTransform(d, 0, 0, d, 0, 0);
-    W = w; H = h; sc = w / 30;
+    W = w; H = h; sc = nar ? Math.min(w / 30, h / 50) : Math.min(w / 62, h / 25);
     draw();
   }
   var queued = false;
@@ -1014,12 +1020,15 @@
   function frame(now) {
     if (!playing) return;
     var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
-    t += dt * 2.4; draw(); raf = requestAnimationFrame(frame);
+    t += dt * 2.4; lapClock += dt;
+    if (lapClock > 1.1) { lapClock = 0; var m = +slm.value; slm.value = m >= +slm.max ? 1 : m + 1; }
+    draw(); raf = requestAnimationFrame(frame);
   }
   function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
   function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
   btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
-  sl.addEventListener('input', invalidate);
+  sln.addEventListener('input', invalidate);
+  slm.addEventListener('input', function(){ userPaused = true; pause(); invalidate(); });
 
   var dragging = false, lx = 0, ly = 0;
   function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
@@ -1038,7 +1047,7 @@
   resize();
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
 
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { slm.value = 4; userPaused = true; pause(); draw(); return; }
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
   } else { play(); }
