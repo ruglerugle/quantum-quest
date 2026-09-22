@@ -524,7 +524,7 @@
         </div>
         <button class="sim-play" id="kk-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout"><span id="kk-msg">よじれの殻が光速で広がっている</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
-        <div class="diagram-caption">電気の力の<strong>場</strong>の線を3Dで描いたもの。等速でまっすぐ進むあいだ（t＜0）は線は粒から放射状にそろう。t＝0 で粒が上へ向きを変えると、内側の線は新しい位置から、外側の線はまだ「向きを変えなければいた位置」（点線の丸）から出たままで、つなぎ目の球面に<strong>よじれ</strong>（赤）ができる。緑で強調した1本を追うと、内側 → よじれ → 外側が<strong>同じ1本の線</strong>としてつながっているのが分かる。場の変化は光の速さでしか伝わらないので、この殻は光速で外へ広がっていく。それが電磁波（光）。円運動は向きを変え続けるので、よじれを出し続ける</div>
+        <div class="diagram-caption">電気の力の<strong>場</strong>の線を3Dで描いたもの。等速でまっすぐ進むあいだ（t＜0）は線は粒から放射状にそろう。t＝0 で粒が上へ向きを変えると、内側の線は新しい位置から、外側の線はまだ「向きを変えなければいた位置」（点線の丸）から出たままで、つなぎ目の球面に<strong>よじれ</strong>ができる。光って見えるこのよじれの区間が<strong>光そのもの</strong>で、速度の変化と同じ向きの線にはよじれがなく、横向きの線ほど強く光る（光は加速の向きには出ない）。緑で強調した1本を追うと、内側 → よじれ → 外側が<strong>同じ1本の線</strong>としてつながっているのが分かる。場の変化は光の速さでしか伝わらないので、この殻は光速で外へ広がっていく。それが電磁波（光）。円運動は向きを変え続けるので、よじれを出し続ける</div>
       </div>
 
       <div class="dialogue-scene">
@@ -1094,18 +1094,32 @@
     /* 奥から手前へ描く（奥は薄く） */
     var pr = segs.map(function(sg){ var a = PR(sg.a), b = PR(sg.b); return { a: a, b: b, k: sg.k, z: (a[2] + b[2]) / 2 }; });
     pr.sort(function(x, y){ return x.z - y.z; });
+    var dlen = Math.sqrt(dot([O[0] - P[0], O[1] - P[1], O[2] - P[2]], [O[0] - P[0], O[1] - P[1], O[2] - P[2]])) || 1, kinks = [];
     for (i = 0; i < pr.length; i++) {
-      var g = pr[i], al = 0.18 + 0.45 * Math.max(0, Math.min(1, (g.z + LMAX) / (2 * LMAX)));
-      ctx.strokeStyle = 'rgba(' + (g.k ? C.kink : C.line) + ',' + (g.k ? Math.min(1, al + 0.25) : al).toFixed(2) + ')';
-      ctx.lineWidth = g.k ? 2.6 : 1.2; ctx.lineCap = 'round';
+      var g = pr[i];
+      if (g.k) { kinks.push(g); continue; }
+      var al = 0.16 + 0.4 * Math.max(0, Math.min(1, (g.z + LMAX) / (2 * LMAX)));
+      ctx.strokeStyle = 'rgba(' + C.line + ',' + al.toFixed(2) + ')';
+      ctx.lineWidth = 1.2; ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(g.a[0], g.a[1]); ctx.lineTo(g.b[0], g.b[1]); ctx.stroke();
     }
+    /* よじれ ＝ 光そのもの。折れ目の大きさ（横向き成分）に応じて光らせる */
+    function glow(a2, b2, amp) {
+      ctx.save(); ctx.lineCap = 'round';
+      ctx.shadowColor = 'rgba(255,186,40,' + (0.55 + 0.45 * amp).toFixed(2) + ')'; ctx.shadowBlur = 6 + 12 * amp;
+      ctx.strokeStyle = 'rgba(255,205,90,' + (0.45 + 0.55 * amp).toFixed(2) + ')'; ctx.lineWidth = 2 + 3 * amp;
+      ctx.beginPath(); ctx.moveTo(a2[0], a2[1]); ctx.lineTo(b2[0], b2[1]); ctx.stroke();
+      ctx.shadowBlur = 0; ctx.strokeStyle = 'rgba(255,252,230,' + (0.5 + 0.5 * amp).toFixed(2) + ')'; ctx.lineWidth = 0.8 + 1.2 * amp;
+      ctx.beginPath(); ctx.moveTo(a2[0], a2[1]); ctx.lineTo(b2[0], b2[1]); ctx.stroke();
+      ctx.restore();
+    }
+    for (i = 0; i < kinks.length; i++) { var kk = kinks[i], dx = kk.b[0] - kk.a[0], dy = kk.b[1] - kk.a[1]; glow(kk.a, kk.b, Math.min(1, Math.sqrt(dx * dx + dy * dy) / (dlen * sc))); }
     /* 強調する1本（濃い青）：内側 → よじれ → 外側 が同じ1本であることを示す */
-    for (var pass = 0; pass < 2; pass++) for (i = 0; i < hs.length; i++) { var h2 = hs[i], a2 = PR(h2.a), b2 = PR(h2.b); ctx.strokeStyle = pass ? (h2.k ? '#c8433f' : '#1f9a55') : 'rgba(255,255,255,.9)'; ctx.lineWidth = (h2.k ? 4.5 : 3.2) + (pass ? 0 : 3); ctx.beginPath(); ctx.moveTo(a2[0], a2[1]); ctx.lineTo(b2[0], b2[1]); ctx.stroke(); }
+    for (var pass = 0; pass < 2; pass++) for (i = 0; i < hs.length; i++) { var h2 = hs[i], a2 = PR(h2.a), b2 = PR(h2.b); if (h2.k) { if (pass) { var hx2 = b2[0] - a2[0], hy2 = b2[1] - a2[1]; glow(a2, b2, Math.min(1, Math.sqrt(hx2 * hx2 + hy2 * hy2) / (dlen * sc))); } continue; } ctx.strokeStyle = pass ? '#1f9a55' : 'rgba(255,255,255,.9)'; ctx.lineWidth = 3.2 + (pass ? 0 : 3); ctx.beginPath(); ctx.moveTo(a2[0], a2[1]); ctx.lineTo(b2[0], b2[1]); ctx.stroke(); }
     var he = PR(add(t <= 0 ? P : O, HU, LMAX)), hx = Math.max(70, Math.min(W - 70, he[0]));
     text(hx, he[1] - 11, nar ? '同じ1本の線' : '同じ1本の線（内側 → よじれ → 外側）', '#1f9a55', SUB);
     /* 殻の輪郭 */
-    if (R > 0.05) { ctx.strokeStyle = 'rgba(200,67,63,.25)'; ctx.lineWidth = 1; ctx.setLineDash([3, 4]); ctx.beginPath(); ctx.arc(ax, ay, sc * R, 0, 7); ctx.stroke(); ctx.setLineDash([]); }
+    if (R > 0.05) { ctx.strokeStyle = 'rgba(255,186,40,.22)'; ctx.lineWidth = 1; ctx.setLineDash([3, 4]); ctx.beginPath(); ctx.arc(ax, ay, sc * R, 0, 7); ctx.stroke(); ctx.setLineDash([]); }
     /* 向きを変えなければいた位置（点線の丸） */
     if (t > 0.05) { var o = PR(O); ctx.strokeStyle = C.muted; ctx.lineWidth = 1.2; ctx.setLineDash([2, 2]); ctx.beginPath(); ctx.arc(o[0], o[1], 5, 0, 7); ctx.stroke(); ctx.setLineDash([]); var oR = o[0] > W * 0.55; text(o[0] + (oR ? -9 : 9), o[1] + 10, nar ? '変えなければいた位置' : '向きを変えなければいた位置', C.muted, SUB, oR ? 'right' : 'left'); }
     /* 粒と速度の矢印 */
@@ -1115,11 +1129,11 @@
     ctx.fillStyle = C.q; ctx.strokeStyle = C.qEdge; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(q[0], q[1], 6, 0, 7); ctx.fill(); ctx.stroke();
     text(q[0] - 10, q[1] + (t < 0 ? 14 : 0), '電気を帯びた粒', C.ink, SUB, 'right');
     var title = t < 0 ? (nar ? '等速でまっすぐ進む：線はそろっている' : '等速でまっすぐ進んでいる：場の線は粒から放射状にそろっている')
-                      : (nar ? 'よじれの殻（赤）が光速で広がる' : '向きを変えた！ つなぎ目のよじれ（赤）の殻が光速で外へ広がる');
+                      : (nar ? '光っているよじれ ＝ 光そのもの' : '向きを変えた！ つなぎ目のよじれ（光っている部分）が光そのもの。殻は光速で広がる');
     text(ax, H * 0.05, title, C.ink, TITLE);
-    text(ax, H * 0.955, t < 0 ? '青い線 ＝ 電気の力の場の線' : (nar ? '殻の半径 ＝ 光速 × 経過時間' : '内側は新しい向き、外側はまだ古い向き。殻の半径 ＝ 光速 × 経過時間'), C.muted, SUB);
+    text(ax, H * 0.955, t < 0 ? '青い線 ＝ 電気の力の場の線' : (nar ? '横向きの線ほど強く光る' : '加速の向きの線にはよじれがなく、横向きの線ほど強く光る。殻の半径 ＝ 光速 × 経過時間'), C.muted, SUB);
     slv.textContent = 't ＝ ' + (t < 0 ? '−' : '') + Math.abs(t).toFixed(2);
-    msg.textContent = t < 0 ? 'まっすぐ進んでいるあいだは光は出ない' : 'よじれの殻が光速で広がっている ＝ 光が出ている';
+    msg.textContent = t < 0 ? 'まっすぐ進んでいるあいだは光は出ない' : '光っているよじれの殻が光速で広がっている ＝ 光が出ている';
   }
   function resize() {
     var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.8, 360)), d = window.devicePixelRatio || 1;
