@@ -140,15 +140,18 @@
       </div>
 
       <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="packet3d" role="img" aria-label="上段：足し合わせる平面波（波長が少しずつ違う複素数の波＝らせん）を1本ずつ並べたもの。下段：それらをぜんぶ足した結果を、回る針の列で描いた3Dアニメーション。1本なら強さはどこも同じで位置が分からない。2本なら強め合う場所と打ち消し合う場所ができてかたまりが生まれては流れる（うなり）。本数を増やすほど波は1か所に集まって波束になる。ドラッグで視点を回せる"></canvas></div>
+        <div class="cv-wrap"><canvas id="packet3d" role="img" aria-label="上段：足し合わせる平面波（波長が少しずつ違う複素数の波＝らせん）を1本ずつ並べたもの。下段：それらをぜんぶ足した結果を、回る針の列で描いた3Dアニメーション。1本なら強さはどこも同じで位置が分からない。2本なら強め合う場所と打ち消し合う場所ができてかたまりが生まれては流れる（うなり）。同じ範囲を細かく埋めるほど次のかたまりは遠ざかり、波は1か所に集まって波束になる。ドラッグで視点を回せる"></canvas></div>
         <div class="sim-ctrl">
-          <label for="pk-n">足す平面波の本数</label>
-          <input type="range" id="pk-n" min="1" max="9" step="1" value="2" aria-label="足し合わせる平面波の本数">
+          <label for="pk-w">混ぜる波長の範囲（広さ）</label>
+          <input type="range" id="pk-w" min="0.4" max="3.2" step="0.1" value="0.8" aria-label="混ぜる波長の範囲の広さ">
+          <span class="val" id="pk-wv">幅 0.8</span>
+          <label for="pk-n">その範囲を埋める本数（細かさ）</label>
+          <input type="range" id="pk-n" min="1" max="15" step="1" value="2" aria-label="範囲を埋める平面波の本数">
           <span class="val" id="pk-nv">2 本</span>
         </div>
         <button class="sim-play" id="pk-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout"><span class="sub" id="pk-msg">2本（うなり）：強め合う場所と打ち消し合う場所ができて、かたまりが生まれては流れていく</span></div>
-        <div class="diagram-caption">上段は足し合わせる平面波（波長＝運動量が少しずつ違う複素数の波なので、らせんの巻きが少しずつ違う）、下段はそれを<strong>ぜんぶ足した結果</strong>。針が ψ の値、薄いチューブが波の強さ |ψ|、足元の赤が見つかる確率 |ψ|²。<strong>1本</strong>なら、らせんが流れるだけでチューブの太さはどこも同じ――波長（＝運動量）は確定しているが位置は完全に不明。<strong>2本</strong>にすると、波長の短いほうが少し速く進む（物質波の性質）ので2本の山は追い越し合いながらずれていき、山がそろった場所が大きく振れ、山と谷がぶつかった場所が消える――「かたまり」が生まれては流れていく（うなり）。本数を増やすほど山がそろう場所は1か所だけになり、<strong>波束</strong>ができる。位置を決めるほど、混ぜた波長（＝運動量）の範囲は広い――両方を同時に確定した波は描けない。🖱️ ドラッグ（スマホは指でなぞる）で視点を回せる</div>
+        <div class="diagram-caption">上段は足し合わせる平面波（波長＝運動量が少しずつ違う複素数の波なので、らせんの巻きが少しずつ違う）、下段はそれを<strong>ぜんぶ足した結果</strong>。針が ψ の値、薄いチューブが波の強さ |ψ|、足元の赤が見つかる確率 |ψ|²。<strong>1本</strong>なら、らせんが流れるだけでチューブの太さはどこも同じ――波長（＝運動量）は確定しているが位置は完全に不明。<strong>2本</strong>にすると、波長の短いほうが少し速く進む（物質波の性質）ので2本の山は追い越し合いながらずれていき、山がそろった場所が大きく振れ、山と谷がぶつかった場所が消える――「かたまり」が生まれては流れていく（うなり）。かたまりは、隣どうしの波長の差で決まる間隔で繰り返す。同じ範囲を細かく埋めるほど次のかたまりは遠ざかり、切れ目なく埋めれば1か所だけになる――これが<strong>波束</strong>。範囲を広げるほど山は狭くなる。位置を決めるほど、混ぜた波長（＝運動量）の範囲は広い――両方を同時に確定した波は描けない。🖱️ ドラッグ（スマホは指でなぞる）で視点を回せる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -164,7 +167,21 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そのとおりの仕組みだよ。いまの現象は「<strong>うなり</strong>」と呼ばれている。高さのわずかに違う2つの音を同時に鳴らすと、音が大きくなったり小さくなったり、うわんうわんと聞こえる――楽器のチューニングでおなじみの、あれと同じものだよ。さて、2本ではまだ、かたまりが繰り返し現れてしまう。でも混ぜる波長の種類を10本、100本と増やしていくとどうなるか。<strong>すべての波の山がそろう場所はただ1か所</strong>になり、そこから離れるほど、ばらばらの波長の波たちは足並みを崩して互いに打ち消し合う。残るのは1か所の盛り上がりだけ――これが<strong>波束</strong>だ。しかも盛り上がりを狭くしたいほど、混ぜる波長の範囲を広げる必要があるんだ。</div>
+          <div class="dialog-bubble">そのとおりの仕組みだよ。いまの現象は「<strong>うなり</strong>」と呼ばれている。高さのわずかに違う2つの音を同時に鳴らすと、音が大きくなったり小さくなったり、うわんうわんと聞こえる――楽器のチューニングでおなじみの、あれと同じものだよ。さて、2本ではまだ、かたまりが繰り返し現れてしまう。でも、ある範囲の波長を10本、100本と細かく埋めるように混ぜていくとどうなるか。<strong>すべての波の山がそろう場所はただ1か所</strong>になり、そこから離れるほど、ばらばらの波長の波たちは足並みを崩して互いに打ち消し合う。残るのは1か所の盛り上がりだけ――これが<strong>波束</strong>だ。しかも盛り上がりを狭くしたいほど、混ぜる波長の範囲を広げる必要があるんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">そこが引っかかります。2本のときのうなりは、山がそろう場所がずっと先でまた来ますよね。10本、100本にしても、いつかはまた全部の山がそろう場所が来て、かたまりが一定の間隔で繰り返すだけではないですか。1か所に定まる気がしません。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい引っかかりだ。そのとおりで、何本足しても、かたまりは一定の間隔で繰り返す。繰り返しの間隔を決めるのは本数ではなく、<strong>隣どうしの波長の差</strong>だよ。隣り合う2本の波がふたたび山をそろえるまでの距離が、その間隔だ。隣どうしの波長が近いほど、山がそろい直すまでの距離は長くなる。だから大事なのは「同じ範囲の中を、どこまで細かく埋めるか」なんだ。10本、100本と細かく埋めていくほど隣との差は小さくなり、次のかたまりはどんどん遠ざかる。切れ目なく埋めきった極限では、次のかたまりは無限の彼方へ去って、残るのは1か所だけになる。数学ではこの「切れ目なく足す」を、STAGE3 で出会った積分で書くんだ。整理すると、<strong>かたまりの幅は混ぜた範囲の広さ</strong>で決まり、<strong>繰り返しの間隔は埋め方の細かさ</strong>で決まる――別々の量だよ。</div>
         </div>
       </div>
 
@@ -328,9 +345,9 @@
   var cv = document.getElementById('packet3d');
   if (!cv) return;
   var ctx = cv.getContext('2d');
-  var sl = document.getElementById('pk-n'), slv = document.getElementById('pk-nv');
+  var sl = document.getElementById('pk-n'), slv = document.getElementById('pk-nv'), slw = document.getElementById('pk-w'), slwv = document.getElementById('pk-wv');
   var btn = document.getElementById('pk-play'), msg = document.getElementById('pk-msg');
-  var K0 = 2.5, DK = 0.4, XW = 2 * (2 * Math.PI / DK), TMAX = 4.2;   /* 波数の中心・間隔。和は 2π/DK ごとに繰り返す（表示は2周期ぶん） */
+  var K0 = 2.5, XW = 2 * (2 * Math.PI / 0.4), TMAX = 4.2;   /* 波数の中心・表示の幅。和は 2π/（隣の波数の差）ごとに繰り返す */
   var XS = 24, N = 64, HZ = 2.6, DIM = 2.3;
   var yaw = 0.34, pitch = -0.55, t = 0, W = 0, H = 0, sc = 1;
   var C = { gold: '#a6742a', goldFaint: 'rgba(166,116,42,.7)', blue: '#2f6fa6', envB: 'rgba(47,111,166,.6)', tube: 'rgba(47,111,166,.2)',
@@ -339,7 +356,7 @@
 
   /* 足し合わせる平面波の一覧（波数 k を中心 K0 のまわりに等間隔で並べ、端ほど弱くする） */
   function comps() {
-    var n = +sl.value, a = [], i, c = (n - 1) / 2, sg = Math.max(n / 3, 0.8), sum = 0;
+    var n = +sl.value, KW = +slw.value, DK = n > 1 ? KW / (n - 1) : 0, a = [], i, c = (n - 1) / 2, sg = Math.max(n / 3, 0.8), sum = 0;
     for (i = 0; i < n; i++) {
       var w = Math.exp(-(i - c) * (i - c) / (2 * sg * sg)), k = K0 + (i - c) * DK;
       a.push({ w: w, k: k, om: k * k / 2 }); sum += w;
@@ -388,7 +405,7 @@
       if (i > 0) text(W * 0.06, ay - sh / 2, '＋', C.muted, SUB);
     }
     text(ax, H * 0.035, n === 1 ? (nar ? '平面波 1本（波長がきっちり1つ）' : '足す波：平面波 1本（波長がきっちり1つ）')
-                               : (nar ? '平面波 ' + n + ' 本（波長が少しずつ違う）' : '足す波：平面波 ' + n + ' 本（波長＝運動量が少しずつ違う）'), C.gold, TITLE);
+                               : (nar ? '平面波 ' + n + ' 本（範囲の中に等間隔）' : '足す波：平面波 ' + n + ' 本（波長＝運動量の範囲の中に等間隔）'), C.gold, TITLE);
     text(ax, H * 0.485, '＝', C.ink, '900 15px system-ui,sans-serif');
     /* 下段：足した結果 */
     var ay2 = H * 0.74;
@@ -423,12 +440,15 @@
     text(aY[0] - 5, aY[1], '実部', C.muted, SUB, 'right'); text(aZ[0] - 4, aZ[1] + 9, '虚部', C.muted, SUB); text(aX[0] + 8, aX[1] + 2, 'x', C.muted, SUB, 'left');
     text(aD[0] + 8, aD[1], '|ψ|²', C.red, SUB, 'left');
     text(ax, H * 0.535, nar ? '足した結果（針＝ψ、チューブ＝強さ |ψ|、赤＝|ψ|²）' : '足した結果：針＝ψ の値、薄いチューブ＝強さ |ψ|、赤＝見つかる確率 |ψ|²', C.blue, TITLE);
-    slv.textContent = n + ' 本';
+    slv.textContent = n + ' 本'; slwv.textContent = '幅 ' + (+slw.value).toFixed(1);
+    var rpt = n > 1 ? 2 * Math.PI * (n - 1) / (+slw.value) : 0, rel = rpt / XW;
     msg.textContent = n === 1
       ? '1本だけ：らせんが流れるだけで、強さ（チューブの太さ）はどこも同じ。位置 x はまったく分からない'
       : (n === 2
-        ? '2本（うなり）：強め合う場所と打ち消し合う場所ができて、かたまりが生まれては流れていく'
-        : n + '本：山がそろう場所が1か所だけになり、波が1か所に集まる（波束）。混ぜる波長の範囲を広げるほど山は狭くなる');
+        ? '2本（うなり）：強め合う場所と打ち消し合う場所ができて、かたまりが生まれては流れていく。かたまりは一定の間隔で繰り返す'
+        : (rel > 1.1
+          ? n + '本：次のかたまりは表示の幅の ' + rel.toFixed(1) + ' 倍先まで遠ざかり、見える範囲では1か所だけ（波束）。範囲を広げるほど山は狭くなる'
+          : n + '本：かたまりの繰り返し間隔は表示の幅の ' + rel.toFixed(2) + ' 倍。もっと細かく埋めると次のかたまりは遠ざかる'));
   }
   function resize() {
     var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.08, 470)), d = window.devicePixelRatio || 1;
@@ -451,6 +471,7 @@
   function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
   btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
   sl.addEventListener('input', function(){ t = 0; invalidate(); });
+  slw.addEventListener('input', function(){ t = 0; invalidate(); });
 
   var dragging = false, lx = 0, ly = 0;
   function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
