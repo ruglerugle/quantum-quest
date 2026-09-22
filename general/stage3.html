@@ -84,7 +84,7 @@
   .spec3-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .spec3-svg .dark{fill:#12121c;stroke:var(--line);stroke-width:1}
   .cv-wrap{width:100%}
-  #face3d,#bohr3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #face3d,#bohr3d,#kink3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -98,11 +98,6 @@
   .sim-play:hover{background:#fff}
   .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
   .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
-  .kink-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
-  .kink-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
-  .kink-svg .fl{stroke:#2f6fa6;stroke-width:1.3;fill:none}
-  .kink-svg .kk{stroke:#c8433f;stroke-width:2.2;fill:none;stroke-linecap:round}
-  .kink-svg .q{fill:var(--gold);stroke:var(--gold-dark);stroke-width:1.5}
 </style>
 </head>
 <body>
@@ -521,19 +516,15 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="kink-svg" viewBox="0 0 340 248" width="100%" role="img" aria-label="電気を帯びた粒が向きを変えると光が出る仕組みの図。左は等速でまっすぐ進む粒で、電気の力の場の線は粒から放射状にきれいにそろっている。右は向きを変えた直後の粒で、内側の線は新しい位置から、外側の線はもし向きを変えなければいた位置から放射状に出ており、そのつなぎ目の殻の上に赤いよじれができている。この殻は光の速さで外へ広がり、それが光である">
-          <text class="strong" x="170" y="18" text-anchor="middle">向きを変えると、場に「よじれ」ができて光速で広がる</text>
-          <text class="label" x="88" y="38" text-anchor="middle">等速でまっすぐ進む</text>
-          <line class="fl" x1="88" y1="112" x2="158.0" y2="112.0"></line><line class="fl" x1="88" y1="112" x2="152.7" y2="138.8"></line><line class="fl" x1="88" y1="112" x2="137.5" y2="161.5"></line><line class="fl" x1="88" y1="112" x2="114.8" y2="176.7"></line><line class="fl" x1="88" y1="112" x2="88.0" y2="182.0"></line><line class="fl" x1="88" y1="112" x2="61.2" y2="176.7"></line><line class="fl" x1="88" y1="112" x2="38.5" y2="161.5"></line><line class="fl" x1="88" y1="112" x2="23.3" y2="138.8"></line><line class="fl" x1="88" y1="112" x2="18.0" y2="112.0"></line><line class="fl" x1="88" y1="112" x2="23.3" y2="85.2"></line><line class="fl" x1="88" y1="112" x2="38.5" y2="62.5"></line><line class="fl" x1="88" y1="112" x2="61.2" y2="47.3"></line><line class="fl" x1="88" y1="112" x2="88.0" y2="42.0"></line><line class="fl" x1="88" y1="112" x2="114.8" y2="47.3"></line><line class="fl" x1="88" y1="112" x2="137.5" y2="62.5"></line><line class="fl" x1="88" y1="112" x2="152.7" y2="85.2"></line><circle class="q" cx="88" cy="112" r="6"></circle><line x1="97" y1="112" x2="118" y2="112" stroke="var(--ink)" stroke-width="2"></line><polygon points="124,112 116,108 116,116" fill="var(--ink)"></polygon>
-          <text class="label" x="88" y="204" text-anchor="middle">場の線は粒からまっすぐ</text>
-          <text class="label" x="88" y="218" text-anchor="middle">遠くまできれいにそろう</text>
-          <text class="label" x="254" y="38" text-anchor="middle">向きを変えた直後</text>
-          <clipPath id="kinkclip"><rect x="174" y="42" width="162" height="152"></rect></clipPath><g clip-path="url(#kinkclip)"><circle cx="252" cy="116" r="50" fill="none" stroke="#c8433f" stroke-width="7" opacity=".13"></circle><line class="fl" x1="252" y1="98" x2="301.3" y2="107.8"></line><line class="kk" x1="301.3" y1="107.8" x2="301.6" y2="122.3"></line><line class="fl" x1="301.6" y1="122.3" x2="363.2" y2="134.5"></line><line class="fl" x1="252" y1="98" x2="300.0" y2="130.1"></line><line class="kk" x1="300.0" y1="130.1" x2="298.3" y2="134.9"></line><line class="fl" x1="298.3" y1="134.9" x2="349.0" y2="168.8"></line><line class="fl" x1="252" y1="98" x2="287.5" y2="151.2"></line><line class="kk" x1="287.5" y1="151.2" x2="290.9" y2="147.4"></line><line class="fl" x1="290.9" y1="147.4" x2="322.8" y2="195.0"></line><line class="fl" x1="252" y1="98" x2="265.2" y2="164.2"></line><line class="kk" x1="265.2" y1="164.2" x2="278.4" y2="158.4"></line><line class="fl" x1="278.4" y1="158.4" x2="288.5" y2="209.2"></line><line class="fl" x1="252" y1="98" x2="238.8" y2="164.2"></line><line class="kk" x1="238.8" y1="164.2" x2="260.2" y2="165.3"></line><line class="fl" x1="260.2" y1="165.3" x2="251.5" y2="209.2"></line><line class="fl" x1="252" y1="98" x2="216.5" y2="151.2"></line><line class="kk" x1="216.5" y1="151.2" x2="237.9" y2="164.0"></line><line class="fl" x1="237.9" y1="164.0" x2="217.2" y2="195.0"></line><line class="fl" x1="252" y1="98" x2="204.0" y2="130.1"></line><line class="kk" x1="204.0" y1="130.1" x2="216.8" y2="151.5"></line><line class="fl" x1="216.8" y1="151.5" x2="191.0" y2="168.8"></line><line class="fl" x1="252" y1="98" x2="202.7" y2="107.8"></line><line class="kk" x1="202.7" y1="107.8" x2="203.8" y2="129.2"></line><line class="fl" x1="203.8" y1="129.2" x2="176.8" y2="134.5"></line><line class="fl" x1="252" y1="98" x2="209.6" y2="89.6"></line><line class="kk" x1="209.6" y1="89.6" x2="203.8" y2="102.8"></line><line class="fl" x1="203.8" y1="102.8" x2="176.8" y2="97.5"></line><line class="fl" x1="252" y1="98" x2="220.6" y2="77.1"></line><line class="kk" x1="220.6" y1="77.1" x2="216.8" y2="80.5"></line><line class="fl" x1="216.8" y1="80.5" x2="191.0" y2="63.2"></line><line class="fl" x1="252" y1="98" x2="233.1" y2="69.7"></line><line class="kk" x1="233.1" y1="69.7" x2="237.9" y2="68.0"></line><line class="fl" x1="237.9" y1="68.0" x2="217.2" y2="37.0"></line><line class="fl" x1="252" y1="98" x2="245.7" y2="66.4"></line><line class="kk" x1="245.7" y1="66.4" x2="260.2" y2="66.7"></line><line class="fl" x1="260.2" y1="66.7" x2="251.5" y2="22.8"></line><line class="fl" x1="252" y1="98" x2="258.3" y2="66.4"></line><line class="kk" x1="258.3" y1="66.4" x2="278.4" y2="73.6"></line><line class="fl" x1="278.4" y1="73.6" x2="288.5" y2="22.8"></line><line class="fl" x1="252" y1="98" x2="270.9" y2="69.7"></line><line class="kk" x1="270.9" y1="69.7" x2="290.9" y2="84.6"></line><line class="fl" x1="290.9" y1="84.6" x2="322.8" y2="37.0"></line><line class="fl" x1="252" y1="98" x2="283.4" y2="77.1"></line><line class="kk" x1="283.4" y1="77.1" x2="298.3" y2="97.1"></line><line class="fl" x1="298.3" y1="97.1" x2="349.0" y2="63.2"></line><line class="fl" x1="252" y1="98" x2="294.4" y2="89.6"></line><line class="kk" x1="294.4" y1="89.6" x2="301.6" y2="109.7"></line><line class="fl" x1="301.6" y1="109.7" x2="363.2" y2="97.5"></line></g><circle cx="270" cy="116" r="5" fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="2 2"></circle><circle class="q" cx="252" cy="98" r="6"></circle><line x1="252" y1="89" x2="252" y2="72" stroke="var(--ink)" stroke-width="2"></line><polygon points="252,66 248,74 256,74" fill="var(--ink)"></polygon><line x1="301.4" y1="85.7" x2="313.4" y2="78.4" stroke="#c8433f" stroke-width="2"></line><polygon points="317.6,75.8 315.6,86.8 306.9,72.5" fill="#c8433f"></polygon><line x1="203.9" y1="148.3" x2="192.2" y2="156.2" stroke="#c8433f" stroke-width="2"></line><polygon points="188.1,158.9 189.6,147.8 199.0,161.7" fill="#c8433f"></polygon>
-          <text class="label" x="254" y="204" text-anchor="middle">内側は新しい向き、外側は古い向き</text>
-          <text class="label" x="254" y="218" text-anchor="middle" fill="#c8433f">よじれが光速で広がる ＝ 光</text>
-          <text class="label" x="254" y="236" text-anchor="middle" style="font-size:10px">点線の丸 ＝ 向きを変えなければいた位置</text>
-        </svg>
-        <div class="diagram-caption">電気の力の<strong>場</strong>の線。等速でまっすぐ進む粒（左）では線は粒から放射状にそろうが、向きを変えた粒（右）では内側の線は新しい位置から、外側の線はまだ古い動きのままで、つなぎ目の殻に<strong>よじれ</strong>ができる。場の変化は光の速さでしか伝わらないので、この殻は光速で外へ広がっていく。それが電磁波（光）。円運動は向きを変え続けるので、よじれを出し続ける</div>
+        <div class="cv-wrap"><canvas id="kink3d" role="img" aria-label="電気を帯びた粒のまわりの場の線を3Dで描いたアニメーション。粒がまっすぐ等速で進むあいだは線は粒から放射状にそろっている。粒が向きを変えた瞬間から、内側の線は新しい位置から、外側の線はもし向きを変えなければいた位置から出るようになり、そのつなぎ目の球面の殻に赤いよじれができる。殻は光の速さで外へ広がる。スライダーで時間を動かし、ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="kk-t">時間（0 で向きを変える）</label>
+          <input type="range" id="kk-t" min="-1.2" max="2.4" step="0.01" value="1.0" aria-label="時間">
+          <span class="val" id="kk-tv">t ＝ 1.00</span>
+        </div>
+        <button class="sim-play" id="kk-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="readout"><span id="kk-msg">よじれの殻が光速で広がっている</span><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">電気の力の<strong>場</strong>の線を3Dで描いたもの。等速でまっすぐ進むあいだ（t＜0）は線は粒から放射状にそろう。t＝0 で粒が上へ向きを変えると、内側の線は新しい位置から、外側の線はまだ「向きを変えなければいた位置」（点線の丸）から出たままで、つなぎ目の球面に<strong>よじれ</strong>（赤）ができる。場の変化は光の速さでしか伝わらないので、この殻は光速で外へ広がっていく。それが電磁波（光）。円運動は向きを変え続けるので、よじれを出し続ける</div>
       </div>
 
       <div class="dialogue-scene">
@@ -1054,5 +1045,118 @@
 })();
 </script>
 <script>QQ.initStagePage(3);</script>
+<script>
+/* 電気を帯びた粒が向きを変えると、場の線に「よじれ」の殻ができて光速で広がる（3D） */
+(function(){
+  var cv = document.getElementById('kink3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sl = document.getElementById('kk-t'), slv = document.getElementById('kk-tv');
+  var btn = document.getElementById('kk-play'), msg = document.getElementById('kk-msg');
+  var V = 1.2, CL = 4.6, LMAX = 12, N = 64;
+  var yaw = 0.45, pitch = -0.35, W = 0, H = 0, sc = 1;
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var C = { line: '47,111,166', kink: '200,67,63', q: '#e3b563', qEdge: '#a6742a', ink: '#241d12', muted: '#8a7a5c', red: '#c8433f' };
+  /* 方向（球面上に均等に散らす） */
+  var DIRS = [];
+  for (var i = 0; i < N; i++) { var y = 1 - 2 * (i + 0.5) / N, r = Math.sqrt(1 - y * y), ph = i * 2.399963; DIRS.push([r * Math.cos(ph), y, r * Math.sin(ph)]); }
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp), Y * sp + Z1 * cp];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function add(a, u, k) { return [a[0] + u[0] * k, a[1] + u[1] * k, a[2] + u[2] * k]; }
+  function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  /* 点 a から方向 u に進んで、原点中心・半径 R の球面に当たるまでの距離 */
+  function hit(a, u, R) { var b = dot(a, u), c = dot(a, a) - R * R, d = b * b - c; if (d < 0) return -1; return -b + Math.sqrt(d); }
+
+  function draw() {
+    var t = +sl.value, nar = W < 520, i;
+    ctx.clearRect(0, 0, W, H);
+    var ax = W * 0.5, ay = H * 0.53;
+    function PR(p) { var q = rot(p[0], p[1], p[2]); return [ax + q[0], ay + q[1], q[2]]; }
+    var P = t < 0 ? [V * t, 0, 0] : [0, V * t, 0];      /* いまの粒の位置（t<0 は右へ、t>0 は上へ） */
+    var O = [V * Math.max(t, 0), 0, 0];                   /* 向きを変えなければいた位置 */
+    var R = CL * Math.max(t, 0);                           /* よじれの殻の半径 ＝ 光速 × 経過時間 */
+    var segs = [];
+    for (i = 0; i < N; i++) {
+      var u = DIRS[i];
+      if (t <= 0) { segs.push({ a: P, b: add(P, u, LMAX), k: 0 }); continue; }
+      var s1 = hit(P, u, R);
+      if (s1 < 0 || s1 > LMAX) { segs.push({ a: P, b: add(P, u, LMAX), k: 0 }); continue; }
+      var s2 = hit(O, u, R), A = add(P, u, s1), B = add(O, u, s2);
+      segs.push({ a: P, b: A, k: 0 });
+      segs.push({ a: A, b: B, k: 1 });
+      if (s2 < LMAX) segs.push({ a: B, b: add(O, u, LMAX), k: 0 });
+    }
+    /* 奥から手前へ描く（奥は薄く） */
+    var pr = segs.map(function(sg){ var a = PR(sg.a), b = PR(sg.b); return { a: a, b: b, k: sg.k, z: (a[2] + b[2]) / 2 }; });
+    pr.sort(function(x, y){ return x.z - y.z; });
+    for (i = 0; i < pr.length; i++) {
+      var g = pr[i], al = 0.28 + 0.6 * Math.max(0, Math.min(1, (g.z + LMAX) / (2 * LMAX)));
+      ctx.strokeStyle = 'rgba(' + (g.k ? C.kink : C.line) + ',' + (g.k ? Math.min(1, al + 0.25) : al).toFixed(2) + ')';
+      ctx.lineWidth = g.k ? 2.6 : 1.2; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(g.a[0], g.a[1]); ctx.lineTo(g.b[0], g.b[1]); ctx.stroke();
+    }
+    /* 殻の輪郭 */
+    if (R > 0.05) { ctx.strokeStyle = 'rgba(200,67,63,.25)'; ctx.lineWidth = 1; ctx.setLineDash([3, 4]); ctx.beginPath(); ctx.arc(ax, ay, sc * R, 0, 7); ctx.stroke(); ctx.setLineDash([]); }
+    /* 向きを変えなければいた位置（点線の丸） */
+    if (t > 0.05) { var o = PR(O); ctx.strokeStyle = C.muted; ctx.lineWidth = 1.2; ctx.setLineDash([2, 2]); ctx.beginPath(); ctx.arc(o[0], o[1], 5, 0, 7); ctx.stroke(); ctx.setLineDash([]); var oR = o[0] > W * 0.55; text(o[0] + (oR ? -9 : 9), o[1] + 10, nar ? '変えなければいた位置' : '向きを変えなければいた位置', C.muted, SUB, oR ? 'right' : 'left'); }
+    /* 粒と速度の矢印 */
+    var q = PR(P), vdir = t < 0 ? [1, 0, 0] : [0, 1, 0], qe = PR(add(P, vdir, 1.6));
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(qe[0], qe[1]); ctx.stroke();
+    var an = Math.atan2(qe[1] - q[1], qe[0] - q[0]); ctx.fillStyle = C.ink; ctx.beginPath(); ctx.moveTo(qe[0] + 6 * Math.cos(an), qe[1] + 6 * Math.sin(an)); ctx.lineTo(qe[0] + 5 * Math.cos(an + 2.5), qe[1] + 5 * Math.sin(an + 2.5)); ctx.lineTo(qe[0] + 5 * Math.cos(an - 2.5), qe[1] + 5 * Math.sin(an - 2.5)); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = C.q; ctx.strokeStyle = C.qEdge; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(q[0], q[1], 6, 0, 7); ctx.fill(); ctx.stroke();
+    text(q[0] - 10, q[1] + (t < 0 ? 14 : 0), '電気を帯びた粒', C.ink, SUB, 'right');
+    var title = t < 0 ? (nar ? '等速でまっすぐ進む：線はそろっている' : '等速でまっすぐ進んでいる：場の線は粒から放射状にそろっている')
+                      : (nar ? 'よじれの殻（赤）が光速で広がる' : '向きを変えた！ つなぎ目のよじれ（赤）の殻が光速で外へ広がる');
+    text(ax, H * 0.05, title, C.ink, TITLE);
+    text(ax, H * 0.955, t < 0 ? '青い線 ＝ 電気の力の場の線' : (nar ? '殻の半径 ＝ 光速 × 経過時間' : '内側は新しい向き、外側はまだ古い向き。殻の半径 ＝ 光速 × 経過時間'), C.muted, SUB);
+    slv.textContent = 't ＝ ' + (t < 0 ? '−' : '') + Math.abs(t).toFixed(2);
+    msg.textContent = t < 0 ? 'まっすぐ進んでいるあいだは光は出ない' : 'よじれの殻が光速で広がっている ＝ 光が出ている';
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 0.8, 360)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = Math.min(w / 30, h / 24);
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    var t = +sl.value + dt * 0.9; if (t > +sl.max) t = +sl.min; sl.value = t.toFixed(2);
+    draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+  sl.addEventListener('input', function(){ userPaused = true; pause(); invalidate(); });
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ invalidate(); }); }
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
+  } else { play(); }
+})();
+</script>
 </body>
 </html>
