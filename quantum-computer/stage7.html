@@ -136,6 +136,32 @@
           </div>
           <div class="dialog-bubble">やってみます。<br>7を1回 → 7、15で割った余りは<strong>7</strong>。<br>7を2回 → 49、15で割ると3余り4なので<strong>4</strong>。<br>7を3回 → 343、15で割ると22余り13なので<strong>13</strong>。<br>7を4回 → 2401、15で割ると160余り1なので<strong>1</strong>。<br>7を5回 → 余りが1のところに7を掛けるので、また<strong>7</strong>。<br>……あ、<strong>戻ってきました</strong>。7, 4, 13, 1, 7, 4, 13, 1, … と、<strong>4個ごとにくり返します</strong>。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qc-svg" viewBox="0 0 372 318" width="100%" role="img" aria-label="7を4回掛けた数2401は15×160＋1と書ける。これに7を掛けると15×1120＋7になり、15の倍数の部分は7倍しても15の倍数のままなので、15で割った余りは1×7＝7だけで決まる。だから大きな数を計算しなくても、前の余りに7を掛けて15で割った余りを取るだけで次の余りが出る。7→4→13→1→7とくり返す">
+          <text class="strong" x="186" y="16" text-anchor="middle">なぜ「余り1のところに7を掛けると、また7」なのか</text>
+          <text class="accent" x="14" y="40" text-anchor="start">7を4回 ＝ 2401 ＝ 15×160 ＋ 1</text>
+          <rect x="14" y="48" width="262" height="26" rx="4" fill="rgba(47,111,166,.14)" stroke="#2f6fa6" stroke-width="1.4"/><text class="label" x="145" y="65" text-anchor="middle" style="fill:#2f6fa6">15 × 160（15の倍数）</text>
+          <rect x="282" y="48" width="22" height="26" rx="4" fill="rgba(200,102,63,.2)" stroke="#c8663f" stroke-width="1.4"/><text class="strong" x="293" y="65" text-anchor="middle" style="fill:#c8663f">1</text>
+          <text class="label" x="316" y="65" text-anchor="start">← 余り</text>
+          <path d="M186 82 v18" stroke="var(--ink)" stroke-width="1.6"/><polygon points="186,106 182,99 190,99" fill="var(--ink)"/>
+          <text class="strong" x="200" y="96" text-anchor="start">× 7</text>
+          <text class="accent" x="14" y="124" text-anchor="start">7を5回 ＝ 16807 ＝ 15×1120 ＋ 7</text>
+          <rect x="14" y="132" width="262" height="26" rx="4" fill="rgba(47,111,166,.14)" stroke="#2f6fa6" stroke-width="1.4"/><text class="label" x="145" y="149" text-anchor="middle" style="fill:#2f6fa6;font-size:10px">15 × 160 × 7 ＝ 15 × 1120（やはり15の倍数）</text>
+          <rect x="282" y="132" width="40" height="26" rx="4" fill="rgba(200,102,63,.2)" stroke="#c8663f" stroke-width="1.4"/><text class="strong" x="302" y="149" text-anchor="middle" style="fill:#c8663f;font-size:10px">1×7＝7</text>
+          <text class="label" x="330" y="149" text-anchor="start" style="font-size:9px">← 余り</text>
+          <text class="label" x="14" y="178" text-anchor="start">15の倍数の部分は、7倍しても 15の倍数のまま → 余りには関係ない</text>
+          <text class="label" x="14" y="194" text-anchor="start" style="fill:#c8663f">余りは「前の余り × 7」だけで決まる：1 × 7 ＝ 7</text>
+          <line x1="14" y1="210" x2="358" y2="210" stroke="var(--line)" stroke-width="1"/>
+          <text class="accent" x="14" y="232" text-anchor="start" style="font-size:10.5px">だから大きな数は要らない：余りに 7 を掛けて、15で割った余りを取るだけ</text>
+          <rect x="14" y="258" width="40" height="28" rx="4" fill="#fffdf6" stroke="#2f7a6b" stroke-width="1.4"/><text class="strong" x="34" y="277" text-anchor="middle" style="fill:#2f7a6b">7</text><path d="M56 272 h26" stroke="var(--muted)" stroke-width="1.4"/><polygon points="86,272 80,269 80,275" fill="var(--muted)"/><text class="label" x="71" y="254" text-anchor="middle">×7</text><text class="label" x="71" y="296" text-anchor="middle" style="font-size:9px">÷15 の余り</text><rect x="90" y="258" width="40" height="28" rx="4" fill="#fffdf6" stroke="#2f7a6b" stroke-width="1.4"/><text class="strong" x="110" y="277" text-anchor="middle" style="fill:#2f7a6b">4</text><path d="M132 272 h26" stroke="var(--muted)" stroke-width="1.4"/><polygon points="162,272 156,269 156,275" fill="var(--muted)"/><text class="label" x="147" y="254" text-anchor="middle">×7</text><text class="label" x="147" y="296" text-anchor="middle" style="font-size:9px">÷15 の余り</text><rect x="166" y="258" width="40" height="28" rx="4" fill="#fffdf6" stroke="#2f7a6b" stroke-width="1.4"/><text class="strong" x="186" y="277" text-anchor="middle" style="fill:#2f7a6b">13</text><path d="M208 272 h26" stroke="var(--muted)" stroke-width="1.4"/><polygon points="238,272 232,269 232,275" fill="var(--muted)"/><text class="label" x="223" y="254" text-anchor="middle">×7</text><text class="label" x="223" y="296" text-anchor="middle" style="font-size:9px">÷15 の余り</text><rect x="242" y="258" width="40" height="28" rx="4" fill="#fffdf6" stroke="#2f7a6b" stroke-width="1.4"/><text class="strong" x="262" y="277" text-anchor="middle" style="fill:#2f7a6b">1</text><path d="M284 272 h26" stroke="var(--muted)" stroke-width="1.4"/><polygon points="314,272 308,269 308,275" fill="var(--muted)"/><text class="label" x="299" y="254" text-anchor="middle">×7</text><text class="label" x="299" y="296" text-anchor="middle" style="font-size:9px">÷15 の余り</text><rect x="318" y="258" width="40" height="28" rx="4" fill="#fffdf6" stroke="#2f7a6b" stroke-width="1.4"/><text class="strong" x="338" y="277" text-anchor="middle" style="fill:#2f7a6b">7</text>
+          <text class="label" x="186" y="312" text-anchor="middle">7 → 4 → 13 → 1 → 7 → … 4個ごとにくり返す（周期 4）</text>
+        </svg>
+        <div class="diagram-caption">「余りが1のところに7を掛けると、また7」の理由。7を4回掛けた 2401 は <strong>15×160＋1</strong> と書ける。これを7倍すると <strong>15×1120＋7</strong>。15の倍数の部分は何倍しても15の倍数のままなので、15で割った余りには効かない。余りを決めるのは「前の余り × 7」だけ。だから途中の大きな数を計算しなくても、<strong>余りに7を掛けて15で割った余りを取る</strong>ことをくり返せば次の余りが出る（下段）。この列が 7, 4, 13, 1 で一巡して戻る</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
