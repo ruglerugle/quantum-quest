@@ -32,7 +32,7 @@
     { n: 4, file: "stage4.html", title: "もつれを作る", sub: "2量子ビットとCNOT" },
     { n: 5, file: "stage5.html", title: "並列計算の神話", sub: "ドイチュのアルゴリズム" },
     { n: 6, file: "stage6.html", title: "グローバーの探索", sub: "振幅増幅" },
-    { n: 7, file: "stage7.html", title: "ショアの因数分解", sub: "暗号を破る周期発見" },
+    { n: 7, file: "stage7.html", title: "ショアの素因数分解", sub: "暗号を破る周期発見" },
     { n: 8, file: "stage8.html", title: "最大の敵と誤り訂正", sub: "デコヒーレンスと現在地" }
   ];
 

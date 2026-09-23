@@ -12,14 +12,14 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE7 ショアの因数分解 ― 量子コンピュータはなぜ速いのか</title>
-<meta name="description" content="インターネットの暗号は「大きな数の素因数分解は遅い」ことを頼りにしている。ショアのアルゴリズムは因数分解を「余りのくり返しの周期を探す問題」に変え、干渉で周期を一気に読み取る。15＝3×5を実際に手で解きながら、指数加速の正体と、耐量子暗号への備えまで見届ける。">
+<title>STAGE7 ショアの素因数分解 ― 量子コンピュータはなぜ速いのか</title>
+<meta name="description" content="インターネットの暗号は「大きな数の素因数分解は遅い」ことを頼りにしている。ショアのアルゴリズムは素因数分解を「余りのくり返しの周期を探す問題」に変え、干渉で周期を一気に読み取る。15＝3×5を実際に手で解きながら、指数加速の正体と、耐量子暗号への備えまで見届ける。">
 <link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage7">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="量子コンピュータはなぜ速いのか">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE7 ショアの因数分解 ― 量子コンピュータはなぜ速いのか">
-<meta property="og:description" content="因数分解を「周期探し」に変え、干渉で周期を読む。15＝3×5を手で解きながらショアのアルゴリズムを理解する。">
+<meta property="og:title" content="STAGE7 ショアの素因数分解 ― 量子コンピュータはなぜ速いのか">
+<meta property="og:description" content="素因数分解を「周期探し」に変え、干渉で周期を読む。15＝3×5を手で解きながらショアのアルゴリズムを理解する。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage7">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/quantum-computer/images/ogp.png">
 <meta property="og:image:width" content="1200">
@@ -44,7 +44,7 @@
   <header class="game-header">
     <div class="brand">
       <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">💠</a> <span>量子コンピュータはなぜ速いのか</span></div>
-      <div class="brand-sub">STAGE 7 ― ショアの因数分解 ―</div>
+      <div class="brand-sub">STAGE 7 ― ショアの素因数分解 ―</div>
     </div>
     <div class="head-progress-wrap">
       <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
@@ -69,13 +69,13 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 7</span><h1 class="chapter-title">ショアの因数分解</h1>
+        <span class="chapter-badge">STAGE 7</span><h1 class="chapter-title">ショアの素因数分解</h1>
         <div class="chapter-sub">暗号を破る周期発見</div>
       </div>
 
       <div class="mission-box">
         <div class="mission-label">🎯 ミッション</div>
-        <div class="mission-text">因数分解が「余りのくり返しの周期を探す問題」に化けることを、15＝3×5 で自分の手で確かめよう。そして周期を干渉で読み取る仕組み――なぜグローバーと違って指数加速になるのか――を説明できれば合格。</div>
+        <div class="mission-text">素因数分解が「余りのくり返しの周期を探す問題」に化けることを、15＝3×5 で自分の手で確かめよう。そして周期を干渉で読み取る仕組み――なぜグローバーと違って指数加速になるのか――を説明できれば合格。</div>
         <span class="mission-status" id="mission-status">未達成</span>
       </div>
 
@@ -127,7 +127,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">手を動かすのがいちばんだ。因数分解したい数を <strong>15</strong> にしよう。答えは知っているけれど、手順を確かめるためだ。<br>まず、15と共通の約数を持たない数を適当に選ぶ。<strong>7</strong> にしよう。そして、7を1回、2回、3回……と掛けていって、そのたびに<strong>15で割った余り</strong>を書き出してごらん。</div>
+          <div class="dialog-bubble">手を動かすのがいちばんだ。素因数分解したい数を <strong>15</strong> にしよう。答えは知っているけれど、手順を確かめるためだ。<br>まず、15と共通の約数を持たない数を適当に選ぶ。<strong>7</strong> にしよう。そして、7を1回、2回、3回……と掛けていって、そのたびに<strong>15で割った余り</strong>を書き出してごらん。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -172,7 +172,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そこは心配いらない。最大公約数には<strong>ユークリッドの互除法</strong>という2300年前からの高速な求め方があって、ふつうのコンピュータでも何百桁だろうと一瞬で計算できるんだ。では手順をまとめよう。<br>①因数分解したい数 N と共通の約数を持たない数 a を、適当に選ぶ<br>②a を1回、2回、3回…と掛けた余りの列の<strong>周期 r</strong> を求める<br>③r が偶数なら、a を r の半分だけ掛けた余りの、<strong>±1 と N の最大公約数</strong>を取る<br>これで N の因数が出る。運が悪いと（r が奇数だったり、うまくいかない場合が）あるが、a を選び直せばよくて、たいてい数回で成功する。<br>――さて、この手順の中で、ふつうのコンピュータにとって絶望的に重いのはどこかな。</div>
+          <div class="dialog-bubble">そこは心配いらない。最大公約数には<strong>ユークリッドの互除法</strong>という2300年前からの高速な求め方があって、ふつうのコンピュータでも何百桁だろうと一瞬で計算できるんだ。では手順をまとめよう。<br>①素因数分解したい数 N と共通の約数を持たない数 a を、適当に選ぶ<br>②a を1回、2回、3回…と掛けた余りの列の<strong>周期 r</strong> を求める<br>③r が偶数なら、a を r の半分だけ掛けた余りの、<strong>±1 と N の最大公約数</strong>を取る<br>これで N の因数が出る。運が悪いと（r が奇数だったり、うまくいかない場合が）あるが、a を選び直せばよくて、たいてい数回で成功する。<br>――さて、この手順の中で、ふつうのコンピュータにとって絶望的に重いのはどこかな。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -233,7 +233,7 @@
           <button type="button" class="btn" id="p-14">14</button>
         </div>
         <div class="readout" id="p-readout"></div>
-        <div class="diagram-caption">選んだ数を1回、2回…と掛けて15で割った余りを並べたもの。必ずどこかで1に戻り、そこから同じ列がくり返す。<strong>1に戻るまでの長さが周期</strong>。周期が偶数なら、その半分の位置の余りに ±1 して15との最大公約数を取ると、3と5が出てくる（数の選び方によっては周期が奇数だったり、うまく分かれないことがある――そのときは別の数を選び直す）。因数分解の難しさは、まるごと「この周期を見つけること」に移し替えられている。</div>
+        <div class="diagram-caption">選んだ数を1回、2回…と掛けて15で割った余りを並べたもの。必ずどこかで1に戻り、そこから同じ列がくり返す。<strong>1に戻るまでの長さが周期</strong>。周期が偶数なら、その半分の位置の余りに ±1 して15との最大公約数を取ると、3と5が出てくる（数の選び方によっては周期が奇数だったり、うまく分かれないことがある――そのときは別の数を選び直す）。素因数分解の難しさは、まるごと「この周期を見つけること」に移し替えられている。</div>
       </div>
 
       <div class="diagram-box">
@@ -267,7 +267,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">それがこの旅を通じての、いちばん大事な教訓だよ。<strong>量子コンピュータが指数的に速くなるのは、問題の中に隠れた構造があって、その構造と共鳴する干渉を設計できたときだけ</strong>。どんな問題にも効く万能薬ではない。<br>いま、そういう指数加速が知られている問題は、実はそれほど多くない。因数分解や離散対数といった数論の問題、そして――こちらが本命かもしれないが――<strong>分子や材料の量子的なふるまいのシミュレーション</strong>だ。量子の世界を量子で真似るのだから、相性がいいのは当然だね。新しい薬や、より良い電池・触媒の設計に効くと期待されている。</div>
+          <div class="dialog-bubble">それがこの旅を通じての、いちばん大事な教訓だよ。<strong>量子コンピュータが指数的に速くなるのは、問題の中に隠れた構造があって、その構造と共鳴する干渉を設計できたときだけ</strong>。どんな問題にも効く万能薬ではない。<br>いま、そういう指数加速が知られている問題は、実はそれほど多くない。素因数分解や離散対数といった数論の問題、そして――こちらが本命かもしれないが――<strong>分子や材料の量子的なふるまいのシミュレーション</strong>だ。量子の世界を量子で真似るのだから、相性がいいのは当然だね。新しい薬や、より良い電池・触媒の設計に効くと期待されている。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -300,7 +300,7 @@
       </div>
 
       <div class="formula-box">
-        <span class="step">【ショアのアルゴリズム ― 因数分解を周期探しに変える】</span>
+        <span class="step">【ショアのアルゴリズム ― 素因数分解を周期探しに変える】</span>
         <span class="step">・RSA暗号は「掛け算は簡単、素因数分解は困難」に安全性を預けている。鍵は2048ビット（約617桁）</span>
         <span class="step">・書き換え：N と共通の約数を持たない a を選び、a を1回、2回…掛けた<strong>余りの列の周期 r</strong> を求める。<br class="wbr">r が偶数なら「a を r の半分だけ掛けた余り ±1」と N の<strong>最大公約数</strong>が N の因数</span>
         <span class="step">・例（N＝15, a＝7）：余りは 7, 4, 13, 1, … で周期 r＝4。<br class="wbr">4−1＝3、4＋1＝5 → <strong>15＝3×5</strong></span>
@@ -318,13 +318,13 @@
           <button class="choice-btn">余りの列がくり返す「周期」を見つけるところ</button>
           <button class="choice-btn">最大公約数を求めるところ</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ 因数分解を周期探しに書き換える部分も、周期から因数を取り出す最大公約数の計算も、ふつうのコンピュータで一瞬でできる。手に負えないのは周期探しだけで、そこだけを干渉で一気に片づける。</div>
+        <div class="quiz-explain" hidden>正解！ 素因数分解を周期探しに書き換える部分も、周期から因数を取り出す最大公約数の計算も、ふつうのコンピュータで一瞬でできる。手に負えないのは周期探しだけで、そこだけを干渉で一気に片づける。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. ショアが指数加速を実現できて、グローバーが2次加速どまりなのはなぜ？</p>
         <div class="choice-list">
-          <button class="choice-btn">因数分解には「くり返し」の構造があり、それと共鳴する干渉を設計できる。構造のない探索ではできない</button>
+          <button class="choice-btn">素因数分解には「くり返し」の構造があり、それと共鳴する干渉を設計できる。構造のない探索ではできない</button>
           <button class="choice-btn">ショアの方が後に作られた新しいアルゴリズムで、そのぶん量子ビットを多数使う技術が進歩していたから</button>
           <button class="choice-btn">ショアは多数の量子ビットをもつれさせて使い、グローバーはもつれをまったく使わずに探索するから</button>
         </div>
