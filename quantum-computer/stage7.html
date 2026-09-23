@@ -224,8 +224,44 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そこは心配いらない。最大公約数には<strong>ユークリッドの互除法</strong>という2300年前からの高速な求め方があって、ふつうのコンピュータでも何百桁だろうと一瞬で計算できるんだ。では手順をまとめよう。<br>①素因数分解したい数 N と共通の約数を持たない数 a を、適当に選ぶ<br>②a を1回、2回、3回…と掛けた余りの列の<strong>周期 r</strong> を求める<br>③r が偶数なら、a を r の半分だけ掛けた余りの、<strong>±1 と N の最大公約数</strong>を取る<br>これで N の因数が出る。運が悪いと（r が奇数だったり、うまくいかない場合が）あるが、a を選び直せばよくて、たいてい数回で成功する。<br>――さて、この手順の中で、ふつうのコンピュータにとって絶望的に重いのはどこかな。</div>
+          <div class="dialog-bubble">そこは心配いらない。最大公約数には<strong>ユークリッドの互除法</strong>という2300年前からの高速な求め方があって、ふつうのコンピュータでも何百桁だろうと一瞬で計算できるんだ。では手順をまとめよう。<br>①素因数分解したい数 N と共通の約数を持たない数 a を、適当に選ぶ<br>②a を1回、2回、3回…と掛けた余りの列の<strong>周期 r</strong> を求める<br>③r が偶数なら、a を r の半分だけ掛けた余りの、<strong>±1 と N の最大公約数</strong>を取る<br>これで N の因数が出る。運が悪いと、うまくいかない場合もある。たとえば N＝21 で a＝4 を選ぶと、余りは 4, 16, 1 で周期が3――奇数なので「半分の回数」が取れない。a＝5 なら周期は6で偶数だが、半分の3回掛けた余りが 20 で、20＋1＝21 は N そのもの、20−1＝19 と 21 の最大公約数は1――どちらからも因数が出ない。こういうときは a を選び直せばいい。a＝2 にすると周期6、半分の3回掛けた余りは 8 で、8−1＝7、8＋1＝9 と 21 の最大公約数は 7 と 3。21＝3×7 が出る。失敗する a は多くないから、たいてい数回で成功する。<br>――さて、この手順の中で、ふつうのコンピュータにとって絶望的に重いのはどこかな。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qc-svg" viewBox="0 0 372 292" width="100%" role="img" aria-label="N＝21 で a を3通り選んだときの結果の表。a＝2 は余りが 2,4,8,16,11,1 で周期6、半分の3回掛けた余り 8 から 7 と 9 が出て、21 との最大公約数 7 と 3 で成功。a＝4 は余りが 4,16,1 で周期3が奇数なので半分の回数が取れず失敗。a＝5 は余りが 5,4,20,16,17,1 で周期6だが、半分の余り 20 の ＋1 が 21 そのもの、−1 の 19 との最大公約数が 1 で、因数が出ず失敗">
+          <text class="strong" x="186" y="16" text-anchor="middle">N ＝ 21 で a を選んだときの成功と失敗</text>
+          
+          <rect x="10" y="31" width="352" height="58" rx="6" fill="rgba(47,122,107,.08)" stroke="#2f7a6b" stroke-width="1"/>
+          <text class="strong" x="18" y="46" text-anchor="start" style="fill:#2f7a6b">a ＝ 2</text>
+          <text class="label" x="70" y="46" text-anchor="start">余り：2, 4, 8, 16, 11, 1</text>
+          <text class="label" x="18" y="64" text-anchor="start">周期 6（偶数）　→ 半分の回数の余り 8　→ 7 と 9</text>
+          <text class="label" x="18" y="80" text-anchor="start" style="fill:#2f7a6b">21 との最大公約数：7 と 3　→ 21 ＝ 3 × 7</text>
+          <text class="strong" x="354" y="46" text-anchor="end" style="fill:#2f7a6b">成功</text>
+          
+          
+          <rect x="10" y="103" width="352" height="58" rx="6" fill="rgba(200,67,63,.07)" stroke="#c8433f" stroke-width="1"/>
+          <text class="strong" x="18" y="118" text-anchor="start" style="fill:#c8433f">a ＝ 4</text>
+          <text class="label" x="70" y="118" text-anchor="start">余り：4, 16, 1</text>
+          <text class="label" x="18" y="136" text-anchor="start">周期 3（奇数）</text>
+          <text class="label" x="18" y="152" text-anchor="start" style="fill:#c8433f">半分の回数が取れない（1.5回は掛けられない）</text>
+          <text class="strong" x="354" y="118" text-anchor="end" style="fill:#c8433f">失敗</text>
+          <text class="label" x="354" y="152" text-anchor="end" style="fill:#c8433f;font-size:10px">a を選び直す</text>
+          
+          <rect x="10" y="175" width="352" height="58" rx="6" fill="rgba(200,67,63,.07)" stroke="#c8433f" stroke-width="1"/>
+          <text class="strong" x="18" y="190" text-anchor="start" style="fill:#c8433f">a ＝ 5</text>
+          <text class="label" x="70" y="190" text-anchor="start">余り：5, 4, 20, 16, 17, 1</text>
+          <text class="label" x="18" y="208" text-anchor="start">周期 6（偶数）　→ 半分の回数の余り 20　→ 19 と 21</text>
+          <text class="label" x="18" y="224" text-anchor="start" style="fill:#c8433f">最大公約数：19→1、21→21 そのもの　→ 因数が出ない</text>
+          <text class="strong" x="354" y="190" text-anchor="end" style="fill:#c8433f">失敗</text>
+          <text class="label" x="354" y="224" text-anchor="end" style="fill:#c8433f;font-size:10px">a を選び直す</text>
+          <text class="label" x="186" y="262" text-anchor="middle" style="font-size:10px">20 は「21 より 1 小さい数」なので、＋1 すると N そのものになってしまう</text>
+          <text class="label" x="186" y="280" text-anchor="middle">失敗する a は多くない → 選び直せば、たいてい数回で成功する</text>
+        </svg>
+        <div class="diagram-caption">N＝21 で a を3通り選んだときの結果。<strong>a＝2</strong>は周期6で、半分の3回掛けた余り 8 から 8−1＝7 と 8＋1＝9 が出て、21 との最大公約数 7 と 3 で成功。<strong>a＝4</strong>は周期3が奇数で「半分の回数」が取れないので失敗。<strong>a＝5</strong>は周期6だが、半分の余りが 20（21 より 1 小さい数）なので 20＋1 が 21 そのものになり、20−1＝19 との最大公約数も 1 で、因数が出ない。どちらの失敗も a を選び直せばよく、失敗する a は多くない</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
