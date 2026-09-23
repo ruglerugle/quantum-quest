@@ -224,7 +224,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そこは心配いらない。最大公約数には<strong>ユークリッドの互除法</strong>という2300年前からの高速な求め方があって、ふつうのコンピュータでも何百桁だろうと一瞬で計算できるんだ。では手順をまとめよう。<br>①素因数分解したい数 N と共通の約数を持たない数 a を、適当に選ぶ<br>②a を1回、2回、3回…と掛けた余りの列の<strong>周期 r</strong> を求める<br>③r が偶数なら、a を r の半分だけ掛けた余りの、<strong>±1 と N の最大公約数</strong>を取る<br>これで N の因数が出る。運が悪いと、うまくいかない場合もある。たとえば N＝21 で a＝4 を選ぶと、余りは 4, 16, 1 で周期が3――奇数なので「半分の回数」が取れない。a＝5 なら周期は6で偶数だが、半分の3回掛けた余りが 20 で、20＋1＝21 は N そのもの、20−1＝19 と 21 の最大公約数は1――どちらからも因数が出ない。こういうときは a を選び直せばいい。a＝2 にすると周期6、半分の3回掛けた余りは 8 で、8−1＝7、8＋1＝9 と 21 の最大公約数は 7 と 3。21＝3×7 が出る。失敗する a は多くないから、たいてい数回で成功する。<br>――さて、この手順の中で、ふつうのコンピュータにとって絶望的に重いのはどこかな。</div>
+          <div class="dialog-bubble">そこは心配いらない。最大公約数には<strong>ユークリッドの互除法</strong>という2300年前からの高速な求め方があって、ふつうのコンピュータでも何百桁だろうと一瞬で計算できるんだ。では手順をまとめよう。<br>①素因数分解したい数 N と共通の約数を持たない数 a を、適当に選ぶ<br>②a を1回、2回、3回…と掛けた余りの列の<strong>周期 r</strong> を求める<br>③r が偶数なら、a を r の半分だけ掛けた余りの、<strong>±1 と N の最大公約数</strong>を取る<br>これで N の因数が出る。運が悪いと、うまくいかない場合もある。たとえば N＝21 で a＝4 を選ぶと、余りは 4, 16, 1 で周期が3――奇数なので「半分の回数」が取れない。a＝5 なら周期は6で偶数だが、半分の3回掛けた余りが 20 で、20＋1＝21 は N そのもの、20−1＝19 と 21 の最大公約数は1――どちらからも因数が出ない。こういうときは a を選び直せばいい。a＝2 にすると周期6、半分の3回掛けた余りは 8 で、8−1＝7、8＋1＝9 と 21 の最大公約数は 7 と 3。21＝3×7 が出る。失敗する a は多くないから、たいてい数回で成功する。</div>
         </div>
       </div>
 
@@ -262,6 +262,13 @@
       </div>
 
       <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">さて、この手順の中で、ふつうのコンピュータにとって絶望的に重いのはどこかな。</div>
+        </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
