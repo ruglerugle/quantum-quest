@@ -186,6 +186,32 @@
           </div>
           <div class="dialog-bubble">種明かしをしよう。周期が4だったということは、<strong>7を4回掛けた余りが1</strong>ということだね。つまり「7を4回掛けた数 − 1」は15でちょうど割り切れる。<br>ここで、中学校で習う因数分解を使う。7を4回掛けた数を、7を2回掛けた数の2乗と見れば、<br><strong>（7を2回掛けた数）² − 1 ＝（7を2回掛けた数 − 1）×（7を2回掛けた数 ＋ 1）</strong><br>この左辺が15で割り切れるのだから、右辺も15で割り切れる。ところが右辺は2つの数の掛け算だ。15＝3×5 の3と5が、この2つの数に<strong>分かれて入っている</strong>可能性が高い。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qc-svg" viewBox="0 0 372 330" width="100%" role="img" aria-label="周期から因数を取り出す仕組みの図。7を4回掛けた数から1を引いた2400は15で割り切れる。これを2乗ひく1の因数分解で（49−1）×（49＋1）＝48×50に分けると、15＝3×5の3は48に、5は50に分かれて入っている。48と15の最大公約数は3、50と15の最大公約数は5となり、15の因数が取り出せる">
+          <text class="strong" x="186" y="16" text-anchor="middle">周期から因数へ：2400 を 2つの数の掛け算に分ける</text>
+          <text class="accent" x="14" y="40" text-anchor="start" style="font-size:10.5px">① 周期4 → 7を4回掛けた余りが1 → 7⁴ − 1 ＝ 2400 は 15 で割り切れる</text>
+          <rect x="14" y="48" width="344" height="26" rx="6" fill="rgba(47,111,166,.12)" stroke="#2f6fa6" stroke-width="1.4"/><text class="strong" x="186" y="65" text-anchor="middle" style="fill:#2f6fa6">2400 ＝ 15 × 160</text>
+          <text class="accent" x="14" y="98" text-anchor="start">② 因数分解：（7²）² − 1 ＝（7² − 1）×（7² ＋ 1）</text>
+          <text class="label" x="14" y="116" text-anchor="start">7² ＝ 49 なので</text>
+          <rect x="60" y="124" width="100" height="30" rx="6" fill="#fffdf6" stroke="#2f7a6b" stroke-width="1.4"/><text class="strong" x="110" y="144" text-anchor="middle" style="fill:#2f7a6b">49 − 1 ＝ 48</text>
+          <text class="strong" x="186" y="144" text-anchor="middle">×</text>
+          <rect x="212" y="124" width="100" height="30" rx="6" fill="#fffdf6" stroke="#2f7a6b" stroke-width="1.4"/><text class="strong" x="262" y="144" text-anchor="middle" style="fill:#2f7a6b">49 ＋ 1 ＝ 50</text>
+          <text class="label" x="186" y="172" text-anchor="middle">＝ 2400（左辺と同じ。だから右辺も 15 で割り切れる）</text>
+          <text class="accent" x="14" y="198" text-anchor="start">③ 15 ＝ 3 × 5 の 3 と 5 は、2つの数に分かれて入っている</text>
+          <rect x="146" y="206" width="80" height="26" rx="6" fill="rgba(200,102,63,.16)" stroke="#c8663f" stroke-width="1.4"/><text class="strong" x="186" y="223" text-anchor="middle" style="fill:#c8663f">15 ＝ 3 × 5</text>
+          <line x1="166" y1="232" x2="116.4" y2="253.2" stroke="#c8663f" stroke-width="1.6"/><polygon points="110,256 115.1,250.0 117.8,256.5" fill="#c8663f"/><line x1="206" y1="232" x2="255.6" y2="253.2" stroke="#c8663f" stroke-width="1.6"/><polygon points="262,256 254.2,256.5 256.9,250.0" fill="#c8663f"/>
+          <rect x="60" y="258" width="100" height="30" rx="6" fill="#fffdf6" stroke="#2f7a6b" stroke-width="1.4"/><text class="strong" x="110" y="278" text-anchor="middle" style="fill:#2f7a6b">48 ＝ 3 × 16</text>
+          <rect x="212" y="258" width="100" height="30" rx="6" fill="#fffdf6" stroke="#2f7a6b" stroke-width="1.4"/><text class="strong" x="262" y="278" text-anchor="middle" style="fill:#2f7a6b">50 ＝ 5 × 10</text>
+          <text class="label" x="110" y="304" text-anchor="middle" style="fill:#c8433f">48 と 15 の最大公約数 ＝ 3</text>
+          <text class="label" x="262" y="304" text-anchor="middle" style="fill:#c8433f">50 と 15 の最大公約数 ＝ 5</text>
+          <text class="strong" x="186" y="322" text-anchor="middle">→ 15 ＝ 3 × 5　因数が取り出せた</text>
+        </svg>
+        <div class="diagram-caption">周期から因数を取り出す仕組み。周期が4なら 7⁴ の余りは1なので、<strong>7⁴ − 1 ＝ 2400</strong> は 15 で割り切れる（①）。これを「2乗 ひく 1」の因数分解で <strong>（49−1）×（49＋1）＝ 48 × 50</strong> に分ける（②）。積が 15 で割り切れるのだから、15＝3×5 の 3 と 5 はこの2つの数のどちらかに入っているはずで、実際に 3 は 48 に、5 は 50 に分かれている（③）。あとは 48 と 15、50 と 15 の最大公約数を取れば、3 と 5 が出てくる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
