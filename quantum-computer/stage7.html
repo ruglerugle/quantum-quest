@@ -302,14 +302,28 @@
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">積み重なるか、打ち消し合うか……<strong>強め合いと打ち消し合い</strong>そのものですね。<br>ということは、こういうことですか。表には「4回ごとにくり返す」という模様が入っている。そこに、いろんな速さで回る矢印を掛けて全部足してみる。<strong>くり返しの周期に合った速さのときだけ、矢印がそろって強め合い、それ以外の速さでは打ち消し合ってゼロになる。</strong>だから測れば、合った速さのところが出てくる。</div>
+          <div class="dialog-bubble">ブランコのたとえは分かりました。でも、表の中の「4回ごと」を、具体的にどうやって取り出すんですか。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">自分で組み立てたね。その操作には名前があって、<strong>量子フーリエ変換</strong>という。「くり返し模様を、その周期の情報に変える装置」だ。アダマールを何本もの量子ビットにまたがって仕掛けたようなもので、<strong>大量の回転を一気にやってのける</strong>。<br>ここが決定的なところだよ。ふつうのコンピュータで同じことをすると、候補の数だけ計算が要る。量子コンピュータでは、量子ビットの本数の2乗くらいの手間で済んでしまう。<strong>候補の個数ではなく、桁数の2乗</strong>だ。この差が、指数の壁を越えさせる。</div>
+          <div class="dialog-bubble">手順を追ってみよう。N＝15、a＝7 で、候補は x＝0 から 15 までの16個にする。<br>① 16個の候補を全部そろえ、箱で「7 を x 回掛けて 15 で割った余り」を隣の量子ビットに書き込む。x と余りが対になった表ができる。<br>② 余りの側だけを測る。たとえば 7 が出たとすると、余りが 7 だった候補だけが残る。残るのは x＝1, 5, 9, 13――<strong>4 おきに矢印が立った表</strong>だ。周期はもう表の中に入っている。でも x をそのまま測っても 1 か 5 か 9 か 13 の1つが出るだけで、間隔は読めない。<br>③ そこで「試す速さ」k を決めて、x 番目の矢印を角度 k×x×22.5°（22.5° は 360° を候補の数 16 で割ったもの）だけ回してから、全部足す。k＝4 なら、4本の矢印は 90°、450°、810°、1170°――どれも 90° と同じ向きだ。そろって長い矢印になる。ブランコがどんどん大きく揺れる状態だね。k＝1 なら 22.5°、112.5°、202.5°、292.5°。円をぐるりと囲む向きになって、足すとゼロ。タイミングの合わない押し方だ。同じ計算をすると、そろうのは k＝0, 4, 8, 12 のときだけ――<strong>候補の数 ÷ 周期 ＝ 4 の倍数</strong>のときだけになる。<br>④ k を測ると、0, 4, 8, 12 のどれかが高い確率で出る。12 が出たら 12/16＝3/4 と約分して、分母の 4 が周期だ（0 が出たら情報がないので、やり直す）。本物の N では候補がずっと多いから割り切れずに近い値が出るが、分数に直して分母を読む手順は同じだよ。<br>③の「全部の k について矢印を回して足す」を、いっぺんにやってのける回路がちゃんとある。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">積み重なるか、打ち消し合うか……<strong>強め合いと打ち消し合い</strong>そのものですね。周期に合った速さのときだけ矢印がそろって強め合い、それ以外の速さでは打ち消し合ってゼロになる。だから測れば、合った速さのところが出てくる。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。その操作には名前があって、<strong>量子フーリエ変換</strong>という。「くり返し模様を、その周期の情報に変える装置」だ。アダマールを何本もの量子ビットにまたがって仕掛けたようなもので、<strong>大量の回転を一気にやってのける</strong>。<br>ここが決定的なところだよ。ふつうのコンピュータで同じことをすると、候補の数だけ計算が要る。量子コンピュータでは、量子ビットの本数の2乗くらいの手間で済んでしまう。<strong>候補の個数ではなく、桁数の2乗</strong>だ。この差が、指数の壁を越えさせる。</div>
         </div>
       </div>
 
