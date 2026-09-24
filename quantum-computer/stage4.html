@@ -213,6 +213,42 @@
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
+          <div class="dialog-bubble">待ってください。「制御ビットが1の行だけ」というのは、本当の条件分岐に見えます。ゲートは入力を見ずに表を当てるだけのはずでは？ これも行列の掛け算で書けるんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">書けるよ。そして条件分岐ではない。2量子ビットの表は |00⟩ |01⟩ |10⟩ |11⟩ の4行だから、ゲートは<strong>4行4列の数の表</strong>だ。CNOT の表は、1行目と2行目は「そのまま」、3行目と4行目は「入れ替え」の形に 1 が置いてある。入力の矢印を (a, b, c, d) として、前に習った「掛けて足す」を各行に当てると、出力は <strong>(a, b, d, c)</strong>。上2行はそのまま、下2行だけが入れ替わる――それだけだ。「制御ビットが1の行だけ標的をひっくり返す」というのは、この表のどこに 1 が置いてあるかを言葉で言い直したものにすぎない。ふつうのコンピュータの「もし〜なら」は、制御ビットが 0 か 1 のどちらかに決まっていて片方の処理だけが実行される。CNOT は、制御ビットが重ね合わせのときも同じ表を1回当てるだけだ。たとえば入力が (0.6, 0, 0.8, 0)、つまり制御ビットが 0.6 で |0⟩、0.8 で |1⟩ の重ね合わせで標的が |0⟩ なら、出力は (0.6, 0, 0, 0.8)。「制御が 0 の部分はそのまま、1 の部分だけ標的が反転」が同時に起きているのは、分岐したからではなく、入れ替えが表の下半分にしか置かれていないからだよ。H のときの「もし〜なら」の気持ち悪さと、答えは同じだね。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="qc-svg" viewBox="0 0 372 262" width="100%" role="img" aria-label="CNOTゲートを4行4列の表として書いた図。1行目と2行目は対角に1があり入力をそのまま通す。3行目と4行目は1の位置が入れ替わっていて、入力(a,b,c,d)に当てると出力は(a,b,d,c)になる。下段の例では入力(0.6,0,0.8,0)が出力(0.6,0,0,0.8)になり、条件分岐ではなく同じ表を1回当てただけで下2行が入れ替わることを示す">
+          <text class="strong" x="186" y="16" text-anchor="middle">CNOT ＝ 4行4列の表：下2行だけが入れ替わる</text>
+          <text class="label" x="120" y="36" text-anchor="middle" style="font-size:9px">入力の行</text>
+          <text class="label" x="52" y="74" text-anchor="end" style="font-size:9.5px;fill:#2f6fa6">|00⟩</text><text class="label" x="74" y="50" text-anchor="middle" style="font-size:9px">|00⟩</text><text class="label" x="52" y="96" text-anchor="end" style="font-size:9.5px;fill:#2f6fa6">|01⟩</text><text class="label" x="98" y="50" text-anchor="middle" style="font-size:9px">|01⟩</text><text class="label" x="52" y="118" text-anchor="end" style="font-size:9.5px;fill:#c8663f">|10⟩</text><text class="label" x="122" y="50" text-anchor="middle" style="font-size:9px">|10⟩</text><text class="label" x="52" y="140" text-anchor="end" style="font-size:9.5px;fill:#c8663f">|11⟩</text><text class="label" x="146" y="50" text-anchor="middle" style="font-size:9px">|11⟩</text>
+          <path d="M66 58 h-6 v90 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M166 58 h6 v90 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="74" y="74" text-anchor="middle" style="fill:#2f6fa6;opacity:1">1</text><text class="strong" x="98" y="74" text-anchor="middle" style="fill:#2f6fa6;opacity:0.35">0</text><text class="strong" x="122" y="74" text-anchor="middle" style="fill:#2f6fa6;opacity:0.35">0</text><text class="strong" x="146" y="74" text-anchor="middle" style="fill:#2f6fa6;opacity:0.35">0</text><text class="strong" x="74" y="96" text-anchor="middle" style="fill:#2f6fa6;opacity:0.35">0</text><text class="strong" x="98" y="96" text-anchor="middle" style="fill:#2f6fa6;opacity:1">1</text><text class="strong" x="122" y="96" text-anchor="middle" style="fill:#2f6fa6;opacity:0.35">0</text><text class="strong" x="146" y="96" text-anchor="middle" style="fill:#2f6fa6;opacity:0.35">0</text><text class="strong" x="74" y="118" text-anchor="middle" style="fill:#c8663f;opacity:0.35">0</text><text class="strong" x="98" y="118" text-anchor="middle" style="fill:#c8663f;opacity:0.35">0</text><text class="strong" x="122" y="118" text-anchor="middle" style="fill:#c8663f;opacity:0.35">0</text><text class="strong" x="146" y="118" text-anchor="middle" style="fill:#c8663f;opacity:1">1</text><text class="strong" x="74" y="140" text-anchor="middle" style="fill:#c8663f;opacity:0.35">0</text><text class="strong" x="98" y="140" text-anchor="middle" style="fill:#c8663f;opacity:0.35">0</text><text class="strong" x="122" y="140" text-anchor="middle" style="fill:#c8663f;opacity:1">1</text><text class="strong" x="146" y="140" text-anchor="middle" style="fill:#c8663f;opacity:0.35">0</text>
+          <text class="label" x="28" y="36" text-anchor="start" style="font-size:9px">新しい行</text>
+          <path d="M200 58 h-6 v90 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M212 58 h6 v90 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="206" y="74" text-anchor="middle">a</text><text class="strong" x="206" y="96" text-anchor="middle">b</text><text class="strong" x="206" y="118" text-anchor="middle">c</text><text class="strong" x="206" y="140" text-anchor="middle">d</text>
+          <text class="strong" x="250" y="106" text-anchor="middle">＝</text>
+          <path d="M286 58 h-6 v90 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M298 58 h6 v90 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="292" y="74" text-anchor="middle" style="fill:#2f6fa6">a</text><text class="strong" x="292" y="96" text-anchor="middle" style="fill:#2f6fa6">b</text><text class="strong" x="292" y="118" text-anchor="middle" style="fill:#c8663f">d</text><text class="strong" x="292" y="140" text-anchor="middle" style="fill:#c8663f">c</text>
+          <text class="label" x="186" y="170" text-anchor="middle">制御が 0 の行（上2行）はそのまま、制御が 1 の行（下2行）は入れ替え</text>
+          <line x1="14" y1="184" x2="358" y2="184" stroke="var(--line)" stroke-width="1"/>
+          <text class="accent" x="14" y="206" text-anchor="start">例：制御が 0.6 で |0⟩、0.8 で |1⟩ の重ね合わせ、標的は |0⟩</text>
+          <text class="strong" x="186" y="230" text-anchor="middle">(0.6,　0,　0.8,　0)　→　(0.6,　0,　0,　0.8)</text>
+          <text class="label" x="186" y="250" text-anchor="middle">分岐していない。同じ表を1回当てたら、下2行の入れ替えが起きただけ</text>
+        </svg>
+        <div class="diagram-caption">CNOT を<strong>4行4列の表</strong>で書いたもの。上2行（制御が 0）は対角に 1 があって入力をそのまま通し、下2行（制御が 1）は 1 の位置が入れ替わっている。「掛けて足す」で入力 (a, b, c, d) に当てると出力は (a, b, d, c)。「制御ビットが1なら標的を反転」という言葉は、この表の 1 の置き場所を言い直したもので、ゲートが入力を見て分岐しているわけではない。下段の例のように、制御が重ね合わせでも同じ表を1回当てるだけ</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
           <div class="dialog-bubble">これでもつれが作れるんですか？ 行を2つ入れ替えるだけの、ずいぶん素朴な操作に見えますが……。</div>
         </div>
         <div class="dialog-row">
@@ -331,6 +367,7 @@
         <span class="step">・<strong>CNOT</strong>：制御ビットが1の行だけ、標的ビットを反転（＝|10⟩ 行と |11⟩ 行の矢印を入れ替える）</span>
         <span class="step">・<strong>もつれの作り方</strong>：|00⟩ → H（1桁目） → CNOT → |00⟩ と |11⟩ に0.71ずつ（ベル状態）。掛け算では書けないことが背理法で示せる</span>
         <span class="step">・もつれがあって初めて2ⁿの表は本物になる。ふつうのコンピュータで真似できなくなる原因はここにある。ただし<span class="nw">もつれで通信はできない</span></span>
+        <span class="step">・<strong>CNOT の数の表（4行4列）</strong>：1・2行目は対角に 1、3・4行目は 1 が入れ替え。入力 (a, b, c, d) → <strong>(a, b, d, c)</strong>。条件分岐ではなく、同じ表を1回当てるだけ</span>
       </div>
 
       <h2 class="quiz-head">確認クイズ</h2>
