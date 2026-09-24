@@ -373,7 +373,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="ending-links">
           <a class="ending-link share" href="https://x.com/intent/post?text=%E9%87%8F%E5%AD%90%E5%9B%9E%E8%B7%AF%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%20%E5%85%A8%E3%83%AC%E3%83%99%E3%83%AB%E3%82%AF%E3%83%AA%E3%82%A2%EF%BC%81%E2%9A%9B%20%E9%87%8F%E5%AD%90%E3%82%B2%E3%83%BC%E3%83%88%E3%82%92%E7%B5%84%E3%82%93%E3%81%A7%E9%87%8F%E5%AD%90%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E3%81%AE%E8%A8%88%E7%AE%97%E3%82%92%E4%BD%93%E9%A8%93%E3%81%A7%E3%81%8D%E3%82%8B%E7%84%A1%E6%96%99%E5%AD%A6%E7%BF%92%E3%82%B2%E3%83%BC%E3%83%A0&url=https%3A%2F%2Fruglerugle.github.io%2Fquantum-circuit%2F" target="_blank" rel="noopener">𝕏 クリアを報告する</a>
           <a class="ending-link" href="https://quantum-mechanics.habatakijuku.com/oracle-workshop/" target="_blank" rel="noopener">⚙ 続編：オラクル工房へ</a>
-          <a class="ending-link" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/" target="_blank" rel="noopener">⚛ 量子コンピュータの旅へ</a>
+          <a class="ending-link" href="https://quantum-mechanics.habatakijuku.com/quantum-computer/" target="_blank" rel="noopener">⚛ 『量子コンピューターの仕組み』へ</a>
         </div>
       </div>
 
@@ -651,7 +651,7 @@ const LEVELS = [
     qubits: 1, labels: ["A"], gates: ["X"],
     mode: "state", target: [0, 1],
     dialogue: [
-      { who:'cat', img:'cat', text:'ようこそ、量子回路の練習場へ。<a href="https://quantum-mechanics.habatakijuku.com/quantum-computer/" target="_blank" rel="noopener">量子コンピュータの旅</a>では、量子の計算を<strong>矢印の一覧表</strong>で追いかけたね。今度は自分の手で回路を組んで、同じ計算を確かめてみよう。まずはXゲートからだよ。' },
+      { who:'cat', img:'cat', text:'ようこそ、量子回路の練習場へ。『<a href="https://quantum-mechanics.habatakijuku.com/quantum-computer/" target="_blank" rel="noopener">量子コンピューターの仕組み</a>』では、量子の計算を<strong>矢印の一覧表</strong>で追いかけたね。今度は自分の手で回路を組んで、同じ計算を確かめてみよう。まずはXゲートからだよ。' },
       { who:'rabbit', img:'rabbit', text:'Xは覚えています。0と1を入れ替えるゲートで、論理回路でいうNOTの量子版ということでしたね。' },
       { who:'cat', img:'catThink', text:'そう。回路図では、入力から出力までつないだ1本の線が、量子ビット1個ぶんの通り道。左が過去、右が未来で、線の途中に挟んだゲートが順に働くんだ。Aの入力と出力のあいだにXを1個つないで、|0⟩を|1⟩にしてごらん。' },
       { who:'rabbit', img:'rabbitThink', text:'一覧表でいうと、|0⟩の行にあった長さ1の矢印が|1⟩の行に引っ越せば成功ですね。やってみます。' },
@@ -670,7 +670,7 @@ const LEVELS = [
       { who:'rabbit', img:'rabbit', text:'Xの次は何ですか？' },
       { who:'cat', img:'cat', text:'もう一回Xだよ。Xを2個並べると何が起きるか、組んで確かめてみよう。' },
       { who:'rabbit', img:'rabbitThink', text:'0→1→0……ただ元に戻るだけ、ということですか？' },
-      { who:'cat', img:'catThink', text:'そう。でもその「戻せる」が大事なんだ。量子ゲートは全部<strong>可逆</strong>——結果から入力を復元できる。論理回路の旅で使ったANDは、出力が0だと入力が00・01・10のどれだったか分からなくなる。ああいう「情報を消す」ゲートは、量子回路には存在できないんだよ。' },
+      { who:'cat', img:'catThink', text:'そう。でもその「戻せる」が大事なんだ。量子ゲートは全部<strong>可逆</strong>——結果から入力を復元できる。『<a href="https://informatics.habatakijuku.com/cpu-logic-game/" target="_blank" rel="noopener">論理回路CPUクエスト</a>』で使ったANDは、出力が0だと入力が00・01・10のどれだったか分からなくなる。ああいう「情報を消す」ゲートは、量子回路には存在できないんだよ。' },
       { who:'rabbit', img:'rabbit', text:'だから量子のゲートは、入れ替えたり回したりする操作だけでできているんですね。' },
     ],
     solution: [ {t:'X', q:[0], c:1}, {t:'X', q:[0], c:2} ],
@@ -726,7 +726,7 @@ const LEVELS = [
     name: "HZH＝X：位相が確率に化ける",
     label: "LEVEL 6", shortName: "HZH=X",
     desc: "X を使わずに、H と Z だけで「Xと同じ動き」をする回路を作ってください。合格条件：入力が |0⟩ なら出力 |1⟩、入力が |1⟩ なら出力 |0⟩（両方の入力で検証します）。ヒント：3個で作れます。",
-    qlink: "H→Z→H と並べると、Xと全く同じ動きになります（HZH＝X）。測定では見えない位相の違いが、最後のHの干渉を通して「どちらが打ち消されるか」を入れ替え、確率の違いに変換されるからです。位相を操作して干渉の結果を設計する——グローバーの探索もショアの因数分解も、この原理の大規模版です。",
+    qlink: "H→Z→H と並べると、Xと全く同じ動きになります（HZH＝X）。測定では見えない位相の違いが、最後のHの干渉を通して「どちらが打ち消されるか」を入れ替え、確率の違いに変換されるからです。位相を操作して干渉の結果を設計する——グローバーの探索もショアの素因数分解も、この原理の大規模版です。",
     qubits: 1, labels: ["A"], gates: ["H","Z"],
     mode: "unitary", targetMap: i => i ^ 1,
     dialogue: [
@@ -749,7 +749,7 @@ const LEVELS = [
       { who:'cat', img:'cat', text:'ここから量子ビットを2個に増やすよ。使うのはCNOT——制御NOTだね。' },
       { who:'rabbit', img:'rabbit', text:'復習します。CNOTは、制御側が1のときだけ標的側にXをかけるゲートでした。制御が0なら何もしないんでしたね。' },
       { who:'cat', img:'catThink', text:'そう。今回は入力を4通り全部切り替えて、「Aが1のときだけBが反転する」ことを確かめよう。' },
-      { who:'rabbit', img:'rabbitThink', text:'出力のBは、Aが0ならBのまま、Aが1ならBの反対……「AとBが違うときだけ1」。論理回路の旅でやったXORと同じ表になる、ということですか？' },
+      { who:'rabbit', img:'rabbitThink', text:'出力のBは、Aが0ならBのまま、Aが1ならBの反対……「AとBが違うときだけ1」。『論理回路CPUクエスト』でやったXORと同じ表になる、ということですか？' },
       { who:'cat', img:'cat', text:'その通り。CNOTは「XORを、入力を消さずに実行する」ゲートなんだ。Aをそのまま残して、Bの場所に A⊕B（⊕はXORの記号）を書き込む。可逆な計算の基本部品だよ。' },
     ],
     solution: [ {t:'CNOT', q:[0,1], c:1} ],
@@ -798,8 +798,8 @@ const LEVELS = [
     qubits: 3, labels: ["A","B","C"], gates: ["CNOT","CCX"],
     mode: "unitary", targetMap: i => { const a=(i>>2)&1, b=(i>>1)&1; return (a&&b) ? (i^1) : i; },
     dialogue: [
-      { who:'cat', img:'cat', text:'部品をもう1個増やそう。トフォリゲート——制御が2個あるCNOTだよ。<a href="https://ruglerugle.github.io/grover-oracle/" target="_blank" rel="noopener">オラクルの旅</a>にも登場したね。' },
-      { who:'rabbit', img:'rabbit', text:'覚えています。制御の2個が両方1のときだけ、標的を反転するゲートでしたね。' },
+      { who:'cat', img:'cat', text:'部品をもう1個増やそう。<strong>トフォリゲート</strong>——制御が2個あるCNOTで、制御の2個が両方1のときだけ標的を反転する。回路図では●が2個と⊕が1個だよ。' },
+      { who:'rabbit', img:'rabbit', text:'制御が2個とも1のときだけ、標的にXがかかる……CNOTの「制御が1なら」が「両方1なら」になった形ですね。' },
       { who:'cat', img:'catThink', text:'そう。ここで大事なのは、Cを最初0にしておいたときのCの出力だよ。「AとBが両方1のときだけ1」——これはANDそのものだね。' },
       { who:'rabbit', img:'rabbitThink', text:'レベル2で、ANDは情報を消すから量子回路には存在できない、という話でした。トフォリなら入力のA・Bが残ったままだから、消さずにANDが計算できる、ということですか？' },
       { who:'cat', img:'cat', text:'その通り。8通りの入力全部で動きを確かめてごらん。' },
@@ -810,13 +810,13 @@ const LEVELS = [
     name: "量子版・半加算器",
     label: "LEVEL 11", shortName: "半加算器",
     desc: "1桁の2進数どうしの足し算 A＋B を回路にします。答えは最大2桁（1＋1＝10）なので、下の桁を SUM（＝AとBのXOR）、繰り上がりを CARRY（＝AとBのAND）と呼びます。CNOT とトフォリを使って、出力が「A：そのまま／B：SUM／C：CARRY」になる回路を作ってください。C は0で入力される空きビットで、答えは C B の2桁として読めます。ヒント：置く順番に注意（まだ使う値を上書きしない）。",
-    qlink: "XOR＝CNOT、AND＝トフォリ。論理回路で作れるものは、すべて量子回路でも作れます（量子回路は古典回路の上位互換です）。ただし可逆計算では「まだ使う値を上書きしない」順序設計が必要です。ショアのアルゴリズムの中で走る「2のx乗を割った余り」の計算も、こうして組んだ可逆な算術回路です。",
+    qlink: "XOR＝CNOT、AND＝トフォリ。論理回路で作れるものは、すべて量子回路でも作れます（量子回路は古典回路の上位互換です）。ただし可逆計算では「まだ使う値を上書きしない」順序設計が必要です。ショアのアルゴリズムの中で走る「a の x 乗を N で割った余り」の計算も、こうして組んだ可逆な算術回路です。",
     qubits: 3, labels: ["A","B","C"], gates: ["CNOT","CCX"],
     mode: "unitary",
     testInputs: [0, 2, 4, 6],
     targetMap: i => { const a=(i>>2)&1, b=(i>>1)&1; return (a<<2) | ((a^b)<<1) | (a&b); },
     dialogue: [
-      { who:'cat', img:'cat', text:'道具が揃ったよ。CNOTとトフォリで、論理回路の旅でも作った<strong>半加算器</strong>——1桁の2進数の足し算 A+B を、量子回路で組んでみよう。' },
+      { who:'cat', img:'cat', text:'道具が揃ったよ。CNOTとトフォリで、『論理回路CPUクエスト』でも作った<strong>半加算器</strong>——1桁の2進数の足し算 A+B を、量子回路で組んでみよう。' },
       { who:'rabbit', img:'rabbitThink', text:'半加算器は、答えの下の桁SUMがXORで、桁上がりCARRYがANDでした。XORはCNOT、ANDはトフォリでできるから……Bの場所にSUMを、Cの場所にCARRYを作ればいい、ということですか？' },
       { who:'cat', img:'catThink', text:'そう。ただし1つ罠がある。<strong>置く順番</strong>だよ。CNOTを先に置くと、Bの中身がA⊕Bに変わってしまってから、トフォリが「AとA⊕BのAND」を計算してしまう。' },
       { who:'rabbit', img:'rabbit', text:'先にトフォリでCARRYを取り出してから、CNOTでBをSUMに書き換えるんですね。紙の筆算と違って途中の材料を上書きしていくから、順番に意味があるのか……。' },
@@ -850,7 +850,7 @@ const LEVELS = [
     mode: "unitary", testInputs: [0, 2],
     targetMap: i => i | ((i >> 1) & 1),
     dialogue: [
-      { who:'cat', img:'cat', text:'ここからは新しい章だよ。レベル12までで、ゲートという部品は全部そろった。次はそれらを組み合わせて、「候補が条件を満たすか」を調べる回路を作っていく。あとでグローバーの探索の心臓部になる「オラクル」の部品だ。土台になるのは検算。「候補が条件を満たすか」を調べて、結果を補助ビットDに書き込む工程だよ。' },
+      { who:'cat', img:'cat', text:'ここからは新しいパートだよ。レベル12までで、ゲートという部品は全部そろった。次はそれらを組み合わせて、「候補が条件を満たすか」を調べる回路を作っていく。あとでグローバーの探索の心臓部になる「オラクル」の部品だ。土台になるのは検算。「候補が条件を満たすか」を調べて、結果を補助ビットDに書き込む工程だよ。' },
       { who:'rabbit', img:'rabbit', text:'判定の結果を、候補とは別の場所に書くんですね。' },
       { who:'cat', img:'catThink', text:'そう。候補そのものを書き換えてしまうと、あとで元に戻せなくなるからね。まずはいちばん簡単な条件「Aが1」から。Aが1のときだけDが0から1になる回路を、CNOT1個で作ってごらん。' },
       { who:'rabbit', img:'rabbitThink', text:'CNOTは「制御が1のときだけ標的を反転」でした。制御をA、標的をD（最初は0）にすれば、DにAの値がそのまま写る——これが判定ビットになるんですね。' },
@@ -867,7 +867,7 @@ const LEVELS = [
     targetMap: i => i | (((i >> 2) ^ (i >> 1)) & 1),
     dialogue: [
       { who:'cat', img:'cat', text:'次の条件は「AとBが違う」。式で書くと A⊕B＝1 だね。DにA⊕Bを書き込む検算を、CNOT2個で組んでごらん。' },
-      { who:'rabbit', img:'rabbitThink', text:'Dは0から始まるから、CNOTでAを足し込んで、続けてBを足し込めば D＝A⊕B。量子回路クエストで半加算器のSUMを作ったのと同じ手ですね。' },
+      { who:'rabbit', img:'rabbitThink', text:'Dは0から始まるから、CNOTでAを足し込んで、続けてBを足し込めば D＝A⊕B。レベル11で半加算器のSUMを作ったのと同じ手ですね。' },
       { who:'cat', img:'catThink', text:'そう。そしてここが大事なところだよ。いま君は、この条件を満たす候補がどれかを<strong>一度も考えていない</strong>。条件の式を、そのまま配線に翻訳しただけだね。' },
       { who:'rabbit', img:'rabbit', text:'言われてみれば……答えの一覧を知らなくても、式さえあれば検算回路は組めるんですね。' },
     ],
@@ -877,14 +877,14 @@ const LEVELS = [
     name: "かつの検算：AもBも1",
     label: "LEVEL 15", shortName: "AND検算",
     desc: "条件「AもBも1」の検算です。トフォリを1個つないで（●●＝AとBの線に、⊕＝Dの線に）、両方が1のときだけDが反転する回路を作ってください。",
-    qlink: "「かつ（AND）」はトフォリで検算できます。⊕（CNOT）と、かつ（トフォリ）と、NOT（X）が揃えば、どんな論理式でも検算回路に翻訳できます——論理回路CPUクエストで見た「基本ゲートの万能性」と同じ話です。実際のAES鍵探索のオラクルも、暗号化の全手順をこの調子で可逆論理に翻訳したものです。",
+    qlink: "「かつ（AND）」はトフォリで検算できます。⊕（CNOT）と、かつ（トフォリ）と、NOT（X）が揃えば、どんな論理式でも検算回路に翻訳できます——論理回路CPUクエストで見た「基本ゲートの万能性」と同じ話です。実際の暗号（AESなど）の鍵探索に使うオラクルも、暗号化の全手順をこの調子で可逆論理に翻訳したものです。",
     qubits: 3, labels: ["A","B","D"], gates: ["X","CNOT","CCX"],
     mode: "unitary", testInputs: [0, 2, 4, 6],
     targetMap: i => i | (((i >> 2) & (i >> 1)) & 1),
     dialogue: [
       { who:'cat', img:'cat', text:'条件「AもBも1」。これはもう道具を持っているね。' },
       { who:'rabbit', img:'rabbit', text:'トフォリです。制御をAとB、標的をDにすれば、両方が1のときだけDが反転します。' },
-      { who:'cat', img:'catThink', text:'そう。CNOTが「⊕」の検算、トフォリが「かつ」の検算。Xも合わせれば、論理回路の旅でやったのと同じ理屈で、どんな条件式でも検算に翻訳できるんだ。' },
+      { who:'cat', img:'catThink', text:'そう。CNOTが「⊕」の検算、トフォリが「かつ」の検算。Xも合わせれば、『論理回路CPUクエスト』でやったのと同じ理屈で、どんな条件式でも検算に翻訳できるんだ。' },
     ],
     solution: [ {t:'CCX', q:[0,1,2], c:1} ],
   },
@@ -916,9 +916,9 @@ const LEVELS = [
     dialogue: [
       { who:'cat', img:'cat', text:'検算ができたから、印をつけよう。H×3で8候補の重ね合わせを作り、いまの検算をつないで、最後に<strong>DにZ</strong>をかける。' },
       { who:'rabbit', img:'rabbitThink', text:'検算で「一致した枝」だけD＝1になっているから、ZはD＝1の行の矢印だけを反転する。つまり鍵の枝にだけ印がつく、ということですか？' },
-      { who:'cat', img:'catThink', text:'その通り。ただし、できあがった一覧表をよく見てほしい。印はついたけれど、鍵の枝だけがD＝1の行に居座ったままだね。' },
-      { who:'rabbit', img:'rabbit', text:'Dに検算の結果が残っています……。「<a href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/" target="_blank" rel="noopener">消える干渉縞</a>」で学んだ手がかりと同じで、枝ごとにDの値が違うままだと、あとで干渉できなくなる気がします。' },
-      { who:'cat', img:'cat', text:'いいところに気づいたね。その後片付けが、次の工程だよ。' },
+      { who:'cat', img:'catThink', text:'その通り。ただし、できあがった一覧表をよく見てほしい。印はついたけれど、鍵の枝だけがD＝1の行に居座ったままだね。検算の結果がDに残っている——枝ごとに違う<strong>手がかり</strong>だ。' },
+      { who:'rabbit', img:'rabbit', text:'あ、思い出しました。『<a href="https://quantum-mechanics.habatakijuku.com/decoherence-quest/" target="_blank" rel="noopener">デコヒーレンスと量子消しゴム</a>』で、道筋ごとに違う手がかりが残ると干渉できなくなる、という話がありましたよね。枝ごとにDの値が違うままだと、同じことが起きそうです。' },
+      { who:'cat', img:'cat', text:'よく覚えていたね。その後片付けが、次の工程だよ。' },
     ],
     solution: OW_L5,
   },
@@ -934,7 +934,7 @@ const LEVELS = [
     dialogue: [
       { who:'cat', img:'cat', text:'後片付けの方法は<strong>逆計算</strong>——検算回路を、逆の順番でもう一度通すことだよ。量子ゲートはすべて可逆だから、必ず元に戻せる。' },
       { who:'rabbit', img:'rabbitThink', text:'X→CCCX→Xを逆順に……この検算は左右対称だから、同じ並びをもう一度つなげばいいんですね。どの枝でもDは0に戻って、矢印の反転だけがABC側に残る。' },
-      { who:'cat', img:'catThink', text:'そう。<strong>検算 → DにZ → 逆計算</strong>。この3工程がオラクルの完成形だよ。外から見ると、X・CCZ・Xで直接組む位相の印つけ――続編のオラクル工房で最初に組む形――と同じ動きになっている。' },
+      { who:'cat', img:'catThink', text:'そう。<strong>検算 → DにZ → 逆計算</strong>。この3工程がオラクルの完成形だよ。外から見ると、X・CCZ・X（CCZは制御2個のZ：3つ全部が1のときだけ矢印を反転する）で直接組む位相の印つけ――続編のオラクル工房で最初に組む形――と同じ動きになっている。' },
       { who:'rabbit', img:'rabbit', text:'補助ビットは、借りて、使って、返す。返すところまでがオラクルなんですね。' },
       { who:'cat', img:'cat', text:'これでオラクルの部品は全部そろった。続きは<a href="https://quantum-mechanics.habatakijuku.com/oracle-workshop/" target="_blank" rel="noopener">オラクル工房</a>で、この部品を使ってグローバーの探索を組もう。' },
     ],
@@ -2258,8 +2258,8 @@ function renderDialogue(dialogue){
 const CLEAR_DIALOGUE_1 = [
   { who:'cat',    img:'cat',        text:'ここまでの18レベルを並べ直してみよう。' },
   { who:'rabbit', img:'rabbit',     text:'前半は量子ビット1個でした。XとHとZ。それからH2個の打ち消しと、HとZだけでXが作れる話——位相が確率に化けるやつです。' },
-  { who:'cat',    img:'catThink',   text:'そう。中盤はCNOTとトフォリで、論理回路の旅で作ったXOR・AND・半加算器を、情報を消さない形で作り直した。' },
-  { who:'rabbit', img:'rabbitThink', text:'そして最後の章では、条件の検算をDに書き、Zで印をつけ、逆計算でDを返す——オラクルの部品を全部そろえました。まとめると——' },
+  { who:'cat',    img:'catThink',   text:'そう。中盤はCNOTとトフォリで、『論理回路CPUクエスト』で作ったXOR・AND・半加算器を、情報を消さない形で作り直した。' },
+  { who:'rabbit', img:'rabbitThink', text:'そして最後のパートでは、条件の検算をDに書き、Zで印をつけ、逆計算でDを返す——オラクルの部品を全部そろえました。まとめると——' },
 ];
 const CLEAR_DIALOGUE_2 = [
   { who:'rabbit', img:'rabbitThink', text:'重ね合わせ足し算では、4つの答えが並んでいても読み出せるのは1つだけでした。欲しい答えを引き出すには干渉の設計が要る——そのための「見えない印」をつける部品が、オラクルなんですね。' },
