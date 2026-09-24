@@ -1,0 +1,2606 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>オラクル工房 ― オラクルからグローバー、ショアまで組む</title>
+<meta name="description" content="鍵101のオラクルとグローバーの探索から始めて、答えを知らない条件からのオラクル、封印オラクル、ミニ暗号の鍵探索、10ビット探索、そしてショアの素因数分解まで、実物の回路を配線して体験する無料学習ゲーム（全16レベル）。量子回路クエストの続編。">
+<link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/oracle-workshop/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="オラクル工房">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="オラクル工房 ― オラクルからグローバー、ショアまで組む">
+<meta property="og:description" content="グローバーの探索から、答えを知らない条件からのオラクル、暗号の鍵探索、ショアの素因数分解まで、回路を自分で配線して体験する無料学習ゲーム。量子回路クエストの続編。">
+<meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/oracle-workshop/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="images/favicon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "オラクル工房",
+  "description": "鍵101のオラクルとグローバーの探索から始めて、答えを知らない条件からのオラクル、封印オラクル、ミニ暗号の鍵探索、10ビット探索、そしてショアの素因数分解まで、実物の回路を配線して体験する無料学習ゲーム（全16レベル）。量子回路クエストの続編。",
+  "url": "https://quantum-mechanics.habatakijuku.com/oracle-workshop/",
+  "inLanguage": "ja",
+  "learningResourceType": "learning activity",
+  "teaches": "グローバーの探索の構成（オラクル・拡散・反復）、条件からのオラクル構成（検算・印つけ・逆計算）、封印オラクル、暗号の鍵探索、√N反復、ショアの周期発見",
+  "isAccessibleForFree": true,
+  "author": { "@type": "Person", "name": "ruglerugle" }
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{max-width:100vw;overflow-x:hidden}
+:root{
+  --paper:#fffdf9;--paper2:#f8fbff;--ink:#1b2340;--muted:#65718f;
+  --line:#c9d2e4;--blue:#2e7dd1;--green:#1aa85a;--gold:#ffd44a;--gold-dark:#b8860b;
+  --shadow:0 18px 45px rgba(0,0,0,.35);
+  --side-line:rgba(255,255,255,.18);
+}
+body{
+  font-family:system-ui,-apple-system,sans-serif;
+  background:radial-gradient(circle at 20% 0%,#2c3c74 0,#1a2450 38%,#0b1230 100%);
+  color:var(--ink);
+  font-weight:650;
+  min-height:100vh;
+}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.05),transparent 35%,rgba(255,255,255,.03));}
+
+/* ── App shell ── */
+.app-shell{min-height:100vh;display:flex;flex-direction:column;gap:10px;padding:8px 10px 10px;}
+
+/* ── Header ── */
+.game-header{height:86px;display:grid;grid-template-columns:290px 1fr auto;gap:18px;align-items:center;color:#fff;}
+.brand-title{font-size:23px;line-height:1.05;font-weight:950;letter-spacing:.02em;color:var(--gold);text-shadow:0 2px 0 rgba(0,0,0,.35);white-space:nowrap;}
+.brand-sub{font-size:13px;margin-top:5px;color:#fff;font-weight:900}
+.brand-sub::before{content:"⚛ "}
+.chapter-title{font-size:17px;font-weight:950;margin-bottom:9px;color:#fff;display:flex;align-items:center;gap:14px}
+.step-num{color:#8de0ff;font-size:17px;letter-spacing:.04em;white-space:nowrap}
+.head-progress{height:18px;background:rgba(255,255,255,.22);border-radius:999px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.28)}
+.head-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#ffe27a,#e0a51e);border-radius:999px;transition:width .3s;position:relative}
+.head-progress-fill::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.28) 0 26px,transparent 26px 42px)}
+.header-actions{display:flex;align-items:center;gap:10px}
+.head-btn{height:50px;padding:0 18px;border:2px solid rgba(255,255,255,.78);border-radius:9px;background:rgba(0,0,0,.18);color:#fff;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.26);touch-action:manipulation}
+.head-btn:hover{background:rgba(255,255,255,.15)}
+a.head-btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+
+/* ── Layout ── */
+.game-layout{display:grid;grid-template-columns:236px minmax(0,1fr);gap:14px;flex:1;min-height:0;transition:grid-template-columns .25s ease}
+
+/* ── Side panel ── */
+.side-panel{background:linear-gradient(180deg,rgba(40,50,92,.96),rgba(24,32,66,.98));position:sticky;top:8px;align-self:start;border:1px solid rgba(255,255,255,.22);border-radius:8px;box-shadow:var(--shadow);padding:0;color:#fff;overflow:hidden}
+.side-head{font-size:14px;font-weight:900;color:#dbe4f3;padding:10px;border-bottom:1px solid var(--side-line);display:flex;align-items:center;gap:8px;min-height:48px}
+.side-head-text{white-space:nowrap}
+.side-toggle{width:36px;height:32px;border:1px solid rgba(255,255,255,.28);border-radius:7px;background:rgba(255,255,255,.10);color:#fff;font-weight:950;font-size:18px;cursor:pointer;line-height:1;flex-shrink:0}
+.side-backdrop{display:none}
+.step-list{display:flex;flex-direction:column}
+.side-level{display:grid;grid-template-columns:28px 1fr 20px;gap:6px;align-items:center;min-height:60px;padding:8px 10px;border-bottom:1px solid var(--side-line);color:#cdd6ea;position:relative;cursor:pointer;user-select:none;touch-action:manipulation}
+.side-level:hover{background:rgba(255,255,255,.07)}
+.side-level.active{background:rgba(9,14,40,.52);outline:2px solid #d7b219;outline-offset:-3px;color:#fff}
+.lv-icon{font-size:15px;text-align:center;color:#9ba7c4;font-weight:950}
+.side-level.cleared .lv-icon{color:#51d184}
+.lv-main{font-size:13px;font-weight:950;line-height:1.25}
+.lv-sub{font-size:11px;margin-top:2px;line-height:1.3;color:#9ab}
+.check{font-size:16px;color:#51d184}
+
+/* Collapsed sidebar */
+.app-shell.side-collapsed .game-layout{grid-template-columns:64px minmax(0,1fr)}
+.app-shell.side-collapsed .side-head{justify-content:center;padding:8px 6px}
+.app-shell.side-collapsed .side-head-text{display:none}
+.app-shell.side-collapsed .side-level{grid-template-columns:1fr;justify-items:center;min-height:44px;padding:6px 4px}
+.app-shell.side-collapsed .side-level>div:nth-child(2),.app-shell.side-collapsed .side-level>div:nth-child(3){display:none}
+@media(min-width:901px){
+  .app-shell.side-collapsed .game-layout{grid-template-columns:236px minmax(0,1fr) !important}
+  .app-shell.side-collapsed .side-head{justify-content:space-between !important;padding:10px !important}
+  .app-shell.side-collapsed .side-head-text{display:block !important}
+  .app-shell.side-collapsed .side-level{grid-template-columns:28px 1fr 20px !important;justify-items:start !important;min-height:60px !important;padding:8px 10px !important}
+  .app-shell.side-collapsed .side-level>div:nth-child(2),.app-shell.side-collapsed .side-level>div:nth-child(3){display:block !important}
+}
+
+/* ── Main area ── */
+.main-area{background:var(--paper);border:1px solid #d8e0ec;border-radius:8px;padding:16px 14px 10px;box-shadow:var(--shadow);overflow:auto;min-height:500px}
+
+/* Intro content */
+.ch-title{display:inline-block;background:#2e5fd1;color:#fff;border-radius:7px;padding:6px 13px;font-size:16px;font-weight:950;letter-spacing:.02em;margin:0 10px 0 0}
+.ch-heading{display:inline;font-size:20px;font-weight:950;color:#1b2340}
+.game-intro{border-top:1px solid #c9d2e4;padding-top:9px;margin-top:8px;font-size:15px;color:#1b2340;line-height:1.7;font-weight:780}
+.q-link-box{background:#eef3fb;border:1px solid #a3b6d9;border-left:4px solid #2e5fd1;border-radius:6px;padding:10px 13px;font-size:13px;color:#1c2c55;margin:12px 0;line-height:1.7;font-weight:780}
+.goal-box{background:#fdf9ec;border:1px solid #d9c27a;border-left:4px solid #d4a017;border-radius:6px;padding:10px 13px;font-size:13px;color:#4a3a10;margin:12px 0;line-height:1.7;font-weight:780}
+.goal-box table{border-collapse:collapse;margin:8px 0 4px;background:#fff}
+.goal-box th,.goal-box td{border:1px solid #d9c27a;padding:3px 12px;text-align:center;font-size:12.5px;font-weight:800;color:#1b2340;font-family:ui-monospace,'Cascadia Code',monospace}
+.goal-box th{background:#f4e9c8;font-family:inherit}
+.goal-box .goal-note{font-size:12px;color:#7a6320;font-weight:750}
+.q-link-box strong{color:#12245e}
+.gm-box{background:#fbf6ea;border:1px solid #d9c9a0;border-left:4px solid #b98a2e;border-radius:6px;padding:10px 13px;margin:12px 0;color:#3a2f16}
+.gm-box .gm-title{font-size:13px;font-weight:800;color:#5a4416;margin-bottom:4px}
+.gm-box svg{display:block;width:100%;max-width:400px;margin:4px auto 0;font-family:system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif}
+.gm-box .gm-note{font-size:12px;color:#5c503a;line-height:1.7;margin-top:6px}
+.gm-box .gm-note a{color:#8a5a2a;text-decoration:underline}
+.intro-actions{display:flex;justify-content:flex-end;margin-top:16px;gap:10px}
+.book-recommend-box{margin:12px 0;background:#f6f4ee;border:1px solid rgba(0,0,0,.13);border-radius:10px;padding:10px 14px}
+.book-recommend-label{display:inline-block;font-size:10px;font-weight:900;color:#888;border:1px solid #aaa;border-radius:4px;padding:0 4px;margin:0 0 6px}
+.book-recommend-lead{font-size:12px;color:#888;margin:0 0 4px;font-weight:700}
+.book-recommend-box a{font-size:13px;font-weight:900;text-decoration:underline;color:var(--ink)}
+
+/* ── Buttons ── */
+.btn{border:1px solid rgba(0,0,0,.22);background:transparent;border-radius:8px;padding:.6rem 1.25rem;font-size:14px;cursor:pointer;color:var(--ink);transition:background .15s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-weight:900}
+.btn:hover{background:#f1f3f8}
+.btn-p{background:linear-gradient(#3f6fe0,#2450c0);border-color:#1c3f9c;color:#fff;box-shadow:0 3px 0 #16307a}
+.btn-p:hover{opacity:.9;background:linear-gradient(#3f6fe0,#2450c0)}
+.btn-next{background:linear-gradient(#f5a623,#d4870a);border-color:#b87210;color:#fff;box-shadow:0 3px 0 #8a5508}
+.btn-next:hover{opacity:.9;background:linear-gradient(#f5a623,#d4870a)}
+
+/* ── Character dialogue ── */
+.dialog-scene{display:flex;flex-direction:column;gap:8px;margin:12px 0 16px}
+.dialog-row{display:grid;grid-template-columns:116px minmax(0,1fr);gap:12px;align-items:stretch;border:1px solid #c9d2e4;background:linear-gradient(180deg,#ffffff,#f8fbff);border-radius:10px;padding:10px 12px;box-shadow:inset 0 1px 0 #fff,0 2px 0 rgba(20,35,70,.04)}
+.dialog-row.right{grid-template-columns:minmax(0,1fr) 128px}
+.dialog-row.right .dialog-character{order:2}
+.dialog-row.right .dialog-bubble{order:1}
+.dialog-character{display:flex;flex-direction:column;align-items:center;justify-content:center;align-self:center;min-width:0}
+.dialog-character img{width:100px;max-width:100%;height:auto;display:block;object-fit:contain;filter:drop-shadow(0 3px 2px rgba(0,0,0,.12));position:relative;z-index:1}
+.dialog-name{margin-top:-2px;padding:4px 10px;border-radius:7px;color:#fff;font-weight:950;font-size:12px;line-height:1.2;box-shadow:0 2px 0 rgba(0,0,0,.16);white-space:nowrap;position:relative;z-index:2}
+.dialog-name.cat{background:linear-gradient(#4e9548,#2d7332)}
+.dialog-name.rabbit{background:linear-gradient(#e78091,#ca5368)}
+.dialog-bubble{position:relative;align-self:center;background:#fff;border:1px solid #c9d2e4;border-radius:12px;padding:12px 15px;color:#1b2340;font-size:14px;line-height:1.85;font-weight:800;min-height:78px;align-content:center}
+.dialog-bubble::before{content:"";position:absolute;left:-10px;top:50%;transform:translateY(-50%);width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:10px solid #c9d2e4}
+.dialog-bubble::after{content:"";position:absolute;left:-8px;top:50%;transform:translateY(-50%);width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-right:9px solid #fff}
+.dialog-row.right .dialog-bubble::before{left:auto;right:-10px;border-right:0;border-left:10px solid #c9d2e4}
+.dialog-row.right .dialog-bubble::after{left:auto;right:-8px;border-right:0;border-left:9px solid #fff}
+.dialog-bubble strong,.dialog-bubble .hot{color:#d61e1e;font-weight:950}
+.dialog-bubble .blue{color:#0967ae;font-weight:950}
+.dialog-bubble a{color:#0967ae;font-weight:950}
+
+/* ── Circuit game screen ── */
+#game-screen{display:flex;flex-direction:column;height:100%}
+.app-shell.game-mode .main-area{overflow:hidden;padding:0;min-height:0;display:flex;flex-direction:column}
+.app-shell.game-mode .game-layout{flex:1;min-height:0}
+#gate-bar{display:flex;align-items:center;gap:6px;padding:7px 14px;background:#eef2fb;border-bottom:1px solid #c9d2e4;flex-shrink:0;flex-wrap:wrap}
+.gate-bar-label{font-size:12px;font-weight:900;color:#5a6c99;white-space:nowrap}
+.gateBtn{padding:7px 13px;background:#fff;border:1.5px solid #7a8bb3;border-radius:6px;color:#1b2340;cursor:pointer;font-size:13px;font-weight:900;touch-action:manipulation;white-space:nowrap}
+.gateBtn:hover{background:#dde6f7;border-color:#3f6fe0}
+.gateBtn.armed{background:#ffe9ad;border-color:#d4870a;box-shadow:inset 0 0 0 1px #d4870a}
+.gate-bar-hint{font-size:11px;color:#5a6c99;font-weight:700;margin-left:auto}
+/* ── 操作ガイド ── */
+#guideBtn{background:#fff;border:1.5px solid #2e7dd1;color:#1d5fae;border-radius:6px;padding:6px 11px;font-size:12px;font-weight:900;cursor:pointer;touch-action:manipulation;white-space:nowrap}
+#guideBtn.on{background:#2e7dd1;color:#fff}
+#opGuide{display:none;padding:10px 14px 8px;background:#fffbe8;border-bottom:1px solid #e3d48f;flex-shrink:0}
+#opGuide.open{display:block}
+.og-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.og-title{font-size:13px;font-weight:950;color:#5a4416}
+.og-close{margin-left:auto;background:none;border:1px solid #c9b46a;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;color:#5a4416;cursor:pointer;touch-action:manipulation}
+.og-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:6px 14px;margin:0;padding:0;list-style:none}
+.og-list li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;align-items:start;font-size:12px;line-height:1.55;color:#3a2f16}
+.og-ic{width:30px;height:30px;border-radius:8px;background:#fff;border:1px solid #e3d48f;display:flex;align-items:center;justify-content:center;font-size:17px}
+.og-list li b{display:block;font-size:12.5px;color:#1b2340}
+.og-list li .og-kw{color:#1d5fae;font-weight:900}
+.sp-tip{background:#e8f1fd;border:1px solid #b9d3f5;border-radius:7px;padding:6px 9px;font-size:11.5px;font-weight:800;color:#1d4f8c;line-height:1.55;margin:6px 0}
+.sp-tip.on{background:#e2f6ea;border-color:#9fd8b5;color:#1f6b3f}
+#cipherSel{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 14px;background:#fdf6e2;border-bottom:1px solid #d9c27a;flex-shrink:0}
+.cipher-label{font-size:12px;font-weight:900;color:#8a6d1e;white-space:nowrap}
+#cipherBtns{display:flex;gap:6px}
+.cipherBtn{padding:6px 12px;background:#fff;border:1.5px solid #d9b84a;border-radius:6px;color:#4a3a10;cursor:pointer;font-size:13px;font-weight:900;font-family:ui-monospace,monospace;touch-action:manipulation}
+.cipherBtn.on{background:#d4a017;border-color:#8a6d1e;color:#fff}
+#cipherHint{font-size:12px;font-weight:800;color:#7a6320}
+#toolbar{padding:8px 14px;background:#e9eefb;border-bottom:1px solid #c9d2e4;display:flex;gap:8px;align-items:center;flex-shrink:0;flex-wrap:wrap}
+#toolbar .btn{padding:7px 14px;font-size:13px}
+#status{margin-left:auto;font-size:13px;font-weight:900;color:var(--ink)}
+#backToIntroBtn{background:none;border:none;color:#2e5fd1;font-size:13px;font-weight:900;cursor:pointer;padding:4px 8px;display:flex;align-items:center;gap:4px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#backToIntroBtn:hover{text-decoration:underline}
+
+#verifyWrap{background:#f7fbff;border-bottom:1px solid #c9d2e4;padding:8px 14px;display:none;flex-shrink:0;max-height:40%;overflow:auto}
+#verifyWrap.visible{display:block}
+#verifyHeader{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;font-size:13px;font-weight:900}
+#verifyClose{background:#7a8bb3;border:none;color:#fff;border-radius:4px;padding:3px 10px;cursor:pointer;font-size:12px;font-weight:900}
+#verifyTable{overflow-x:auto}
+#verifyTable table{border-collapse:collapse;white-space:nowrap}
+.verify-note{font-size:12px;font-weight:750;color:#5a6c99;line-height:1.7;margin:0 0 7px}
+#verifyTable th,#verifyTable td{padding:3px 12px;text-align:center;border-bottom:1px solid #c9d2e4;font-size:13px;font-weight:750}
+#verifyTable tr.pass td{color:#2a7d1a;font-weight:900}
+#verifyTable tr.fail td{color:#c0241a;font-weight:900}
+
+#playRow{flex:1;min-height:0;display:flex;overflow:hidden;position:relative}
+#scrollHint{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(27,35,64,.72);color:#fff;font-size:11px;font-weight:900;padding:5px 11px;border-radius:999px;pointer-events:none;display:none;z-index:6}
+#printBtn{position:absolute;top:8px;right:312px;z-index:7;padding:6px 12px;border:1.5px solid #7a8bb3;border-radius:7px;background:#fff;color:#1b2340;font-size:12px;font-weight:900;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.15);touch-action:manipulation}
+#printBtn:hover{background:#eef2fb}
+@media(max-width:900px){#printBtn{display:none}}
+#printArea{display:none}
+@media print{
+  @page{size:A4 landscape;margin:8mm}
+  html,body{background:#fff!important;max-width:none;overflow:visible}
+  body::before{display:none}
+  .app-shell{display:none!important}
+  #printArea{display:block}
+  #printArea .print-title{font-size:13px;font-weight:900;color:#000;margin:0 0 5mm;font-family:system-ui,sans-serif}
+  #printArea svg{display:block}
+}
+#canvasWrap{flex:1;min-width:0;position:relative;overflow:auto;background:radial-gradient(circle at 1px 1px,#dbe4f4 1px,transparent 0) 0 0/20px 20px,var(--paper2)}
+#msg{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);padding:10px 24px;border-radius:8px;font-weight:950;font-size:15px;display:none;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:5}
+
+/* ── State panel（矢印の一覧表） ── */
+#statePanel{width:300px;flex-shrink:0;border-left:1px solid #c9d2e4;background:#fff;overflow-y:auto;padding:10px 12px}
+.sp-head{font-size:13px;font-weight:950;color:#1b2340;margin-bottom:2px}
+.sp-subhead{font-size:12px;font-weight:950;color:#2e4a86;margin:2px 0}
+.sp-sub{font-size:11px;color:var(--muted);font-weight:700}
+#spInputNote{font-size:11px;color:var(--muted);font-weight:700;margin:4px 0 8px;line-height:1.5}
+.amp-row{display:grid;grid-template-columns:44px 50px 44px 1fr;gap:6px;align-items:center;padding:4px 2px;border-bottom:1px dashed #dde3ef;cursor:pointer;border-radius:5px}
+.amp-row:hover{background:#eef3fb}
+.amp-row.zero{opacity:.42}
+.amp-row.traced{background:#e2ecff;outline:2px solid #2e7dd1;outline-offset:-2px;opacity:1}
+.trace-cap{font-size:11.5px;color:#1d4f8c;font-weight:800;line-height:1.55;margin-top:8px;background:#e8f1fd;border:1px solid #b9d3f5;border-radius:7px;padding:6px 9px}
+.trace-cap.on{background:#e2f6ea;border-color:#9fd8b5;color:#1f6b3f}
+.amp-row.flash{background:#fff3c4;border-radius:6px}
+.amp-ket{font-size:13px;font-weight:950;font-family:ui-monospace,'Cascadia Code',monospace;white-space:nowrap}
+.amp-val{font-size:12px;font-weight:900;text-align:right;font-family:ui-monospace,monospace;white-space:nowrap}
+.amp-val.neg{color:#c0241a}
+.prob-track{height:12px;background:#eef1f8;border-radius:999px;overflow:hidden;position:relative}
+.prob-fill{height:100%;background:linear-gradient(90deg,#ffe27a,#e0a51e);border-radius:999px}
+.prob-pct{font-size:10px;font-weight:900;color:var(--muted);margin-left:2px}
+#measureBtn{margin-top:10px;width:100%;padding:8px;border:1.5px solid #7a8bb3;border-radius:7px;background:#f4f7ff;color:#1b2340;font-size:13px;font-weight:900;cursor:pointer;touch-action:manipulation}
+#measureBtn:hover{background:#e4ebfb}
+#measureResult{font-size:12px;font-weight:900;color:#1b2340;margin-top:8px;min-height:34px;line-height:1.6}
+.sp-incomplete{font-size:12px;font-weight:800;color:#8a6d1e;background:#fdf6e2;border:1px dashed #d9b84a;border-radius:8px;padding:10px 12px;line-height:1.7;margin:6px 0}
+/* ── 10ビット探索（反復パネル） ── */
+.sim-caption{font-size:10.5px;color:var(--muted);font-weight:750;margin:4px 0 0}
+#loopStats{font-size:13px;font-weight:900;color:#1b2340;margin:2px 0 6px}
+.loop-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.loop-btns .btn{padding:.45rem .7rem;font-size:12px}
+.tn{touch-action:none}
+.sp-note{font-size:10.5px;color:var(--muted);font-weight:700;margin-top:8px;line-height:1.6}
+
+/* ── Clear screen ── */
+#clear-screen{flex:1;overflow-y:auto;padding:4px 4px 20px;display:flex;flex-direction:column}
+.ending-links{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:10px}
+.ending-link{display:inline-block;padding:10px 18px;border-radius:9px;font-weight:900;font-size:14px;text-decoration:none;border:1px solid rgba(0,0,0,.13);background:#f6f4ee;color:var(--ink)}
+.ending-link.share{background:#111;border-color:#222;color:#fff}
+
+svg{cursor:default}
+text{user-select:none}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .app-shell{padding:8px;gap:8px}
+  .game-header{height:auto;grid-template-columns:1fr auto;gap:8px}
+  .game-header>div:nth-child(2){display:none}
+  .brand-title{font-size:19px}
+  .game-layout{grid-template-columns:64px minmax(0,1fr);gap:8px}
+  .app-shell:not(.side-collapsed) .game-layout{grid-template-columns:210px minmax(0,1fr)}
+  .side-panel{display:block;order:0;position:sticky;top:8px}
+  #playRow{flex-direction:column;overflow:auto}
+  #canvasWrap{flex:none;overflow-x:auto;min-height:230px}
+  #statePanel{width:auto;border-left:none;border-top:1px solid #c9d2e4;overflow:visible}
+}
+@media(max-width:700px){
+  .game-layout{grid-template-columns:minmax(0,1fr)}
+  .app-shell.side-collapsed .game-layout,
+  .app-shell:not(.side-collapsed) .game-layout{grid-template-columns:minmax(0,1fr)}
+  .side-panel{position:fixed;top:0;left:0;width:min(82vw,300px);height:100vh;height:100dvh;border-radius:0;transform:translateX(-100%);transition:transform .25s ease;box-shadow:10px 0 30px rgba(0,0,0,.45);overflow-y:auto;z-index:80}
+  .app-shell.side-collapsed .side-panel{transform:translateX(-100%)}
+  .app-shell:not(.side-collapsed) .side-panel{transform:translateX(0)}
+  .side-backdrop{display:none;position:fixed;inset:0;background:rgba(6,10,24,.55);z-index:70}
+  .app-shell:not(.side-collapsed) .side-backdrop{display:block}
+  .dialog-row,.dialog-row.right{grid-template-columns:82px minmax(0,1fr);padding:8px;gap:8px}
+  .dialog-row.right .dialog-character{order:0}
+  .dialog-row.right .dialog-bubble{order:1}
+  .dialog-character img{width:74px}
+  .dialog-name{font-size:10px;padding:3px 7px}
+  .dialog-bubble{font-size:13px;line-height:1.65;padding:9px 11px;min-height:64px}
+  .dialog-row.right .dialog-bubble::before{left:-10px;right:auto;border-left:0;border-right:10px solid #c9d2e4}
+  .dialog-row.right .dialog-bubble::after{left:-8px;right:auto;border-left:0;border-right:9px solid #fff}
+  .main-area{min-height:0}
+}
+</style>
+</head>
+<body>
+
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div>
+      <h1 class="brand-title">オラクル工房</h1>
+      <div class="brand-sub">オラクルからグローバー、ショアまで組む</div>
+    </div>
+    <div>
+      <div class="chapter-title">
+        <span id="head-level-title">レベル 1 / 12</span>
+        <span class="step-num" id="head-step">X</span>
+      </div>
+      <div class="head-progress"><div class="head-progress-fill" id="prog"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-btn" onclick="toggleSidebar()">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop" onclick="toggleSidebar()"></div>
+    <aside class="side-panel" id="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" onclick="toggleSidebar()" title="ナビを開閉">☰</button>
+        <span class="side-head-text">レベル一覧</span>
+      </div>
+      <div class="step-list" id="levelList"></div>
+    </aside>
+
+    <main class="main-area" id="main-area">
+      <!-- イントロ画面 -->
+      <div id="intro-screen">
+        <div>
+          <span class="ch-title" id="intro-label">LEVEL 1</span>
+          <span class="ch-heading" id="intro-title"></span>
+        </div>
+        <p class="game-intro" id="intro-desc"></p>
+        <div id="goal-area"></div>
+        <div class="dialog-scene" id="dialog-scene"></div>
+        <div id="q-link-area"></div>
+        <div id="gate-matrix-area"></div>
+        <div class="intro-actions">
+          <button class="btn btn-p" onclick="startGame()">⚛ 回路を組む</button>
+        </div>
+        <div class="book-recommend-box">
+          <p class="book-recommend-label">参考文献［PR］</p>
+          <div>
+            <p class="book-recommend-lead">もっと深く学びたい方へ</p>
+            <a href="https://www.amazon.co.jp/dp/4062574691?tag=senjin-22" target="_blank" rel="sponsored noopener">竹内繁樹『量子コンピュータ 超並列計算のからくり』（ブルーバックス）</a>
+            <p style="font-size:10.5px;color:#8a8577;margin:8px 0 0;font-weight:600;line-height:1.5">※ Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 全クリアまとめ画面 -->
+      <div id="clear-screen" style="display:none">
+        <div>
+          <span class="ch-title">🎉 COMPLETE</span>
+          <span class="ch-heading">全レベルクリア！</span>
+        </div>
+        <p class="game-intro">おめでとうございます。鍵101のオラクルから始めて、グローバーの探索、答えを知らない条件からのオラクル、ミニ暗号、10ビットの鍵探索、そしてショアの素因数分解まで完走しました。</p>
+        <div class="dialog-scene" id="clear-dialog-1"></div>
+        <div class="q-link-box" id="clear-flow-box"></div>
+        <div class="dialog-scene" id="clear-dialog-2"></div>
+        <div class="intro-actions">
+          <button class="btn btn-p" onclick="loadLevel(0)">最初から遊ぶ</button>
+        </div>
+        <div class="ending-links">
+          <a class="ending-link share" href="https://x.com/intent/post?text=%E3%82%AA%E3%83%A9%E3%82%AF%E3%83%AB%E5%B7%A5%E6%88%BF%20%E5%85%A8%E3%83%AC%E3%83%99%E3%83%AB%E3%82%AF%E3%83%AA%E3%82%A2%EF%BC%81%E2%9A%99%20%E3%82%B0%E3%83%AD%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E3%82%AA%E3%83%A9%E3%82%AF%E3%83%AB%E3%82%92%E6%A4%9C%E7%AE%97%E5%9B%9E%E8%B7%AF%E3%81%8B%E3%82%89%E8%87%AA%E4%BD%9C%E3%81%A7%E3%81%8D%E3%82%8B%E7%84%A1%E6%96%99%E5%AD%A6%E7%BF%92%E3%82%B2%E3%83%BC%E3%83%A0&url=https%3A%2F%2Fruglerugle.github.io%2Foracle-workshop%2F" target="_blank" rel="noopener">𝕏 クリアを報告する</a>
+          <a class="ending-link" href="https://quantum-mechanics.habatakijuku.com/quantum-circuit/" target="_blank" rel="noopener">⚛ 量子回路クエストへ</a>
+          <a class="ending-link" href="https://ruglerugle.github.io/grover-oracle/" target="_blank" rel="noopener">🔍 オラクルの旅へ</a>
+        </div>
+      </div>
+
+      <!-- 回路ゲーム画面 -->
+      <div id="game-screen" style="display:none">
+        <div id="gate-bar">
+          <span class="gate-bar-label">ゲートを選ぶ：</span>
+          <span id="gateBtns" style="display:flex;gap:6px;flex-wrap:wrap"></span>
+          <button id="guideBtn" onclick="toggleGuide()">❔ 操作方法</button>
+        </div>
+        <div id="opGuide">
+          <div class="og-head"><span class="og-title">🎮 操作方法</span><button class="og-close" onclick="toggleGuide(false)">✕ 閉じる</button></div>
+          <ul class="og-list" id="ogList"></ul>
+        </div>
+        <div id="cipherSel" style="display:none">
+          <span class="cipher-label">暗号文 C を選ぶ：</span>
+          <span id="cipherBtns"></span>
+          <span id="cipherHint"></span>
+        </div>
+        <div id="toolbar">
+          <button id="backToIntroBtn" onclick="showIntro()">← 説明へ</button>
+          <button id="runBtn" class="btn btn-p">▶ 検証する</button>
+          <button id="clearBtn" class="btn">やり直す</button>
+          <button id="answerBtn" class="btn">解答</button>
+          <div id="status"></div>
+          <button id="nextLevelBtn" class="btn btn-next" style="display:none">次のレベルへ →</button>
+        </div>
+        <div id="verifyWrap">
+          <div id="verifyHeader">
+            <span id="verifyTitle">検証結果</span>
+            <button id="verifyClose">✕ 閉じる</button>
+          </div>
+          <div id="verifyTable"></div>
+        </div>
+        <div id="playRow">
+          <div id="canvasWrap">
+            <svg id="svg"></svg>
+          </div>
+          <div id="msg"></div>
+          <button id="printBtn" onclick="printCircuit()" title="回路図をA4横1枚に収めて印刷">🖨 印刷</button>
+          <div id="scrollHint">⇆ 横にスクロールできます</div>
+          <aside id="statePanel">
+            <div class="sp-head">矢印の一覧表 <span class="sp-sub">（いまの回路が作る状態）</span></div>
+            <div id="spInputNote"></div>
+            <div id="ampTable"></div>
+            <button id="measureBtn">🎲 測定してみる</button>
+            <div id="measureResult"></div>
+            <div class="sp-note">表の各行は「測定したときに出力に現れる可能性のある0/1の並び（答え候補）」。確率＝矢印の長さの2乗。測定は何度でも試せますが、実物の量子コンピュータでは測定すると状態は壊れ、答えは1回につき1つしか読み出せません。</div>
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- 印刷専用エリア（画面では非表示、印刷時のみ表示） -->
+<div id="printArea"></div>
+
+<script>
+// ====================== ゲート仕様 ======================
+// pins: 入出力ピンの本数（量子ゲートは可逆なので入=出）。pinMarks: 各ピン行の役割（●制御/⊕標的）
+const GATESPEC = {
+  X:    { pins:1, btn:'X', w:46, fill:'#fde3dc', stroke:'#d3603f', short:'X' },
+  H:    { pins:1, btn:'H', w:46, fill:'#ddeafc', stroke:'#2e7dd1', short:'H' },
+  Z:    { pins:1, btn:'Z', w:46, fill:'#ece1fb', stroke:'#8a5ac4', short:'Z' },
+  CNOT: { pins:2, btn:'CNOT ●—⊕', w:86, fill:'#e2f4f0', stroke:'#1b6e63', short:'CNOT', pinMarks:['●','⊕'] },
+  CCX:  { pins:3, btn:'トフォリ ●●—⊕', w:86, fill:'#e2f4f0', stroke:'#1b6e63', short:'トフォリ', pinMarks:['●','●','⊕'] },
+  CCZ:  { pins:3, btn:'CCZ ●●●', w:86, fill:'#ece1fb', stroke:'#8a5ac4', short:'CCZ', pinMarks:['●','●','●'] },
+  ORACLE: { pins:3, btn:'？オラクル（封印）', w:86, fill:'#3a3f52', stroke:'#191d2c', short:'？', dark:true },
+  CCCX: { pins:4, btn:'CCCX ●●●—⊕', w:86, fill:'#e2f4f0', stroke:'#1b6e63', short:'CCCX', pinMarks:['●','●','●','⊕'] },
+  CZ: { pins:2, btn:'CZ ●●', w:86, fill:'#ece1fb', stroke:'#8a5ac4', short:'CZ', pinMarks:['●','●'] },
+  // 10ビット探索用の多重制御ゲート（制御10個）
+  MCX: { pins:11, btn:'MCX', w:86, fill:'#e2f4f0', stroke:'#1b6e63', short:'MCX', pinMarks:['●','●','●','●','●','●','●','●','●','●','⊕'] },
+  MCZ: { pins:10, btn:'MCZ', w:86, fill:'#ece1fb', stroke:'#8a5ac4', short:'MCZ', pinMarks:['●','●','●','●','●','●','●','●','●','●'] },
+  // ショア用（複素振幅）：SWAP＝2本の線を入れ替え、CSWAP＝制御付き入れ替え、R₂†/R₃†＝逆QFTの制御位相回転
+  SWAP:  { pins:2, btn:'SWAP ⨯⨯', w:66, fill:'#e2f4f0', stroke:'#1b6e63', short:'⨯⨯', pinMarks:['⨯','⨯'] },
+  CSWAP: { pins:3, btn:'CSWAP ●⨯⨯', w:86, fill:'#e2f4f0', stroke:'#1b6e63', short:'C⨯⨯', pinMarks:['●','⨯','⨯'] },
+  CP2:   { pins:2, w:66, fill:'#ece1fb', stroke:'#8a5ac4', short:'R₂†', pinMarks:['●','●'], phase:-Math.PI/2 },
+  CP3:   { pins:2, w:66, fill:'#ece1fb', stroke:'#8a5ac4', short:'R₃†', pinMarks:['●','●'], phase:-Math.PI/4 },
+};
+
+// ====================== オラクル工房の部品 ======================
+// 4量子ビット（A・B・C＋補助ビットD）。基底状態の番号は A を最上位、D を最下位とする
+const A8 = 1 / Math.sqrt(8);
+// L5: 検算＋Z（逆計算前）。鍵101の枝はD=1側（|1011⟩）に残る
+const T5 = [A8,0, A8,0, A8,0, A8,0, A8,0, 0,-A8, A8,0, A8,0];
+// L6: 逆計算後。|1010⟩（=|101⟩とD=0）だけ反転、Dは全枝で0
+const T6 = [A8,0, A8,0, A8,0, A8,0, A8,0, -A8,0, A8,0, A8,0];
+// L7: 条件「隣り合う桁が違う」→ 010 と 101 に印
+const T7 = [A8,0, A8,0, -A8,0, A8,0, A8,0, -A8,0, A8,0, A8,0];
+// L8: グローバー1反復 → 2つの答えに0.71ずつ（この組み方では全体符号が反転）
+const T8 = (() => { const t = new Array(16).fill(0); t[4] = -Math.SQRT1_2; t[10] = -Math.SQRT1_2; return t; })();
+// 回路部品（solution/preset用）
+const OW_H3 = c => [ {t:'H',q:[0],c}, {t:'H',q:[1],c}, {t:'H',q:[2],c} ];
+const OW_X3 = c => [ {t:'X',q:[0],c}, {t:'X',q:[1],c}, {t:'X',q:[2],c} ];
+const OW_CHECK101 = c => [ {t:'X',q:[1],c:c}, {t:'CCCX',q:[0,1,2,3],c:c+1}, {t:'X',q:[1],c:c+2} ];
+const OW_L5 = [ ...OW_H3(0), ...OW_CHECK101(1), {t:'Z',q:[3],c:4} ];
+const OW_L6 = [ ...OW_L5, ...OW_CHECK101(5) ];
+const OW_CHECK_ALT = c => [ {t:'CNOT',q:[1,0],c:c}, {t:'CNOT',q:[2,1],c:c+1}, {t:'CCX',q:[0,1,3],c:c+2} ];
+const OW_UNCHECK_ALT = c => [ {t:'CCX',q:[0,1,3],c:c}, {t:'CNOT',q:[2,1],c:c+1}, {t:'CNOT',q:[1,0],c:c+2} ];
+const OW_L7 = [ ...OW_H3(0), ...OW_CHECK_ALT(1), {t:'Z',q:[3],c:4}, ...OW_UNCHECK_ALT(5) ];
+const OW_DIFF3 = c => [ ...OW_H3(c), ...OW_X3(c+1), {t:'CCZ',q:[0,1,2],c:c+2}, ...OW_X3(c+3), ...OW_H3(c+4) ];
+const OW_L8 = [ ...OW_L7, ...OW_DIFF3(8) ];
+// ミニ暗号（L9-10）: 鍵K=2桁（K1,K0）、Enc(P,K)=S(K⊕P)、S=2進で+1（CNOT(K0→K1)→X(K0)）。
+// 手元のデータは P=10・C=01（合格する鍵は S⁻¹(C)⊕P だが、回路の構成には使わない）
+const OW_H2 = c => [ {t:'H',q:[0],c}, {t:'H',q:[1],c} ];
+const OW_ENC = c => [ {t:'X',q:[0],c:c}, {t:'CNOT',q:[1,0],c:c+1}, {t:'X',q:[1],c:c+2} ];   // ⊕P → かき混ぜS
+const OW_UNENC = c => [ {t:'X',q:[1],c:c}, {t:'CNOT',q:[1,0],c:c+1}, {t:'X',q:[0],c:c+2} ]; // その逆走
+const OW_CMP = c => [ {t:'X',q:[0],c:c}, {t:'CCX',q:[0,1,2],c:c+1}, {t:'X',q:[0],c:c+2} ];  // C=01 との一致をDへ
+const OW_L9 = [ ...OW_H2(0), ...OW_ENC(1), ...OW_CMP(4), {t:'Z',q:[2],c:7}, ...OW_CMP(8), ...OW_UNENC(11) ];
+const OW_DIFF2 = c => [ ...OW_H2(c), {t:'X',q:[0],c:c+1}, {t:'X',q:[1],c:c+1}, {t:'CZ',q:[0,1],c:c+2}, {t:'X',q:[0],c:c+3}, {t:'X',q:[1],c:c+3}, ...OW_H2(c+4) ];
+const OW_L10 = [ ...OW_L9, ...OW_DIFF2(14) ];
+// L9: 検算オラクル通過後（鍵の枝だけ反転。鍵がどれかは回路が決める）
+const T9 = [0.5,0, 0.5,0, -0.5,0, 0.5,0];
+// L10: グローバー1反復後（4候補・答え1つは確率100%。この組み方では符号は反転）
+const T10 = [0,0, 0,0, -1,0, 0,0];
+
+// L13: 本物志向のミニ暗号（逆算できない＝非線形・多ラウンド）。鍵2ビット・ブロック3ビット・補助D。
+// 量子ビット順: K1=0,K0=1,B2=2,B1=3,B0=4,D=5。暗号 Enc(P,K)=(鍵加算→非線形S→拡散)を3ラウンド。
+// 平文P=101・暗号文C=001（これだけから回路を組む）。合格する鍵は01（＝この暗号でP→Cになる唯一の鍵）。
+function OW_CIPHER13(){
+  const g = []; let c = 0; const add = (t, q) => g.push({ t, q: q.slice(), c: c++ });
+  add('H', [0]); add('H', [1]);          // 4つの鍵候補を重ね合わせ
+  add('X', [2]); add('X', [4]);          // ブロックを平文P=101に初期化
+  const round = () => { add('CNOT', [1,4]); add('CNOT', [0,3]); add('CNOT', [1,2]); add('CCX', [4,3,2]); add('CNOT', [3,4]); add('CNOT', [2,3]); add('CNOT', [4,2]); };
+  const rinv  = () => { add('CNOT', [4,2]); add('CNOT', [2,3]); add('CNOT', [3,4]); add('CCX', [4,3,2]); add('CNOT', [1,2]); add('CNOT', [0,3]); add('CNOT', [1,4]); };
+  round(); round(); round();             // 暗号化（前向き）
+  add('X', [2]); add('X', [3]); add('CCCX', [2,3,4,5]); add('X', [2]); add('X', [3]); // 暗号文C=001と一致判定→D
+  add('Z', [5]);                         // 印つけ
+  add('X', [2]); add('X', [3]); add('CCCX', [2,3,4,5]); add('X', [2]); add('X', [3]); // 一致判定を戻す
+  rinv(); rinv(); rinv();                // 暗号化を逆計算
+  add('X', [2]); add('X', [4]);          // ブロック初期化を戻す
+  return g;
+}
+// L13ターゲット: 64次元。ブロック・Dが0の鍵状態のみ非ゼロ。鍵01(=index16)だけ−0.5、他+0.5
+const T13c = (() => { const t = new Array(64).fill(0); t[0] = 0.5; t[16] = -0.5; t[32] = 0.5; t[48] = 0.5; return t; })();
+
+// ====================== ショアの部品（L12〜15） ======================
+// ×7 mod 15 ＝ 全ビット反転（×−1）→ 3つの SWAP で3桁ぶん巡回（×8）。w＝作業レジスタ4本（w[0] が最上位）
+const SH_U7 = (w, c) => [ {t:'X',q:[w[0]],c}, {t:'X',q:[w[1]],c}, {t:'X',q:[w[2]],c}, {t:'X',q:[w[3]],c},
+  {t:'SWAP',q:[w[3],w[2]],c:c+1}, {t:'SWAP',q:[w[2],w[1]],c:c+2}, {t:'SWAP',q:[w[1],w[0]],c:c+3} ];
+// 制御つき ×7：X→CNOT、SWAP→CSWAP。列は c から c+3 まで使う
+const SH_CU7 = (ctrl, w, c) => [ {t:'CNOT',q:[ctrl,w[0]],c}, {t:'CNOT',q:[ctrl,w[1]],c}, {t:'CNOT',q:[ctrl,w[2]],c}, {t:'CNOT',q:[ctrl,w[3]],c},
+  {t:'CSWAP',q:[ctrl,w[3],w[2]],c:c+1}, {t:'CSWAP',q:[ctrl,w[2],w[1]],c:c+2}, {t:'CSWAP',q:[ctrl,w[1],w[0]],c:c+3} ];
+// L15 の配線済み部分：H×3 → 作業＝1 → q2（重み1）の ×7 を1組
+const SH_L15_PRE = [ {t:'H',q:[0],c:0}, {t:'H',q:[1],c:0}, {t:'H',q:[2],c:0}, {t:'X',q:[6],c:0}, ...SH_CU7(2, [3,4,5,6], 1) ];
+// L15 の目標：Σ_x |x⟩|7^x mod 15⟩ / √8（q0 が最上位、作業は q3..q6 で q6 が最下位）
+const SH_T15 = (() => { const t = new Array(128).fill(0); let v = 1; for (let x = 0; x < 8; x++){ t[(x << 4) | v] = Math.SQRT1_2 / 2; v = (v * 7) % 15; } return t; })();
+
+// ====================== ショア（L16）：N=15 の素因数分解（a=7、周期r=4）の完成回路 ======================
+// 7量子ビット。数え上げ q0,q1,q2（値=q0*4+q1*2+q2、q2がLSB）／作業 q3,q4,q5,q6（q6がLSB、初期値|1⟩）。
+// c-U^(2^k)：数え上げビットの重み分だけ ×7 mod15 を繰り返す。N=15の特殊性で U=×7 は SWAP＋Xだけで作れる。
+// 逆QFTで数え上げレジスタを測定すると 0/2/4/6 が等確率 → m/8 の連分数から周期4 → gcd(7^2±1,15)=3,5。
+function OW_SHOR15(){
+  const g = []; let c = 0; const add = (t, q) => g.push({ t, q: q.slice(), c: c++ });
+  add('H', [0]); add('H', [1]); add('H', [2]);      // 数え上げレジスタを重ね合わせ
+  add('X', [6]);                                     // 作業レジスタ = |0001⟩ = 1
+  // ×7 mod15 を1回分（作業q3..q6に対する X×4 → SWAP×3）。制御は数え上げビット ctrl。
+  // この並びで作業レジスタは x回目に 7ˣ mod15（1→7→4→13→1…）と巡回する。
+  const uStep = ctrl => { add('CNOT',[ctrl,3]); add('CNOT',[ctrl,4]); add('CNOT',[ctrl,5]); add('CNOT',[ctrl,6]);
+    add('CSWAP',[ctrl,6,5]); add('CSWAP',[ctrl,5,4]); add('CSWAP',[ctrl,4,3]); };
+  uStep(2);                          // q2（重み1）→ U¹
+  uStep(1); uStep(1);                // q1（重み2）→ U²（=×4 mod15）
+  uStep(0); uStep(0); uStep(0); uStep(0);   // q0（重み4）→ U⁴（=I：Uを4回で元に戻る＝周期4）
+  // 逆QFT（q0=MSB, q2=LSB）：末尾のbit反転SWAP → H・制御位相を逆順・逆符号で
+  add('SWAP', [0,2]);
+  add('H', [2]);
+  add('CP2', [2,1]); add('H', [1]);
+  add('CP3', [2,0]); add('CP2', [1,0]); add('H', [0]);
+  return g;
+}
+// ショア測定分布（数え上げ3ビット, 値0..7）を複素状態から求める
+function shorCountDist(re, im){
+  const n = 7, dist = new Array(8).fill(0);
+  for (let i = 0; i < (1 << n); i++){
+    const p = re[i] * re[i] + im[i] * im[i];
+    if (p < 1e-12) continue;
+    const cv = ((i >> (n - 1)) & 1) * 4 + ((i >> (n - 2)) & 1) * 2 + ((i >> (n - 3)) & 1);
+    dist[cv] += p;
+  }
+  return dist;
+}
+// m/8 を連分数展開して分母（周期候補, <15）を返す
+function shorPeriodFromMeasure(m){
+  if (m === 0) return null;
+  let num = m, den = 8;               // m/8 を約分
+  const gcd = (a, b) => b ? gcd(b, a % b) : a;
+  const gg = gcd(num, den); num /= gg; den /= gg;
+  return den;                          // 既約分母＝周期候補
+}
+let shorHist = new Array(8).fill(0), shorMeasures = 0, shorFound = false;
+
+// ステージ9で選べる暗号文C（既定は01）。かき混ぜSは 00→01→10→11→00 の巡回（＋1）
+let stage9C = 0b01;
+const S_TBL = [1, 2, 3, 0];      // S(x)
+const SINV_TBL = [3, 0, 1, 2];   // S⁻¹(y)：SINV_TBL[S(x)] = x
+function stage9Key(C){ return SINV_TBL[C] ^ 0b10; }   // その暗号文Cを生む鍵（平文P=10）
+// 選んだCに合わせた一致判定（Cの0の桁の線をXで挟む）
+function stage9CMP(col){
+  const wrap = [];
+  if (!(stage9C & 2)) wrap.push(0);   // K1桁が0
+  if (!(stage9C & 1)) wrap.push(1);   // K0桁が0
+  const g = [];
+  wrap.forEach(q => g.push({ t:'X', q:[q], c:col }));
+  g.push({ t:'CCX', q:[0,1,2], c:col + 1 });
+  wrap.forEach(q => g.push({ t:'X', q:[q], c:col + 2 }));
+  return g;
+}
+function stage9Solution(){
+  return [ ...OW_H2(0), ...OW_ENC(1), ...stage9CMP(4), { t:'Z', q:[2], c:7 }, ...stage9CMP(8), ...OW_UNENC(11) ];
+}
+function stage9Target(){
+  const key = stage9Key(stage9C);
+  const t = new Array(8).fill(0);
+  for (let k = 0; k < 4; k++) t[k << 1] = (k === key ? -0.5 : 0.5);   // D=0 の行だけ、鍵は−
+  return t;
+}
+function bits2(x){ return x.toString(2).padStart(2, '0'); }
+
+// ====================== グローバー章の部品 ======================
+// 鍵は101（q0=A が最上位）。振幅の目標値（実数）
+const G1N = -1 / (2 * Math.sqrt(8));          // 1反復後の非鍵 −0.177
+const G1K = -5 / (2 * Math.sqrt(8));          // 1反復後の鍵 −0.884
+const G2N = -1 / (4 * Math.sqrt(8));          // 2反復後の非鍵 −0.088
+const G2K = 11 / (4 * Math.sqrt(8));          // 2反復後の鍵 0.972
+const T13 = [A8, A8, A8, A8, A8, -A8, A8, A8];
+const T14 = [G1N, G1N, G1N, G1N, G1N, G1K, G1N, G1N];
+const T15 = [G2N, G2N, G2N, G2N, G2N, G2K, G2N, G2N];
+// 回路部品（solution/preset用）
+const GV_H3 = c => [ {t:'H',q:[0],c}, {t:'H',q:[1],c}, {t:'H',q:[2],c} ];
+const GV_X3 = c => [ {t:'X',q:[0],c}, {t:'X',q:[1],c}, {t:'X',q:[2],c} ];
+const GV_ORACLE = c => [ {t:'X',q:[1],c:c}, {t:'CCZ',q:[0,1,2],c:c+1}, {t:'X',q:[1],c:c+2} ];
+const GV_DIFF = c => [ ...GV_H3(c), ...GV_X3(c+1), {t:'CCZ',q:[0,1,2],c:c+2}, ...GV_X3(c+3), ...GV_H3(c+4) ];
+const GV_L13 = [ ...GV_H3(0), ...GV_ORACLE(1) ];
+const GV_L14 = [ ...GV_L13, ...GV_DIFF(4) ];
+const GV_L15 = [ ...GV_L14, ...GV_ORACLE(9), ...GV_DIFF(12) ];
+// L16: 封印オラクル（鍵はランダム）を使ったグローバー2反復
+const GV_L16 = [ ...GV_H3(0), {t:'ORACLE',q:[0,1,2],c:1}, ...GV_DIFF(2), {t:'ORACLE',q:[0,1,2],c:7}, ...GV_DIFF(8) ];
+
+/* ---- ゲートの「数の表」（行列）図。当て方の説明は量子コンピュータの旅に任せ、表そのものだけを見せる ---- */
+const GATE_MATRIX = {
+  X:    { title: 'X の表（2行2列）', n: 1, m: [[0,1],[1,0]], io: '(a, b) → (b, a)', note: '|0⟩ 行と |1⟩ 行の矢印を入れ替える表。' },
+  H:    { title: 'H の表（2行2列）', n: 1, scale: '0.71×', m: [[1,1],[1,-1]], io: '(a, b) → ((a＋b)×0.71,　(a−b)×0.71)', note: '和と差を作る表。−1 が1か所だけ入っている。' },
+  Z:    { title: 'Z の表（2行2列）', n: 1, m: [[1,0],[0,-1]], io: '(a, b) → (a, −b)', note: '|1⟩ 行の矢印だけ正反対にする表。長さは変えない。' },
+  CNOT: { title: 'CNOT の表（4行4列）', n: 2, m: [[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]], io: '(a, b, c, d) → (a, b, d, c)', note: '上2行（A が 0）はそのまま、下2行（A が 1：|10⟩ と |11⟩）だけ入れ替え。「A が 1 なら B を反転」は、この 1 の置き場所を言葉にしたもの。' },
+  CZ:   { title: 'CZ の表（4行4列）', n: 2, m: [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,-1]], io: '(a, b, c, d) → (a, b, c, −d)', note: '|11⟩ 行の矢印だけ正反対にする。ほかの3行はそのまま。' },
+  SWAP: { title: 'SWAP の表（4行4列）', n: 2, m: [[1,0,0,0],[0,0,1,0],[0,1,0,0],[0,0,0,1]], io: '(a, b, c, d) → (a, c, b, d)', note: '|01⟩ 行と |10⟩ 行の矢印を入れ替える（2本の線の中身を入れ替える）。|00⟩ と |11⟩ はそのまま。' },
+  CSWAP:{ title: 'CSWAP の表（8行8列）', n: 3, m: null, io: '(a, b, c, d, e, f, g, h) → (a, b, c, d, e, g, f, h)', note: '制御が 1 の行（|1xx⟩）のうち、|101⟩ と |110⟩ だけ入れ替え。制御が 0 の上4行はそのまま。' },
+  CCX:  { title: 'トフォリの表（8行8列）', n: 3, m: null, io: '(a, b, c, d, e, f, g, h) → (a, b, c, d, e, f, h, g)', note: 'A も B も 1 の行（|110⟩ と |111⟩）だけ入れ替え。ほかの6行はそのまま。' },
+  CCZ:  { title: 'CCZ の表（8行8列）', n: 3, m: null, io: '(a, b, c, d, e, f, g, h) → (a, b, c, d, e, f, g, −h)', note: '|111⟩ 行の矢印だけ正反対にする。ほかの7行はそのまま。' },
+  CCCX: { title: 'CCCX の表（16行16列）', n: 4, m: null, io: '16個の矢印のうち、最後の2つだけ入れ替え', note: 'A・B・C が全部 1 の行（|1110⟩ と |1111⟩）だけ入れ替え。ほかの14行はそのまま。制御が増えても「入れ替えが表の右下の2行に置いてあるだけ」という形は変わらない。' },
+};
+(function(){
+  const I = n => Array.from({length:n}, (_, r) => Array.from({length:n}, (_, c) => r === c ? 1 : 0));
+  const ccx = I(8); ccx[6][6] = 0; ccx[6][7] = 1; ccx[7][7] = 0; ccx[7][6] = 1; GATE_MATRIX.CCX.m = ccx;
+  const ccz = I(8); ccz[7][7] = -1; GATE_MATRIX.CCZ.m = ccz;
+  const csw = I(8); csw[5][5] = 0; csw[5][6] = 1; csw[6][6] = 0; csw[6][5] = 1; GATE_MATRIX.CSWAP.m = csw;
+  const cccx = I(16); cccx[14][14] = 0; cccx[14][15] = 1; cccx[15][15] = 0; cccx[15][14] = 1; GATE_MATRIX.CCCX.m = cccx;
+})();
+function gateMatrixHTML(key) {
+  const g = GATE_MATRIX[key]; if (!g) return '';
+  const N = g.m.length, cs = N > 8 ? 15 : (N > 4 ? 22 : (N > 2 ? 30 : 34)), fsL = N > 8 ? 6.5 : (N > 4 ? 8 : 9.5), fsV = N > 8 ? 8 : (N > 4 ? 10 : 12);
+  const labels = Array.from({length:N}, (_, i) => '|' + i.toString(2).padStart(g.n, '0') + '⟩');
+  const x0 = (N > 8 ? 52 : 62) + (g.scale ? 26 : 0), y0 = 30, W = 372, H = y0 + N * cs + 26;
+  const changed = g.m.map((row, r) => row.some((v, c) => v !== (r === c ? 1 : 0)));
+  let out = '';
+  labels.forEach((l, i) => { out += `<text x="${x0 + i * cs + cs / 2}" y="${y0 - 8}" text-anchor="middle" font-size="${fsL}" font-weight="700" fill="#6b6150">${l}</text>`; });
+  labels.forEach((l, i) => { out += `<text x="${x0 - 10}" y="${y0 + i * cs + cs / 2 + 4}" text-anchor="end" font-size="${fsL}" font-weight="800" fill="${changed[i] ? '#c8663f' : '#2f6fa6'}">${l}</text>`; });
+  out += `<path d="M${x0 - 2} ${y0} h-6 v${N * cs} h6" fill="none" stroke="#3a2f16" stroke-width="1.4"/><path d="M${x0 + N * cs + 2} ${y0} h6 v${N * cs} h-6" fill="none" stroke="#3a2f16" stroke-width="1.4"/>`;
+  if (g.scale) out += `<text x="${x0 - 14}" y="${y0 + N * cs / 2 + 4}" text-anchor="end" font-size="12" font-weight="900" fill="#3a2f16">${g.scale}</text>`;
+  g.m.forEach((row, r) => row.forEach((v, c) => {
+    const col = v === 0 ? '#9c9483' : (v < 0 ? '#c8433f' : (changed[r] ? '#c8663f' : '#2f6fa6'));
+    out += `<text x="${x0 + c * cs + cs / 2}" y="${y0 + r * cs + cs / 2 + 4}" text-anchor="middle" font-size="${fsV}" font-weight="900" fill="${col}" opacity="${v === 0 ? .4 : 1}">${v < 0 ? '−1' : v}</text>`;
+  }));
+  out += `<text x="${W / 2}" y="${H - 6}" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6b6150">上：入力の行　左：新しい行（色つき＝変わる行）</text>`;
+  return `<div class="gm-box"><div class="gm-title">🧮 ${g.title}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${g.title}。入力 ${g.io}">${out}</svg><div class="gm-note"><strong>${g.io}</strong><br>${g.note}　表の当て方（掛けて足す）は <a href="https://quantum-mechanics.habatakijuku.com/quantum-computer/stage2" target="_blank" rel="noopener">量子コンピューターの仕組み STAGE2</a> で。</div></div>`;
+}
+
+// ====================== レベル定義 ======================
+// qubits: 量子ビット数（上の行が q0）。基底状態の番号は q0 を最上位ビットとする。
+// mode 'state': input（省略時|0…0⟩）から target（実数振幅の配列）を作れたら合格
+// mode 'unitary': testInputs の各基底入力に対し targetMap(idx) の基底状態が出たら合格
+const LEVELS = [
+  {
+    name: "オラクル：鍵101に印をつける",
+    label: "LEVEL 1", shortName: "オラクル", matrix: "CCZ",
+    desc: "探す鍵は 101 です。まず A・B・C に H を1個ずつかけて8通りの候補すべてに0.35ずつの矢印を立て、その後ろに X → CCZ → X をつないで、鍵 |101⟩ の矢印だけを反転してください。X は真ん中のBの線に（鍵の0の桁）、CCZ は3本全部の線につなぎます。",
+    qlink: "オラクルは「候補が鍵と一致したときだけ矢印を反転する」固定の回路です。CCZ（3つ全部が1のときだけ矢印を反転する多重制御Z）と、鍵の0の桁をXで一時的に反転しておく組み合わせで、どんな鍵のオラクルも作れます。反転しても矢印の長さは変わらないので、印は測定の確率に一切現れません——見えない印（位相）だからこそ、このあとの干渉で利用できます。",
+    qubits: 3, labels: ["A","B","C"], gates: ["H","X","CCZ"],
+    canvasW: 660,
+    mode: "state", target: T13,
+    dialogue: [
+      { who:'cat', img:'cat', text:'ようこそ、オラクル工房へ。<a href="https://quantum-mechanics.habatakijuku.com/quantum-circuit/" target="_blank" rel="noopener">量子回路クエスト</a>でオラクルの部品――判定ビット・検算・印つけ・逆計算――を全部そろえたね。ここからは、その部品でグローバーの鍵探索を組んで動かす。探す鍵は101。まずはオラクル――鍵の候補にだけ印をつける回路を、いちばん短い形で組もう。' },
+      { who:'rabbit', img:'rabbit', text:'復習します。オラクルは「入力が鍵と一致したときだけ矢印を反転する」固定の回路で、多重制御Zで作れるんでしたね。' },
+      { who:'cat', img:'catThink', text:'そう。今回は<strong>CCZ</strong>——3つ全部が1のときだけ矢印を反転するゲートを使う。ただし鍵101は真ん中が0だね。CCZをそのまま置くと、印がつくのは|111⟩になってしまう。' },
+      { who:'rabbit', img:'rabbitThink', text:'量子回路クエストの一致検算でやった手ですね。Bを先にXで反転しておけば、101のときだけ「全部1」になってCCZが効きます。CCZのあとにもう一度Xで戻せば、B自体は元どおりです。' },
+      { who:'cat', img:'cat', text:'その通り。先にHを3つ置いて8本の矢印を立ててから、その印つけをつないでごらん。' },
+      { who:'rabbit', img:'rabbit', text:'印がついても長さは全部0.35のまま……測定の確率は8分の1ずつで変わらないんですよね。この見えない印をどう使うのか。' },
+    ],
+    solution: GV_L13,
+  },
+  {
+    name: "拡散：印を確率に変える",
+    label: "LEVEL 2", shortName: "拡散",
+    desc: "オラクルまでは配置済みです。その後ろに拡散回路を、この順番で全部つないでください：H×3 → X×3 → CCZ → X×3 → H×3（X×3・H×3 は A・B・C の3本の線に1個ずつ）。完成すると |101⟩ の矢印だけ長さ0.88（確率78%）に育ちます。矢印は全部左向きになりますが、表全体の向きに意味はありません。",
+    qlink: "拡散は「すべての矢印を平均のまわりで折り返す」操作で、正体は「|000⟩だけ位相反転」をH×3で挟んだものです。真ん中の X×3→CCZ→X×3 が「000のときだけ反転」を作る——オラクルと同じ構造です。1反復で鍵の確率は 1/8 → 78% に育ちます。なお、この組み方では表全体の符号が反転しますが、全体の向き（グローバル位相）は測定に一切影響しないため、問題ありません。",
+    qubits: 3, labels: ["A","B","C"], gates: ["H","X","CCZ"],
+    canvasW: 1160,
+    mode: "state", target: T14,
+    dialogue: [
+      { who:'cat', img:'cat', text:'見えない印を確率に変える番だよ。使うのは<strong>拡散</strong>——すべての矢印を「平均のまわりで折り返す」操作。旅では一覧表の計算で追いかけたね。' },
+      { who:'rabbit', img:'rabbitThink', text:'平均折り返しなら、マイナス側にある鍵の矢印だけが反対へ大きく振れて、長く育つんでしたね。でも「平均で折り返す回路」を、HとXとCCZだけでどう組むんでしょう。' },
+      { who:'cat', img:'catThink', text:'拡散の正体は、<strong>「|000⟩だけ位相反転」をH×3で挟んだもの</strong>なんだ。順番に H×3 → X×3 → CCZ → X×3 → H×3。真ん中のX×3とCCZは「000のときだけ反転」——さっきのオラクルと同じ手だよ。' },
+      { who:'rabbit', img:'rabbit', text:'拡散もオラクルと同じ部品でできているんですね。オラクルの続きにつないでみます。' },
+      { who:'cat', img:'cat', text:'うまく組めると、|101⟩の矢印だけ長さ0.88——確率78%まで育つよ。矢印が全部左向きに変わるけれど、表全体の向きには意味がない。長さを見てごらん。' },
+    ],
+    preset: GV_L13,
+    solution: GV_L14,
+  },
+  {
+    name: "グローバー完成：94.5%で鍵を当てる",
+    label: "LEVEL 3", shortName: "グローバー",
+    desc: "1反復目までは配置済みです。その後ろに2反復目を、この順番でつないでください：オラクル（X → CCZ → X、XはBの線）→ 拡散（H×3 → X×3 → CCZ → X×3 → H×3）。完成すると |101⟩ が長さ0.97（確率94.5%）になります。仕上げに測定で鍵を引き当てましょう。",
+    qlink: "最適な反復回数はおよそ (π/4)√N 回。8候補なら2回で94.5%に達します。回し過ぎると折り返しで逆に確率が下がります（3反復目を組んで確かめられます）。古典では平均4.5回・最悪8回の試行が必要なところ、グローバーは√N 回程度——2次加速です。何でも一瞬で解けるわけではない、という距離感まで含めて、これが量子探索の実力です。",
+    qubits: 3, labels: ["A","B","C"], gates: ["H","X","CCZ"],
+    canvasW: 1960,
+    mode: "state", target: T15,
+    dialogue: [
+      { who:'rabbit', img:'rabbit', text:'78%まで来ました。もう一押ししたいです。' },
+      { who:'cat', img:'cat', text:'同じ一手をもう1回だよ。オラクルで印をつけ直して、拡散で折り返す。これで|101⟩は0.97、確率94.5%になる。組み上げたら、測定で鍵を引き当ててごらん。' },
+      { who:'rabbit', img:'rabbitThink', text:'古典なら最悪8回、平均でも4回以上は試すところを、オラクル2回と測定1回でほぼ確実……重ね合わせと干渉が本当に仕事をしているんですね。' },
+      { who:'cat', img:'catThink', text:'そう。そして候補が増えても、必要な反復はおよそ√N回で済む。仕組みは、いま君が組んだこの回路と同じだよ。' },
+    ],
+    preset: GV_L14,
+    solution: GV_L15,
+  },
+  {
+    name: "条件からオラクルを作る",
+    label: "LEVEL 4", shortName: "条件オラクル",
+    desc: "答えを知らない条件からオラクルを作ります。条件は「隣り合う桁が必ず違う」（A⊕B＝1 かつ B⊕C＝1）。手順：H×3 → CNOT（制御B→標的A）→ CNOT（制御C→標的B）→ トフォリ（制御＝AとB、標的＝D）→ D に Z → いまの3個を逆順（トフォリ → CNOT(C→B) → CNOT(B→A)）。条件を満たす候補がどれかは、考えなくても組めます。",
+    qlink: "この回路の設計者は、条件「隣り合う桁が違う」を満たす候補がどれかを一度も計算していません。それでも印は010と101に落ちます（一覧表で確認できます）。補助ビットが足りないときは、候補レジスタ自体を一時的に書き換えて作業場所にし、逆計算で返す——実際の大規模なオラクルでも常套手段です。「まだ使う値を上書きしない」のではなく「上書きしても必ず返す」へ、可逆設計が一段進んだ形です。",
+    qubits: 4, labels: ["A","B","C","D"], gates: ["H","X","Z","CNOT","CCX","CCCX"],
+    canvasW: 1080,
+    mode: "state", target: T7,
+    dialogue: [
+      { who:'cat', img:'cat', text:'今度は、<strong>答えを考えずに</strong>オラクルを作ってみよう。量子回路クエストの最後に組んだ「検算 → DにZ → 逆計算」の3工程を使う。条件は「隣り合う桁が必ず違う」——A⊕B＝1 かつ B⊕C＝1 だよ。' },
+      { who:'rabbit', img:'rabbitThink', text:'「かつ」だからトフォリでDに書きたいですが、その前に A⊕B と B⊕C を置く場所が要ります。補助ビットはD1個しかありません。' },
+      { who:'cat', img:'catThink', text:'そこで一工夫だよ。CNOT(B→A)でAの場所を一時的にA⊕Bに、CNOT(C→B)でBの場所をB⊕Cに書き換えてしまう。トフォリでDに「かつ」を書いたら、Zのあと、いまの3個を逆順に通して全部返せばいい。' },
+      { who:'rabbit', img:'rabbit', text:'候補の置き場所そのものを作業メモに使うんですね。逆計算で返すから、書き換えても大丈夫……。組んでみます。' },
+    ],
+    solution: OW_L7,
+  },
+  {
+    name: "グローバー接続：1反復で100%",
+    label: "LEVEL 5", shortName: "接続",
+    desc: "オラクルまでは配置済みです。その後ろに、A・B・Cへの拡散 H×3 → X×3 → CCZ → X×3 → H×3 をつないでください（Dには何もしません）。答えが8候補中2つあるこの問題では、1反復だけで確率が100%になります。完成したら測定を何度か試してみましょう。",
+    qlink: "答えがM個あるとき、最適な反復回数はおよそ (π/4)√(N/M) 回。N=8・M=2 ではちょうど1反復で確率100%になります（答えが多いほど見つけやすい）。測定すると010か101のどちらかが毎回出ますが、どちらが出るかはランダムです。答えを列挙せず、条件だけから組んだ回路が、答えだけを確実に差し出す——これが「オラクル＝条件を回路にコンパイルしたもの」という意味です。",
+    qubits: 4, labels: ["A","B","C","D"], gates: ["H","X","Z","CNOT","CCX","CCZ","CCCX"],
+    canvasW: 1580,
+    mode: "state", target: T8,
+    preset: OW_L7,
+    dialogue: [
+      { who:'cat', img:'cat', text:'できあがったオラクルを、グローバーにつなごう。オラクルの後ろに、A・B・Cへの拡散——H×3 → X×3 → CCZ → X×3 → H×3——だよ。Dには何もしない。' },
+      { who:'rabbit', img:'rabbitThink', text:'この条件は、満たす候補が1つとは限りませんよね。答えが複数あるとき、反復は何回必要なんでしょうか。' },
+      { who:'cat', img:'cat', text:'答えが8候補中2つのときは、ちょうど<strong>1反復で確率100%</strong>になるんだ。組んで、一覧表と測定で確かめてごらん。' },
+      { who:'rabbit', img:'rabbit', text:'条件を配線に翻訳しただけで、答えは一度も書いていないのに……答えのほうが引き寄せられてくる。オラクルの意味が、やっと腑に落ちました。' },
+      { who:'cat', img:'catThink', text:'それがグローバーの設計思想だよ。「確かめるのは簡単、見つけるのは大変」——そういう問題のための道具なんだ。' },
+    ],
+    solution: OW_L8,
+  },
+  {
+    name: "覆面オラクル：知らない鍵を探す",
+    label: "LEVEL 6", shortName: "覆面オラクル",
+    desc: "オラクルの中身が見えなくなりました。？オラクルは「隠された鍵（3桁の0/1）と一致した候補の矢印だけを反転する」封印済みの判定回路で、鍵はランダムに決まっています（あなたにも見えません）。H×3 → ？オラクル → 拡散 → ？オラクル → 拡散 と組んで、隠れた鍵の確率を90%以上に育ててください。？オラクルは3本の線を上から順（A・B・C）につなぎます。先に測定で鍵を予想してから、検証で答え合わせをしましょう。",
+    qlink: "これが本来のグローバーの姿です。鍵に依存する部品は封印されたオラクル（検算箱）だけで、H×3も拡散も鍵と無関係——だから鍵を知らない人でも回路全体を組めます。封印オラクルの中身は、レベル4で組んだとおり「鍵から」ではなく「条件（検算の手順）から」作れます。①候補が条件を満たすかの検算を、量子回路クエストで組んだ判定ビット・トフォリ・CNOT・X（可逆論理）で組んで補助ビットに書き込む ②補助ビットにZで印をつける ③逆計算で補助ビットを返す。この3工程は、暗号化の手順が公開されていれば鍵を知らなくても組めます。",
+    qubits: 3, labels: ["A","B","C"], gates: ["H","X","CCZ","ORACLE"],
+    canvasW: 1580,
+    mode: "mystery",
+    goalHTML: "：封印オラクルの隠れた鍵について、その答え候補の確率を<strong>90%以上</strong>に育てること。「▶ 検証する」で鍵の発表と答え合わせをします。回路を組み直すたびに鍵はランダムに変わりますが、同じ形の回路のままで通用するはずです。",
+    dialogue: [
+      { who:'rabbit', img:'rabbitThink', text:'博士、整理させてください。レベル1〜3では鍵が101だと知っていてオラクルを組み、レベル4では答えを知らない条件から組みました。本物の鍵探索では、組む人はどこまで知っているんでしょうか。' },
+      { who:'cat', img:'cat', text:'いい整理だね。鍵になるのは、オラクルが「鍵を知っている箱」ではなく「候補を検算できる箱」だという点だよ。レベル4で組んだのがまさにそれで、攻撃者は平文と暗号文のペアを持っていて、「候補の鍵で暗号化して一致するかを調べる回路」は、鍵を知らなくても組める。' },
+      { who:'rabbit', img:'rabbit', text:'はい。暗号化の手順は公開されているから、判定回路そのものは誰でも作れる。作った本人も、どの候補で一致が出るかは知らないんでしたね。' },
+      { who:'cat', img:'catThink', text:'そう。そしてもう1つ気づいてほしい。レベル2で組んだ<strong>拡散回路は、鍵に全く依存しない</strong>。鍵の情報が入っているのはオラクルだけなんだ。そこで今回は、中身を封印した「？オラクル」を渡すよ。鍵はランダムに決まっていて、私も君も知らない。' },
+      { who:'rabbit', img:'rabbitThink', text:'知らない鍵を、H×3と拡散——鍵と無関係な部品だけ——で挟んで、あぶり出せるかどうか、ということですね。' },
+      { who:'cat', img:'cat', text:'そう。組み上げたら、先に測定で鍵を予想してから答え合わせをしてごらん。鍵を取り替えても、回路は同じ形のままで通用するはずだよ。' },
+    ],
+    solution: GV_L16,
+  },
+  {
+    name: "ミニ暗号：暗号文に合わせてオラクルを組む",
+    label: "LEVEL 7", shortName: "ミニ暗号",
+    desc: "おもちゃの暗号を定義します：暗号文 C ＝「平文Pに鍵K（2桁）を⊕して、かき混ぜS（2進で＋1：CNOT(K0→K1)→X(K0)）を1回かけたもの」。平文は P=10 で固定、暗号文 C は下のボタンで選べます。選んだ C を検算するオラクルを組んでください。手順：H×2（K1・K0）→ ⊕P（Pの1の桁＝K1にX）→ かき混ぜS（CNOT(K0→K1)→X(K0)）→ 一致判定（Cの0の桁をXで挟み、トフォリ(K1,K0→D)）→ DにZ → 一致判定と暗号化を逆順にすべて戻す。Cに依存するのは一致判定の「Xで挟む線」だけ——Cの0の桁の線を挟みます。",
+    qlink: "本物の暗号（AESなど）も「鍵を⊕する → かき混ぜる（S-box）」の繰り返しでできており、このミニ暗号はその1往復だけを取り出したものです。検算オラクルの作り方は同じ：①暗号化の手順を可逆論理で書く ②既知の暗号文とX挟み＋多重制御で比較してDへ ③DにZ ④全部逆走。材料は公開の暗号化手順と手元のP・Cだけで、鍵はどこにも使っていません。<br><br>暗号文Cを変えても、回路の大部分（H・⊕P・かき混ぜS・Z・逆計算）は同じままで、変わるのは<strong>一致判定でXを挟む線の位置だけ</strong>です（Cの0の桁の線を挟む）。このミニ暗号のかき混ぜSは 00→01→10→11→00 の巡回なので、C＝01なら鍵10、C＝10なら鍵11、C＝11なら鍵00、C＝00なら鍵01が検算に合格します。Cを選んで組み、印がつく鍵が一覧表で切り替わることを確かめてください。",
+    qubits: 3, labels: ["K1","K0","D"], gates: ["H","X","Z","CNOT","CCX"],
+    canvasW: 1680,
+    mode: "state", target: stage9Target, solution: stage9Solution,
+    pickCipher: true,
+    goalHTML: "：下のボタンで選んだ暗号文 C に対して、<strong>その C を生む鍵の枝だけ</strong>が反転（−0.5）し、残り3本が＋0.5、Dはすべて0に戻った一覧表を作ること。C を変えると目標の反転位置も変わります。",
+    dialogue: [
+      { who:'rabbit', img:'rabbitThink', text:'「隣どうしが違う」のような条件だけでなく、本物の暗号みたいに「平文と暗号文から鍵を探す」オラクルも組めるんでしょうか。' },
+      { who:'cat', img:'cat', text:'組めるよ。おもちゃの暗号をひとつ定義しよう。鍵Kは2桁。暗号化は「平文Pに鍵を⊕して、かき混ぜSを1回かける」——Sは2進で＋1する回路だ。平文はP=10で固定、暗号文Cは君が選んでいい。' },
+      { who:'rabbit', img:'rabbit', text:'検算は「候補KをPに⊕して、Sをかけて、選んだCと比べる」……比べた結果をDに書くんですね。作業用のレジスタがないので、レベル4と同じように候補K自身を書き換えて、あとで逆計算で返します。' },
+      { who:'cat', img:'catThink', text:'そう。⊕Pは「Pの1の桁にX」、Sは「CNOTとX」、一致判定は「Cの0の桁をXで挟んでトフォリ」。Cを変えたとき、回路のどこが変わるか——それを自分の手で確かめてほしいんだ。' },
+      { who:'rabbit', img:'rabbitThink', text:'⊕Pも、かき混ぜSも、Zも変わらない……変わるのは一致判定でXを挟む線だけ、ですか。Cの0の桁が動けば、挟む場所も動く。組んでみます。' },
+    ],
+  },
+  {
+    name: "鍵の一本釣り：4候補・1反復・100%",
+    label: "LEVEL 8", shortName: "鍵の一本釣り", matrix: "CZ",
+    desc: "ミニ暗号のオラクルまでは配置済みです。その後ろに、Kレジスタへの拡散 H×2 → X×2 → CZ → X×2 → H×2 をつないでください（CZは制御Z：両方が1のときだけ矢印を反転する2量子ビット版。Dには何もしません）。4候補・答え1つのこの問題では、1反復で確率100%になります。完成したら測定で鍵を取り出しましょう。",
+    qlink: "N=4・M=1は、1反復でちょうど確率100%になる特別な場合です（一般には (π/4)√N 回で100%弱）。古典なら平均2〜3回は暗号化を試すところを、量子は重ね合わせへの検算1回＋拡散で言い当てます。取り出した鍵が本物かどうかは、手元の平文を暗号化してみれば古典計算で確かめられます——「見つけるのは大変、確かめるのは簡単」という、グローバーが得意な問題の形そのものです。",
+    qubits: 3, labels: ["K1","K0","D"], gates: ["H","X","Z","CNOT","CCX","CZ"],
+    canvasW: 2180,
+    mode: "state", target: T10,
+    goalHTML: "：グローバー1反復で、<strong>検算に合格する鍵</strong>の確率を100%にすること。測定すると毎回同じ鍵が出るはずです。「▶ 検証する」で答え合わせをします。",
+    preset: OW_L9,
+    dialogue: [
+      { who:'cat', img:'cat', text:'仕上げだよ。オラクルの後ろに、Kレジスタへの拡散——H×2 → X×2 → CZ → X×2 → H×2。CZは制御Zで、両方が1のときだけ矢印を反転する2量子ビット版だ。' },
+      { who:'rabbit', img:'rabbitThink', text:'候補は4つで、検算に合格する鍵は1つのはず……このときは何反復必要なんでしょうか。' },
+      { who:'cat', img:'cat', text:'4候補・答え1つは特別で、<strong>1反復でちょうど100%</strong>になるんだ。組んで、測定してごらん。毎回同じ鍵が出るはずだよ。' },
+      { who:'rabbit', img:'rabbit', text:'出てきた鍵で本当にP=10がC=01になるか、手で暗号化し直せば答え合わせもできますね。平文と暗号文だけから、鍵が一本釣りできました。' },
+    ],
+    solution: OW_L10,
+  },
+  {
+    name: "オラクル10ビット版：鍵に印がつく瞬間",
+    label: "LEVEL 9", shortName: "10ビット印つけ",
+    desc: "レベル7のオラクルを10ビット鍵に拡大した実回路です（グローバーの反復に入る前の、印つけまで）。K9〜K0とDの11本に、H×10 → ⊕P → かき混ぜS → 暗号文Cとの一致判定（X挟み＋MCX）→ DにZ → 全逆計算、の約75ゲートが配線済み。「▶ 回路に通す」で一様な重ね合わせにオラクルを1回かけ、1024本の矢印のうち隠れた鍵の1本だけが左向き（赤）になることを確かめてください。「✓ 印を答え合わせ」でクリア判定。もう一度通すと印が消えることも試せます。",
+    qlink: "1024候補への「⊕P → かき混ぜ → 比較」が、重ね合わせのすべての枝で同時に走り、検算に合格した1本にだけ位相の印が落ちます——鍵を誰も計算していないのに。ただし全候補の矢印の長さは1/32（確率0.1%）のままで、測定してもこの印は見えません。見えない印を確率に変えるのが、次のレベルでつなぐ拡散です。なお、オラクルを偶数回通すと反転の反転で印は消えます。",
+    qubits: 11, labels: ["K9","K8","K7","K6","K5","K4","K3","K2","K1","K0","D"],
+    gates: [],
+    canvasW: 1880,
+    mode: "loop", oracleOnly: true,
+    preset: sim10OraclePreset,
+    goalHTML: "：オラクルを1回通し、<strong>隠れた鍵の1本だけが左向き（−）になった一覧表</strong>を作って「✓ 印を答え合わせ」で確認すること。長さは全候補同じまま＝測定では印が見えないことも確かめましょう。",
+    dialogue: [
+      { who:'rabbit', img:'rabbitThink', text:'ミニ暗号のオラクルを、10ビットでも見てみたいです。拡散をつなぐ前の、印がつくところまでを。' },
+      { who:'cat', img:'cat', text:'いいね。レベル7と同じオラクル——⊕P、かき混ぜS、Cとの一致判定、DにZ、逆計算——を10ビット幅で配線しておいたよ。約75ゲートだ。' },
+      { who:'rabbit', img:'rabbit', text:'1024本の矢印すべてで、検算が同時に走るんですね。' },
+      { who:'cat', img:'catThink', text:'そう。通してみて、左向きになった矢印を探してごらん。それが、誰も計算していない鍵の居場所だよ。長さは全部同じままだから、測定では見えないことも確かめられるね。' },
+    ],
+    solution: [],
+  },
+  {
+    name: "10ビットの鍵探索：√Nを体感する",
+    label: "LEVEL 10", shortName: "10ビット探索",
+    desc: "ミニ暗号を10ビット鍵に拡大した本物の回路です。K9〜K0の10本と補助ビットDに、H×10 → オラクル（⊕P → かき混ぜS → 暗号文Cとの一致判定 → DにZ → すべて逆計算）→ 拡散、の1反復分・約100ゲートが配線済みです。かき混ぜSは「上の桁から順に K_i ⊕= K_(i-1)、最後にK0を反転」。暗号文Cは隠し鍵から作られていますが、回路は公開データのPとCだけから組まれています。「▶ 回路に1反復通す」で状態を回路に通し、矢印グラフが育ったら（最適は約25反復）測定で鍵を言い当ててください（一致でクリア）。回しすぎるとどうなるかも試せます。",
+    qlink: "10ビット（1024候補）では約25反復で確率99.9%——反復回数が√Nに比例することを体感できます。実機でも同じで、この回路を25回繰り返しかけます（ここでは同じ回路に状態を通し直しています）。ではAESの128ビットでは？　候補は2の128乗≈3.4×10³⁸通り。このゲームの方式（古典シミュレーション）で矢印の一覧表を持つには約10²⁷テラバイトが必要で、地球上の全ストレージでも遠く及びません——一覧表を「状態」としてそのまま持てる量子ビットの存在意義がここにあります。ただし量子実機でも反復は (π/4)√(2¹²⁸) ≈ 1.4×10¹⁹回。1マイクロ秒に1反復でも約46万年かかり、誤り訂正済みの論理量子ビットが数千個（物理量子ビットでは数百万個規模）必要です。つまりグローバーはAES-128を実質64ビット相当に弱めるものの実用的な攻撃には程遠く、AES-256などへの移行で備えられます。それでも回路の工程は、このゲームで組んだ「検算→DにZ→逆計算＋拡散」のまま変わりません。",
+    qubits: 11, labels: ["K9","K8","K7","K6","K5","K4","K3","K2","K1","K0","D"],
+    gates: [],
+    canvasW: 2380,
+    mode: "loop",
+    preset: sim10Preset,
+    goalHTML: "：回路に反復を通して鍵の矢印を育て、<strong>測定で隠された鍵を言い当てる</strong>こと（一致した時点でクリア）。最適な反復回数はおよそ (π/4)√1024 ≈ 25回です。「やり直す」ごとに鍵は変わりますが、回路の形は変わりません（変わるのは一致判定のXの位置＝公開の暗号文Cだけ）。",
+    dialogue: [
+      { who:'cat', img:'cat', text:'仕上げに、ミニ暗号を鍵10ビットに広げてみよう。暗号化は同じ「⊕鍵→かき混ぜ」を10ビット幅にしただけ。オラクルの工程も、検算→DにZ→逆計算でまったく同じだよ。1反復分の回路——約100ゲート——は配線しておいた。' },
+      { who:'rabbit', img:'rabbitThink', text:'候補は2の10乗で1024通り……答えが1つだと、1反復では育ちきりませんよね。何回まわせばいいんでしょうか。' },
+      { who:'cat', img:'catThink', text:'最適はおよそ (π/4)√N 回。√1024＝32だから、25回前後だね。25回ぶん横に並べると2500ゲートを超えて画面に収まらないから、実機と同じように<strong>同じ回路を繰り返しかける</strong>——ここでは、いまの状態をもう一度回路に通す形で回そう。矢印が育っていくようすを見ながら、25回あたりで測定してごらん。' },
+      { who:'rabbit', img:'rabbit', text:'まわしすぎたら、どうなるんですか？' },
+      { who:'cat', img:'cat', text:'折り返しの回しすぎで、今度は逆に縮んでいく。それも自分の目で確かめてごらん。' },
+    ],
+    solution: [],
+  },
+  {
+    name: "本物志向の暗号：逆算できない鍵探し",
+    label: "LEVEL 11", shortName: "非線形暗号",
+    desc: "これまでのミニ暗号は Enc(K)=S(K⊕P) で、鍵は K＝S⁻¹(C)⊕P と公式で逆算できました（試す必要がない）。実際の暗号のように「逆算の公式がない」ようにするには、非線形なS-box（＋2桁の値では作れないので3ビットのブロック）と複数ラウンドが要ります。この回路は、鍵2ビット・ブロック3ビット・非線形S層・3ラウンドのミニ暗号のオラクルを配線済みにしたものです。平文P=101と暗号文C=001だけから組まれていて、合格する鍵（この暗号でP→Cになる唯一の鍵）は組んだ結果として回路が選びます。「▶ 検証する」で、鍵01だけに印（−0.5）がつくことを確かめてください。補助ビット（B2B1B0・D）はすべて0に戻ります。",
+    qlink: "なぜ2ビットでは「逆算できない暗号」が作れないのか——2ビットの値の並べ替えは全部で24通りで、その<strong>すべてがアフィン写像（線形＋定数）</strong>になってしまうからです。アフィンな暗号は鍵についての連立1次方程式になり、公式で一発で解けます（試す必要がない）。非線形性は3ビット以上のS-boxで初めて生まれ、複数ラウンドと組み合わせると鍵を公式で分離できなくなり、<strong>本当に鍵を試すしかなくなります</strong>。この回路の暗号は非線形なので、K＝公式(P,C) が書けず、4つの鍵を実際に暗号化して比べるしかありません——それでもオラクルの作り方は今までと完全に同じ：ブロックをPに初期化 → 鍵で暗号化を前向きに計算 → 暗号文Cと一致判定 → DにZ → すべて逆計算。暗号を一度も逆に回していません。AESもS-boxと鍵混合を何ラウンドも重ねただけで、原理はこの回路と同じです。",
+    qubits: 6, labels: ["K1","K0","B2","B1","B0","D"], gates: ["H","X","Z","CNOT","CCX","CCCX"],
+    canvasW: 6200,
+    mode: "state", target: T13c,
+    ampFilter: i => (i & 15) === 0,   // ブロック・Dが0の鍵状態だけ一覧に出す
+    presetWired: true,
+    preset: OW_CIPHER13, solution: OW_CIPHER13,
+    goalHTML: "：配線済みの回路を「▶ 検証する」で確かめること。合格する鍵 <strong>|01⟩</strong> だけに印（−0.5）がつき、残り3つの鍵は＋0.5、補助ビット（B2B1B0・D）はすべて0に戻ります（一覧は鍵の状態だけを表示。先頭2桁K1K0が鍵）。",
+    dialogue: [
+      { who:'rabbit', img:'rabbitThink', text:'ステージ9の暗号、よく見たら K＝S⁻¹(C)⊕P で一発で逆算できますね。それだと、わざわざ探さなくても鍵が分かってしまう気がします。' },
+      { who:'cat', img:'cat', text:'鋭いところに気づいたね。実はあのミニ暗号は「かき混ぜS」も「⊕P」もアフィン——線形＋定数——だから、鍵は連立1次方程式で解けてしまう。本物の暗号が逆算できないのは、<strong>非線形なS-box</strong>を何ラウンドも重ねているからなんだ。' },
+      { who:'rabbit', img:'rabbit', text:'2ビットの鍵で、非線形な暗号は作れないんですか？' },
+      { who:'cat', img:'catThink', text:'2ビットの値の並べ替えは、実は全部アフィンになってしまうんだ。非線形はブロックを3ビットに広げて初めて作れる。この回路は鍵2ビット・ブロック3ビット・非線形S層を3ラウンド重ねた暗号のオラクルで、平文P=101と暗号文C=001だけから組んである。' },
+      { who:'rabbit', img:'rabbitThink', text:'非線形だから公式で逆算できない……4つの鍵を実際に暗号化して、Cと一致するものを探すしかない。それでもオラクルの作り方は、検算→印→逆計算で今までと同じなんですね。' },
+      { who:'cat', img:'cat', text:'そう。暗号がどれだけ複雑になっても、オラクルは「前向きに暗号化して比べる」だけ。検証してごらん——合格する鍵01だけに印がつくよ。' },
+    ],
+  },
+  {
+    name: "×7 mod 15 を回路にする",
+    label: "LEVEL 12", shortName: "×7 mod 15", matrix: "SWAP",
+    desc: "ここからはショアの素因数分解です。まずは部品作り。作業レジスタ4本（w0 が最上位、w3 が最下位）に入った数 x を、7x を 15 で割った余りに変える回路を作ってください。15 は 2⁴−1 という特殊な数なので、×7 は「×(−1)」と「×8」の組み合わせで作れます。手順：w0〜w3 の4本すべてに X（全ビット反転＝15−x）→ SWAP(w3,w2) → SWAP(w2,w1) → SWAP(w1,w0)（3つの SWAP で下の桁を上へ巡回＝×8 mod 15）。入力 1・2・4・7・13 に対して 7・14・13・4・1 が出れば合格です。",
+    qlink: "ショアのアルゴリズムの量子部分は「a を x 回掛けて N で割った余り」を回路で作るところに手間がかかります。N＝15 は 2⁴−1 なので、4ビットの値を 1 桁ぶん巡回させると ×2、3桁ぶんで ×8 になり（16≡1 mod 15）、全ビット反転は 15−x＝×(−1)。合わせて ×(−8)＝×7 mod 15 が、X と SWAP という並べ替えだけで作れます。一般の N ではここに足し算・掛け算の可逆回路が丸ごと入り、ゲート数が桁違いになります。",
+    qubits: 4, labels: ["w0","w1","w2","w3"], gates: ["X","SWAP"],
+    mode: "unitary", testInputs: [1, 2, 4, 7, 13],
+    targetMap: i => (7 * i) % 15,
+    dialogue: [
+      { who:'rabbit', img:'rabbitThink', text:'グローバーは「総当たりを速くする」道具でした。素因数分解のショアも、同じように候補（約数）を1つずつ試すんですか？' },
+      { who:'cat', img:'cat', text:'いや、ショアはまったく別の考え方だよ。15 を割るのに、約数を探すんじゃない。「7 を何回かけると余りが 1 に戻るか」——掛け算の<strong>周期</strong>を求めるんだ。7¹＝7、7²＝4、7³＝13、7⁴＝1（mod 15）……4回で戻る。この周期 4 さえ分かれば、あとは古典計算で約数が出る。' },
+      { who:'rabbit', img:'rabbit', text:'それなら、まず「×7 して 15 で割った余り」を回路にしないといけませんね。掛け算の回路なんて、組めるんでしょうか。' },
+      { who:'cat', img:'catThink', text:'15 が特別な数だから、今回は簡単だよ。4ビットの数を1桁ぶん上へ巡回させると ×2。3桁ぶん巡回させると ×8。16 は 15 で割ると余り 1 だから、×8 は mod 15 でも本当に ×8 だ。そして全ビット反転は 15−x、つまり ×(−1)。−8 は 15 で割った余りが 7 だから、反転して3桁巡回すれば ×7 になる。' },
+      { who:'rabbit', img:'rabbitThink', text:'反転は X を4本に、巡回は SWAP を3つ……並べ替えだけで掛け算ができるんですね。入力を変えて確かめてみます。' },
+    ],
+    solution: SH_U7([0,1,2,3], 0),
+  },
+  {
+    name: "制御つき ×7：数え上げビットで掛けるかどうかを決める",
+    label: "LEVEL 13", shortName: "制御つき×7", matrix: "CSWAP",
+    desc: "レベル12の ×7 回路を「制御ビット c が 1 のときだけ働く」形にします。X は CNOT（制御 c → 標的 w）に、SWAP は CSWAP（制御 c、入れ替える2本）に置き換えてください。手順：CNOT(c→w0)・CNOT(c→w1)・CNOT(c→w2)・CNOT(c→w3) → CSWAP(c; w3,w2) → CSWAP(c; w2,w1) → CSWAP(c; w1,w0)。c＝0 なら作業レジスタはそのまま、c＝1 なら 7x mod 15 になれば合格です。",
+    qlink: "ショアの回路では、数え上げレジスタの各ビットが「そのビットの重みぶんだけ ×7 を繰り返す」制御をします。制御つきの掛け算は、ゲートを1つずつ制御つき版（X→CNOT、SWAP→CSWAP）に置き換えれば作れます。これは一般の回路でも同じで、どんな可逆回路も制御つき版が機械的に作れることが知られています。",
+    qubits: 5, labels: ["c","w0","w1","w2","w3"], gates: ["CNOT","CSWAP"],
+    mode: "unitary", testInputs: [1, 7, 13, 17, 18, 20, 23, 29],
+    targetMap: i => (i & 16) ? (16 | ((7 * (i & 15)) % 15)) : i,
+    dialogue: [
+      { who:'cat', img:'cat', text:'次は、この ×7 を「掛けるかどうか」を別の量子ビットで決められるようにしよう。制御ビット c が 1 のときだけ ×7、0 なら何もしない。' },
+      { who:'rabbit', img:'rabbitThink', text:'X を CNOT に、SWAP を CSWAP に置き換えれば……c が 0 のときは全部素通りで、1 のときだけレベル12の回路になります。' },
+      { who:'cat', img:'catThink', text:'その通り。これで「c 回だけ ×7 する」回路の最小単位ができる。c は 0 か 1 だから、掛け算を 0 回か 1 回、だね。' },
+      { who:'rabbit', img:'rabbit', text:'c を重ね合わせにすれば、「掛けた世界」と「掛けていない世界」が同時に一覧表に載る……ということですね。組んでみます。' },
+    ],
+    solution: SH_CU7(0, [1,2,3,4], 0),
+  },
+  {
+    name: "×7 を2回つなぐと ×4、4回で元に戻る",
+    label: "LEVEL 14", shortName: "×7×7＝×4",
+    desc: "制御つき ×7（CNOT×4 → CSWAP×3）を2組、直列につないでください。c＝1 のとき 7×7＝49、49 を 15 で割った余りは 4 なので、作業レジスタは 4x mod 15 になります（1→4、2→8、4→1、7→13、13→7）。c＝0 なら素通りです。同じものを4組つなぐと 7⁴＝2401、余り 1 ——つまり元に戻ります（これが周期 4）。",
+    qlink: "数え上げレジスタの各ビットは重みが 1・2・4 なので、それぞれ ×7 を 1 回・2 回・4 回する制御回路が要ります。×7 を 2 回で ×4（＝7² mod 15）、4 回で ×1（＝7⁴ mod 15）。「4 回で元に戻る」ことが周期 4 の正体で、ショアが求めたい量そのものです。実際の回路では ×7² や ×7⁴ をあらかじめ1つの回路にまとめて、ゲート数を節約します。",
+    qubits: 5, labels: ["c","w0","w1","w2","w3"], gates: ["CNOT","CSWAP"],
+    mode: "unitary", testInputs: [1, 17, 18, 20, 23, 29],
+    targetMap: i => (i & 16) ? (16 | ((4 * (i & 15)) % 15)) : i,
+    require: () => countGate('CSWAP') >= 6 ? {ok:true} : {ok:false, msg:'制御つき×7（CNOT×4→CSWAP×3）を2組つないでみよう。'},
+    dialogue: [
+      { who:'cat', img:'cat', text:'数え上げレジスタは3本で、重みは 1・2・4 だったね。重み 2 のビットが 1 なら ×7 を 2 回、重み 4 のビットなら 4 回しなければならない。制御つき ×7 を 2 組つなぐと、何倍になるかな。' },
+      { who:'rabbit', img:'rabbitThink', text:'7×7＝49 で、15 で割った余りは 4。だから ×4 mod 15 です。1 は 4 に、4 は 16 で余り 1 に……あれ、4 回つなぐと 7⁴＝2401、余り 1 で元に戻りますね。' },
+      { who:'cat', img:'catThink', text:'それが周期 4 だよ。ショアが知りたいのは、まさにその「何回で元に戻るか」だ。まず 2 組つないで、×4 になることを入力を変えて確かめてごらん。' },
+      { who:'rabbit', img:'rabbit', text:'重み 4 のビット用は 4 組……つまり何もしないのと同じ。回路を組む前に、周期が答えを教えてくれるのが面白いです。' },
+    ],
+    solution: [ ...SH_CU7(0, [1,2,3,4], 0), ...SH_CU7(0, [1,2,3,4], 4) ],
+  },
+  {
+    name: "周期を並べる：Σ|x⟩|7ˣ mod 15⟩",
+    label: "LEVEL 15", shortName: "周期を並べる",
+    desc: "数え上げレジスタ q0〜q2 と作業レジスタ q3〜q6 の7本です。H×3（q0〜q2）→ 作業を |0001⟩＝1 にする X（q6）→ q2（重み 1）で制御した ×7 が1組、までは配線済み。その後ろに q1（重み 2）で制御した ×7 を2組（CNOT(q1→q3..q6)×4 → CSWAP(q1; q6,q5)・(q1; q5,q4)・(q1; q4,q3)、をもう1度）つないでください。q0（重み 4）は ×7 を4回＝元に戻るので、何もつなぎません。完成すると、8通りの x に対して |x⟩|7ˣ mod 15⟩ の8行に 0.35 ずつ矢印が並びます。",
+    qlink: "これが Σ_x |x⟩|7ˣ mod 15⟩ ——「x と、7 を x 回掛けた余り」の対応表を、8行まとめて一覧表に載せた状態です。作業レジスタの値は x が進むごとに 1・7・4・13・1・7・4・13 と周期 4 で繰り返します。ただし x をそのまま測っても 8 行のうち 1 行が出るだけで、周期は読めません。周期を読み取るのは、次のレベルの逆QFTの仕事です。",
+    qubits: 7, labels: ["q0","q1","q2","q3","q4","q5","q6"], gates: ["CNOT","CSWAP"],
+    canvasW: 2400,
+    mode: "state", target: SH_T15,
+    ampFilter: i => [1, 4, 7, 13].includes(i & 15),
+    goalHTML: "：8通りの x（q0q1q2）ごとに、作業レジスタ（q3〜q6）が 7ˣ mod 15 になった行に 0.35 ずつ矢印が並ぶこと——|000 0001⟩、|001 0111⟩、|010 0100⟩、|011 1101⟩、|100 0001⟩、|101 0111⟩、|110 0100⟩、|111 1101⟩ の8行。",
+    preset: SH_L15_PRE,
+    dialogue: [
+      { who:'cat', img:'cat', text:'部品がそろったので、本体を組もう。数え上げレジスタ3本を H で重ね合わせにして、x＝0〜7 の8通りを同時に立てる。作業レジスタは 1 から出発。あとは、x の各ビットの重みぶんだけ ×7 を制御つきで掛けていく。' },
+      { who:'rabbit', img:'rabbitThink', text:'重み 1 の q2 には ×7 を1組、重み 2 の q1 には2組、重み 4 の q0 には4組……でも4組は元に戻るので、q0 には何もつながなくていいんですね。' },
+      { who:'cat', img:'catThink', text:'その通り。q2 の1組までは配線してある。q1 の2組を君がつないでごらん。完成すると、一覧表には x と 7ˣ の余りが対になった8行が、0.35 ずつ並ぶ。' },
+      { who:'rabbit', img:'rabbit', text:'作業レジスタの値が 1・7・4・13・1・7・4・13……周期 4 で繰り返しているのが、一覧表でそのまま見えるんですね。でも、これを測っても8行のうち1行が出るだけ。周期はどうやって読むんでしょう。' },
+    ],
+    solution: [ ...SH_L15_PRE, ...SH_CU7(1, [3,4,5,6], 5), ...SH_CU7(1, [3,4,5,6], 9) ],
+  },
+  {
+    name: "逆QFTで周期を読む：15 ＝ 3 × 5",
+    label: "LEVEL 16", shortName: "逆QFT",
+    desc: "レベル15までで作った Σ|x⟩|7ˣ mod 15⟩（数え上げ q0〜q2、作業 q3〜q6）の後ろに、逆QFT（bit反転の SWAP → H・R₂†・R₃† の制御位相回転）を配線した完成回路です。ここは矢印の回転（複素の位相）が本質的に効く部分なので、配線済みの回路を通して測定します。「▶ 回路を通して測定」で数え上げレジスタを測ると 0・2・4・6 が等確率で出ます。「✓ 周期を求めて素因数分解」で m/8 の連分数から周期 r=4 を割り出し、15=3×5 へ。",
+    qlink: "グローバーが「総当たりを√Nに縮める探索」なら、ショアは「周期（位数）を一発で見抜く」まったく別の道具です。鍵は<strong>逆QFT（量子フーリエ変換の逆）</strong>——数え上げレジスタが Σ_x |x⟩|7ˣ mod15⟩ という「xについて周期rで繰り返す状態」になっているとき、逆QFTはその周期を、測定値が r の倍数間隔（ここでは 8/r=2 の倍数＝0,2,4,6）に山を作る形へ変換します。測定値 m から m/8 を連分数展開すると分母に周期rが現れ（2/8=1/4→r=4、6/8=3/4→r=4）、rが偶数なら gcd(7^{r/2}±1, 15)=gcd(48,15)=3・gcd(50,15)=5 と<strong>古典計算だけで</strong>約数が出ます。<br><br>この回路の「×7 mod15」は、N=15 が 2⁴−1 という特殊な数なので SWAP（線の入れ替え）とX だけで作れています。逆QFTの R₂†・R₃† は −π/2・−π/4 の制御位相回転で、ここで初めて<strong>複素の位相</strong>（矢印の回転）が本質的に効きます。RSA暗号を破るような大きなNでは、この「掛け算の周期を量子で求める」部分だけが指数的に速く、残りは連分数などの古典計算です。ただし実用規模には誤り訂正済みの論理量子ビットが多数必要で、まだ実現していません。",
+    qubits: 7, labels: ["q0","q1","q2","q3","q4","q5","q6"], gates: [],
+    canvasW: 6600,
+    mode: "shor",
+    presetWired: true,
+    preset: OW_SHOR15, solution: OW_SHOR15,
+    goalHTML: "：配線済みのショア回路を「▶ 回路を通して測定」で確かめること。数え上げレジスタ（q0q1q2）の測定値は <strong>0・2・4・6</strong> が等確率で出ます。「✓ 周期を求めて素因数分解」で m/8 の連分数から周期 r=4 を求め、15=3×5 にたどり着きます。",
+    dialogue: [
+      { who:'cat', img:'cat', text:'レベル15で、数え上げ x と 7ˣ の余りが対になった、周期4で繰り返す一覧表ができた。でも x をそのまま測っても、8行のうち1行が出るだけで周期は読めない。周期を読み取る道具が<strong>逆QFT</strong>——量子フーリエ変換の逆だ。' },
+      { who:'rabbit', img:'rabbitThink', text:'グローバーは矢印の向き（＋−）だけでしたが、ここは矢印を回すんですね。R₂†・R₃† は −90°・−45° の制御つき回転……この部分は複素数の矢印なので、一覧表では追いきれません。' },
+      { who:'cat', img:'catThink', text:'そう。だからここだけは配線済みの回路を通して、結果を見よう。周期4で繰り返す状態に逆QFTをかけると、測定値は 8÷4＝2 の倍数——0・2・4・6——だけに山が立つ。' },
+      { who:'cat', img:'cat', text:'たとえば 6 が出たら 6/8＝3/4、その分母 4 が周期だ。周期4は偶数だから gcd(7²−1, 15)＝gcd(48, 15)＝3、gcd(7²＋1, 15)＝gcd(50, 15)＝5——15＝3×5。通して、測って、素因数分解までやってごらん。' },
+      { who:'rabbit', img:'rabbit', text:'掛け算の周期を量子で並べて、逆QFTで読む。約数を1つずつ試すのではなく、周期を見抜くのが、ショアが古典より速い正体なんですね。' },
+    ],
+  }
+];
+
+// ====================== 状態 ======================
+let currentLevelIdx = 0;
+let cleared = JSON.parse(localStorage.getItem("oracle_workshop_v2_cleared") || "[]");
+let nodes = [], pins = [], wires = [];
+let idc = 1;
+let dragNode = null, dragOffset = {x:0,y:0}, dragMoved = false;
+let wireStart = null, tempWireEnd = null;
+let inputBits = [];   // unitaryレベルの入力切り替え（量子ビットごとに0/1）
+let mysteryKey = 0;   // 覆面オラクルの隠し鍵（mysteryレベルで回路リセットごとにランダム）
+let traceIdx = null;  // 「道すじ表示」で追っている答え候補（出力ラベル順のインデックス）
+
+const svg = document.getElementById('svg');
+
+function LV(){ return LEVELS[currentLevelIdx]; }
+function countGate(t){ return nodes.filter(n => n.type === t).length; }
+function uid(){ return idc++; }
+
+// ====================== ナビ・画面切り替え ======================
+function toggleSidebar(){
+  document.getElementById('app-shell').classList.toggle('side-collapsed');
+}
+function showIntro(){
+  document.getElementById('intro-screen').style.display = '';
+  document.getElementById('game-screen').style.display = 'none';
+  document.getElementById('app-shell').classList.remove('game-mode');
+}
+// ====================== 操作ガイド ======================
+const GUIDE_KEY = 'oracle_workshop_v2_guide_closed';
+function guideItems(lv){
+  const observe = lv.mode === 'loop' || lv.mode === 'shor';
+  const it = [];
+  const li = (ic, title, body) => it.push(`<li><span class="og-ic">${ic}</span><span><b>${title}</b>${body}</span></li>`);
+  if (!observe){
+    li('🧩', 'ゲートを置く', '上の<span class="og-kw">「ゲートを選ぶ」</span>のボタンをタップすると回路に現れます。ドラッグで移動、✕ で削除。');
+    li('🔗', '線をつなぐ', '<span class="og-kw">青い丸（出力ピン）</span>をタップ → つなぎ先の<span class="og-kw">灰色の丸（入力ピン）</span>をタップ。ドラッグでも引けます。線はタップで消えます。');
+  }
+  if (lv.mode === 'unitary'){
+    li('🔀', '入力を変える', '左端の緑の<span class="og-kw">「入力」をタップ</span>すると 0 ⇄ 1 が切り替わります。合格には表にある入力すべてで正しい出力が必要です。');
+  } else if (lv.mode === 'state' || lv.mode === 'mystery'){
+    li('🔀', '入力について', 'このレベルの入力は <span class="og-kw">|0…0⟩ で固定</span>。重ね合わせを作るのは H などのゲートの仕事です。');
+  }
+  if (lv.mode === 'shor'){
+    li('🔍', '数値を追う', '一覧表の<span class="og-kw">候補をタップ</span>すると、その数え上げ値の枝で作業レジスタが 1 → … → 7ˣ に育つ道すじが回路の上に表示されます。もう一度タップで解除。');
+    li('🎲', '測定する', '<span class="og-kw">「▶ 回路を通して測定」</span>で数え上げレジスタを何度か測り、<span class="og-kw">「✓ 周期を求めて素因数分解」</span>へ。');
+  } else if (lv.mode === 'loop'){
+    li('🔁', '回路を回す', '一覧表のボタンで回路に<span class="og-kw">反復を通し</span>、鍵候補の矢印がどう育つかを見ます。測定して鍵を言い当てればクリア。');
+  } else {
+    li('🔍', '数値を追う', '<span class="og-kw">「矢印の一覧表」の行をタップ</span>すると、その候補に至る道すじで各線が 0 か 1 かが回路の上に表示されます（緑＝1・灰＝0）。もう一度タップで解除。');
+    li('✅', '答え合わせ', '<span class="og-kw">「▶ 検証する」</span>で合格条件と比べます。行き詰まったら<span class="og-kw">「解答」</span>で正解の回路が置かれます。');
+  }
+  return it.join('');
+}
+function toggleGuide(force){
+  const g = document.getElementById('opGuide');
+  const open = typeof force === 'boolean' ? force : !g.classList.contains('open');
+  g.classList.toggle('open', open);
+  document.getElementById('guideBtn').classList.toggle('on', open);
+  try { localStorage.setItem(GUIDE_KEY, open ? '0' : '1'); } catch (e) {}
+}
+function renderGuide(){
+  document.getElementById('ogList').innerHTML = guideItems(LV());
+  let closed = '0';
+  try { closed = localStorage.getItem(GUIDE_KEY) || '0'; } catch (e) {}
+  toggleGuide(closed !== '1');
+}
+
+function startGame(){
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('game-screen').style.display = 'flex';
+  window.scrollTo(0, 0);
+  document.getElementById('app-shell').classList.add('game-mode');
+  const observe = LV().mode === 'loop' || LV().mode === 'shor';   // 配線済み観察レベル（自分で組まない）
+  document.getElementById('gate-bar').style.display = observe ? 'none' : 'flex';
+  document.getElementById('runBtn').style.display = observe ? 'none' : '';
+  document.getElementById('answerBtn').style.display = observe ? 'none' : '';
+  document.getElementById('cipherSel').style.display = LV().pickCipher ? 'flex' : 'none';
+  if (LV().pickCipher) buildCipherSel();
+  if (!observe) buildGateBar();
+  renderGuide();
+  resetCircuit();
+}
+
+// 暗号文セレクタ（ステージ9）
+function buildCipherSel(){
+  const order = [0b01, 0b10, 0b11, 0b00];   // 巡回の見やすい順
+  document.getElementById('cipherBtns').innerHTML = order.map(c =>
+    `<button class="cipherBtn${c === stage9C ? ' on' : ''}" data-c="${c}">${bits2(c)}</button>`
+  ).join('');
+  document.querySelectorAll('#cipherBtns .cipherBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      stage9C = Number(btn.dataset.c);
+      document.querySelectorAll('#cipherBtns .cipherBtn').forEach(b => b.classList.toggle('on', b === btn));
+      updateCipherHint();
+      resetCircuit();   // 目標が変わるので組みかけをクリア
+    });
+  });
+  updateCipherHint();
+}
+function updateCipherHint(){
+  document.getElementById('cipherHint').innerHTML =
+    `→ この C を生む鍵は <strong>|${bits2(stage9Key(stage9C))}⟩</strong>。一致判定で挟むのは `
+    + ((!(stage9C & 2) && !(stage9C & 1)) ? 'K1とK0の両方'
+      : (!(stage9C & 2) ? 'K1' : (!(stage9C & 1) ? 'K0' : 'なし（Cが11なので挟むXは不要）')))
+    + ' の線';
+}
+
+function loadLevel(idx){
+  if (idx !== undefined) currentLevelIdx = idx;
+  localStorage.setItem('oracle_workshop_v2_level', currentLevelIdx);
+  document.getElementById('clear-screen').style.display = 'none';
+  const lv = LV(), total = LEVELS.length;
+
+  document.getElementById('head-level-title').textContent = `レベル ${currentLevelIdx+1} / ${total}`;
+  document.getElementById('head-step').textContent = lv.shortName;
+  document.getElementById('prog').style.width = `${(currentLevelIdx+1)/total*100}%`;
+
+  document.getElementById('intro-label').textContent = lv.label;
+  document.getElementById('intro-title').textContent = lv.name;
+  document.getElementById('intro-desc').textContent = '📋 ' + lv.desc;
+  // 合格条件の表（検証と同じ目標を問題文として提示する）
+  document.getElementById('goal-area').innerHTML = lv.goalHTML
+    ? `<div class="goal-box"><strong>🎯 合格条件</strong>${lv.goalHTML}</div>`
+    : `<div class="goal-box"><strong>🎯 合格条件</strong>（「▶ 検証する」でこの表と比べます）${goalTableHTML(lv)}</div>`;
+  document.getElementById('dialog-scene').innerHTML = renderDialogue(lv.dialogue);
+  document.getElementById('q-link-area').innerHTML = lv.qlink
+    ? `<div class="q-link-box">⚛ <strong>量子コンピュータとのつながり</strong><br>${lv.qlink}</div>` : '';
+  document.getElementById('gate-matrix-area').innerHTML = lv.matrix ? gateMatrixHTML(lv.matrix) : '';
+
+  buildLevelList();
+  document.getElementById('verifyTable').innerHTML = '';
+  document.getElementById('verifyWrap').classList.remove('visible');
+  document.getElementById('status').textContent = '';
+  hideNextBtn();
+  showIntro();
+}
+
+// レベルの合格条件をイントロ用の表にする
+function goalTableHTML(lv){
+  const n = lv.qubits;
+  if (lv.mode === 'unitary'){
+    const ins = lv.testInputs || Array.from({ length: 1 << n }, (_, i) => i);
+    let h = '<table><tr><th>入力</th><th>出力（目標）</th></tr>';
+    for (const i of ins) h += `<tr><td>|${ketStr(i, n)}⟩</td><td>|${ketStr(lv.targetMap(i), n)}⟩</td></tr>`;
+    h += '</table>';
+    h += '<span class="goal-note">上のすべての入力パターンで、出力がこの表と一致すれば合格です。入力は左端の入力ノードをタップして切り替えて試せます。</span>';
+    return h;
+  }
+  const tgt = typeof lv.target === 'function' ? lv.target() : lv.target;
+  let h = '<table><tr><th>答え候補</th><th>目標の矢印</th><th>確率</th></tr>';
+  for (let i = 0; i < tgt.length; i++){
+    const a = tgt[i];
+    const p = Math.round(a * a * 1000) / 10;
+    h += `<tr><td>|${ketStr(i, n)}⟩</td><td>${fmtAmp(a)}</td><td>${p}%</td></tr>`;
+  }
+  h += '</table>';
+  h += '<span class="goal-note">入力 |' + '0'.repeat(n) + '⟩ から出発して、この矢印の一覧表を作れば合格です（表全体の向きの反転は同じものとみなします）。'
+    + `候補の0/1は、回路の上の線から順（${lv.labels.join('・')}）に並んでいます。</span>`;
+  return h;
+}
+
+function buildLevelList(){
+  const wrap = document.getElementById('levelList');
+  wrap.innerHTML = LEVELS.map((lv, i) => {
+    const isActive = i === currentLevelIdx;
+    const isCleared = cleared.includes(i);
+    return `<div class="side-level${isActive?' active':''}${isCleared?' cleared':''}" onclick="loadLevel(${i})">
+      <div class="lv-icon">${isCleared?'✓':(i+1)}</div>
+      <div><div class="lv-main">${lv.name}</div><div class="lv-sub">${lv.label}</div></div>
+      ${isCleared?'<div class="check">✓</div>':'<div></div>'}
+    </div>`;
+  }).join('');
+}
+
+// ====================== ゲートパレット ======================
+function buildGateBar(){
+  const lv = LV();
+  document.getElementById('gateBtns').innerHTML = lv.gates.map(t =>
+    `<button class="gateBtn" data-gate="${t}">${GATESPEC[t].btn}</button>`
+  ).join('');
+  document.querySelectorAll('#gateBtns .gateBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.gate;
+      const wrap = document.getElementById('canvasWrap');
+      const W = Number(svg.getAttribute('width')) || 760;
+      const H = Number(svg.getAttribute('height')) || 260;
+      // いまスクロールして見えている範囲の中に置く
+      const visW = Math.min(W, (wrap.clientWidth || W) - 2);
+      const sx = wrap.scrollLeft || 0;
+      addNode(t, sx + visW*0.30 + Math.random()*visW*0.28, 36 + Math.random()*Math.max(110, H-170));
+      updateAll();
+    });
+  });
+}
+
+// ====================== 回路操作 ======================
+// ノード: INPUT(出力ピン1)・OUTPUT(入力ピン1)・ゲート(入=出=GATESPEC.pins)。
+// 配線は出力ピン→入力ピンの1対1（分岐＝クローン禁止、合流なし、ループなし）
+function addNode(type, x, y, opts = {}){
+  const id = uid();
+  let inCount, outCount;
+  if (type === 'INPUT'){ inCount = 0; outCount = 1; }
+  else if (type === 'OUTPUT'){ inCount = 1; outCount = 0; }
+  else { inCount = GATESPEC[type].pins; outCount = inCount; }
+  const node = { id, type, x, y, label: opts.label || type, qidx: opts.qidx, inPins: [], outPins: [] };
+  for (let i = 0; i < inCount; i++){ const p = {id:uid(), nodeId:id, kind:'in', index:i}; pins.push(p); node.inPins.push(p.id); }
+  for (let i = 0; i < outCount; i++){ const p = {id:uid(), nodeId:id, kind:'out', index:i}; pins.push(p); node.outPins.push(p.id); }
+  nodes.push(node);
+  return node;
+}
+function getNode(id){ return nodes.find(n => n.id === id); }
+function getPin(id){ return pins.find(p => p.id === id); }
+function wireTo(pinId){ return wires.find(w => w.toPin === pinId); }
+function wireFrom(pinId){ return wires.find(w => w.fromPin === pinId); }
+
+function nodeWidth(n){ return (n.type === 'INPUT' || n.type === 'OUTPUT') ? 66 : GATESPEC[n.type].w; }
+function nodeHeight(n){
+  if (n.type === 'INPUT' || n.type === 'OUTPUT') return 38;
+  const k = GATESPEC[n.type].pins;
+  return k === 1 ? 46 : (k === 2 ? 66 : (k === 3 ? 92 : (k === 4 ? 118 : 56 * (k - 1) + 44)));
+}
+function pinSpacing(node){
+  const k = (GATESPEC[node.type] || {}).pins || 1;
+  return k > 4 ? 56 : 24;
+}
+function pinPos(pin){
+  const node = getNode(pin.nodeId), w = nodeWidth(node), h = nodeHeight(node);
+  const list = pin.kind === 'in' ? node.inPins : node.outPins;
+  const sp = (node.type === 'INPUT' || node.type === 'OUTPUT') ? 24 : pinSpacing(node);
+  const y = node.y + h/2 - ((list.length - 1) * sp) / 2 + pin.index * sp;
+  return { x: pin.kind === 'in' ? node.x : node.x + w, y };
+}
+
+function resetCircuit(skipPreset){
+  nodes = []; pins = []; wires = [];
+  wireStart = null; tempWireEnd = null; dragNode = null; traceIdx = null;
+  const lv = LV();
+  inputBits = new Array(lv.qubits).fill(0);
+  if (lv.mode === 'mystery') mysteryKey = Math.floor(Math.random() * 8);
+  const wrap = document.getElementById('canvasWrap');
+  const minH = lv.qubits >= 5 ? (40 + lv.qubits * 64 + 50)
+    : (lv.qubits === 4 ? 425 : (lv.qubits === 3 ? 340 : (lv.qubits === 2 ? 270 : 220)));
+  const W = Math.max((wrap.clientWidth || 760) - 2, 560, lv.canvasW || 0);
+  const H = Math.max((wrap.clientHeight || 0) - 2, minH);
+  svg.setAttribute('width', W);
+  svg.setAttribute('height', H);
+  const ys = lv.qubits >= 5 ? Array.from({ length: lv.qubits }, (_, i) => 40 + i * 64)
+    : (lv.qubits === 1 ? [110] : (lv.qubits === 2 ? [70, 190] : (lv.qubits === 3 ? [50, 160, 270] : [40, 145, 250, 355])));
+  // 出力ノードは「見えている幅」の内側に置く（狭い画面でも最初から見える。
+  // キャンバス右側の余白は作業スペースとしてスクロールで使える）
+  const visW = Math.min(W, (wrap.clientWidth || W) - 2);
+  const outX = Math.max(visW - 104, 250);
+  lv.labels.forEach((name, i) => addNode('INPUT', 28, ys[i], {label:name, qidx:i}));
+  lv.labels.forEach((name, i) => addNode('OUTPUT', outX, ys[i], {label:name, qidx:i}));
+  // 10ビット探索レベル：隠し鍵と暗号文を作り直し、状態をリセット
+  if (lv.mode === 'loop'){
+    sim10Key = Math.floor(Math.random() * 1024);
+    sim10C = sim10Enc(sim10Key);
+    loopState = null;
+    loopK = 0;
+  }
+  // ショアレベル：測定ヒストグラムと周期発見フラグをリセット
+  if (lv.mode === 'shor'){ shorHist = new Array(8).fill(0); shorMeasures = 0; shorFound = false; }
+  // 途中まで組んだ回路を最初から配置するレベル（関数なら都度生成。loop/presetWiredは出力まで配線済みにする）
+  const pre = typeof lv.preset === 'function' ? lv.preset() : lv.preset;
+  if (pre && !skipPreset) buildGateChain(pre, lv.mode === 'loop' || lv.presetWired);
+  hideNextBtn();
+  document.getElementById('verifyWrap').classList.remove('visible');
+  document.getElementById('measureResult').textContent = '';
+  document.getElementById('status').textContent = '';
+  updateAll();
+  document.getElementById('scrollHint').style.display =
+    wrap.scrollWidth > wrap.clientWidth + 8 ? 'block' : 'none';
+}
+document.getElementById('canvasWrap').addEventListener('scroll', () => {
+  document.getElementById('scrollHint').style.display = 'none';
+});
+
+function deleteNode(id){
+  const node = getNode(id);
+  const pinIds = [...node.inPins, ...node.outPins];
+  wires = wires.filter(w => !pinIds.includes(w.fromPin) && !pinIds.includes(w.toPin));
+  pins = pins.filter(p => p.nodeId !== id);
+  nodes = nodes.filter(n => n.id !== id);
+  updateAll();
+}
+
+function createsCycle(outPin, inPin){
+  // inPin側のノードから下流をたどって outPin のノードに戻れたらループ
+  const target = outPin.nodeId;
+  const stack = [inPin.nodeId], seen = new Set();
+  while (stack.length){
+    const nid = stack.pop();
+    if (nid === target) return true;
+    if (seen.has(nid)) continue;
+    seen.add(nid);
+    for (const opid of getNode(nid).outPins){
+      const w = wireFrom(opid);
+      if (w) stack.push(getPin(w.toPin).nodeId);
+    }
+  }
+  return false;
+}
+
+function tryConnect(aId, bId){
+  let out = getPin(aId), inp = getPin(bId);
+  if (out.kind === 'in' && inp.kind === 'out'){ const t = out; out = inp; inp = t; }
+  if (out.kind !== 'out' || inp.kind !== 'in') return;
+  if (out.nodeId === inp.nodeId){ flashStatus('同じ部品の入出力は直結できません'); return; }
+  if (wireFrom(out.id)){ flashStatus('量子の配線は分岐できません（量子ビットはコピー不可：クローン禁止）'); return; }
+  if (createsCycle(out, inp)){ flashStatus('ループは作れません（時間は左から右へ一方向です）'); return; }
+  wires = wires.filter(w => w.toPin !== inp.id);
+  wires.push({ id: uid(), fromPin: out.id, toPin: inp.id });
+}
+
+function onPinTap(pin){
+  if (!wireStart){
+    if (pin.kind === 'out'){
+      const ex = wireFrom(pin.id);
+      if (ex) wires = wires.filter(w => w.id !== ex.id);  // 線を拾い直す
+      wireStart = pin.id;
+    } else {
+      const ex = wireTo(pin.id);
+      if (ex){ wires = wires.filter(w => w.id !== ex.id); wireStart = ex.fromPin; }
+    }
+  } else {
+    if (wireStart === pin.id) wireStart = null;
+    else { tryConnect(wireStart, pin.id); wireStart = null; }
+    tempWireEnd = null;
+  }
+  updateAll();
+}
+
+let statusTimer = null;
+function flashStatus(text){
+  const el = document.getElementById('status');
+  el.textContent = text;
+  clearTimeout(statusTimer);
+  statusTimer = setTimeout(() => { el.textContent = ''; }, 2600);
+}
+
+// ====================== シミュレータ ======================
+// 基底状態の番号: q0（一番上の量子ビット）を最上位ビットとする。amp は実数（この題材のゲートはすべて実数）
+function maskOf(q, n){ return 1 << (n - 1 - q); }
+
+// 回路全体を評価する。配線が未完成なら null。
+// 返り値 {s: 出力ラベル順に並べた状態ベクトル, perm: perm[入力q]=つながった出力ノードのqidx}
+function evalCircuit(inputIdx){
+  const lv = LV(), n = lv.qubits;
+  // 完全に未配線のゲート（場に置いただけで使っていない部品）は無視する
+  const isFloating = nd => (nd.type === 'INPUT' || nd.type === 'OUTPUT') ? false
+    : ![...nd.inPins, ...nd.outPins].some(p => wireTo(p) || wireFrom(p));
+  // 完成チェック：入力・出力・「使っている」ゲートの全ピンに配線があること
+  for (const nd of nodes){
+    if (nd.type === 'INPUT'){ if (!wireFrom(nd.outPins[0])) return null; }
+    else if (nd.type === 'OUTPUT'){ if (!wireTo(nd.inPins[0])) return null; }
+    else if (!isFloating(nd)){
+      for (const p of nd.inPins) if (!wireTo(p)) return null;
+      for (const p of nd.outPins) if (!wireFrom(p)) return null;
+    }
+  }
+  // スレッド追跡：入力qが各ゲートのどのピン行を通るか
+  const gq = new Map();               // gateId -> [pinIndex] = 量子ビット番号
+  const perm = new Array(n).fill(-1); // 入力q -> 到達した出力ノードのqidx
+  for (const inp of nodes.filter(x => x.type === 'INPUT')){
+    let w = wireFrom(inp.outPins[0]), guard = 0;
+    while (w){
+      if (++guard > 1000) return null;
+      const pin = getPin(w.toPin), nd = getNode(pin.nodeId);
+      if (nd.type === 'OUTPUT'){ perm[inp.qidx] = nd.qidx; break; }
+      if (!gq.has(nd.id)) gq.set(nd.id, []);
+      gq.get(nd.id)[pin.index] = inp.qidx;
+      w = wireFrom(nd.outPins[pin.index]);
+    }
+  }
+  if (perm.includes(-1)) return null;
+  // ゲートをトポロジカル順（配線の依存順＝時間順）に並べる。未使用の部品は除外
+  const gates = nodes.filter(x => x.type !== 'INPUT' && x.type !== 'OUTPUT' && !isFloating(x));
+  const indeg = new Map(), children = new Map();
+  gates.forEach(g => { indeg.set(g.id, 0); children.set(g.id, []); });
+  for (const g of gates){
+    for (const pid of g.inPins){
+      const src = getNode(getPin(wireTo(pid).fromPin).nodeId);
+      if (src.type !== 'INPUT'){
+        indeg.set(g.id, indeg.get(g.id) + 1);
+        children.get(src.id).push(g.id);
+      }
+    }
+  }
+  const queue = gates.filter(g => indeg.get(g.id) === 0).map(g => g.id);
+  const order = [];
+  while (queue.length){
+    const gid = queue.shift();
+    order.push(gid);
+    for (const cid of children.get(gid)){
+      indeg.set(cid, indeg.get(cid) - 1);
+      if (indeg.get(cid) === 0) queue.push(cid);
+    }
+  }
+  if (order.length !== gates.length) return null; // ループ（接続時に防いでいるが保険）
+  // 状態ベクトルを流す
+  const N = 1 << n;
+  let s = new Float64Array(N);
+  s[inputIdx] = 1;
+  for (const gid of order) applyGate(s, getNode(gid).type, gq.get(gid) || [], n);
+  // 出力ノードのラベル順に並べ替え（配線の交差＝ラベルの付け替えを反映）
+  if (perm.some((p, q) => p !== q)){
+    const s2 = new Float64Array(N);
+    for (let i = 0; i < N; i++){
+      let j = 0;
+      for (let q = 0; q < n; q++) if (i & maskOf(q, n)) j |= maskOf(perm[q], n);
+      s2[j] = s[i];
+    }
+    s = s2;
+  }
+  return { s, perm };
+}
+
+function applyGate(s, type, qs, n){
+  const N = s.length;
+  if (type === 'X'){
+    const m = maskOf(qs[0], n);
+    for (let i = 0; i < N; i++) if (!(i & m)){ const j = i | m, t = s[i]; s[i] = s[j]; s[j] = t; }
+  } else if (type === 'Z'){
+    const m = maskOf(qs[0], n);
+    for (let i = 0; i < N; i++) if (i & m) s[i] = -s[i];
+  } else if (type === 'H'){
+    const m = maskOf(qs[0], n), r = Math.SQRT1_2;
+    for (let i = 0; i < N; i++) if (!(i & m)){
+      const j = i | m, a = s[i], b = s[j];
+      s[i] = (a + b) * r; s[j] = (a - b) * r;
+    }
+  } else if (type === 'CNOT'){
+    const mc = maskOf(qs[0], n), mt = maskOf(qs[1], n);
+    for (let i = 0; i < N; i++) if ((i & mc) && !(i & mt)){ const j = i | mt, t = s[i]; s[i] = s[j]; s[j] = t; }
+  } else if (type === 'CCX'){
+    const m1 = maskOf(qs[0], n), m2 = maskOf(qs[1], n), mt = maskOf(qs[2], n);
+    for (let i = 0; i < N; i++) if ((i & m1) && (i & m2) && !(i & mt)){ const j = i | mt, t = s[i]; s[i] = s[j]; s[j] = t; }
+  } else if (type === 'CCZ'){
+    const m1 = maskOf(qs[0], n), m2 = maskOf(qs[1], n), m3 = maskOf(qs[2], n);
+    for (let i = 0; i < N; i++) if ((i & m1) && (i & m2) && (i & m3)) s[i] = -s[i];
+  } else if (type === 'CZ'){
+    const m1 = maskOf(qs[0], n), m2 = maskOf(qs[1], n);
+    for (let i = 0; i < N; i++) if ((i & m1) && (i & m2)) s[i] = -s[i];
+  } else if (type === 'CCCX'){
+    const m1 = maskOf(qs[0], n), m2 = maskOf(qs[1], n), m3 = maskOf(qs[2], n), mt = maskOf(qs[3], n);
+    for (let i = 0; i < N; i++) if ((i & m1) && (i & m2) && (i & m3) && !(i & mt)){ const j = i | mt, t = s[i]; s[i] = s[j]; s[j] = t; }
+  } else if (type === 'MCX'){
+    // 全制御が1のときだけ最後のピンの量子ビットを反転
+    const cm = qs.slice(0, -1).reduce((m, q) => m | maskOf(q, n), 0);
+    const mt = maskOf(qs[qs.length - 1], n);
+    for (let i = 0; i < N; i++) if ((i & cm) === cm && !(i & mt)){ const j = i | mt, t = s[i]; s[i] = s[j]; s[j] = t; }
+  } else if (type === 'MCZ'){
+    const cm = qs.reduce((m, q) => m | maskOf(q, n), 0);
+    for (let i = 0; i < N; i++) if ((i & cm) === cm) s[i] = -s[i];
+  } else if (type === 'SWAP'){
+    // (a=1,b=0) の状態だけを (a=0,b=1) の相手と交換する（片側だけが条件成立するので二重交換なし）
+    const ma = maskOf(qs[0], n), mb = maskOf(qs[1], n);
+    for (let i = 0; i < N; i++){ if ((i & ma) && !(i & mb)){ const j = (i ^ ma) | mb; const t = s[i]; s[i] = s[j]; s[j] = t; } }
+  } else if (type === 'CSWAP'){
+    const mc = maskOf(qs[0], n), ma = maskOf(qs[1], n), mb = maskOf(qs[2], n);
+    for (let i = 0; i < N; i++){ if ((i & mc) && (i & ma) && !(i & mb)){ const j = (i ^ ma) | mb; const t = s[i]; s[i] = s[j]; s[j] = t; } }
+  } else if (type === 'ORACLE'){
+    // 封印された判定回路：ピンに入った3ビットが隠し鍵と一致した候補の矢印だけ反転
+    for (let i = 0; i < N; i++){
+      let match = true;
+      for (let j = 0; j < 3; j++){
+        const bit = (i & maskOf(qs[j], n)) ? 1 : 0;
+        if (bit !== ((mysteryKey >> (2 - j)) & 1)) match = false;
+      }
+      if (match) s[i] = -s[i];
+    }
+  }
+}
+
+// ====================== 複素振幅シミュレータ（ショア＝逆QFTに複素位相が必要） ======================
+// 実振幅の applyGate と同じ置換・反転を re/im 両方に施し、位相ゲート(CP2/CP3)だけ複素で処理する。
+function applyGateC(re, im, type, qs, n){
+  const N = re.length;
+  const swap2 = (i, j) => { let t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; };
+  const neg = i => { re[i] = -re[i]; im[i] = -im[i]; };
+  if (type === 'X'){
+    const m = maskOf(qs[0], n);
+    for (let i = 0; i < N; i++) if (!(i & m)) swap2(i, i | m);
+  } else if (type === 'Z'){
+    const m = maskOf(qs[0], n);
+    for (let i = 0; i < N; i++) if (i & m) neg(i);
+  } else if (type === 'H'){
+    const m = maskOf(qs[0], n), r = Math.SQRT1_2;
+    for (let i = 0; i < N; i++) if (!(i & m)){
+      const j = i | m, ar = re[i], ai = im[i], br = re[j], bi = im[j];
+      re[i] = (ar + br) * r; im[i] = (ai + bi) * r; re[j] = (ar - br) * r; im[j] = (ai - bi) * r;
+    }
+  } else if (type === 'CNOT'){
+    const mc = maskOf(qs[0], n), mt = maskOf(qs[1], n);
+    for (let i = 0; i < N; i++) if ((i & mc) && !(i & mt)) swap2(i, i | mt);
+  } else if (type === 'CCX'){
+    const m1 = maskOf(qs[0], n), m2 = maskOf(qs[1], n), mt = maskOf(qs[2], n);
+    for (let i = 0; i < N; i++) if ((i & m1) && (i & m2) && !(i & mt)) swap2(i, i | mt);
+  } else if (type === 'CCCX'){
+    const m1 = maskOf(qs[0], n), m2 = maskOf(qs[1], n), m3 = maskOf(qs[2], n), mt = maskOf(qs[3], n);
+    for (let i = 0; i < N; i++) if ((i & m1) && (i & m2) && (i & m3) && !(i & mt)) swap2(i, i | mt);
+  } else if (type === 'MCX'){
+    const cm = qs.slice(0, -1).reduce((m, q) => m | maskOf(q, n), 0), mt = maskOf(qs[qs.length - 1], n);
+    for (let i = 0; i < N; i++) if ((i & cm) === cm && !(i & mt)) swap2(i, i | mt);
+  } else if (type === 'CCZ'){
+    const m1 = maskOf(qs[0], n), m2 = maskOf(qs[1], n), m3 = maskOf(qs[2], n);
+    for (let i = 0; i < N; i++) if ((i & m1) && (i & m2) && (i & m3)) neg(i);
+  } else if (type === 'CZ'){
+    const m1 = maskOf(qs[0], n), m2 = maskOf(qs[1], n);
+    for (let i = 0; i < N; i++) if ((i & m1) && (i & m2)) neg(i);
+  } else if (type === 'MCZ'){
+    const cm = qs.reduce((m, q) => m | maskOf(q, n), 0);
+    for (let i = 0; i < N; i++) if ((i & cm) === cm) neg(i);
+  } else if (type === 'SWAP'){
+    const ma = maskOf(qs[0], n), mb = maskOf(qs[1], n);
+    for (let i = 0; i < N; i++) if ((i & ma) && !(i & mb)) swap2(i, (i ^ ma) | mb);
+  } else if (type === 'CSWAP'){
+    const mc = maskOf(qs[0], n), ma = maskOf(qs[1], n), mb = maskOf(qs[2], n);
+    for (let i = 0; i < N; i++) if ((i & mc) && (i & ma) && !(i & mb)) swap2(i, (i ^ ma) | mb);
+  } else if (type === 'CP2' || type === 'CP3'){
+    // 制御位相：両方1のとき e^{iθ} を掛ける（θはGATESPECのphase）
+    const theta = GATESPEC[type].phase, cs = Math.cos(theta), sn = Math.sin(theta);
+    const ma = maskOf(qs[0], n), mb = maskOf(qs[1], n);
+    for (let i = 0; i < N; i++) if ((i & ma) && (i & mb)){ const r0 = re[i], i0 = im[i]; re[i] = r0 * cs - i0 * sn; im[i] = r0 * sn + i0 * cs; }
+  }
+}
+
+// 配線グラフを解析して複素状態ベクトルを流す（evalCircuitと同じ規則。ショア専用）。
+// 返り値 {re, im}（perm=恒等前提。未完成なら null）
+function evalCircuitComplex(inputIdx){
+  const lv = LV(), n = lv.qubits;
+  const isFloating = nd => (nd.type === 'INPUT' || nd.type === 'OUTPUT') ? false
+    : ![...nd.inPins, ...nd.outPins].some(p => wireTo(p) || wireFrom(p));
+  for (const nd of nodes){
+    if (nd.type === 'INPUT'){ if (!wireFrom(nd.outPins[0])) return null; }
+    else if (nd.type === 'OUTPUT'){ if (!wireTo(nd.inPins[0])) return null; }
+    else if (!isFloating(nd)){
+      for (const p of nd.inPins) if (!wireTo(p)) return null;
+      for (const p of nd.outPins) if (!wireFrom(p)) return null;
+    }
+  }
+  const gq = new Map();
+  for (const inp of nodes.filter(x => x.type === 'INPUT')){
+    let w = wireFrom(inp.outPins[0]), guard = 0;
+    while (w){
+      if (++guard > 3000) return null;
+      const pin = getPin(w.toPin), nd = getNode(pin.nodeId);
+      if (nd.type === 'OUTPUT') break;
+      if (!gq.has(nd.id)) gq.set(nd.id, []);
+      gq.get(nd.id)[pin.index] = inp.qidx;
+      w = wireFrom(nd.outPins[pin.index]);
+    }
+  }
+  const gates = nodes.filter(x => x.type !== 'INPUT' && x.type !== 'OUTPUT' && !isFloating(x));
+  const indeg = new Map(), children = new Map();
+  gates.forEach(g => { indeg.set(g.id, 0); children.set(g.id, []); });
+  for (const g of gates) for (const pid of g.inPins){
+    const src = getNode(getPin(wireTo(pid).fromPin).nodeId);
+    if (src.type !== 'INPUT'){ indeg.set(g.id, indeg.get(g.id) + 1); children.get(src.id).push(g.id); }
+  }
+  const queue = gates.filter(g => indeg.get(g.id) === 0).map(g => g.id);
+  const order = [];
+  while (queue.length){
+    const gid = queue.shift(); order.push(gid);
+    for (const cid of children.get(gid)){ indeg.set(cid, indeg.get(cid) - 1); if (indeg.get(cid) === 0) queue.push(cid); }
+  }
+  if (order.length !== gates.length) return null;
+  const N = 1 << n;
+  const re = new Float64Array(N), im = new Float64Array(N);
+  re[inputIdx] = 1;
+  for (const gid of order) applyGateC(re, im, getNode(gid).type, gq.get(gid) || [], n);
+  return { re, im };
+}
+
+// ====================== ビット追跡（選んだ候補に至るラインの0/1） ======================
+// b は各量子ビットのビット値の配列（0/1、不明はnull）。1ゲート分だけ古典的に更新する。
+// 位相ゲート(Z/CZ/CCZ/MCZ/ORACLE)はビットを変えない。Hは分岐点なので下流を不明にする。
+// X/CNOT/CCX/CCCX/MCX はすべて自分自身が逆変換なので、前向き・後ろ向きとも同じ処理でよい。
+function applyBits(b, type, qs){
+  if (type === 'X'){ if (b[qs[0]] != null) b[qs[0]] ^= 1; }
+  else if (type === 'CNOT'){ const c = b[qs[0]], t = qs[1]; if (c == null) b[t] = null; else if (c === 1 && b[t] != null) b[t] ^= 1; }
+  else if (type === 'CCX'){ const c1 = b[qs[0]], c2 = b[qs[1]], t = qs[2]; if (c1 == null || c2 == null) b[t] = null; else if (c1 && c2 && b[t] != null) b[t] ^= 1; }
+  else if (type === 'CCCX' || type === 'MCX'){ const ctrls = qs.slice(0, -1), t = qs[qs.length - 1]; if (ctrls.some(c => b[c] == null)) b[t] = null; else if (ctrls.every(c => b[c] === 1) && b[t] != null) b[t] ^= 1; }
+  else if (type === 'H'){ b[qs[0]] = null; }
+  // Z / CZ / CCZ / MCZ / ORACLE：ビットは変わらない
+}
+// 選んだ出力候補 outIdx に至るラインで、各配線が0か1かを求める。返り値 Map<wireId, 0|1>
+function computeBitTrace(outIdx){
+  const lv = LV(), n = lv.qubits;
+  const isFloating = nd => (nd.type === 'INPUT' || nd.type === 'OUTPUT') ? false
+    : ![...nd.inPins, ...nd.outPins].some(p => wireTo(p) || wireFrom(p));
+  for (const nd of nodes){
+    if (nd.type === 'INPUT'){ if (!wireFrom(nd.outPins[0])) return null; }
+    else if (nd.type === 'OUTPUT'){ if (!wireTo(nd.inPins[0])) return null; }
+    else if (!isFloating(nd)){
+      for (const p of nd.inPins) if (!wireTo(p)) return null;
+      for (const p of nd.outPins) if (!wireFrom(p)) return null;
+    }
+  }
+  const gq = new Map(), perm = new Array(n).fill(-1), pinQubit = new Map();
+  for (const inp of nodes.filter(x => x.type === 'INPUT')){
+    pinQubit.set(inp.outPins[0], inp.qidx);
+    let w = wireFrom(inp.outPins[0]), guard = 0;
+    while (w){
+      if (++guard > 3000) return null;
+      const pin = getPin(w.toPin), nd = getNode(pin.nodeId);
+      pinQubit.set(pin.id, inp.qidx);
+      if (nd.type === 'OUTPUT'){ perm[inp.qidx] = nd.qidx; break; }
+      if (!gq.has(nd.id)) gq.set(nd.id, []);
+      gq.get(nd.id)[pin.index] = inp.qidx;
+      const op = nd.outPins[pin.index];
+      pinQubit.set(op, inp.qidx);
+      w = wireFrom(op);
+    }
+  }
+  if (perm.includes(-1)) return null;
+  const gates = nodes.filter(x => x.type !== 'INPUT' && x.type !== 'OUTPUT' && !isFloating(x));
+  const indeg = new Map(), children = new Map();
+  gates.forEach(g => { indeg.set(g.id, 0); children.set(g.id, []); });
+  for (const g of gates) for (const pid of g.inPins){
+    const src = getNode(getPin(wireTo(pid).fromPin).nodeId);
+    if (src.type !== 'INPUT'){ indeg.set(g.id, indeg.get(g.id) + 1); children.get(src.id).push(g.id); }
+  }
+  const queue = gates.filter(g => indeg.get(g.id) === 0).map(g => g.id);
+  const order = [];
+  while (queue.length){
+    const gid = queue.shift(); order.push(gid);
+    for (const cid of children.get(gid)){ indeg.set(cid, indeg.get(cid) - 1); if (indeg.get(cid) === 0) queue.push(cid); }
+  }
+  if (order.length !== gates.length) return null;
+  const orderIndex = new Map(); order.forEach((gid, k) => orderIndex.set(gid, k));
+  const inIdx = panelInputIdx();
+  const inBits = new Array(n), outBits = new Array(n);
+  for (let q = 0; q < n; q++){ inBits[q] = (inIdx & maskOf(q, n)) ? 1 : 0; outBits[q] = (outIdx & maskOf(perm[q], n)) ? 1 : 0; }
+  const L = order.length;
+  // 前向き（入力から）と後ろ向き（出力から）の両方でビットを求め、確定した方を採用する
+  const fwd = [inBits.slice()];
+  let cur = inBits.slice();
+  for (let k = 0; k < L; k++){ applyBits(cur, getNode(order[k]).type, gq.get(order[k]) || []); fwd.push(cur.slice()); }
+  const bwd = new Array(L + 1); bwd[L] = outBits.slice();
+  cur = outBits.slice();
+  for (let k = L - 1; k >= 0; k--){ applyBits(cur, getNode(order[k]).type, gq.get(order[k]) || []); bwd[k] = cur.slice(); }
+  const slot = [];
+  for (let k = 0; k <= L; k++){
+    slot[k] = new Array(n);
+    for (let q = 0; q < n; q++) slot[k][q] = fwd[k][q] != null ? fwd[k][q] : (bwd[k][q] != null ? bwd[k][q] : null);
+  }
+  const wireBit = new Map();
+  for (const w of wires){
+    const q = pinQubit.get(w.fromPin);
+    if (q == null) continue;
+    const src = getNode(getPin(w.fromPin).nodeId);
+    const sk = src.type === 'INPUT' ? 0 : (orderIndex.get(src.id) + 1);
+    const b = slot[sk] ? slot[sk][q] : null;
+    if (b != null) wireBit.set(w.id, b);
+  }
+  return wireBit;
+}
+
+// ショア専用の道すじ：数え上げ値 cv の「枝」を選び、べき乗剰余の区間だけ古典的に追跡する。
+// 数え上げ(q0-q2)はこの枝では cv に固定、作業(q3-q6)は 1 から 7^cv へ育つ。逆QFT(SWAP/CP)手前で停止。
+function computeShorTrace(cv){
+  const n = LV().qubits;   // 7
+  const isFloating = nd => (nd.type === 'INPUT' || nd.type === 'OUTPUT') ? false
+    : ![...nd.inPins, ...nd.outPins].some(p => wireTo(p) || wireFrom(p));
+  const gq = new Map(), pinQubit = new Map();
+  for (const inp of nodes.filter(x => x.type === 'INPUT')){
+    pinQubit.set(inp.outPins[0], inp.qidx);
+    let w = wireFrom(inp.outPins[0]), guard = 0;
+    while (w){
+      if (++guard > 3000) return null;
+      const pin = getPin(w.toPin), nd = getNode(pin.nodeId);
+      pinQubit.set(pin.id, inp.qidx);
+      if (nd.type === 'OUTPUT') break;
+      if (!gq.has(nd.id)) gq.set(nd.id, []);
+      gq.get(nd.id)[pin.index] = inp.qidx;
+      const op = nd.outPins[pin.index];
+      pinQubit.set(op, inp.qidx);
+      w = wireFrom(op);
+    }
+  }
+  const gates = nodes.filter(x => x.type !== 'INPUT' && x.type !== 'OUTPUT' && !isFloating(x));
+  const indeg = new Map(), children = new Map();
+  gates.forEach(g => { indeg.set(g.id, 0); children.set(g.id, []); });
+  for (const g of gates) for (const pid of g.inPins){
+    const src = getNode(getPin(wireTo(pid).fromPin).nodeId);
+    if (src.type !== 'INPUT'){ indeg.set(g.id, indeg.get(g.id) + 1); children.get(src.id).push(g.id); }
+  }
+  const queue = gates.filter(g => indeg.get(g.id) === 0).map(g => g.id);
+  const order = [];
+  while (queue.length){
+    const gid = queue.shift(); order.push(gid);
+    for (const cid of children.get(gid)){ indeg.set(cid, indeg.get(cid) - 1); if (indeg.get(cid) === 0) queue.push(cid); }
+  }
+  if (order.length !== gates.length) return null;
+  const orderIndex = new Map(); order.forEach((gid, k) => orderIndex.set(gid, k));
+  const branchBit = q => (q <= 2) ? ((cv >> (2 - q)) & 1) : 0;   // 数え上げは cv、作業は0スタート
+  const L = order.length;
+  const slot = new Array(L + 1);
+  let cur = new Array(n); for (let q = 0; q < n; q++) cur[q] = (q <= 2) ? 0 : 0;   // 入力|0…0⟩
+  slot[0] = cur.slice();
+  let iqft = false;
+  for (let k = 0; k < L; k++){
+    const g = getNode(order[k]), t = g.type, qs = gq.get(order[k]) || [];
+    if (t === 'SWAP' || t === 'CP2' || t === 'CP3') iqft = true;   // 逆QFT開始
+    if (iqft){ slot[k + 1] = null; continue; }
+    if (t === 'H'){ if (qs[0] <= 2) cur[qs[0]] = branchBit(qs[0]); }   // 枝を選ぶH：数え上げを cv に
+    else if (t === 'X'){ cur[qs[0]] ^= 1; }
+    else if (t === 'CNOT'){ if (cur[qs[0]] === 1) cur[qs[1]] ^= 1; }
+    else if (t === 'CCX'){ if (cur[qs[0]] && cur[qs[1]]) cur[qs[2]] ^= 1; }
+    else if (t === 'CCCX'){ if (cur[qs[0]] && cur[qs[1]] && cur[qs[2]]) cur[qs[3]] ^= 1; }
+    else if (t === 'CSWAP'){ if (cur[qs[0]]){ const tmp = cur[qs[1]]; cur[qs[1]] = cur[qs[2]]; cur[qs[2]] = tmp; } }
+    slot[k + 1] = cur.slice();
+  }
+  const wireBit = new Map();
+  for (const w of wires){
+    const q = pinQubit.get(w.fromPin);
+    if (q == null) continue;
+    const src = getNode(getPin(w.fromPin).nodeId);
+    const sk = src.type === 'INPUT' ? 0 : (orderIndex.get(src.id) + 1);
+    const b = slot[sk] ? slot[sk][q] : null;
+    if (b != null) wireBit.set(w.id, b);
+  }
+  return wireBit;
+}
+
+function ketStr(i, n){
+  let b = '';
+  for (let q = 0; q < n; q++) b += (i & maskOf(q, n)) ? '1' : '0';
+  return b;
+}
+function fmtAmp(a){
+  if (Math.abs(a) < 0.005) return '0';
+  const v = Math.round(Math.abs(a) * 100) / 100;
+  return (a < 0 ? '−' : '＋') + v;
+}
+function stateToStr(s, n){
+  const parts = [];
+  for (let i = 0; i < s.length; i++){
+    if (Math.abs(s[i]) > 0.004) parts.push({ a: s[i], k: ketStr(i, n) });
+  }
+  if (!parts.length) return '—';
+  return parts.map((p, k) => {
+    const mag = Math.abs(p.a);
+    const num = Math.abs(mag - 1) < 0.004 ? '' : String(Math.round(mag * 100) / 100);
+    const sign = p.a < 0 ? '−' : (k ? '＋' : '');
+    return `${sign}${num}|${p.k}⟩`;
+  }).join(' ');
+}
+
+// ====================== 描画 ======================
+function panelInputIdx(){
+  const lv = LV();
+  if (lv.mode !== 'unitary') return lv.input || 0;
+  let idx = 0;
+  for (let q = 0; q < lv.qubits; q++) if (inputBits[q]) idx |= maskOf(q, lv.qubits);
+  return idx;
+}
+
+function render(){
+  const lv = LV();
+  let out = '';
+  // 道すじ表示：選んだ候補に至るラインの、各配線の0/1
+  let wireBit = null;
+  if (traceIdx != null && lv.mode !== 'loop'){
+    wireBit = (lv.mode === 'shor') ? computeShorTrace((traceIdx >> 4) & 7) : computeBitTrace(traceIdx);
+    if (!wireBit) traceIdx = null;
+  }
+  let traceLbls = '';
+  // 配線
+  for (const w of wires){
+    const p1 = pinPos(getPin(w.fromPin)), p2 = pinPos(getPin(w.toPin));
+    const mx = (p1.x + p2.x) / 2;
+    const lit = wireBit && wireBit.has(w.id);
+    out += `<path class="tn" data-wireid="${w.id}" d="M ${p1.x} ${p1.y} C ${mx} ${p1.y}, ${mx} ${p2.y}, ${p2.x} ${p2.y}" stroke="${lit ? (wireBit.get(w.id) ? '#1aa85a' : '#c3ccdb') : '#7a8bb3'}" stroke-width="${lit ? 4 : 3.5}" fill="none" style="cursor:pointer"/>`;
+    if (lit){
+      const b = wireBit.get(w.id);
+      const cx = (p1.x + p2.x) / 2, cy = (p1.y + p2.y) / 2;
+      traceLbls += `<circle cx="${cx}" cy="${cy}" r="9" fill="#fff" stroke="${b ? '#1aa85a' : '#aab3c4'}" stroke-width="1.5"/>`
+        + `<text x="${cx}" y="${cy + 4}" font-size="12" font-weight="950" text-anchor="middle" fill="${b ? '#1aa85a' : '#8a97b8'}" font-family="ui-monospace,monospace" pointer-events="none">${b}</text>`;
+    }
+  }
+  // 引っ張り中の仮配線
+  if (wireStart && tempWireEnd){
+    const p1 = pinPos(getPin(wireStart));
+    out += `<path d="M ${p1.x} ${p1.y} L ${tempWireEnd.x} ${tempWireEnd.y}" stroke="#d4870a" stroke-width="2.5" stroke-dasharray="6 4" fill="none" pointer-events="none"/>`;
+  }
+  // ノード
+  let delOut = '';   // 削除ボタンは最前面に描く（ピンの当たり判定に隠れないように）
+  for (const node of nodes){
+    const w = nodeWidth(node), h = nodeHeight(node);
+    let fill = '#dce8f5', stroke = '#7a8bb3';
+    if (node.type === 'INPUT'){ fill = '#dff3e8'; stroke = '#3a9e63'; }
+    else if (node.type === 'OUTPUT'){ fill = '#fef0e6'; stroke = '#c56a2a'; }
+    else { fill = GATESPEC[node.type].fill; stroke = GATESPEC[node.type].stroke; }
+    out += `<g class="tn" data-nodeid="${node.id}" style="cursor:grab">`;
+    out += `<rect x="${node.x}" y="${node.y}" width="${w}" height="${h}" rx="9" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;
+    if (node.type === 'INPUT'){
+      const bit = lv.mode === 'unitary' ? inputBits[node.qidx] : 0;
+      out += `<text x="${node.x + w/2}" y="${node.y + 13}" font-size="9" font-weight="900" text-anchor="middle" fill="#3a9e63" pointer-events="none">入力${lv.mode==='unitary' ? ' ⇄' : ''}</text>`;
+      out += `<text x="${node.x + w/2}" y="${node.y + 30}" font-size="14" font-weight="900" text-anchor="middle" fill="#1b2340" font-family="ui-monospace,monospace" pointer-events="none">${node.label}=|${bit}⟩</text>`;
+      if (lv.mode === 'unitary') out += `<text x="${node.x + w/2}" y="${node.y + h + 11}" font-size="8.5" font-weight="900" text-anchor="middle" fill="#3a9e63" pointer-events="none">👆 タップで 0/1</text>`;
+    } else if (node.type === 'OUTPUT'){
+      out += `<text x="${node.x + w/2}" y="${node.y + 13}" font-size="9" font-weight="900" text-anchor="middle" fill="#c56a2a" pointer-events="none">出力</text>`;
+      out += `<text x="${node.x + w/2}" y="${node.y + 30}" font-size="15" font-weight="950" text-anchor="middle" fill="#1b2340" pointer-events="none">${node.label}</text>`;
+    } else {
+      const spec = GATESPEC[node.type];
+      const fs = spec.pins === 1 ? 19 : (node.type === 'CCX' ? 11 : (node.type === 'ORACLE' ? 28 : 12));
+      out += `<text x="${node.x + w/2}" y="${node.y + h/2 + (spec.pins===1 ? 7 : (node.type==='ORACLE' ? 10 : 4))}" font-size="${fs}" font-weight="950" text-anchor="middle" fill="${spec.dark ? '#ffd44a' : '#1b2340'}" pointer-events="none">${spec.short}</text>`;
+      if (spec.pinMarks){
+        const msp = pinSpacing(node);
+        for (let i = 0; i < spec.pins; i++){
+          const py = node.y + h/2 - ((spec.pins - 1) * msp) / 2 + i * msp;
+          out += `<text x="${node.x + 12}" y="${py + 4}" font-size="11" font-weight="900" text-anchor="middle" fill="${stroke}" pointer-events="none">${spec.pinMarks[i]}</text>`;
+          out += `<text x="${node.x + w - 12}" y="${py + 4}" font-size="11" font-weight="900" text-anchor="middle" fill="${stroke}" pointer-events="none">${spec.pinMarks[i]}</text>`;
+        }
+      }
+      // 削除ボタンは delOut に貯めて、全ノード・ピンの後（最前面）に描く。
+      // 見た目は元の小さなグレーの×。当たり判定だけ透明の円で確保する
+      delOut += `<g class="tn" data-del="${node.id}" style="cursor:pointer">`
+        + `<circle cx="${node.x + w - 7}" cy="${node.y + 9}" r="10" fill="transparent"/>`
+        + `<text x="${node.x + w - 4}" y="${node.y + 13}" font-size="11" text-anchor="end" fill="#8892ad" pointer-events="none">✕</text>`
+        + `</g>`;
+    }
+    out += `</g>`;
+    // ピン（ノードの上に重ねる）
+    for (const pid of [...node.inPins, ...node.outPins]){
+      const pin = getPin(pid), pos = pinPos(pin);
+      const sel = wireStart === pin.id;
+      out += `<circle class="tn" data-pinid="${pin.id}" cx="${pos.x}" cy="${pos.y}" r="17" fill="transparent"/>`;
+      out += `<circle class="tn" data-pinid="${pin.id}" cx="${pos.x}" cy="${pos.y}" r="9" fill="${sel ? '#ffd54f' : (pin.kind === 'out' ? '#378add' : '#7a8bb3')}" stroke="${sel ? '#d4870a' : '#5a6c99'}" stroke-width="${sel ? 3 : 2}" style="cursor:crosshair"/>`;
+    }
+  }
+  svg.innerHTML = out + traceLbls + delOut;
+}
+
+function renderStatePanel(){
+  const lv = LV(), n = lv.qubits;
+  if (lv.mode === 'loop'){
+    document.getElementById('spInputNote').innerHTML =
+      `手元のデータ：平文 P=${SIM10_P.toString(2).padStart(10,'0')}／暗号文 C=${sim10C.toString(2).padStart(10,'0')}<br>（回路はこの2つだけから組まれています。鍵はどこにも書かれていません）`;
+    const ob = lv.oracleOnly;
+    let html = `<div id="loopStats">${ob ? 'オラクル通過：' : '反復：'}<strong>${loopK}回</strong>${ob ? '（2回通すと印は消えます）' : '　最適はおよそ25回（(π/4)√1024）'}</div>`;
+    html += '<canvas id="loopCanvas" width="1024" height="140" style="width:100%;background:#fff;border:1px solid #c9d2e4;border-radius:6px"></canvas>';
+    html += '<div class="sim-caption">1024個の鍵候補それぞれの矢印（横軸＝候補 0000000000〜1111111111。中心線から上＝右向き＋（金色）、下＝左向き−（赤））</div>';
+    html += ob
+      ? `<div class="loop-btns">
+      <button class="btn btn-p" onclick="loopIterate()">▶ 回路に通す</button>
+      <button class="btn" onclick="loopCheckMark()">✓ 印を答え合わせ</button>
+      <button class="btn" onclick="loopResetKey()">鍵を変えてやり直す</button>
+    </div>`
+      : `<div class="loop-btns">
+      <button class="btn btn-p" onclick="loopIterate()">▶ 回路に1反復通す</button>
+      <button class="btn" onclick="loopTo25()">25反復まで回す</button>
+      <button class="btn" onclick="loopResetKey()">鍵を変えてやり直す</button>
+    </div>`;
+    document.getElementById('ampTable').innerHTML = html;
+    document.getElementById('measureBtn').style.display = '';
+    drawLoopCanvas();
+    return;
+  }
+  if (lv.mode === 'shor'){
+    document.getElementById('measureBtn').style.display = 'none';   // 専用の測定ボタンを使う
+    document.getElementById('spInputNote').innerHTML =
+      '分解したい数 <strong>N=15</strong>／底 <strong>a=7</strong>（7ˣ mod 15 の周期を探します）<br>数え上げレジスタ q0q1q2（3ビット）・作業レジスタ q3〜q6（4ビット）。回路は配線済みです。';
+    const ev = evalCircuitComplex(0);
+    if (!ev){
+      document.getElementById('ampTable').innerHTML =
+        '<div class="sp-incomplete">配線が未完成です。<br>すべてのピンがつながると一覧表と測定分布が出ます。</div>';
+      return;
+    }
+    // ---- 時点セレクタ＋矢印の一覧表（数字を追う）----
+    let html = '<div class="sp-subhead" style="margin-top:2px">① どの時点の状態を見る？</div>';
+    html += '<div class="cp-btns" style="display:flex;gap:5px;flex-wrap:wrap;margin:4px 0">'
+      + SHOR_CP.map((c, k) => `<button class="btn${k === shorCheckpoint ? ' btn-p' : ''}" style="padding:4px 8px;font-size:11px" onclick="shorSetCheckpoint(${k})">${c.name}</button>`).join('')
+      + '</div>';
+    html += `<div class="cp-note" style="font-size:11px;color:#5a6480;margin-bottom:6px;line-height:1.5">${SHOR_CP[shorCheckpoint].note}</div>`;
+    const st = shorStateAt(shorCheckpoint);
+    let maxMag = 0;
+    for (let i = 0; i < st.re.length; i++){ const m = Math.hypot(st.re[i], st.im[i]); if (m > maxMag) maxMag = m; }
+    html += '<div style="display:flex;font-size:10px;color:#8a97b8;font-weight:900;padding:0 2px 2px">'
+      + '<span style="flex:1">候補 |数え上げ·作業⟩</span><span style="width:40px;text-align:center">矢印</span><span style="width:58px;text-align:right">大きさ∠位相</span></div>';
+    for (let i = 0; i < st.re.length; i++){
+      const re = st.re[i], im = st.im[i], m = Math.hypot(re, im);
+      if (m < 0.004) continue;
+      const cv = (i >> 4) & 7, wv = i & 15;
+      const ccc = cv.toString(2).padStart(3, '0'), wwww = wv.toString(2).padStart(4, '0');
+      const isNeg = Math.abs(im) < 0.004 && re < 0;
+      const traced = traceIdx != null && ((traceIdx >> 4) & 7) === cv;
+      html += `<div data-shoridx="${i}" style="display:flex;align-items:center;gap:5px;padding:2px;border-bottom:1px dashed #dde3ef;cursor:pointer;border-radius:5px;${traced ? 'background:#e2ecff;outline:2px solid #2e7dd1;outline-offset:-2px' : ''}">`
+        + `<span style="flex:1;min-width:0"><span style="font-family:ui-monospace,monospace;font-weight:950;font-size:12px">|${ccc}·${wwww}⟩</span>`
+        + `<span style="font-size:10px;color:#8a97b8;margin-left:4px">数${cv}·作${wv}</span></span>`
+        + `<span style="flex:0 0 auto">${complexArrowSVG(re, im, maxMag)}</span>`
+        + `<span style="width:58px;text-align:right;font-family:ui-monospace,monospace;font-size:11px;font-weight:900;color:${isNeg ? '#c0241a' : (Math.abs(im) >= 0.004 ? '#8a5ac4' : '#1b2340')}">${fmtComplex(re, im)}</span>`
+        + `</div>`;
+    }
+    if (traceIdx != null){
+      const cv = (traceIdx >> 4) & 7;
+      let wv = 1; for (let e = 0; e < cv; e++) wv = (wv * 7) % 15;   // 7^cv mod15
+      html += `<div class="trace-cap" style="margin-top:5px">数え上げ値 <strong>x=${cv}</strong> の枝を追跡中。作業レジスタ（q3-q6）が回路の上で <strong>1 → … → 7<sup>${cv}</sup>=${wv}</strong> と育つのを、各配線の 0/1（緑=1・灰=0）で追えます。逆QFTは干渉のため手前まで。もう一度クリックで解除。</div>`;
+    } else {
+      html += '<div class="sim-caption" style="margin-top:4px">矢印の<strong>向き＝位相（回転）</strong>、<strong>長さ＝大きさ</strong>。→＝＋、←＝−、斜め＝複素の位相（逆QFTで現れる）。<strong>候補をクリック</strong>すると、その数え上げ値の枝で作業レジスタが 7ˣ に育つ道すじを回路上で追えます。</div>';
+    }
+    // ---- 測定（数え上げレジスタ）----
+    html += '<hr style="margin:10px 0;border:none;border-top:1px solid #dde3ef">';
+    html += '<div class="sp-subhead">② 数え上げレジスタを測定</div>';
+    html += `<div id="loopStats" style="margin:4px 0">測定した回数：<strong>${shorMeasures}回</strong></div>`;
+    html += '<canvas id="shorCanvas" width="512" height="160" style="width:100%;background:#fff;border:1px solid #c9d2e4;border-radius:6px"></canvas>';
+    html += '<div class="sim-caption">数え上げレジスタ（q0q1q2）の測定分布。横軸＝測定値 0〜7。うすい枠＝理論値（0・2・4・6が各25%）、塗り＝実際に測定した回数の割合。</div>';
+    html += `<div class="loop-btns">
+      <button class="btn btn-p" onclick="shorMeasureOnce()">▶ 回路を通して測定</button>
+      <button class="btn" onclick="shorFactor()">✓ 周期を求めて素因数分解</button>
+      <button class="btn" onclick="resetCircuit()">やり直す</button>
+    </div>`;
+    document.getElementById('ampTable').innerHTML = html;
+    drawShorCanvas(shorCountDist(ev.re, ev.im));
+    return;
+  }
+  document.getElementById('measureBtn').style.display = '';
+  const idx = panelInputIdx();
+  const ev = evalCircuit(idx);
+  document.getElementById('spInputNote').innerHTML = (lv.mode === 'unitary'
+    ? `入力：|${ketStr(idx, n)}⟩<div class="sp-tip">👆 左端の「入力」をタップすると 0 ⇄ 1 が切り替わります</div>`
+    : `入力：|${ketStr(idx, n)}⟩ から出発`)
+    + `0/1の並びは、回路の上の線から順（${lv.labels.join('・')}）`;
+  if (!ev){
+    document.getElementById('ampTable').innerHTML =
+      '<div class="sp-incomplete">配線が未完成です。<br>入力 →（ゲート）→ 出力まで、すべてのピンをつなぐと一覧表が出ます。</div>';
+    return;
+  }
+  const s = ev.s;
+  let html = '';
+  for (let i = 0; i < s.length; i++){
+    if (lv.ampFilter && !lv.ampFilter(i)) continue;
+    const a = s[i], p = a * a;
+    const zero = Math.abs(a) < 0.004;
+    const len = Math.round(20 * Math.abs(a));
+    let arrow;
+    if (zero){
+      arrow = `<circle cx="23" cy="8" r="2.2" fill="#b9c1d4"/>`;
+    } else if (a > 0){
+      arrow = `<line x1="${23-len}" y1="8" x2="${23+len-4}" y2="8" stroke="#c69a1e" stroke-width="3"/><polygon points="${23+len},8 ${23+len-7},4.5 ${23+len-7},11.5" fill="#c69a1e"/>`;
+    } else {
+      arrow = `<line x1="${23+len}" y1="8" x2="${23-len+4}" y2="8" stroke="#b0483a" stroke-width="3"/><polygon points="${23-len},8 ${23-len+7},4.5 ${23-len+7},11.5" fill="#b0483a"/>`;
+    }
+    html += `<div class="amp-row${zero?' zero':''}${i===traceIdx?' traced':''}" data-amprow="${i}">
+      <span class="amp-ket">|${ketStr(i, n)}⟩</span>
+      <svg width="46" height="16" viewBox="0 0 46 16">${arrow}</svg>
+      <span class="amp-val${a < -0.004?' neg':''}">${fmtAmp(a)}</span>
+      <span class="prob-track"><span class="prob-fill" style="width:${Math.min(100, p*100)}%"></span></span>
+    </div>`;
+  }
+  html += traceIdx != null
+    ? `<div class="trace-cap on">🔍 |${ketStr(traceIdx, n)}⟩ の道すじを回路に表示中（各線が 0 か 1 か：緑＝1・灰＝0）。もう一度タップで解除。</div>`
+    : `<div class="trace-cap">👆 行をタップすると、その候補に至る道すじで各線が 0 か 1 かを回路の上に表示します。</div>`;
+  document.getElementById('ampTable').innerHTML = html;
+}
+
+function updateAll(){
+  render();
+  renderStatePanel();
+}
+
+// ====================== 印刷（A4横1枚に回路図を収める） ======================
+function printCircuit(){
+  const gates = nodes;
+  if (!gates.length) return;
+  // 回路の中身の外接矩形を求める（余白の広いキャンバス全幅ではなく、部品の範囲だけ）
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const nd of gates){
+    const w = nodeWidth(nd), h = nodeHeight(nd);
+    minX = Math.min(minX, nd.x); minY = Math.min(minY, nd.y);
+    maxX = Math.max(maxX, nd.x + w); maxY = Math.max(maxY, nd.y + h);
+  }
+  const pad = 28;
+  minX -= pad; minY -= pad; maxX += pad; maxY += pad;
+  const W = maxX - minX, H = maxY - minY;
+  const clone = svg.cloneNode(true);
+  clone.querySelectorAll('[data-del]').forEach(el => el.remove());   // 削除ボタンは印刷しない
+  clone.setAttribute('viewBox', `${minX} ${minY} ${W} ${H}`);
+  // A4横の印刷可能領域（約278×190mm）に、アスペクト比を保って収める
+  const PW = 278, PH = 190;
+  let mmW = PW, mmH = PW * H / W;
+  if (mmH > PH){ mmH = PH; mmW = PH * W / H; }
+  clone.setAttribute('width', mmW + 'mm');
+  clone.setAttribute('height', mmH + 'mm');
+  const area = document.getElementById('printArea');
+  area.innerHTML = '';
+  const title = document.createElement('div');
+  title.className = 'print-title';
+  title.textContent = `${LV().label}　${LV().name} ― オラクル工房`;
+  area.appendChild(title);
+  area.appendChild(clone);
+  window.print();
+}
+
+// ====================== 入力操作（ポインタ） ======================
+function svgXY(clientX, clientY){
+  const r = svg.getBoundingClientRect();
+  return { x: clientX - r.left, y: clientY - r.top };
+}
+function startNodeDrag(node, cx, cy){
+  dragNode = node;
+  dragMoved = false;
+  const { x, y } = svgXY(cx, cy);
+  dragOffset.x = x - node.x;
+  dragOffset.y = y - node.y;
+}
+let rafPending = false;
+function scheduleRender(){
+  if (rafPending) return;
+  rafPending = true;
+  requestAnimationFrame(() => { rafPending = false; render(); });
+}
+
+svg.addEventListener('pointerdown', (e) => {
+  const delEl = e.target.closest ? e.target.closest('[data-del]') : null;
+  if (delEl){ e.preventDefault(); deleteNode(Number(delEl.dataset.del)); return; }
+  const pinEl = e.target.closest ? e.target.closest('[data-pinid]') : null;
+  if (pinEl){ e.preventDefault(); onPinTap(getPin(Number(pinEl.dataset.pinid))); return; }
+  const wireEl = e.target.closest ? e.target.closest('[data-wireid]') : null;
+  if (wireEl){ e.preventDefault(); wires = wires.filter(w => w.id !== Number(wireEl.dataset.wireid)); updateAll(); return; }
+  const nodeEl = e.target.closest ? e.target.closest('[data-nodeid]') : null;
+  if (nodeEl){
+    e.preventDefault();
+    const nd = getNode(Number(nodeEl.dataset.nodeid));
+    // 入力ノードはドラッグせず、押した瞬間に0/1を切り替える（指タップでも確実に反応させる）
+    if (nd.type === 'INPUT'){
+      if (LV().mode === 'unitary'){
+        inputBits[nd.qidx] = inputBits[nd.qidx] ? 0 : 1;
+        document.getElementById('measureResult').textContent = '';
+        updateAll();
+      }
+      return;
+    }
+    svg.setPointerCapture(e.pointerId);
+    startNodeDrag(nd, e.clientX, e.clientY);
+    return;
+  }
+  if (wireStart){ wireStart = null; tempWireEnd = null; render(); }
+});
+svg.addEventListener('pointermove', (e) => {
+  if (!dragNode && !wireStart) return;
+  const { x, y } = svgXY(e.clientX, e.clientY);
+  if (dragNode){
+    e.preventDefault();
+    const nx = x - dragOffset.x, ny = y - dragOffset.y;
+    if (Math.abs(nx - dragNode.x) + Math.abs(ny - dragNode.y) > 4) dragMoved = true;
+    if (dragMoved){ dragNode.x = nx; dragNode.y = ny; scheduleRender(); }
+  } else {
+    tempWireEnd = { x, y };
+    scheduleRender();
+  }
+});
+svg.addEventListener('pointerup', (e) => {
+  try { svg.releasePointerCapture(e.pointerId); } catch(_){}
+  if (dragNode){
+    dragNode = null;
+    updateAll();
+    return;
+  }
+  if (wireStart){
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    const pinEl = el && el.closest ? el.closest('[data-pinid]') : null;
+    if (pinEl){
+      const pid = Number(pinEl.dataset.pinid);
+      if (pid !== wireStart){ tryConnect(wireStart, pid); wireStart = null; tempWireEnd = null; }
+    }
+    updateAll();
+  }
+});
+svg.addEventListener('pointercancel', () => { dragNode = null; });
+
+// ====================== 測定 ======================
+// 一覧表の行クリック → その候補の「道すじ（各ゲート前後の振幅）」を回路に表示／解除
+document.getElementById('ampTable').addEventListener('click', (e) => {
+  // ショア：候補クリックで枝の道すじを表示（べき乗剰余の一覧に切り替えて数字を追う）
+  const shorRow = e.target.closest ? e.target.closest('[data-shoridx]') : null;
+  if (shorRow){
+    const i = Number(shorRow.dataset.shoridx);
+    const sameBranch = traceIdx != null && ((traceIdx >> 4) & 7) === ((i >> 4) & 7);
+    traceIdx = sameBranch ? null : i;
+    if (traceIdx != null) shorCheckpoint = 1;   // 追跡は「べき乗剰余後」の一覧で見せる
+    updateAll();
+    return;
+  }
+  const row = e.target.closest ? e.target.closest('.amp-row') : null;
+  if (!row) return;
+  const i = Number(row.dataset.amprow);
+  traceIdx = (traceIdx === i) ? null : i;
+  updateAll();
+});
+
+document.getElementById('measureBtn').addEventListener('click', () => {
+  const lv = LV(), n = lv.qubits;
+  if (lv.mode === 'loop'){
+    if (!loopState){
+      document.getElementById('measureResult').textContent = 'まず「▶ 回路に1反復通す」で回路を通してから測定してください。';
+      return;
+    }
+    let r = Math.random(), acc = 0, hit = 0;
+    for (let i = 0; i < loopState.length; i++){ acc += loopState[i] * loopState[i]; if (r <= acc){ hit = i; break; } }
+    const keyBits = (hit >> 1).toString(2).padStart(10, '0');
+    const ok = (hit >> 1) === sim10Key;
+    document.getElementById('measureResult').innerHTML =
+      `測定結果：鍵の候補 <strong>|${keyBits}⟩</strong>（D=${hit & 1}）<br>` +
+      (ok ? `隠していた鍵は |${sim10Key.toString(2).padStart(10,'0')}⟩ —— <strong style="color:#1aa85a">一致！鍵を言い当てました 🎉</strong>`
+          : `隠していた鍵は |${sim10Key.toString(2).padStart(10,'0')}⟩ —— はずれ。反復の回数を調整してもう一度どうぞ。`);
+    if (ok){
+      if (!cleared.includes(currentLevelIdx)){
+        cleared.push(currentLevelIdx);
+        localStorage.setItem('oracle_workshop_v2_cleared', JSON.stringify(cleared));
+        buildLevelList();
+      }
+      showNextBtn();
+    }
+    return;
+  }
+  const ev = evalCircuit(panelInputIdx());
+  if (!ev){
+    document.getElementById('measureResult').textContent = '配線が未完成のため測定できません。';
+    return;
+  }
+  const s = ev.s;
+  const r = Math.random();
+  let acc = 0, hit = 0;
+  for (let i = 0; i < s.length; i++){ acc += s[i] * s[i]; if (r <= acc){ hit = i; break; } }
+  const p = Math.round(s[hit] * s[hit] * 100);
+  document.getElementById('measureResult').innerHTML =
+    `測定結果：<strong style="font-size:15px">|${ketStr(hit, n)}⟩</strong>（この結果が出る確率は ${p}%）`;
+  document.querySelectorAll('.amp-row').forEach(el => {
+    el.classList.toggle('flash', Number(el.dataset.amprow) === hit);
+  });
+});
+
+// ====================== 検証 ======================
+document.getElementById('runBtn').addEventListener('click', () => {
+  const lv = LV(), n = lv.qubits;
+  if (lv.mode === 'loop' || lv.mode === 'shor') return;   // 観察レベルは専用ボタンを使う
+  if (!evalCircuit(lv.input || 0)){
+    showMsg(false, '配線が未完成です。すべてのピンをつないでから検証してください。');
+    return;
+  }
+  let allPass = true;
+  let html = '';
+
+  if (lv.mode === 'unitary'){
+    const ins = lv.testInputs || Array.from({ length: 1 << n }, (_, i) => i);
+    html = '<table><tr><th>入力</th><th>回路の出力</th><th>期待する出力</th></tr>';
+    for (const idx of ins){
+      const s = evalCircuit(idx).s;
+      let sig = 0, outIdx = -1;
+      for (let i = 0; i < s.length; i++) if (Math.abs(s[i]) > 0.004){ sig++; outIdx = i; }
+      const single = sig === 1 && Math.abs(Math.abs(s[outIdx]) - 1) < 0.01;
+      const exp = lv.targetMap(idx);
+      const pass = single && outIdx === exp;
+      if (!pass) allPass = false;
+      const outStr = single ? `|${ketStr(outIdx, n)}⟩` : `${stateToStr(s, n)}（重ね合わせ）`;
+      html += `<tr class="${pass?'pass':'fail'}"><td>|${ketStr(idx, n)}⟩</td><td>${outStr}</td><td>|${ketStr(exp, n)}⟩</td></tr>`;
+    }
+    html += '</table>';
+  } else if (lv.mode === 'mystery'){
+    const s = evalCircuit(lv.input || 0).s;
+    const p = s[mysteryKey] * s[mysteryKey];
+    allPass = p >= 0.9;
+    html = `<p class="verify-note">封印オラクルの鍵は <strong>|${ketStr(mysteryKey, n)}⟩</strong> でした。あなたの回路がこの鍵に育てた確率：<strong>${Math.round(p*1000)/10}%</strong>（90%以上で合格）。`
+      + `「やり直す」と鍵はランダムに変わります——同じ形の回路のままで、もう一度あぶり出せることを確かめられます。</p>`;
+    html += '<table><tr><th>答え候補</th><th>回路の矢印</th><th>確率</th></tr>';
+    for (let i = 0; i < s.length; i++){
+      const cls = i === mysteryKey ? (allPass ? 'pass' : 'fail') : '';
+      html += `<tr class="${cls}"><td>|${ketStr(i, n)}⟩${i === mysteryKey ? '（鍵）' : ''}</td><td>${fmtAmp(s[i])}</td><td>${Math.round(s[i]*s[i]*1000)/10}%</td></tr>`;
+    }
+    html += '</table>';
+  } else {
+    const s = evalCircuit(lv.input || 0).s;
+    const t = typeof lv.target === 'function' ? lv.target() : lv.target;
+    let dot = 0;
+    for (let i = 0; i < s.length; i++) dot += s[i] * t[i];
+    const sign = dot < 0 ? -1 : 1;
+    html = '<p class="verify-note">このレベルの目標は「矢印の一覧表」を作ることです。表の各行は答え候補——測定したときに出力に現れる可能性のある0/1の並び——で、'
+      + `並びは回路の上の線から順（${lv.labels.join('・')}）です。`
+      + '行ごとにあなたの回路が作った矢印と目標の矢印を比べます。数値は矢印の長さと向き（＋＝右向き、−＝左向き、長さの2乗がその並びが出る確率）。</p>'
+      + '<table><tr><th>答え候補</th><th>回路が作った矢印</th><th>目標の矢印</th></tr>';
+    for (let i = 0; i < s.length; i++){
+      const a = s[i] * sign;
+      const pass = Math.abs(a - t[i]) < 0.02;
+      if (!pass) allPass = false;   // 合否は全状態でチェック
+      if (lv.ampFilter && !lv.ampFilter(i)) continue;   // 表示は絞る
+      html += `<tr class="${pass?'pass':'fail'}"><td>|${ketStr(i, n)}⟩</td><td>${fmtAmp(a)}</td><td>${fmtAmp(t[i])}</td></tr>`;
+    }
+    html += '</table>';
+  }
+
+  let extraMsg = '';
+  if (allPass && lv.require){
+    const r = lv.require();
+    if (!r.ok){ allPass = false; extraMsg = r.msg; }
+  }
+
+  document.getElementById('verifyTitle').textContent = allPass
+    ? '✓ 検証結果（すべて一致）'
+    : '✗ 検証結果（不一致あり）' + (extraMsg ? `　${extraMsg}` : '');
+  document.getElementById('verifyTable').innerHTML = html;
+  document.getElementById('verifyWrap').classList.add('visible');
+  showMsg(allPass, extraMsg);
+
+  if (allPass && !cleared.includes(currentLevelIdx)){
+    cleared.push(currentLevelIdx);
+    localStorage.setItem('oracle_workshop_v2_cleared', JSON.stringify(cleared));
+    buildLevelList();
+  }
+});
+
+function showMsg(pass, extraMsg){
+  const el = document.getElementById('msg');
+  el.style.display = 'block';
+  el.style.background = pass ? '#1aa85a' : '#c0241a';
+  el.style.color = '#fff';
+  el.textContent = pass ? '✓ 正解！目標どおりの回路になりました。'
+    : (extraMsg || '✗ 不一致あり。表を確認して回路を修正してください。');
+  document.getElementById('status').textContent = pass ? '✓ クリア！' : '';
+  setTimeout(() => { el.style.display = 'none'; }, 3000);
+  if (pass) showNextBtn();
+}
+function showNextBtn(){
+  const btn = document.getElementById('nextLevelBtn');
+  const isLast = currentLevelIdx >= LEVELS.length - 1;
+  btn.textContent = isLast ? '🎉 全レベルクリア！' : '次のレベルへ →';
+  btn.style.display = 'inline-flex';
+  btn.dataset.last = isLast ? '1' : '0';
+}
+function hideNextBtn(){
+  document.getElementById('nextLevelBtn').style.display = 'none';
+}
+document.getElementById('nextLevelBtn').addEventListener('click', (e) => {
+  if (e.currentTarget.dataset.last === '1') showClearScreen();
+  else loadLevel(currentLevelIdx + 1);
+});
+document.getElementById('clearBtn').addEventListener('click', () => { resetCircuit(); });
+document.getElementById('verifyClose').addEventListener('click', () => {
+  document.getElementById('verifyWrap').classList.remove('visible');
+});
+
+// ====================== 解答・自動配置 ======================
+// {t, q:[量子ビット], c:列} の並びをスレッド順に自動配線して構築する。
+// wireOutputs=false なら出力へつながず途中で止める（プリセット用）
+function buildGateChain(list, wireOutputs){
+  const inputs = nodes.filter(x => x.type === 'INPUT');
+  const outputs = nodes.filter(x => x.type === 'OUTPUT');
+  const cursor = inputs.map(x => x.outPins[0]);  // 量子ビットごとの「現在の出力ピン」
+  const x0 = inputs[0].x + nodeWidth(inputs[0]);
+  const wrap = document.getElementById('canvasWrap');
+  const visW = Math.min(Number(svg.getAttribute('width')) || 760, (wrap.clientWidth || 9999) - 2);
+  const chain = (g, nd) => {
+    g.q.forEach((q, k) => {
+      wires.push({ id: uid(), fromPin: cursor[q], toPin: nd.inPins[k] });
+      cursor[q] = nd.outPins[k];
+    });
+  };
+  if (visW >= 520 || list.length > 40){
+    // 横並び（列ごと）レイアウト（ゲート数が多い回路は狭い画面でも横並び＋スクロール）
+    const COLW = 100;
+    for (const g of list){
+      const nd = addNode(g.t, 0, 0);
+      nd.x = x0 + 12 + g.c * COLW + (COLW - nodeWidth(nd)) / 2;
+      const cy = g.q.reduce((a, q) => a + inputs[q].y, 0) / g.q.length + nodeHeight(inputs[0]) / 2;
+      nd.y = cy - nodeHeight(nd) / 2;
+      chain(g, nd);
+    }
+    // 出力が回路の途中に埋まらないよう右へ寄せ、必要ならキャンバスも広げる
+    const maxC = Math.max(...list.map(g => g.c));
+    const lastX = x0 + 12 + (maxC + 1) * COLW;
+    outputs.forEach(o => { if (o.x < lastX + 24) o.x = lastX + 24; });
+    const needW = lastX + 156;
+    if (needW > Number(svg.getAttribute('width'))) svg.setAttribute('width', needW);
+  } else {
+    // 縦積みレイアウト（狭い画面）：入力と出力のあいだの中央に、実行順で上から並べる
+    const cxMid = (x0 + outputs[0].x) / 2;
+    let y = 30;
+    for (const g of list){
+      const nd = addNode(g.t, 0, 0);
+      nd.x = cxMid - nodeWidth(nd) / 2;
+      nd.y = y;
+      y += nodeHeight(nd) + 28;
+      chain(g, nd);
+    }
+    if (y + 16 > (Number(svg.getAttribute('height')) || 0)) svg.setAttribute('height', y + 16);
+  }
+  if (wireOutputs){
+    for (const o of outputs) wires.push({ id: uid(), fromPin: cursor[o.qidx], toPin: o.inPins[0] });
+  }
+}
+document.getElementById('answerBtn').addEventListener('click', () => {
+  resetCircuit(true);
+  buildGateChain(typeof LV().solution === 'function' ? LV().solution() : LV().solution, true);
+  document.getElementById('status').textContent = '（解答例を表示中）';
+  updateAll();
+});
+
+// ====================== ダイアログ ======================
+function renderDialogue(dialogue){
+  return dialogue.map(d => {
+    const isRabbit = d.who === 'rabbit';
+    return `<div class="dialog-row${isRabbit?' right':''}">
+      <div class="dialog-character">
+        <img src="images/${d.img}.webp" alt="${isRabbit?'うさ美':'ねこ博士'}" width="100">
+        <div class="dialog-name ${d.who}">${isRabbit?'うさ美':'ねこ博士'}</div>
+      </div>
+      <div class="dialog-bubble">${d.text}</div>
+    </div>`;
+  }).join('');
+}
+
+const CLEAR_DIALOGUE_1 = [
+  { who:'cat',    img:'cat',        text:'ここまでの16レベルを並べ直してみよう。' },
+  { who:'rabbit', img:'rabbit',     text:'前半はグローバーでした。X・CCZ・Xのオラクルと拡散を組んで、8候補から鍵を94.5%で当て、答えを知らない条件からもオラクルを組みました。' },
+  { who:'cat',    img:'catThink',   text:'そう。後半は本物志向だ。封印オラクルで知らない鍵をあぶり出し、ミニ暗号の鍵探索、10ビットの探索で√Nを体感して、最後はショアの回路を部品から組み上げて、逆QFTで周期を読んだ。まとめると——' },
+];
+const CLEAR_DIALOGUE_2 = [
+  { who:'rabbit', img:'rabbitThink', text:'レベル1〜3では、オラクルは鍵を知って組むように見えていました。でも本当は、条件を配線に翻訳しただけで、答えはどこにも書いていなかったんですね。' },
+  { who:'cat',    img:'cat',        text:'そう。オラクルは「条件のコンパイル結果」で、答えは条件が勝手に選ぶ。AESの鍵探索のオラクルも、桁違いに大きいだけで、作り方はこの3工程と同じだよ。' },
+  { who:'rabbit', img:'rabbit',     text:'検算・印つけ・逆計算……グローバーの心臓部を、部品の1個まで自分の手で組めるようになりました。最後のショアは、探索じゃなくて周期を見抜く別系統で、×7 の回路から自分で組めました。' },
+  { who:'cat',    img:'cat',        text:'そう。グローバーは矢印の向き（＋−）で答えを引き寄せ、ショアは矢印を回す逆QFTで周期を炙り出す。道具は違っても、回路を「配線とゲート」で読む目は同じだよ。' },
+  { who:'cat',    img:'catThink',   text:'それが分かれば、量子アルゴリズムの回路図はもう怖くない。おつかれさま。' },
+];
+
+function showClearScreen(){
+  document.getElementById('game-screen').style.display = 'none';
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('app-shell').classList.remove('game-mode');
+  document.getElementById('clear-dialog-1').innerHTML = renderDialogue(CLEAR_DIALOGUE_1);
+  document.getElementById('clear-flow-box').innerHTML =
+    'H・X・CCZ → オラクル（見えない印）と拡散（平均折り返し）<br>' +
+    '（オラクル→拡散）×2反復 → グローバーの探索：8候補から鍵を94.5%で発見<br>' +
+    '条件「隣り合う桁が違う」 → 答えを知らずに組んだオラクル（検算 → DにZ → 逆計算）<br>' +
+    '＋拡散1反復 → 010と101が確率100%で出てくる<br>' +
+    '封印オラクル → 鍵を知らないまま、同じ回路で鍵をあぶり出す<br>' +
+    'ミニ暗号（⊕鍵→かき混ぜ） → 平文と暗号文だけから鍵を検算するオラクル<br>' +
+    '＋拡散1反復 → 鍵が確率100%で一本釣り（4候補・答え1つ）<br>' +
+    '10ビット印つけ → 1024本のうち鍵の1本だけが左を向く（でも測定では見えない）<br>' +
+    '10ビット×約25反復 → √Nの体感（1024候補が99.9%に。128ビットへの距離も）<br>' +
+    '非線形・多ラウンドの暗号 → 逆算の公式がない＝本当に鍵を試すしかない（同じオラクル構成）<br>' +
+    '×7 mod 15 → 全ビット反転（×−1）と3つのSWAP（×8）だけで作れる（15＝2⁴−1）<br>' +
+    '制御つき×7 → X→CNOT、SWAP→CSWAP。2組で×4、4組で元に戻る（周期4）<br>' +
+    'H×3＋重み1・2の制御つき×7 → Σ|x⟩|7ˣ mod15⟩（周期4が一覧表に並ぶ）<br>' +
+    '逆QFT → 測定値 0・2・4・6 → m/8 の連分数から周期4 → 15＝3×5（グローバーとは別系統）<br>' +
+    '<strong>オラクル＝条件を回路にコンパイルしたもの。答えは条件が選ぶ</strong>' +
+    '<hr style="margin:12px 0;border-color:rgba(0,0,0,.15)">' +
+    '<small>実際のAES鍵探索のオラクルも、暗号化の全手順（数万ゲート規模）を同じ3工程' +
+    '（検算 → 位相の印つけ → 逆計算）で可逆論理に翻訳したものです。規模が違うだけで、作り方の原理はこのゲームで組んだ回路と変わりません。</small>';
+  document.getElementById('clear-dialog-2').innerHTML = renderDialogue(CLEAR_DIALOGUE_2);
+  document.getElementById('clear-screen').style.display = '';
+}
+
+// ====================== 10ビット探索（実回路への反復適用） ======================
+// レベル11では、1反復分の本物の回路（H×10＋オラクル＋拡散）をキャンバスに配線し、
+// その回路に状態ベクトル（2^11＝2048本の矢印）を繰り返し通す。
+const SIM10_P = 0b1010101010;   // 公開の平文
+let sim10Key = 0;               // 隠し鍵（リセットごとにランダム）
+let sim10C = 0;                 // 暗号文 = Enc(P, 鍵)。回路はPとCだけから組む
+let loopState = null, loopK = 0;
+
+// ミニ暗号の10ビット版: Enc(P,K) = かき混ぜS(K⊕P)。
+// S: 上の桁から順に K_i ^= K_{i-1}（i=9..1）、最後に K0 を反転
+function sim10Enc(k){
+  let t = k ^ SIM10_P;
+  for (let i = 9; i >= 1; i--) t ^= ((t >> (i - 1)) & 1) << i;
+  t ^= 1;
+  return t;
+}
+
+// オラクルまでの回路（H×10＋印つけ）。qubit 0..9 = K9..K0（上がK9）、qubit 10 = D
+function sim10OraclePreset(){
+  const g = [];
+  const XP = c => { for (let j = 0; j <= 9; j++) if ((SIM10_P >> j) & 1) g.push({t:'X', q:[9 - j], c}); };
+  const XC0 = c => { for (let j = 0; j <= 9; j++) if (!((sim10C >> j) & 1)) g.push({t:'X', q:[9 - j], c}); };
+  const HALL = c => { for (let q = 0; q <= 9; q++) g.push({t:'H', q:[q], c}); };
+  const KALL = [0,1,2,3,4,5,6,7,8,9];
+  HALL(0);
+  // 検算：⊕P → かき混ぜS
+  XP(1);
+  for (let i = 9; i >= 1; i--) g.push({t:'CNOT', q:[10 - i, 9 - i], c: 2 + ((9 - i) % 2)});
+  g.push({t:'X', q:[9], c:4});
+  // Cとの一致判定（Cの0の桁をXで挟んで多重制御X）
+  XC0(5); g.push({t:'MCX', q:[...KALL, 10], c:6}); XC0(7);
+  // 印つけ
+  g.push({t:'Z', q:[10], c:8});
+  // 逆計算：一致判定 → S → ⊕P をすべて逆走
+  XC0(9); g.push({t:'MCX', q:[...KALL, 10], c:10}); XC0(11);
+  g.push({t:'X', q:[9], c:12});
+  for (let i = 1; i <= 9; i++) g.push({t:'CNOT', q:[10 - i, 9 - i], c: 13 + ((i - 1) % 2)});
+  XP(15);
+  return g;
+}
+// 1反復分の回路（オラクル＋拡散）
+function sim10Preset(){
+  const g = sim10OraclePreset();
+  const KALL = [0,1,2,3,4,5,6,7,8,9];
+  for (let q = 0; q <= 9; q++) g.push({t:'H', q:[q], c:16});
+  for (let q = 0; q <= 9; q++) g.push({t:'X', q:[q], c:17});
+  g.push({t:'MCZ', q:KALL, c:18});
+  for (let q = 0; q <= 9; q++) g.push({t:'X', q:[q], c:19});
+  for (let q = 0; q <= 9; q++) g.push({t:'H', q:[q], c:20});
+  return g;
+}
+// 印つけレベルの答え合わせ：左向き（−）の矢印が隠し鍵の1本だけかを確認する
+function loopCheckMark(){
+  if (!loopState){
+    document.getElementById('measureResult').textContent = 'まず「▶ 回路に通す」でオラクルを通してから確認してください。';
+    return;
+  }
+  const negs = [];
+  let posCount = 0, residue = 0;
+  for (let k = 0; k < 1024; k++){
+    const a0 = loopState[k * 2];
+    residue += loopState[k * 2 + 1] ** 2;
+    if (a0 < -0.001) negs.push(k);
+    else if (a0 > 0.001) posCount++;
+  }
+  const el = document.getElementById('measureResult');
+  if (negs.length === 1 && negs[0] === sim10Key && residue < 0.001 && posCount === 1023){
+    el.innerHTML = `左向き（−）の矢印は <strong>|${sim10Key.toString(2).padStart(10,'0')}⟩</strong> の1本だけ——隠していた鍵と一致！` +
+      `<strong style="color:#1aa85a">オラクルが印をつけました 🎉</strong><br>ただし長さは全候補0.031のまま（確率は各0.1%）——測定ではこの印は見えません。`;
+    if (!cleared.includes(currentLevelIdx)){
+      cleared.push(currentLevelIdx);
+      localStorage.setItem('oracle_workshop_v2_cleared', JSON.stringify(cleared));
+      buildLevelList();
+    }
+    showNextBtn();
+  } else if (negs.length === 0){
+    el.textContent = '反転した矢印がありません。オラクルを1回（奇数回）通した状態で確認してください（2回通すと反転の反転で印が消えます）。';
+  } else {
+    el.textContent = '想定と違う状態です。「やり直す」で組み直して、もう一度オラクルを1回だけ通してみてください。';
+  }
+}
+
+// 回路を解析（完成チェック・スレッド・実行順）。evalCircuitと同じ規則
+function loopAnalyze(){
+  const n = LV().qubits;
+  for (const nd of nodes){
+    if (nd.type === 'INPUT'){ if (!wireFrom(nd.outPins[0])) return null; }
+    else if (nd.type === 'OUTPUT'){ if (!wireTo(nd.inPins[0])) return null; }
+    else {
+      for (const p of nd.inPins) if (!wireTo(p)) return null;
+      for (const p of nd.outPins) if (!wireFrom(p)) return null;
+    }
+  }
+  const gq = new Map(); const perm = new Array(n).fill(-1);
+  for (const inp of nodes.filter(x => x.type === 'INPUT')){
+    let w = wireFrom(inp.outPins[0]), guard = 0;
+    while (w){
+      if (++guard > 3000) return null;
+      const pin = getPin(w.toPin), nd = getNode(pin.nodeId);
+      if (nd.type === 'OUTPUT'){ perm[inp.qidx] = nd.qidx; break; }
+      if (!gq.has(nd.id)) gq.set(nd.id, []);
+      gq.get(nd.id)[pin.index] = inp.qidx;
+      w = wireFrom(nd.outPins[pin.index]);
+    }
+  }
+  if (perm.some((p, q) => p !== q)) return null;
+  const gates = nodes.filter(x => x.type !== 'INPUT' && x.type !== 'OUTPUT');
+  const indeg = new Map(), children = new Map();
+  gates.forEach(g => { indeg.set(g.id, 0); children.set(g.id, []); });
+  for (const g of gates){
+    for (const pid of g.inPins){
+      const src = getNode(getPin(wireTo(pid).fromPin).nodeId);
+      if (src.type !== 'INPUT'){ indeg.set(g.id, indeg.get(g.id) + 1); children.get(src.id).push(g.id); }
+    }
+  }
+  const queue = gates.filter(g => indeg.get(g.id) === 0).map(g => g.id);
+  const order = [];
+  while (queue.length){
+    const gid = queue.shift(); order.push(gid);
+    for (const cid of children.get(gid)){ indeg.set(cid, indeg.get(cid) - 1); if (indeg.get(cid) === 0) queue.push(cid); }
+  }
+  if (order.length !== gates.length) return null;
+  return { order, gq, n };
+}
+
+// 1反復通す。2回目以降は先頭のH層（入力ノード直結のH）をスキップして再突入
+function loopPassOnce(){
+  const a = loopAnalyze();
+  if (!a){ flashStatus('配線が未完成です（すべてのピンをつないでください）'); return false; }
+  const first = !loopState;
+  if (first){ loopState = new Float64Array(1 << a.n); loopState[0] = 1; }
+  for (const gid of a.order){
+    const g = getNode(gid);
+    if (!first && g.type === 'H' &&
+        g.inPins.every(p => getNode(getPin(wireTo(p).fromPin).nodeId).type === 'INPUT')) continue;
+    applyGate(loopState, g.type, a.gq.get(gid) || [], a.n);
+  }
+  return true;
+}
+function loopIterate(){
+  if (!loopPassOnce()) return;
+  loopK++;
+  renderStatePanel();
+}
+function loopTo25(){
+  while (loopK < 25){ if (!loopPassOnce()) return; loopK++; }
+  renderStatePanel();
+}
+function loopResetKey(){
+  resetCircuit();
+}
+function drawLoopCanvas(){
+  const c = document.getElementById('loopCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0, 0, 1024, 140);
+  // 中心線から上＝右向き（＋）、下＝左向き（−）
+  const mid = 70;
+  for (let k = 0; k < 1024; k++){
+    let a, re;
+    if (!loopState){ a = k === 0 ? 1 : 0; re = a; }   // まだ通していない：|0…0⟩
+    else { re = loopState[k * 2]; a = Math.hypot(re, loopState[k * 2 + 1]); }
+    if (a > 0.001){
+      const h = Math.max(2, a * 64);
+      if (re < -0.001){
+        ctx.fillStyle = '#b0483a';
+        ctx.fillRect(k, mid, 2, h);
+      } else {
+        ctx.fillStyle = '#c69a1e';
+        ctx.fillRect(k, mid - h, 1, h);
+      }
+    }
+  }
+  ctx.fillStyle = '#8a97b8';
+  ctx.fillRect(0, mid, 1024, 1);
+}
+
+// ====================== ショア（測定・素因数分解） ======================
+function igcd(a, b){ return b ? igcd(b, a % b) : a; }
+function drawShorCanvas(dist){
+  const c = document.getElementById('shorCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0, 0, 512, 160);
+  const base = 128, top = 12, bw = 44, gap = (512 - 8 * bw) / 9;
+  const tot = shorMeasures || 0;
+  for (let v = 0; v < 8; v++){
+    const x = gap + v * (bw + gap);
+    // 理論値の枠
+    const th = dist[v] * (base - top);
+    ctx.strokeStyle = '#b9a3e0'; ctx.lineWidth = 1.5;
+    ctx.strokeRect(x, base - th, bw, th);
+    // 実測の塗り
+    if (tot > 0){
+      const obs = shorHist[v] / tot;
+      const oh = obs * (base - top);
+      ctx.fillStyle = (v % 2 === 0) ? '#8a5ac4' : '#c0483a';
+      ctx.fillRect(x, base - oh, bw, oh);
+    }
+    // ラベル
+    ctx.fillStyle = '#1b2340'; ctx.font = 'bold 13px ui-monospace,monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(String(v), x + bw / 2, base + 16);
+    ctx.fillStyle = '#8a97b8'; ctx.font = '10px ui-monospace,monospace';
+    ctx.fillText(v.toString(2).padStart(3, '0'), x + bw / 2, base + 30);
+  }
+  ctx.strokeStyle = '#8a97b8'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, base); ctx.lineTo(512, base); ctx.stroke();
+}
+function shorMeasureOnce(){
+  const ev = evalCircuitComplex(0);
+  const el = document.getElementById('measureResult');
+  if (!ev){ el.textContent = '配線が未完成のため測定できません。'; return; }
+  const dist = shorCountDist(ev.re, ev.im);
+  // 分布からサンプリング
+  let r = Math.random(), acc = 0, m = 0;
+  for (let v = 0; v < 8; v++){ acc += dist[v]; if (r <= acc){ m = v; break; } }
+  shorHist[m]++; shorMeasures++;
+  const rr = shorPeriodFromMeasure(m);
+  let note;
+  if (m === 0) note = `測定値 <strong>m=0</strong>（000）→ ${0}/8。分母が出ないので周期の情報なし——もう一度どうぞ（0はときどき出ます）。`;
+  else note = `測定値 <strong>m=${m}</strong>（${m.toString(2).padStart(3,'0')}）→ ${m}/8 を約分して <strong>${m/igcd(m,8)}/${8/igcd(m,8)}</strong>。分母 <strong>${rr}</strong> が周期の候補です。`
+    + (rr === 4 ? '（＝7の位数r=4！）' : (rr === 2 ? '（周期4の約数。2/8や6/8が出ればr=4と確定できます）' : ''));
+  el.innerHTML = note;
+  renderStatePanel();
+}
+function shorFactor(){
+  const ev = evalCircuitComplex(0);
+  const el = document.getElementById('measureResult');
+  if (!ev){ el.textContent = '配線が未完成のため素因数分解できません。'; return; }
+  const dist = shorCountDist(ev.re, ev.im);
+  const ok = [0,2,4,6].every(v => Math.abs(dist[v] - 0.25) < 0.03) && [1,3,5,7].every(v => dist[v] < 0.03);
+  if (!ok){ el.innerHTML = '回路が想定の分布（0・2・4・6が各25%）になっていません。「やり直す」で戻せます。'; return; }
+  const a = 7, Nn = 15, r = 4;                 // 測定値2/6の連分数から周期r=4が得られる
+  const half = Math.pow(a, r / 2);             // 7^2 = 49
+  const f1 = igcd(half - 1, Nn), f2 = igcd(half + 1, Nn);   // gcd(48,15)=3, gcd(50,15)=5
+  el.innerHTML =
+    `測定値 0・2・4・6 のうち <strong>2</strong> や <strong>6</strong> を連分数展開すると分母は4——これが 7 の周期（位数）<strong>r=4</strong>。<br>`
+    + `rが偶数なので、7^(r/2)=7²=49 として<br>`
+    + `　gcd(49−1, 15)=gcd(48,15)=<strong>${f1}</strong>、gcd(49+1, 15)=gcd(50,15)=<strong>${f2}</strong>。<br>`
+    + `よって <strong style="color:#1aa85a">15 = ${f1} × ${f2}</strong> 🎉　量子で周期を求め、古典計算で約数を取り出しました。`;
+  if (!cleared.includes(currentLevelIdx)){
+    cleared.push(currentLevelIdx);
+    localStorage.setItem('oracle_workshop_v2_cleared', JSON.stringify(cleared));
+    buildLevelList();
+  }
+  showNextBtn();
+}
+// ショアの回路を「時点」で区切って状態を返す（数字を追うための一覧表用）
+// cp: 0=重ね合わせ＋作業=1 / 1=べき乗剰余後 / 2=逆QFT後（出力）
+let shorCheckpoint = 2;
+const SHOR_CP = [
+  { name: '① 重ね合わせ後', note: '数え上げ（q0q1q2）が0〜7の重ね合わせ、作業（q3〜q6）は|1⟩。矢印はすべて右向き（+）。' },
+  { name: '② べき乗剰余後', note: '各数え上げxに、7ˣ mod15（1→7→4→13→…と周期4で巡回）が絡みつく。ここに「周期4」が入っている。' },
+  { name: '③ 逆QFT後（出力）', note: '逆QFTが周期4を読み取り、数え上げが0/2/4/6に集中。矢印が回るのは逆QFTの位相。測定すると下のヒストグラムになる。' },
+];
+function shorStateAt(cp){
+  const list = OW_SHOR15();
+  const bounds = [4, list.length - 7, list.length];   // 設定4 / べき乗剰余まで / 逆QFTまで
+  const upto = bounds[cp];
+  const n = 7, N = 1 << n;
+  const re = new Float64Array(N), im = new Float64Array(N);
+  re[0] = 1;
+  for (let k = 0; k < upto; k++) applyGateC(re, im, list[k].t, list[k].q, n);
+  return { re, im };
+}
+// 複素振幅の矢印（中心から向き＝位相、長さ＝大きさ）。real は横向き（他ページと同じ見た目）
+function complexArrowSVG(re, im, maxMag){
+  const mag = Math.hypot(re, im);
+  if (mag < 0.004) return `<svg width="34" height="34" viewBox="0 0 34 34"><circle cx="17" cy="17" r="2.2" fill="#b9c1d4"/></svg>`;
+  const len = 6 + (mag / (maxMag || 1)) * 9;   // 6〜15px
+  const th = Math.atan2(im, re);
+  const ex = 17 + len * Math.cos(th), ey = 17 - len * Math.sin(th);
+  const isNeg = Math.abs(im) < 0.004 && re < 0;
+  const col = Math.abs(im) < 0.004 ? (re < 0 ? '#b0483a' : '#c69a1e') : '#8a5ac4';   // 実+=金/実−=赤/複素=紫
+  // 矢じり
+  const ah = 4.2, a1 = th + Math.PI - 0.5, a2 = th + Math.PI + 0.5;
+  const p1x = ex + ah * Math.cos(a1), p1y = ey - ah * Math.sin(a1);
+  const p2x = ex + ah * Math.cos(a2), p2y = ey - ah * Math.sin(a2);
+  return `<svg width="34" height="34" viewBox="0 0 34 34">`
+    + `<circle cx="17" cy="17" r="15.5" fill="none" stroke="#e6ebf5" stroke-width="1"/>`
+    + `<line x1="17" y1="17" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${col}" stroke-width="2.4"/>`
+    + `<polygon points="${ex.toFixed(1)},${ey.toFixed(1)} ${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" fill="${col}"/>`
+    + `</svg>`;
+}
+// 複素振幅を読みやすい文字に（実数はfmtAmp相当、複素は大きさ∠角度）
+function fmtComplex(re, im){
+  const mag = Math.hypot(re, im);
+  if (mag < 0.004) return '0';
+  if (Math.abs(im) < 0.004) return (re < 0 ? '−' : '') + Math.abs(re).toFixed(2);
+  let deg = Math.round(Math.atan2(im, re) * 180 / Math.PI);
+  return mag.toFixed(2) + '∠' + deg + '°';
+}
+function shorSetCheckpoint(cp){ shorCheckpoint = cp; renderStatePanel(); }
+
+// ====================== 起動 ======================
+// 前回開いていたレベルを復元する（リロードでレベル1に戻らないように）
+const savedLevel = Number(localStorage.getItem('oracle_workshop_v2_level'));
+loadLevel(Number.isInteger(savedLevel) && savedLevel >= 0 && savedLevel < LEVELS.length ? savedLevel : 0);
+</script>
+</body>
+</html>
