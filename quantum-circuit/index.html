@@ -945,6 +945,9 @@ const LEVELS = [
 // ====================== 状態 ======================
 let currentLevelIdx = 0;
 let cleared = JSON.parse(localStorage.getItem("quantum_circuit_v2_cleared") || "[]");
+// GA4 イベント（level_clear / all_clear / verify_fail）
+function track(name, params){ if (typeof window.gtag === "function") window.gtag("event", name, params || {}); }
+function trackClear(){ const lv = LV(); track("level_clear", { level: currentLevelIdx + 1, level_name: lv.shortName, game: "quantum_circuit" }); if (cleared.length >= LEVELS.length) track("all_clear", { game: "quantum_circuit" }); }
 let nodes = [], pins = [], wires = [];
 let idc = 1;
 let dragNode = null, dragOffset = {x:0,y:0}, dragMoved = false;
@@ -2052,7 +2055,7 @@ document.getElementById('measureBtn').addEventListener('click', () => {
           : `隠していた鍵は |${sim10Key.toString(2).padStart(10,'0')}⟩ —— はずれ。反復の回数を調整してもう一度どうぞ。`);
     if (ok){
       if (!cleared.includes(currentLevelIdx)){
-        cleared.push(currentLevelIdx);
+        cleared.push(currentLevelIdx); trackClear();
         localStorage.setItem('quantum_circuit_v2_cleared', JSON.stringify(cleared));
         buildLevelList();
       }
@@ -2147,9 +2150,10 @@ document.getElementById('runBtn').addEventListener('click', () => {
   document.getElementById('verifyTable').innerHTML = html;
   document.getElementById('verifyWrap').classList.add('visible');
   showMsg(allPass, extraMsg);
+  if (!allPass) track("verify_fail", { level: currentLevelIdx + 1, level_name: lv.shortName, game: "quantum_circuit" });
 
   if (allPass && !cleared.includes(currentLevelIdx)){
-    cleared.push(currentLevelIdx);
+    cleared.push(currentLevelIdx); trackClear();
     localStorage.setItem('quantum_circuit_v2_cleared', JSON.stringify(cleared));
     buildLevelList();
   }
@@ -2361,7 +2365,7 @@ function loopCheckMark(){
     el.innerHTML = `左向き（−）の矢印は <strong>|${sim10Key.toString(2).padStart(10,'0')}⟩</strong> の1本だけ——隠していた鍵と一致！` +
       `<strong style="color:#1aa85a">オラクルが印をつけました 🎉</strong><br>ただし長さは全候補0.031のまま（確率は各0.1%）——測定ではこの印は見えません。`;
     if (!cleared.includes(currentLevelIdx)){
-      cleared.push(currentLevelIdx);
+      cleared.push(currentLevelIdx); trackClear();
       localStorage.setItem('quantum_circuit_v2_cleared', JSON.stringify(cleared));
       buildLevelList();
     }
@@ -2533,7 +2537,7 @@ function shorFactor(){
     + `　gcd(49−1, 15)=gcd(48,15)=<strong>${f1}</strong>、gcd(49+1, 15)=gcd(50,15)=<strong>${f2}</strong>。<br>`
     + `よって <strong style="color:#1aa85a">15 = ${f1} × ${f2}</strong> 🎉　量子で周期を求め、古典計算で約数を取り出しました。`;
   if (!cleared.includes(currentLevelIdx)){
-    cleared.push(currentLevelIdx);
+    cleared.push(currentLevelIdx); trackClear();
     localStorage.setItem('quantum_circuit_v2_cleared', JSON.stringify(cleared));
     buildLevelList();
   }
