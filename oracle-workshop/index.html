@@ -71,6 +71,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;background:li
 .header-actions{display:flex;align-items:center;gap:10px}
 .head-btn{height:50px;padding:0 18px;border:2px solid rgba(255,255,255,.78);border-radius:9px;background:rgba(0,0,0,.18);color:#fff;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.26);touch-action:manipulation}
 .head-btn:hover{background:rgba(255,255,255,.15)}
+@media(max-width:700px){.head-btn{height:44px;padding:0 12px;font-size:14px}}
 a.head-btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 
 /* ── Layout ── */
@@ -316,6 +317,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="head-progress"><div class="head-progress-fill" id="prog"></div></div>
     </div>
     <div class="header-actions">
+      <a class="head-btn" href="https://quantum-mechanics.habatakijuku.com/" title="量子クエスト集（シリーズマップ）へ">🗺 マップへ</a>
       <button class="head-btn" onclick="toggleSidebar()">☰ ナビ</button>
     </div>
   </header>
