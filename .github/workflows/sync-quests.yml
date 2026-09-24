@@ -35,7 +35,7 @@ jobs:
       - name: Sync quest repos into subdirs
         run: |
           set -e
-          for repo in schrodinger-equation kennard-inequality bell-inequality decoherence-quest quantum-computer quantum-hardware; do
+          for repo in schrodinger-equation kennard-inequality bell-inequality decoherence-quest quantum-computer quantum-hardware quantum-circuit oracle-workshop; do
             rm -rf "$repo" tmp-clone
             git clone --depth 1 "https://github.com/ruglerugle/$repo.git" tmp-clone
             rm -rf tmp-clone/.git tmp-clone/.github tmp-clone/.claude tmp-clone/CLAUDE.md
