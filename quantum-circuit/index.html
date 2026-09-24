@@ -377,14 +377,14 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 
       <!-- 回路ゲーム画面 -->
       <div id="game-screen" style="display:none">
+        <div id="opGuide">
+          <div class="og-head"><span class="og-title">🎮 操作方法</span><button class="og-close" onclick="toggleGuide(false)">✕ 閉じる</button></div>
+          <ul class="og-list" id="ogList"></ul>
+        </div>
         <div id="gate-bar">
           <span class="gate-bar-label">ゲートを選ぶ：</span>
           <span id="gateBtns" style="display:flex;gap:6px;flex-wrap:wrap"></span>
           <button id="guideBtn" onclick="toggleGuide()">❔ 操作方法</button>
-        </div>
-        <div id="opGuide">
-          <div class="og-head"><span class="og-title">🎮 操作方法</span><button class="og-close" onclick="toggleGuide(false)">✕ 閉じる</button></div>
-          <ul class="og-list" id="ogList"></ul>
         </div>
         <div id="cipherSel" style="display:none">
           <span class="cipher-label">暗号文 C を選ぶ：</span>
@@ -973,7 +973,7 @@ function guideItems(lv){
   const it = [];
   const li = (ic, title, body) => it.push(`<li><span class="og-ic">${ic}</span><span><b>${title}</b>${body}</span></li>`);
   if (!observe){
-    li('🧩', 'ゲートを置く', '上の<span class="og-kw">「ゲートを選ぶ」</span>のボタンをタップすると回路に現れます。ドラッグで移動、✕ で削除。');
+    li('🧩', 'ゲートを置く', '下の<span class="og-kw">「ゲートを選ぶ」</span>のボタンをタップすると回路に現れます。ドラッグで移動、✕ で削除。');
     li('🔗', '線をつなぐ', '<span class="og-kw">青い丸（出力ピン）</span>をタップ → つなぎ先の<span class="og-kw">灰色の丸（入力ピン）</span>をタップ。ドラッグでも引けます。線はタップで消えます。');
   }
   if (lv.mode === 'unitary'){
