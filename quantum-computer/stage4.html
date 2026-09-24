@@ -220,12 +220,12 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">書けるよ。そして条件分岐ではない。2量子ビットの表は |00⟩ |01⟩ |10⟩ |11⟩ の4行だから、ゲートは<strong>4行4列の数の表</strong>だ。CNOT の表は、1行目と2行目は「そのまま」、3行目と4行目は「入れ替え」の形に 1 が置いてある。入力の矢印を (a, b, c, d) として、前に習った「掛けて足す」を各行に当てると、出力は <strong>(a, b, d, c)</strong>。上2行はそのまま、下2行だけが入れ替わる――それだけだ。「制御ビットが1の行だけ標的をひっくり返す」というのは、この表のどこに 1 が置いてあるかを言葉で言い直したものにすぎない。ふつうのコンピュータの「もし〜なら」は、制御ビットが 0 か 1 のどちらかに決まっていて片方の処理だけが実行される。CNOT は、制御ビットが重ね合わせのときも同じ表を1回当てるだけだ。たとえば入力が (0.6, 0, 0.8, 0)、つまり制御ビットが 0.6 で |0⟩、0.8 で |1⟩ の重ね合わせで標的が |0⟩ なら、出力は (0.6, 0, 0, 0.8)。「制御が 0 の部分はそのまま、1 の部分だけ標的が反転」が同時に起きているのは、分岐したからではなく、入れ替えが表の下半分にしか置かれていないからだよ。H のときの「もし〜なら」の気持ち悪さと、答えは同じだね。</div>
+          <div class="dialog-bubble">書けるよ。そして条件分岐ではない。2量子ビットの表は |00⟩ |01⟩ |10⟩ |11⟩ の4行だから、ゲートは<strong>4行4列の数の表</strong>だ。CNOT の表は、1行目と2行目は「そのまま」、3行目と4行目は「入れ替え」の形に 1 が置いてある。表が4行4列になっても、当て方のルールは 2行2列のときと同じだ。各行に並んだ4つの数を、入力の矢印 (a, b, c, d) にそれぞれ掛けて足す。1行目は 1×a ＋ 0×b ＋ 0×c ＋ 0×d ＝ a、2行目は 0×a ＋ 1×b ＋ 0×c ＋ 0×d ＝ b、3行目は 0×a ＋ 0×b ＋ 0×c ＋ 1×d ＝ d、4行目は 0×a ＋ 0×b ＋ 1×c ＋ 0×d ＝ c。出力は <strong>(a, b, d, c)</strong>。上2行はそのまま、下2行だけが入れ替わる――それだけだ。「制御ビットが1の行だけ標的をひっくり返す」というのは、この表のどこに 1 が置いてあるかを言葉で言い直したものにすぎない。ふつうのコンピュータの「もし〜なら」は、制御ビットが 0 か 1 のどちらかに決まっていて片方の処理だけが実行される。CNOT は、制御ビットが重ね合わせのときも同じ表を1回当てるだけだ。たとえば入力が (0.6, 0, 0.8, 0)、つまり制御ビットが 0.6 で |0⟩、0.8 で |1⟩ の重ね合わせで標的が |0⟩ なら、出力は (0.6, 0, 0, 0.8)。「制御が 0 の部分はそのまま、1 の部分だけ標的が反転」が同時に起きているのは、分岐したからではなく、入れ替えが表の下半分にしか置かれていないからだよ。H のときの「もし〜なら」の気持ち悪さと、答えは同じだね。</div>
         </div>
       </div>
 
       <div class="diagram-box">
-        <svg class="qc-svg" viewBox="0 0 372 262" width="100%" role="img" aria-label="CNOTゲートを4行4列の表として書いた図。1行目と2行目は対角に1があり入力をそのまま通す。3行目と4行目は1の位置が入れ替わっていて、入力(a,b,c,d)に当てると出力は(a,b,d,c)になる。下段の例では入力(0.6,0,0.8,0)が出力(0.6,0,0,0.8)になり、条件分岐ではなく同じ表を1回当てただけで下2行が入れ替わることを示す">
+        <svg class="qc-svg" viewBox="0 0 372 340" width="100%" role="img" aria-label="CNOTゲートを4行4列の表として書いた図。1行目と2行目は対角に1があり入力をそのまま通す。3行目と4行目は1の位置が入れ替わっていて、入力(a,b,c,d)に当てると出力は(a,b,d,c)になる。下段の例では入力(0.6,0,0.8,0)が出力(0.6,0,0,0.8)になり、条件分岐ではなく同じ表を1回当てただけで下2行が入れ替わることを示す">
           <text class="strong" x="186" y="16" text-anchor="middle">CNOT ＝ 4行4列の表：下2行だけが入れ替わる</text>
           <text class="label" x="120" y="36" text-anchor="middle" style="font-size:9px">入力の行</text>
           <text class="label" x="52" y="74" text-anchor="end" style="font-size:9.5px;fill:#2f6fa6">|00⟩</text><text class="label" x="74" y="50" text-anchor="middle" style="font-size:9px">|00⟩</text><text class="label" x="52" y="96" text-anchor="end" style="font-size:9.5px;fill:#2f6fa6">|01⟩</text><text class="label" x="98" y="50" text-anchor="middle" style="font-size:9px">|01⟩</text><text class="label" x="52" y="118" text-anchor="end" style="font-size:9.5px;fill:#c8663f">|10⟩</text><text class="label" x="122" y="50" text-anchor="middle" style="font-size:9px">|10⟩</text><text class="label" x="52" y="140" text-anchor="end" style="font-size:9.5px;fill:#c8663f">|11⟩</text><text class="label" x="146" y="50" text-anchor="middle" style="font-size:9px">|11⟩</text>
@@ -234,13 +234,13 @@
           <path d="M200 58 h-6 v90 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M212 58 h6 v90 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="206" y="74" text-anchor="middle">a</text><text class="strong" x="206" y="96" text-anchor="middle">b</text><text class="strong" x="206" y="118" text-anchor="middle">c</text><text class="strong" x="206" y="140" text-anchor="middle">d</text>
           <text class="strong" x="250" y="106" text-anchor="middle">＝</text>
           <path d="M286 58 h-6 v90 h6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M298 58 h6 v90 h-6" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text class="strong" x="292" y="74" text-anchor="middle" style="fill:#2f6fa6">a</text><text class="strong" x="292" y="96" text-anchor="middle" style="fill:#2f6fa6">b</text><text class="strong" x="292" y="118" text-anchor="middle" style="fill:#c8663f">d</text><text class="strong" x="292" y="140" text-anchor="middle" style="fill:#c8663f">c</text>
-          <text class="label" x="186" y="170" text-anchor="middle">制御が 0 の行（上2行）はそのまま、制御が 1 の行（下2行）は入れ替え</text>
-          <line x1="14" y1="184" x2="358" y2="184" stroke="var(--line)" stroke-width="1"/>
-          <text class="accent" x="14" y="206" text-anchor="start">例：制御が 0.6 で |0⟩、0.8 で |1⟩ の重ね合わせ、標的は |0⟩</text>
-          <text class="strong" x="186" y="230" text-anchor="middle">(0.6,　0,　0.8,　0)　→　(0.6,　0,　0,　0.8)</text>
-          <text class="label" x="186" y="250" text-anchor="middle">分岐していない。同じ表を1回当てたら、下2行の入れ替えが起きただけ</text>
+          <text class="label" x="14" y="170" text-anchor="start">当て方は 2行2列のときと同じ：各行の4つの数を a, b, c, d に掛けて足す</text><text class="label" x="30" y="190" text-anchor="start" style="fill:#2f6fa6">1行目：1×a ＋ 0×b ＋ 0×c ＋ 0×d ＝ a</text><text class="label" x="30" y="206" text-anchor="start" style="fill:#2f6fa6">2行目：0×a ＋ 1×b ＋ 0×c ＋ 0×d ＝ b</text><text class="label" x="30" y="222" text-anchor="start" style="fill:#c8663f">3行目：0×a ＋ 0×b ＋ 0×c ＋ 1×d ＝ d</text><text class="label" x="30" y="238" text-anchor="start" style="fill:#c8663f">4行目：0×a ＋ 0×b ＋ 1×c ＋ 0×d ＝ c</text><text class="label" x="186" y="256" text-anchor="middle">制御が 0 の行（上2行）はそのまま、制御が 1 の行（下2行）は入れ替え</text>
+          <line x1="14" y1="268" x2="358" y2="268" stroke="var(--line)" stroke-width="1"/>
+          <text class="accent" x="14" y="290" text-anchor="start">例：制御が 0.6 で |0⟩、0.8 で |1⟩ の重ね合わせ、標的は |0⟩</text>
+          <text class="strong" x="186" y="312" text-anchor="middle">(0.6,　0,　0.8,　0)　→　(0.6,　0,　0,　0.8)</text>
+          <text class="label" x="186" y="332" text-anchor="middle">分岐していない。同じ表を1回当てたら、下2行の入れ替えが起きただけ</text>
         </svg>
-        <div class="diagram-caption">CNOT を<strong>4行4列の表</strong>で書いたもの。上2行（制御が 0）は対角に 1 があって入力をそのまま通し、下2行（制御が 1）は 1 の位置が入れ替わっている。「掛けて足す」で入力 (a, b, c, d) に当てると出力は (a, b, d, c)。「制御ビットが1なら標的を反転」という言葉は、この表の 1 の置き場所を言い直したもので、ゲートが入力を見て分岐しているわけではない。下段の例のように、制御が重ね合わせでも同じ表を1回当てるだけ</div>
+        <div class="diagram-caption">CNOT を<strong>4行4列の表</strong>で書いたもの。上2行（制御が 0）は対角に 1 があって入力をそのまま通し、下2行（制御が 1）は 1 の位置が入れ替わっている。当て方は 2行2列のときと同じで、各行の4つの数を a, b, c, d に掛けて足す。入力 (a, b, c, d) に当てると出力は (a, b, d, c)。「制御ビットが1なら標的を反転」という言葉は、この表の 1 の置き場所を言い直したもので、ゲートが入力を見て分岐しているわけではない。下段の例のように、制御が重ね合わせでも同じ表を1回当てるだけ</div>
       </div>
 
       <div class="dialogue-scene">
