@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>量子クエスト集 ― 量子力学から量子コンピュータまでの学習マップ ―</title>
-<meta name="description" content="二重スリットの謎から量子コンピュータの実機まで、7つの無料ブラウザ学習ゲームで量子の世界を旅するシリーズマップ。おすすめの学習順序つき。ねこ博士とうさ美が案内します。">
+<meta name="description" content="二重スリットの謎から量子コンピュータの実機、回路づくりの実技まで、9つの無料ブラウザ学習ゲームで量子の世界を旅するシリーズマップ。おすすめの学習順序つき。ねこ博士とうさ美が案内します。">
 <link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="量子クエスト集">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:title" content="量子クエスト集 ― 量子力学から量子コンピュータまでの学習マップ ―">
-<meta property="og:description" content="二重スリットの謎から量子コンピュータの実機まで、7つの無料ブラウザ学習ゲームで量子の世界を旅するシリーズマップ。">
+<meta property="og:description" content="二重スリットの謎から量子コンピュータの実機、回路づくりの実技まで、9つの無料ブラウザ学習ゲームで量子の世界を旅するシリーズマップ。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/images/ogp.png">
 <meta property="og:image:width" content="1200">
@@ -22,7 +22,7 @@
   "@context": "https://schema.org",
   "@type": "ItemList",
   "name": "量子クエスト集",
-  "description": "二重スリットの謎から量子コンピュータの実機まで、量子の世界を7つの無料ブラウザ学習ゲームで旅するシリーズ。",
+  "description": "二重スリットの謎から量子コンピュータの実機まで、量子の世界を9つの無料ブラウザ学習ゲームで旅するシリーズ。",
   "url": "https://quantum-mechanics.habatakijuku.com/",
   "inLanguage": "ja",
   "itemListElement": [
@@ -32,7 +32,9 @@
     { "@type": "ListItem", "position": 4, "name": "不確定性原理を証明する ― ケナードの不等式", "url": "https://quantum-mechanics.habatakijuku.com/kennard-inequality/" },
     { "@type": "ListItem", "position": 5, "name": "シュレディンガー方程式を導く", "url": "https://quantum-mechanics.habatakijuku.com/schrodinger-equation/" },
     { "@type": "ListItem", "position": 6, "name": "量子コンピュータはなぜ速いのか", "url": "https://quantum-mechanics.habatakijuku.com/quantum-computer/" },
-    { "@type": "ListItem", "position": 7, "name": "量子コンピュータはどう作るのか", "url": "https://quantum-mechanics.habatakijuku.com/quantum-hardware/" }
+    { "@type": "ListItem", "position": 7, "name": "量子コンピュータはどう作るのか", "url": "https://quantum-mechanics.habatakijuku.com/quantum-hardware/" },
+    { "@type": "ListItem", "position": 8, "name": "量子回路クエスト ― 組んで学ぶ量子コンピュータの論理回路", "url": "https://quantum-mechanics.habatakijuku.com/quantum-circuit/" },
+    { "@type": "ListItem", "position": 9, "name": "オラクル工房 ― オラクルからグローバー、ショアまで組む", "url": "https://quantum-mechanics.habatakijuku.com/oracle-workshop/" }
   ]
 }
 </script>
@@ -143,7 +145,7 @@
   .map{
     position:relative;
     width:100%;
-    aspect-ratio:5/3.15;
+    aspect-ratio:5/4.3;
     border-radius:10px;
     overflow:hidden;
     background:
@@ -238,13 +240,15 @@
   }
 
   /* Node position presets */
-  .n1{left:9%;  top:25%}
-  .n2{left:33%; top:21%}
-  .n3{left:57%; top:27%}
-  .n4{left:81%; top:22%}
-  .n5{left:86%; top:70%}
-  .n6{left:60%; top:74%}
-  .n7{left:33%; top:69%}
+  .n1{left:12%; top:15%}
+  .n2{left:50%; top:14%}
+  .n3{left:85%; top:17%}
+  .n4{left:83%; top:49%}
+  .n5{left:50%; top:49%}
+  .n6{left:16%; top:49%}
+  .n7{left:14%; top:83%}
+  .n8{left:50%; top:83%}
+  .n9{left:86%; top:83%}
 
   .compass{position:absolute;top:12px;right:14px;width:46px;height:46px;opacity:.9}
 
@@ -303,7 +307,7 @@
     .hero h1{letter-spacing:.05em}
     .btn{padding:11px 18px;font-size:13.5px}
 
-    .map{ aspect-ratio:4/5.1; }
+    .map{ aspect-ratio:4/5.4; }
 
     .trail-glow:not(.mobile-only), .trail:not(.mobile-only){display:none}
     .mobile-only{display:block}
@@ -314,13 +318,15 @@
     .flag{display:none}
     .node .start-tip::before{content:"🚩 "}
 
-    .n1{left:15%; top:18%}
-    .n2{left:50%; top:15%}
-    .n3{left:85%; top:20%}
-    .n4{left:86%; top:48%}
+    .n1{left:15%; top:16%}
+    .n2{left:50%; top:13%}
+    .n3{left:85%; top:17%}
+    .n4{left:86%; top:47%}
     .n5{left:50%; top:44%}
-    .n6{left:14%; top:49%}
-    .n7{left:50%; top:76%}
+    .n6{left:14%; top:48%}
+    .n7{left:15%; top:79%}
+    .n8{left:50%; top:76%}
+    .n9{left:85%; top:80%}
 
     .node{max-width:30%}
     .node .badge{width:46px;height:46px;font-size:20px}
@@ -328,6 +334,8 @@
     .node .label{font-size:9px;padding:2px 7px;white-space:normal;text-align:center;line-height:1.25;width:max-content;max-width:104px;border-radius:8px}
     .node.n1 .label{position:relative;left:14px}
     .node.n4 .label{position:relative;left:-14px}
+    .node.n7 .label{position:relative;left:14px}
+    .node.n9 .label{position:relative;left:-14px}
     /* 上に飛び出すと地図のoverflowで切れるため、モバイルは通常フローでバッジの上に置く */
     .node .start-tip{position:static;transform:none;animation:none;margin-left:14px}
 
@@ -343,6 +351,8 @@
   <symbol id="ic-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16c4 0 5-11 9-11s5 11 9 11"/><path d="M5.5 20.5h13"/><path d="M8 18.5l-2.5 2 2.5 2M16 18.5l2.5 2-2.5 2"/></symbol>
   <symbol id="ic-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><text x="12" y="18.5" text-anchor="middle" font-size="19" font-family="Georgia,'Times New Roman',serif" font-weight="700" fill="currentColor" stroke="none">ψ</text></symbol>
   <symbol id="ic-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18M3 16h18"/><rect x="7.5" y="5.2" width="5.6" height="5.6" rx="1" fill="#fffdf6"/><circle cx="17" cy="8" r="1.7" fill="currentColor" stroke="none"/><path d="M17 8v8"/><circle cx="17" cy="16" r="2.3" fill="#fffdf6"/></symbol>
+  <symbol id="ic-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h4M13 7h8M3 17h18"/><rect x="7" y="4" width="6" height="6" rx="1.2" fill="#fffdf6"/><circle cx="17" cy="7" r="1.7" fill="currentColor" stroke="none"/><path d="M17 7v10"/><circle cx="17" cy="17" r="2.6" fill="#fffdf6"/><path d="M17 14.4v5.2M14.4 17h5.2"/></symbol>
+  <symbol id="ic-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/><circle cx="12" cy="12" r="5.2" fill="#fffdf6"/><circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none"/></symbol>
   <symbol id="ic-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.6"/><rect x="10.3" y="10.3" width="3.4" height="3.4" rx=".6" fill="currentColor" stroke="none"/><path d="M10 4v3M14 4v3M10 17v3M14 17v3M4 10h3M4 14h3M17 10h3M17 14h3"/></symbol>
 </svg>
 <div class="stars"></div>
@@ -359,10 +369,10 @@
   <header class="hero">
     <h1>量子の世界、<span class="qmark">全制覇</span>の地図</h1>
     <p class="tag">二重スリットの謎から、量子コンピュータの実機まで。<br>
-      ねこ博士とうさ美と一緒に、7つのクエストで量子力学を旅しよう。</p>
+      ねこ博士とうさ美と一緒に、9つのクエストで量子力学を旅しよう。</p>
     <div class="stats" aria-label="シリーズの規模">
-      <span class="stat"><b>7</b> クエスト</span>
-      <span class="stat"><b>51</b> ステージ</span>
+      <span class="stat"><b>9</b> クエスト</span>
+      <span class="stat"><b>51</b> ステージ ＋ <b>34</b> レベル</span>
       <span class="stat">無料・登録不要</span>
       <span class="stat">中学数学からOK</span>
     </div>
@@ -378,10 +388,10 @@
       <div class="grid-lines"></div>
 
       <svg class="terrain" viewBox="0 0 100 60" preserveAspectRatio="none">
-        <path class="trail-glow" d="M9,15 C17,9 25,17 33,12.6 C41,8 49,21 57,16.2 C65,11 73,18 81,13.2 C91,7 97,32 86,42 C79,49 68,40 60,44.4 C52,49 42,36 33,41.4"/>
-        <path class="trail" d="M9,15 C17,9 25,17 33,12.6 C41,8 49,21 57,16.2 C65,11 73,18 81,13.2 C91,7 97,32 86,42 C79,49 68,40 60,44.4 C52,49 42,36 33,41.4"/>
-        <path class="trail-glow mobile-only" d="M15,10.8 C25,6.9 40,10.9 50,9 C62,6.9 76,8.4 85,12 C92,14.9 92,22.4 86,28.8 C78,34.4 62,28.4 50,26.4 C38,24.4 20,22.4 14,29.4 C10,34.4 16,39.4 26,41.9 C36,44.4 46,41.9 50,45.6"/>
-        <path class="trail mobile-only" d="M15,10.8 C25,6.9 40,10.9 50,9 C62,6.9 76,8.4 85,12 C92,14.9 92,22.4 86,28.8 C78,34.4 62,28.4 50,26.4 C38,24.4 20,22.4 14,29.4 C10,34.4 16,39.4 26,41.9 C36,44.4 46,41.9 50,45.6"/>
+        <path class="trail-glow" d="M12,9 C24,4 38,13 50,8.4 C62,4 74,14 85,10.2 C96,7 97,26 83,29.4 C71,33 61,25 50,29.4 C39,33 27,25 16,29.4 C5,33 3,46 14,49.8 C26,54 38,45 50,49.8 C62,54 74,45 86,49.8"/>
+        <path class="trail" d="M12,9 C24,4 38,13 50,8.4 C62,4 74,14 85,10.2 C96,7 97,26 83,29.4 C71,33 61,25 50,29.4 C39,33 27,25 16,29.4 C5,33 3,46 14,49.8 C26,54 38,45 50,49.8 C62,54 74,45 86,49.8"/>
+        <path class="trail-glow mobile-only" d="M15,9.6 C25,5.7 40,9.7 50,7.8 C62,5.7 76,7.2 85,10.2 C92,13.1 92,21.8 86,28.2 C78,33.8 62,28.4 50,26.4 C38,24.4 20,23 14,28.8 C6,34.4 6,43.6 15,47.4 C26,51.2 40,43.2 50,45.6 C62,48.2 76,45 85,48"/>
+        <path class="trail mobile-only" d="M15,9.6 C25,5.7 40,9.7 50,7.8 C62,5.7 76,7.2 85,10.2 C92,13.1 92,21.8 86,28.2 C78,33.8 62,28.4 50,26.4 C38,24.4 20,23 14,28.8 C6,34.4 6,43.6 15,47.4 C26,51.2 40,43.2 50,45.6 C62,48.2 76,45 85,48"/>
       </svg>
 
       <!-- decorative scenery -->
@@ -449,10 +459,26 @@
 
       <a class="node n7" href="https://quantum-mechanics.habatakijuku.com/quantum-hardware/"
          data-accent="#c8663f" data-icon="ic-7" data-sub="HARDWARE" data-title="量子コンピュータはどう作るのか"
-         data-desc="実機は宇宙空間の100倍冷たい場所で動いている。超伝導・ジョセフソン接合・希釈冷凍機・マイクロ波制御から100万量子ビットへの壁まで、⑥の原理を現実の物質で作る工学に踏み込む。旅の終着点。"
+         data-desc="実機は宇宙空間の100倍冷たい場所で動いている。超伝導・ジョセフソン接合・希釈冷凍機・マイクロ波制御から100万量子ビットへの壁まで、⑥の原理を現実の物質で作る工学に踏み込む。"
          data-tags="超伝導,希釈冷凍機,誤り訂正" data-num="7" data-stages="全8ステージ" data-level="発展" data-prereq="前提: ⑥">
         <div class="badge" style="--accent:#c8663f"><svg class="ic" aria-hidden="true"><use href="#ic-7"></use></svg><span class="num">7</span></div>
         <div class="label">第7章 量子コンピューターの仕組み(ハード)</div>
+      </a>
+
+      <a class="node n8" href="https://quantum-mechanics.habatakijuku.com/quantum-circuit/"
+         data-accent="#4b56c9" data-icon="ic-8" data-sub="CIRCUIT LAB" data-title="量子回路クエスト ― 組んで学ぶ量子コンピュータの論理回路"
+         data-desc="⑥で学んだゲートを、実際に配線して組む実技ゲーム。X・H・CNOT から始めて、ベル状態・半加算器、そしてオラクルの部品（検算・印つけ・逆計算）まで、全18レベルを自分の手で構成する。回路が作る「矢印の一覧表」の行をタップすれば、数値を1本ずつ追える。"
+         data-tags="ゲート,配線,矢印の一覧表" data-num="8" data-stages="全18レベル" data-level="実技" data-prereq="前提: ⑥">
+        <div class="badge" style="--accent:#4b56c9"><svg class="ic" aria-hidden="true"><use href="#ic-8"></use></svg><span class="num">8</span></div>
+        <div class="label">第8章 量子回路クエスト</div>
+      </a>
+
+      <a class="node n9" href="https://quantum-mechanics.habatakijuku.com/oracle-workshop/"
+         data-accent="#a03a3a" data-icon="ic-9" data-sub="ORACLE WORKSHOP" data-title="オラクル工房 ― オラクルからグローバー、ショアまで組む"
+         data-desc="鍵101のオラクルとグローバーの探索から、答えを知らない条件からのオラクル、覆面オラクル、ミニ暗号の鍵探索、10ビットの実回路、そしてショアの素因数分解を「×7 mod 15」の部品から組み上げる。全16レベル。旅の終着点。"
+         data-tags="オラクル,グローバー,ショア" data-num="9" data-stages="全16レベル" data-level="実技" data-prereq="前提: ⑧">
+        <div class="badge" style="--accent:#a03a3a"><svg class="ic" aria-hidden="true"><use href="#ic-9"></use></svg><span class="num">9</span></div>
+        <div class="label">第9章 オラクル工房</div>
       </a>
 
     </div>
@@ -471,20 +497,10 @@
         <div class="sc-title">本当はおもしろい複素数の世界</div>
         <div class="sc-desc">③④⑤で使う複素数を、ガウス平面からオイラーの等式まで基礎から。①の前後どちらでも。</div>
       </a>
-      <a class="side-card" href="https://ruglerugle.github.io/quantum-circuit/">
-        <div class="sc-sub">実技編 ・ CIRCUIT</div>
-        <div class="sc-title">量子回路クエスト</div>
-        <div class="sc-desc">⑥で学んだゲートを実際に配線して組む実技ゲーム（全18レベル）。ベル状態や半加算器から、オラクルの部品（検算・印つけ・逆計算）まで自分の手で構成する。</div>
-      </a>
       <a class="side-card" href="https://ruglerugle.github.io/grover-oracle/">
         <div class="sc-sub">発展編 ・ ORACLE</div>
         <div class="sc-title">オラクルは比較しない</div>
         <div class="sc-desc">⑥のグローバー探索に出てくる「オラクル」の中身を回路レベルで解剖する解説クエスト。</div>
-      </a>
-      <a class="side-card" href="https://ruglerugle.github.io/oracle-workshop/">
-        <div class="sc-sub">発展編 ・ WORKSHOP</div>
-        <div class="sc-title">オラクル工房</div>
-        <div class="sc-desc">鍵101のオラクルとグローバーの探索から、答えを知らない条件からのオラクル、ミニ暗号の鍵探索、ショアの素因数分解まで組む実技ゲーム（全16レベル）。量子回路クエストの続編。</div>
       </a>
     </div>
   </div>
