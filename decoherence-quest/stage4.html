@@ -136,7 +136,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">理論計算の答えを教えよう。空気中の小さな塵粒子の場合、縞が消えるまでの時間はおよそ<strong>10⁻³¹秒</strong>。物理学者の<strong>ヨース</strong>と<strong>ツェー</strong>が1985年に見積もった数字だ。宇宙の年齢が約10¹⁷秒だから、どれほど桁外れの速さか分かるね。ここで用語を2つ渡そう。矢印を足せる資格が保たれていることを<strong>コヒーレンス</strong>、環境へ手がかりが漏れてその資格が壊れていくことを<strong>デコヒーレンス</strong>と呼ぶんだ。</div>
+          <div class="dialog-bubble">理論計算の答えを教えよう。空気中の小さな塵粒子の場合、縞が消えるまでの時間はおよそ<strong>10⁻³¹秒</strong>。物理学者の<strong>ヨース</strong>と<strong>ツェー</strong>が1985年に見積もった数字だ。宇宙の年齢は、いま最も有力な説で約138億年、秒にすると約4×10¹⁷秒だから、どれほど桁外れの速さか分かるね。ここで用語を2つ渡そう。矢印を足せる資格が保たれていることを<strong>コヒーレンス</strong>、環境へ手がかりが漏れてその資格が壊れていくことを<strong>デコヒーレンス</strong>と呼ぶんだ。</div>
         </div>
       </div>
 
@@ -235,7 +235,7 @@
       </div>
 
       <div class="diagram-box">
-        <svg id="timescale-svg" class="dq-svg" viewBox="0 0 372 200" width="100%" role="img" aria-label="デコヒーレンス時間の桁の比較。対数スケールの横軸に、空気中の塵粒子は10のマイナス31乗秒、宇宙空間で背景放射だけを浴びる塵粒子は約1秒、宇宙の年齢は10の17乗秒が示されている。電子は超高真空なら縞の実験ができるほど長く保てる">
+        <svg id="timescale-svg" class="dq-svg" viewBox="0 0 372 200" width="100%" role="img" aria-label="デコヒーレンス時間の桁の比較。対数スケールの横軸に、空気中の塵粒子は10のマイナス31乗秒、宇宙空間で背景放射だけを浴びる塵粒子は約1秒、宇宙の年齢（最も有力な説で約138億年）は約4×10の17乗秒の位置に示されている。電子は超高真空なら縞の実験ができるほど長く保てる">
           <text class="strong" x="186" y="16" text-anchor="middle">縞が保てる時間（1目盛＝10倍）</text>
           <g id="timescale-body"></g>
         </svg>
@@ -424,19 +424,19 @@
     return t;
   }
   // 対数軸: 10^-31 .. 10^17（48桁）を x=40..340 に割り当て
-  var X0 = 40, X1 = 340, E0 = -31, E1 = 17;
+  var X0 = 40, X1 = 340, E0 = -31, E1 = 18;
   function xOf(e) { return X0 + (e - E0) / (E1 - E0) * (X1 - X0); }
   var AY = 150;
   el('line', {x1: X0 - 6, y1: AY, x2: X1 + 6, y2: AY, stroke: 'var(--ink)', 'stroke-width': 1.6});
-  [-31, -20, -10, 0, 10, 17].forEach(function(e){
+  [-31, -20, -10, 0, 10, 18].forEach(function(e){
     el('line', {x1: xOf(e), y1: AY - 3, x2: xOf(e), y2: AY + 3, stroke: 'var(--ink)'});
-    txt(xOf(e), AY + 16, 'label', e === 0 ? '1秒' : '10' + String(e).replace('-', '⁻').replace(/1/g, '¹').replace(/2/g, '²').replace(/3/g, '³').replace(/7/g, '⁷').replace(/0/g, '⁰') + '秒');
+    txt(xOf(e), AY + 16, 'label', e === 0 ? '1秒' : '10' + String(e).replace('-', '⁻').replace(/1/g, '¹').replace(/2/g, '²').replace(/3/g, '³').replace(/7/g, '⁷').replace(/8/g, '⁸').replace(/0/g, '⁰') + '秒');
   });
   // 項目（点＋ラベル）
   var items = [
     {e: -31, label: '塵粒子・空気中', color: '#b5504a', y: 56},
     {e: 0, label: '塵粒子・宇宙空間（背景放射のみ）', color: '#3f6191', y: 82},
-    {e: 17, label: '宇宙の年齢', color: '#7a6a2f', y: 108}
+    {e: 17.64, label: '宇宙の年齢（約138億年）', color: '#7a6a2f', y: 108}
   ];
   items.forEach(function(it){
     var x = xOf(it.e);
