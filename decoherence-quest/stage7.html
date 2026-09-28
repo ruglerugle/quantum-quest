@@ -91,7 +91,7 @@
       </div>
 
       <div class="diagram-box">
-        <svg id="chain-svg" class="dq-svg" viewBox="0 0 372 232" width="100%" role="img" aria-label="旅の論理の鎖の一枚絵。足し算ルールから、経路検出器、量子消しゴム、環境デコヒーレンス、月と古典世界、観測問題の線引きまで、6つの結論が矢印でつながっている">
+        <svg id="chain-svg" class="dq-svg" viewBox="0 0 372 276" width="100%" role="img" aria-label="旅の論理の鎖の一枚絵。足し算ルールから、経路検出器、量子消しゴム、環境デコヒーレンス、月と古典世界、観測問題の線引きまで、6つの結論が矢印でつながっている">
           <text class="strong" x="186" y="16" text-anchor="middle">この旅の論理の鎖</text>
           <g id="chain-body"></g>
         </svg>
@@ -280,33 +280,25 @@
     {t: '⑤ 月と古典世界', s: '位置の定まった姿が生き残る', c: '#7a6a2f'},
     {t: '⑥ 誠実な線引き', s: '「1つに決まる仕組み」は未解決', c: '#b5504a'}
   ];
-  // 2列ジグザグ配置
-  var W = 158, H = 44, GX = 22, GY = 26;
+  // 1列の縦並び：上から下へ一本道（矢印はすべて下向き）
+  var X = 21, W = 330, H = 30, GAP = 12, Y0 = 28;
   nodes.forEach(function(n, i){
-    var col = i % 2, row = Math.floor(i / 2);
-    var x = GX + col * (W + 30), y = 30 + row * (H + 6) + (col ? 22 : 0);
-    n.x = x; n.y = y;
-    el('rect', {x: x, y: y, width: W, height: H, rx: 8, fill: 'var(--paper2)', stroke: n.c, 'stroke-width': 1.8});
-    var t1 = txt(x + W / 2, y + 18, 'strong', n.t);
+    var y = Y0 + i * (H + GAP);
+    n.y = y;
+    el('rect', {x: X, y: y, width: W, height: H, rx: 8, fill: 'var(--paper2)', stroke: n.c, 'stroke-width': 1.8});
+    var t1 = txt(X + 10, y + 19.5, 'strong', n.t);
+    t1.setAttribute('text-anchor', 'start');
     t1.style.fill = n.c;
     t1.style.fontSize = '11.5px';
-    var t2 = txt(x + W / 2, y + 34, 'label', n.s);
+    var t2 = txt(X + W - 10, y + 19.5, 'label', n.s);
+    t2.setAttribute('text-anchor', 'end');
     t2.style.fontSize = '9.5px';
-  });
-  // 接続矢印
-  for (var i = 0; i < nodes.length - 1; i++) {
-    var a = nodes[i], b = nodes[i + 1];
-    var x1 = a.x + W * (i % 2 === 0 ? 1 : 0), y1 = a.y + H / 2;
-    var x2 = b.x + W * (i % 2 === 0 ? 0 : 1), y2 = b.y + H / 2;
-    if (i % 2 === 0) { // 左→右
-      el('line', {x1: x1, y1: y1, x2: x2 - 2, y2: y2, stroke: 'var(--muted)', 'stroke-width': 1.6});
-      el('path', {d: 'M ' + (x2 - 2) + ' ' + y2 + ' l -7 -4 l 0 8 z', fill: 'var(--muted)'});
-    } else { // 右→左（下の行へ）
-      var my = (y1 + y2) / 2 + 4;
-      el('path', {d: 'M ' + (a.x + W / 2) + ' ' + (a.y + H) + ' L ' + (a.x + W / 2) + ' ' + (my) + ' L ' + (b.x + W / 2) + ' ' + (my) + ' L ' + (b.x + W / 2) + ' ' + (b.y - 3), fill: 'none', stroke: 'var(--muted)', 'stroke-width': 1.6});
-      el('path', {d: 'M ' + (b.x + W / 2) + ' ' + (b.y - 2) + ' l -4 -7 l 8 0 z', fill: 'var(--muted)'});
+    if (i < nodes.length - 1) {
+      var cx = X + W / 2, ya = y + H + 1, yb = y + H + GAP - 1;
+      el('line', {x1: cx, y1: ya, x2: cx, y2: yb - 5, stroke: 'var(--muted)', 'stroke-width': 1.8});
+      el('path', {d: 'M ' + cx + ' ' + yb + ' l -4.5 -6 l 9 0 z', fill: 'var(--muted)'});
     }
-  }
+  });
 })();
 </script>
 
