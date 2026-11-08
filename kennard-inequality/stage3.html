@@ -589,8 +589,16 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いい引っかかりだ。そのとおりで、<strong>そのままでは帯も角もどちらもゼロに向かう</strong>。違いが出るのは「傾き」を出すときだよ。微分は「増えた量 ÷ 進んだ幅 Δx」だったね。そこで Δf と Δg を Δx で書き直す。f の増分は「傾き × 進んだ幅」だから Δf ≈ f′·Δx、同じく Δg ≈ g′·Δx。すると2つの帯は Δf·g ＋ f·Δg ≈ (f′g ＋ fg′)·Δx で、<strong>Δx が1個</strong>。角は Δf·Δg ≈ f′g′·(Δx)² で、<strong>Δx が2個</strong>。面積の増え方を Δx で割ると、帯のほうは Δx が打ち消されて f′g ＋ fg′ という<strong>有限の値</strong>が残るのに、角のほうは f′g′·Δx と <strong>Δx が1個残る</strong>。だから Δx をゼロに近づけると、角の項だけが消える。数字で言えば、Δx＝0.01 のとき帯は割ったあとで f′g＋fg′ のまま、角は 0.01×f′g′。Δx＝0.001 なら角は 0.001×f′g′。帯は変わらず、角だけがどこまでも小さくなる。つまり Δx で割ったあとに残るのは帯のぶんだけ。これが積の微分公式 <strong>(f·g)′ ＝ f′g ＋ fg′</strong> だ。2つの項に分かれたのは、伸びる帯が2本あるからだよ。いまの場合は f＝R、g＝e<sup>iS</sup> だから、<strong>ψ′ ＝ R′·e<sup>iS</sup> ＋ R·(e<sup>iS</sup>)′</strong> というわけだね。</div>
+          <div class="dialog-bubble">いい引っかかりだ。そのとおりで、<strong>そのままでは帯も角もどちらもゼロに向かう</strong>。違いが出るのは「傾き」を出すときだよ。微分は「増えた量 ÷ 進んだ幅 Δx」だったね。そこで Δf と Δg を「傾き × 進んだ幅」で書き直す。すると2つの帯には <strong>Δx が1個</strong>、角には <strong>Δx が2個</strong>入る。面積の増え方を Δx で割ると、帯のほうは Δx が打ち消されて<strong>有限の値</strong>が残るのに、角のほうは <strong>Δx が1個残る</strong>。だから Δx をゼロに近づけると、角の項だけが消える。数字で言えば、Δx＝0.01 のとき角は 0.01×f′g′、Δx＝0.001 なら 0.001×f′g′。帯は変わらず、角だけがどこまでも小さくなる。つまり Δx で割ったあとに残るのは帯のぶんだけ。これが積の微分公式 <strong>(f·g)′ ＝ f′g ＋ fg′</strong> だ。2つの項に分かれたのは、伸びる帯が2本あるからだよ。いまの場合は f＝R、g＝e<sup>iS</sup> とすればいい。</div>
         </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step"><span class="nw">Δf ≈ f′·Δx</span>、<span class="nw">Δg ≈ g′·Δx</span></span>
+        <span class="step">帯2本：<span class="nw">Δf·g ＋ f·Δg ≈ (f′g ＋ fg′)·Δx</span>　（Δx が1個）</span>
+        <span class="step">角：<span class="nw">Δf·Δg ≈ f′g′·(Δx)²</span>　（Δx が2個）</span>
+        <span class="step">Δx で割る：帯 → <span class="nw">f′g ＋ fg′</span>、角 → <span class="nw">f′g′·Δx</span> → 0</span>
+        <span class="step"><span class="nw"><strong>(f·g)′ ＝ f′g ＋ fg′</strong></span>　→　<span class="nw"><strong>ψ′ ＝ R′·e<sup>iS</sup> ＋ R·(e<sup>iS</sup>)′</strong></span></span>
       </div>
 
       <div class="diagram-box">
@@ -610,7 +618,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">ふたつ目の<strong>肩の微分</strong>にいこう。実は平面波のときも、前に出ていた ik は「肩 ikx を<strong>微分したもの</strong>」だったんだ。肩の傾きが ik で一定だったから、係数をそのまま取り出しただけに見えていた。肩が S(x) のように曲がった式でも通用する規則として、組み立て直そう。ψ＝e<sup>f(x)</sup> と書いて、x を少しだけ Δx 進める。微分は「増えた量 ÷ 進んだ幅」だったから、裏返せば増えた量は「傾き × 進んだ幅」。まず肩 f が <strong>Δf ≈ f′(x)·Δx</strong> だけ変わる。次に、肩が Δf 変わると e<sup>f</sup> はどうなるか。肩の足し算は掛け算だから e<sup>f＋Δf</sup>＝e<sup>f</sup>·e<sup>Δf</sup>。そして e は、複素数の教室で<strong>傾きが自分の高さのちょうど1倍になる数</strong>として作ったね。つまり e<sup>u</sup> のグラフは、どの点でも傾きが自分の高さと同じだ。とくに出発点 u＝0 では、高さが e<sup>0</sup>＝1 だから、傾きも 1 になる。そこから u を、ほんの少しだけ Δf 進めてみよう。さっきと同じ「増えた量 ＝ 傾き × 進んだ幅」を使えば、増えるのは 1×Δf ＝ Δf。出発点の高さが 1 だったから、進んだ先の高さは 1 ＋ Δf。つまり <strong>e<sup>Δf</sup> ≈ 1＋Δf</strong> というわけだ。……ただし念のため、この近似が使えるのは<strong>肩が 0 に近いときだけ</strong>だよ。肩が 1 や 2 のところでは高さも傾きも 1 ではないから、同じ手は使えない。でも今回はそれで足りる。さっき e<sup>f＋Δf</sup>＝e<sup>f</sup>·e<sup>Δf</sup> と分けたおかげで、残った因子の肩はちょうど Δf――ほんの少しの量だからね。肩が大きい部分は e<sup>f</sup> のほうが丸ごと引き受けてくれている。合わせよう。増分はいつも「進んだ先の値 − 元の値」だったね。進んだ先の肩は f＋Δf だから値は e<sup>f＋Δf</sup>、元の値は e<sup>f</sup>。つまり <strong>Δψ ＝ e<sup>f＋Δf</sup> − e<sup>f</sup></strong>。前半 を e<sup>f</sup>·e<sup>Δf</sup> に書き直すと Δψ ＝ e<sup>f</sup>·e<sup>Δf</sup> − e<sup>f</sup> で、共通の e<sup>f</sup> をくくり出せば <strong>Δψ ＝ e<sup>f</sup>(e<sup>Δf</sup> − 1)</strong>。括弧の中はさっきの近似が効いて e<sup>Δf</sup> − 1 ≈ Δf だから、Δψ ≈ e<sup>f</sup>·Δf ＝ e<sup>f</sup>·f′(x)·Δx。Δx で割れば <strong>ψ′＝f′(x)·e<sup>f(x)</sup></strong>――「肩を微分したものが前に降りてきて、e の部分はそのまま残る」。ψ の傾きは「肩の傾き × 自分の高さ」というわけだ。平面波は f′＝ik の特別な場合だったんだね。今回の肩は iS(x) だから、微分すると <strong>iS′</strong> が前に降りる。</div>
+          <div class="dialog-bubble">ふたつ目の<strong>肩の微分</strong>にいこう。実は平面波のときも、前に出ていた ik は「肩 ikx を<strong>微分したもの</strong>」だったんだ。肩の傾きが ik で一定だったから、係数をそのまま取り出しただけに見えていた。肩が S(x) のように曲がった式でも通用する規則として、組み立て直そう。ψ＝e<sup>f(x)</sup> と書いて、x を少しだけ Δx 進める。微分は「増えた量 ÷ 進んだ幅」だったから、裏返せば増えた量は「傾き × 進んだ幅」。まず肩 f が <strong>Δf ≈ f′(x)·Δx</strong> だけ変わる。次に、肩が Δf 変わると e<sup>f</sup> はどうなるか。肩の足し算は掛け算だから e<sup>f＋Δf</sup>＝e<sup>f</sup>·e<sup>Δf</sup>。そして e は、複素数の教室で<strong>傾きが自分の高さのちょうど1倍になる数</strong>として作ったね。つまり e<sup>u</sup> のグラフは、どの点でも傾きが自分の高さと同じだ。とくに出発点 u＝0 では、高さが e<sup>0</sup>＝1 だから、傾きも 1 になる。そこから u を、ほんの少しだけ Δf 進めてみよう。さっきと同じ「増えた量 ＝ 傾き × 進んだ幅」を使えば、増えるのは 1×Δf ＝ Δf。出発点の高さが 1 だったから、進んだ先の高さは 1 ＋ Δf。つまり <strong>e<sup>Δf</sup> ≈ 1＋Δf</strong> というわけだ。……ただし念のため、この近似が使えるのは<strong>肩が 0 に近いときだけ</strong>だよ。肩が 1 や 2 のところでは高さも傾きも 1 ではないから、同じ手は使えない。でも今回はそれで足りる。さっき e<sup>f＋Δf</sup>＝e<sup>f</sup>·e<sup>Δf</sup> と分けたおかげで、残った因子の肩はちょうど Δf――ほんの少しの量だからね。肩が大きい部分は e<sup>f</sup> のほうが丸ごと引き受けてくれている。合わせよう。増分はいつも「進んだ先の値 − 元の値」だったね。進んだ先の値を e<sup>f</sup>·e<sup>Δf</sup> と分けておけば、共通の e<sup>f</sup> をくくり出せる。括弧の中に残るのは e<sup>Δf</sup> − 1 で、さっきの近似からこれは Δf ≈ f′(x)·Δx。Δx で割れば <strong>ψ′＝f′(x)·e<sup>f(x)</sup></strong>――「肩を微分したものが前に降りてきて、e の部分はそのまま残る」。ψ の傾きは「肩の傾き × 自分の高さ」というわけだ。平面波は f′＝ik の特別な場合だったんだね。今回の肩は iS(x) だから、微分すると <strong>iS′</strong> が前に降りる。</div>
         </div>
       </div>
 
